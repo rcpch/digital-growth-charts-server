@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
 import os
-# import markdown
+import markdown
 import calculations
 from datetime import date
 from measurement_request import MeasurementForm
+import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'UK_WHO' #not very secret - this will need complicating and adding to config
@@ -22,19 +23,6 @@ def home():
         return render_template('measurement_form.html', form = form)
     else:
         return render_template('measurement_form.html', form = form)
-
-# @app.route("/about")
-# def about():
-#     return "string + string2 + string3 + extra + string5 + string6"
-    
-#     # #open README.md file
-#     # with open(file) as markdown_file:
-
-#     #     #read contents of file
-#     #     content = markdown_file.read()
-
-#     #     #convert to HTML
-#     #     return markdown.markdown(content)
 
 def perform_calculations(form):
     birth_date = form.birth_date.data
@@ -92,11 +80,25 @@ def perform_calculations(form):
 
 @app.route("/instructions", methods=['GET'])
 def instructions():
-    return render_template('instructions.html')
+    #open README.md file
+    this_directory = os.path.abspath(os.path.dirname(__file__))
+    file = os.path.join(this_directory, 'README.md')
+    with open(file) as markdown_file:
+
+        #read contents of file
+        content = markdown_file.read()
+
+        #convert to HTML
+        return markdown.markdown(content)
 
 @app.route("/references", methods=['GET'])
 def references():
-    return render_template('instructions.html')
+
+    #starting with a hard-coded list, but as it grows probably belongs in database
+    with open('./data_tables/growth_reference_repository.json') as json_file:
+            data = json.load(json_file)
+            json_file.close()
+    return render_template('references.html', data=data)
 
 if __name__ == '__main__':
     app.run()
