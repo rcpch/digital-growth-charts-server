@@ -63,7 +63,7 @@ def perform_calculations(form):
         corrected_calendar_age = calculations.chronological_calendar_age(edd, obs_date)
         edd_string = edd.strftime('%a %d %B, %Y')
     if height > 1:
-        height_sds = calculations.sds(age, 'height', ofc, sex)
+        height_sds = calculations.sds(age, 'height', height, sex)
         height_centile = calculations.centile(height_sds)
     if weight > 1:
         weight_sds = calculations.sds(age, 'weight', weight, sex)
