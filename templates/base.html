@@ -1,0 +1,53 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <title>RCPCH Growth</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/components/checkbox.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/components/checkbox.min.js"></script>
+    </head>
+
+    <section class="content">
+        <header>
+            <div class="ui secondary pointing menu">
+                <a class="active item" href="/">
+                Home
+                </a>
+                <a class="item" href="/">
+                Calculator
+                </a>
+                <a class="item" href="/instructions">
+                    Instructions
+                </a>
+                <a class="item" href="/references">
+                Growth References
+                </a>
+                <div class="right menu">
+                    <div class="ui item">
+                      RCPCH Growth Reference Group
+                    </div>
+                  </div>
+            </div>
+            <div class="ui center aligned padded grid">
+                <div class="ui huge header" style="margin-bottom:10px!important">
+                    {% block header %}{% endblock %}
+                </div>
+            </div>
+        </header>
+        {% for message in get_flashed_messages() %}
+          <div class="flash">{{ message }}</div>
+        {% endfor %}
+        {% block content %}{% endblock %}
+    </section>
+
+    <footer>
+        <div class="ui one column centered relaxed grid">
+            <div class="ui container" style="margin-top:50px!important">
+                <div class="ui red message">These calculations use licenced UK-WHO reference data. They are in development and should not be used for clinical purposes.</div>
+            </div>
+        </div>
+    </footer>
+</html>

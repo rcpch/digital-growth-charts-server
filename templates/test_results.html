@@ -1,0 +1,329 @@
+
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}Results{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+    <!-- The results get posted here -->
+    {% if result %}
+    <div class="ui two column centered padded grid">
+
+        <!-- summary results -->
+        <div class="section">
+            <table class="ui very basic collapsing celled table">
+                <thead>
+                <tr><th colspan='2'>Dates</th>
+                </tr></thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <h4 class="ui header">
+                                <div class="content">
+                                    Sex
+                                    <div class="sub header"></div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            {{result.patient.sex}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="ui header">
+                                <div class="content">
+                                    Gestational Age at Delivery
+                                    <div class="sub header"></div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            {{result.dates.gestation_weeks}}+{{result.dates.gestation_days}} weeks
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="ui header">
+                                
+                                <div class="content">
+                                    Chronological Decimal Age
+                                <div class="sub header"></div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            {{result.dates.chronological_decimal_age}} y
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <h4 class="ui image header">
+                            
+                            <div class="content">
+                            Corrected Decimal Age
+                            <div class="sub header">
+                            </div>
+                        </div>
+                        </h4></td>
+                        {% if result.dates.corrected_decimal_age != 'None' %}
+                        <td>
+                            {{result.dates.corrected_decimal_age}} y
+                        </td>
+                        {% else %}
+                        <td>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>
+                        <h4 class="ui image header">
+                            
+                            <div class="content">
+                            Chronological Calendar Age
+                            <div class="sub header">
+                            </div>
+                        </div>
+                        </h4></td>
+                        <td>
+                            {{result.dates.chronological_calendar_age}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <h4 class="ui image header">
+                            
+                            <div class="content">
+                            Corrected Calendar Age
+                            <div class="sub header">
+                            </div>
+                        </div>
+                        </h4></td>
+                        <td>
+                            {{result.dates.corrected_calendar_age}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <h4 class="ui image header">
+                            
+                            <div class="content">
+                            Estimated Date of Delivery
+                            <div class="sub header">
+                            </div>
+                        </div>
+                        </h4></td>
+                        <td>
+                            {{result.dates.edd_string}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- measurement results -->
+
+        <div class="section">
+            <table class="ui very basic collapsing celled table">
+                <thead>
+                    <tr>
+                        <th colspan='2'>Measurements</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <h4 class="ui blue header">
+                                <div class="content">
+                                    Height
+                                    <div class="sub header">
+                                        
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            {{ result.patient.height }} cm
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="ui header">
+                                <div class="content">
+                                    SDS
+                                    <div class="sub header">
+                                        
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            <div class="ui blue header">
+                                {{ result.calculations.height_sds }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="ui header">
+                                <div class="content">
+                                    Centile
+                                    <div class="sub header">
+                                        
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            {{ result.calculations.height_centile }}  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="ui blue header">
+                                <div class="content">
+                                    Weight
+                                    <div class="sub header">
+                                        
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            {{ result.patient.weight }} kg
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="ui header">
+                                <div class="content">
+                                    SDS
+                                    <div class="sub header">
+                                        
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            <div class="ui blue header">
+                                {{ result.calculations.weight_sds }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="ui header">
+                                <div class="content">
+                                    Centile
+                                    <div class="sub header">
+                                        
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            {{ result.calculations.weight_centile }}  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="ui blue header">
+                                <div class="content">
+                                    BMI
+                                    <div class="sub header">
+                                        
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            {{ result.patient.bmi }} kg/m<sup>2</sup>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="ui header">
+                                <div class="content">
+                                    SDS
+                                    <div class="sub header">
+                                        
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            <div class="ui blue header">
+                                {{ result.calculations.bmi_sds }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="ui header">
+                                <div class="content">
+                                    Centile
+                                    <div class="sub header">
+                                        
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            {{ result.calculations.bmi_centile }}  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="ui blue header">
+                                <div class="content">
+                                    Head Circumference
+                                    <div class="sub header">
+                                        
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            {{ result.patient.ofc }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="ui header">
+                                <div class="content">
+                                    SDS
+                                    <div class="sub header">
+                                        
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            <h4 class="ui blue header">
+                                {{ result.calculations.ofc_sds }}
+                            </h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="ui header">
+                                <div class="content">
+                                    Centile
+                                    <div class="sub header">
+                                        
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            {{ result.calculations.ofc_centile }}  
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    
+    {% endif %}
+                
+{% endblock %}

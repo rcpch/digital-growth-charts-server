@@ -1,0 +1,5 @@
+dark_pink: 217, 49, 155 #D9319B
+light_pink: 251, 228, 240
+
+dark_blue: 0, 126, 198 #007EC6
+light_blue: 220, 236, 247 #DCECF7

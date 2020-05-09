@@ -1,0 +1,74 @@
+
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}RCPCH Growth Chart Calculator{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+    <div class="ui center aligned relaxed grid">
+        <div class="row">
+            <div class="ui inverted segment" style="min-width:350px!important">
+                <form action="" method="post" novalidate class="ui inverted form" enctype="multipart/form-data">
+                    {{ form.csrf_token }}
+                    {{ form.name }}
+                    {{ form.hidden_tag() }}
+                    <p>
+                                {{ form.birth_date.label }}<br>
+                                {{ form.birth_date(class='ui input', type='date') }}
+                                {% for error in form.birth_date.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </p>
+                    <p>
+                        {{ form.obs_date.label }}<br>
+                        {{ form.obs_date(class='ui input', type='date') }}
+                        {% for error in form.obs_date.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                            {{ form.height.label }}<br>
+                            {{ form.height(type='number') }}
+                    </p>
+                    <p>
+                        {{ form.weight.label }}<br>
+                        {{ form.weight(type='number') }}
+                    </p>
+                    <p>
+                        {{ form.ofc.label }}<br>
+                        {{ form.ofc(type='number') }}
+                    </p>
+                    <p>
+                        {{ form.gestation_weeks.label }}<br>
+                        {{ form.gestation_weeks(type='number') }}
+                    </p>
+                    <p>
+                        {{ form.gestation_days.label }}<br>
+                        {{ form.gestation_days(type='number') }}
+                    </p>
+                    <div class="ui sex toggle checkbox">
+                        <p>{{ form.sex() }} {{ form.sex.label }}</p>
+                    </div>
+                    {% for error in form.sex.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                    <p>
+                        {{ form.submit() }}
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+   
+        
+        
+    
+{% endblock %}
+
+<script>
+    $('.ui.toggle').checkbox({
+  onChecked: function () { console.log('checked');
+   },
+  onUnchecked: function () { console.log('unchecked'); }
+});
+</script>
