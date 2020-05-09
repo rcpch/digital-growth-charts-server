@@ -2,6 +2,8 @@ import math
 import data_tables
 import statistics
 import scipy.stats as stats
+from scipy import interpolate
+# from scipy.interpolate import CubicSpline
 import numpy as np
 from datetime import date
 import json
@@ -56,8 +58,16 @@ def sds(age: float, measurement: str, observation: float, sex: str)->float:
      - Head circumference reference data is available from 23 weeks gestation to 17y in girls and 18y in boys
     """
     age_index_one_below = nearest_age_below_index(age)
+    if age == decimal_ages[age_index_one_below]:
+        #child's age matches a reference age - no interpolation necessary
+        l = data['measurement'][measurement][sex][age_index_one_below]["L"]
+        m = data['measurement'][measurement][sex][age_index_one_below]["M"]
+        s = data['measurement'][measurement][sex][age_index_one_below]["S"]
+        sds = z_score(l, m, s, observation)
+        return sds
 
     if cubic_interpolation_possible(age):
+        #collect all L, M and S above and below lower age index for cubic interpolation
         l_one_below = data['measurement'][measurement][sex][age_index_one_below]["L"]
         m_one_below = data['measurement'][measurement][sex][age_index_one_below]["M"]
         s_one_below = data['measurement'][measurement][sex][age_index_one_below]["S"]
@@ -78,6 +88,7 @@ def sds(age: float, measurement: str, observation: float, sex: str)->float:
         m = cubic_interpolation(age, age_index_one_below, m_two_below, m_one_below, m_one_above, m_two_above)
         s = cubic_interpolation(age, age_index_one_below, s_two_below, s_one_below, s_one_above, s_two_above)
     else:
+        #a chart threshold: collect one L, M and S above and below lower age index for linear interpolation
         l_one_below = data['measurement'][measurement][sex][age_index_one_below]["L"]
         m_one_below = data['measurement'][measurement][sex][age_index_one_below]["M"]
         s_one_below = data['measurement'][measurement][sex][age_index_one_below]["S"]
@@ -135,7 +146,7 @@ def percentage_median_bmi( age: float, actual_bmi: float, sex: str)->float:
 #private methods
 def nearest_age_below_index(age: float)->int:
     """
-    Returns the array index of the nearest age in the reference data below the calculated decimal age (either chronological or corrected for gestational age)
+    Returns the array index of the nearest (lowest) age (or a match) in the reference data below the calculated decimal age (either chronological or corrected for gestational age)
     Uses the NumPy library to do this quickly - identifies the first incidence of a value in a sorted array.
     """
     result_index = 0
@@ -146,7 +157,7 @@ def nearest_age_below_index(age: float)->int:
     else:
         result = decimal_ages[idx]
         result_index = idx
-    if result < age:
+    if result <= age:
         return result_index
     else:
         return result_index-1
@@ -155,8 +166,14 @@ def cubic_interpolation_possible(age: float):
     """
     See sds function. This method tests if the age of the child (either corrected for prematurity or chronological) is at a threshold of the reference data
     This method is specific to the UK-WHO data set.
+    Thresholds wehere cubic interpolation is not possible:
+    - Start of viability: [-0.325804244,-0.306639288....], indices are 0, 1
+    - Threshold of UK90 term data and start of WHO data at 2 weeks of age (42 weeks): [...0,0.019164956,0.038329911,0.038329911,0.057494867...], indices are 17, 18, 19, 20, 21
+    - Threshold at 2 years [1.916666667,2.0,2.0,2.083333333] - this is the same data set but children are measured standing not lying > 2y, indices 54, 55, 56, 57
+    - Threshold of WHO 2006 data at 4y and reverts to UK90: [...3.916666667,4.0,4.0,4.083...], indices 79, 80, 81, 82
+    - End of UK90 data set at 20y: [...19.917,20.0], indices 272, 273
     """
-    if age < decimal_ages[3] or age == 0.038329911 or age == 2.0 or age == 4.0 or age > 19.917:
+    if age <= -0.306639288 or (age > 0.019164956 and age < 0.057494867) or (age > 1.916666667 and age < 2.083333333) or (age > 3.916666667 and age < 4.083) or age > 19.917:
         return False
     else:
         return True
@@ -168,64 +185,77 @@ def cubic_interpolation( age: float, age_index_below: int, parameter_two_below: 
     This method is specific to the UK-WHO data set.
     """
 
-    cubic_interpolated_value = 0.0
+    # cubic_interpolated_value = 0.0
 
-    t = 0.0 #actual age
-    tt0 = 0.0
-    tt1 = 0.0
-    tt2 = 0.0
-    tt3 = 0.0
+    # t = 0.0 #actual age ///This commented function is Tim Cole's used in LMSGrowth to perform cubic interpolation
+    # tt0 = 0.0
+    # tt1 = 0.0
+    # tt2 = 0.0
+    # tt3 = 0.0
 
-    t01 = 0.0
-    t02 = 0.0
-    t03 = 0.0
-    t12 = 0.0
-    t13 = 0.0
-    t23 = 0.0
+    # t01 = 0.0
+    # t02 = 0.0
+    # t03 = 0.0
+    # t12 = 0.0
+    # t13 = 0.0
+    # t23 = 0.0
 
-    age_two_below = decimal_ages[age_index_below-1]
-    age_one_below = decimal_ages[age_index_below]
-    age_one_above = decimal_ages[age_index_below+1]
-    age_two_above = decimal_ages[age_index_below+2]
+    # age_two_below = decimal_ages[age_index_below-1]
+    # age_one_below = decimal_ages[age_index_below]
+    # age_one_above = decimal_ages[age_index_below+1]
+    # age_two_above = decimal_ages[age_index_below+2]
     
-    t = round(age, 9)
+    # t = round(age, 9)
 
-    tt0 = t - age_two_below
-    tt1 = t - age_one_below
-    tt2 = t - age_one_above
-    tt3 = t - age_two_above
+    # tt0 = t - age_two_below
+    # tt1 = t - age_one_below
+    # tt2 = t - age_one_above
+    # tt3 = t - age_two_above
 
-    t01 = age_two_below - age_one_below
-    t02 = age_two_below - age_one_above
-    t03 = age_two_below - age_two_above
+    # t01 = age_two_below - age_one_below
+    # t02 = age_two_below - age_one_above
+    # t03 = age_two_below - age_two_above
 
-    t12 = age_one_below - age_one_above
-    t13 = age_one_below - age_two_above
-    t23 = age_one_above - age_two_above
+    # t12 = age_one_below - age_one_above
+    # t13 = age_one_below - age_two_above
+    # t23 = age_one_above - age_two_above
 
-    cubic_interpolated_value = parameter_two_below * tt1 * tt2 * tt3 /t01 / t02 / t03 - parameter_one_below * tt0 * tt2 * tt3 / t01 / t12 /t13 + parameter_one_above * tt0 * tt1 * tt3 / t02/ t12 / t23 - parameter_two_above * tt0 * tt1 * tt2 / t03 / t13 / t23
+    # cubic_interpolated_value = parameter_two_below * tt1 * tt2 * tt3 /t01 / t02 / t03 - parameter_one_below * tt0 * tt2 * tt3 / t01 / t12 /t13 + parameter_one_above * tt0 * tt1 * tt3 / t02/ t12 / t23 - parameter_two_above * tt0 * tt1 * tt2 / t03 / t13 / t23
+
+    xpoints = [decimal_ages[age_index_below-1], decimal_ages[age_index_below], decimal_ages[age_index_below+1], decimal_ages[age_index_below+2]]
+    ypoints = [parameter_two_below, parameter_one_below, parameter_one_above, parameter_two_above]
+
+    # cs = CubicSpline(xpoints,ypoints,bc_type='natural')
+    # cubic_interpolated_value = cs(age) - this also works, but not as accurate
+
+    tck = interpolate.splrep(xpoints, ypoints)
+    cubic_interpolated_value = interpolate.splev(age, tck)   
 
     return cubic_interpolated_value
 
-def linear_interpolation( decimal_age: float, age_index_below: int, parameter_one_below: int, parameter_one_above: int) -> float:
+def linear_interpolation( decimal_age: float, age_index_below: int, parameter_one_below: float, parameter_one_above: float) -> float:
     
     """
-    See sds function. This method is to interpolate L, M and S values for children whose ages are at the threshold of the reference data, making cubic interpolation impossible
+    See sds function. This method is to do linear interpolation of L, M and S values for children whose ages are at the threshold of the reference data, making cubic interpolation impossible
     """
     
     linear_interpolated_value = 0.0
     age_below = decimal_ages[age_index_below]
     age_above = decimal_ages[age_index_below+1]
-    linear_interpolated_value = parameter_one_above + (((decimal_age - age_below)*parameter_one_above-parameter_one_below))/(age_above-age_below)
+    # linear_interpolated_value = parameter_one_above + (((decimal_age - age_below)*parameter_one_above-parameter_one_below))/(age_above-age_below)
+    x_array = [age_below, age_above]
+    y_array = [parameter_one_below, parameter_one_above]
+    intermediate = interpolate.interp1d(x_array, y_array)
+    linear_interpolated_value = intermediate(decimal_age)
     return linear_interpolated_value
 
 def z_score(l: float, m: float, s: float, observation: float):
 
     """
-    Converts the (age-specific) LM and S parameters into a z-score
+    Converts the (age-specific) L, M and S parameters into a z-score
     """
     sds = 0.0
-    if round(l, 1) != 0.0:
+    if l != 0.0:
         sds = (((math.pow((observation / m), l))-1)/(l*s))
     else:
         sds = (math.log(observation / m)/s)

@@ -1,6 +1,7 @@
 from datetime import date, datetime
 from datetime import timedelta
 from dateutil import relativedelta
+import math
 
 """
 3 functions to calculate ages
@@ -21,10 +22,6 @@ def chronological_decimal_age(birth_date: date, observation_date: date) -> float
     Calculates a decimal age from two dates supplied as raw dates without times.
     Returns value floating point
     """
-
-    #ensure dates are in the right order
-    if observation_date < birth_date:
-        raise ValueError("Date of birth must come before the observation date!")
 
     days_between = observation_date - birth_date
     return (days_between.days / 365.25)
@@ -107,22 +104,47 @@ def chronological_calendar_age(birth_date: date, observation_date: date) -> str:
         return (', '.join(date_string[:-1])) + ' and ' + date_string[-1]
     elif len(date_string) == 1:
         return date_string[0]
-    else:
+    elif birth_date == observation_date:
         return 'Happy Birthday'
+    else:
+        return ''
 
 def estimated_date_delivery(birth_date: date, gestation_weeks: int, gestation_supplementary_days: int, pregnancy_length_days = 0) -> date:
     """
-    returns estimated date of delivery from gestational age and birthdate
+    Returns estimated date of delivery from gestational age and birthdate
+    Will still calculate an estimated date of delivery if already term (>37 weeks)
     """
     if pregnancy_length_days == 0:
         pregnancy_length_days = (gestation_weeks * 7) + gestation_supplementary_days
-
-    if pregnancy_length_days >= TERM_LOWER_THRESHOLD_LENGTH_DAYS:
-        #this is a term baby - correction inappropriate
-        return
     
     prematurity = TERM_PREGNANCY_LENGTH_DAYS - pregnancy_length_days
 
     edd = birth_date + timedelta(days=prematurity)
     return edd
+
+def corrected_gestational_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_supplementary_days: int)->str:
+    """
+    Returns a corrected gestational age
+    """
+    edd = estimated_date_delivery(birth_date, gestation_weeks, gestation_supplementary_days)
+    forty_two_weeks_gestation_date = edd + timedelta(days=14)
+
+    if observation_date >= forty_two_weeks_gestation_date:
+        #beyond 2 weeks post term - chronological age measured in days / weeks / months years
+        #no correction
+        return ''
+    
+    pregnancy_length_days = (gestation_weeks * 7) + gestation_supplementary_days
+    # time_alive = relativedelta.relativedelta(observation_date, birth_date)
+    time_alive = observation_date - birth_date
+    days_of_life = time_alive.days
+    days_since_conception = days_of_life + pregnancy_length_days
+
+    corrected_weeks = math.floor(days_since_conception / 7)
+    corrected_supplementary_days = days_since_conception - (corrected_weeks * 7)
+
+    return f"{corrected_weeks}+{corrected_supplementary_days} weeks"
+
+
+
     

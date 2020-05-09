@@ -2,18 +2,18 @@
 # CALCULATIONS FOR GROWTH CHARTS USING UK-WHO GROWTH REFERENCES 
 Marcus Baw, Simon Chapman, Tim Cole, Andy Palmer, Charlotte Weldon, Magdalena Umerska
 
-##Clinical Aspects
-###Introduction
-####The Charts
+## Clinical Aspects
+### Introduction
+#### The Charts
 The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any child born after that date should be plotted on a UK-WHO Growth chart.  Children born before May 11th 2009 are already plotted on British 1990 (UK90) charts and subsequent measurements must be plotted using those charts. There should be no switch over of existing children to the new UK-WHO Charts.  After age 4 we revert to using UK90 charts. The source data for these charts are included in two spreadsheets as LMS tables. Together they define the UK-WHO growth charts, containing LMS values by age. If the data are needed in centile or SDS lookup format they can be accessed via the LMSgrowth Excel add in (see below).  We have also included data not yet incorporated into a paper chart - for example BMI and head circumference beyond 2 years.  These data and the LMSgrowth software can be freely used without charge as long as their source is acknowledged in any publications or products using them. Users may not claim any IP rights over them, derive financial gain from supplying the data to others, seek to restrict use of the data by others or use them for the purposes of advertising or promoting other products. Notwithstanding this limited grant of rights, the original copyright notices must continue to be reproduced in any copies of these materials.
 
-####The UK RCPCH Growth Chart Application Program Interface (API) Project
+#### The UK RCPCH Growth Chart Application Program Interface (API) Project
 This is the first national effort to produce validated and reliable SDS and Centile scores from UK Children's growth data. The project team was commissioned by NHS England to produce, in the first instance, an API (application program interface) to generate reliable results for growth data from children 1 y and below. The project team began work in May 2020.
 
-###The LMS Method
+### The LMS Method
 It is now common practice to express child growth status in the form of SD scores. The LMS method provides a way of obtaining normalized growth centile standards which simplifies this assessment, and which deals quite generally with skewness which may be present in the distribution of the measurement (eg height, weight, circumferences or skinfolds). It assumes that the data can be normalized by using a power transformation, which stretches one tail of the distribution and shrinks the other, removing the skewness. The optimal power to obtain normality is calculated for each of a series of age groups and the trend summarized by a smooth (L) curve. Trends in the mean (M) and coefficient of variation (S) are similarly smoothed. The resulting L, M and S curves contain the information to draw any centile curve, and to convert measurements (even extreme values) into exact SD scores.
 
-###How the LMS method is used
+### How the LMS method is used
 1.    Look up in the LMS table for the relevant measurement (height or weight etc) the age-sex-specific values of L, M and S for the child, using either linear or cubic interpolation to get the exact age.  
 2.    To obtain the z-score, plug the LMS values with the child's measurement into the formula:
 $$z = {[(Measurement / M)-1] \over L S}$$
@@ -23,7 +23,7 @@ $$z = {[(Measurement / M)-1] \over L S}$$
 $$Measurement=M(1+L×S×z)^{1/L}$$
 6. This conversion is useful for example to obtain centiles to plot growth charts, where each centile is defined by its corresponding z-score. 
 
-###UK Growth References
+### UK Growth References
 This is a growing list of growth references for children. It will continue to be added to as more data becomes available.
 1. _British1990.xls_: length/height & BMI for ages -0.13 to 23 yr; 
 weight -0.33 to 23 yr; head circumference -0.33 to 18 or 17 yr 
@@ -43,23 +43,23 @@ skinfold for 0.25 to 5 yr.
 
 5. _LMSdata_BP.xls_: systoloc & diastolic blood pressure for ages 4 to 24 yr.
 
-###References
+### References
 1. Cole TJ, Freeman JV, Preece MA. British 1990 growth reference centiles for weight, height, body mass index and head circumference fitted by maximum penalized likelihood. Stat Med 1998;17:407-29. 
 2.    Cole TJ, Freeman JV, Preece MA. 1998. British 1990 growth reference centiles for weight, height, body mass index and head circumference fitted by maximum penalized likelihood. Stat Med 17(4):407-29 
 3.    WHO Multicentre Growth Reference Study Group. WHO Child Growth Standards: Length/Height-for-age, Weight-for-age, Weight-for-length, Weight-for-height and Body Mass Index-for age. Methods and Development. 2006. ISBN    92 4 154693 X.  
 4.    WHO Multicentre Growth Reference Study Group. WHO Child Growth Standards: Head circumference-for-age, arm circumference-for-age, triceps skinfold-for-age and subscapular skinfold-for age. Methods and Development. 2007. ISBN 978 92 4 154718 5.  
 
-##Technical Aspects
-###API
+## Technical Aspects
+### API
 The algorithms are written in Python 3.8.
 Mathematical and statistical calculations are made using the [SciPy](https://www.scipy.org/) and [NumPy](https://numpy.org/) libraries.
 Server middleware used is [Flask](https://flask.palletsprojects.com/en/1.1.x/quickstart/) and [FlaskForms](https://github.com/wtforms/wtforms/)
 Frontend is provided by [Semantic UI](https://semantic-ui.com/)
 
-###Software Licensing
+### Software Licensing
 The project team agree that the growth references and the algorithms that generate reliable results should all exist in the public domain. They are published here under GNU Affero GPL3 licence.
 
-###Usage
+### Usage
 All responses will have the form
 
 ```json
@@ -69,13 +69,13 @@ All responses will have the form
 }
 ```
 
-###Calculate static SDS and Centile values for child anthropometric measurements
+### Calculate static SDS and Centile values for child anthropometric measurements
 
-####End-points
+#### End-points
 _this section needs completing_
 `POST /calculate`
 
-####Arguments
+#### Arguments
 Naming is based on PEP 8 standards
 - `"birth_date": date` date as datetimestamp (mandatory). This is of format 'DD/MM/YY' (eg 01/05/2020), without timestamp or locale
 - `"observation_date": date` date as datetimestamp (mandatory). This is of format 'DD/MM/YY' (eg 01/05/2020), without timestamp or locale
@@ -130,9 +130,9 @@ Naming is based on PEP 8 standards
 - `"chronological_calendar_age": string` human readable representation of age in years, months, weeks, days or hours. 
 - `"corrected_decimal_age"`
 
-####Functions
+#### Functions
 
-#####Date and age calculations
+##### Date and age calculations
 
 ***Constants***
 ```python
@@ -140,7 +140,7 @@ TERM_PREGNANCY_LENGTH_DAYS = 40 * 7
 TERM_LOWER_THRESHOLD_LENGTH_DAYS = 37 * 7
 EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS = 32 * 7
 ```
-#####Functions
+##### Functions
 
 ```python
 chronological_decimal_age(birth_date: date, observation_date: date) -> float
@@ -165,6 +165,11 @@ chronological_calendar_age(birth_date: date, observation_date: date) -> str:
 estimated_date_delivery(birth_date: date, gestation_weeks: int, gestation_supplementary_days: int, pregnancy_length_days = 0) -> date:
 ```
 - Returns estimated date of delivery from gestational age and birthdate
+
+```python
+corrected_gestational_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_supplementary_days: int)->str:
+```
+- Returns a corrected gestational age for those babies not yet 42 weeks gestation
 
 #####SDS and Centile Calculations
 
@@ -199,7 +204,7 @@ centile(z_score: float):
 ```
 - Converts a Z Score to a p value (2-tailed) using the SciPy library, which it returns as a percentage
 
-####BMI functions
+#### BMI functions
 
 ```python
 percentage_median_bmi( age: float, actual_bmi: float, sex: str)->float:
@@ -218,7 +223,7 @@ weight_for_bmi_height( height: float,  bmi: float) -> float:
 - Returns a weight from a height in cm and a BMI in kg/m2
 - Does not depend on the age or sex of the child.
 
-#####Scope
+##### Scope
 Currently the minimum viable product is to provide reliable calculations for all children in the UK under the age of 1 year for height, weight, body mass index (BMI) and head circumference ('occipitofrontal circumference' - OFC).
 
 In addition to providing standard deviation scores (SDS) and centiles, it will also provide basic guidance for users on how to interpret the information received.
