@@ -1,5 +1,4 @@
 import math
-import data_tables
 import statistics
 import scipy.stats as stats
 from scipy import interpolate
@@ -7,6 +6,8 @@ from scipy import interpolate
 import numpy as np
 from datetime import date
 import json
+import pkg_resources
+
 
 """
 dob: date of birth
@@ -22,7 +23,8 @@ lms: L, M or S
 """
 
 #load the reference data
-with open('./data_tables/uk_who_0_20_preterm.json') as json_file:
+data = pkg_resources.resource_filename(__name__, "/data_tables/uk_who_0_20_preterm.json")
+with open(data) as json_file:
             data = json.load(json_file)
             json_file.close()
 

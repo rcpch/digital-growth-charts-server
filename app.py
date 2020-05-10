@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
 import os
 import markdown
-import calculations
 from datetime import date
 from measurement_request import MeasurementForm
 import json
+import rcpchgrowth.rcpchgrowth as calculations
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'UK_WHO' #not very secret - this will need complicating and adding to config
@@ -94,13 +94,14 @@ def instructions():
         content = markdown_file.read()
 
         #convert to HTML
-        return markdown.markdown(content)
+        html = markdown.markdown(content)
+    return render_template('instructions.html', fill=html)
 
 @app.route("/references", methods=['GET'])
 def references():
 
     # starting with a hard-coded list, but as it grows probably belongs in database
-    with open('./data_tables/growth_reference_repository.json') as json_file:
+    with open('./resource_data/growth_reference_repository.json') as json_file:
             data = json.load(json_file)
             json_file.close()
     return render_template('references.html', data=data)

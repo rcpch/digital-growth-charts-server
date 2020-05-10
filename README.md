@@ -16,11 +16,11 @@ It is now common practice to express child growth status in the form of SD score
 ### How the LMS method is used
 1.    Look up in the LMS table for the relevant measurement (height or weight etc) the age-sex-specific values of L, M and S for the child, using either linear or cubic interpolation to get the exact age.  
 2.    To obtain the z-score, plug the LMS values with the child's measurement into the formula:
-$$z = {[(Measurement / M)-1] \over L S}$$
+> ![formula](https://latex.codecogs.com/svg.latex?\=z={[(Measurement / M)-1] \over L S})
 3. The algorithm for the reverse process, from z-score or centile back to measurement, is as follows: 
 4.    Repeat step 1 to obtain the LMS values for the child’s measurement, age and sex. 
-5.    The z-score is then converted back to a measurement with the formula 
-$$Measurement=M(1+L×S×z)^{1/L}$$
+5.    The z-score is then converted back to a measurement with the formula:
+> ![formula](https://latex.codecogs.com/svg.latex?\=Measurement= M (1+LSz)^{1/L})
 6. This conversion is useful for example to obtain centiles to plot growth charts, where each centile is defined by its corresponding z-score. 
 
 ### UK Growth References
@@ -171,9 +171,9 @@ corrected_gestational_age(birth_date: date, observation_date: date, gestation_we
 ```
 - Returns a corrected gestational age for those babies not yet 42 weeks gestation
 
-#####SDS and Centile Calculations
+##### SDS and Centile Calculations
 
-#####Functions
+##### Functions
 ```python
 sds(age: float, measurement: str, observation: float, sex: str)->float:
 ```

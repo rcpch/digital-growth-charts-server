@@ -24,3 +24,6 @@ Werkzeug==1.0.1
 wrapt==1.12.1
 zipp==3.1.0
 markdown==2.6.11
+Flask-WTF==0.14.3
+scipy==1.4.1
+numpy==1.18.4
