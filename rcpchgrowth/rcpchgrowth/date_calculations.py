@@ -21,6 +21,8 @@ def chronological_decimal_age(birth_date: date, observation_date: date) -> float
     """
     Calculates a decimal age from two dates supplied as raw dates without times.
     Returns value floating point
+    :param birth_date: date of birth
+    :param observation_date: date observation made
     """
 
     days_between = observation_date - birth_date
@@ -32,6 +34,10 @@ def corrected_decimal_age(birth_date: date, observation_date: date, gestation_we
     Corrects for 1 year, if gestation at birth >= 32 weeks and < 37 weeks
     Corrects for 2 years, if gestation at birth <32 weeks
     Otherwise returns decimal age without correction
+    :param birth_date: date of birth
+    :param observation_date: date observation made
+    :param gestation_weeks: weeks of gestation up to 40
+    :param gestation_supplementary_days: days in excess of weeks
     """
 
     correction_days = 0
