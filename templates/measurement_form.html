@@ -6,18 +6,18 @@
 {% block content %}
     <div class="ui center aligned relaxed grid">
         <div class="row">
-            <div class="ui inverted segment" style="min-width:350px!important">
+            <div class="ui blue segment inverted" style="min-width:350px!important">
                 <form action="" method="post" novalidate class="ui inverted form" enctype="multipart/form-data">
                     {{ form.csrf_token }}
                     {{ form.name }}
                     {{ form.hidden_tag() }}
                     <p>
-                                {{ form.birth_date.label }}<br>
-                                {{ form.birth_date(class='ui input', type='date') }}
-                                {% for error in form.birth_date.errors %}
-                                    <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </p>
+                        {{ form.birth_date.label }}<br>
+                        {{ form.birth_date(class='ui input', type='date') }}
+                        {% for error in form.birth_date.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
                     <p>
                         {{ form.obs_date.label }}<br>
                         {{ form.obs_date(class='ui input', type='date') }}
@@ -45,14 +45,19 @@
                         {{ form.gestation_days.label }}<br>
                         {{ form.gestation_days(type='number') }}
                     </p>
-                    <div class="ui sex toggle checkbox">
-                        <p>{{ form.sex() }} {{ form.sex.label }}</p>
+                    <div >
+                        {% for subfield in form.sex %}
+                            <tr>
+                                <td>{{ subfield }}</td>
+                                <td>{{ subfield.label }}</td>
+                            </tr>
+                        {% endfor %}
                     </div>
                     {% for error in form.sex.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
-                    <p>
-                        {{ form.submit() }}
+                    <p style="text-align: center;">
+                        {{ form.submit(class_='ui button') }}
                     </p>
                 </form>
             </div>
@@ -60,11 +65,3 @@
     </div>
     
 {% endblock %}
-
-<script>
-    $('.ui.toggle').checkbox({
-  onChecked: function () { console.log('checked');
-   },
-  onUnchecked: function () { console.log('unchecked'); }
-});
-</script>

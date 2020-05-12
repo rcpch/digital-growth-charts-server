@@ -35,11 +35,7 @@ def perform_calculations(form):
     height = float(form.height.data)
     weight = float(form.weight.data)
     ofc = float(form.ofc.data)
-    isMale = form.sex.data
-    if isMale:
-        sex = 'male'
-    else:
-        sex = 'female'
+    sex = form.sex.data
     gestation_weeks = form.gestation_weeks.data
     gestation_days = form.gestation_days.data
     corrected_decimal_age = calculations.corrected_decimal_age(birth_date, obs_date, gestation_weeks, gestation_days)
@@ -82,7 +78,7 @@ def perform_calculations(form):
             bmi_sds = calculations.sds(age, 'bmi', bmi, sex)
             bmi_centile = calculations.centile(bmi_sds)
     if ofc > 1:
-        if (age <= 17 and not isMale) or (age <= 18 and isMale): # OFC data not present >17y in girls or >18y in boys
+        if (age <= 17 and sex == 'female') or (age <= 18 and sex == 'male'): # OFC data not present >17y in girls or >18y in boys
             ofc_sds = calculations.sds(age, 'ofc', ofc, sex)
             ofc_centile = calculations.centile(ofc_sds)
 
