@@ -5,7 +5,7 @@ Marcus Baw, Simon Chapman, Tim Cole, Andy Palmer, Charlotte Weldon, Magdalena Um
 ## Clinical Aspects
 ### Introduction
 #### The Charts
-The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any child born after that date should be plotted on a UK-WHO Growth chart.  Children born before May 11th 2009 are already plotted on British 1990 (UK90) charts and subsequent measurements must be plotted using those charts. There should be no switch over of existing children to the new UK-WHO Charts.  After age 4 we revert to using UK90 charts. The source data for these charts are included in two spreadsheets as LMS tables. Together they define the UK-WHO growth charts, containing LMS values by age. If the data are needed in centile or SDS lookup format they can be accessed via the LMSgrowth Excel add in (see below).  We have also included data not yet incorporated into a paper chart - for example BMI and head circumference beyond 2 years.  These data and the LMSgrowth software can be freely used without charge as long as their source is acknowledged in any publications or products using them. Users may not claim any IP rights over them, derive financial gain from supplying the data to others, seek to restrict use of the data by others or use them for the purposes of advertising or promoting other products. Notwithstanding this limited grant of rights, the original copyright notices must continue to be reproduced in any copies of these materials.
+The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any child born after that date should be plotted on a UK-WHO Growth chart.  Children born before May 11th 2009 are already plotted on British 1990 (UK90) charts and subsequent measurements must be plotted using those charts. There should be no switch over of existing children to the new UK-WHO Charts.  After age 4 we revert to using UK90 charts. The source data for these charts are included in two spreadsheets as LMS tables. Together they define the UK-WHO growth charts, containing LMS values by age.  Also included are data not yet incorporated into a paper chart - for example, head circumference beyond 2 years.  These data can be freely used without charge as long as their source is acknowledged in any publications or products using them. Users may not claim any IP rights over them, derive financial gain from supplying the data to others, seek to restrict use of the data by others or use them for the purposes of advertising or promoting other products. Notwithstanding this limited grant of rights, the original copyright notices must continue to be reproduced in any copies of these materials.
 
 #### The UK RCPCH Growth Chart Application Program Interface (API) Project
 This is the first national effort to produce validated and reliable SDS and Centile scores from UK Children's growth data. The project team was commissioned by NHS England to produce, in the first instance, an API (application program interface) to generate reliable results for growth data from children 1 y and below. The project team began work in May 2020.
@@ -79,7 +79,7 @@ _this section needs completing_
 Naming is based on PEP 8 standards
 - `"birth_date": date` date as datetimestamp (mandatory). This is of format 'DD/MM/YY' (eg 01/05/2020), without timestamp or locale
 - `"observation_date": date` date as datetimestamp (mandatory). This is of format 'DD/MM/YY' (eg 01/05/2020), without timestamp or locale
-- `"sex": string` MALE or FEMALE or UNCLASSIFIED or INDETERMINATE (mandatory)
+- `"sex": string` MALE or FEMALE (mandatory)
 - `"gestation_weeks": int` length of pregnancy in weeks (optional)
 - `"gestation_days": int` days additional to length of pregnancy in weeks (optional)
 - `"gestation_total_days": int` length of pregnancy in days from conception (optional)
@@ -92,8 +92,8 @@ Naming is based on PEP 8 standards
 ```json
 {
     "dates": {
-            "birth_date": '02/05/2009',
-            "obs_date": '03/01/2011',
+            "birth_date": "02/05/2009",
+            "obs_date": "03/01/2011",
             "gestation_weeks": 40,
             "gestation_days": 0,
             "chronological_decimal_age": 1.62,
@@ -232,4 +232,6 @@ It is envisaged that once established and validated, older age groups can be inc
 
 It is planned that the API will in future be able to receive longitudinal growth data of individual children as an array, with a view to making some interpretations on their growth pattern and trajectory.
 
-It separately aimed that this project standardise the data format for all growth references.
+It separately aimed that this project in future standardise the data format for all growth references.
+
+An additional future objective is to create a respository of all available growth references.
