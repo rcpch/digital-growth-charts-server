@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}Upload Growth Data{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+    <div class="ui container">
+        <div class="ui placeholder segment">
+            <div class="ui icon header">
+                <i class="excel file outline icon"></i>
+                <form method="POST" action='/import' class="dropzone dz-clickable" 
+                    id="dropper" enctype="multipart/form-data">
+                </form>
+            </div>
+        </div>
+        <div class="ui container">
+            <button class="ui button" onclick="window.location.href='{{url_for("uploaded_data")}}'">View Data</button>
+        </div>
+    </div>
+
+    <script type="application/javascript">
+        Dropzone.options.dropper = {
+            paramName: 'file',
+            chunking: true,
+            forceChunking: true,
+            url: '/import',
+            maxFilesize: 1025, // megabytes
+            chunkSize: 1000000 // bytes
+        }
+        this.on("sending", function() {
+            $("#dropper").submit()
+        });
+    </script>
+  
+{% endblock %}

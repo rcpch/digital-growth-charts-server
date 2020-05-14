@@ -26,7 +26,8 @@ def chronological_decimal_age(birth_date: date, observation_date: date) -> float
     """
 
     days_between = observation_date - birth_date
-    return (days_between.days / 365.25)
+    chronological_decimal_age = days_between.days / 365.25
+    return chronological_decimal_age
     
 def corrected_decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_supplementary_days: int, pregnancy_length_days = 0)->float:
     """

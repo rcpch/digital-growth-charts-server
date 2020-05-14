@@ -60,6 +60,9 @@
                         {{ form.submit(class_='ui button') }}
                     </p>
                 </form>
+                <button href='/import' type='button' onclick="window.location.href='{{ url_for( "import_growth_data" ) }}'" class="ui circular dark green right large right floated icon button">
+                    <i class="file excel icon"></i>
+                </button>
             </div>
         </div>
     </div>

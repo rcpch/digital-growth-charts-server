@@ -53,7 +53,7 @@ skinfold for 0.25 to 5 yr.
 ### API
 The algorithms are written in Python 3.8.
 Mathematical and statistical calculations are made using the [SciPy](https://www.scipy.org/) and [NumPy](https://numpy.org/) libraries.
-Server middleware used is [Flask](https://flask.palletsprojects.com/en/1.1.x/quickstart/) and [FlaskForms](https://github.com/wtforms/wtforms/)
+Server middleware used is [Flask](https://flask.palletsprojects.com/en/1.1.x/quickstart/) and [FlaskForms](https://github.com/wtforms/wtforms/), [Pandas](https://pandas.pydata.org/) and [Xlrd](https://pypi.org/project/xlrd/) for data analysis.
 Frontend is provided by [Semantic UI](https://semantic-ui.com/)
 
 ### Software Licensing

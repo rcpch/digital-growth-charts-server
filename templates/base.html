@@ -4,23 +4,34 @@
         <title>RCPCH Growth</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link rel="stylesheet" type='text/css' href="{{ url_for('static', filename='css/main.css') }}"> -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/basic.min.css"/>
+        <script type="application/javascript" 
+        src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.js">
+        </script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/components/checkbox.css">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/components/checkbox.min.js"></script>
-        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/components/dropdown.min.js"></script>
     </head>
 
     <section class="content">
-        <header>
+        <header>    
             <div class="ui secondary pointing menu">
-                <a class="active item" href="/">
-                Calculator
-                </a>
-                <a class="item" href="/instructions">
+                <a class="active item" href="/instructions">
                     Instructions
                 </a>
+                <div class="ui simple dropdown item">
+                    Calculator Options
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                      <a class="item" href='/'>Calculator</a>
+                      <a class="item" href='/import'>Upload a file</a>
+                    </div>
+                </div>        
                 <a class="item" href="/references">
                 Growth References
                 </a>
@@ -50,3 +61,8 @@
         </div>
     </footer>
 </html>
+<script> 
+    $(document).ready(function(){
+         $('.ui.dropdown').dropdown();
+   });
+</script>

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}Uploaded Data{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+  <div class="ui container">  
+    {{data|safe }}
+  </div>
+{% endblock %}
