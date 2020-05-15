@@ -116,14 +116,12 @@ def centile(z_score: float):
     Converts a Z Score to a p value (2-tailed) using the SciPy library, which it returns as a percentage
     """
 
-    # p = stats.norm.sf(abs(z_score))*2 #twosided
-    # centile = p*100.0
     centile = (stats.norm.cdf(z_score) * 100)
 
-    if centile >99.6:
-        centile = 'above 99.6th centile'
-    if centile < 0.04:
-        centile = 'below 0.04th centile'
+    # if centile >99.6:
+        # centile = 'above 99.6th centile'
+    # if centile < 0.04:
+        # centile = 'below 0.04th centile'
     return centile
 
 def percentage_median_bmi( age: float, actual_bmi: float, sex: str)->float:
