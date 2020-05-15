@@ -116,8 +116,10 @@ def centile(z_score: float):
     Converts a Z Score to a p value (2-tailed) using the SciPy library, which it returns as a percentage
     """
 
-    p = stats.norm.sf(abs(z_score))*2 #twosided
-    centile = p*100.0
+    # p = stats.norm.sf(abs(z_score))*2 #twosided
+    # centile = p*100.0
+    centile = (stats.norm.cdf(z_score) * 100)
+
     if centile >99.6:
         centile = 'above 99.6th centile'
     if centile < 0.04:
@@ -275,22 +277,21 @@ These functions are for testing accuracy.
 Commented out but left for documentation to show process behind evaluation of each interpolation method
 # """
 
-def tim_tests():
+# def tim_tests():
 # """
     # function to run growth data on 76 hypothetical children to test algorithm against gold standard (LMSGrowth and LMS2z function from Tim Cole R package Sitar)
 # """
     # child_gestational_ages = [27,27,27,27,27,35,35,40,40,40,40,40,27,27,27,27,27,27,27,27,27,27,27,27,27,35,35,35,35,35,35,35,35,35,35,35,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40];
-    child_decimal_ages = [-0.249144422,-0.202600958,1.013004791,1.303216975,3.983572895,0.161533196,0.161533196,0,0.251882272,0.303901437,0.303901437,0.323066393,0.331279945,0.895277207,2.288843258,2.587268994,3.271731691,3.504449008,3.808350445,4.462696783,1.013004791,3.271731691,3.504449008,3.808350445,4.462696783,-0.095824778,0.396988364,0.793976728,1.065023956,1.330595483,1.492128679,2.280629706,2.565366188,0.396988364,0.793976728,1.065023956,0.323066393,0.380561259,0.41889117,0.676249144,0.887063655,0.898015058,1.095140315,1.45927447,1.535934292,1.708418891,1.919233402,0.380561259,0.676249144,0.887063655,1.095140315,1.45927447,1.535934292,1.708418891,1.919233402,1.327857632,1.984941821,2.691307324,2.746064339,3.244353183,3.422313484,4.164271047,4.878850103,4.955509925,5.032169747,5.278576318,5.708418891,5.935660507,6.127310062,6.412046543,1.327857632,2.691307324,4.164271047,4.878850103,5.708418891,5.935660507,6.127310062]
-    child_sexes = ["female","female","female","female","female","male","male","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","male","male","male","male","male","male","male","male","male","male","male","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male"]
-    child_measurements = ["weight","weight","height","height","height","weight","height","weight","weight","weight","height","height","weight","weight","weight","weight","weight","weight","weight","weight","height","height","height","height","height","weight","weight","weight","weight","weight","weight","weight","weight","height","height","height","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","height","height","height","height","height","height","height","height","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","height","height","height","height","height","height","height"]
-    child_observations = [1.21,1.5,81,84.5,100.5,4.17,54.8,2.7,4.57,4.48,57,59,8.2,10.7,12.4,12.5,13.8,13.6,14.1,15.36,81,96,98,99.5,100.8,3.09,5.23,5.85,6.62,7.41,7.25,9.96,10.84,61.7,65,68.2,4.67,5.42,5.63,6.3,7.1,7.1,7.26,8.08,8.11,8.1,8.98,60,66,70.5,73.6,75.9,79.1,78.2,78.9,12.2,13.8,12.5,12.5,13.5,14.3,16,20.05,20.5,19.85,20.5,21.9,22.8,22.3,24,79.6,88,99,102.7,110,109.5,109]
-    final_z_list=[]
-    for i in range(len(child_decimal_ages)):
-        z = sds(child_decimal_ages[i], child_measurements[i], child_observations[i], child_sexes[i])
-        final_z_list.append(z)
-    return final_z_list
+    # child_decimal_ages = [-0.249144422,-0.202600958,1.013004791,1.303216975,3.983572895,0.161533196,0.161533196,0,0.251882272,0.303901437,0.303901437,0.323066393,0.331279945,0.895277207,2.288843258,2.587268994,3.271731691,3.504449008,3.808350445,4.462696783,1.013004791,3.271731691,3.504449008,3.808350445,4.462696783,-0.095824778,0.396988364,0.793976728,1.065023956,1.330595483,1.492128679,2.280629706,2.565366188,0.396988364,0.793976728,1.065023956,0.323066393,0.380561259,0.41889117,0.676249144,0.887063655,0.898015058,1.095140315,1.45927447,1.535934292,1.708418891,1.919233402,0.380561259,0.676249144,0.887063655,1.095140315,1.45927447,1.535934292,1.708418891,1.919233402,1.327857632,1.984941821,2.691307324,2.746064339,3.244353183,3.422313484,4.164271047,4.878850103,4.955509925,5.032169747,5.278576318,5.708418891,5.935660507,6.127310062,6.412046543,1.327857632,2.691307324,4.164271047,4.878850103,5.708418891,5.935660507,6.127310062]
+    # child_sexes = ["female","female","female","female","female","male","male","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","male","male","male","male","male","male","male","male","male","male","male","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male"]
+    # child_measurements = ["weight","weight","height","height","height","weight","height","weight","weight","weight","height","height","weight","weight","weight","weight","weight","weight","weight","weight","height","height","height","height","height","weight","weight","weight","weight","weight","weight","weight","weight","height","height","height","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","height","height","height","height","height","height","height","height","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","height","height","height","height","height","height","height"]
+    # child_observations = [1.21,1.5,81,84.5,100.5,4.17,54.8,2.7,4.57,4.48,57,59,8.2,10.7,12.4,12.5,13.8,13.6,14.1,15.36,81,96,98,99.5,100.8,3.09,5.23,5.85,6.62,7.41,7.25,9.96,10.84,61.7,65,68.2,4.67,5.42,5.63,6.3,7.1,7.1,7.26,8.08,8.11,8.1,8.98,60,66,70.5,73.6,75.9,79.1,78.2,78.9,12.2,13.8,12.5,12.5,13.5,14.3,16,20.05,20.5,19.85,20.5,21.9,22.8,22.3,24,79.6,88,99,102.7,110,109.5,109]
+    # final_z_list=[]
+    # for i in range(len(child_decimal_ages)):
+        # z = sds(child_decimal_ages[i], child_measurements[i], child_observations[i], child_sexes[i])
+        # final_z_list.append(z)
+    # return final_z_list
 # 
 # def time_functions():
 #   Used to test function run time. Needs timeit package importing also
     # return sds(-0.249144422,'weight',1.21,'female')
-
