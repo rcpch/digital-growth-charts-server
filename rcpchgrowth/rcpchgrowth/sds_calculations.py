@@ -63,6 +63,34 @@ def sds(age: float, measurement: str, observation: float, sex: str)->float:
      - Head circumference reference data is available from 23 weeks gestation to 17y in girls and 18y in boys
     """
 
+    try:
+        #this child is < or > the extremes of the chart
+        age >= decimal_ages[0] or age <= decimal_ages[-1], 'Cannot be younger than 23 weeks or older than 20y'
+    except AssertionError as chart_extremes_msg:
+        print(chart_extremes_msg)
+        return
+    
+    try:
+        #this child < 25 weeks and height is requested
+        age > decimal_ages[2] and measurement == 'height', 'There is no reference data for length below 25 weeks'
+    except AssertionError as lower_length_threshold_error_message:
+        print(lower_length_threshold_error_message)
+        return
+    
+    try:
+        #this child < 2 weeks and BMI is requested
+        age >= 0.038329911 and measurement == 'bmi', 'There is no BMI reference data available for BMI below 2 weeks'
+    except AssertionError as lower_bmi_threshold_error_message:
+        print(lower_bmi_threshold_error_message)
+        return
+    
+    try:
+        #head circumference is requested and this child is either female > 17 or male >18y
+        measurement == 'ofc' and ((sex == 'male' and age <= 18.0) or (sex == 'female' and age <=17.0)), 'There is no head circumference data available in girls over 17y or boys over 18y'
+    except AssertionError as upper_head_circumference_threshold_error_message:
+        print(upper_head_circumference_threshold_error_message)
+        return
+
     age_index_one_below = nearest_age_below_index(age)
     if age == decimal_ages[age_index_one_below]:
         #child's age matches a reference age - no interpolation necessary
@@ -72,7 +100,7 @@ def sds(age: float, measurement: str, observation: float, sex: str)->float:
         sds = z_score(l, m, s, observation)
         return sds
 
-    if cubic_interpolation_possible(age):
+    if cubic_interpolation_possible(age, measurement, sex):
         #collect all L, M and S above and below lower age index for cubic interpolation
         l_one_below = data['measurement'][measurement][sex][age_index_one_below]["L"]
         m_one_below = data['measurement'][measurement][sex][age_index_one_below]["M"]
@@ -134,7 +162,7 @@ def percentage_median_bmi( age: float, actual_bmi: float, sex: str)->float:
     
     age_index_one_below = nearest_age_below_index(age)
 
-    if cubic_interpolation_possible(age):
+    if cubic_interpolation_possible(age, 'bmi', sex):
         m_one_below = data['measurement']["bmi"][sex][age_index_one_below]["M"]
         m_two_below = data['measurement']["bmi"][sex][age_index_one_below-1]["M"]
         m_one_above = data['measurement']["bmi"][sex][age_index_one_below+1]["M"]
@@ -170,7 +198,7 @@ def nearest_age_below_index(age: float)->int:
     else:
         return result_index-1
 
-def cubic_interpolation_possible(age: float):
+def cubic_interpolation_possible(age: float, measurement, sex):
     """
     See sds function. This method tests if the age of the child (either corrected for prematurity or chronological) is at a threshold of the reference data
     This method is specific to the UK-WHO data set.
@@ -180,8 +208,11 @@ def cubic_interpolation_possible(age: float):
     - Threshold at 2 years [1.916666667,2.0,2.0,2.083333333] - this is the same data set but children are measured standing not lying > 2y, indices 54, 55, 56, 57
     - Threshold of WHO 2006 data at 4y and reverts to UK90: [...3.916666667,4.0,4.0,4.083...], indices 79, 80, 81, 82
     - End of UK90 data set at 20y: [...19.917,20.0], indices 272, 273
+    - Height in boys and girls below 27 weeks (no data below 25 weeks) [-0.2683093771] index 3
+    - BMI in boys and girls below 4 weeks (no data below 2 weeks) [0.07665982204] index 22
+    - OFC in boys > 17.917y index 248 (no data over 18y) or in girls > 16.917y index 236 (no data over 17y)
     """
-    if age <= -0.306639288 or (age > 0.019164956 and age < 0.057494867) or (age > 1.916666667 and age < 2.083333333) or (age > 3.916666667 and age < 4.083) or age > 19.917:
+    if age <= -0.306639288 or (age > 0.019164956 and age < 0.057494867) or (age > 1.916666667 and age < 2.083333333) or (age > 3.916666667 and age < 4.083) or age > 19.917 or (age < -0.2683093771 and measurement == 'height') or (age < 0.07665982204 and measurement == 'bmi') or (age > 17.917 and measurement == 'ofc' and sex=='male') or (age > 16.917 and measurement == 'ofc' and sex=='female'):
         return False
     else:
         return True
@@ -273,21 +304,23 @@ def z_score(l: float, m: float, s: float, observation: float):
 """
 These functions are for testing accuracy.
 Commented out but left for documentation to show process behind evaluation of each interpolation method
-# """
-
+# """                                                                                    
 # def tim_tests():
 # """
     # function to run growth data on 76 hypothetical children to test algorithm against gold standard (LMSGrowth and LMS2z function from Tim Cole R package Sitar)
 # """
-    # child_gestational_ages = [27,27,27,27,27,35,35,40,40,40,40,40,27,27,27,27,27,27,27,27,27,27,27,27,27,35,35,35,35,35,35,35,35,35,35,35,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40];
+
     # child_decimal_ages = [-0.249144422,-0.202600958,1.013004791,1.303216975,3.983572895,0.161533196,0.161533196,0,0.251882272,0.303901437,0.303901437,0.323066393,0.331279945,0.895277207,2.288843258,2.587268994,3.271731691,3.504449008,3.808350445,4.462696783,1.013004791,3.271731691,3.504449008,3.808350445,4.462696783,-0.095824778,0.396988364,0.793976728,1.065023956,1.330595483,1.492128679,2.280629706,2.565366188,0.396988364,0.793976728,1.065023956,0.323066393,0.380561259,0.41889117,0.676249144,0.887063655,0.898015058,1.095140315,1.45927447,1.535934292,1.708418891,1.919233402,0.380561259,0.676249144,0.887063655,1.095140315,1.45927447,1.535934292,1.708418891,1.919233402,1.327857632,1.984941821,2.691307324,2.746064339,3.244353183,3.422313484,4.164271047,4.878850103,4.955509925,5.032169747,5.278576318,5.708418891,5.935660507,6.127310062,6.412046543,1.327857632,2.691307324,4.164271047,4.878850103,5.708418891,5.935660507,6.127310062]
     # child_sexes = ["female","female","female","female","female","male","male","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","male","male","male","male","male","male","male","male","male","male","male","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","female","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male","male"]
     # child_measurements = ["weight","weight","height","height","height","weight","height","weight","weight","weight","height","height","weight","weight","weight","weight","weight","weight","weight","weight","height","height","height","height","height","weight","weight","weight","weight","weight","weight","weight","weight","height","height","height","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","height","height","height","height","height","height","height","height","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","weight","height","height","height","height","height","height","height"]
     # child_observations = [1.21,1.5,81,84.5,100.5,4.17,54.8,2.7,4.57,4.48,57,59,8.2,10.7,12.4,12.5,13.8,13.6,14.1,15.36,81,96,98,99.5,100.8,3.09,5.23,5.85,6.62,7.41,7.25,9.96,10.84,61.7,65,68.2,4.67,5.42,5.63,6.3,7.1,7.1,7.26,8.08,8.11,8.1,8.98,60,66,70.5,73.6,75.9,79.1,78.2,78.9,12.2,13.8,12.5,12.5,13.5,14.3,16,20.05,20.5,19.85,20.5,21.9,22.8,22.3,24,79.6,88,99,102.7,110,109.5,109]
+    # child_gestational_ages = [27,27,27,27,27,35,35,40,40,40,40,40,27,27,27,27,27,27,27,27,27,27,27,27,27,35,35,35,35,35,35,35,35,35,35,35,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40]
     # final_z_list=[]
+    # final_uncorrected = []
     # for i in range(len(child_decimal_ages)):
         # z = sds(child_decimal_ages[i], child_measurements[i], child_observations[i], child_sexes[i])
         # final_z_list.append(z)
+        # decimal_age_uncorrected = 
     # return final_z_list
 # 
 # def time_functions():

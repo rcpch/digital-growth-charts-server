@@ -83,8 +83,8 @@ def import_growth_data():
                 return make_response(('Size mismatch', 500))
             else:
                 print(f'File {file.filename} has been uploaded successfully')
-                # data = controllers.import_excel_sheet(file_to_save)
-                return make_response('Upload Successful', 200)
+                # return make_response('Upload Successful', 200)
+                return make_response('success', 200)
         else:
             print(f'Chunk {current_chunk + 1} of {total_chunks} '
                     f'for file {file.filename} complete')
@@ -94,13 +94,20 @@ def import_growth_data():
     else:
         return render_template('import.html')
 
-@app.route("/uploaded_data", methods=['GET'])
-def uploaded_data():
-    static_directory = path.join(path.abspath(path.dirname(__file__)), "static/uploaded_data/")
-    for file_name in listdir(static_directory):
-        file_path = path.join(static_directory, file_name)
-        data_frame = controllers.import_excel_sheet(file_path)
-    return render_template('uploaded_data.html', data=data_frame)
+@app.route("/uploaded_data/<id>", methods=['GET'])
+def uploaded_data(id):
+    if id == 'example':
+        static_directory = path.join(path.abspath(path.dirname(__file__)), "static/uploaded_data/")
+        file_path = path.join(static_directory, 'dummy_data.xlsx')
+        data_frame = controllers.import_excel_sheet(file_path, False) 
+        return render_template('uploaded_data.html', data=data_frame)
+    if id == 'excel_sheet':
+        static_directory = path.join(path.abspath(path.dirname(__file__)), "static/uploaded_data/")
+        for file_name in listdir(static_directory):
+            if file_name != 'dummy_data.xlsx':
+                file_path = path.join(static_directory, file_name)
+                data_frame = controllers.import_excel_sheet(file_path, True)
+                return render_template('uploaded_data.html', data=data_frame)
 
 @app.route("/references", methods=['GET'])
 def references():

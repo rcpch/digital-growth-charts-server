@@ -6,25 +6,52 @@
     <div class="ui container">
         <div class="ui placeholder segment">
             <div class="ui icon header">
-                <i class="excel file outline icon"></i>
+                <i class="green excel file outline icon"></i>
+                <h2 color='green'>.xls or .xlsx files only</h2>
                 <form method="POST" action='/import' class="dropzone dz-clickable" 
                     id="dropper" enctype="multipart/form-data">
                 </form>
             </div>
         </div>
         <div class="ui container">
-            <button class="ui button" onclick="window.location.href='{{url_for("uploaded_data")}}'">View Data</button>
+            <div class="ui green message">
+                <h3><b>Format:</b></h3>
+                <p>Please note that only <b>.xls</b> and <b>.xlsx</b> files are accepted. They must be uploaded with the following column headings:</p>
+                <table class="ui simple table">
+                    <thead>
+                        <tr>
+                            <td>birth_date</td>
+                            <td>observation_date</td>
+                            <td>gestation_weeks</td>
+                            <td>gestation_days</td>
+                            <td>estimated_date_delivery</td>
+                            <td>decimal_age</td>
+                            <td>sex</td>
+                            <td>measurement_type</td>
+                            <td>measurement_value</td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <button class="ui green button" onclick="window.location.href='{{url_for("uploaded_data", id='example')}}'">View Example</button>
+            <button class="ui green button" id='upload_complete_button' style='visibility: hidden;' onclick="window.location.href='{{url_for("uploaded_data", id='excel_sheet')}}'">View Upload</button>
         </div>
     </div>
 
     <script type="application/javascript">
         Dropzone.options.dropper = {
             paramName: 'file',
+            acceptedFiles: '.xls, .xlsx',
+            clickable: true,
             chunking: true,
             forceChunking: true,
             url: '/import',
             maxFilesize: 1025, // megabytes
-            chunkSize: 1000000 // bytes
+            chunkSize: 1000000, // bytes
+            accept: function(file, done) { 
+                document.getElementById("upload_complete_button").style.visibility = "visible";
+                done();
+            },
         }
         this.on("sending", function() {
             $("#dropper").submit()
