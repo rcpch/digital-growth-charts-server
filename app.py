@@ -1,14 +1,16 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response
+from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response, send_file
 from werkzeug.utils import secure_filename
 import markdown
-from os import path, listdir
+from os import path, listdir, remove
+from datetime import datetime
+from pathlib import Path
 
 from measurement_request import MeasurementForm
 import json
 
 import controllers as controllers
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = 'UK_WHO' #not very secret - this will need complicating and adding to config
 
 from app import app
@@ -94,20 +96,44 @@ def import_growth_data():
     else:
         return render_template('import.html')
 
-@app.route("/uploaded_data/<id>", methods=['GET'])
+@app.route("/uploaded_data/<id>", methods=['GET', 'POST'])
 def uploaded_data(id):
-    if id == 'example':
+    global requested_data
+    if request.method == 'GET':
         static_directory = path.join(path.abspath(path.dirname(__file__)), "static/uploaded_data/")
-        file_path = path.join(static_directory, 'dummy_data.xlsx')
-        data_frame = controllers.import_excel_sheet(file_path, False) 
-        return render_template('uploaded_data.html', data=data_frame)
-    if id == 'excel_sheet':
-        static_directory = path.join(path.abspath(path.dirname(__file__)), "static/uploaded_data/")
-        for file_name in listdir(static_directory):
-            if file_name != 'dummy_data.xlsx':
-                file_path = path.join(static_directory, file_name)
-                data_frame = controllers.import_excel_sheet(file_path, True)
-                return render_template('uploaded_data.html', data=data_frame)
+        if id == 'example':
+            file_path = path.join(static_directory, 'dummy_data.xlsx')
+            data_frame = controllers.import_excel_sheet(file_path, False)
+            data = json.loads(data_frame)
+            for i in data:
+                if(i['birth_date']):
+                    i['birth_date'] =  datetime.strftime(datetime.fromtimestamp(i['birth_date']/1000), '%d/%m/%Y')
+                if(i['observation_date']):    
+                    i['observation_date'] =  datetime.strftime(datetime.fromtimestamp(i['observation_date']/1000), '%d/%m/%Y')
+                if(i['estimated_date_delivery']): 
+                    i['estimated_date_delivery'] =  datetime.strftime(datetime.fromtimestamp(i['estimated_date_delivery']/1000), '%d/%m/%Y')
+            requested_data = data
+            return render_template('uploaded_data.html', data=data)
+        if id == 'excel_sheet':
+            for file_name in listdir(static_directory):
+                if file_name != 'dummy_data.xlsx':
+                    file_path = path.join(static_directory, file_name)
+                    data_frame = controllers.import_excel_sheet(file_path, True)
+                    data = json.loads(data_frame)
+                    for i in data:
+                        if(i['birth_date']):
+                            i['birth_date'] =  datetime.strftime(datetime.fromtimestamp(i['birth_date']/1000), '%d/%m/%Y')
+                        if(i['observation_date']):    
+                            i['observation_date'] =  datetime.strftime(datetime.fromtimestamp(i['observation_date']/1000), '%d/%m/%Y')
+                        if(i['estimated_date_delivery']): 
+                            i['estimated_date_delivery'] =  datetime.strftime(datetime.fromtimestamp(i['estimated_date_delivery']/1000), '%d/%m/%Y')
+                    requested_data = data
+            return render_template('uploaded_data.html', data=data)
+        if id=='get_excel':
+            print('hello')
+            excel_file = controllers.download_excel(requested_data)
+            temp_directory = Path.cwd().joinpath("static").joinpath('uploaded_data').joinpath('temp')
+            return send_from_directory(temp_directory, filename='output.xlsx', as_attachment=True)
 
 @app.route("/references", methods=['GET'])
 def references():

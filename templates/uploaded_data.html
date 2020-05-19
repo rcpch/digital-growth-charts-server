@@ -4,6 +4,63 @@
 {% endblock %}
 {% block content %}
   <div class="ui center aligned container">  
-    {{data|safe }}
+    <!-- {{data|safe }} -->
+    <table class="ui table">
+      <thead>
+        <th>index</th>
+        <th>birth_date</th>
+        <th>observation_days</th>
+        <th>gestation_weeks</th>
+        <th>gestation_days</th>
+        <th>estimated_date_delivery</th>
+        <th>decimal_age</th>
+        <th>sex</th>
+        <th>measurement_type</th>
+        <th>measurement_value</th>
+        <th>sds</th>
+        <th>centile</th>              
+        <!-- {% for h in headers %} -->
+          <!-- <th>{{h.name}}</th> -->
+        <!-- {% endfor %} -->
+      </thead>
+      <tbody>
+        {% for m in data %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ m.birth_date }}</td>
+          <td>{{ m.observation_date }}</td>
+          <td>{{ m.gestation_weeks}}</td>
+          <td>{{ m.gestation_days }}</td>
+          <td>{{ m.estimated_date_delivery }}</td>
+          <td>{{ m.decimal_age }}</td>
+          <td>{{ m.sex }}</td>
+          <td>{{ m.measurement_type }}</td>
+          <td>{{ m.measurement_value }}</td>
+          <td>{{ m.sds }}</td>
+          <td>{{ m.centile}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+      <!-- <form type='submit' method='post'> -->
+        <button onclick="window.location.href='{{url_for('uploaded_data', id='get_excel')}}'" class="green ui button" type="submit">Download .XLSX</button>
+      <!-- </form> -->
   </div>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -67,7 +67,7 @@ def corrected_decimal_age(birth_date: date, observation_date: date, gestation_we
         #correct age for 1 year
         correction_days = prematurity
         edd = birth_date + timedelta(days=correction_days)
-        return chronological_decimal_age(edd, observation_date);
+        return chronological_decimal_age(edd, observation_date)
     
     else:
         return uncorrected_age
