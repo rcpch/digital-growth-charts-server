@@ -1,6 +1,6 @@
 ![RCPCH Logo](https://www.rcpch.ac.uk/themes/rcpch/images/logo-desktop.svg)
 # CALCULATIONS FOR GROWTH CHARTS USING UK-WHO GROWTH REFERENCES 
-Marcus Baw, Simon Chapman, Tim Cole, Andy Palmer, Charlotte Weldon, Magdalena Umerska
+Marcus Baw, Helen Bedford, Simon Chapman, Tim Cole, Mary Fewtrell, Victoria Jackson, Liz Marder, Rachel McKeown, Jonathan Miall, Andy Palmer, Charlotte Weldon, Charlotte Wright, Magdalena Umerska
 
 ## Clinical Aspects
 ### Introduction
@@ -54,7 +54,7 @@ skinfold for 0.25 to 5 yr.
 The algorithms are written in Python 3.8.
 Mathematical and statistical calculations are made using the [SciPy](https://www.scipy.org/) and [NumPy](https://numpy.org/) libraries.
 Server middleware used is [Flask](https://flask.palletsprojects.com/en/1.1.x/quickstart/) and [FlaskForms](https://github.com/wtforms/wtforms/), [Pandas](https://pandas.pydata.org/) and [Xlrd](https://pypi.org/project/xlrd/) for data analysis.
-Frontend is provided by [Semantic UI](https://semantic-ui.com/)
+Frontend is provided by [Semantic UI](https://semantic-ui.com/) and [Jinja2](https://pypi.org/project/Jinja2/)
 
 ### Software Licensing
 The project team agree that the growth references and the algorithms that generate reliable results should all exist in the public domain. They are published here under GNU Affero GPL3 licence.
@@ -83,52 +83,53 @@ Naming is based on PEP 8 standards
 - `"gestation_weeks": int` length of pregnancy in weeks (optional)
 - `"gestation_days": int` days additional to length of pregnancy in weeks (optional)
 - `"gestation_total_days": int` length of pregnancy in days from conception (optional)
-- `"observation_type": string` HEIGHT / WEIGHT / OFC / BMI (/ SKIN_FOLDS / PEFR) lower case (mandatory)
-- `"observation_units": string` CM / M / G / KGM2 / CM3SEC (mandatory)
-- `"observation: float"` observation to 2 dp (mandatory)
+- `"measurement_type": string` HEIGHT / WEIGHT / OFC / BMI (/ SKIN_FOLDS / PEFR) lower case (mandatory)
+- `"measurement_value: float"` observation to 2 dp (mandatory)
 
 
 -`201 Created` on success
 ```json
 {
     "dates": {
-            "birth_date": "02/05/2009",
-            "obs_date": "03/01/2011",
-            "gestation_weeks": 40,
-            "gestation_days": 0,
-            "chronological_decimal_age": 1.62,
-            "chronological_calendar_age": "one year, 8 months and 2 days",
-            "corrected_decimal_age": 3.52,
-            "corrected_calendar_age": "three years, 6 months and 2 days",
+            "birth_date": "03/01/2020",
+            "obs_date": "15/05/2020",
+            "gestation_weeks": 31,
+            "gestation_days": 3,
+            "chronological_decimal_age": 0.36,
+            "chronological_calendar_age": "4 months, 1 week and 5 days",
+            "corrected_decimal_age": 0.2,
+            "corrected_calendar_age": "2 months, 1 week and 5 days",
             "clinician_comment": "This is an age which has been corrected for prematurity.",
             "lay_comment": "This takes into account your child's prematurity"
     },
     "patient": {
-        "height": 76.0,
-        "weight": 8.2,
-        "bmi": 15.3,
-        "ofc": 43.1
+        "height": 60.7,
+        "weight": 6.3,
+        "bmi": 15.9,
+        "ofc": 40.2
     },
     "measurements": {
             "height_sds": 1.20,
-            "height_centile": 85.34,
+            "height_centile": 88,
             "clinician_height_commment": "This is in the top 15%. Serial data needed for comparison",
             "lay_height_comment": "Your child is tall for their age but in the normal range",
-            "weight_sds":  1.30,
-            "weight_centile": 88.21,
+            "weight_sds":  1.158,
+            "weight_centile": 88,
             "clinician_height_commment": "This is in the top 15%. Serial data needed for comparison",
             "lay_height_comment": "Your child has a higher weight for their age than average but is in the normal range",
-            "ofc_sds":  0.50,
-            "ofc_centile": 67.50,
+            "ofc_sds":  1.173,
+            "ofc_centile": 88,
             "clinician_ofc_commment": "This is average. Serial data essential for comparison.",
             "lay_ofc_comment": "Your child's head circumference is in the normal range. It is important to compare measurements over time.",
     }
 }
 ```
 
-- `"decimal_age_in_years": float` age to 3 d.p. calculated as the difference in days between date of birth at 00:00 and date of observation at 00:00 divided by 365.25 (to account for leap years every 4 years)
+- `"decimal_age_in_years": float` age reported to 1 d.p. calculated as the difference in days between date of birth at 00:00 and date of observation at 00:00 divided by 365.25 (to account for leap years every 4 years)
 - `"chronological_calendar_age": string` human readable representation of age in years, months, weeks, days or hours. 
-- `"corrected_decimal_age"`
+- `"corrected_decimal_age"` age reported to 1 d.p. accounting for prematurity. Correction only occurs in babies born below 32 weeks for the first 2 years of life, or if below 37 weeks, for the first year only.
+- `"corrected_calendar_age": string` human readable representation of age in years, months, weeks, days or hours, accounting for prematurity, following principle of corrected decimal age
+- `"corrected_gestational_age": string` weeks of gestation (and supplementary days) in babies born premature who have not yet reached term. Reported as a string eg '24+3 weeks'
 
 #### Functions
 
@@ -159,12 +160,13 @@ corrected_decimal_age(birth_date: date, observation_date: date, gestation_weeks:
 ```python
 chronological_calendar_age(birth_date: date, observation_date: date) -> str:
 ```
-- Returns age in years, months, weeks and days: to return a corrected calendar age user passes estimated date of delivery (EDD) instead of birth date
+- Returns age in years, months, weeks and days as a string: to return a corrected calendar age user passes estimated date of delivery (EDD) instead of birth date
 
 ```python
-estimated_date_delivery(birth_date: date, gestation_weeks: int, gestation_supplementary_days: int, pregnancy_length_days = 0) -> date:
+estimated_date_delivery(birth_date: date, gestation_weeks: int, gestation_days: int, pregnancy_length_days = 0) -> date:
 ```
-- Returns estimated date of delivery from gestational age and birthdate
+- Returns estimated date of delivery (as a python datetime) from gestational age and birthdate
+- Will still calculate an estimated date of delivery if already term (>37 weeks)
 
 ```python
 corrected_gestational_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_supplementary_days: int)->str:
@@ -202,25 +204,36 @@ Other considerations
 ```python
 centile(z_score: float):
 ```
-- Converts a Z Score to a p value (2-tailed) using the SciPy library, which it returns as a percentage
+- Converts a Z Score to a p value (2-tailed) using the SciPy library, which it returns as a percentage. Reported as an integer, or 1 d.p. if below 1 or above 99
+
+```python
+measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  decimal_age: float) -> float:
+```
+- Public method
+- Returns the measurement from a given SDS.
+- Parameters are: 
+-    measurement (type of observation) ['height', 'weight', 'bmi', 'ofc']
+-    decimal age (corrected or chronological),
+-    requested_sds
+-    sex (a standard string) ['male' or 'female']
 
 #### BMI functions
 
 ```python
 percentage_median_bmi( age: float, actual_bmi: float, sex: str)->float:
 ```
-- This returns a child's BMI expressed as a percentage of the median value for age and sex. It is used widely in the assessment of malnutrition particularly in children and young people with eating disorders.
+- This returns a child's BMI expressed as a percentage of the median value for age and sex. It is used widely in the assessment of malnutrition particularly in children and young people with eating disorders. Reported as an integer
 
 ```python
 bmi_from_height_weight( height: float,  weight: float) -> float:
 ```
-- Returns a BMI in kg/m2 from a height in cm and a weight in kg
+- Returns a BMI in kg/m2 from a height in cm and a weight in kg. Reported to 1 d.p.
 - Does not depend on the age or sex of the child.
 
 ```python
 weight_for_bmi_height( height: float,  bmi: float) -> float:
 ```
-- Returns a weight from a height in cm and a BMI in kg/m2
+- Returns a weight from a height in cm and a BMI in kg/m2. Reported to 3 d.p.
 - Does not depend on the age or sex of the child.
 
 ##### Scope

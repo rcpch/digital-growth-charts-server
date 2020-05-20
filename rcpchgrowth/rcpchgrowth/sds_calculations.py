@@ -36,14 +36,14 @@ decimal_ages=[-0.325804244,-0.306639288,-0.287474333,-0.268309377,-0.249144422,-
 
 #public functions
 
-def sds(age: float, measurement: str, observation: float, sex: str)->float:
+def sds(age: float, measurement: str, measurement_value: float, sex: str)->float:
     """
     Public function
     Returns a standard deviation score. 
     Parameters are: 
     a decimal age (corrected or chronological), 
     a measurement (type of observation) ['height', 'weight', 'bmi', 'ofc']
-    observation (the value is standard units) [height and ofc are in cm, weight in kg bmi in kg/m2]
+    measurement_value (the value is standard units) [height and ofc are in cm, weight in kg bmi in kg/m2]
     sex (a standard string) ['male' or 'female']
 
     This function is specific to the UK-WHO data set as this is actually a blend of UK-90 and WHO 2006 references and necessarily has duplicate values.
@@ -63,80 +63,12 @@ def sds(age: float, measurement: str, observation: float, sex: str)->float:
      - Head circumference reference data is available from 23 weeks gestation to 17y in girls and 18y in boys
     """
 
-    try:
-        #this child is < or > the extremes of the chart
-        age >= decimal_ages[0] or age <= decimal_ages[-1], 'Cannot be younger than 23 weeks or older than 20y'
-    except AssertionError as chart_extremes_msg:
-        print(chart_extremes_msg)
-        return
-    
-    try:
-        #this child < 25 weeks and height is requested
-        age > decimal_ages[2] and measurement == 'height', 'There is no reference data for length below 25 weeks'
-    except AssertionError as lower_length_threshold_error_message:
-        print(lower_length_threshold_error_message)
-        return
-    
-    try:
-        #this child < 2 weeks and BMI is requested
-        age >= 0.038329911 and measurement == 'bmi', 'There is no BMI reference data available for BMI below 2 weeks'
-    except AssertionError as lower_bmi_threshold_error_message:
-        print(lower_bmi_threshold_error_message)
-        return
-    
-    try:
-        #head circumference is requested and this child is either female > 17 or male >18y
-        measurement == 'ofc' and ((sex == 'male' and age <= 18.0) or (sex == 'female' and age <=17.0)), 'There is no head circumference data available in girls over 17y or boys over 18y'
-    except AssertionError as upper_head_circumference_threshold_error_message:
-        print(upper_head_circumference_threshold_error_message)
-        return
+    lms = get_lms(age, measurement, sex)
+    l = lms['l']
+    m = lms ['m']
+    s = lms ['s']
 
-    age_index_one_below = nearest_age_below_index(age)
-    if age == decimal_ages[age_index_one_below]:
-        #child's age matches a reference age - no interpolation necessary
-        l = data['measurement'][measurement][sex][age_index_one_below]["L"]
-        m = data['measurement'][measurement][sex][age_index_one_below]["M"]
-        s = data['measurement'][measurement][sex][age_index_one_below]["S"]
-        sds = z_score(l, m, s, observation)
-        return sds
-
-    if cubic_interpolation_possible(age, measurement, sex):
-        #collect all L, M and S above and below lower age index for cubic interpolation
-        l_one_below = data['measurement'][measurement][sex][age_index_one_below]["L"]
-        m_one_below = data['measurement'][measurement][sex][age_index_one_below]["M"]
-        s_one_below = data['measurement'][measurement][sex][age_index_one_below]["S"]
-
-        l_two_below = data['measurement'][measurement][sex][age_index_one_below-1]["L"]
-        m_two_below = data['measurement'][measurement][sex][age_index_one_below-1]["M"]
-        s_two_below = data['measurement'][measurement][sex][age_index_one_below-1]["S"]
-
-        l_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["L"]
-        m_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["M"]
-        s_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["S"]
-
-        l_two_above = data['measurement'][measurement][sex][age_index_one_below+2]["L"]
-        m_two_above = data['measurement'][measurement][sex][age_index_one_below+2]["M"]
-        s_two_above = data['measurement'][measurement][sex][age_index_one_below+2]["S"]
-        
-        l = cubic_interpolation(age, age_index_one_below, l_two_below, l_one_below, l_one_above, l_two_above)
-        m = cubic_interpolation(age, age_index_one_below, m_two_below, m_one_below, m_one_above, m_two_above)
-        s = cubic_interpolation(age, age_index_one_below, s_two_below, s_one_below, s_one_above, s_two_above)
-    else:
-        #a chart threshold: collect one L, M and S above and below lower age index for linear interpolation
-        l_one_below = data['measurement'][measurement][sex][age_index_one_below]["L"]
-        m_one_below = data['measurement'][measurement][sex][age_index_one_below]["M"]
-        s_one_below = data['measurement'][measurement][sex][age_index_one_below]["S"]
-
-        l_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["L"]
-        m_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["M"]
-        s_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["S"]
-
-        l = linear_interpolation(age, age_index_one_below, l_one_below, l_one_above)
-        m = linear_interpolation(age, age_index_one_below, m_one_below, m_one_above)
-        s = linear_interpolation(age, age_index_one_below, s_one_below, s_one_above)
-    # print(f"actual age: {round(age, 9)} l,m,s interpolated: {l} {m} {s} lower: {l_one_below} {m_one_below} {s_one_below}") #debugging as accuracy currently uncertain 
-    # print(f"{l}, {m}, {s}")
-    sds = z_score(l, m, s, observation)
+    sds = z_score(l, m, s, measurement_value)
     return sds
 
 def centile(z_score: float):
@@ -178,6 +110,42 @@ def percentage_median_bmi( age: float, actual_bmi: float, sex: str)->float:
     percent_median_bmi = (actual_bmi/m)*100.0
     return percent_median_bmi
 
+def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  decimal_age: float) -> float:
+    """
+    Public method
+    Returns the measurement from a given SDS.
+    Parameters are: 
+        measurement (type of observation) ['height', 'weight', 'bmi', 'ofc']
+        decimal age (corrected or chronological),
+        requested_sds
+        sex (a standard string) ['male' or 'female']
+    """
+    measurement_value = 0.0
+
+    lms= get_lms(decimal_age, measurement, sex)
+
+    l = lms['l']
+    m = lms['m']
+    s = lms['s']
+
+    """
+    Centile to SDS Conversion for Chart lines
+    0.4th -2.67
+    2nd -2.00
+    9th -1.33
+    25th -0.67
+    50th 0
+    75th 0.67
+    91st 1.33
+    98th 2.00
+    99.6th 2.67
+    """
+    if l != 0.0:
+        measurement_value = math.pow((1+l*s*requested_sds),1/l)*m
+    else:
+        measurement_value = math.exp(s*requested_sds)*m
+    return measurement_value
+
 #private methods
 def nearest_age_below_index(age: float)->int:
     """
@@ -216,6 +184,96 @@ def cubic_interpolation_possible(age: float, measurement, sex):
         return False
     else:
         return True
+
+
+def get_lms(age: float, measurement: str, sex: str)->list:
+    """
+    Returns an interpolated L, M and S value as an array [l, m, s] against a decimal age, sex and measurement
+    """
+    try:
+        #this child is < or > the extremes of the chart
+        age >= decimal_ages[0] or age <= decimal_ages[-1], 'Cannot be younger than 23 weeks or older than 20y'
+    except AssertionError as chart_extremes_msg:
+        print(chart_extremes_msg)
+        return
+    
+    try:
+        #this child < 25 weeks and height is requested
+        age > decimal_ages[2] and measurement == 'height', 'There is no reference data for length below 25 weeks'
+    except AssertionError as lower_length_threshold_error_message:
+        print(lower_length_threshold_error_message)
+        return
+    
+    try:
+        #this child < 2 weeks and BMI is requested
+        age >= 0.038329911 and measurement == 'bmi', 'There is no BMI reference data available for BMI below 2 weeks'
+    except AssertionError as lower_bmi_threshold_error_message:
+        print(lower_bmi_threshold_error_message)
+        return
+    
+    try:
+        #head circumference is requested and this child is either female > 17 or male >18y
+        measurement == 'ofc' and ((sex == 'male' and age <= 18.0) or (sex == 'female' and age <=17.0)), 'There is no head circumference data available in girls over 17y or boys over 18y'
+    except AssertionError as upper_head_circumference_threshold_error_message:
+        print(upper_head_circumference_threshold_error_message)
+        return
+
+    age_index_one_below = nearest_age_below_index(age)
+    if age == decimal_ages[age_index_one_below]:
+        #child's age matches a reference age - no interpolation necessary
+        l = data['measurement'][measurement][sex][age_index_one_below]["L"]
+        m = data['measurement'][measurement][sex][age_index_one_below]["M"]
+        s = data['measurement'][measurement][sex][age_index_one_below]["S"]
+        lms = {
+            'l': l,
+            'm': m,
+            's': s
+        }
+        return lms
+        
+
+    if cubic_interpolation_possible(age, measurement, sex):
+        #collect all L, M and S above and below lower age index for cubic interpolation
+        l_one_below = data['measurement'][measurement][sex][age_index_one_below]["L"]
+        m_one_below = data['measurement'][measurement][sex][age_index_one_below]["M"]
+        s_one_below = data['measurement'][measurement][sex][age_index_one_below]["S"]
+
+        l_two_below = data['measurement'][measurement][sex][age_index_one_below-1]["L"]
+        m_two_below = data['measurement'][measurement][sex][age_index_one_below-1]["M"]
+        s_two_below = data['measurement'][measurement][sex][age_index_one_below-1]["S"]
+
+        l_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["L"]
+        m_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["M"]
+        s_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["S"]
+
+        l_two_above = data['measurement'][measurement][sex][age_index_one_below+2]["L"]
+        m_two_above = data['measurement'][measurement][sex][age_index_one_below+2]["M"]
+        s_two_above = data['measurement'][measurement][sex][age_index_one_below+2]["S"]
+        
+        l = cubic_interpolation(age, age_index_one_below, l_two_below, l_one_below, l_one_above, l_two_above)
+        m = cubic_interpolation(age, age_index_one_below, m_two_below, m_one_below, m_one_above, m_two_above)
+        s = cubic_interpolation(age, age_index_one_below, s_two_below, s_one_below, s_one_above, s_two_above)
+    else:
+        #a chart threshold: collect one L, M and S above and below lower age index for linear interpolation
+        l_one_below = data['measurement'][measurement][sex][age_index_one_below]["L"]
+        m_one_below = data['measurement'][measurement][sex][age_index_one_below]["M"]
+        s_one_below = data['measurement'][measurement][sex][age_index_one_below]["S"]
+
+        l_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["L"]
+        m_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["M"]
+        s_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["S"]
+
+        l = linear_interpolation(age, age_index_one_below, l_one_below, l_one_above)
+        m = linear_interpolation(age, age_index_one_below, m_one_below, m_one_above)
+        s = linear_interpolation(age, age_index_one_below, s_one_below, s_one_above)
+    # print(f"actual age: {round(age, 9)} l,m,s interpolated: {l} {m} {s} lower: {l_one_below} {m_one_below} {s_one_below}") #debugging as accuracy currently uncertain 
+    # print(f"{l}, {m}, {s}")
+    lms = {
+        'l': l,
+        'm': m,
+        's': s
+        }
+    return lms
 
 def cubic_interpolation( age: float, age_index_below: int, parameter_two_below: float, parameter_one_below: float, parameter_one_above: float, parameter_two_above: float) -> float:
 
