@@ -62,8 +62,11 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str)->float
      - There is only BMI reference data from 2 weeks of age to aged 20y
      - Head circumference reference data is available from 23 weeks gestation to 17y in girls and 18y in boys
     """
-
-    lms = get_lms(age, measurement, sex)
+    try:
+        lms = get_lms(age, measurement, sex)
+    except:
+        print('unable to calculate SDS')
+        
     l = lms['l']
     m = lms ['m']
     s = lms ['s']
@@ -77,11 +80,6 @@ def centile(z_score: float):
     """
 
     centile = (stats.norm.cdf(z_score) * 100)
-
-    # if centile >99.6:
-        # centile = 'above 99.6th centile'
-    # if centile < 0.04:
-        # centile = 'below 0.04th centile'
     return centile
 
 def percentage_median_bmi( age: float, actual_bmi: float, sex: str)->float:
@@ -119,16 +117,7 @@ def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  de
         decimal age (corrected or chronological),
         requested_sds
         sex (a standard string) ['male' or 'female']
-    """
-    measurement_value = 0.0
 
-    lms= get_lms(decimal_age, measurement, sex)
-
-    l = lms['l']
-    m = lms['m']
-    s = lms['s']
-
-    """
     Centile to SDS Conversion for Chart lines
     0.4th -2.67
     2nd -2.00
@@ -140,11 +129,21 @@ def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  de
     98th 2.00
     99.6th 2.67
     """
-    if l != 0.0:
-        measurement_value = math.pow((1+l*s*requested_sds),1/l)*m
+    measurement_value = 0.0
+    try:
+        lms= get_lms(decimal_age, measurement, sex)
+    except:
+        print('Unable to get measurement from SDS')
     else:
-        measurement_value = math.exp(s*requested_sds)*m
-    return measurement_value
+        l = lms['l']
+        m = lms['m']
+        s = lms['s']
+
+        if l != 0.0:
+            measurement_value = math.pow((1+l*s*requested_sds),1/l)*m
+        else:
+            measurement_value = math.exp(s*requested_sds)*m
+        return measurement_value
 
 #private methods
 def nearest_age_below_index(age: float)->int:
@@ -190,33 +189,34 @@ def get_lms(age: float, measurement: str, sex: str)->list:
     """
     Returns an interpolated L, M and S value as an array [l, m, s] against a decimal age, sex and measurement
     """
+    
     try:
         #this child is < or > the extremes of the chart
-        age >= decimal_ages[0] or age <= decimal_ages[-1], 'Cannot be younger than 23 weeks or older than 20y'
+        assert (age >= decimal_ages[0] or age <= decimal_ages[-1]), 'Cannot be younger than 23 weeks or older than 20y'
     except AssertionError as chart_extremes_msg:
         print(chart_extremes_msg)
-        return
     
-    try:
-        #this child < 25 weeks and height is requested
-        age > decimal_ages[2] and measurement == 'height', 'There is no reference data for length below 25 weeks'
-    except AssertionError as lower_length_threshold_error_message:
-        print(lower_length_threshold_error_message)
-        return
+    if measurement == 'height':
+        try:
+            #this child < 25 weeks and height is requested
+            assert (age >= -0.287474333), 'There is no reference data for length below 25 weeks'
+        except AssertionError as lower_length_threshold_error_message:
+            print(lower_length_threshold_error_message)
     
-    try:
-        #this child < 2 weeks and BMI is requested
-        age >= 0.038329911 and measurement == 'bmi', 'There is no BMI reference data available for BMI below 2 weeks'
-    except AssertionError as lower_bmi_threshold_error_message:
-        print(lower_bmi_threshold_error_message)
-        return
+    if measurement == 'bmi':
+        try:
+            #this child < 2 weeks and BMI is requested
+            print(f'{measurement}')
+            assert (age >= 0.038329911 and measurement == 'bmi'), 'There is no BMI reference data available for BMI below 2 weeks'
+        except AssertionError as lower_bmi_threshold_error_message:
+            print(lower_bmi_threshold_error_message)
     
-    try:
-        #head circumference is requested and this child is either female > 17 or male >18y
-        measurement == 'ofc' and ((sex == 'male' and age <= 18.0) or (sex == 'female' and age <=17.0)), 'There is no head circumference data available in girls over 17y or boys over 18y'
-    except AssertionError as upper_head_circumference_threshold_error_message:
-        print(upper_head_circumference_threshold_error_message)
-        return
+    if measurement == 'ofc':
+        try:
+            #head circumference is requested and this child is either female > 17 or male >18y
+            assert (measurement == 'ofc' and ((sex == 'male' and age <= 18.0) or (sex == 'female' and age <=17.0))), 'There is no head circumference data available in girls over 17y or boys over 18y'
+        except AssertionError as upper_head_circumference_threshold_error_message:
+            print(upper_head_circumference_threshold_error_message)
 
     age_index_one_below = nearest_age_below_index(age)
     if age == decimal_ages[age_index_one_below]:

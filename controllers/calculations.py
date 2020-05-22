@@ -37,20 +37,20 @@ def perform_calculations(form):
         corrected_calendar_age = calculations.chronological_calendar_age(edd, obs_date)
         edd_string = edd.strftime('%a %d %B, %Y')
         corrected_gestational_age = calculations.corrected_gestational_age(birth_date, obs_date, gestation_weeks, gestation_days)
-    if height > 1:
+    if height > 0.0:
         if age >= -0.287474333: # there is no length data below 25 weeks gestation
             height_sds = calculations.sds(age, 'height', height, sex)
             height_centile = calculations.centile(height_sds)
-    if weight > 1:
+    if weight > 0.0:
         weight_sds = calculations.sds(age, 'weight', weight, sex)
         weight_centile = calculations.centile(weight_sds)
-    if height > 1 and weight> 1:
+    if height > 0.0 and weight > 0.0:
         bmi = calculations.bmi_from_height_weight(height, weight)
         if age > 0.038329911: # BMI data not present < 42 weeks gestation
             bmi_sds = calculations.sds(age, 'bmi', bmi, sex)
             bmi_centile = calculations.centile(bmi_sds)
-    if ofc > 1:
-        if (age <= 17 and sex == 'female') or (age <= 18 and sex == 'male'): # OFC data not present >17y in girls or >18y in boys
+    if ofc > 0.0:
+        if (age <= 17 and sex == 'female') or (age <= 18.0 and sex == 'male'): # OFC data not present >17y in girls or >18y in boys
             ofc_sds = calculations.sds(age, 'ofc', ofc, sex)
             ofc_centile = calculations.centile(ofc_sds)
 

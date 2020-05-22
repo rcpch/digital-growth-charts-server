@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response, send_file
+from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response, jsonify, session
 from werkzeug.utils import secure_filename
 import markdown
 from os import path, listdir, remove
@@ -18,7 +18,7 @@ from app import app
 # @app.route('/favicon.ico')
 # def favicon():
 #     return send_from_directory(os.path.join(app.root_path, 'static'),
-#                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
+#                                'favicon.ico', mimetype='image/vnd.microsoft.icon')    
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -26,12 +26,31 @@ def home():
     if request.method == 'POST':
         if form.validate_on_submit():
             results = controllers.perform_calculations(form)
-            return render_template('test_results.html', result=results)
-        
+            # return render_template('test_results.html', results=results)
+            session['results'] = results
+            return redirect(url_for('results', id='table'))
         # form not validated. Need flash warning here
         return render_template('measurement_form.html', form = form)
     else:
         return render_template('measurement_form.html', form = form)
+
+@app.route("/results/<id>", methods=['GET', 'POST'])
+def results(id):
+    results = session.get('results')
+    if id == 'table':
+        return render_template('test_results.html', result = results)
+    if id == 'chart':
+        return render_template('chart.html')
+
+@app.route("/chart", methods=['GET'])
+def chart():
+    return render_template('chart.html')
+
+@app.route("/chart_data", methods=['GET'])
+def chart_data():
+    patient_results = session.get('results')
+    data = controllers.plot_centile(patient_results)
+    return jsonify({'data': data})
 
 @app.route("/instructions", methods=['GET'])
 def instructions():
@@ -130,7 +149,6 @@ def uploaded_data(id):
                     requested_data = data
             return render_template('uploaded_data.html', data=data)
         if id=='get_excel':
-            print('hello')
             excel_file = controllers.download_excel(requested_data)
             temp_directory = Path.cwd().joinpath("static").joinpath('uploaded_data').joinpath('temp')
             return send_from_directory(temp_directory, filename='output.xlsx', as_attachment=True)

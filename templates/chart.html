@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}Chart{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+    <div class="ui container">
+      <canvas id="myChart" width="400" height="400"></canvas>        
+    <script>
+
+      var girl = 'rgba(217, 49, 155, 1.0)';
+      var boy = 'rgba(0, 126, 198, 1.0)';
+      var sex_color = ''
+    
+      var getData = $.get('/chart_data');
+      getData.done(function(results) {
+        if (results.data[9].child.measurements.sex == 'male') {
+          sex_color = boy;
+        }
+        if (results.data[9].child.measurements.sex == 'female') {
+          sex_color = girl;
+        }
+
+        var data = {
+          labels:results.data.sds,
+          datasets:[
+            {
+              label: '0.04th',
+              data: results.data[0].centile_data,
+              fill: false,
+              showLine: true,
+              borderColor: sex_color,
+              borderWidth: 0.5,
+              pointStyle: 'dash',
+              borderDash: [15, 5],
+              pointRadius: 0,
+              lineTension: 0
+            },
+            {
+              label: '2nd',
+              data: results.data[1].centile_data,
+              fill: false,
+              showLine: true,
+              borderColor: sex_color,
+              borderWidth: 0.5,
+              spanGaps: true,
+              pointRadius: 0,
+              lineTension: 0
+            },
+            {
+              label: '9th',
+              data: results.data[2].centile_data,
+              fill: false,
+              borderColor: sex_color,
+              borderWidth: 0.5,
+              spanGaps: true,
+              pointRadius: 0,
+              lineTension: 0,
+              pointStyle: 'dash',
+              borderDash: [15, 5],              
+            },
+            {
+              label: '25th',
+              data: results.data[3].centile_data,
+              fill: false,
+              borderColor: sex_color,
+              borderWidth: 0.5,
+              spanGaps: true,
+              pointRadius: 0,
+              lineTension: 0,
+            },
+            {
+              label: '50th',
+              data: results.data[4].centile_data,
+              fill: false,
+              borderColor: sex_color,
+              borderWidth: 0.5,
+              spanGaps: true,
+              pointRadius: 0,
+              lineTension: 0,
+              pointStyle: 'dash',
+              borderDash: [15, 5],              
+            },
+            {
+              label: '75th',
+              data: results.data[5].centile_data,
+              fill: false,
+              borderColor: sex_color,
+              borderWidth: 0.5,
+              spanGaps: true,
+              pointRadius: 0,
+              lineTension: 0
+            },
+            {
+              label: '91st',
+              data: results.data[6].centile_data,
+              fill: false,
+              borderColor: sex_color,
+              borderWidth: 0.5,
+              spanGaps: true,
+              pointRadius: 0,
+              lineTension: 0,
+              pointStyle: 'dash',
+              borderDash: [15, 5],              
+            },
+            {
+              label: '98th',
+              data: results.data[7].centile_data,
+              fill: false,
+              borderColor: sex_color,
+              borderWidth: 0.5,
+              spanGaps: true,
+              pointRadius: 0,
+              lineTension: 0
+              
+            },
+            {
+              label: '99.6th',
+              data: results.data[8].centile_data,
+              fill: false,
+              borderColor: sex_color,
+              borderWidth: 0.5,
+              spanGaps: true,
+              pointRadius: 0,
+              lineTension: 0,
+              pointStyle: 'dash',
+              borderDash: [15, 5],
+            },
+            {
+              label: 'measurement',
+              data: [{
+                x: results.data[9].child.dates.chronological_decimal_age,
+                y: results.data[9].child.measurements.height
+              }],
+              fill: true,
+              borderColor: 'rgba(0, 0, 0, 1.0)',
+              borderWidth: 1.0,
+              pointRadius: 1.0,
+              pointStyle: 'circle',
+            }
+          ]
+        }
+
+        var options = {
+            legend: {
+              display: false
+            },
+            scales: {
+              xAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Age (yrs)',
+                  fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                  fontStyle: 'bold'
+                },
+                type: 'linear',
+                position: 'bottom',
+                ticks: {
+                  min: -0.3,
+                  max: 20,
+                  stepSize: 0.5,
+                  fixedStepSize: 0.5,
+                  fontStyle: 'bold'
+                }
+              }],
+              yAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Length/Height (cm)',
+                  fontStyle: 'bold'
+                },
+                ticks: {
+                  min: 0,
+                  max: 180,
+                  stepSize: 1,
+                  fixedStepSize: 1,
+                  fontStyle: 'bold'
+                }
+              }]
+            }
+          }
+        
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: data,
+          options: options
+        })
+      })
+      </script> 
+    </div>
+{% endblock %}
