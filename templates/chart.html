@@ -1,191 +1,291 @@
 {% extends 'base.html' %}
 {% block header %}
-  <h1>{% block title %}Chart{% endblock %}</h1>
+  <h1>{% block title %}Growth Charts{% endblock %}</h1>
 {% endblock %}
 {% block content %}
     <div class="ui container">
-      <canvas id="myChart" width="400" height="400"></canvas>        
+      <canvas id="heightChart" width="200" height="200"></canvas>        
+      <canvas id="weightChart" width="200" height="200"></canvas>        
+      <canvas id="bmiChart" width="200" height="200"></canvas>        
+      <canvas id="ofcChart" width="200" height="200"></canvas>        
     <script>
 
       var girl = 'rgba(217, 49, 155, 1.0)';
       var boy = 'rgba(0, 126, 198, 1.0)';
       var sex_color = ''
-    
+      var height_data = [];
+      var weight_data = [];
+      var ofc_data = [];
+      var measurements = ['height', 'weight', 'bmi', 'ofc']
+      var child_measurement = 0.0;
+
       var getData = $.get('/chart_data');
       getData.done(function(results) {
-        if (results.data[9].child.measurements.sex == 'male') {
+
+        if (results.data[1].child.measurements.sex == 'male') {
           sex_color = boy;
         }
-        if (results.data[9].child.measurements.sex == 'female') {
+        if (results.data[1].child.measurements.sex == 'female') {
           sex_color = girl;
         }
 
-        var data = {
-          labels:results.data.sds,
-          datasets:[
-            {
-              label: '0.04th',
-              data: results.data[0].centile_data,
-              fill: false,
-              showLine: true,
-              borderColor: sex_color,
-              borderWidth: 0.5,
-              pointStyle: 'dash',
-              borderDash: [15, 5],
-              pointRadius: 0,
-              lineTension: 0
-            },
-            {
-              label: '2nd',
-              data: results.data[1].centile_data,
-              fill: false,
-              showLine: true,
-              borderColor: sex_color,
-              borderWidth: 0.5,
-              spanGaps: true,
-              pointRadius: 0,
-              lineTension: 0
-            },
-            {
-              label: '9th',
-              data: results.data[2].centile_data,
-              fill: false,
-              borderColor: sex_color,
-              borderWidth: 0.5,
-              spanGaps: true,
-              pointRadius: 0,
-              lineTension: 0,
-              pointStyle: 'dash',
-              borderDash: [15, 5],              
-            },
-            {
-              label: '25th',
-              data: results.data[3].centile_data,
-              fill: false,
-              borderColor: sex_color,
-              borderWidth: 0.5,
-              spanGaps: true,
-              pointRadius: 0,
-              lineTension: 0,
-            },
-            {
-              label: '50th',
-              data: results.data[4].centile_data,
-              fill: false,
-              borderColor: sex_color,
-              borderWidth: 0.5,
-              spanGaps: true,
-              pointRadius: 0,
-              lineTension: 0,
-              pointStyle: 'dash',
-              borderDash: [15, 5],              
-            },
-            {
-              label: '75th',
-              data: results.data[5].centile_data,
-              fill: false,
-              borderColor: sex_color,
-              borderWidth: 0.5,
-              spanGaps: true,
-              pointRadius: 0,
-              lineTension: 0
-            },
-            {
-              label: '91st',
-              data: results.data[6].centile_data,
-              fill: false,
-              borderColor: sex_color,
-              borderWidth: 0.5,
-              spanGaps: true,
-              pointRadius: 0,
-              lineTension: 0,
-              pointStyle: 'dash',
-              borderDash: [15, 5],              
-            },
-            {
-              label: '98th',
-              data: results.data[7].centile_data,
-              fill: false,
-              borderColor: sex_color,
-              borderWidth: 0.5,
-              spanGaps: true,
-              pointRadius: 0,
-              lineTension: 0
-              
-            },
-            {
-              label: '99.6th',
-              data: results.data[8].centile_data,
-              fill: false,
-              borderColor: sex_color,
-              borderWidth: 0.5,
-              spanGaps: true,
-              pointRadius: 0,
-              lineTension: 0,
-              pointStyle: 'dash',
-              borderDash: [15, 5],
-            },
-            {
-              label: 'measurement',
-              data: [{
-                x: results.data[9].child.dates.chronological_decimal_age,
-                y: results.data[9].child.measurements.height
-              }],
-              fill: true,
-              borderColor: 'rgba(0, 0, 0, 1.0)',
-              borderWidth: 1.0,
-              pointRadius: 1.0,
-              pointStyle: 'circle',
-            }
-          ]
+        if(results.data[1].child.measurements.height > 0){
+          height_data = results.data[0].centiles.height_centiles;
+        }
+        if(results.data[1].child.measurements.weight > 0){
+          weight_data = results.data[0].centiles.weight_centiles;
+        }  
+        if(results.data[1].child.measurements.bmi > 0){
+          bmi_data = results.data[0].centiles.bmi_centiles;
+        }
+        if(results.data[1].child.measurements.ofc > 0){
+          ofc_data = results.data[0].centiles.ofc_centiles;
         }
 
-        var options = {
-            legend: {
-              display: false
-            },
-            scales: {
-              xAxes: [{
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Age (yrs)',
-                  fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-                  fontStyle: 'bold'
-                },
-                type: 'linear',
-                position: 'bottom',
-                ticks: {
-                  min: -0.3,
-                  max: 20,
-                  stepSize: 0.5,
-                  fixedStepSize: 0.5,
-                  fontStyle: 'bold'
-                }
-              }],
-              yAxes: [{
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Length/Height (cm)',
-                  fontStyle: 'bold'
-                },
-                ticks: {
-                  min: 0,
-                  max: 180,
-                  stepSize: 1,
-                  fixedStepSize: 1,
-                  fontStyle: 'bold'
-                }
-              }]
-            }
-          }
         
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-          type: 'line',
-          data: data,
-          options: options
-        })
-      })
+        
+
+        for (i=0; i<measurements.length; i++){
+
+          var centile_data_set = [];
+          measurement_label = ''
+          axis_label=''
+
+          if(measurements[i] == 'height'){
+            centile_data_set = height_data
+            axis_label = "Length/Height (cm)"
+            measurement_label = 'Length/Height'
+            child_measurement = results.data[1].child.measurements.height
+          }
+          if(measurements[i] == 'weight') {
+            centile_data_set = weight_data
+            axis_label = "Weight (kg)"
+            measurement_label = 'Weight'
+          child_measurement = results.data[1].child.measurements.weight
+          }
+          if(measurements[i] == 'bmi') {
+            centile_data_set = bmi_data
+            axis_label = "BMI (kg/2)"
+            measurement_label = 'Body Mass Index'
+            child_measurement = results.data[1].child.measurements.bmi
+          }
+          if(measurements[i] == 'ofc') {
+            centile_data_set = ofc_data
+            axis_label = "Head Circumference (cm)"
+            measurement_label = 'Head Circumference'
+            child_measurement = results.data[1].child.measurements.ofc
+          }
+
+           var data = {
+                  labels:results.data.sds,
+                  datasets:[
+                    {
+                      label: '0.04th',
+                      data: centile_data_set[0].centile_data,
+                      fill: false,
+                      showLine: true,
+                      borderColor: sex_color,
+                      borderWidth: 0.5,
+                      pointStyle: 'dash',
+                      borderDash: [15, 5],
+                      pointRadius: 0,
+                      lineTension: 0
+                    },
+                    {
+                      label: '2nd',
+                      data: centile_data_set[1].centile_data,
+                      fill: false,
+                      showLine: true,
+                      borderColor: sex_color,
+                      borderWidth: 0.5,
+                      spanGaps: true,
+                      pointRadius: 0,
+                      lineTension: 0
+                    },
+                    {
+                      label: '9th',
+                      data: centile_data_set[2].centile_data,
+                      fill: false,
+                      borderColor: sex_color,
+                      borderWidth: 0.5,
+                      spanGaps: true,
+                      pointRadius: 0,
+                      lineTension: 0,
+                      pointStyle: 'dash',
+                      borderDash: [15, 5],              
+                    },
+                    {
+                      label: '25th',
+                      data: centile_data_set[3].centile_data,
+                      fill: false,
+                      borderColor: sex_color,
+                      borderWidth: 0.5,
+                      spanGaps: true,
+                      pointRadius: 0,
+                      lineTension: 0,
+                    },
+                    {
+                      label: '50th',
+                      data: centile_data_set[4].centile_data,
+                      fill: false,
+                      borderColor: sex_color,
+                      borderWidth: 0.5,
+                      spanGaps: true,
+                      pointRadius: 0,
+                      lineTension: 0,
+                      pointStyle: 'dash',
+                      borderDash: [15, 5],              
+                    },
+                    {
+                      label: '75th',
+                      data: centile_data_set[5].centile_data,
+                      fill: false,
+                      borderColor: sex_color,
+                      borderWidth: 0.5,
+                      spanGaps: true,
+                      pointRadius: 0,
+                      lineTension: 0
+                    },
+                    {
+                      label: '91st',
+                      data: centile_data_set[6].centile_data,
+                      fill: false,
+                      borderColor: sex_color,
+                      borderWidth: 0.5,
+                      spanGaps: true,
+                      pointRadius: 0,
+                      lineTension: 0,
+                      pointStyle: 'dash',
+                      borderDash: [15, 5],              
+                    },
+                    {
+                      label: '98th',
+                      data: centile_data_set[7].centile_data,
+                      fill: false,
+                      borderColor: sex_color,
+                      borderWidth: 0.5,
+                      spanGaps: true,
+                      pointRadius: 0,
+                      lineTension: 0
+
+                    },
+                    {
+                      label: '99.6th',
+                      data: centile_data_set[8].centile_data,
+                      fill: false,
+                      borderColor: sex_color,
+                      borderWidth: 0.5,
+                      spanGaps: true,
+                      pointRadius: 0,
+                      lineTension: 0,
+                      pointStyle: 'dash',
+                      borderDash: [15, 5],
+                    },
+                    {
+                      label: 'Measurement',
+                      data: [{
+                        x: results.data[1].child.dates.chronological_decimal_age,
+                        y: child_measurement
+                      }],
+                      fill: true,
+                      borderColor: 'rgba(0, 0, 0, 1.0)',
+                      borderWidth: 1.0,
+                      pointRadius: 1.0,
+                      pointStyle: 'circle',
+                    },
+                    {
+                      label: 'Measurement Corrected For Gestational Age',
+                      data: [{
+                        x: results.data[1].child.dates.corrected_decimal_age,
+                        y: child_measurement
+                      }],
+                      fill: true,
+                      borderColor: 'rgba(0, 0, 0, 1.0)',
+                      borderWidth: 1.0,
+                      pointRadius: 3.0,
+                      pointStyle: 'crossRot',
+                    }
+
+                  ]
+                }
+
+                var options = {
+                    title:{
+                      display: true,
+                      position: 'top',
+                      text: measurement_label
+                    },
+                    legend: {
+                      display: false
+                    },
+                    scales: {
+                      xAxes: [{
+                        scaleLabel: {
+                          display: true,
+                          labelString: 'Age (yrs)',
+                          fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                          fontStyle: 'bold'
+                        },
+                        type: 'linear',
+                        position: 'bottom',
+                        ticks: {
+                          min: -0.3,
+                          max: 20,
+                          stepSize: 0.5,
+                          fixedStepSize: 0.5,
+                          fontStyle: 'bold'
+                        }
+                      }],
+                      yAxes: [{
+                        scaleLabel: {
+                          display: true,
+                          labelString: axis_label,
+                          fontStyle: 'bold'
+                        },
+                        ticks: {
+                          min: 0,
+                          max: 180,
+                          stepSize: 1,
+                          fixedStepSize: 1,
+                          fontStyle: 'bold'
+                        }
+                      }]
+                    }
+                  }
+                if (measurements[i] == 'height'){
+                  var heightCtx = document.getElementById('heightChart').getContext('2d');
+                  var heightChart = new Chart(heightCtx, {
+                    type: 'line',
+                    data: data,
+                    options: options
+                  })
+                }
+                if (measurements[i] == 'weight'){
+                  var weightCtx = document.getElementById('weightChart').getContext('2d');
+                  var weightChart = new Chart(weightCtx, {
+                    type: 'line',
+                    data: data,
+                    options: options
+                })
+                if (measurements[i] == 'bmi'){
+                  var bmiCtx = document.getElementById('bmiChart').getContext('2d');
+                  var bmiChart = new Chart(bmiCtx, {
+                    type: 'line',
+                    data: data,
+                    options: options
+                  })
+                }
+                if (measurements[i] == 'ofc'){
+                  var ofcCtx = document.getElementById('ofcChart').getContext('2d');
+                  var ofcChart = new Chart(ofcCtx, {
+                    type: 'line',
+                    data: data,
+                    options: options
+                })
+              }
+            }         
+          }    
+        });
       </script> 
     </div>
 {% endblock %}
