@@ -3,49 +3,79 @@
   <h1>{% block title %}Uploaded Data{% endblock %}</h1>
 {% endblock %}
 {% block content %}
-  <div class="ui center aligned container">  
-    <!-- {{data|safe }} -->
-    <table class="ui table">
-      <thead>
-        <th>index</th>
-        <th>birth_date</th>
-        <th>observation_days</th>
-        <th>gestation_weeks</th>
-        <th>gestation_days</th>
-        <th>estimated_date_delivery</th>
-        <th>decimal_age</th>
-        <th>sex</th>
-        <th>measurement_type</th>
-        <th>measurement_value</th>
-        <th>sds</th>
-        <th>centile</th>              
-        <!-- {% for h in headers %} -->
-          <!-- <th>{{h.name}}</th> -->
-        <!-- {% endfor %} -->
-      </thead>
-      <tbody>
-        {% for m in data %}
-        <tr>
-          <td>{{ loop.index }}</td>
-          <td>{{ m.birth_date }}</td>
-          <td>{{ m.observation_date }}</td>
-          <td>{{ m.gestation_weeks}}</td>
-          <td>{{ m.gestation_days }}</td>
-          <td>{{ m.estimated_date_delivery }}</td>
-          <td>{{ m.decimal_age }}</td>
-          <td>{{ m.sex }}</td>
-          <td>{{ m.measurement_type }}</td>
-          <td>{{ m.measurement_value }}</td>
-          <td>{{ m.sds }}</td>
-          <td>{{ m.centile}}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-      <!-- <form type='submit' method='post'> -->
+    <div class="ui centered aligned grid">
+      <div class="ui center aligned column" id='data_container'>
+      {% if data %}
+        <table class="ui small compact table">
+          <thead>
+            <th>index</th>
+            <th>birth_date</th>
+            <th>observation_days</th>
+            <th>gestation_weeks</th>
+            <th>gestation_days</th>
+            <th>estimated_date_delivery</th>
+            <th>decimal_age</th>
+            <th>sex</th>
+            <th>measurement_type</th>
+            <th>measurement_value</th>
+            <th>sds</th>
+            <th>centile</th>              
+            <!-- {% for h in headers %} -->
+              <!-- <th>{{h.name}}</th> -->
+            <!-- {% endfor %} -->
+          </thead>
+          <tbody>
+            {% for m in data %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ m.birth_date }}</td>
+              <td>{{ m.observation_date }}</td>
+              <td>{{ m.gestation_weeks}}</td>
+              <td>{{ m.gestation_days }}</td>
+              <td>{{ m.estimated_date_delivery }}</td>
+              <td>{{ m.decimal_age }}</td>
+              <td>{{ m.sex }}</td>
+              <td>{{ m.measurement_type }}</td>
+              <td>{{ m.measurement_value }}</td>
+              <td>{{ m.sds }}</td>
+              <td>{{ m.centile}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
         <button onclick="window.location.href='{{url_for('uploaded_data', id='get_excel')}}'" class="green ui button" type="submit">Download .XLSX</button>
-      <!-- </form> -->
+      </div>
+      {% else %}
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+              {% for message in messages %}
+                <div class="ui container">
+                  <div class='ui red icon message'>
+                    <i class="exclamation triangle icon"></i>
+                    <div class="content">
+                      <div class="header">
+                        Error importing data!
+                      </div>
+                      <p>{{message}}</p>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+              <div class="ui container" style="padding: 10px;">
+                <button onclick="window.location.href='{{url_for('import_growth_data')}}'" class="green ui button" type="submit">Return to Upload</button>
+              </div>
+            </ul>
+          {% endif %}
+        {% endwith %}
+      {% endif %}
   </div>
+  <style>
+    #data_container{
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+  </style>
 {% endblock %}
 
 

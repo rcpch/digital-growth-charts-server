@@ -137,16 +137,29 @@ def uploaded_data(id):
             for file_name in listdir(static_directory):
                 if file_name != 'dummy_data.xlsx':
                     file_path = path.join(static_directory, file_name)
-                    data_frame = controllers.import_excel_sheet(file_path, True)
-                    data = json.loads(data_frame)
-                    for i in data:
-                        if(i['birth_date']):
-                            i['birth_date'] =  datetime.strftime(datetime.fromtimestamp(i['birth_date']/1000), '%d/%m/%Y')
-                        if(i['observation_date']):    
-                            i['observation_date'] =  datetime.strftime(datetime.fromtimestamp(i['observation_date']/1000), '%d/%m/%Y')
-                        if(i['estimated_date_delivery']): 
-                            i['estimated_date_delivery'] =  datetime.strftime(datetime.fromtimestamp(i['estimated_date_delivery']/1000), '%d/%m/%Y')
-                    requested_data = data
+                    try:
+                        data_frame = controllers.import_excel_sheet(file_path, True)
+                    except ValueError as e: 
+                        print(e)
+                        flash(f"{e}")
+                        data=None
+                        render_template('uploaded_data.html', data=data)
+                    except LookupError as l:
+                        data=None
+                        print(l)
+                        flash(f"{l}")
+                        data=None
+                        render_template('uploaded_data.html', data=data)
+                    else:
+                        data = json.loads(data_frame)
+                        for i in data:
+                            if(i['birth_date']):
+                                i['birth_date'] =  datetime.strftime(datetime.fromtimestamp(i['birth_date']/1000), '%d/%m/%Y')
+                            if(i['observation_date']):    
+                                i['observation_date'] =  datetime.strftime(datetime.fromtimestamp(i['observation_date']/1000), '%d/%m/%Y')
+                            if(i['estimated_date_delivery']): 
+                                i['estimated_date_delivery'] =  datetime.strftime(datetime.fromtimestamp(i['estimated_date_delivery']/1000), '%d/%m/%Y')
+                        requested_data = data
             return render_template('uploaded_data.html', data=data)
         if id=='get_excel':
             excel_file = controllers.download_excel(requested_data)
