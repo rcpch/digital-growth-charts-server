@@ -521,7 +521,7 @@ chronological_decimal_age(birth_date: date, observation_date: date) -> float
 - Returns value floating point
 
 ```python
-corrected_decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_supplementary_days: int, pregnancy_length_days = 0)->float:
+corrected_decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int)->float:
 ```
 - Corrects for gestational age. 
 - Corrects for 1 year, if gestation at birth >= 32 weeks and < 37 weeks
@@ -540,7 +540,7 @@ estimated_date_delivery(birth_date: date, gestation_weeks: int, gestation_days: 
 - Will still calculate an estimated date of delivery if already term (>37 weeks)
 
 ```python
-corrected_gestational_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_supplementary_days: int)->str:
+corrected_gestational_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int)->str:
 ```
 - Returns a corrected gestational age for those babies not yet 42 weeks gestation
 

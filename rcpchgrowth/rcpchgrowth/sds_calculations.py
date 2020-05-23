@@ -65,7 +65,8 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str)->float
     try:
         lms = get_lms(age, measurement, sex)
     except:
-        print('unable to calculate SDS')
+        raise Exception('Cannot calculate this value')
+        print('Cannot calculate this value')
         
     l = lms['l']
     m = lms ['m']
@@ -384,3 +385,12 @@ Commented out but left for documentation to show process behind evaluation of ea
 # def time_functions():
 #   Used to test function run time. Needs timeit package importing also
     # return sds(-0.249144422,'weight',1.21,'female')
+
+# def test_data():
+#     array_to_add=[]
+#     decimal_ages=[0.021902806,0.021902806,0.021902806,0.186173854,0.353182752,0.52019165,0.689938398,0.856947296,1.023956194,1.185489391,1.352498289,1.519507187,1.689253936,1.856262834,2.023271732,2.184804928,2.351813826,2.518822724,2.688569473,2.855578371,3.022587269,3.184120465,3.351129363,3.518138261,3.68788501,3.854893908,4.021902806,4.186173854,4.353182752,4.52019165,4.689938398,4.856947296,5.023956194,5.185489391,5.352498289,5.519507187,5.689253936,5.856262834,6.023271732,6.184804928]
+#     measurement_types=["height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height"]
+#     for i in range(len(decimal_ages)):
+#         value = measurement_from_sds(measurement_types[i], 0.67, 'male', decimal_ages[i])
+#         array_to_add.append(value)
+#     return array_to_add

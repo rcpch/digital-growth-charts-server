@@ -122,8 +122,8 @@ def uploaded_data(id):
         static_directory = path.join(path.abspath(path.dirname(__file__)), "static/uploaded_data/")
         if id == 'example':
             file_path = path.join(static_directory, 'dummy_data.xlsx')
-            data_frame = controllers.import_excel_sheet(file_path, False)
-            data = json.loads(data_frame)
+            loaded_data = controllers.import_excel_sheet(file_path, False)
+            data = json.loads(loaded_data['data'])
             for i in data:
                 if(i['birth_date']):
                     i['birth_date'] =  datetime.strftime(datetime.fromtimestamp(i['birth_date']/1000), '%d/%m/%Y')
@@ -132,13 +132,14 @@ def uploaded_data(id):
                 if(i['estimated_date_delivery']): 
                     i['estimated_date_delivery'] =  datetime.strftime(datetime.fromtimestamp(i['estimated_date_delivery']/1000), '%d/%m/%Y')
             requested_data = data
-            return render_template('uploaded_data.html', data=data)
+            return render_template('uploaded_data.html', data=data, unique=loaded_data['unique'])
         if id == 'excel_sheet':
             for file_name in listdir(static_directory):
                 if file_name != 'dummy_data.xlsx':
                     file_path = path.join(static_directory, file_name)
                     try:
-                        data_frame = controllers.import_excel_sheet(file_path, True)
+                        child_data = controllers.import_excel_sheet(file_path, True)
+                        data_frame = child_data['data']
                     except ValueError as e: 
                         print(e)
                         flash(f"{e}")
@@ -160,7 +161,7 @@ def uploaded_data(id):
                             if(i['estimated_date_delivery']): 
                                 i['estimated_date_delivery'] =  datetime.strftime(datetime.fromtimestamp(i['estimated_date_delivery']/1000), '%d/%m/%Y')
                         requested_data = data
-            return render_template('uploaded_data.html', data=data)
+            return render_template('uploaded_data.html', data=data, unique=child_data['unique'])
         if id=='get_excel':
             excel_file = controllers.download_excel(requested_data)
             temp_directory = Path.cwd().joinpath("static").joinpath('uploaded_data').joinpath('temp')

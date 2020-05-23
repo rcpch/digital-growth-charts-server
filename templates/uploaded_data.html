@@ -10,7 +10,7 @@
           <thead>
             <th>index</th>
             <th>birth_date</th>
-            <th>observation_days</th>
+            <th>observation_date</th>
             <th>gestation_weeks</th>
             <th>gestation_days</th>
             <th>estimated_date_delivery</th>
@@ -44,6 +44,9 @@
           </tbody>
         </table>
         <button onclick="window.location.href='{{url_for('uploaded_data', id='get_excel')}}'" class="green ui button" type="submit">Download .XLSX</button>
+        {% if unique %}
+          <div class="ui green button" onclick="window.location.href='{{url_for('chart')}}'" type='submit'>Chart</div>
+        {% endif %}
       </div>
       {% else %}
         {% with messages = get_flashed_messages() %}

@@ -11,6 +11,7 @@ def import_excel_sheet(file_path: str, can_delete: bool):
     #TODO test excel sheet in appropriate format to receive data
     
     data_frame = pd.read_excel(file_path)
+    unique = True
     
     ## delete the file if not dummy_data.xlsx
     if can_delete:
@@ -46,18 +47,32 @@ def import_excel_sheet(file_path: str, can_delete: bool):
     data_frame['decimal_age']=data_frame.apply(lambda row: decimal_age_if_decimal_age_is_empty(row['decimal_age'], row['birth_date'], row['observation_date'], row['gestation_weeks'], row['gestation_days']), axis=1)
     data_frame['sds']=data_frame.apply(lambda row: sds_if_parameters(row['decimal_age'], row['measurement_type'], row['measurement_value'], row['sex']), axis=1)
     data_frame['centile']=data_frame.apply(lambda row: calculations.centile(row['sds']), axis=1)
+    if data_frame['birth_date'].nunique() > 1:
+        print('these are not the same patient') #do not chart these values
+        unique = False
     
-    return data_frame.to_json(orient='records', date_format='epoch')
+    return {
+        'data': data_frame.to_json(orient='records', date_format='epoch'),
+        'unique': unique
+    }
+
+
 
 def decimal_age_if_decimal_age_is_empty(decimal_age, dob, obs_date, gestation_weeks, gestation_days):
     if decimal_age:
         return decimal_age
     else:
-        return calculations.corrected_decimal_age(dob, obs_date, gestation_weeks, gestation_days)
+        corrected_decimal_age = calculations.corrected_decimal_age(dob, obs_date, gestation_weeks, gestation_days)
+        
+        return corrected_decimal_age
 
 def sds_if_parameters(decimal_age, measurement_type, measurement_value, sex):
     if decimal_age and measurement_type and measurement_value and sex:
-        return calculations.sds(decimal_age, measurement_type, measurement_value, sex)
+        try:
+            return calculations.sds(decimal_age, measurement_type, measurement_value, sex)
+        except:
+            print('could not calculate this value')
+            return 0
     else:
         return 0
 
