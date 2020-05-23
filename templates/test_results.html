@@ -29,6 +29,7 @@
                         <td>
                             {{result.patient.sex}}
                         </td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>
@@ -42,6 +43,7 @@
                         <td>
                             {{result.dates.gestation_weeks}}+{{result.dates.gestation_days}} weeks
                         </td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>
@@ -49,24 +51,27 @@
                                 
                                 <div class="content">
                                     Chronological Decimal Age
-                                <div class="sub header"></div>
+                                    <div class="sub header">                                
+                                    </div>
                                 </div>
                             </h4>
                         </td>
                         <td>
                             {{result.dates.chronological_decimal_age}} y
                         </td>
+                        <td class='chronological_decimal_age'>
+                            <i class="info green circle icon"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td>
-                        <h4 class="ui image header">
-                            
-                            <div class="content">
-                            Corrected Decimal Age
-                            <div class="sub header">
-                            </div>
-                        </div>
-                        </h4></td>
+                            <h4 class="ui image header">
+                                <div class="content">
+                                    Corrected Decimal Age
+                                    <div class="sub header"></div>
+                                </div>
+                            </h4>
+                        </td>
                         {% if result.dates.corrected_decimal_age != 'None' %}
                         <td>
                             {{result.dates.corrected_decimal_age}} y
@@ -75,19 +80,24 @@
                         <td>
                         </td>
                         {% endif %}
+                        <td class='chronological_decimal_age'>
+                            <i class="info green circle icon"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td>
-                        <h4 class="ui image header">
-                            
-                            <div class="content">
-                            Chronological Calendar Age
-                            <div class="sub header">
-                            </div>
-                        </div>
-                        </h4></td>
+                            <h4 class="ui image header">
+                                <div class="content">
+                                    <div class="sub header"></div>
+                                    Chronological Calendar Age
+                                </div>
+                            </h4>
+                        </td>
                         <td>
                             {{result.dates.chronological_calendar_age}}
+                        </td>
+                        <td class='chronological_decimal_age'>
+                            <i class="info green circle icon"></i>
                         </td>
                     </tr>
                     <tr>
@@ -103,6 +113,9 @@
                         <td>
                             {{result.dates.corrected_calendar_age}}
                         </td>
+                        <td class='chronological_decimal_age'>
+                            <i class="info green circle icon"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td>
@@ -116,6 +129,9 @@
                         </h4></td>
                         <td>
                             {{result.dates.edd_string}}
+                        </td>
+                        <td class='chronological_decimal_age'>
+                            <i class="info green circle icon"></i>
                         </td>
                     </tr>
                     <tr>
@@ -192,6 +208,9 @@
                         <td>
                             {{ result.calculations.height_centile }}  
                         </td>
+                        <td id='height_centile'>
+                            <i class="info green circle icon"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td>
@@ -238,6 +257,9 @@
                         </td>
                         <td>
                             {{ result.calculations.weight_centile }}  
+                        </td>
+                        <td id='weight_centile'>
+                            <i class="info green circle icon"></i>
                         </td>
                     </tr>
                     <tr>
@@ -286,6 +308,9 @@
                         <td>
                             {{ result.calculations.bmi_centile }}  
                         </td>
+                        <td id='bmi_centile'>
+                            <i class="info green circle icon"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td>
@@ -293,7 +318,6 @@
                                 <div class="content">
                                     Head Circumference
                                     <div class="sub header">
-                                        
                                     </div>
                                 </div>
                             </h4>
@@ -333,6 +357,9 @@
                         <td>
                             {{ result.calculations.ofc_centile }}  
                         </td>
+                        <td id='ofc_centile'>
+                            <i class="info green circle icon"></i>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -341,5 +368,37 @@
             <div class="ui green button" onclick="window.location.href='{{url_for('chart')}}'" type='submit'>Chart</div>
         </div>
     {% endif %}
+    <script>
+        $('.chronological_decimal_age').popup({
+            on: 'click',
+            setFluidWidth: true,
+            variation: 'wide green',
+            html: '<p><b>Clinician: </b>{{result.dates.clinician_decimal_age_comment}}</p><p><b>Parent/Carer:</b> {{result.dates.lay_decimal_age_comment}}</p>'
+        })  
+        $('#height_centile').popup({
+            on: 'click',
+            setFluidWidth: true,
+            variation: 'wide green',
+            html: '<p><b>Clinician: </b>{{result.calculations.clinician_height_comment}}</p><p><b>Parent/Carer:</b> {{result.calculations.lay_height_comment}}</p>'
+        }) 
+        $('#weight_centile').popup({
+            on: 'click',
+            setFluidWidth: true,
+            variation: 'wide green',
+            html: '<p><b>Clinician: </b>{{result.calculations.clinician_weight_comment}}</p><p><b>Parent/Carer:</b> {{result.calculations.lay_weight_comment}}</p>'
+        })
+        $('#bmi_centile').popup({
+            on: 'click',
+            setFluidWidth: true,
+            variation: 'wide green',
+            html: '<p><b>Clinician: </b>{{result.calculations.clinician_bmi_comment}}</p><p><b>Parent/Carer:</b> {{result.calculations.lay_bmi_comment}}</p>'
+        })
+        $('#ofc_centile').popup({
+            on: 'click',
+            setFluidWidth: true,
+            variation: 'wide green',
+            html: '<p><b>Clinician: </b>{{result.calculations.clinician_ofc_comment}}</p><p><b>Parent/Carer:</b> {{result.calculations.lay_ofc_comment}}</p>'
+        })         
+    </script>
                 
 {% endblock %}

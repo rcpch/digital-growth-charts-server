@@ -7,7 +7,7 @@ Marcus Baw, Helen Bedford, Simon Chapman, Tim Cole, Mary Fewtrell, Victoria Jack
 #### The Charts
 The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any child born after that date should be plotted on a UK-WHO Growth chart.  Children born before May 11th 2009 are already plotted on British 1990 (UK90) charts and subsequent measurements must be plotted using those charts. There should be no switch over of existing children to the new UK-WHO Charts.  After age 4 we revert to using UK90 charts. The source data for these charts are included in two spreadsheets as LMS tables. Together they define the UK-WHO growth charts, containing LMS values by age.  Also included are data not yet incorporated into a paper chart - for example, head circumference beyond 2 years.  These data can be freely used without charge as long as their source is acknowledged in any publications or products using them. Users may not claim any IP rights over them, derive financial gain from supplying the data to others, seek to restrict use of the data by others or use them for the purposes of advertising or promoting other products. Notwithstanding this limited grant of rights, the original copyright notices must continue to be reproduced in any copies of these materials.
 
-#### The UK RCPCH Growth Chart Application Program Interface (API) Project
+#### The UK RCPCH Growth Chart Application Program Interface (API) Project (RCPCHGrowth)
 This is the first national effort to produce validated and reliable SDS and Centile scores from UK Children's growth data. The project team was commissioned by NHS England to produce, in the first instance, an API (application program interface) to generate reliable results for growth data from children 1 y and below. The project team began work in May 2020.
 
 ### The LMS Method
@@ -41,7 +41,378 @@ skinfold for 0.25 to 5 yr.
 
 4. _Spiro.xls_: FEV1, FVC, FEV1FVC & FEF2575 for ages 4 to 80 yr.
 
-5. _LMSdata_BP.xls_: systoloc & diastolic blood pressure for ages 4 to 24 yr.
+5. _LMSdata_BP.xls_: systolic & diastolic blood pressure for ages 4 to 24 yr.
+
+### Medical Recommendations
+A particular stated requirement of RCPCHGrowth was not only to provide accurate and validated calculations against anthropometric data, but also to report alongside these clinical interpretations of the numbers generated. 
+
+Advice provided is of two kinds:
+- Advice for parents and carers
+- Advice for clinicians
+
+Advice reported is based on centile cut-offs:
+
+##### 0.04th Centile
+###### Height/Length
+- _Parent/Carer of child aged < 2y:_
+```
+"Your child has a lower or the same length as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
+```
+- _Parent/Carer of child aged >= 2y_
+```
+"Your child has a lower or the same height as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
+```
+- _Clinician_
+```
+"On or below the 0.04th centile for height. Medical review advised."
+```
+###### Weight
+- _Parent/Carer_
+```
+"Your child has a lower or the same weight as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
+```
+- _Clinician_
+```
+"On or below the 0.04th centile for weight. Medical review advised."
+```
+###### BMI
+- _Parent/Carer_
+```
+"Compared with other children the same height, age and sex, your child is below or the same weight as only 4 in every 1000 children. It is advisable to see your doctor."
+```
+- _Clinician_
+```
+"On or below the 0.04th centile. Medical review advised."
+```
+###### Head Circumference
+- _Parent/Carer_
+```
+"Your child 's head size is larger than or the same as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
+```
+- _Clinician_
+```
+"On or below the 0.04th centile for head circumference. Medical review advised."
+```
+##### 2nd Centile
+- _Parent/Care_of child aged < 2y:_
+```
+"Your child is in the lowest 2 percent for length, sex and age. Consider seeing your doctor."
+```
+- _Parent/Carer of child aged >= 2y_
+```
+"Your child is in the lowest 2 percent for height, sex and age. Consider seeing your doctor."
+```
+- _Clinician_
+```
+"On or below the 2nd centile. Consider reviewing trend."
+```
+###### Weight
+- _Parent/Carer_
+```
+"Your child is in the lowest 2 percent for weight compared with other children the same age and sex. Consider seeing your doctor."
+```
+- _Clinician_
+```
+"On or below the 2nd centile. Consider reviewing trend."
+```
+###### BMI
+- _Parent/Carer_
+```
+"Compared with other children the same height, age and sex, your child is is in the lowest 2 percent of the population for their weight. Consider seeing your doctor."
+```
+- _Clinician_
+```
+"On or below the 2nd centile. Consider reviewing trend."       
+```     
+###### Head Circumference
+- _Parent/Carer_
+```
+"Your child's head size is in the lowest 2 percent as other children the same sex and age. Consider seeing your doctor."
+```
+- _Clinician_
+```
+"On or below the 2nd centile for head circumference. Consider reviewing trend."
+```
+##### 9th Centile
+__Parent/Carer_of child aged < 2y:_
+```
+"Your child is in the lowest 9 percent of the population for length, sex and age."
+```
+- _Parent/Carer of child aged >= 2y_
+```
+"Your child is in the lowest 9 percent of the population for height, sex and age."
+```
+- _Clinician_
+```
+"On or below the 9th centile. Consider reviewing trend."
+```
+###### Weight
+- _Parent/Carer_
+```
+"Your child is in the lowest 9 percent of the population for weight compared with other children the same age and sex."
+```
+- _Clinician_
+```
+"On or below the 9th centile. Consider reviewing trend."
+```
+###### BMI
+- _Parent/Carer_
+```
+"Compared with other children the same height, age and sex, your child is in the lowest 9 percent of the population for weight."
+```
+- _Clinician_
+```
+"On or below the 9th centile. Consider reviewing trend."
+```
+###### Head Circumference
+- _Parent/Carer_
+```
+"Your child's head size is in the lowest 9 percent of the population for children the same sex and age."
+```
+- _Clinician_
+```
+"On or below the 9th centile for head circumference. Consider reviewing trend."
+##### 25th Centile
+```
+- _Parent/Care_of child aged < 2y:_
+```
+"Your child is in the lowest 1/4 of the population for length, sex and age."
+```
+- _Parent/Carer of child aged >= 2y_
+```
+"Your child is in the lowest 1/4 of the population for height, sex and age."
+```
+- _Clinician_
+```
+"On or below the 25th centile. Consider reviewing trend."
+```
+###### Weight
+- _Parent/Carer_
+```
+"Your child is in the lowest 1/4 of the population for weight, compared with other children the same age and sex."
+```
+- _Clinician_
+```
+"On or below the 25th centile. Consider reviewing trend."
+```
+###### BMI
+- _Parent/Carer_
+```
+"Compared with other children the same height, age and sex, your child is in the lowest 1/4 of the population for their weight."
+```
+- _Clinician_
+```
+"On or below the 25th centile. Consider reviewing trend."
+```
+###### Head Circumference
+- _Parent/Carer_
+```
+"Your child's head size is in the lowest 1/4 of the population compared with other children the same sex and age."
+```
+- _Clinician_
+```
+"On or below the 25th centile for head circumference. Consider reviewing trend."
+```
+##### 50th Centile
+- _Parent/Care_of child aged < 2y:_
+```
+"Your child is on or just below the average length of the population for sex and age."
+```
+- _Parent/Carer of child aged >= 2y_
+```
+"Your child is on or just below the average height of the population for sex and age."
+```
+- _Clinician_
+```
+"On or below the 50th centile."
+```
+###### Weight
+- _Parent/Carer_
+```
+"Your child is on or just below the average weight of the population, compared with other children the same age and sex."
+```
+- _Clinician_
+```
+"On or below the 50th centile."
+```
+###### BMI
+- _Parent/Carer_
+```
+"Compared with other children the same height, age and sex, your child is on or just below the average weight for the population ."
+```
+- _Clinician_
+```
+"On or below the 50th centile."
+```
+###### Head Circumference
+- _Parent/Carer_
+```
+"Your child is on or just below the average height of the population for sex and age."
+```
+- _Clinician_
+```
+"On or below the 50th centile for head circumference."
+```
+##### 75th Centile
+- _Parent/Care_of child aged < 2y:_
+```
+"Your child has the same or a shorter length than 75 percent of children the same age and sex."
+```
+- _Parent/Carer of child aged >= 2y_
+```
+"Your child has the same or a shorter height than 75 percent of children the same age and sex."
+```
+- _Clinician_
+```
+"On or below the 75th centile. Consider reviewing trend."
+```
+###### Weight
+- _Parent/Carer_
+```
+"Your child is below or the same as 75 percent of children the same age and sex. This does not take account of their height."
+```
+- _Clinician_
+```
+"On or below the 75th centile. Consider reviewing trend."
+```
+###### BMI
+- _Parent/Carer_
+```
+"Compared with other children the same height, age and sex, your child is below or the same as 75 percent of children for their weight."
+```
+- _Clinician_
+```
+"On or below the 75th centile. Consider reviewing trend."
+```
+###### Head Circumference
+- _Parent/Carer_
+```
+"Your child's head circumference is in the top 25 percent of children the same age and sex."
+```
+- _Clinician_
+```
+"On or below the 75th centile for head circumference. Consider reviewing trend."
+```
+##### 91st Centile
+- _Parent/Care_of child aged < 2y:_
+```
+"Your child is in the top 9 percent of children the same age and sex for their length."
+```
+- _Parent/Carer of child aged >= 2y_
+```
+"Your child is in the top 9 percent of children the same age and sex for their height."
+```
+- _Clinician_
+```
+"On or below the 91st centile. Consider reviewing trend."
+```
+###### Weight
+- _Parent/Carer_
+```
+"Your child is in the top 9 percent of children the same age and sex for their weight. This does not take account of their height."
+```
+- _Clinician_
+```
+"On or below the 91st centile. Consider reviewing trend."
+```
+###### BMI
+- _Parent/Carer_
+```
+"Compared with other children the same height, age and sex, your child is in the top 9 percent of children for their weight."
+```
+- _Clinician_
+```
+"On or below the 91st centile. Consider reviewing trend."
+```
+###### Head Circumference
+- _Parent/Carer_
+```
+"Your child's head circumference is in the top 9 percent of children the same age and sex."
+```
+- _Clinician_
+```
+"On or below the 91st centile for head circumference. Consider reviewing trend."
+```
+##### 98th Centile
+- _Parent/Care_of child aged < 2y:_
+```
+"Your child is in the top 2 percent of children the same age and sex for their length."
+```
+- _Parent/Carer of child aged >= 2y_
+```
+"Your child is in the top 2 percent of children the same age and sex for their height."
+```
+- _Clinician_
+```
+"On or below the 91st centile. Consider reviewing trend."
+```
+###### Weight
+- _Parent/Carer_
+```
+"Your child is in the top 2 percent of children the same age and sex for their weight. This does not take account of their height. Consider seeking medical review ."
+```
+- _Clinician_
+```
+"On or below the 91st centile. Consider reviewing trend."
+```
+###### BMI
+- _Parent/Carer_
+```
+"Compared with other children the same height, age and sex, your child is in the top 2 percent of children for their weight. Consider seeing your doctor."
+```
+- _Clinician_
+```
+"On or below the 98th centile. Meets definition for being overweight. Consider reviewing trend."
+```
+###### Head Circumference
+- _Parent/Carer_
+```
+"Your child's head circumference is in the top 2 percent of children the same age and sex. Consider seeing your doctor."
+```
+- _Clinician_
+```
+"On or below the 91st centile for head circumference. Consider reviewing trend."
+```
+#### 99.6th Centile
+- _Parent/Care_of child aged < 2y:_
+```
+"Your child is longer than only 4 children in every 1000 the same age and sex. Consider seeking medical review."
+```
+- _Parent/Carer of child aged >= 2y_
+```
+"Your child is taller than only 4 children in every 1000 the same age and sex. Consider seeking medical review."
+```
+- _Clinician_
+```
+"On or below the 99.6th centile. Consider medical review."
+```
+###### Weight
+- _Parent/Carer_
+```
+"Your child is taller than only 4 children in every 1000 the same age and sex. This does not take account of their height. Medical review is advised."
+```
+- _Clinician_
+```
+"On or below the 99.6th centile. Consider medical review."
+```
+###### BMI
+- _Parent/Carer_
+```
+"Compared with other children the same height, age and sex, your child 's  weight is lower than only 4 children in every 1000 childre. Medical review is advised."
+```
+- _Clinician_
+```
+"On or below the 99.6th centile. Above obesity threshold. Consider medical review."
+```
+###### Head Circumference
+- _Parent/Carer_
+```
+"Your child's head circumference is larger than only 4 children in every 1000 children the same age and sex. Medical review is advised."
+```
+- _Clinician_
+```
+"On or below the 99.6th centile for head circumference. Medical review is advised."
+```
 
 ### References
 1. Cole TJ, Freeman JV, Preece MA. British 1990 growth reference centiles for weight, height, body mass index and head circumference fitted by maximum penalized likelihood. Stat Med 1998;17:407-29. 
@@ -99,8 +470,8 @@ Naming is based on PEP 8 standards
             "chronological_calendar_age": "4 months, 1 week and 5 days",
             "corrected_decimal_age": 0.2,
             "corrected_calendar_age": "2 months, 1 week and 5 days",
-            "clinician_comment": "This is an age which has been corrected for prematurity.",
-            "lay_comment": "This takes into account your child's prematurity"
+            "clinician_decimal_age_comment": "This is an age which has been corrected for prematurity.",
+            "lay_decimal_age_comment": "This takes into account your child's prematurity"
     },
     "patient": {
         "height": 60.7,

@@ -41,10 +41,7 @@
         if(results.data[1].child.measurements.ofc > 0){
           ofc_data = results.data[0].centiles.ofc_centiles;
         }
-
-        
-        
-
+      
         for (i=0; i<measurements.length; i++){
 
           var centile_data_set = [];
@@ -61,7 +58,7 @@
             centile_data_set = weight_data
             axis_label = "Weight (kg)"
             measurement_label = 'Weight'
-          child_measurement = results.data[1].child.measurements.weight
+            child_measurement = results.data[1].child.measurements.weight
           }
           if(measurements[i] == 'bmi') {
             centile_data_set = bmi_data
