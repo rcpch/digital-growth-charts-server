@@ -459,41 +459,49 @@ Naming is based on PEP 8 standards
 
 
 -`201 Created` on success
+Each growth parameter generates a new json object in an array.
+Therefore height, weight and head circumference performed on the same day report an array of 3 JSON objects.
 ```json
-{
-    "dates": {
+[
+    {
+        "birth_data": {
             "birth_date": "03/01/2020",
-            "obs_date": "15/05/2020",
             "gestation_weeks": 31,
             "gestation_days": 3,
+        }
+        
+        "measurement_dates": {
+            "obs_date": "15/05/2020",
             "chronological_decimal_age": 0.36,
             "chronological_calendar_age": "4 months, 1 week and 5 days",
             "corrected_decimal_age": 0.2,
             "corrected_calendar_age": "2 months, 1 week and 5 days",
+            "corrected_gestational_age": ""
             "clinician_decimal_age_comment": "This is an age which has been corrected for prematurity.",
             "lay_decimal_age_comment": "This takes into account your child's prematurity"
-    },
-    "patient": {
-        "height": 60.7,
-        "weight": 6.3,
-        "bmi": 15.9,
-        "ofc": 40.2
-    },
-    "measurements": {
+        },
+        "child_measurement_value": {  
+            "height": 60.7,
+            "weight": 0.0,
+            "bmi": 0.0,
+            "ofc": 0.0
+        },
+        "measurement_calculated_values": {
             "height_sds": 1.20,
             "height_centile": 88,
             "clinician_height_commment": "This is in the top 15%. Serial data needed for comparison",
             "lay_height_comment": "Your child is tall for their age but in the normal range",
-            "weight_sds":  1.158,
-            "weight_centile": 88,
-            "clinician_height_commment": "This is in the top 15%. Serial data needed for comparison",
-            "lay_height_comment": "Your child has a higher weight for their age than average but is in the normal range",
-            "ofc_sds":  1.173,
-            "ofc_centile": 88,
-            "clinician_ofc_commment": "This is average. Serial data essential for comparison.",
-            "lay_ofc_comment": "Your child's head circumference is in the normal range. It is important to compare measurements over time.",
+            "weight_sds":  NULL,
+            "weight_centile": NULL,
+            "clinician_weight_commment": NULL,
+            "lay_weight_comment": NULL,
+            "ofc_sds":  NULL,
+            "ofc_centile": NULL,
+            "clinician_ofc_commment": NULL,
+            "lay_ofc_comment": NULL,
+        }
     }
-}
+]
 ```
 
 - `"decimal_age_in_years": float` age reported to 1 d.p. calculated as the difference in days between date of birth at 00:00 and date of observation at 00:00 divided by 365.25 (to account for leap years every 4 years)

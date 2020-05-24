@@ -1,3 +1,3 @@
-from .upload import import_excel_sheet, download_excel
+from .upload import import_excel_sheet, download_excel, prepare_data_as_array_of_measurement_objects
 from .calculations import perform_calculations
-from .chart import plot_centile
+from .chart import create_centile_values, create_data_plots

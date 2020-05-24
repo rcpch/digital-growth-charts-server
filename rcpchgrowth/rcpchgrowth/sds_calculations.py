@@ -207,7 +207,6 @@ def get_lms(age: float, measurement: str, sex: str)->list:
     if measurement == 'bmi':
         try:
             #this child < 2 weeks and BMI is requested
-            print(f'{measurement}')
             assert (age >= 0.038329911 and measurement == 'bmi'), 'There is no BMI reference data available for BMI below 2 weeks'
         except AssertionError as lower_bmi_threshold_error_message:
             print(lower_bmi_threshold_error_message)

@@ -3,11 +3,20 @@
   <h1>{% block title %}Growth Charts{% endblock %}</h1>
 {% endblock %}
 {% block content %}
-    <div class="ui container">
-      <canvas id="heightChart" width="200" height="200"></canvas>        
-      <canvas id="weightChart" width="200" height="200"></canvas>        
-      <canvas id="bmiChart" width="200" height="200"></canvas>        
-      <canvas id="ofcChart" width="200" height="200"></canvas>        
+    <div class="ui centered aligned grid">
+      <div class="ui container">
+        <canvas id="heightChart" width="200" height="200"></canvas>        
+      </div>
+      <div class="ui container">
+        <canvas id="weightChart" width="200" height="200"></canvas>        
+      </div>
+      <div class="ui container">
+        <canvas id="bmiChart" width="200" height="200"></canvas>
+      </div>
+      <div class="ui container">
+        <canvas id="ofcChart" width="200" height="200"></canvas>
+      </div>
+    </div>      
     <script>
 
       var girl = 'rgba(217, 49, 155, 1.0)';
@@ -17,29 +26,30 @@
       var weight_data = [];
       var ofc_data = [];
       var measurements = ['height', 'weight', 'bmi', 'ofc']
-      var child_measurement = 0.0;
+      var max_ticks = 0;
 
       var getData = $.get('/chart_data');
       getData.done(function(results) {
-
-        if (results.data[1].child.measurements.sex == 'male') {
+        
+        if (results.sex == 'male') {
           sex_color = boy;
         }
-        if (results.data[1].child.measurements.sex == 'female') {
+        if (results.sex == 'female') {
           sex_color = girl;
         }
-
-        if(results.data[1].child.measurements.height > 0){
-          height_data = results.data[0].centiles.height_centiles;
+        
+        /// select which centile charts to show
+        if(results.child_data.heights.length > 0){
+          height_data = results.centile_data.height_centiles;
         }
-        if(results.data[1].child.measurements.weight > 0){
-          weight_data = results.data[0].centiles.weight_centiles;
+        if(results.child_data.weights.length > 0){
+          weight_data = results.centile_data.weight_centiles;
         }  
-        if(results.data[1].child.measurements.bmi > 0){
-          bmi_data = results.data[0].centiles.bmi_centiles;
+        if(results.child_data.bmis.length > 0){
+          bmi_data = results.centile_data.bmi_centiles;
         }
-        if(results.data[1].child.measurements.ofc > 0){
-          ofc_data = results.data[0].centiles.ofc_centiles;
+        if(results.child_data.ofcs.length > 0){
+          ofc_data = results.centile_data.ofc_centiles;
         }
       
         for (i=0; i<measurements.length; i++){
@@ -52,29 +62,33 @@
             centile_data_set = height_data
             axis_label = "Length/Height (cm)"
             measurement_label = 'Length/Height'
-            child_measurement = results.data[1].child.measurements.height
+            child_measurement = results.child_data.heights
+            max_ticks = 200;
           }
           if(measurements[i] == 'weight') {
             centile_data_set = weight_data
             axis_label = "Weight (kg)"
             measurement_label = 'Weight'
-            child_measurement = results.data[1].child.measurements.weight
+            child_measurement = results.child_data.weights
+            max_ticks = 180;
           }
           if(measurements[i] == 'bmi') {
             centile_data_set = bmi_data
             axis_label = "BMI (kg/2)"
             measurement_label = 'Body Mass Index'
-            child_measurement = results.data[1].child.measurements.bmi
+            child_measurement = results.child_data.bmis
+            max_ticks = 65;
           }
           if(measurements[i] == 'ofc') {
             centile_data_set = ofc_data
             axis_label = "Head Circumference (cm)"
             measurement_label = 'Head Circumference'
-            child_measurement = results.data[1].child.measurements.ofc
+            child_measurement = results.child_data.ofcs
+            max_ticks = 70;
           }
 
            var data = {
-                  labels:results.data.sds,
+                  // labels:results.data.sds,
                   datasets:[
                     {
                       label: '0.04th',
@@ -180,28 +194,25 @@
                     },
                     {
                       label: 'Measurement',
-                      data: [{
-                        x: results.data[1].child.dates.chronological_decimal_age,
-                        y: child_measurement
-                      }],
-                      fill: true,
+                      data: child_measurement,
+                      fill: false,
                       borderColor: 'rgba(0, 0, 0, 1.0)',
                       borderWidth: 1.0,
                       pointRadius: 1.0,
                       pointStyle: 'circle',
                     },
-                    {
-                      label: 'Measurement Corrected For Gestational Age',
-                      data: [{
-                        x: results.data[1].child.dates.corrected_decimal_age,
-                        y: child_measurement
-                      }],
-                      fill: true,
-                      borderColor: 'rgba(0, 0, 0, 1.0)',
-                      borderWidth: 1.0,
-                      pointRadius: 3.0,
-                      pointStyle: 'crossRot',
-                    }
+                    // {
+                    //   label: 'Measurement Corrected For Gestational Age',
+                    //   data: [{
+                    //     x: results.data[1].child.date.corrected_decimal_age,
+                    //     y: child_measurement
+                    //   }],
+                    //   fill: true,
+                    //   borderColor: 'rgba(0, 0, 0, 1.0)',
+                    //   borderWidth: 1.0,
+                    //   pointRadius: 3.0,
+                    //   pointStyle: 'crossRot',
+                    // }
 
                   ]
                 }
@@ -241,9 +252,7 @@
                         },
                         ticks: {
                           min: 0,
-                          max: 180,
-                          stepSize: 1,
-                          fixedStepSize: 1,
+                          max: max_ticks,
                           fontStyle: 'bold'
                         }
                       }]
@@ -255,7 +264,7 @@
                     type: 'line',
                     data: data,
                     options: options
-                  })
+                  });
                 }
                 if (measurements[i] == 'weight'){
                   var weightCtx = document.getElementById('weightChart').getContext('2d');
@@ -263,14 +272,15 @@
                     type: 'line',
                     data: data,
                     options: options
-                })
+                  });
+                }
                 if (measurements[i] == 'bmi'){
                   var bmiCtx = document.getElementById('bmiChart').getContext('2d');
                   var bmiChart = new Chart(bmiCtx, {
                     type: 'line',
                     data: data,
                     options: options
-                  })
+                  });
                 }
                 if (measurements[i] == 'ofc'){
                   var ofcCtx = document.getElementById('ofcChart').getContext('2d');
@@ -278,11 +288,9 @@
                     type: 'line',
                     data: data,
                     options: options
-                })
-              }
-            }         
-          }    
-        });
+                  });
+                }
+            } 
+          });
       </script> 
-    </div>
 {% endblock %}

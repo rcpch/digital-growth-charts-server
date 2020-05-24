@@ -27,7 +27,7 @@
                             </h4>
                         </td>
                         <td>
-                            {{result.patient.sex}}
+                            {{result[0].birth_data.sex}}
                         </td>
                         <td></td>
                     </tr>
@@ -41,7 +41,7 @@
                             </h4>
                         </td>
                         <td>
-                            {{result.dates.gestation_weeks}}+{{result.dates.gestation_days}} weeks
+                            {{result[0].birth_data.gestation_weeks}}+{{result[0].birth_data.gestation_days}} weeks
                         </td>
                         <td></td>
                     </tr>
@@ -57,7 +57,7 @@
                             </h4>
                         </td>
                         <td>
-                            {{result.dates.chronological_decimal_age}} y
+                            {{result[0].measurement_dates.chronological_decimal_age}} y
                         </td>
                         <td class='chronological_decimal_age'>
                             <i class="info green circle icon"></i>
@@ -72,9 +72,9 @@
                                 </div>
                             </h4>
                         </td>
-                        {% if result.dates.corrected_decimal_age != 'None' %}
+                        {% if result[0].measurement_dates.corrected_decimal_age != 'None' %}
                         <td>
-                            {{result.dates.corrected_decimal_age}} y
+                            {{result[0].measurement_dates.corrected_decimal_age}} y
                         </td>
                         {% else %}
                         <td>
@@ -94,7 +94,7 @@
                             </h4>
                         </td>
                         <td>
-                            {{result.dates.chronological_calendar_age}}
+                            {{result[0].measurement_dates.chronological_calendar_age}}
                         </td>
                         <td class='chronological_decimal_age'>
                             <i class="info green circle icon"></i>
@@ -111,7 +111,7 @@
                         </div>
                         </h4></td>
                         <td>
-                            {{result.dates.corrected_calendar_age}}
+                            {{result[0].measurement_dates.corrected_calendar_age}}
                         </td>
                         <td class='chronological_decimal_age'>
                             <i class="info green circle icon"></i>
@@ -128,7 +128,7 @@
                         </div>
                         </h4></td>
                         <td>
-                            {{result.dates.edd_string}}
+                            {{result[0].measurement_dates.edd_string}}
                         </td>
                         <td class='chronological_decimal_age'>
                             <i class="info green circle icon"></i>
@@ -145,7 +145,7 @@
                         </div>
                         </h4></td>
                         <td>
-                            {{result.dates.corrected_gestational_age}}
+                            {{result[0].measurement_dates.corrected_gestational_age}}
                         </td>
                     </tr>
                 </tbody>
@@ -173,9 +173,13 @@
                                 </div>
                             </h4>
                         </td>
-                        <td>
-                            {{ result.patient.height }} cm
-                        </td>
+                        {% for measurement in result %}
+                            {% if measurement.child_measurement_value.height %}
+                                <td>
+                                    {{ measurement.child_measurement_value.height }} cm
+                                </td>
+                            {% endif %}
+                        {% endfor %}
                     </tr>
                     <tr>
                         <td>
@@ -188,11 +192,15 @@
                                 </div>
                             </h4>
                         </td>
-                        <td>
-                            <div class="ui blue header">
-                                {{ result.calculations.height_sds }}
-                            </div>
-                        </td>
+                        {% for measurement in result %}
+                            {% if measurement.measurement_calculated_values.height_sds %}
+                            <td>
+                                <div class="ui blue header">
+                                    {{ measurement.measurement_calculated_values.height_sds }}
+                                </div>
+                            </td>
+                            {% endif %}
+                        {% endfor %}
                     </tr>
                     <tr>
                         <td>
@@ -205,9 +213,15 @@
                                 </div>
                             </h4>
                         </td>
-                        <td>
-                            {{ result.calculations.height_centile }}  
-                        </td>
+                        {% for measurement in result %}
+                            {% if measurement.measurement_calculated_values.height_centile %}
+                                <td>
+                                    <div class="ui blue header">
+                                        {{ measurement.measurement_calculated_values.height_centile }}
+                                    </div>
+                                </td>
+                            {% endif %}
+                        {% endfor %}
                         <td id='height_centile'>
                             <i class="info green circle icon"></i>
                         </td>
@@ -223,9 +237,13 @@
                                 </div>
                             </h4>
                         </td>
-                        <td>
-                            {{ result.patient.weight }} kg
-                        </td>
+                        {% for measurement in result %}
+                            {% if measurement.child_measurement_value.weight %}
+                                <td>
+                                    {{ measurement.child_measurement_value.weight }} kg
+                                </td>
+                            {% endif %}
+                        {% endfor %}
                     </tr>
                     <tr>
                         <td>
@@ -238,11 +256,15 @@
                                 </div>
                             </h4>
                         </td>
-                        <td>
-                            <div class="ui blue header">
-                                {{ result.calculations.weight_sds }}
-                            </div>
-                        </td>
+                        {% for measurement in result %}
+                            {% if measurement.measurement_calculated_values.weight_sds %}
+                                <td>
+                                    <div class="ui blue header">
+                                        {{ measurement.measurement_calculated_values.weight_sds }}
+                                    </div>
+                                </td>
+                            {% endif %}
+                        {% endfor %}
                     </tr>
                     <tr>
                         <td>
@@ -255,9 +277,15 @@
                                 </div>
                             </h4>
                         </td>
-                        <td>
-                            {{ result.calculations.weight_centile }}  
-                        </td>
+                        {% for measurement in result %}
+                            {% if measurement.measurement_calculated_values.weight_centile %}
+                                <td>
+                                    <div class="ui blue header">
+                                        {{ measurement.measurement_calculated_values.weight_centile }}
+                                    </div>
+                                </td>
+                            {% endif %}
+                        {% endfor %}
                         <td id='weight_centile'>
                             <i class="info green circle icon"></i>
                         </td>
@@ -273,9 +301,13 @@
                                 </div>
                             </h4>
                         </td>
-                        <td>
-                            {{ result.patient.bmi }} kg/m<sup>2</sup>
-                        </td>
+                        {% for measurement in result %}
+                            {% if measurement.child_measurement_value.bmi %}
+                                <td>
+                                    {{ measurement.child_measurement_value.bmi }} kg/m2
+                                </td>
+                            {% endif %}
+                        {% endfor %}
                     </tr>
                     <tr>
                         <td>
@@ -288,11 +320,15 @@
                                 </div>
                             </h4>
                         </td>
-                        <td>
-                            <div class="ui blue header">
-                                {{ result.calculations.bmi_sds }}
-                            </div>
-                        </td>
+                        {% for measurement in result %}
+                                {% if measurement.measurement_calculated_values.bmi_sds %}
+                                    <td>
+                                        <div class="ui blue header">
+                                            {{ measurement.measurement_calculated_values.bmi_sds }}
+                                        </div>
+                                    </td>
+                                {% endif %}
+                        {% endfor %}
                     </tr>
                     <tr>
                         <td>
@@ -305,12 +341,18 @@
                                 </div>
                             </h4>
                         </td>
-                        <td>
-                            {{ result.calculations.bmi_centile }}  
-                        </td>
-                        <td id='bmi_centile'>
-                            <i class="info green circle icon"></i>
-                        </td>
+                        {% for measurement in result %}
+                                {% if measurement.measurement_calculated_values.bmi_centile %}
+                                    <td>
+                                        <div class="ui blue header">
+                                            {{ measurement.measurement_calculated_values.bmi_centile }}
+                                        </div>
+                                    </td>
+                                {% endif %}
+                            {% endfor %}
+                            <td id='bmi_centile'>
+                                <i class="info green circle icon"></i>
+                            </td>
                     </tr>
                     <tr>
                         <td>
@@ -322,9 +364,13 @@
                                 </div>
                             </h4>
                         </td>
-                        <td>
-                            {{ result.patient.ofc }}
-                        </td>
+                        {% for measurement in result %}
+                            {% if measurement.child_measurement_value.ofc %}
+                                <td>
+                                    {{ measurement.child_measurement_value.ofc }} cm
+                                </td>
+                            {% endif %}
+                        {% endfor %}
                     </tr>
                     <tr>
                         <td>
@@ -337,11 +383,15 @@
                                 </div>
                             </h4>
                         </td>
-                        <td>
-                            <h4 class="ui blue header">
-                                {{ result.calculations.ofc_sds }}
-                            </h4>
-                        </td>
+                        {% for measurement in result %}
+                                {% if measurement.measurement_calculated_values.ofc_sds %}
+                                    <td>
+                                        <div class="ui blue header">
+                                            {{ measurement.measurement_calculated_values.ofc_sds }}
+                                        </div>
+                                    </td>
+                                {% endif %}
+                            {% endfor %}
                     </tr>
                     <tr>
                         <td>
@@ -354,12 +404,19 @@
                                 </div>
                             </h4>
                         </td>
-                        <td>
-                            {{ result.calculations.ofc_centile }}  
-                        </td>
-                        <td id='ofc_centile'>
-                            <i class="info green circle icon"></i>
-                        </td>
+                        {% for measurement in result %}
+                                {% if measurement.measurement_calculated_values.ofc_centile %}
+                                    <td>
+                                        <div class="ui blue header">
+                                            {{ measurement.measurement_calculated_values.ofc_centile }}
+                                        </div>
+                                    </td>
+                                    
+                                {% endif %}
+                            {% endfor %}
+                            <td id='ofc_centile'>
+                                <i class="info green circle icon"></i>
+                            </td>
                     </tr>
                 </tbody>
             </table>
@@ -373,31 +430,31 @@
             on: 'click',
             setFluidWidth: true,
             variation: 'wide green',
-            html: '<p><b>Clinician: </b>{{result.dates.clinician_decimal_age_comment}}</p><p><b>Parent/Carer:</b> {{result.dates.lay_decimal_age_comment}}</p>'
+            html: '<p><b>Clinician: </b>{{result[0].measurement_calculated_values.clinician_decimal_age_comment}}</p><p><b>Parent/Carer:</b> {{result[0].measurement_calculated_values.lay_decimal_age_comment}}</p>'
         })  
         $('#height_centile').popup({
             on: 'click',
             setFluidWidth: true,
             variation: 'wide green',
-            html: '<p><b>Clinician: </b>{{result.calculations.clinician_height_comment}}</p><p><b>Parent/Carer:</b> {{result.calculations.lay_height_comment}}</p>'
+            html: '<p><b>Clinician: </b>{{result[0].measurement_calculated_values.clinician_height_comment}}</p><p><b>Parent/Carer:</b> {{result[0].measurement_calculated_values.lay_height_comment}}</p>'
         }) 
         $('#weight_centile').popup({
             on: 'click',
             setFluidWidth: true,
             variation: 'wide green',
-            html: '<p><b>Clinician: </b>{{result.calculations.clinician_weight_comment}}</p><p><b>Parent/Carer:</b> {{result.calculations.lay_weight_comment}}</p>'
+            html: '<p><b>Clinician: </b>{{result[0].measurement_calculated_values.clinician_weight_comment}}</p><p><b>Parent/Carer:</b> {{result[0].measurement_calculated_values.lay_weight_comment}}</p>'
         })
         $('#bmi_centile').popup({
             on: 'click',
             setFluidWidth: true,
             variation: 'wide green',
-            html: '<p><b>Clinician: </b>{{result.calculations.clinician_bmi_comment}}</p><p><b>Parent/Carer:</b> {{result.calculations.lay_bmi_comment}}</p>'
+            html: '<p><b>Clinician: </b>{{result[0].measurement_calculated_values.clinician_bmi_comment}}</p><p><b>Parent/Carer:</b> {{result[0].measurement_calculated_values.lay_bmi_comment}}</p>'
         })
         $('#ofc_centile').popup({
             on: 'click',
             setFluidWidth: true,
             variation: 'wide green',
-            html: '<p><b>Clinician: </b>{{result.calculations.clinician_ofc_comment}}</p><p><b>Parent/Carer:</b> {{result.calculations.lay_ofc_comment}}</p>'
+            html: '<p><b>Clinician: </b>{{result[0].measurement_calculated_values.clinician_ofc_comment}}</p><p><b>Parent/Carer:</b> {{result[0].measurement_calculated_values.lay_ofc_comment}}</p>'
         })         
     </script>
                 

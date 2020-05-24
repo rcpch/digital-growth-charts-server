@@ -15,21 +15,34 @@ app.config['SECRET_KEY'] = 'UK_WHO' #not very secret - this will need complicati
 
 from app import app
 
-# @app.route('/favicon.ico')
-# def favicon():
-#     return send_from_directory(os.path.join(app.root_path, 'static'),
-#                                'favicon.ico', mimetype='image/vnd.microsoft.icon')    
+"""
+Uses session variables to store form or uploaded unique child data
+These session variables are accessed when user wants to download the calculated data,
+or chart them.
+    session["results"] are the form data entered by the user or uploaded from excel
+    session["serial_data"] is a boolean value flagging if data are single measurements 
+    or serial unique patient data
+"""  
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
     form = MeasurementForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
+
+            # collect user form entries and perform date and SDS/Centile calculations
             results = controllers.perform_calculations(form)
-            # return render_template('test_results.html', results=results)
+
+            # store the results in a session for access by tables and charts later
             session['results'] = results
+
+            # flag to differentiate between individual plot and serial data plot
+            session['serial_data'] = False
+
             return redirect(url_for('results', id='table'))
+
         # form not validated. Need flash warning here
+
         return render_template('measurement_form.html', form = form)
     else:
         return render_template('measurement_form.html', form = form)
@@ -48,9 +61,33 @@ def chart():
 
 @app.route("/chart_data", methods=['GET'])
 def chart_data():
-    patient_results = session.get('results')
-    data = controllers.plot_centile(patient_results)
-    return jsonify({'data': data})
+    # Retrieve child data for charting
+    results = session.get('results')
+    # Retrieve source of data
+    unique = session.get('serial_data')
+    if unique:
+        #data come from a table and are not formatted for the charts
+        formatted_child_data = controllers.prepare_data_as_array_of_measurement_objects(results)
+        
+        # Prepare data from plotting
+        child_data = controllers.create_data_plots(formatted_child_data)
+        # Retrieve sex of child to select correct centile charts
+        sex = formatted_child_data[0]['birth_data']['sex']
+        
+    else:
+        # Prepare data from plotting
+        child_data = controllers.create_data_plots(results)
+        # Retrieve sex of child to select correct centile charts
+        sex = results[0]['birth_data']['sex']
+
+    # Create Centile Charts
+    centiles = controllers.create_centile_values(sex)
+
+    return jsonify({
+        'sex': sex,
+        'child_data': child_data,
+        'centile_data': centiles
+    })
 
 @app.route("/instructions", methods=['GET'])
 def instructions():
@@ -124,6 +161,9 @@ def uploaded_data(id):
             file_path = path.join(static_directory, 'dummy_data.xlsx')
             loaded_data = controllers.import_excel_sheet(file_path, False)
             data = json.loads(loaded_data['data'])
+            """
+            converts ISO8601 to UK readable dates - need to transfer to controller as separate method
+            """
             for i in data:
                 if(i['birth_date']):
                     i['birth_date'] =  datetime.strftime(datetime.fromtimestamp(i['birth_date']/1000), '%d/%m/%Y')
@@ -136,33 +176,70 @@ def uploaded_data(id):
         if id == 'excel_sheet':
             for file_name in listdir(static_directory):
                 if file_name != 'dummy_data.xlsx':
+                    """
+                    Loop through static/upload folder
+                    Avoid the example sheet
+                    Save there temporarily, import the data then delete
+                    """
                     file_path = path.join(static_directory, file_name)
                     try:
+                        # import the data from excel and validate
                         child_data = controllers.import_excel_sheet(file_path, True)
+                        # extract the dataframe
                         data_frame = child_data['data']
-                    except ValueError as e: 
+                    
+                    except ValueError as e:
+                        """
+                        Error handler - uploaded sheet is incompatible: missing essential data
+                        """
                         print(e)
                         flash(f"{e}")
                         data=None
                         render_template('uploaded_data.html', data=data)
                     except LookupError as l:
+                        """
+                        Error handler - uploaded sheet is incompatible: headings are missing or too many or misspelled
+                        """
+
                         data=None
                         print(l)
                         flash(f"{l}")
                         data=None
                         render_template('uploaded_data.html', data=data)
+                    
                     else:
+                        """
+                        Data is correct format
+                        Load as JSON and report to table
+                        If the imported data is all same patient (on basis of unique birth_date),
+                        offer the opportunity to chart it
+                        Array of individual patient data could later be analysed for SDS drift
+                        """
+
+                        #convert dataframe to JSON
                         data = json.loads(data_frame)
+
+                        """
+                        creates UK date strings from ISO8601
+                        """
                         for i in data:
                             if(i['birth_date']):
                                 i['birth_date'] =  datetime.strftime(datetime.fromtimestamp(i['birth_date']/1000), '%d/%m/%Y')
-                            if(i['observation_date']):    
+                            if(i['observation_date']):
                                 i['observation_date'] =  datetime.strftime(datetime.fromtimestamp(i['observation_date']/1000), '%d/%m/%Y')
                             if(i['estimated_date_delivery']): 
                                 i['estimated_date_delivery'] =  datetime.strftime(datetime.fromtimestamp(i['estimated_date_delivery']/1000), '%d/%m/%Y')
+                        
+                        # store the JSON in global variable for conversion back to excel format for download if requested
                         requested_data = data
-            return render_template('uploaded_data.html', data=data, unique=child_data['unique'])
-        if id=='get_excel':
+                        
+                        # if unique data(single child, not multiple children) store in session for access by chart if requested
+                        session['results'] = requested_data
+                        session['serial_data'] = True
+                ## errors here ??
+            return render_template('uploaded_data.html', data=data, unique=child_data['unique']) #unique is a flag to indicate if unique child or multiple children
+        
+        if id=='get_excel': ##broken needs fix - file deleted so can't download
             excel_file = controllers.download_excel(requested_data)
             temp_directory = Path.cwd().joinpath("static").joinpath('uploaded_data').joinpath('temp')
             return send_from_directory(temp_directory, filename='output.xlsx', as_attachment=True)

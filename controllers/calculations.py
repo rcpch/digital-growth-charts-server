@@ -39,6 +39,9 @@ def perform_calculations(form):
     clinician_decimal_age_comment = ''
     lay_decimal_age_comment = ''
 
+    array_of_measurement_objects = [];
+    return_measurement_object = {}
+
     if chronological_decimal_age == corrected_decimal_age:
         corrected_decimal_age = 'None'
         age = chronological_decimal_age
@@ -56,6 +59,7 @@ def perform_calculations(form):
         corrected_gestational_age = calculations.corrected_gestational_age(birth_date, obs_date, gestation_weeks, gestation_days)
         lay_decimal_age_comment =   "Your child's prematurity has been accounted for when considering their growth ."
         clinician_decimal_age_comment =  "Correction for gestational age has been made ."
+
     if height > 0.0:
         if age >= -0.287474333: # there is no length data below 25 weeks gestation
             height_sds = calculations.sds(age, 'height', height, sex)
@@ -63,12 +67,18 @@ def perform_calculations(form):
             comment = interpret('height', height_centile, age)
             clinician_height_comment = comment["clinician_comment"]
             lay_height_comment = comment["lay_comment"]
+            ## create return object
+            return_measurement_object = create_measurement_object(birth_date, edd, obs_date, edd_string, sex, chronological_decimal_age, chronological_calendar_age, gestation_weeks, gestation_days, corrected_decimal_age, corrected_calendar_age, corrected_gestational_age, clinician_decimal_age_comment, lay_decimal_age_comment,height_sds,height_centile,clinician_height_comment,lay_height_comment,None,None,None,None,None,None,None,None,None,None,None,None, height, None, None, None)
+            array_of_measurement_objects.append(return_measurement_object)
     if weight > 0.0:
         weight_sds = calculations.sds(age, 'weight', weight, sex)
         weight_centile = calculations.centile(weight_sds)
         comment = interpret('weight', weight_centile, age)
         clinician_weight_comment = comment['clinician_comment']
         lay_weight_comment = comment['lay_comment']
+        ## create return object
+        return_measurement_object = create_measurement_object(birth_date, edd, obs_date, edd_string, sex, chronological_decimal_age, chronological_calendar_age, gestation_weeks, gestation_days, corrected_decimal_age, corrected_calendar_age, corrected_gestational_age, clinician_decimal_age_comment, lay_decimal_age_comment,None,None,None,None,weight_sds,weight_centile,clinician_weight_comment,lay_weight_comment,None,None,None,None,None,None,None,None, None, weight, None , None)
+        array_of_measurement_objects.append(return_measurement_object)
     if height > 0.0 and weight > 0.0:
         bmi = calculations.bmi_from_height_weight(height, weight)
         if age > 0.038329911: # BMI data not present < 42 weeks gestation
@@ -77,6 +87,9 @@ def perform_calculations(form):
             comment = interpret('bmi', bmi_centile, age)
             clinician_bmi_comment = comment['clinician_comment']
             lay_bmi_comment = comment['lay_comment']
+            ## create return object
+            return_measurement_object = create_measurement_object(birth_date, edd, obs_date, edd_string, sex, chronological_decimal_age, chronological_calendar_age, gestation_weeks, gestation_days, corrected_decimal_age, corrected_calendar_age, corrected_gestational_age, clinician_decimal_age_comment, lay_decimal_age_comment,None,None,None,None,None,None,None,None,bmi_sds,bmi_centile,clinician_bmi_comment,lay_bmi_comment,None,None,None,None, None, None, bmi, None)
+            array_of_measurement_objects.append(return_measurement_object)
     if ofc > 0.0:
         if (age <= 17 and sex == 'female') or (age <= 18.0 and sex == 'male'): # OFC data not present >17y in girls or >18y in boys
             ofc_sds = calculations.sds(age, 'ofc', ofc, sex)
@@ -84,7 +97,61 @@ def perform_calculations(form):
             comment = interpret('ofc', ofc_centile, age)
             clinician_ofc_comment = comment['clinician_comment']
             lay_ofc_comment = comment['lay_comment']
-    return {"dates": {"birth_date": birth_date, "obs_date": obs_date, "gestation_weeks": gestation_weeks, "gestation_days": gestation_days, "chronological_decimal_age": chronological_decimal_age, "corrected_decimal_age": corrected_decimal_age, "chronological_calendar_age": chronological_calendar_age, "corrected_calendar_age": corrected_calendar_age, "edd": edd, "edd_string": edd_string, "corrected_gestational_age": corrected_gestational_age, 'clinician_decimal_age_comment': clinician_decimal_age_comment, 'lay_decimal_age_comment': lay_decimal_age_comment}, "patient": {"sex": sex, "height": height, "weight": weight, "bmi": bmi, "ofc": ofc}, "calculations": {"height_sds": height_sds, "height_centile": height_centile, 'clinician_height_comment': clinician_height_comment, 'lay_height_comment': lay_height_comment, "weight_sds": weight_sds, "weight_centile":weight_centile, 'clinician_weight_comment': clinician_weight_comment, 'lay_weight_comment': lay_weight_comment, "bmi_sds": bmi_sds, "bmi_centile": bmi_centile, 'clinician_bmi_comment': clinician_bmi_comment, 'lay_bmi_comment': lay_bmi_comment, "ofc_sds": ofc_sds, "ofc_centile": ofc_centile, 'clinician_ofc_comment': clinician_ofc_comment, 'lay_ofc_comment': lay_ofc_comment,} }
+            ## create return object
+            return_measurement_object = create_measurement_object(birth_date, edd, obs_date, edd_string, sex, chronological_decimal_age, chronological_calendar_age, gestation_weeks, gestation_days, corrected_decimal_age, corrected_calendar_age, corrected_gestational_age, clinician_decimal_age_comment, lay_decimal_age_comment,None,None,None,None,None,None,None,None,None,None,None,None, ofc_sds, ofc_centile, clinician_ofc_comment,lay_ofc_comment, None, None, None, ofc)
+            array_of_measurement_objects.append(return_measurement_object)
+    
+    return array_of_measurement_objects
+    
+
+def create_measurement_object(birth_date, edd, obs_date, edd_string, sex, chronological_decimal_age, chronological_calendar_age: str, gestation_weeks, gestation_days, corrected_decimal_age, corrected_calendar_age, corrected_gestational_age, clinician_decimal_age_comment, lay_decimal_age_comment,height_sds,height_centile,clinician_height_comment,lay_height_comment,weight_sds,weight_centile,clinician_weight_comment,lay_weight_comment,bmi_sds,bmi_centile,clinician_bmi_comment,lay_bmi_comment, ofc_sds, ofc_centile, clinician_ofc_comment,lay_ofc_comment, height, weight, bmi, ofc):
+
+    return {
+                "birth_data": {
+                    "birth_date": birth_date, 
+                    "gestation_weeks": gestation_weeks, 
+                    "gestation_days": gestation_days, 
+                    "edd": edd, 
+                    "edd_string": edd_string, #redundant? need to check
+                    "sex": sex, 
+                },
+
+                "measurement_dates": {
+                    "obs_date": obs_date, 
+                    "chronological_decimal_age": chronological_decimal_age, 
+                    "corrected_decimal_age": corrected_decimal_age, 
+                    "chronological_calendar_age": chronological_calendar_age, 
+                    "corrected_calendar_age": corrected_calendar_age, 
+                    "corrected_gestational_age": corrected_gestational_age, 
+                    'clinician_decimal_age_comment': clinician_decimal_age_comment, 
+                    'lay_decimal_age_comment': lay_decimal_age_comment
+                }, 
+                "child_measurement_value": {
+                    "height": height, 
+                    "weight": weight, 
+                    "bmi": bmi, 
+                    "ofc": ofc
+                    }, 
+                "measurement_calculated_values": {
+                    "height_sds": height_sds, 
+                    "height_centile": height_centile, 
+                    'clinician_height_comment': clinician_height_comment, 
+                    'lay_height_comment': lay_height_comment, 
+                    "weight_sds": weight_sds, 
+                    "weight_centile":weight_centile, 
+                    'clinician_weight_comment': clinician_weight_comment, 
+                    'lay_weight_comment': lay_weight_comment, 
+                    "bmi_sds": bmi_sds,
+                    "bmi_centile": bmi_centile,
+                    'clinician_bmi_comment': clinician_bmi_comment, 
+                    'lay_bmi_comment': lay_bmi_comment, 
+                    "ofc_sds": ofc_sds, 
+                    "ofc_centile": ofc_centile, 
+                    'clinician_ofc_comment': clinician_ofc_comment, 
+                    'lay_ofc_comment': lay_ofc_comment
+                } 
+        }
+
 
 def interpret(measurement: str, centile: float, age: float):    
     """

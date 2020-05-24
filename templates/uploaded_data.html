@@ -14,7 +14,8 @@
             <th>gestation_weeks</th>
             <th>gestation_days</th>
             <th>estimated_date_delivery</th>
-            <th>decimal_age</th>
+            <th>chronological_decimal_age</th>
+            <th>corrected_decimal_age</th>
             <th>sex</th>
             <th>measurement_type</th>
             <th>measurement_value</th>
@@ -33,7 +34,8 @@
               <td>{{ m.gestation_weeks}}</td>
               <td>{{ m.gestation_days }}</td>
               <td>{{ m.estimated_date_delivery }}</td>
-              <td>{{ m.decimal_age }}</td>
+              <td>{{ m.chronological_decimal_age }}</td>
+              <td>{{ m.corrected_decimal_age }}</td>
               <td>{{ m.sex }}</td>
               <td>{{ m.measurement_type }}</td>
               <td>{{ m.measurement_value }}</td>
@@ -75,8 +77,8 @@
   </div>
   <style>
     #data_container{
-      padding-left: 40px;
-      padding-right: 40px;
+      padding-left: 20px;
+      padding-right: 20px;
     }
   </style>
 {% endblock %}
