@@ -132,7 +132,7 @@ def prepare_data_as_array_of_measurement_objects(uploaded_data):
         corrected_calendar_age = rcpchgrowth.chronological_calendar_age(estimated_date_delivery, observation_date)
         corrected_gestational_age = rcpchgrowth.corrected_gestational_age(birth_date, observation_date, observation['gestation_weeks'], observation['gestation_days'])
         edd_string = observation['estimated_date_delivery']
-        decimal_age_comments = comment_prematurity_correction(observation['chronological_decimal_age'], observation['corrected_decimal_age'], observation['gestation_weeks'], observation['gestation_days'])
+        decimal_age_comments = rcpchgrowth.comment_prematurity_correction(observation['chronological_decimal_age'], observation['corrected_decimal_age'], observation['gestation_weeks'], observation['gestation_days'])
         
         if observation['measurement_type'] == 'height':
             ## create return object
@@ -156,23 +156,6 @@ def prepare_data_as_array_of_measurement_objects(uploaded_data):
             array_of_measurement_objects.append(return_measurement_object)
     
     return array_of_measurement_objects
-
-def comment_prematurity_correction(chronological_decimal_age, corrected_decimal_age, gestation_weeks, gestation_days):
-    if chronological_decimal_age == corrected_decimal_age:
-        if gestation_weeks < 37 and gestation_weeks >= 32:
-            lay_decimal_age_comment =   "Your child is now old enough nolonger to need to take their prematurity into account when considering their growth ."
-            clinician_decimal_age_comment =  "Correction for gestational age is nolonger necessary after a year of age."
-        if gestation_weeks < 33:
-            lay_decimal_age_comment =   "Your child is now old enough nolonger to need to take their prematurity into account when considering their growth ."
-            clinician_decimal_age_comment = "Correction for gestational age is nolonger necessary after two years of age."
-    else:
-        lay_decimal_age_comment =   "Your child's prematurity has been accounted for when considering their growth ."
-        clinician_decimal_age_comment =  "Correction for gestational age has been made ."
-    comment = {
-        'lay_comment': lay_decimal_age_comment,
-        'clinician_comment': clinician_decimal_age_comment
-    }
-    return comment
 
 """
 Data model for child data:

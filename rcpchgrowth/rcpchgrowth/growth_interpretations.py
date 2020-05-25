@@ -164,3 +164,27 @@ def interpret(measurement: str, centile: float, age: float):
     }
 
     return return_comment
+
+def comment_prematurity_correction(chronological_decimal_age, corrected_decimal_age, gestation_weeks, gestation_days):
+    """
+    Return interpretations on age correction as a string
+    :Params - chronological_decimal_age : float
+    :Params - corrected_decimal_age : float
+    :Params - gestation_weeks : int
+    :Params - gestation_days : int
+    """
+    if chronological_decimal_age == corrected_decimal_age:
+        if gestation_weeks < 37 and gestation_weeks >= 32:
+            lay_decimal_age_comment =   "Your child is now old enough nolonger to need to take their prematurity into account when considering their growth ."
+            clinician_decimal_age_comment =  "Correction for gestational age is nolonger necessary after a year of age."
+        if gestation_weeks < 33:
+            lay_decimal_age_comment =   "Your child is now old enough nolonger to need to take their prematurity into account when considering their growth ."
+            clinician_decimal_age_comment = "Correction for gestational age is nolonger necessary after two years of age."
+    else:
+        lay_decimal_age_comment =   "Your child's prematurity has been accounted for when considering their growth ."
+        clinician_decimal_age_comment =  "Correction for gestational age has been made ."
+    comment = {
+        'lay_comment': lay_decimal_age_comment,
+        'clinician_comment': clinician_decimal_age_comment
+    }
+    return comment
