@@ -1,5 +1,5 @@
-import rcpchgrowth.rcpchgrowth as calculations
-from .calculations import create_measurement_object, interpret
+import rcpchgrowth.rcpchgrowth as rcpchgrowth
+from .calculations import create_measurement_object
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 import numpy as np
@@ -24,10 +24,10 @@ def create_centile_values(sex: str):
         ofc_data=[]
         for age in decimal_ages:
             try:
-                y_height_sds = calculations.measurement_from_sds('height', sds, sex, age)
-                y_weight_sds = calculations.measurement_from_sds('weight', sds, sex, age)
-                y_bmi_sds = calculations.measurement_from_sds('bmi', sds, sex, age)
-                y_ofc_sds = calculations.measurement_from_sds('ofc', sds, sex, age)
+                y_height_sds = rcpchgrowth.measurement_from_sds('height', sds, sex, age)
+                y_weight_sds = rcpchgrowth.measurement_from_sds('weight', sds, sex, age)
+                y_bmi_sds = rcpchgrowth.measurement_from_sds('bmi', sds, sex, age)
+                y_ofc_sds = rcpchgrowth.measurement_from_sds('ofc', sds, sex, age)
             except:
                 print("No value")
                 continue
