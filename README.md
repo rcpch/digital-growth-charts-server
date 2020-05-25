@@ -553,13 +553,12 @@ Therefore height, weight and head circumference performed on the same day report
 ```json
 [
     {
-        "birth_data": {
+        "birth_data" {
             "birth_date": "03/01/2020",
             "gestation_weeks": 31,
             "gestation_days": 3,
-        }
-        
-        "measurement_dates": {
+        },
+        "measurement_dates" {
             "obs_date": "15/05/2020",
             "chronological_decimal_age": 0.36,
             "chronological_calendar_age": "4 months, 1 week and 5 days",
@@ -569,25 +568,25 @@ Therefore height, weight and head circumference performed on the same day report
             "clinician_decimal_age_comment": "This is an age which has been corrected for prematurity.",
             "lay_decimal_age_comment": "This takes into account your child's prematurity"
         },
-        "child_measurement_value": {  
+        "child_measurement_value" {  
             "height": 60.7,
-            "weight": 0.0,
-            "bmi": 0.0,
-            "ofc": 0.0
+            "weight": None,
+            "bmi": None,
+            "ofc": None
         },
-        "measurement_calculated_values": {
+        "measurement_calculated_values" {
             "height_sds": 1.20,
             "height_centile": 88,
             "clinician_height_commment": "This is in the top 15%. Serial data needed for comparison",
             "lay_height_comment": "Your child is tall for their age but in the normal range",
-            "weight_sds":  NULL,
-            "weight_centile": NULL,
-            "clinician_weight_commment": NULL,
-            "lay_weight_comment": NULL,
-            "ofc_sds":  NULL,
-            "ofc_centile": NULL,
-            "clinician_ofc_commment": NULL,
-            "lay_ofc_comment": NULL,
+            "weight_sds":  None,
+            "weight_centile": None,
+            "clinician_weight_commment": None,
+            "lay_weight_comment": None,
+            "ofc_sds":  None,
+            "ofc_centile": None,
+            "clinician_ofc_commment": None,
+            "lay_ofc_comment": None,
         }
     }
 ]
