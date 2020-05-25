@@ -247,33 +247,37 @@ def interpret(measurement: str, centile: float, age: float):
             clinician_interpretation = "On or below the 99.6th centile. Consider medical review."
 
     if measurement == 'bmi':
-        if centile <= 0.04:
-            lay_interpretation = "Compared with other children the same height, age and sex, your child is below or the same weight as only 4 in every 1000 children. It is advisable to see your doctor."
-            clinician_interpretation = "On or below the 0.04th centile. Medical review advised."
-        elif centile <= 2.0:
-            lay_interpretation = "Compared with other children the same height, age and sex, your child is is in the lowest 2 percent of the population for their weight. Consider seeing your doctor."
-            clinician_interpretation = "On or below the 2nd centile. Consider reviewing trend."            
-        elif centile <= 9.0:
-            lay_interpretation = "Compared with other children the same height, age and sex, your child is in the lowest 9 percent of the population for weight."
-            clinician_interpretation = "On or below the 9th centile. Consider reviewing trend."
-        elif centile <= 25.0:
-            lay_interpretation = "Compared with other children the same height, age and sex, your child is in the lowest 1/4 of the population for their weight."
-            clinician_interpretation = "On or below the 25th centile. Consider reviewing trend."
-        elif centile <= 50.0:
-            lay_interpretation = "Compared with other children the same height, age and sex, your child is on or just below the average weight for the population ."
-            clinician_interpretation = "On or below the 50th centile ."
-        elif centile <= 75.0:
-            lay_interpretation = "Compared with other children the same height, age and sex, your child is below or the same as 75 percent of children for their weight."
-            clinician_interpretation = "On or below the 75th centile. Consider reviewing trend."
-        elif centile <= 91.0:
-            lay_interpretation = "Compared with other children the same height, age and sex, your child is in the top 9 percent of children for their weight."
-            clinician_interpretation = "On or below the 91st centile. Consider reviewing trend."
-        elif centile <= 98.0:
-            lay_interpretation = "Compared with other children the same height, age and sex, your child is in the top 2 percent of children for their weight. Consider seeing your doctor."
-            clinician_interpretation = "On or below the 98th centile. Meets definition for being overweight. Consider reviewing trend."
-        elif centile <= 99.6:
-            lay_interpretation = "Compared with other children the same height, age and sex, your child's  weight is lower than only 4 children in every 1000 childre. Medical review is advised."
-            clinician_interpretation = "On or below the 99.6th centile. Above obesity threshold. Consider medical review."
+        if centile:
+            if centile <= 0.04:
+                lay_interpretation = "Compared with other children the same height, age and sex, your child is below or the same weight as only 4 in every 1000 children. It is advisable to see your doctor."
+                clinician_interpretation = "On or below the 0.04th centile. Medical review advised."
+            elif centile <= 2.0:
+                lay_interpretation = "Compared with other children the same height, age and sex, your child is is in the lowest 2 percent of the population for their weight. Consider seeing your doctor."
+                clinician_interpretation = "On or below the 2nd centile. Consider reviewing trend."            
+            elif centile <= 9.0:
+                lay_interpretation = "Compared with other children the same height, age and sex, your child is in the lowest 9 percent of the population for weight."
+                clinician_interpretation = "On or below the 9th centile. Consider reviewing trend."
+            elif centile <= 25.0:
+                lay_interpretation = "Compared with other children the same height, age and sex, your child is in the lowest 1/4 of the population for their weight."
+                clinician_interpretation = "On or below the 25th centile. Consider reviewing trend."
+            elif centile <= 50.0:
+                lay_interpretation = "Compared with other children the same height, age and sex, your child is on or just below the average weight for the population ."
+                clinician_interpretation = "On or below the 50th centile ."
+            elif centile <= 75.0:
+                lay_interpretation = "Compared with other children the same height, age and sex, your child is below or the same as 75 percent of children for their weight."
+                clinician_interpretation = "On or below the 75th centile. Consider reviewing trend."
+            elif centile <= 91.0:
+                lay_interpretation = "Compared with other children the same height, age and sex, your child is in the top 9 percent of children for their weight."
+                clinician_interpretation = "On or below the 91st centile. Consider reviewing trend."
+            elif centile <= 98.0:
+                lay_interpretation = "Compared with other children the same height, age and sex, your child is in the top 2 percent of children for their weight. Consider seeing your doctor."
+                clinician_interpretation = "On or below the 98th centile. Meets definition for being overweight. Consider reviewing trend."
+            elif centile <= 99.6:
+                lay_interpretation = "Compared with other children the same height, age and sex, your child's  weight is lower than only 4 children in every 1000 childre. Medical review is advised."
+                clinician_interpretation = "On or below the 99.6th centile. Above obesity threshold. Consider medical review."
+        else:
+            lay_interpretation = "BMI is not interpretable below 2 weeks of age"
+            clinician_interpretation = 'There is no reference data below 2 weeks of age'
 
     if measurement == 'ofc':
         if centile <= 0.04:

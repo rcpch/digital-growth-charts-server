@@ -62,6 +62,7 @@ def import_excel_sheet(file_path: str, can_delete: bool):
     weight_birth_date = ''
     height_birth_date = ''
 
+    extra_rows = []
     for index, row in same_date_data_frame.iterrows():
         if pd.notnull(row['height']):
             height = row['height']
@@ -79,8 +80,14 @@ def import_excel_sheet(file_path: str, can_delete: bool):
             else:
                 bmi_sds = None
                 bmi_centile = None
-            new_row = {'birth_date': height_birth_date, 'observation_date': height_date, 'gestation_weeks': row['gestation_weeks'], 'gestation_days': row['gestation_days'], 'sex': row['sex'], 'measurement_type': 'bmi', 'measurement_value': bmi, 'sds': bmi_sds, 'centile': bmi_centile}
-            data_frame.append(new_row, ignore_index=True)
+            new_row = {'birth_date': height_birth_date, 'observation_date': height_date, 'gestation_weeks': row['gestation_weeks'], 'gestation_days': row['gestation_days'], 'estimated_date_delivery': row['estimated_date_delivery'], 'chronological_decimal_age': row['chronological_decimal_age'], 'corrected_decimal_age': row['corrected_decimal_age'], 'sex': row['sex'], 'measurement_type': 'bmi', 'measurement_value': bmi, 'sds': bmi_sds, 'centile': bmi_centile, 'height': None, 'weight': None}
+            extra_rows.append(new_row)
+
+    if len(extra_rows) > 0:
+        data_frame = data_frame.append(extra_rows, ignore_index=True)
+        data_frame = data_frame.drop_duplicates(ignore_index=True)
+        
+
 
     if data_frame['birth_date'].nunique() > 1:
         print('these are not all data from the same patient. They cannot be charted.') #do not chart these values
