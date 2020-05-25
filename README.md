@@ -104,6 +104,7 @@ Advice reported is based on centile cut-offs:
 ```
 ***
 ##### 2nd Centile
+###### ___Height/Length___
 
  *-*_Parent/Care_of child aged < 2y:_
 ```
@@ -154,6 +155,7 @@ Advice reported is based on centile cut-offs:
 ```
 ***
 ##### 9th Centile
+###### ___Height/Length___
 __Parent/Carer_of child aged < 2y:_
 ```
 "Your child is in the lowest 9 percent of the population for length, sex and age."
@@ -253,6 +255,7 @@ __Parent/Carer_of child aged < 2y:_
 ```
 ***
 ##### 50th Centile
+###### ___Height/Length___
 
  *-*_Parent/Care_of child aged < 2y:_
 ```
@@ -303,6 +306,7 @@ __Parent/Carer_of child aged < 2y:_
 ```
 ***
 ##### 75th Centile
+###### ___Height/Length___
 
  *-*_Parent/Care_of child aged < 2y:_
 ```
@@ -318,7 +322,7 @@ __Parent/Carer_of child aged < 2y:_
 ```
 "On or below the 75th centile. Consider reviewing trend."
 ```
-###### Weight
+###### ___Weight___
 
  *-* _Parent/Carer_
 ```
@@ -354,6 +358,7 @@ __Parent/Carer_of child aged < 2y:_
 ```
 ***
 ##### 91st Centile
+###### ___Height/Length___
 
  *-*_Parent/Care_of child aged < 2y:_
 ```
@@ -369,7 +374,7 @@ __Parent/Carer_of child aged < 2y:_
 ```
 "On or below the 91st centile. Consider reviewing trend."
 ```
-###### Weight
+###### ___Weight___
 
  *-* _Parent/Carer_
 ```
@@ -404,6 +409,7 @@ __Parent/Carer_of child aged < 2y:_
 ```
 ***
 ##### 98th Centile
+###### ___Height/Length___
 
  *-*_Parent/Care_of child aged < 2y:_
 ```
@@ -419,7 +425,7 @@ __Parent/Carer_of child aged < 2y:_
 ```
 "On or below the 91st centile. Consider reviewing trend."
 ```
-###### Weight
+###### ___Weight___
 
  *-* _Parent/Carer_
 ```
@@ -454,6 +460,7 @@ __Parent/Carer_of child aged < 2y:_
 ```
 ***
 #### 99.6th Centile
+###### ___Height/Length___
 
  *-*_Parent/Care_of child aged < 2y:_
 ```
@@ -469,7 +476,7 @@ __Parent/Carer_of child aged < 2y:_
 ```
 "On or below the 99.6th centile. Consider medical review."
 ```
-###### Weight
+###### ___Weight___
 
  *-* _Parent/Carer_
 ```
