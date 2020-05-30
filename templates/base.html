@@ -59,10 +59,28 @@
     </section>
 
     <footer>
-        <div class="ui one column centered relaxed grid">
-            <div class="ui container" style="margin-top:50px!important">
+        <!-- <div class="ui one column centered relaxed grid"> -->
+            <div class="ui container" style="margin-top:50px; margin-bottom: 50px;">
                 <div class="ui red message">These calculations use licenced UK-WHO reference data. They are in development and should not be used for clinical purposes.</div>
             </div>
+        <!-- </div> -->
+        <div class="ui padded footer segment">
+            <div class="ui horizontal list">
+                <div class="item">
+                  <img class="ui mini circular image" src='{{ url_for('static', filename='/images/rcpch_logo.png') }}'>
+                  <div class="content">
+                    <div class="ui sub header">RCPCH.</div>
+                    All Rights Reserved.
+                  </div>
+                </div>
+                <div class="item">
+                    <img src='{{ url_for('static', filename='/images/octicons-mark-github.svg') }}' class="ui mini circular image">
+                        <div class="content">
+                            <div class="ui sub header">GitHub</div>
+                            <a href='https://github.com/rcpch/digital-growth-charts'>Contribute to the project</div></a>
+                        </div>
+                </div>
+            </div>        
         </div>
     </footer>
 </html>

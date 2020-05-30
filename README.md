@@ -518,7 +518,7 @@ __Parent/Carer_of child aged < 2y:_
 The API is written in Python 3.8.
 Mathematical and statistical calculations are made using the [SciPy](https://www.scipy.org/) and [NumPy](https://numpy.org/) libraries.
 Server middleware used is [Flask](https://flask.palletsprojects.com/en/1.1.x/quickstart/) and [FlaskForms](https://github.com/wtforms/wtforms/), [Pandas](https://pandas.pydata.org/) and [Xlrd](https://pypi.org/project/xlrd/) for data analysis.
-Frontend is provided by [Semantic UI](https://semantic-ui.com/) and [Jinja2](https://pypi.org/project/Jinja2/). Graphing is implemented with [ChartJS](https://www.chartjs.org/) and zoom plugin [chart-js-plugin-zoom](https://github.com/chartjs/chartjs-plugin-zoom)
+Frontend is provided by [Semantic UI](https://semantic-ui.com/) and [Jinja2](https://pypi.org/project/Jinja2/). Graphing is implemented with [ChartJS](https://www.chartjs.org/) and zoom plugin [chart-js-plugin-zoom](https://github.com/chartjs/chartjs-plugin-zoom).
 
 ### Software Licensing
 The project team agree that the growth references and the algorithms that generate reliable results should all exist in the public domain. They are published here under GNU Affero GPL3 licence.
@@ -536,8 +536,28 @@ All responses will have the form
 ### Calculate static SDS and Centile values for child anthropometric measurements
 
 #### End-points
-_this section needs completing_
-`POST /calculate`
+
+- `/` This endpoint renders a webform which accepts a POST request and returns age, centile and SDS calculations of children's growth data. A typical response is shown below in [Arguments](#Arguments). Note that growth reference data do not exist to calculate SDS or centiles for:
+1. Height/Length below 25 weeks gestation
+2. BMI below 2 weeks of age (post 40 weeks)
+3. OFC (occipitofrontal circumference) above 17y in girls and >18y in boys.
+In these circumstances, `NoneType` is returned.
+
+- `/results/table` : Reports anthropometric data entered via the webform with calculated values (ages/SDS and centile values with clinical guidance) as a table.
+
+- `/results/chart` : Plots data entered via the webform, or uploaded in .xlsx format, as growth charts. Charts have capability to zoom in and out.
+
+- `/chart_data` : a JSON dump of the centile chart data
+
+- `/import` : accepts a POST request to upload an excel spreadsheet of mixed patient data (for example for research purposes), or serial growth data over time for individual patients. The upload format for each is different and prescribed. Mandatory column names are: 'birth_date', 'observation_date', 'gestation_weeks','gestation_days', 'sex', 'measurement_type', 'measurement_value'. These are case sensitive. measurement_type must be lower case and one of 'height', 'weight', 'ofc', 'bmi'. This must be anonymised as is in the public domain. Any columns other than those prescribed will be stripped and discarded. No data is retained on the server.
+
+- `/uploaded_data/example` : this is a sample spreadsheet of fictional data for users to try
+
+- `/uploaded_data/excel_spreadsheet` : redirected here once an excel spreadsheet of data has been uploaded.
+
+- `/references` : currently is a hardcoded list (stored as JSON) of national and international growth references (not the datasets themselves), with literature references and authorship, date of publication. The intention is for this to be stored in a database and available opensource (with some governance) for users to update and use. In future it is intended to be a national standard for growth reference publication and provide guidance on growth reference development.
+
+- `/instructions` : currently renders this readme.md. In future is intended to be a resource to help users access the API, as well as details of the API licence, rules of use and disclaimers.
 
 #### Arguments
 Naming is based on PEP 8 standards
@@ -557,12 +577,12 @@ Therefore height, weight and head circumference performed on the same day report
 ```json
 [
     {
-        "birth_data" {
+        "birth_data": {
             "birth_date": "03/01/2020",
             "gestation_weeks": 31,
             "gestation_days": 3,
         },
-        "measurement_dates" {
+        "measurement_dates": {
             "obs_date": "15/05/2020",
             "chronological_decimal_age": 0.36,
             "chronological_calendar_age": "4 months, 1 week and 5 days",
@@ -572,13 +592,13 @@ Therefore height, weight and head circumference performed on the same day report
             "clinician_decimal_age_comment": "This is an age which has been corrected for prematurity.",
             "lay_decimal_age_comment": "This takes into account your child's prematurity"
         },
-        "child_measurement_value" {  
+        "child_measurement_value": {  
             "height": 60.7,
             "weight": None,
             "bmi": None,
             "ofc": None
         },
-        "measurement_calculated_values" {
+        "measurement_calculated_values": {
             "height_sds": 1.20,
             "height_centile": 88,
             "clinician_height_commment": "This is in the top 15%. Serial data needed for comparison",
@@ -715,7 +735,7 @@ percentage_median_bmi( age: float, actual_bmi: float, sex: str)->float:
 ```python
 bmi_from_height_weight( height: float,  weight: float) -> float:
 ```
-- Returns a BMI in kg/m2 from a height in cm and a weight in kg. Reported to 1 d.p.
+- Returns a BMI in kg/m<sup>2</sup> from a height in cm and a weight in kg. Reported to 1 d.p.
 - Does not depend on the age or sex of the child.
 
 ```python
