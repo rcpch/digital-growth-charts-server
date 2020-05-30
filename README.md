@@ -205,6 +205,7 @@ __Parent/Carer_of child aged < 2y:_
 ```
 ***
 ##### 25th Centile
+###### ___Height/Length___
 
  *-*_Parent/Care_of child aged < 2y:_
 ```
@@ -221,6 +222,7 @@ __Parent/Carer_of child aged < 2y:_
 "On or below the 25th centile. Consider reviewing trend."
 ```
 ###### ___Weight___
+
  *-* _Parent/Carer_
 
 ```
@@ -271,6 +273,7 @@ __Parent/Carer_of child aged < 2y:_
 ```
 "On or below the 50th centile."
 ```
+
 ###### ___Weight___
 
  *-* _Parent/Carer_
@@ -512,10 +515,10 @@ __Parent/Carer_of child aged < 2y:_
 
 ## Technical Aspects
 ### API
-The algorithms are written in Python 3.8.
+The API is written in Python 3.8.
 Mathematical and statistical calculations are made using the [SciPy](https://www.scipy.org/) and [NumPy](https://numpy.org/) libraries.
 Server middleware used is [Flask](https://flask.palletsprojects.com/en/1.1.x/quickstart/) and [FlaskForms](https://github.com/wtforms/wtforms/), [Pandas](https://pandas.pydata.org/) and [Xlrd](https://pypi.org/project/xlrd/) for data analysis.
-Frontend is provided by [Semantic UI](https://semantic-ui.com/) and [Jinja2](https://pypi.org/project/Jinja2/)
+Frontend is provided by [Semantic UI](https://semantic-ui.com/) and [Jinja2](https://pypi.org/project/Jinja2/). Graphing is implemented with [ChartJS](https://www.chartjs.org/) and zoom plugin [chart-js-plugin-zoom](https://github.com/chartjs/chartjs-plugin-zoom)
 
 ### Software Licensing
 The project team agree that the growth references and the algorithms that generate reliable results should all exist in the public domain. They are published here under GNU Affero GPL3 licence.
