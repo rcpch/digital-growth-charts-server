@@ -36,7 +36,7 @@ decimal_ages=[-0.325804244,-0.306639288,-0.287474333,-0.268309377,-0.249144422,-
 
 #public functions
 
-def sds(age: float, measurement: str, measurement_value: float, sex: str)->float:
+def sds(age: float, measurement: str, measurement_value: float, sex: str, default_to_youngest_reference: bool = True)->float:
     """
     Public function
     Returns a standard deviation score. 
@@ -45,6 +45,9 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str)->float
     a measurement (type of observation) ['height', 'weight', 'bmi', 'ofc']
     measurement_value (the value is standard units) [height and ofc are in cm, weight in kg bmi in kg/m2]
     sex (a standard string) ['male' or 'female']
+    default_to_youngest_reference (boolean): defaults to True. For circumstances when the age exactly matches 
+        a join between two references (or moving from lying to standing at 2y) where there are 2 ages in the reference
+        data to choose between. Defaults to the youngest reference unless the user selects false
 
     This function is specific to the UK-WHO data set as this is actually a blend of UK-90 and WHO 2006 references and necessarily has duplicate values.
 
@@ -62,10 +65,23 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str)->float
      - There is only BMI reference data from 2 weeks of age to aged 20y
      - Head circumference reference data is available from 23 weeks gestation to 17y in girls and 18y in boys
     """
+
+    if measurement == 'height':
+        if age < -0.287474333:
+            return None # There is no reference data for length below 25 weeks'
+    
+    if measurement == 'bmi':
+        if age < 0.038329911:
+            return None # There is no BMI reference data available for BMI below 2 weeks
+    
+    if measurement == 'ofc':
+        if (sex == 'male' and age > 18.0) or (sex == 'female' and age > 17.0):
+            return None # There is no head circumference data available in girls over 17y or boys over 18y
+
     try:
-        lms = get_lms(age, measurement, sex)
+        lms = get_lms(age, measurement, sex, default_to_youngest_reference)
     except:
-        raise Exception('Cannot calculate this value')
+        raise
         
     l = lms['l']
     m = lms ['m']
