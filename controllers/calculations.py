@@ -39,16 +39,16 @@ def perform_calculations(form):
     clinician_decimal_age_comment = ''
     lay_decimal_age_comment = ''
 
-    array_of_measurement_objects = [];
+    array_of_measurement_objects = []
     return_measurement_object = {}
 
-    if chronological_decimal_age == corrected_decimal_age:
+    if chronological_decimal_age == corrected_decimal_age: ## assessment of need for correction made within the calculation functions
         corrected_decimal_age = 'None'
         age = chronological_decimal_age
-        if gestation_weeks < 37 and gestation_weeks >= 32:
+        if gestation_weeks < 37 and gestation_weeks >= 32: ## was born premature but now >1y
             lay_decimal_age_comment =   "Your child is now old enough nolonger to need to take their prematurity into account when considering their growth ."
             clinician_decimal_age_comment =  "Correction for gestational age is nolonger necessary after a year of age."
-        if gestation_weeks < 33:
+        if gestation_weeks < 33: ## was born extreme premature but now >2y
             lay_decimal_age_comment =   "Your child is now old enough nolonger to need to take their prematurity into account when considering their growth ."
             clinician_decimal_age_comment = "Correction for gestational age is nolonger necessary after two years of age."
     else:

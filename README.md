@@ -52,7 +52,7 @@ Advice provided is of two kinds:
 
 Advice reported is based on centile cut-offs:
 
-##### 0.04th Centile
+##### 0.4th Centile
 ###### ___Height/Length___
 
  *-*_Parent/Carer of child aged < 2y:_
@@ -67,7 +67,7 @@ Advice reported is based on centile cut-offs:
 
  *-* _Clinician_
 ```
-"On or below the 0.04th centile for height. Medical review advised."
+"On or below the 0.4th centile for height. Medical review advised."
 ```
 ###### ___Weight___
 
@@ -78,7 +78,7 @@ Advice reported is based on centile cut-offs:
 
  *-* _Clinician_
 ```
-"On or below the 0.04th centile for weight. Medical review advised."
+"On or below the 0.4th centile for weight. Medical review advised."
 ```
 ###### ___BMI___
 
@@ -89,7 +89,7 @@ Advice reported is based on centile cut-offs:
 
  *-* _Clinician_
 ```
-"On or below the 0.04th centile. Medical review advised."
+"On or below the 0.4th centile. Medical review advised."
 ```
 ###### ___Head Circumference___
 
@@ -100,7 +100,7 @@ Advice reported is based on centile cut-offs:
 
  *-* _Clinician_
 ```
-"On or below the 0.04th centile for head circumference. Medical review advised."
+"On or below the 0.4th centile for head circumference. Medical review advised."
 ```
 ***
 ##### 2nd Centile

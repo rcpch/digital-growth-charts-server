@@ -66,6 +66,13 @@ def interpret(measurement: str, centile: float, age: float):
             if age >= 2.0:
                 lay_interpretation = "Your child is taller than only 4 children in every 1000 the same age and sex. Consider seeking medical review."
             clinician_interpretation = "On or below the 99.6th centile. Consider medical review."
+        elif centile > 99.6:
+            if age < 2.0:
+                lay_interpretation = "Your child's length is outside the upper limit of the chart. Please discuss with your doctor."
+                clinician_interpretation = "Above 99.6th centile for length. Medical review is advised."
+            if age >= 2.0:
+                lay_interpretation = "Your child's height is outside the upper limit of the chart. Please discuss with your doctor."
+                clinician_interpretation = "Above 99.6th centile for height. Medical review is advised."
 
     if measurement == 'weight':
         if centile <= 0.04:
@@ -95,6 +102,9 @@ def interpret(measurement: str, centile: float, age: float):
         elif centile <= 99.6:
             lay_interpretation = "Your child is taller than only 4 children in every 1000 the same age and sex. This does not take account of their height. Medical review is advised."
             clinician_interpretation = "On or below the 99.6th centile. Consider medical review."
+        elif centile > 99.6:
+            lay_interpretation = "Your child's weight is outside the upper limit of the chart. Please discuss with your doctor."
+            clinician_interpretation = "Above 99.6th centile for weight. Medical review is advised."
 
     if measurement == 'bmi':
         if centile:
@@ -125,6 +135,9 @@ def interpret(measurement: str, centile: float, age: float):
             elif centile <= 99.6:
                 lay_interpretation = "Compared with other children the same height, age and sex, your child's  weight is lower than only 4 children in every 1000 childre. Medical review is advised."
                 clinician_interpretation = "On or below the 99.6th centile. Above obesity threshold. Consider medical review."
+            elif centile > 99.6:
+                lay_interpretation = "Your child's weight is outside the upper limit of the chart, compared with other children the same age, height and sex. Please discuss with your doctor."
+                clinician_interpretation = "Above 99.6th centile for BMI. Medical review is advised."
         else:
             lay_interpretation = "BMI is not interpretable below 2 weeks of age"
             clinician_interpretation = 'There is no reference data below 2 weeks of age'
@@ -157,6 +170,9 @@ def interpret(measurement: str, centile: float, age: float):
         elif centile <= 99.6:
             lay_interpretation = "Your child's head circumference is larger than only 4 children in every 1000 children the same age and sex. Medical review is advised."
             clinician_interpretation = "On or below the 99.6th centile for head circumference. Medical review is advised."
+        elif centile > 99.6:
+            lay_interpretation = "Your child's head circumference is outside the upper limit of the chart. Please discuss with your doctor."
+            clinician_interpretation = "Above 99.6th centile for head circumference. Medical review is advised."
 
     return_comment =  {
         'clinician_comment': clinician_interpretation,

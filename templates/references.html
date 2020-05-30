@@ -25,8 +25,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td data-tooltip={{reference.description}}>
-                      <i class="circle info icon link"></i>
+                    <td class='description'>
+                      <i class="circle green info icon link"></i>
                     </td>
                     <td>
                       <a href='reference.publication_url'>{{reference.publication_reference}}</a>
@@ -41,4 +41,12 @@
     </div>
   </div>
 </div>
+<script>
+  $('.description').popup({
+            on: 'click',
+            setFluidWidth: true,
+            variation: 'wide green',
+            html: '<p>this will be the description</p>'
+        });
+</script>
 {% endblock %}

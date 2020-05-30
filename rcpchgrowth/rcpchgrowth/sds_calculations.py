@@ -66,7 +66,6 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str)->float
         lms = get_lms(age, measurement, sex)
     except:
         raise Exception('Cannot calculate this value')
-        print('Cannot calculate this value')
         
     l = lms['l']
     m = lms ['m']
@@ -109,7 +108,7 @@ def percentage_median_bmi( age: float, actual_bmi: float, sex: str)->float:
     percent_median_bmi = (actual_bmi/m)*100.0
     return percent_median_bmi
 
-def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  decimal_age: float) -> float:
+def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  decimal_age: float, default_to_youngest_reference: bool = True) -> float:
     """
     Public method
     Returns the measurement from a given SDS.
@@ -118,6 +117,8 @@ def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  de
         decimal age (corrected or chronological),
         requested_sds
         sex (a standard string) ['male' or 'female']
+        default_to_youngest_reference (boolean): in the event of an exact age match at the threshold of a chart,
+            where it is possible to choose 2 references, default will pick the youngest reference (optional)
 
     Centile to SDS Conversion for Chart lines
     0.4th -2.67
@@ -130,11 +131,12 @@ def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  de
     98th 2.00
     99.6th 2.67
     """
+
     measurement_value = 0.0
     try:
-        lms= get_lms(decimal_age, measurement, sex)
+        lms= get_lms(decimal_age, measurement, sex, default_to_youngest_reference)
     except:
-        print('Unable to get measurement from SDS')
+        raise
     else:
         l = lms['l']
         m = lms['m']
@@ -186,41 +188,58 @@ def cubic_interpolation_possible(age: float, measurement, sex):
         return True
 
 
-def get_lms(age: float, measurement: str, sex: str)->list:
+def get_lms(age: float, measurement: str, sex: str, default_to_youngest_reference: bool = True)->list:
     """
     Returns an interpolated L, M and S value as an array [l, m, s] against a decimal age, sex and measurement
+
+    default_to_youngest_reference (boolean): in the event of an exact age match at the threshold of a chart,
+            where it is possible to choose 2 references, default will pick the youngest reference (optional)
+            eg at exactly 2 y, the function will therefore always select UK-WHO infant and not child data, unless
+            this flag specifies otherwise
     """
     
     try:
         #this child is < or > the extremes of the chart
         assert (age >= decimal_ages[0] or age <= decimal_ages[-1]), 'Cannot be younger than 23 weeks or older than 20y'
-    except AssertionError as chart_extremes_msg:
+    except IndexError as chart_extremes_msg:
         print(chart_extremes_msg)
     
     if measurement == 'height':
-        try:
-            #this child < 25 weeks and height is requested
-            assert (age >= -0.287474333), 'There is no reference data for length below 25 weeks'
-        except AssertionError as lower_length_threshold_error_message:
-            print(lower_length_threshold_error_message)
+        if age < -0.287474333:
+            raise ValueError('There is no reference data for length below 25 weeks')
     
     if measurement == 'bmi':
-        try:
-            #this child < 2 weeks and BMI is requested
-            assert (age >= 0.038329911 and measurement == 'bmi'), 'There is no BMI reference data available for BMI below 2 weeks'
-        except AssertionError as lower_bmi_threshold_error_message:
-            print(lower_bmi_threshold_error_message)
+        if age < 0.038329911:
+            raise ValueError('There is no BMI reference data available for BMI below 2 weeks')
     
     if measurement == 'ofc':
-        try:
-            #head circumference is requested and this child is either female > 17 or male >18y
-            assert (measurement == 'ofc' and ((sex == 'male' and age <= 18.0) or (sex == 'female' and age <=17.0))), 'There is no head circumference data available in girls over 17y or boys over 18y'
-        except AssertionError as upper_head_circumference_threshold_error_message:
-            print(upper_head_circumference_threshold_error_message)
+        if (sex == 'male' and age > 18.0) or (sex == 'female' and age > 17.0):
+            raise ValueError('There is no head circumference data available in girls over 17y or boys over 18y')
 
     age_index_one_below = nearest_age_below_index(age)
     if age == decimal_ages[age_index_one_below]:
-        #child's age matches a reference age - no interpolation necessary
+        """
+        child's age matches a reference age - no interpolation necessary
+        defaults to the lowest reference if at reference threshold
+        unless default_to_youngest_reference is false
+        or bmi at 2 weeks of age is requested as no data at 42 weeks gestation
+        """
+
+        # age_matches = [0.038329911, 2.0, 4.0]
+        lower_index = [19, 55, 80]
+        # upper_index = [20, 56, 81]
+
+        if (age_index_one_below in lower_index) and (default_to_youngest_reference == False):
+            age_index_one_below = age_index_one_below + 1
+
+
+        """
+        NB: if age == 0.038329911 (2 weeks of age) and we are requesting BMI, must start at 
+        WHO ref data. This is index 20, not 19
+        """
+        if measurement == 'bmi' and age_index_one_below == 19:
+            age_index_one_below = 20
+
         l = data['measurement'][measurement][sex][age_index_one_below]["L"]
         m = data['measurement'][measurement][sex][age_index_one_below]["M"]
         s = data['measurement'][measurement][sex][age_index_one_below]["S"]

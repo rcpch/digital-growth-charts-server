@@ -88,7 +88,6 @@ def import_excel_sheet(file_path: str, can_delete: bool):
         data_frame = data_frame.drop_duplicates(ignore_index=True)
         
 
-
     if data_frame['birth_date'].nunique() > 1:
         print('these are not all data from the same patient. They cannot be charted.') #do not chart these values
         unique = False
@@ -156,6 +155,12 @@ def prepare_data_as_array_of_measurement_objects(uploaded_data):
             array_of_measurement_objects.append(return_measurement_object)
     
     return array_of_measurement_objects
+
+def convert_data_frame_measurement_arrays(data_frame):
+    """
+    returns a json object of arrays of all the child's growth measurements
+    """
+    
 
 """
 Data model for child data:
