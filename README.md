@@ -5,7 +5,7 @@ Marcus Baw, Helen Bedford, Simon Chapman, Tim Cole, Mary Fewtrell, Victoria Jack
 ## Clinical Aspects
 ### Introduction
 #### The Charts
-The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any child born after that date should be plotted on a UK-WHO Growth chart.  Children born before May 11th 2009 are already plotted on British 1990 (UK90) charts and subsequent measurements must be plotted using those charts. There should be no switch over of existing children to the new UK-WHO Charts.  After age 4 we revert to using UK90 charts. The source data for these charts are included in two spreadsheets as LMS tables. Together they define the UK-WHO growth charts, containing LMS values by age.  Also included are data not yet incorporated into a paper chart - for example, head circumference beyond 2 years.  These data can be freely used without charge as long as their source is acknowledged in any publications or products using them. Users may not claim any IP rights over them, derive financial gain from supplying the data to others, seek to restrict use of the data by others or use them for the purposes of advertising or promoting other products. Notwithstanding this limited grant of rights, the original copyright notices must continue to be reproduced in any copies of these materials.
+The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any child born after that date should be plotted on a UK-WHO Growth chart.  Children born before May 11th 2009 are plotted on British 1990 (UK90) charts and subsequent measurements must be plotted using those charts. There should be no switch over of existing children to the new UK-WHO Charts.  After age 4 we revert to using UK90 charts. The source data for these charts (UK90 and WHO 2006) together define the UK-WHO growth charts, containing LMS values by age.  These data are freely available and can be used without charge as long as their source is acknowledged in any publications or products using them. Users may not claim any IP rights over them, derive financial gain from supplying the data to others, seek to restrict use of the data by others or use them for the purposes of advertising or promoting other products. Notwithstanding this limited grant of rights, the original copyright notices must continue to be reproduced in any copies of these materials.
 
 #### The UK RCPCH Growth Chart Application Program Interface (API) Project (RCPCHGrowth)
 This is the first national effort to produce validated and reliable SDS and Centile scores from UK Children's growth data. The project team was commissioned by NHS England to produce, in the first instance, an API (application program interface) to generate reliable results for growth data from children 1 y and below. The project team began work in May 2020.
@@ -510,12 +510,6 @@ __Parent/Carer_of child aged < 2y:_
 "On or below the 99.6th centile for head circumference. Medical review is advised."
 ```
 
-### References
-1. Cole TJ, Freeman JV, Preece MA. British 1990 growth reference centiles for weight, height, body mass index and head circumference fitted by maximum penalized likelihood. Stat Med 1998;17:407-29. 
-2.    Cole TJ, Freeman JV, Preece MA. 1998. British 1990 growth reference centiles for weight, height, body mass index and head circumference fitted by maximum penalized likelihood. Stat Med 17(4):407-29 
-3.    WHO Multicentre Growth Reference Study Group. WHO Child Growth Standards: Length/Height-for-age, Weight-for-age, Weight-for-length, Weight-for-height and Body Mass Index-for age. Methods and Development. 2006. ISBN    92 4 154693 X.  
-4.    WHO Multicentre Growth Reference Study Group. WHO Child Growth Standards: Head circumference-for-age, arm circumference-for-age, triceps skinfold-for-age and subscapular skinfold-for age. Methods and Development. 2007. ISBN 978 92 4 154718 5.  
-
 ## Technical Aspects
 ### API
 The algorithms are written in Python 3.8.
@@ -651,15 +645,17 @@ corrected_gestational_age(birth_date: date, observation_date: date, gestation_we
 
 ##### Functions
 ```python
-sds(age: float, measurement: str, observation: float, sex: str)->float:
+def sds(age: float, measurement: str, measurement_value: float, sex: str, default_to_youngest_reference: bool = True)->float:
 ```
 - **This function is specific to the UK-WHO data set as this is actually a blend of UK-90 and WHO 2006 references and necessarily has duplicate values.**
+- Public function
 - Returns a standard deviation score. 
 - Parameters are: 
 - a decimal age (corrected or chronological), 
 - a measurement (type of observation) ['height', 'weight', 'bmi', 'ofc']
 - observation (the value is standard units) [height and ofc are in cm, weight in kg bmi in kg/m2]
 - sex (a standard string) ['male' or 'female']
+- default_to_youngest_reference (boolean): defaults to True. For circumstances when the age exactly matches a join between two references (or moving from lying to standing at 2y) where there are 2 ages in the reference data to choose between.Defaults to the youngest reference unless the user selects false
 
 SDS is generated by passing the interpolated L, M and S values for age through an equation.
 Cubic interpolation is used for most values, but where ages of children are at the extremes of the growth reference,
@@ -681,15 +677,30 @@ centile(z_score: float):
 - Converts a Z Score to a p value (2-tailed) using the SciPy library, which it returns as a percentage. Reported as an integer, or 1 d.p. if below 1 or above 99
 
 ```python
-measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  decimal_age: float) -> float:
-```
-- Public method
-- Returns the measurement from a given SDS.
-- Parameters are: 
--    measurement (type of observation) ['height', 'weight', 'bmi', 'ofc']
--    decimal age (corrected or chronological),
--    requested_sds
--    sex (a standard string) ['male' or 'female']
+def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  decimal_age: float, default_to_youngest_reference: bool = True) -> float:
+    """
+    Public method
+    Returns the measurement from a given SDS.
+    Parameters are: 
+        measurement (type of observation) ['height', 'weight', 'bmi', 'ofc']
+        decimal age (corrected or chronological),
+        requested_sds
+        sex (a standard string) ['male' or 'female']
+        default_to_youngest_reference (boolean): in the event of an exact age match at the threshold of a chart,
+            where it is possible to choose 2 references, default will pick the youngest reference (optional)
+
+    Centile to SDS Conversion for Chart lines
+    0.4th -2.67
+    2nd -2.00
+    9th -1.33
+    25th -0.67
+    50th 0
+    75th 0.67
+    91st 1.33
+    98th 2.00
+    99.6th 2.67
+    """
+
 
 #### BMI functions
 
@@ -717,8 +728,16 @@ In addition to providing standard deviation scores (SDS) and centiles, it will a
 
 It is envisaged that once established and validated, older age groups can be included, and other growth references.
 
-It is planned that the API will in future be able to receive longitudinal growth data of individual children as an array, with a view to making some interpretations on their growth pattern and trajectory.
+It is planned that the API will in future be able to receive longitudinal growth data of individual children as an array, with a view to making some interpretations on their growth pattern and trajectory, as well as *'thrive lines'*[5][6](#references)
 
 It separately aimed that this project in future standardise the data format for all growth references.
 
 An additional future objective is to create a respository of all available growth references.
+
+### References
+1. Cole TJ, Freeman JV, Preece MA. British 1990 growth reference centiles for weight, height, body mass index and head circumference fitted by maximum penalized likelihood. Stat Med 1998;17:407-29. 
+2.    Cole TJ, Freeman JV, Preece MA. 1998. British 1990 growth reference centiles for weight, height, body mass index and head circumference fitted by maximum penalized likelihood. Stat Med 17(4):407-29 
+3.  WHO Multicentre Growth Reference Study Group. WHO Child Growth Standards: Length/Height-for-age, Weight-for-age, Weight-for-length, Weight-for-height and Body Mass Index-for age. Methods and Development. 2006. ISBN    92 4 154693 X.  
+4.  WHO Multicentre Growth Reference Study Group. WHO Child Growth Standards: Head circumference-for-age, arm circumference-for-age, triceps skinfold-for-age and subscapular skinfold-for age. Methods and Development. 2007. ISBN 978 92 4 154718 5. 
+5.  3-in-1 weight monitoring chart. T Cole, Lancet. 1997 Jan 11;349(9045):102-3.
+6. A chart to predict adult height from a child’s current height. T Cole, C Wright, Annals of Human Biology, November–December 2011; 38(6): 662–668
