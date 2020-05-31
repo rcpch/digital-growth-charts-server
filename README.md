@@ -564,11 +564,11 @@ In these circumstances, `NoneType` is returned.
 Naming is based on PEP 8 standards
 - `"birth_date": date` date as datetimestamp (mandatory). This is of format 'DD/MM/YY' (eg 01/05/2020), without timestamp or locale
 - `"observation_date": date` date as datetimestamp (mandatory). This is of format 'DD/MM/YY' (eg 01/05/2020), without timestamp or locale
-- `"sex": string` MALE or FEMALE (mandatory)
+- `"sex": string` 'male' or 'female' (lower case mandatory)
 - `"gestation_weeks": int` length of pregnancy in weeks (optional)
 - `"gestation_days": int` days additional to length of pregnancy in weeks (optional)
 - `"gestation_total_days": int` length of pregnancy in days from conception (optional)
-- `"measurement_type": string` HEIGHT / WEIGHT / OFC / BMI (/ SKIN_FOLDS / PEFR) lower case (mandatory)
+- `"measurement_type": string` accepted parameters include: 'height', 'weight', 'ofc', 'bmi' (lower case mandatory)
 - `"measurement_value: float"` observation to 2 dp (mandatory)
 
 
