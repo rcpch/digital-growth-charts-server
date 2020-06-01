@@ -1,5 +1,5 @@
 import rcpchgrowth.rcpchgrowth as rcpchgrowth
-from .calculations import create_measurement_object
+# from .calculations import create_measurement_object
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 import numpy as np
@@ -138,25 +138,25 @@ def create_data_plots(child_results_array):
     
     for child_result in child_results_array:
         data_point = {}
-        if(child_result['child_measurement_value']['height']):
+        if(child_result and child_result['child_measurement_value']['height']):
             data_point = {
                 'x': child_result['measurement_dates']['chronological_decimal_age'], ##this needs considering - is it chronological ? should always  be corrected
                 'y': child_result['child_measurement_value']['height']
             }
             child_height_data.append(data_point)
-        elif(child_result['child_measurement_value']['weight']):
+        elif(child_result and child_result['child_measurement_value']['weight'] and child_result['child_measurement_value']['weight'] is not None):
             data_point = {
                 'x': child_result['measurement_dates']['chronological_decimal_age'], ##this needs considering - is it chronological ? should always  be corrected
                 'y': child_result['child_measurement_value']['weight']
             }
             child_weight_data.append(data_point)
-        elif(child_result['child_measurement_value']['bmi']):
+        elif(child_result and child_result['child_measurement_value']['bmi'] and child_result['child_measurement_value']['bmi'] is not None):
             data_point = {
                 'x': child_result['measurement_dates']['chronological_decimal_age'], ##this needs considering - is it chronological ? should always  be corrected
                 'y': child_result['child_measurement_value']['bmi']
             }
             child_bmi_data.append(data_point)
-        elif(child_result['child_measurement_value']['ofc']):
+        elif(child_result and child_result['child_measurement_value']['ofc'] and child_result['child_measurement_value']['ofc'] is not None):
             data_point = {
                 'x': child_result['measurement_dates']['chronological_decimal_age'], ##this needs considering - is it chronological ? should always  be corrected
                 'y': child_result['child_measurement_value']['ofc']

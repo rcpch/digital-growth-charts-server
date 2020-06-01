@@ -12,33 +12,11 @@ class Measurement:
         self.gestation_weeks = gestation_weeks
         self.gestation_days = gestation_days
         self.observation_date = observation_date
-        # self.measurement_type = measurement_type
-        # self.measurement_value = measurement_value
-
-        # ##parameter validation
-        # sex_array = ['male', 'female']
-        # measurement_type_array = ['height', 'weight', 'bmi', 'ofc']
-
-        # if any(filter(str.isupper, sex)):
-        #     raise TypeError('All parameters must be lower case.')
-        # if sex not in sex_array:
-        #     raise TypeError('Sex parameter must be either male or female.')
-        # if measurement_type not in measurement_type_array:
-        #     raise TypeError('Measurement type must be one of height, weight, bmi or ofc.')
-
         
         self.height = None
         self.weight = None
         self.bmi = None
         self.ofc = None
-
-        # if measurement_type == 'height':
-        #     self.height = measurement_value
-        # elif measurement_type == 'weight':
-        #     self.weight = measurement_value
-        # elif measurement_type == 'ofc':
-        #     self.ofc = measurement_value
-
         
         self.calculated_corrected_decimal_age = corrected_decimal_age(birth_date, observation_date, gestation_weeks, gestation_days)
         self.chronological_decimal_age = chronological_decimal_age(birth_date, observation_date)
@@ -77,7 +55,7 @@ class Measurement:
 
         if self.chronological_decimal_age == self.calculated_corrected_decimal_age: ## assessment of need for correction made within the calculation functions
             self.calculated_corrected_decimal_age = 'None'
-            self.age = chronological_decimal_age
+            self.age = self.chronological_decimal_age
         else:
             self.age = self.calculated_corrected_decimal_age
             self.estimated_date_delivery = estimated_date_delivery(self.birth_date, self.gestation_weeks, self.gestation_days)
@@ -126,7 +104,7 @@ class Measurement:
             return self.return_measurement_object
         else:
             return None
-    def calculate_bmi_sds_centile(self, height: float, weight: float):
+    def calculate_bmi_sds_centile(self, height: float = 0.0, weight: float = 0.0, bmi: float = 0.0):
         if (height and height > 0.0) and (weight and weight > 0.0):
             self.bmi = bmi_from_height_weight(height, weight)
             if self.age > 0.038329911: # BMI data not present < 42 weeks gestation
@@ -138,8 +116,19 @@ class Measurement:
                 ## create return object
                 self.return_measurement_object = self.__create_measurement_object()
             return self.return_measurement_object
-        else:
-            return None
+        elif bmi and bmi > 0.0:
+            self.bmi = bmi
+            if self.age > 0.038329911: # BMI data not present < 42 weeks gestation
+                self.bmi_sds = sds(self.age, 'bmi', self.bmi, self.sex)
+                self.bmi_centile = centile(self.bmi_sds)
+                comment = interpret('bmi', self.bmi_centile, self.age)
+                self.clinician_bmi_comment = comment['clinician_comment']
+                self.lay_bmi_comment = comment['lay_comment']
+                ## create return object
+                self.return_measurement_object = self.__create_measurement_object()
+            return self.return_measurement_object
+        # else:
+        #     return None
 
     def __create_measurement_object(self):
 
