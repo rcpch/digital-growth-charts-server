@@ -55,8 +55,8 @@ Advice reported is based on centile cut-offs:
 ##### 0.4th Centile
 ###### ___Height/Length___
 
- *-*_Parent/Carer of child aged < 2y:_
-```
+  *-*_Parent/Carer of child aged < 2y:_
+ ```
 "Your child has a lower or the same length as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
 ```
 
@@ -221,7 +221,6 @@ __Parent/Carer_of child aged < 2y:_
 ```
 "On or below the 25th centile. Consider reviewing trend."
 ```
-
 ###### ___Weight___
 
  *-* _Parent/Carer_
@@ -274,7 +273,6 @@ __Parent/Carer_of child aged < 2y:_
 ```
 "On or below the 50th centile."
 ```
-
 ###### ___Weight___
 
  *-* _Parent/Carer_
