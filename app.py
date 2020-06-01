@@ -162,7 +162,7 @@ def uploaded_data(id):
             loaded_data = controllers.import_excel_sheet(file_path, False)
             data = json.loads(loaded_data['data'])
             """
-            converts ISO8601 to UK readable dates - need to transfer to controller as separate method
+            converts ISO8601 to UK readable dates
             """
             for i in data:
                 if(i['birth_date']):
@@ -189,6 +189,7 @@ def uploaded_data(id):
                         data_frame = child_data['data']
                     
                     except ValueError as e:
+                        
                         """
                         Error handler - uploaded sheet is incompatible: missing essential data
                         """
@@ -196,7 +197,9 @@ def uploaded_data(id):
                         flash(f"{e}")
                         data=None
                         render_template('uploaded_data.html', data=data)
+
                     except LookupError as l:
+                        
                         """
                         Error handler - uploaded sheet is incompatible: headings are missing or too many or misspelled
                         """
@@ -205,7 +208,7 @@ def uploaded_data(id):
                         print(l)
                         flash(f"{l}")
                         data=None
-                        render_template('uploaded_data.html', data=data)
+                        render_template('uploaded_data.html', data=data, velocities=None)
                     
                     else:
                         """
@@ -232,12 +235,17 @@ def uploaded_data(id):
                         
                         # store the JSON in global variable for conversion back to excel format for download if requested
                         requested_data = data
+
+                        # data is unique patient, calculate velocity
+                        # data come from a table and need converting to Measurement class
+                        formatted_child_data = controllers.prepare_data_as_array_of_measurement_objects(requested_data)
+                        velocities = controllers.calculate_velocity(formatted_child_data)
                         
                         # if unique data(single child, not multiple children) store in session for access by chart if requested
                         session['results'] = requested_data
                         session['serial_data'] = True
-                ## errors here ??
-            return render_template('uploaded_data.html', data=data, unique=child_data['unique']) #unique is a flag to indicate if unique child or multiple children
+                
+            return render_template('uploaded_data.html', data=data, unique=child_data['unique'], velocities=velocities) #unique is a flag to indicate if unique child or multiple children
         
         if id=='get_excel': ##broken needs fix - file deleted so can't download
             excel_file = controllers.download_excel(requested_data)

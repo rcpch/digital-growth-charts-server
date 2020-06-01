@@ -3,3 +3,4 @@ from .sds_calculations import sds, centile, percentage_median_bmi, measurement_f
 from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import interpret, comment_prematurity_correction
 from .measurement import Measurement
+from .dynamic_growth import velocity
