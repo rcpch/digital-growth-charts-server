@@ -1,6 +1,6 @@
 from datetime import date
 from rcpchgrowth.rcpchgrowth.measurement import Measurement
-from rcpchgrowth.rcpchgrowth.dynamic_growth import velocity
+from rcpchgrowth.rcpchgrowth.dynamic_growth import velocity, acceleration
 
 def perform_calculations(form):
     birth_date = form.birth_date.data
@@ -28,15 +28,23 @@ def perform_calculations(form):
     
     return array_of_measurement_objects
 
-def calculate_velocity(data):
+def calculate_velocity_acceleration(data):
     height_velocity = velocity('height', data)
     weight_velocity = velocity('weight', data)
     bmi_velocity = velocity('bmi', data)
     ofc_velocity = velocity('ofc', data)
+    height_acceleration = acceleration('height', data)
+    weight_acceleration = acceleration('weight', data)
+    bmi_acceleration = acceleration('bmi', data)
+    ofc_acceleration = acceleration('ofc', data)
     return {
         'height_velocity': height_velocity,
         'weight_velocity': weight_velocity,
         'bmi_velocity': bmi_velocity,
-        'ofc_velocity': ofc_velocity
+        'ofc_velocity': ofc_velocity,
+        'height_acceleration': height_acceleration,
+        'weight_acceleration': weight_acceleration,
+        'bmi_acceleration': bmi_acceleration,
+        'ofc_acceleration': ofc_acceleration
     }
     

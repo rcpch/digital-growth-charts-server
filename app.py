@@ -208,7 +208,7 @@ def uploaded_data(id):
                         print(l)
                         flash(f"{l}")
                         data=None
-                        render_template('uploaded_data.html', data=data, velocities=None)
+                        render_template('uploaded_data.html', data=data, dynamic_calculations=None)
                     
                     else:
                         """
@@ -239,13 +239,13 @@ def uploaded_data(id):
                         # data is unique patient, calculate velocity
                         # data come from a table and need converting to Measurement class
                         formatted_child_data = controllers.prepare_data_as_array_of_measurement_objects(requested_data)
-                        velocities = controllers.calculate_velocity(formatted_child_data)
+                        dynamic_calculations = controllers.calculate_velocity_acceleration(formatted_child_data)
                         
                         # if unique data(single child, not multiple children) store in session for access by chart if requested
                         session['results'] = requested_data
                         session['serial_data'] = True
                 
-            return render_template('uploaded_data.html', data=data, unique=child_data['unique'], velocities=velocities) #unique is a flag to indicate if unique child or multiple children
+            return render_template('uploaded_data.html', data=data, unique=child_data['unique'], dynamic_calculations = dynamic_calculations) #unique is a flag to indicate if unique child or multiple children
         
         if id=='get_excel': ##broken needs fix - file deleted so can't download
             excel_file = controllers.download_excel(requested_data)

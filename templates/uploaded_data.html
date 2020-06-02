@@ -50,32 +50,85 @@
         <button onclick="window.location.href='{{url_for('uploaded_data', id='get_excel')}}'" class="green ui button" type="submit">Download .XLSX</button>
         {% if unique %}
           <div class="ui green button" onclick="window.location.href='{{url_for('chart')}}'" type='submit'>Chart</div>
-          <div class="ui green button" id='velocityButton'>Velocity</div>
+          <div class="ui green button" id='velocityButton'>Dynamic Calculations</div>
           <div class="ui modal">
-            <div class="header">Velocities</div>
+            <div class="header">Velocities and Accelerations</div>
             <div class="content">
-                <div class="ui list">
-                  <div class="item">
-                    <i class="chart line icon"></i>
-                    <div class="header">Height</div>
-                    <div class="description">{{velocities.height_velocity}} cm/y</div>
-                  </div>
-                  <div class="item">
-                    <i class="chart line icon"></i>
-                    <div class="header">Weight</div>
-                    <div class="description">{{velocities.weight_velocity}} kg/y</div>
-                  </div>
-                  <div class="item">
-                    <i class="chart line icon"></i>
-                    <div class="header">BMI</div>
-                    <div class="description">{{velocities.bmi_velocity}} kg/m2/y</div>
-                  </div>
-                  <div class="item">
-                    <i class="chart line icon"></i>
-                    <div class="header">Head Circumference</div>
-                    <div class="description">{{velocities.ofc_velocity}} cm/y</div>
+              <div class="ui two column grid">
+                <div class="column">
+                  <div class="ui list">
+                    <div class="item">
+                      <i class="chart line green middle aligned icon"></i>
+                      <div class="content">
+                        <div class="header">Height Velocity</div>
+                        <div class="description">{{dynamic_calculations.height_velocity}} cm&#8231;y&#8315;&#185;</div>
+                      </div>
+                    </div>
+                    <div class="item">
+                      <i class="chart line green middle aligned icon"></i>
+                      <div class="content">
+                        <div class="header">Weight Velocity</div>
+                        <div class="description">{{dynamic_calculations.weight_velocity}} kg&#8231;y&#8315;&#185;</div>
+                      </div>
+                    </div>
+                    <div class="item">
+                      <i class="chart line green middle aligned icon"></i>
+                      <div class="content">
+                        <div class="header">BMI Velocity</div>
+                        {% if dynamic_calculations.bmi_acceleration is string %}
+                        <div class="description">{{dynamic_calculations.bmi_velocity}}</div>
+                        {% else %}
+                        <div class="description">{{dynamic_calculations.bmi_velocity}} kg&#8231;m&#8315;&#178;y&#8315;&#185;</div>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="item">
+                      <i class="chart line green middle aligned icon"></i>
+                      <div class="content">
+                        <div class="header">Head Circumference Velocity</div>
+                        <div class="description">{{dynamic_calculations.ofc_velocity}} cm&#8231;y&#8315;&#185;</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <div class="column">
+                  <div class="ui list">
+                    <div class="item">
+                      <i class="chart line green middle aligned icon"></i>
+                      <div class="content">
+                        <div class="header">Height Acceleration</div>
+                        <div class="description">{{dynamic_calculations.height_acceleration}} cm&#8231;y&#8315;&#178;</div>
+                      </div>
+                    </div>
+                    <div class="item">
+                      <i class="chart line green middle aligned icon"></i>
+                      <div class="content">
+                        <div class="header">Weight Acceleration</div>
+                        <div class="description">{{dynamic_calculations.weight_acceleration}} kg&#8231;y&#8315;&#178;</div>
+                      </div>
+                    </div>
+                    <div class="item">
+                      <i class="chart line green middle aligned icon"></i>
+                      <div class="content">
+                        <div class="header">BMI Acceleration</div>
+                        {% if dynamic_calculations.bmi_acceleration is string %}
+                          <div class="description">{{dynamic_calculations.bmi_acceleration}}</div>
+                        {% else %}
+                          <div class="description">{{dynamic_calculations.bmi_acceleration}} kg&#8231;m&#8315;&#178;&#8231;y&#8315;&#178;</div>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="item">
+                      <i class="chart line green middle aligned icon"></i>
+                      <div class="content">
+                        <div class="header">Head Circumference Acceleration</div>
+                        <div class="description">{{dynamic_calculations.ofc_acceleration}} cm&#8231;y&#8315;&#178;</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
             </div>
           </div>
         </div>
