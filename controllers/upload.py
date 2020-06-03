@@ -155,13 +155,7 @@ def prepare_data_as_array_of_measurement_objects(uploaded_data):
             return_measurement_object = ofc_measurement.calculate_ofc_sds_centile(observation['measurement_value'])
             array_of_measurement_objects.append(return_measurement_object)
     
-    return array_of_measurement_objects
-
-def convert_data_frame_measurement_arrays(data_frame):
-    """
-    returns a json object of arrays of all the child's growth measurements
-    """
-    
+    return array_of_measurement_objects    
 
 """
 Data model for child data:

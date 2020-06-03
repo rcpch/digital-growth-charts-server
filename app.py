@@ -158,8 +158,9 @@ def uploaded_data(id):
     if request.method == 'GET':
         static_directory = path.join(path.abspath(path.dirname(__file__)), "static/uploaded_data/")
         if id == 'example':
+            ## Have requested to view the sample data
             file_path = path.join(static_directory, 'dummy_data.xlsx')
-            loaded_data = controllers.import_excel_sheet(file_path, False)
+            loaded_data = controllers.import_excel_sheet(file_path, False) #false flag prevents deleting file once data imported
             data = json.loads(loaded_data['data'])
             """
             converts ISO8601 to UK readable dates
@@ -171,8 +172,10 @@ def uploaded_data(id):
                     i['observation_date'] =  datetime.strftime(datetime.fromtimestamp(i['observation_date']/1000), '%d/%m/%Y')
                 if(i['estimated_date_delivery']): 
                     i['estimated_date_delivery'] =  datetime.strftime(datetime.fromtimestamp(i['estimated_date_delivery']/1000), '%d/%m/%Y')
+            # store the formatted data in a global variable
             requested_data = data
-            return render_template('uploaded_data.html', data=data, unique=loaded_data['unique'])
+            ## this data is not from a unique patient - cannot graph or produce velocities
+            return render_template('uploaded_data.html', data=data, unique=loaded_data['unique'], dynamic_calculations=None)
         if id == 'excel_sheet':
             for file_name in listdir(static_directory):
                 if file_name != 'dummy_data.xlsx':
@@ -183,7 +186,7 @@ def uploaded_data(id):
                     """
                     file_path = path.join(static_directory, file_name)
                     try:
-                        # import the data from excel and validate
+                        # import the data from excel and validate, delete the file once imported (True flag)
                         child_data = controllers.import_excel_sheet(file_path, True)
                         # extract the dataframe
                         data_frame = child_data['data']
@@ -196,7 +199,7 @@ def uploaded_data(id):
                         print(e)
                         flash(f"{e}")
                         data=None
-                        render_template('uploaded_data.html', data=data)
+                        render_template('uploaded_data.html', data=data, unique=False, dynamic_calculations=None)
 
                     except LookupError as l:
                         
@@ -208,15 +211,14 @@ def uploaded_data(id):
                         print(l)
                         flash(f"{l}")
                         data=None
-                        render_template('uploaded_data.html', data=data, dynamic_calculations=None)
+                        render_template('uploaded_data.html', data=data, unique=False, dynamic_calculations=None)
                     
                     else:
                         """
                         Data is correct format
                         Load as JSON and report to table
                         If the imported data is all same patient (on basis of unique birth_date),
-                        offer the opportunity to chart it
-                        Array of individual patient data could later be analysed for SDS drift
+                        offer the opportunity to chart it, calculate velocity and acceleration of most recent parameters
                         """
 
                         #convert dataframe to JSON

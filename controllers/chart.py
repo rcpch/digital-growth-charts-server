@@ -135,33 +135,34 @@ def create_data_plots(child_results_array):
     child_weight_data = []
     child_bmi_data = []
     child_ofc_data = []
-    
-    for child_result in child_results_array:
-        data_point = {}
-        if(child_result and child_result['child_measurement_value']['height']):
-            data_point = {
-                'x': child_result['measurement_dates']['chronological_decimal_age'], ##this needs considering - is it chronological ? should always  be corrected
-                'y': child_result['child_measurement_value']['height']
-            }
-            child_height_data.append(data_point)
-        elif(child_result and child_result['child_measurement_value']['weight'] and child_result['child_measurement_value']['weight'] is not None):
-            data_point = {
-                'x': child_result['measurement_dates']['chronological_decimal_age'], ##this needs considering - is it chronological ? should always  be corrected
-                'y': child_result['child_measurement_value']['weight']
-            }
-            child_weight_data.append(data_point)
-        elif(child_result and child_result['child_measurement_value']['bmi'] and child_result['child_measurement_value']['bmi'] is not None):
-            data_point = {
-                'x': child_result['measurement_dates']['chronological_decimal_age'], ##this needs considering - is it chronological ? should always  be corrected
-                'y': child_result['child_measurement_value']['bmi']
-            }
-            child_bmi_data.append(data_point)
-        elif(child_result and child_result['child_measurement_value']['ofc'] and child_result['child_measurement_value']['ofc'] is not None):
-            data_point = {
-                'x': child_result['measurement_dates']['chronological_decimal_age'], ##this needs considering - is it chronological ? should always  be corrected
-                'y': child_result['child_measurement_value']['ofc']
-            }
-            child_ofc_data.append(data_point)
+    for count, child_result in enumerate(child_results_array):
+        if(child_result):
+            data_point = {}
+            if(child_result['child_measurement_value']['height']):
+                data_point = {
+                    'x': child_result['measurement_dates']['chronological_decimal_age'], 
+                    'y': child_result['child_measurement_value']['height']
+                }
+                child_height_data.append(data_point)
+            if(child_result['child_measurement_value']['weight']):
+                data_point = {
+                    'x': child_result['measurement_dates']['chronological_decimal_age'], 
+                    'y': child_result['child_measurement_value']['weight']
+                }
+                child_weight_data.append(data_point)
+            if(child_result['child_measurement_value']['bmi']):
+                data_point = {
+                    'x': child_result['measurement_dates']['chronological_decimal_age'], 
+                    'y': child_result['child_measurement_value']['bmi']
+                }
+                child_bmi_data.append(data_point)
+            if(child_result['child_measurement_value']['ofc']):
+                data_point = {
+                    'x': child_result['measurement_dates']['chronological_decimal_age'], 
+                    'y': child_result['child_measurement_value']['ofc']
+                }
+                child_ofc_data.append(data_point)
+        
     return {
         'heights': child_height_data, 
         'weights': child_weight_data,
