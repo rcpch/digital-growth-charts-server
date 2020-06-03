@@ -18,12 +18,12 @@ def interpret(measurement: str, centile: float, age: float, sex: str):
     elif age < -0.287474333 and measurement == 'height': # below 25 weeks there is no height reference data
         lay_interpretation = "Height centiles cannot be calculate below 25 weeks gestation."
         clinician_interpretation = "Length SDS and Centiles cannot be calculated below 25 weeks as there is no reference data below this threshold."
-    elif age > 17.0 and measurement == 'ofc' and sex == 'male':
+    elif age > 17.0 and measurement == 'ofc' and sex == 'female':
         lay_interpretation = "Head circumference centiles cannot be calculated above 17 years in girls."
-        clinician_interpretation = "Head circumference SDS and Centiles cannot be calculated above 17 y as there is no reference data beyond this threshold."
-    elif age > 18.0 and measurement == 'ofc' and sex == 'female':
+        clinician_interpretation = "Head circumference SDS and Centiles cannot be calculated above 17 y as there is no reference data beyond this threshold in girls."
+    elif age > 18.0 and measurement == 'ofc' and sex == 'male':
         lay_interpretation = "Head circumference centiles cannot be calculated above 18 years in boys."
-        clinician_interpretation = "Head circumference SDS and Centiles cannot be calculated above 18 y as there is no reference data below this threshold."
+        clinician_interpretation = "Head circumference SDS and Centiles cannot be calculated above 18 y as there is no reference data below this threshold in boys."
     else: 
         ## return comments
         if measurement == 'height':
