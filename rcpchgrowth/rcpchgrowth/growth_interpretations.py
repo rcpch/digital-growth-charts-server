@@ -27,12 +27,12 @@ def interpret(measurement: str, centile: float, age: float, sex: str):
     else: 
         ## return comments
         if measurement == 'height':
-            if centile <= 0.04:
+            if centile <= 0.4:
                 if age < 2.0:
                     lay_interpretation = "Your child has a lower or the same length as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
                 if age >= 2.0:
                     lay_interpretation = "Your child has a lower or the same height as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
-                clinician_interpretation = "On or below the 0.04th centile for height. Medical review advised."
+                clinician_interpretation = "On or below the 0.4th centile for height. Medical review advised."
             elif centile <= 2.0:
                 if age < 2.0:
                     lay_interpretation = "Your child is in the lowest 2 percent for length, sex and age. Consider seeing your doctor."
@@ -90,9 +90,9 @@ def interpret(measurement: str, centile: float, age: float, sex: str):
                     clinician_interpretation = "Above 99.6th centile for height. Medical review is advised."
 
         if measurement == 'weight':
-            if centile <= 0.04:
+            if centile <= 0.4:
                 lay_interpretation = "Your child has a lower or the same weight as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
-                clinician_interpretation = "On or below the 0.04th centile for weight. Medical review advised."
+                clinician_interpretation = "On or below the 0.4th centile for weight. Medical review advised."
             elif centile <= 2.0:
                 lay_interpretation = "Your child is in the lowest 2 percent for weight compared with other children the same age and sex. Consider seeing your doctor."
                 clinician_interpretation = "On or below the 2nd centile. Consider reviewing trend."
@@ -123,9 +123,9 @@ def interpret(measurement: str, centile: float, age: float, sex: str):
 
         if measurement == 'bmi':
             if centile:
-                if centile <= 0.04:
+                if centile <= 0.4:
                     lay_interpretation = "Compared with other children the same height, age and sex, your child is below or the same weight as only 4 in every 1000 children. It is advisable to see your doctor."
-                    clinician_interpretation = "On or below the 0.04th centile. Medical review advised."
+                    clinician_interpretation = "On or below the 0.4th centile. Medical review advised."
                 elif centile <= 2.0:
                     lay_interpretation = "Compared with other children the same height, age and sex, your child is is in the lowest 2 percent of the population for their weight. Consider seeing your doctor."
                     clinician_interpretation = "On or below the 2nd centile. Consider reviewing trend."            
@@ -158,9 +158,9 @@ def interpret(measurement: str, centile: float, age: float, sex: str):
                 clinician_interpretation = 'There is no reference data below 2 weeks of age'
 
         if measurement == 'ofc':
-            if centile <= 0.04:
+            if centile <= 0.4:
                 lay_interpretation = "Your child's head size is larger than or the same as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
-                clinician_interpretation = "On or below the 0.04th centile for head circumference. Medical review advised."
+                clinician_interpretation = "On or below the 0.4th centile for head circumference. Medical review advised."
             elif centile <= 2.0:
                 lay_interpretation = "Your child's head size is in the lowest 2 percent as other children the same sex and age. Consider seeing your doctor."
                 clinician_interpretation = "On or below the 2nd centile for head circumference. Consider reviewing trend."
