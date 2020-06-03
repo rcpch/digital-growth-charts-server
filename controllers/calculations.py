@@ -19,7 +19,7 @@ def perform_calculations(form):
     if weight:
         weight_measurement = Measurement(sex, birth_date, observation_date, gestation_weeks, gestation_days)
         array_of_measurement_objects.append(weight_measurement.calculate_weight_sds_centile(weight))
-    if height and weight:
+    if height and weight: 
         bmi_measurement = Measurement(sex, birth_date, observation_date, gestation_weeks, gestation_days)
         array_of_measurement_objects.append(bmi_measurement.calculate_bmi_sds_centile(height, weight))
     if ofc:

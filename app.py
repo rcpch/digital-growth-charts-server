@@ -42,7 +42,6 @@ def home():
             return redirect(url_for('results', id='table'))
 
         # form not validated. Need flash warning here
-
         return render_template('measurement_form.html', form = form)
     else:
         return render_template('measurement_form.html', form = form)

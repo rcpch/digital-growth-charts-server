@@ -69,48 +69,75 @@ class Measurement:
             if self.age >= -0.287474333: # there is no length data below 25 weeks gestation
                 self.height_sds = sds(self.age, 'height', self.height, self.sex)
                 self.height_centile = centile(self.height_sds)
-                comment = interpret('height', self.height_centile, self.age)
+                comment = interpret('height', self.height_centile, self.age, self.sex)
                 self.clinician_height_comment = comment["clinician_comment"]
                 self.lay_height_comment = comment["lay_comment"]
                 ## create return object
                 self.return_measurement_object = self.__create_measurement_object()
-            return self.return_measurement_object
+                return self.return_measurement_object
+            else:
+                self.height_centile = None
+                self.height_centile = None
+                comment = interpret('height', self.height_centile, self.age, self.sex) # returns ref data error to user
+                self.clinician_height_comment = comment["clinician_comment"]
+                self.lay_height_comment = comment["lay_comment"]
+                ## create return object
+                self.return_measurement_object = self.__create_measurement_object()
+                return self.return_measurement_object
         else:
-            return None
+            raise LookupError("Unable to return SDS or centile values for height")
 
     def calculate_weight_sds_centile(self, weight: float):
         if weight and weight > 0.0:
             self.weight = weight
             self.weight_sds = sds(self.age, 'weight', self.weight, self.sex)
             self.weight_centile = centile(self.weight_sds)
-            comment = interpret('weight', self.weight_centile, self.age)
+            comment = interpret('weight', self.weight_centile, self.age, self.sex)
             self.clinician_weight_comment = comment['clinician_comment']
             self.lay_weight_comment = comment['lay_comment']
             ## create return object
             self.return_measurement_object = self.__create_measurement_object()
             return self.return_measurement_object
         else:
-            return None
+            raise LookupError("Unable to return SDS or centile values for weight.")
+
     def calculate_ofc_sds_centile(self, ofc: float):
         if ofc and ofc > 0.0:
             self.ofc = ofc
             if (self.age <= 17 and self.sex == 'female') or (self.age <= 18.0 and self.sex == 'male'): # OFC data not present >17y in girls or >18y in boys
                 self.ofc_sds = sds(self.age, 'ofc', self.ofc, self.sex)
                 self.ofc_centile = centile(self.ofc_sds)
-                comment = interpret('ofc', self.ofc_centile, self.age)
+                comment = interpret('ofc', self.ofc_centile, self.age, self.sex)
                 self.clinician_ofc_comment = comment['clinician_comment']
                 self.lay_ofc_comment = comment['lay_comment']
                 self.return_measurement_object = self.__create_measurement_object()
+            else:
+                self.ofc_sds = None
+                self.ofc_centile = None
+                comment = interpret('ofc', self.ofc_centile, self.age, self.sex)
+                self.clinician_ofc_comment = comment['clinician_comment']
+                self.lay_ofc_comment = comment['lay_comment']
+                ## create return object
+                self.return_measurement_object = self.__create_measurement_object()
             return self.return_measurement_object
         else:
-            return None
+            raise LookupError('Unable to return SDS or centile values for head circumference')
+
     def calculate_bmi_sds_centile(self, height: float = 0.0, weight: float = 0.0, bmi: float = 0.0):
         if (height and height > 0.0) and (weight and weight > 0.0):
             self.bmi = bmi_from_height_weight(height, weight)
             if self.age > 0.038329911: # BMI data not present < 42 weeks gestation
                 self.bmi_sds = sds(self.age, 'bmi', self.bmi, self.sex)
                 self.bmi_centile = centile(self.bmi_sds)
-                comment = interpret('bmi', self.bmi_centile, self.age)
+                comment = interpret('bmi', self.bmi_centile, self.age, self.sex)
+                self.clinician_bmi_comment = comment['clinician_comment']
+                self.lay_bmi_comment = comment['lay_comment']
+                ## create return object
+                self.return_measurement_object = self.__create_measurement_object()
+            else:
+                self.bmi_sds = None
+                self.bmi_centile = None
+                comment = interpret('bmi', self.bmi_centile, self.age, self.sex)
                 self.clinician_bmi_comment = comment['clinician_comment']
                 self.lay_bmi_comment = comment['lay_comment']
                 ## create return object
@@ -118,17 +145,24 @@ class Measurement:
             return self.return_measurement_object
         elif bmi and bmi > 0.0:
             self.bmi = bmi
+            comment = interpret('bmi', self.bmi_centile, self.age, self.sex)
             if self.age > 0.038329911: # BMI data not present < 42 weeks gestation
                 self.bmi_sds = sds(self.age, 'bmi', self.bmi, self.sex)
                 self.bmi_centile = centile(self.bmi_sds)
-                comment = interpret('bmi', self.bmi_centile, self.age)
                 self.clinician_bmi_comment = comment['clinician_comment']
                 self.lay_bmi_comment = comment['lay_comment']
                 ## create return object
                 self.return_measurement_object = self.__create_measurement_object()
+            else:
+                self.clinician_bmi_comment = comment['clinician_comment']
+                self.lay_bmi_comment = comment['lay_comment']
+                self.bmi_centile = None
+                self.bmi_sds = None
+                ## create return object
+                self.return_measurement_object = self.__create_measurement_object()
             return self.return_measurement_object
-        # else:
-        #     return None
+        else:
+            raise LookupError('Unable to return SDS or centile values for BMI')
 
     def __create_measurement_object(self):
 

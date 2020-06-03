@@ -173,7 +173,6 @@
         </div>
 
         <!-- measurement results -->
-
         <div class="section">
             <table class="ui very basic collapsing celled table">
                 <thead>
@@ -187,16 +186,13 @@
                             <h4 class="ui blue header">
                                 <div class="content">
                                     Height
-                                    <div class="sub header">
-                                        
-                                    </div>
                                 </div>
                             </h4>
                         </td>
                         {% for measurement in result %}
-                            {% if measurement.child_measurement_value.height is not none %}
+                            {% if measurement.child_measurement_value.height is number %}
                                 <td>
-                                    {{ measurement.child_measurement_value.height }} cm
+                                    {{ measurement.child_measurement_value.height }} kg
                                 </td>
                             {% endif %}
                         {% endfor %}
@@ -410,6 +406,7 @@
                 </tbody>
             </table>
         </div>
+        
         <div class="ui container">
             <div class="ui green button" onclick="window.location.href='{{url_for('chart')}}'" type='submit'>Chart</div>
         </div>
