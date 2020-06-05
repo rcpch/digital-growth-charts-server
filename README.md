@@ -1,6 +1,6 @@
 ![RCPCH Logo](https://www.rcpch.ac.uk/themes/rcpch/images/logo-desktop.svg)
 # CALCULATIONS FOR GROWTH CHARTS USING UK-WHO GROWTH REFERENCES 
-Marcus Baw, Helen Bedford, Simon Chapman, Tim Cole, Mary Fewtrell, Victoria Jackson, Liz Marder, Rachel McKeown, Jonathan Miall, Andy Palmer, Charlotte Weldon, Charlotte Wright, Magdalena Umerska
+Marcus Baw, Helen Bedford, Simon Chapman, Tim Cole, Mary Fewtrell, Victoria Jackson, Liz Marder, Rachel McKeown, Jonathan Miall, Andy Palmer, Charlotte Weldon, Charlotte Wright, Magdalena Umerska.
 
 ## Clinical Aspects
 ### Introduction
