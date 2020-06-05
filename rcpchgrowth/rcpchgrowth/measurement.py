@@ -37,7 +37,7 @@ class Measurement:
         self.estimated_date_delivery = 'None'
         self.estimated_date_delivery_string = ""
         self.corrected_calendar_age = ''
-        self.corrected_gestational_age = ''
+        self.corrected_gestational_age = {}
 
         self.clinician_height_comment = ''
         self.clinician_weight_comment = ''
@@ -59,6 +59,7 @@ class Measurement:
         if self.chronological_decimal_age == self.calculated_corrected_decimal_age: ## assessment of need for correction made within the calculation functions
             self.calculated_corrected_decimal_age = 'None'
             self.age = self.chronological_decimal_age
+            self.corrected_gestational_age = corrected_gestational_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days) #return None as no correction necessary
         else:
             self.age = self.calculated_corrected_decimal_age
             self.estimated_date_delivery = estimated_date_delivery(self.birth_date, self.gestation_weeks, self.gestation_days)
@@ -185,7 +186,10 @@ class Measurement:
                         "corrected_decimal_age": self.calculated_corrected_decimal_age,
                         "chronological_calendar_age": self.chronological_calendar_age, 
                         "corrected_calendar_age": self.corrected_calendar_age, 
-                        "corrected_gestational_age": self.corrected_gestational_age, 
+                        "corrected_gestational_age": {
+                            "corrected_gestation_weeks": self.corrected_gestational_age["corrected_gestation_weeks"],
+                            "corrected_gestation_days": self.corrected_gestational_age["corrected_gestation_days"],
+                        }, 
                         "clinician_decimal_age_comment": self.clinician_decimal_age_comment, 
                         "lay_decimal_age_comment": self.lay_decimal_age_comment
                     }, 

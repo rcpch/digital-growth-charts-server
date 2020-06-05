@@ -40,7 +40,7 @@
                             </h4>
                         </td>
                         <td>
-                            {{result[0].birth_data.gestation_weeks}}+{{result[0].birth_data.gestation_days}} weeks
+                            {{result[0].birth_data.gestation_weeks}}<sup>+{{result[0].birth_data.gestation_days}}</sup> weeks
                         </td>
                     </tr>
                     <tr>
@@ -158,9 +158,9 @@
                             </div>
                         </div>
                         </h4></td>
-                        {% if result[0].measurement_dates.corrected_gestational_age %}
+                        {% if result[0].measurement_dates.corrected_gestational_age.corrected_gestation_weeks %}
                         <td>
-                            {{result[0].measurement_dates.corrected_gestational_age}}
+                            {{result[0].measurement_dates.corrected_gestational_age.corrected_gestation_weeks}}<sup>+{{result[0].measurement_dates.corrected_gestational_age.corrected_gestation_days}}</sup> weeks
                         </td>
                         {% else %}
                             <td>
@@ -206,7 +206,7 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                            {% if measurement.measurement_calculated_values.height_sds is number %}
+                            {% if measurement.child_measurement_value.height is number %}
                             <td>
                                 <div class="ui blue header">
                                     {{ measurement.measurement_calculated_values.height_sds }}
@@ -224,15 +224,16 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                            {% if measurement.measurement_calculated_values.height_centile is number %}
+                            {% if measurement.child_measurement_value.height is number %}
                                 <td>
                                     <div class="ui blue header">
                                         {{ measurement.measurement_calculated_values.height_centile }}
                                     </div>
+                                    <td id='height_centile' style="border: 0px !important;">
+                                        <i class="info green circle icon"></i>
+                                    </td>
                                 </td>
-                                <td id='height_centile' style="border: 0px !important;">
-                                    <i class="info green circle icon"></i>
-                                </td>
+                            {% else %}
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -302,7 +303,7 @@
                         {% for measurement in result  %}
                             {% if measurement.child_measurement_value.bmi is number %}
                                 <td>
-                                    {{ measurement.child_measurement_value.bmi }} kg/m2
+                                    {{ measurement.child_measurement_value.bmi }} kg/m&#178;
                                 </td>
                             {% endif %}
                         {% endfor %}
@@ -316,13 +317,13 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                                {% if measurement.measurement_calculated_values.bmi_sds is number %}
-                                    <td>
-                                        <div class="ui blue header">
-                                            {{ measurement.measurement_calculated_values.bmi_sds }}
-                                        </div>
-                                    </td>
-                                {% endif %}
+                            {% if measurement.child_measurement_value.bmi is number %}
+                                <td>
+                                    <div class="ui blue header">
+                                        {{ measurement.measurement_calculated_values.bmi_sds }}
+                                    </div>
+                                </td>
+                            {% endif %}
                         {% endfor %}
                     </tr>
                     <tr>
@@ -334,7 +335,7 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                                {% if measurement.measurement_calculated_values.bmi_centile is number %}
+                                {% if measurement.child_measurement_value.bmi is number %}
                                     <td>
                                         <div class="ui blue header">
                                             {{ measurement.measurement_calculated_values.bmi_centile }}
@@ -373,14 +374,14 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                                {% if measurement.measurement_calculated_values.ofc_sds is number %}
-                                    <td>
-                                        <div class="ui blue header">
-                                            {{ measurement.measurement_calculated_values.ofc_sds }}
-                                        </div>
-                                    </td>
-                                {% endif %}
-                            {% endfor %}
+                            {% if measurement.child_measurement_value.ofc is number %}
+                                <td>
+                                    <div class="ui blue header">
+                                        {{ measurement.measurement_calculated_values.ofc_sds }}
+                                    </div>
+                                </td>
+                            {% endif %}
+                        {% endfor %}
                     </tr>
                     <tr>
                         <td>
@@ -391,7 +392,7 @@
                             </h4>
                         </td>
                         {% for measurement in result  %}
-                            {% if measurement.measurement_calculated_values.ofc_centile is number %}
+                            {% if measurement.child_measurement_value.ofc is number %}
                                 <td>
                                     <div class="ui blue header">
                                         {{ measurement.measurement_calculated_values.ofc_centile }}

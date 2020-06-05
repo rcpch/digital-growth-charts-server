@@ -140,7 +140,10 @@ def corrected_gestational_age(birth_date: date, observation_date: date, gestatio
     if observation_date >= forty_two_weeks_gestation_date:
         #beyond 2 weeks post term - chronological age measured in days / weeks / months years
         #no correction
-        return ''
+        return {
+            "corrected_gestation_weeks": None,
+            "corrected_gestation_days": None
+        }
     
     pregnancy_length_days = (gestation_weeks * 7) + gestation_days
     # time_alive = relativedelta.relativedelta(observation_date, birth_date)
@@ -151,7 +154,11 @@ def corrected_gestational_age(birth_date: date, observation_date: date, gestatio
     corrected_weeks = math.floor(days_since_conception / 7)
     corrected_supplementary_days = days_since_conception - (corrected_weeks * 7)
 
-    return f"{corrected_weeks}+{corrected_supplementary_days} weeks"
+    # return f"{corrected_weeks}+{corrected_supplementary_days} weeks"
+    return {
+        'corrected_gestation_weeks': corrected_weeks,
+        'corrected_gestation_days': corrected_supplementary_days
+    }
 
 def string_to_date(convert_string):
     return datetime.strptime(convert_string, '%d/%m/%Y')

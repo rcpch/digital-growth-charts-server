@@ -1,4 +1,4 @@
-
+from .constants import FORTY_TWO_WEEKS_GESTATION, TWENTY_FIVE_WEEKS_GESTATION
 
 def interpret(measurement: str, centile: float, age: float, sex: str):    
     """
@@ -12,10 +12,10 @@ def interpret(measurement: str, centile: float, age: float, sex: str):
     clinician_interpretation = ''
 
     ## error handling
-    if age < 0.038329911 and measurement == 'bmi': # below 42 weeks of age there is no BMI reference data
+    if age < FORTY_TWO_WEEKS_GESTATION and measurement == 'bmi': # below 42 weeks of age there is no BMI reference data
         lay_interpretation = "BMI centiles cannot be calculated below 2 weeks of age or before your baby has reached term."
         clinician_interpretation = "BMI SDS and Centiles cannot be calculated before 42 weeks as there is no reference data below this threshold."
-    elif age < -0.287474333 and measurement == 'height': # below 25 weeks there is no height reference data
+    elif age < TWENTY_FIVE_WEEKS_GESTATION and measurement == 'height': # below 25 weeks there is no height reference data
         lay_interpretation = "Height centiles cannot be calculate below 25 weeks gestation."
         clinician_interpretation = "Length SDS and Centiles cannot be calculated below 25 weeks as there is no reference data below this threshold."
     elif age > 17.0 and measurement == 'ofc' and sex == 'female':
