@@ -69,7 +69,6 @@ class Measurement:
     def calculate_height_sds_centile(self, height: float):
         if height and height > 0.0:
             self.height = height
-            print(f"{self.age} and {TWENTY_FIVE_WEEKS_GESTATION}")
             if self.age >= TWENTY_FIVE_WEEKS_GESTATION: # there is no length data below 25 weeks gestation
                 self.height_sds = sds(self.age, 'height', self.height, self.sex)
                 self.height_centile = centile(self.height_sds)

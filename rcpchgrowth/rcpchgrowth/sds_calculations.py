@@ -8,6 +8,7 @@ import numpy as np
 from datetime import date
 import json
 import pkg_resources
+from .constants import TWENTY_FIVE_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION
 # import timeit #see below, comment back in if timing functions in this module
 
 """
@@ -20,7 +21,7 @@ measurement: height, weight, bmi, ofc (decimal)
 observation: value (float)
 gestation_weeks: gestational age(weeks), integer
 gestation_days: supplementary days of gestation
-lms: L, "male" or S
+lms: L, M or S
 """
 
 #load the reference data
@@ -66,11 +67,11 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str, defaul
     """
 
     if measurement == 'height':
-        if age < -0.287474333:
+        if age < TWENTY_FIVE_WEEKS_GESTATION:
             return None # There is no reference data for length below 25 weeks'
     
     if measurement == 'bmi':
-        if age < 0.038329911:
+        if age < FORTY_TWO_WEEKS_GESTATION:
             return None # There is no BMI reference data available for BMI below 2 weeks
     
     if measurement == 'ofc':
@@ -220,11 +221,11 @@ def get_lms(age: float, measurement: str, sex: str, default_to_youngest_referenc
         print(chart_extremes_msg)
     
     if measurement == 'height':
-        if age < -0.287474333:
+        if age < TWENTY_FIVE_WEEKS_GESTATION:
             raise ValueError('There is no reference data for length below 25 weeks')
     
     if measurement == 'bmi':
-        if age < 0.038329911:
+        if age < FORTY_TWO_WEEKS_GESTATION:
             raise ValueError('There is no BMI reference data available for BMI below 2 weeks')
     
     if measurement == 'ofc':
