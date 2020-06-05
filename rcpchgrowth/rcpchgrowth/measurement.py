@@ -4,7 +4,11 @@ from .date_calculations import chronological_decimal_age, corrected_decimal_age,
 from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import interpret, comment_prematurity_correction
 
+TWENTY_FIVE_WEEKS_GESTATION = (25 * 7)/365.25
+FORTY_TWO_WEEKS_GESTATION = (42 * 7)/365.25
+
 class Measurement:
+
     def __init__(self, sex: str, birth_date: date, observation_date, gestation_weeks: int = 0, gestation_days: int = 0,):
 
         self.sex = sex
@@ -66,7 +70,7 @@ class Measurement:
     def calculate_height_sds_centile(self, height: float):
         if height and height > 0.0:
             self.height = height
-            if self.age >= -0.287474333: # there is no length data below 25 weeks gestation
+            if self.age >= TWENTY_FIVE_WEEKS_GESTATION: # there is no length data below 25 weeks gestation
                 self.height_sds = sds(self.age, 'height', self.height, self.sex)
                 self.height_centile = centile(self.height_sds)
                 comment = interpret('height', self.height_centile, self.age, self.sex)
@@ -76,7 +80,7 @@ class Measurement:
                 self.return_measurement_object = self.__create_measurement_object()
                 return self.return_measurement_object
             else:
-                self.height_centile = None
+                self.height_sds = None
                 self.height_centile = None
                 comment = interpret('height', self.height_centile, self.age, self.sex) # returns ref data error to user
                 self.clinician_height_comment = comment["clinician_comment"]
@@ -126,7 +130,7 @@ class Measurement:
     def calculate_bmi_sds_centile(self, height: float = 0.0, weight: float = 0.0, bmi: float = 0.0):
         if (height and height > 0.0) and (weight and weight > 0.0):
             self.bmi = bmi_from_height_weight(height, weight)
-            if self.age > 0.038329911: # BMI data not present < 42 weeks gestation
+            if self.age > FORTY_TWO_WEEKS_GESTATION: # BMI data not present < 42 weeks gestation
                 self.bmi_sds = sds(self.age, 'bmi', self.bmi, self.sex)
                 self.bmi_centile = centile(self.bmi_sds)
                 comment = interpret('bmi', self.bmi_centile, self.age, self.sex)
@@ -146,7 +150,7 @@ class Measurement:
         elif bmi and bmi > 0.0:
             self.bmi = bmi
             comment = interpret('bmi', self.bmi_centile, self.age, self.sex)
-            if self.age > 0.038329911: # BMI data not present < 42 weeks gestation
+            if self.age >= FORTY_TWO_WEEKS_GESTATION: # BMI data not present < 42 weeks gestation
                 self.bmi_sds = sds(self.age, 'bmi', self.bmi, self.sex)
                 self.bmi_centile = centile(self.bmi_sds)
                 self.clinician_bmi_comment = comment['clinician_comment']

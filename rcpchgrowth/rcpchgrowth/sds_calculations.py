@@ -10,7 +10,6 @@ import json
 import pkg_resources
 # import timeit #see below, comment back in if timing functions in this module
 
-
 """
 dob: date of birth
 obs_date: date of observation
@@ -124,7 +123,7 @@ def percentage_median_bmi( age: float, actual_bmi: float, sex: str)->float:
     percent_median_bmi = (actual_bmi/m)*100.0
     return percent_median_bmi
 
-def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  decimal_age: float, default_to_youngest_reference: bool = True) -> float:
+def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  decimal_age: float, default_to_youngest_reference: bool = False) -> float:
     """
     Public method
     Returns the measurement from a given SDS.
@@ -204,13 +203,13 @@ def cubic_interpolation_possible(age: float, measurement, sex):
         return True
 
 
-def get_lms(age: float, measurement: str, sex: str, default_to_youngest_reference: bool = True)->list:
+def get_lms(age: float, measurement: str, sex: str, default_to_youngest_reference: bool = False)->list:
     """
     Returns an interpolated L, M and S value as an array [l, m, s] against a decimal age, sex and measurement
 
     default_to_youngest_reference (boolean): in the event of an exact age match at the threshold of a chart,
-            where it is possible to choose 2 references, default will pick the youngest reference (optional)
-            eg at exactly 2 y, the function will therefore always select UK-WHO infant and not child data, unless
+            where it is possible to choose 2 references, default will pick the oldest reference (optional)
+            eg at exactly 2 y, the function will therefore always select UK-WHO child and not infant data, unless
             this flag specifies otherwise
     """
     
@@ -236,7 +235,7 @@ def get_lms(age: float, measurement: str, sex: str, default_to_youngest_referenc
     if age == decimal_ages[age_index_one_below]:
         """
         child's age matches a reference age - no interpolation necessary
-        defaults to the lowest reference if at reference threshold
+        defaults to the highest reference if at reference threshold
         unless default_to_youngest_reference is false
         or bmi at 2 weeks of age is requested as no data at 42 weeks gestation
         """
