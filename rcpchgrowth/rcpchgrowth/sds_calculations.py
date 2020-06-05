@@ -8,7 +8,7 @@ import numpy as np
 from datetime import date
 import json
 import pkg_resources
-from .constants import TWENTY_FIVE_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION
+from .constants import TWENTY_FIVE_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION, TERM_LOWER_THRESHOLD_LENGTH_DAYS
 # import timeit #see below, comment back in if timing functions in this module
 
 """

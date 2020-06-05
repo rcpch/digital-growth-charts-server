@@ -617,6 +617,8 @@ Therefore height, weight and head circumference performed on the same day report
             "birth_date": "03/01/2020",
             "gestation_weeks": 31,
             "gestation_days": 3,
+            "estimated_date_delivery": "03/03/2020",
+            "estimated_date_delivery_string": "Tue 03 March, 2020",
         },
         "measurement_dates": {
             "obs_date": "15/05/2020",
@@ -624,7 +626,10 @@ Therefore height, weight and head circumference performed on the same day report
             "chronological_calendar_age": "4 months, 1 week and 5 days",
             "corrected_decimal_age": 0.2,
             "corrected_calendar_age": "2 months, 1 week and 5 days",
-            "corrected_gestational_age": ""
+            "corrected_gestational_age": {
+                            "corrected_gestation_weeks": None,
+                            "corrected_gestation_days": None
+                        }, 
             "clinician_decimal_age_comment": "This is an age which has been corrected for prematurity.",
             "lay_decimal_age_comment": "This takes into account your child's prematurity"
         },
@@ -683,6 +688,7 @@ corrected_decimal_age(birth_date: date, observation_date: date, gestation_weeks:
 - Corrects for 1 year, if gestation at birth >= 32 weeks and < 37 weeks
 - Corrects for 2 years, if gestation at birth <32 weeks
 - Otherwise returns decimal age without correction
+- Depends on chronological_decimal_age function
 
 ```python
 chronological_calendar_age(birth_date: date, observation_date: date) -> str:

@@ -21,7 +21,7 @@ class Measurement:
         self.bmi = None
         self.ofc = None
         
-        self.calculated_corrected_decimal_age = corrected_decimal_age(birth_date, observation_date, gestation_weeks, gestation_days)
+        self.corrected_decimal_age = corrected_decimal_age(birth_date, observation_date, gestation_weeks, gestation_days)
         self.chronological_decimal_age = chronological_decimal_age(birth_date, observation_date)
         self.chronological_calendar_age = chronological_calendar_age(birth_date, observation_date)
 
@@ -52,16 +52,16 @@ class Measurement:
 
         self.return_measurement_object = {}
 
-        age_comments = comment_prematurity_correction(self.chronological_decimal_age, self.calculated_corrected_decimal_age, self.gestation_weeks, self.gestation_days)
+        age_comments = comment_prematurity_correction(self.chronological_decimal_age, self.corrected_decimal_age, self.gestation_weeks, self.gestation_days)
         self.lay_decimal_age_comment =  age_comments['lay_comment']
         self.clinician_decimal_age_comment = age_comments['clinician_comment']
 
-        if self.chronological_decimal_age == self.calculated_corrected_decimal_age: ## assessment of need for correction made within the calculation functions
-            self.calculated_corrected_decimal_age = 'None'
+        if self.chronological_decimal_age == self.corrected_decimal_age: ## assessment of need for correction made within the corrected_decimal_age function
+            self.corrected_decimal_age = 'None'
             self.age = self.chronological_decimal_age
             self.corrected_gestational_age = corrected_gestational_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days) #return None as no correction necessary
         else:
-            self.age = self.calculated_corrected_decimal_age
+            self.age = self.corrected_decimal_age
             self.estimated_date_delivery = estimated_date_delivery(self.birth_date, self.gestation_weeks, self.gestation_days)
             self.corrected_calendar_age = chronological_calendar_age(self.estimated_date_delivery, self.observation_date)
             self.estimated_date_delivery_string = self.estimated_date_delivery.strftime('%a %d %B, %Y')
@@ -175,15 +175,15 @@ class Measurement:
                         "birth_date": self.birth_date, 
                         "gestation_weeks": self.gestation_weeks, 
                         "gestation_days": self.gestation_days, 
-                        "edd": self.estimated_date_delivery, 
-                        "edd_string": self.estimated_date_delivery_string,
+                        "estimated_date_delivery": self.estimated_date_delivery, 
+                        "estimated_date_delivery_string": self.estimated_date_delivery_string,
                         "sex": self.sex
                     },
 
                     "measurement_dates": {
                         "obs_date": self.observation_date, 
                         "chronological_decimal_age": self.chronological_decimal_age, 
-                        "corrected_decimal_age": self.calculated_corrected_decimal_age,
+                        "corrected_decimal_age": self.corrected_decimal_age,
                         "chronological_calendar_age": self.chronological_calendar_age, 
                         "corrected_calendar_age": self.corrected_calendar_age, 
                         "corrected_gestational_age": {
