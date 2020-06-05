@@ -3,6 +3,7 @@ from datetime import timedelta
 from dateutil import relativedelta
 import math
 from decimal import *
+from .constants import TERM_PREGNANCY_LENGTH_DAYS, TERM_LOWER_THRESHOLD_LENGTH_DAYS, EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS
 
 """
 3 functions to calculate ages
@@ -11,11 +12,6 @@ from decimal import *
  - chronological_calendar_age: returns a calendar age as a string (takes birth_date or estimated_date_delivery and observation_date)
  - estimated_date_delivery: returns estimated date of delivery in a known premature infant (takes birth_date, gestation_weeks, gestation_days, pregnancy_length_days[optional])
 """
-
-#constants
-TERM_PREGNANCY_LENGTH_DAYS = 40 * 7
-TERM_LOWER_THRESHOLD_LENGTH_DAYS = 37 * 7
-EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS = 32 * 7
 
 def chronological_decimal_age(birth_date: date, observation_date: date) -> float:
 

@@ -3,9 +3,8 @@ from .sds_calculations import sds, centile, percentage_median_bmi, measurement_f
 from .date_calculations import chronological_decimal_age, corrected_decimal_age, chronological_calendar_age, estimated_date_delivery, corrected_gestational_age
 from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import interpret, comment_prematurity_correction
+from .constants import TWENTY_FIVE_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION
 
-TWENTY_FIVE_WEEKS_GESTATION = (25 * 7)/365.25
-FORTY_TWO_WEEKS_GESTATION = (42 * 7)/365.25
 
 class Measurement:
 
@@ -70,6 +69,7 @@ class Measurement:
     def calculate_height_sds_centile(self, height: float):
         if height and height > 0.0:
             self.height = height
+            print(f"{self.age} and {TWENTY_FIVE_WEEKS_GESTATION}")
             if self.age >= TWENTY_FIVE_WEEKS_GESTATION: # there is no length data below 25 weeks gestation
                 self.height_sds = sds(self.age, 'height', self.height, self.sex)
                 self.height_centile = centile(self.height_sds)
