@@ -1,7 +1,5 @@
 import rcpchgrowth.rcpchgrowth as rcpchgrowth
 # from .calculations import create_measurement_object
-import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
 import numpy as np
 import os 
 from datetime import datetime
