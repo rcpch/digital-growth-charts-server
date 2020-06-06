@@ -3,15 +3,23 @@ from datetime import timedelta
 from dateutil import relativedelta
 import math
 from decimal import *
-from .constants import TERM_PREGNANCY_LENGTH_DAYS, TERM_LOWER_THRESHOLD_LENGTH_DAYS, EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS
+from .constants import FORTY_WEEKS_GESTATION, TERM_PREGNANCY_LENGTH_DAYS, TERM_LOWER_THRESHOLD_LENGTH_DAYS, EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS
 
 """
-3 functions to calculate ages
+4 functions to calculate ages
+ - decimal_age: returns a decimal age from 2 dates (birth_date and observation_date) and gestational age at delivery (gestation_weeks and gestation_days), based on 40 weeks as 0. Days/Weeks before 40 weeks are negative.
  - chronological_decimal_age: returns a decimal age from 2 dates (takes birth_date and observation_date)
  - corrected_decimal_age: returns a corrected decimal age accounting for prematurity (takes birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int, pregnancy_length_day [optional])
  - chronological_calendar_age: returns a calendar age as a string (takes birth_date or estimated_date_delivery and observation_date)
  - estimated_date_delivery: returns estimated date of delivery in a known premature infant (takes birth_date, gestation_weeks, gestation_days, pregnancy_length_days[optional])
 """
+
+def decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int):
+    """
+    returns decimal age relative to forty weeks expressed as 0 y
+    """
+    days_from_forty_weeks = ((gestation_weeks * 7) + gestation_days) - TERM_PREGNANCY_LENGTH_DAYS
+    return days_from_forty_weeks / 365.25
 
 def chronological_decimal_age(birth_date: date, observation_date: date) -> float:
 
@@ -32,7 +40,7 @@ def corrected_decimal_age(birth_date: date, observation_date: date, gestation_we
     Corrects for 1 year, if gestation at birth >= 32 weeks and < 37 weeks
     Corrects for 2 years, if gestation at birth <32 weeks
     Otherwise returns decimal age without correction
-    Returns a decimal age correct for gestaton even over 37 weeks
+    Any baby 37-42 weeks returns decimal age of 0.0
     Depends on chronological_decimal_age
     :param birth_date: date of birth
     :param observation_date: date observation made

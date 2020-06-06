@@ -44,6 +44,7 @@ def home():
         # form not validated. Need flash warning here
         return render_template('measurement_form.html', form = form)
     else:
+        # controllers.temp_test_functions.tim_tests_preterm()
         return render_template('measurement_form.html', form = form)
 
 @app.route("/results/<id>", methods=['GET', 'POST'])

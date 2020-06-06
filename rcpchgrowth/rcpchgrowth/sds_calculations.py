@@ -8,7 +8,7 @@ import numpy as np
 from datetime import date
 import json
 import pkg_resources
-from .constants import TWENTY_FIVE_WEEKS_GESTATION, THIRTY_SEVEN_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION, TERM_LOWER_THRESHOLD_LENGTH_DAYS
+from .constants import TWENTY_FOUR_WEEKS_GESTATION, TWENTY_FIVE_WEEKS_GESTATION, THIRTY_SEVEN_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION, TERM_LOWER_THRESHOLD_LENGTH_DAYS
 # import timeit #see below, comment back in if timing functions in this module
 
 """
@@ -31,7 +31,7 @@ with open(data) as json_file:
             json_file.close()
 term_data = pkg_resources.resource_filename(__name__, "/data_tables/uk_who_0_20_term.json")
 with open(term_data) as json_file:
-            data = json.load(json_file)
+            term_data = json.load(json_file)
             json_file.close()
 
 # reference decimal ages
@@ -71,6 +71,10 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str, defaul
      - Head circumference reference data is available from 23 weeks gestation to 17y in girls and 18y in boys
     """
 
+    if age < TWENTY_FOUR_WEEKS_GESTATION or age > 20:
+        # extremes of chart
+        return None
+
     if measurement == 'height':
         if age < TWENTY_FIVE_WEEKS_GESTATION:
             return None # There is no reference data for length below 25 weeks'
@@ -85,7 +89,7 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str, defaul
 
     ## if this is a baby now term, use the term data set unless the child was born preterm and is now term,
     ## in which case continue to use the preterm data set
-
+    
     if age >= THIRTY_SEVEN_WEEKS_GESTATION  and age < FORTY_TWO_WEEKS_GESTATION and born_preterm == False:
         lms = get_term_lms(measurement, sex)
     else:
@@ -219,9 +223,9 @@ def get_term_lms(measurement: str, sex: str):
     For babies at 37-42 weeks not preterm, L, M, S are averaged across the 5 weeks. For babies born preterm
     but are now term gestation, this method is not called and the UK90 preterm data is used upto 42 weeks
     """
-    l = data['measurement'][measurement][sex][0]["L"]
-    m = data['measurement'][measurement][sex][0]["M"]
-    s = data['measurement'][measurement][sex][0]["S"]
+    l = term_data['measurement'][measurement][sex][0]["L"]
+    m = term_data['measurement'][measurement][sex][0]["M"]
+    s = term_data['measurement'][measurement][sex][0]["S"]
 
     lms = {
             'l': l,

@@ -1,6 +1,6 @@
 from datetime import date
 from .sds_calculations import sds, centile, percentage_median_bmi, measurement_from_sds
-from .date_calculations import chronological_decimal_age, corrected_decimal_age, chronological_calendar_age, estimated_date_delivery, corrected_gestational_age
+from .date_calculations import decimal_age, chronological_decimal_age, corrected_decimal_age, chronological_calendar_age, estimated_date_delivery, corrected_gestational_age
 from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import interpret, comment_prematurity_correction
 from .constants import TWENTY_FIVE_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION, THIRTY_SEVEN_WEEKS_GESTATION
@@ -53,6 +53,7 @@ class Measurement:
         self.return_measurement_object = {}
 
         # calculate ages from dates
+        self.decimal_age = decimal_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days)
         self.corrected_decimal_age = corrected_decimal_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days)
         self.chronological_decimal_age = chronological_decimal_age(self.birth_date, self.observation_date)
         self.chronological_calendar_age = chronological_calendar_age(self.birth_date, self.observation_date)
@@ -76,9 +77,8 @@ class Measurement:
             self.corrected_calendar_age = chronological_calendar_age(self.estimated_date_delivery, self.observation_date)
             self.estimated_date_delivery_string = self.estimated_date_delivery.strftime('%a %d %B, %Y')
         else:
-            self.chronological_decimal_age = 0.0
-            self.age = self.chronological_decimal_age
-            
+            # term baby
+            self.age = self.chronological_decimal_age   
 
     def calculate_height_sds_centile(self, height: float):
         if height and height > 0.0:
@@ -195,6 +195,7 @@ class Measurement:
 
                     "measurement_dates": {
                         "obs_date": self.observation_date, 
+                        "decimal_age": self.decimal_age,
                         "chronological_decimal_age": self.chronological_decimal_age, 
                         "corrected_decimal_age": self.corrected_decimal_age,
                         "chronological_calendar_age": self.chronological_calendar_age, 
