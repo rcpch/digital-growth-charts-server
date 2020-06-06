@@ -39,7 +39,7 @@ decimal_ages=[-0.325804244,-0.306639288,-0.287474333,-0.268309377,-0.249144422,-
 
 #public functions
 
-def sds(age: float, measurement: str, measurement_value: float, sex: str, default_to_youngest_reference: bool = True, born_preterm = False)->float:
+def sds(age: float, measurement: str, measurement_value: float, sex: str, default_to_youngest_reference: bool = False, born_preterm = False)->float:
     """
     Public function
     Returns a standard deviation score. 

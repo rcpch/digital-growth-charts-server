@@ -52,7 +52,11 @@ class Measurement:
 
         self.return_measurement_object = {}
 
-        # calculate ages from dates
+        if gestation_weeks == 0:
+            # if gestation not specified, set to 40 weeks
+            gestation_weeks = 40
+
+        # calculate ages from dates and gestational ages at birth
         self.decimal_age = decimal_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days)
         self.corrected_decimal_age = corrected_decimal_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days)
         self.chronological_decimal_age = chronological_decimal_age(self.birth_date, self.observation_date)
@@ -62,15 +66,10 @@ class Measurement:
         self.clinician_decimal_age_comment = age_comments['clinician_comment']
         self.corrected_gestational_age = corrected_gestational_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days) #return None if no correction necessary
 
-        if gestation_weeks == 0:
-            # if gestation not specified, set to 40 weeks
-            gestation_weeks = 40
-
         if gestation_weeks < 37 and gestation_weeks >= 24:
-            # born premature - may need correction (not if >32 weeks and >1 y, or >24 weeks and >2 y)
+            # born premature - may need correction (not if >32 weeks and >1 y, or <32 weeks and >2 y)
             # decision to correct is made in the date_calculations module
-            # if baby is <42 weeks currently, decimal age reflects exact corrected gestational age and uses
-            # the UK-WHO preterm data set.
+            # if baby is <42 weeks currently, decimal age reflects the corrected gestational age
             self.born_premature = True
             self.age = self.corrected_decimal_age
             self.estimated_date_delivery = estimated_date_delivery(self.birth_date, self.gestation_weeks, self.gestation_days)
@@ -84,7 +83,7 @@ class Measurement:
         if height and height > 0.0:
             self.height = height
             if self.age >= TWENTY_FIVE_WEEKS_GESTATION: # there is no length data below 25 weeks gestation
-                self.height_sds = sds(self.age, 'height', self.height, self.sex, self.born_premature)
+                self.height_sds = sds(self.age, 'height', self.height, self.sex, False, self.born_premature)
                 self.height_centile = centile(self.height_sds)
                 comment = interpret('height', self.height_centile, self.age, self.sex)
                 self.clinician_height_comment = comment["clinician_comment"]
@@ -107,7 +106,7 @@ class Measurement:
     def calculate_weight_sds_centile(self, weight: float):
         if weight and weight > 0.0:
             self.weight = weight
-            self.weight_sds = sds(self.age, 'weight', self.weight, self.sex, self.born_premature)
+            self.weight_sds = sds(self.age, 'weight', self.weight, self.sex, False, self.born_premature)
             self.weight_centile = centile(self.weight_sds)
             comment = interpret('weight', self.weight_centile, self.age, self.sex)
             self.clinician_weight_comment = comment['clinician_comment']
@@ -122,7 +121,7 @@ class Measurement:
         if ofc and ofc > 0.0:
             self.ofc = ofc
             if (self.age <= 17 and self.sex == 'female') or (self.age <= 18.0 and self.sex == 'male'): # OFC data not present >17y in girls or >18y in boys
-                self.ofc_sds = sds(self.age, 'ofc', self.ofc, self.sex, self.born_premature)
+                self.ofc_sds = sds(self.age, 'ofc', self.ofc, self.sex, False, self.born_premature)
                 self.ofc_centile = centile(self.ofc_sds)
                 comment = interpret('ofc', self.ofc_centile, self.age, self.sex)
                 self.clinician_ofc_comment = comment['clinician_comment']
@@ -144,7 +143,7 @@ class Measurement:
         if (height and height > 0.0) and (weight and weight > 0.0):
             self.bmi = bmi_from_height_weight(height, weight)
             if self.age > FORTY_TWO_WEEKS_GESTATION: # BMI data not present < 42 weeks gestation
-                self.bmi_sds = sds(self.age, 'bmi', self.bmi, self.sex, self.born_premature)
+                self.bmi_sds = sds(self.age, 'bmi', self.bmi, self.sex, True, self.born_premature) ## does not default to youngest reference
                 self.bmi_centile = centile(self.bmi_sds)
                 comment = interpret('bmi', self.bmi_centile, self.age, self.sex)
                 self.clinician_bmi_comment = comment['clinician_comment']
