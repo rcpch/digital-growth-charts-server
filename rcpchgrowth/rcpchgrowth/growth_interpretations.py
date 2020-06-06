@@ -221,6 +221,9 @@ def comment_prematurity_correction(chronological_decimal_age, corrected_decimal_
         elif gestation_weeks < 33:
             lay_decimal_age_comment = f"Because your child was born at {gestation_weeks}+{gestation_days}, an adjustment had been made to take into account their prematurity. This occurs up to two years of age."
             clinician_decimal_age_comment = "Correction for gestational age has been made. This occurs until two years of age."
+        elif gestation_weeks < 24:
+            lay_decimal_age_comment = "Your child has been born below the threshold of the charts."
+            clinician_decimal_age_comment = "Reference data does not exist below the age of 23 weeks gestation."
     else:
         #some error
         lay_decimal_age_comment = "It has not been possible to calculate age this time."

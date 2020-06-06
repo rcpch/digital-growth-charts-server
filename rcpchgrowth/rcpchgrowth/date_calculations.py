@@ -31,8 +31,8 @@ def corrected_decimal_age(birth_date: date, observation_date: date, gestation_we
     Corrects for gestational age. 
     Corrects for 1 year, if gestation at birth >= 32 weeks and < 37 weeks
     Corrects for 2 years, if gestation at birth <32 weeks
-    Corrects for premature infants now > 37 weeks
     Otherwise returns decimal age without correction
+    Returns a decimal age correct for gestaton even over 37 weeks
     Depends on chronological_decimal_age
     :param birth_date: date of birth
     :param observation_date: date observation made
