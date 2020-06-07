@@ -18,8 +18,9 @@ def decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, 
     """
     returns decimal age relative to forty weeks expressed as 0 y
     """
-    days_from_forty_weeks = ((gestation_weeks * 7) + gestation_days) - TERM_PREGNANCY_LENGTH_DAYS
-    return days_from_forty_weeks / 365.25
+    days_born_from_forty_weeks = ((gestation_weeks * 7) + gestation_days) - TERM_PREGNANCY_LENGTH_DAYS
+    days_of_life_in_years = chronological_decimal_age(birth_date, observation_date)
+    return  (days_born_from_forty_weeks / 365.25) + days_of_life_in_years
 
 def chronological_decimal_age(birth_date: date, observation_date: date) -> float:
 

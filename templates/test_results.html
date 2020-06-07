@@ -51,6 +51,22 @@
                         </td>
                     </tr>
                     <tr>
+                        <td style="border: 0px !important;" id="decimal_age_explain">
+                            <i class="info green circle icon"></i>
+                        </td>
+                        <td>
+                            <h4 class="ui header">
+                                <div class="content">
+                                    Decimal Age
+                                    <div class="sub header"></div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            {{result[0].measurement_dates.decimal_age}} y
+                        </td>
+                    </tr>
+                    <tr>
                         <td style="border: 0px !important;" id="chronological_decimal_age_explain">
                             <i class="info green circle icon"></i>
                         </td>
@@ -439,11 +455,17 @@
             variation: 'wide green',
             html: '<p><b>Info: </b>This is the child\'s gestation at birth; it is the number of weeks since the last menstrual period.</p>'
         });
+        $('#decimal_age_explain').popup({
+            on: 'click',
+            setFluidWidth: true,
+            variation: 'wide green',
+            html: '<p><b>Info: </b>This is the child\'s age relative to their due date.</p>'
+        });
         $('#corrected_decimal_age_explain').popup({
             on: 'click',
             setFluidWidth: true,
             variation: 'wide green',
-            html: '<p><b>Info: </b>This calculates the child\'s age from their expected due date, not their date of birth. This allows clinicians to compare them with other term babies the same age.</p>'
+            html: '<p><b>Info: </b>This calculates the child\'s age from their expected due date, not their date of birth. This allows clinicians to compare them with other term babies the same age. It is considered 0 at term (37-42 weeks)</p>'
         });
         $('#chronological_decimal_age_explain').popup({
             on: 'click',
