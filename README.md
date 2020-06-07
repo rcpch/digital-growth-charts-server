@@ -617,14 +617,20 @@ Therefore height, weight and head circumference performed on the same day report
             "birth_date": "03/01/2020",
             "gestation_weeks": 31,
             "gestation_days": 3,
+            "estimated_date_delivery": "03/03/2020",
+            "estimated_date_delivery_string": "Tue 03 March, 2020",
         },
         "measurement_dates": {
             "obs_date": "15/05/2020",
+            "decimal_age": 0.2,
             "chronological_decimal_age": 0.36,
             "chronological_calendar_age": "4 months, 1 week and 5 days",
             "corrected_decimal_age": 0.2,
             "corrected_calendar_age": "2 months, 1 week and 5 days",
-            "corrected_gestational_age": ""
+            "corrected_gestational_age": {
+                            "corrected_gestation_weeks": None,
+                            "corrected_gestation_days": None
+                        }, 
             "clinician_decimal_age_comment": "This is an age which has been corrected for prematurity.",
             "lay_decimal_age_comment": "This takes into account your child's prematurity"
         },
@@ -651,8 +657,8 @@ Therefore height, weight and head circumference performed on the same day report
     }
 ]
 ```
-
-- `"decimal_age_in_years": float` age reported to 1 d.p. calculated as the difference in days between date of birth at 00:00 and date of observation at 00:00 divided by 365.25 (to account for leap years every 4 years)
+-`decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int):`
+- `"chronological_decimal_age": float` age reported to 1 d.p. calculated as the difference in days between date of birth at 00:00 and date of observation at 00:00 divided by 365.25 (to account for leap years every 4 years)
 - `"chronological_calendar_age": string` human readable representation of age in years, months, weeks, days or hours. 
 - `"corrected_decimal_age"` age reported to 1 d.p. accounting for prematurity. Correction only occurs in babies born below 32 weeks for the first 2 years of life, or if below 37 weeks, for the first year only.
 - `"corrected_calendar_age": string` human readable representation of age in years, months, weeks, days or hours, accounting for prematurity, following principle of corrected decimal age
@@ -662,6 +668,39 @@ Therefore height, weight and head circumference performed on the same day report
 
 ##### Date and age calculations
 
+Ages are expressed as years. This is the number of days of life / 365.25. The extra 0.25 is to 
+account for the leap year which comes round every 4 years.
+
+A pregnancy lasts 40 weeks (280 days). This is calculated from the date of the baby's 
+mother's last menstrual period.  In fact, from that date, ovulation will occur midway through 
+the following cycle (on average 14 days into a 28 day cycle). This means that from conception,
+a pregnancy actually lasts only 266 days. Babies are considered to have been born 'Term' if 
+delivered anywhere from 37 to 42 weeks gestation (3 weeks before to 2 weeks after due date).
+
+The due date is referred to as the Estimated Date of Delivery (EDD).
+
+_Decimal age_
+This is the age of the child based on 40 weeks gestation, each day being 1/365.25.  
+Days before 40 weeks are < 0. 
+A baby born at 24 weeks gestation would be (24 * 7) - (40 * 7) / 365.25 y
+
+_Chronological Decimal age_
+This is the time since birth irrespective of gestation at birth. A baby born at 24 weeks would
+be 16 weeks old at 40 weeks gestation (16 x 7)/365.25 y
+
+_Corrected decimal age_
+This is the age of a child that was born preterm
+Convention is that correction occurs for all babies born before 37 weeks (definition of term):
+    babies born at or above 32 weeks have the additional weeks (calculated up to 40 weeks)
+        added to their decimal age for the first year of life
+    babies born below 32 weeks have the additional weeks (calculated up to 40 weeks) added
+        to their decimal age until the age of 2 years
+
+A few other things about correction:
+- term is consider 37-42 weeks. No correction is made for any baby born between these gestations.
+Their decimal age, therefore is considered to be 0.0. This means a baby born at 42 weeks and 
+now 2 weeks of age will calculate identically to a baby born at 37 weeks and now 2 weeks of age.
+
 ***Constants***
 ```python
 TERM_PREGNANCY_LENGTH_DAYS = 40 * 7
@@ -669,6 +708,11 @@ TERM_LOWER_THRESHOLD_LENGTH_DAYS = 37 * 7
 EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS = 32 * 7
 ```
 ##### Functions
+
+```python
+decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int):
+```
+- returns a decimal age from 2 dates (birth_date and observation_date) and gestational age at delivery (gestation_weeks and gestation_days), based on 40 weeks as 0. Days/Weeks before 40 weeks are negative.
 
 ```python
 chronological_decimal_age(birth_date: date, observation_date: date) -> float
@@ -683,6 +727,8 @@ corrected_decimal_age(birth_date: date, observation_date: date, gestation_weeks:
 - Corrects for 1 year, if gestation at birth >= 32 weeks and < 37 weeks
 - Corrects for 2 years, if gestation at birth <32 weeks
 - Otherwise returns decimal age without correction
+- Returns a decimal age correct for gestation even over 37 weeks
+- Depends on chronological_decimal_age function
 
 ```python
 chronological_calendar_age(birth_date: date, observation_date: date) -> str:
@@ -715,6 +761,7 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str, defaul
 - observation (the value is standard units) [height and ofc are in cm, weight in kg bmi in kg/m2]
 - sex (a standard string) ['male' or 'female']
 - default_to_youngest_reference (boolean): defaults to False. For circumstances when the age exactly matches a join between two references (or moving from lying to standing at 2y) where there are 2 ages in the reference data to choose between.Defaults to the oldest reference unless the user selects True
+- born_preterm (boolean): defaults to False. If a baby is 37-42 weeks, use the uk_who_0_20_term data by default. If a baby was born preterm, the UK90 gestation specific data is used up to 42 weeks.
 
 SDS is generated by passing the interpolated L, M and S values for age through an equation.
 Cubic interpolation is used for most values, but where ages of children are at the extremes of the growth reference,

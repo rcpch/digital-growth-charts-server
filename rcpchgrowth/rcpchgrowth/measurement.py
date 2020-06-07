@@ -1,14 +1,16 @@
 from datetime import date
 from .sds_calculations import sds, centile, percentage_median_bmi, measurement_from_sds
-from .date_calculations import chronological_decimal_age, corrected_decimal_age, chronological_calendar_age, estimated_date_delivery, corrected_gestational_age
+from .date_calculations import decimal_age, chronological_decimal_age, corrected_decimal_age, chronological_calendar_age, estimated_date_delivery, corrected_gestational_age
 from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import interpret, comment_prematurity_correction
-from .constants import TWENTY_FIVE_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION
+from .constants import TWENTY_FIVE_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION, THIRTY_SEVEN_WEEKS_GESTATION
 
 
 class Measurement:
 
     def __init__(self, sex: str, birth_date: date, observation_date, gestation_weeks: int = 0, gestation_days: int = 0,):
+
+        # intialise variables
 
         self.sex = sex
         self.birth_date = birth_date
@@ -20,10 +22,6 @@ class Measurement:
         self.weight = None
         self.bmi = None
         self.ofc = None
-        
-        self.calculated_corrected_decimal_age = corrected_decimal_age(birth_date, observation_date, gestation_weeks, gestation_days)
-        self.chronological_decimal_age = chronological_decimal_age(birth_date, observation_date)
-        self.chronological_calendar_age = chronological_calendar_age(birth_date, observation_date)
 
         self.height_sds = 'None'
         self.height_centile="None"
@@ -38,6 +36,7 @@ class Measurement:
         self.estimated_date_delivery_string = ""
         self.corrected_calendar_age = ''
         self.corrected_gestational_age = {}
+        self.born_premature = False # flag to signal if correction needed when baby now term but was premature at birth
 
         self.clinician_height_comment = ''
         self.clinician_weight_comment = ''
@@ -52,26 +51,38 @@ class Measurement:
 
         self.return_measurement_object = {}
 
-        age_comments = comment_prematurity_correction(self.chronological_decimal_age, self.calculated_corrected_decimal_age, self.gestation_weeks, self.gestation_days)
+        if gestation_weeks == 0:
+            # if gestation not specified, set to 40 weeks
+            gestation_weeks = 40
+
+        # calculate ages from dates and gestational ages at birth
+        self.decimal_age = decimal_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days)
+        self.corrected_decimal_age = corrected_decimal_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days)
+        self.chronological_decimal_age = chronological_decimal_age(self.birth_date, self.observation_date)
+        self.chronological_calendar_age = chronological_calendar_age(self.birth_date, self.observation_date)
+        age_comments = comment_prematurity_correction(self.chronological_decimal_age, self.corrected_decimal_age, self.gestation_weeks, self.gestation_days)
         self.lay_decimal_age_comment =  age_comments['lay_comment']
         self.clinician_decimal_age_comment = age_comments['clinician_comment']
+        self.corrected_gestational_age = corrected_gestational_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days) #return None if no correction necessary
 
-        if self.chronological_decimal_age == self.calculated_corrected_decimal_age: ## assessment of need for correction made within the calculation functions
-            self.calculated_corrected_decimal_age = 'None'
-            self.age = self.chronological_decimal_age
-            self.corrected_gestational_age = corrected_gestational_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days) #return None as no correction necessary
-        else:
-            self.age = self.calculated_corrected_decimal_age
+        if gestation_weeks < 37 and gestation_weeks >= 24:
+            # born premature - may need correction (not if >32 weeks and >1 y, or <32 weeks and >2 y)
+            # decision to correct is made in the date_calculations module
+            # if baby is <42 weeks currently, decimal age reflects the corrected gestational age
+            self.born_premature = True
+            self.age = self.corrected_decimal_age
             self.estimated_date_delivery = estimated_date_delivery(self.birth_date, self.gestation_weeks, self.gestation_days)
             self.corrected_calendar_age = chronological_calendar_age(self.estimated_date_delivery, self.observation_date)
             self.estimated_date_delivery_string = self.estimated_date_delivery.strftime('%a %d %B, %Y')
-            self.corrected_gestational_age = corrected_gestational_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days)
+        else:
+            # term baby
+            self.age = self.chronological_decimal_age   
 
     def calculate_height_sds_centile(self, height: float):
         if height and height > 0.0:
             self.height = height
             if self.age >= TWENTY_FIVE_WEEKS_GESTATION: # there is no length data below 25 weeks gestation
-                self.height_sds = sds(self.age, 'height', self.height, self.sex)
+                self.height_sds = sds(self.age, 'height', self.height, self.sex, False, self.born_premature)
                 self.height_centile = centile(self.height_sds)
                 comment = interpret('height', self.height_centile, self.age, self.sex)
                 self.clinician_height_comment = comment["clinician_comment"]
@@ -94,7 +105,7 @@ class Measurement:
     def calculate_weight_sds_centile(self, weight: float):
         if weight and weight > 0.0:
             self.weight = weight
-            self.weight_sds = sds(self.age, 'weight', self.weight, self.sex)
+            self.weight_sds = sds(self.age, 'weight', self.weight, self.sex, False, self.born_premature)
             self.weight_centile = centile(self.weight_sds)
             comment = interpret('weight', self.weight_centile, self.age, self.sex)
             self.clinician_weight_comment = comment['clinician_comment']
@@ -109,7 +120,7 @@ class Measurement:
         if ofc and ofc > 0.0:
             self.ofc = ofc
             if (self.age <= 17 and self.sex == 'female') or (self.age <= 18.0 and self.sex == 'male'): # OFC data not present >17y in girls or >18y in boys
-                self.ofc_sds = sds(self.age, 'ofc', self.ofc, self.sex)
+                self.ofc_sds = sds(self.age, 'ofc', self.ofc, self.sex, False, self.born_premature)
                 self.ofc_centile = centile(self.ofc_sds)
                 comment = interpret('ofc', self.ofc_centile, self.age, self.sex)
                 self.clinician_ofc_comment = comment['clinician_comment']
@@ -131,7 +142,7 @@ class Measurement:
         if (height and height > 0.0) and (weight and weight > 0.0):
             self.bmi = bmi_from_height_weight(height, weight)
             if self.age > FORTY_TWO_WEEKS_GESTATION: # BMI data not present < 42 weeks gestation
-                self.bmi_sds = sds(self.age, 'bmi', self.bmi, self.sex)
+                self.bmi_sds = sds(self.age, 'bmi', self.bmi, self.sex, True, self.born_premature) ## does not default to youngest reference
                 self.bmi_centile = centile(self.bmi_sds)
                 comment = interpret('bmi', self.bmi_centile, self.age, self.sex)
                 self.clinician_bmi_comment = comment['clinician_comment']
@@ -151,7 +162,7 @@ class Measurement:
             self.bmi = bmi
             comment = interpret('bmi', self.bmi_centile, self.age, self.sex)
             if self.age >= FORTY_TWO_WEEKS_GESTATION: # BMI data not present < 42 weeks gestation
-                self.bmi_sds = sds(self.age, 'bmi', self.bmi, self.sex)
+                self.bmi_sds = sds(self.age, 'bmi', self.bmi, self.sex, self.born_premature)
                 self.bmi_centile = centile(self.bmi_sds)
                 self.clinician_bmi_comment = comment['clinician_comment']
                 self.lay_bmi_comment = comment['lay_comment']
@@ -175,15 +186,16 @@ class Measurement:
                         "birth_date": self.birth_date, 
                         "gestation_weeks": self.gestation_weeks, 
                         "gestation_days": self.gestation_days, 
-                        "edd": self.estimated_date_delivery, 
-                        "edd_string": self.estimated_date_delivery_string,
+                        "estimated_date_delivery": self.estimated_date_delivery, 
+                        "estimated_date_delivery_string": self.estimated_date_delivery_string,
                         "sex": self.sex
                     },
 
                     "measurement_dates": {
                         "obs_date": self.observation_date, 
+                        "decimal_age": self.decimal_age,
                         "chronological_decimal_age": self.chronological_decimal_age, 
-                        "corrected_decimal_age": self.calculated_corrected_decimal_age,
+                        "corrected_decimal_age": self.corrected_decimal_age,
                         "chronological_calendar_age": self.chronological_calendar_age, 
                         "corrected_calendar_age": self.corrected_calendar_age, 
                         "corrected_gestational_age": {

@@ -13,15 +13,17 @@ tim_days_of_life = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 
 def tim_tests_preterm():
     array = []
-    print(len(tim_bmis))
-    print(len(tim_sexes))
-    for counter, bmi in enumerate(tim_bmis):
-        dob = date(2020, 6, 1)
+    for counter, tim_height in enumerate(tim_heights):
+        dob = date(2020, 6, 6)
+        is_preterm = False
         date_to_measure = dob + timedelta(tim_days_of_life[counter])
-        age = corrected_decimal_age(dob, date_to_measure, tim_gestation_weeks[counter], tim_gestation_days[counter])        
-
-        if tim_bmis[counter] is not None:
-            z = sds(age, 'bmi', bmi, tim_sexes[counter], True)
+        if tim_gestation_weeks[counter] < 37:
+            is_preterm = True
+        else:
+            is_preterm = False
+        age = corrected_decimal_age(dob, date_to_measure, tim_gestation_weeks[counter], tim_gestation_days[counter])
+        if tim_height is not None:
+            z = sds(age, 'height', tim_height, tim_sexes[counter], True, is_preterm)
             array.append(z)
         else:
             array.append(None)
