@@ -2,7 +2,8 @@
 
 (WORK IN PROGRESS)
 
-* [Setup for Python Development](python-development.md)
+* [Setting up your Python Development environment](python-development.md)
+* [Running the Growth Chart API in development](running-in-development.md)
 * Using different reference data files
 * Adding new calculations
 * Testing
