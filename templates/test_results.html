@@ -14,10 +14,14 @@
         <div class="section">
             <table class="ui very basic collapsing celled table">
                 <thead>
-                <tr><th colspan='2'>Dates</th>
-                </tr></thead>
+                    <tr>
+                        <th style="border: 0px !important;"></th>
+                        <th colspan='2' style="border-left: 0px !important;">Dates</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
+                        <td style="border: 0px !important;"></td>
                         <td>
                             <h4 class="ui header">
                                 <div class="content">
@@ -31,6 +35,9 @@
                         </td>
                     </tr>
                     <tr>
+                        <td style="border: 0px !important;" id="gestational_age_delivery_explain">
+                            <i class="info green circle icon"></i>
+                        </td>
                         <td>
                             <h4 class="ui header">
                                 <div class="content">
@@ -44,6 +51,9 @@
                         </td>
                     </tr>
                     <tr>
+                        <td style="border: 0px !important;" id="chronological_decimal_age_explain">
+                            <i class="info green circle icon"></i>
+                        </td>
                         <td>
                             <h4 class="ui header">
                                 
@@ -62,6 +72,9 @@
                         </td> -->
                     </tr>
                     <tr>
+                        <td style="border: 0px !important;" id="corrected_decimal_age_explain">
+                            <i class="info green circle icon"></i>
+                        </td>
                         <td>
                             <h4 class="ui image header">
                                 <div class="content">
@@ -87,6 +100,9 @@
                         </td> -->
                     </tr>
                     <tr>
+                        <td style="border: 0px !important;" id="chronological_calendar_age_explain">
+                            <i class="info green circle icon"></i>
+                        </td>
                         <td>
                             <h4 class="ui image header">
                                 <div class="content">
@@ -103,6 +119,9 @@
                         </td> -->
                     </tr>
                     <tr>
+                        <td style="border: 0px !important;" id="corrected_calendar_age_explain">
+                            <i class="info green circle icon"></i>
+                        </td>
                         <td>
                         <h4 class="ui image header">
                             
@@ -116,9 +135,6 @@
                         <td>
                             {{result[0].measurement_dates.corrected_calendar_age}}
                         </td>
-                        <!-- <td class='chronological_decimal_age'>
-                            <i class="info green circle icon"></i>
-                        </td> -->
                         {% else %}
                             <td>
                                 No correction needed
@@ -126,6 +142,9 @@
                         {% endif %}
                     </tr>
                     <tr>
+                        <td style="border: 0px !important;" id="estimated_date_delivery_explain">
+                            <i class="info green circle icon"></i>
+                        </td>
                         <td>
                         <h4 class="ui image header">
                             
@@ -149,15 +168,16 @@
                         {% endif %}
                     </tr>
                     <tr>
+                        <td style="border: 0px !important;" id="corrected_gestational_age_explain">
+                            <i class="info green circle icon"></i>
+                        </td>
                         <td>
-                        <h4 class="ui image header">
-                            
-                            <div class="content">
-                            Corrected Gestational Age
-                            <div class="sub header">
-                            </div>
-                        </div>
-                        </h4></td>
+                            <h4 class="ui image header">
+                                <div class="content">
+                                Corrected Gestational Age
+                                </div>
+                            </h4>
+                        </td>
                         {% if result[0].measurement_dates.corrected_gestational_age.corrected_gestation_weeks %}
                         <td>
                             {{result[0].measurement_dates.corrected_gestational_age.corrected_gestation_weeks}}<sup>+{{result[0].measurement_dates.corrected_gestational_age.corrected_gestation_days}}</sup> weeks
@@ -413,11 +433,47 @@
         </div>
     {% endif %}
     <script>
-        $('#corrected_decimal_age').popup({
+        $('#gestational_age_delivery_explain').popup({
             on: 'click',
             setFluidWidth: true,
             variation: 'wide green',
-            html: '<p><b>Clinician: </b>{% if result[0].measurement_dates.clinician_decimal_age_comment %}{{result[0].measurement_dates.clinician_decimal_age_comment}}</p><p><b>Parent/Carer:</b> {{result[0].measurement_dates.lay_decimal_age_comment}}{%endif%}</p>'
+            html: '<p><b>Info: </b>This is the child\'s gestation at birth; it is the number of weeks since the last menstrual period.</p>'
+        });
+        $('#corrected_decimal_age_explain').popup({
+            on: 'click',
+            setFluidWidth: true,
+            variation: 'wide green',
+            html: '<p><b>Info: </b>This calculates the child\'s age from their expected due date, not their date of birth. This allows clinicians to compare them with other term babies the same age.</p>'
+        });
+        $('#chronological_decimal_age_explain').popup({
+            on: 'click',
+            setFluidWidth: true,
+            variation: 'wide green',
+            html: '<p><b>Info: </b>This reports the child\'s age from birth in years, expressed as a decimal.</p>'
+        });
+        $('#chronological_calendar_age_explain').popup({
+            on: 'click',
+            setFluidWidth: true,
+            variation: 'wide green',
+            html: '<p><b>Info: </b>This is the child\'s age from birth in years, months, weeks and days.</p>'
+        });
+        $('#corrected_calendar_age_explain').popup({
+            on: 'click',
+            setFluidWidth: true,
+            variation: 'wide green',
+            html: '<p><b>Info: </b>This is the child\'s age from their due date in years, months, weeks and days.</p>'
+        });
+        $('#estimated_date_delivery_explain').popup({
+            on: 'click',
+            setFluidWidth: true,
+            variation: 'wide green',
+            html: '<p><b>Clinician: </b>This is the child\'s due date.</p>'
+        });
+        $('#corrected_gestational_age_explain').popup({
+            on: 'click',
+            setFluidWidth: true,
+            variation: 'wide green',
+            html: '<p><b>Clinician: </b>For babies born preterm, this is their gestational age since birth up until 42 weeks.</p>'
         });
         $('#height_centile').popup({
             on: 'click',

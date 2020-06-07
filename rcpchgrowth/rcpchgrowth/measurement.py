@@ -22,7 +22,6 @@ class Measurement:
         self.weight = None
         self.bmi = None
         self.ofc = None
-        
 
         self.height_sds = 'None'
         self.height_centile="None"
