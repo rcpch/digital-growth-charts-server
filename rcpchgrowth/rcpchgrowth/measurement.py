@@ -1,6 +1,6 @@
 from datetime import date
 from .sds_calculations import sds, centile, percentage_median_bmi, measurement_from_sds
-from .date_calculations import decimal_age, chronological_decimal_age, corrected_decimal_age, chronological_calendar_age, estimated_date_delivery, corrected_gestational_age
+from .date_calculations import chronological_decimal_age, corrected_decimal_age, chronological_calendar_age, estimated_date_delivery, corrected_gestational_age
 from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import interpret, comment_prematurity_correction
 from .constants import TWENTY_FIVE_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION, THIRTY_SEVEN_WEEKS_GESTATION
@@ -56,7 +56,7 @@ class Measurement:
             gestation_weeks = 40
 
         # calculate ages from dates and gestational ages at birth
-        self.decimal_age = decimal_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days)
+        #  self.decimal_age = decimal_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days) DEPRECATED
         self.corrected_decimal_age = corrected_decimal_age(self.birth_date, self.observation_date, self.gestation_weeks, self.gestation_days)
         self.chronological_decimal_age = chronological_decimal_age(self.birth_date, self.observation_date)
         self.chronological_calendar_age = chronological_calendar_age(self.birth_date, self.observation_date)
@@ -193,7 +193,6 @@ class Measurement:
 
                     "measurement_dates": {
                         "obs_date": self.observation_date, 
-                        "decimal_age": self.decimal_age,
                         "chronological_decimal_age": self.chronological_decimal_age, 
                         "corrected_decimal_age": self.corrected_decimal_age,
                         "chronological_calendar_age": self.chronological_calendar_age, 

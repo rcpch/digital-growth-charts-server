@@ -1,4 +1,7 @@
-from .measurement import Measurement
+# from .measurement import Measurement
+import pandas as pd
+import os
+import math
 
 """
 These functions are experimental
@@ -15,6 +18,13 @@ thrive lines, generated here.
 """
 
 def velocity(parameter: str, measurements_array):
+    """
+    This is an experimental function and not to be used clinically because velocity is not constant
+    and is age dependent.
+    Velocity needs at least 2 measurements from 2 consecutive time points.
+    This takes an array of Measurement objects of the same child, removes the last 2 values of the same
+    measurement and calculates the velocity in units/y.
+    """
     parameter_list=[]
     if len(measurements_array) < 2:
         return 'Not enough data'
@@ -47,6 +57,15 @@ def velocity(parameter: str, measurements_array):
             return parameter_difference / time_elapsed
 
 def acceleration(parameter: str, measurements_array):
+    """
+    This is an experimental function and not to be used clinically because acceleration is not constant
+    and is age dependent.
+    Accelaration needs at least 3 measurements over 3 consecutive time points in order to compare the velocity
+    change between the first pair and the last pair.
+    This takes an array of Measurement objects of the same child, removes the last 3 values of the same
+    measurement and calculates the acceleration.
+    The parameter in question is one of 'height', 'weight', 'bmi', 'ofc'
+    """
     parameter_list=[]
     if len(measurements_array) < 3:
         return 'Not enough data'
@@ -88,3 +107,78 @@ def acceleration(parameter: str, measurements_array):
             penultimate_velocity = first_parameter_pair_difference / first_parameter_pair_time_elapsed
             accleration = (latest_velocity - penultimate_velocity)/last_parameter_pair_time_elapsed
             return accleration
+
+
+def correlate_weight(measurements_array: list):
+    """
+    Weight velocity of the individual child cannot be predicted without comparison against reference data velocity
+    since weight velocity is age dependent. This uses a uses a correlation matrix to look up values against which
+    to compare the rate at which the child is gaining or losing weight.
+    The formula for conditional weight gain is: (z2 – r x z1) / √1-r2
+    """
+
+    # import the reference
+    cwd = os.path.dirname(__file__) # current location
+    file_path = os.path.join(cwd, './data_tables/RCPCH weight correlation matrix by month.csv')
+    data_frame = pd.read_csv(file_path)
+
+    parameter_list=[]
+
+    if len(measurements_array) < 2:
+        return 'Not enough data'
+    else:
+        for measurement in measurements_array:
+            if measurement:
+                if measurement['child_measurement_value']['weight'] is not None:
+                    parameter_list.append(measurement)
+
+        if len(parameter_list) < 2:
+            return f"There are not enough weight values to calculate a velocity."
+        else:
+            last = parameter_list[-1]
+            penultimate = parameter_list[-2]
+            penultimate_weight_sds_value = penultimate['child_measurement_value']['weight_sds']
+            penultimate_decimal_age = penultimate['measurement_dates']['chronological_decimal_age']
+            last_weight_sds_value = last['child_measurement_value']['weight_sds']
+            last_decimal_age = last['measurement_dates']['chronological_decimal_age']
+            
+            ## look up age
+            ## this is the formula: (z2 – r x z1) / √1-r2
+            z2 = last_weight_sds_value
+            z1 = penultimate_weight_sds_value
+
+            ## get age above penultimate age
+            if penultimate_decimal_age.is_integer():
+                ## match - look up correlation
+                r = r_for_age(penultimate_decimal_age)
+            else:
+                ## no match - get nearest age below
+                correlation_age_below = nearest_age(penultimate_decimal_age)
+                r_below = r_for_age(correlation_age_below)
+                r_above = r_for_age(correlation_age_below + 1)
+                r = interpolate(r_below, r_above, correlation_age_below, correlation_age_below + 1)
+
+            if last_decimal_age.is_integer():
+                ## match - look up correlation
+                r2 = r_for_age(last_decimal_age)
+            else:
+                correlation_age_below = nearest_age(last_decimal_age)
+                r_below = r_for_age(correlation_age_below)
+                r_above = r_for_age(correlation_age_below + 1)
+                r2 = interpolate(r_below, r_above, correlation_age_below, correlation_age_below + 1)
+
+            ## simplify
+            conditional_weight_gain = (z2 - (z1 * r)) / math.sqrt(1 - r2)
+            
+            return conditional_weight_gain
+
+
+def nearest_age(decimal_age)->float:
+    nearest_age = int(round(decimal_age))
+    age_above = 0.0
+    age_below = 0.0
+    if nearest_age > decimal_age:
+        return nearest_age - 1
+    else:
+        return nearest_age
+    

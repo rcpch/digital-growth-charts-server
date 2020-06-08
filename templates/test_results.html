@@ -41,29 +41,13 @@
                         <td>
                             <h4 class="ui header">
                                 <div class="content">
-                                    Gestational Age at Delivery
+                                    Gestational Age at Delivery (Postmenstrual age)
                                     <div class="sub header"></div>
                                 </div>
                             </h4>
                         </td>
                         <td>
                             {{result[0].birth_data.gestation_weeks}}<sup>+{{result[0].birth_data.gestation_days}}</sup> weeks
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="border: 0px !important;" id="decimal_age_explain">
-                            <i class="info green circle icon"></i>
-                        </td>
-                        <td>
-                            <h4 class="ui header">
-                                <div class="content">
-                                    Decimal Age
-                                    <div class="sub header"></div>
-                                </div>
-                            </h4>
-                        </td>
-                        <td>
-                            {{result[0].measurement_dates.decimal_age}} y
                         </td>
                     </tr>
                     <tr>
@@ -190,7 +174,7 @@
                         <td>
                             <h4 class="ui image header">
                                 <div class="content">
-                                Corrected Gestational Age
+                                Corrected Gestational Age (Postmenstrual Age after birth)
                                 </div>
                             </h4>
                         </td>
@@ -454,12 +438,6 @@
             setFluidWidth: true,
             variation: 'wide green',
             html: '<p><b>Info: </b>This is the child\'s gestation at birth; it is the number of weeks since the last menstrual period.</p>'
-        });
-        $('#decimal_age_explain').popup({
-            on: 'click',
-            setFluidWidth: true,
-            variation: 'wide green',
-            html: '<p><b>Info: </b>This is the child\'s age relative to their due date.</p>'
         });
         $('#corrected_decimal_age_explain').popup({
             on: 'click',
