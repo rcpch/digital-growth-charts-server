@@ -24,6 +24,13 @@ or chart them.
     or serial unique patient data
 """  
 
+# API route
+@app.route("/api", methods=['GET'])
+def api():
+    return jsonify({'hello': 'world'})
+
+
+# client route
 @app.route("/", methods=['GET', 'POST'])
 def home():
     form = MeasurementForm(request.form)
@@ -49,6 +56,7 @@ def home():
         # print(controllers.temp_test_functions.correlate_weight())
         return render_template('measurement_form.html', form = form)
 
+# client route
 @app.route("/results/<id>", methods=['GET', 'POST'])
 def results(id):
     results = session.get('results')
@@ -58,10 +66,12 @@ def results(id):
     if id == 'chart':
         return render_template('chart.html')
 
+# client route
 @app.route("/chart", methods=['GET'])
 def chart():
     return render_template('chart.html')
 
+# API route
 @app.route("/chart_data", methods=['GET'])
 def chart_data():
     # Retrieve child data for charting
@@ -92,6 +102,7 @@ def chart_data():
         'centile_data': centiles
     })
 
+# potentially an API route - serve instructions from README.md as MD or something else
 @app.route("/instructions", methods=['GET'])
 def instructions():
     #open README.md file
@@ -106,6 +117,8 @@ def instructions():
         html = markdown.markdown(content)
     return render_template('instructions.html', fill=html)
 
+
+# may need to be deprecated for MVP
 @app.route("/import", methods=['GET', 'POST'])
 def import_growth_data():
     if request.method == 'POST':
@@ -155,6 +168,7 @@ def import_growth_data():
     else:
         return render_template('import.html')
 
+# ?deprecate for MVP
 @app.route("/uploaded_data/<id>", methods=['GET', 'POST'])
 def uploaded_data(id):
     global requested_data
@@ -257,6 +271,8 @@ def uploaded_data(id):
             temp_directory = Path.cwd().joinpath("static").joinpath('uploaded_data').joinpath('temp')
             return send_from_directory(temp_directory, filename='output.xlsx', as_attachment=True)
 
+
+# client route, generated from references list (references in separate GH repo eventually)
 @app.route("/references", methods=['GET'])
 def references():
     # starting with a hard-coded list, but as it grows probably belongs in database
