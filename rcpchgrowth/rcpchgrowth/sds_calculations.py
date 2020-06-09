@@ -12,8 +12,8 @@ from .constants import TWENTY_FOUR_WEEKS_GESTATION, TWENTY_FIVE_WEEKS_GESTATION,
 # import timeit #see below, comment back in if timing functions in this module
 
 """
-dob: date of birth
-obs_date: date of observation
+birth_date: date of birth
+observation_date: date of observation
 sex: sex (string, MALE or FEMALE)
 decimal_age: chronological, decimal
 corrected_age: corrected for prematurity, decimal

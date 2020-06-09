@@ -50,6 +50,7 @@ def home():
 @app.route("/results/<id>", methods=['GET', 'POST'])
 def results(id):
     results = session.get('results')
+    print(results)
     if id == 'table':
         return render_template('test_results.html', result = results)
     if id == 'chart':

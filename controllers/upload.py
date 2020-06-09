@@ -170,7 +170,7 @@ SHOULD ONLY RETURN ONE CALCULATION PER RECORD
         }
         
         "measurement_dates": {
-            "obs_date": "15/05/2020",
+            "observation_date": "15/05/2020",
             "chronological_decimal_age": 0.36,
             "chronological_calendar_age": "4 months, 1 week and 5 days",
             "corrected_decimal_age": 0.2,

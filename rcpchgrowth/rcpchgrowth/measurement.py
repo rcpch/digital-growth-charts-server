@@ -192,7 +192,7 @@ class Measurement:
                     },
 
                     "measurement_dates": {
-                        "obs_date": self.observation_date, 
+                        "observation_date": self.observation_date, 
                         "chronological_decimal_age": self.chronological_decimal_age, 
                         "corrected_decimal_age": self.corrected_decimal_age,
                         "chronological_calendar_age": self.chronological_calendar_age, 

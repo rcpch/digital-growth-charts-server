@@ -21,8 +21,36 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="border: 0px !important;"></td>
+                        <td ></td>
+                        <td style="border: 0px !important;">
+                            <h4 class="ui header">
+                                <div class="content">
+                                    Date of Birth
+                                    <div class="sub header"></div>
+                                </div>
+                            </h4>
+                        </td>
                         <td>
+                            {{result[0].birth_data.birth_date}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 0px !important;"></td>
+                        <td style="border-left: 0px !important;">
+                            <h4 class="ui header">
+                                <div class="content">
+                                    Date of measurement
+                                    <div class="sub header"></div>
+                                </div>
+                            </h4>
+                        </td>
+                        <td>
+                            {{result[0].measurement_dates.observation_date}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 0px !important;"></td>
+                        <td style="border-left: 0px !important;">
                             <h4 class="ui header">
                                 <div class="content">
                                     Sex
@@ -38,7 +66,7 @@
                         <td style="border: 0px !important;" id="gestational_age_delivery_explain">
                             <i class="info green circle icon"></i>
                         </td>
-                        <td>
+                        <td style="border-left: 0px !important;">
                             <h4 class="ui header">
                                 <div class="content">
                                     Gestational Age at Delivery (Postmenstrual age)
@@ -54,7 +82,7 @@
                         <td style="border: 0px !important;" id="chronological_decimal_age_explain">
                             <i class="info green circle icon"></i>
                         </td>
-                        <td>
+                        <td style="border-left: 0px !important;">
                             <h4 class="ui header">
                                 
                                 <div class="content">
@@ -65,7 +93,7 @@
                             </h4>
                         </td>
                         <td>
-                            {{result[0].measurement_dates.chronological_decimal_age}} y
+                            {{result[0].measurement_dates.chronological_decimal_age|round(3)}} y
                         </td>
                         <!-- <td class='chronological_decimal_age'>
                             <i class="info green circle icon"></i>
@@ -75,7 +103,7 @@
                         <td style="border: 0px !important;" id="corrected_decimal_age_explain">
                             <i class="info green circle icon"></i>
                         </td>
-                        <td>
+                        <td style="border-left: 0px !important;">
                             <h4 class="ui image header">
                                 <div class="content">
                                     Corrected Decimal Age
@@ -85,7 +113,7 @@
                         </td>
                         {% if result[0].measurement_dates.corrected_decimal_age != 'None' %}
                         <td>
-                            {{result[0].measurement_dates.corrected_decimal_age}} y
+                            {{result[0].measurement_dates.corrected_decimal_age|round(3)}} y
                         </td>
                         <td id='corrected_decimal_age' style="border: 0px !important;">
                             <i class="info green circle icon"></i>
@@ -103,7 +131,7 @@
                         <td style="border: 0px !important;" id="chronological_calendar_age_explain">
                             <i class="info green circle icon"></i>
                         </td>
-                        <td>
+                        <td style="border-left: 0px !important;">
                             <h4 class="ui image header">
                                 <div class="content">
                                     <div class="sub header"></div>
@@ -122,7 +150,7 @@
                         <td style="border: 0px !important;" id="corrected_calendar_age_explain">
                             <i class="info green circle icon"></i>
                         </td>
-                        <td>
+                        <td style="border-left: 0px !important;">
                         <h4 class="ui image header">
                             
                             <div class="content">
@@ -145,7 +173,7 @@
                         <td style="border: 0px !important;" id="estimated_date_delivery_explain">
                             <i class="info green circle icon"></i>
                         </td>
-                        <td>
+                        <td style="border-left: 0px !important;">
                         <h4 class="ui image header">
                             
                             <div class="content">
@@ -171,7 +199,7 @@
                         <td style="border: 0px !important;" id="corrected_gestational_age_explain">
                             <i class="info green circle icon"></i>
                         </td>
-                        <td>
+                        <td style="border-left: 0px !important;">
                             <h4 class="ui image header">
                                 <div class="content">
                                 Corrected Gestational Age (Postmenstrual Age after birth)
@@ -212,8 +240,10 @@
                         {% for measurement in result %}
                             {% if measurement.child_measurement_value.height is number %}
                                 <td>
-                                    {{ measurement.child_measurement_value.height }} cm
+                                    {{ measurement.child_measurement_value.height|round(1) }} cm
                                 </td>
+                            {% else %}
+                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -228,10 +258,12 @@
                         {% for measurement in result %}
                             {% if measurement.child_measurement_value.height is number %}
                             <td>
-                                <div class="ui blue header">
-                                    {{ measurement.measurement_calculated_values.height_sds }}
+                                <div>
+                                    {{ measurement.measurement_calculated_values.height_sds|round(2) }}
                                 </div>
                             </td>
+                            {% else %}
+                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -247,13 +279,22 @@
                             {% if measurement.child_measurement_value.height is number %}
                                 <td>
                                     <div class="ui blue header">
-                                        {{ measurement.measurement_calculated_values.height_centile }}
+                                        {% if (measurement.measurement_calculated_values.height_centile >99 and measurement.measurement_calculated_values.height_centile < 100) or (measurement.measurement_calculated_values.height_centile < 1 and measurement.measurement_calculated_values.height_centile > 0) %}
+                                            {{ measurement.measurement_calculated_values.height_centile|round(1) }}
+                                        {% elif measurement.measurement_calculated_values.height_centile >= 100 %}
+                                            >99.6<sup>th</sup>
+                                        {% elif measurement.measurement_calculated_values.height_centile <= 0%}
+                                            < 0.4<sup>th</sup>
+                                        {% else %}
+                                            {{ measurement.measurement_calculated_values.height_centile|round|int}}
+                                        {% endif %}
                                     </div>
                                     <td id='height_centile' style="border: 0px !important;">
                                         <i class="info green circle icon"></i>
                                     </td>
                                 </td>
                             {% else %}
+                                    <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -268,8 +309,10 @@
                         {% for measurement in result %}
                             {% if measurement.child_measurement_value.weight is number %}
                                 <td>
-                                    {{ measurement.child_measurement_value.weight }} kg
+                                    {{ measurement.child_measurement_value.weight|round(2) }} kg
                                 </td>
+                            {% else %}
+                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -284,11 +327,13 @@
                         {% for measurement in result %}
                             {% if measurement.measurement_calculated_values.weight_sds is number %}
                                 <td>
-                                    <div class="ui blue header">
-                                        {{ measurement.measurement_calculated_values.weight_sds }}
+                                    <div >
+                                        {{ measurement.measurement_calculated_values.weight_sds|round(2) }}
                                     </div>
                                 </td>
                             {% endif %}
+                            {% else %}
+                                <td>None</td>
                         {% endfor %}
                     </tr>
                     <tr>
@@ -303,12 +348,22 @@
                             {% if measurement.measurement_calculated_values.weight_centile is number %}
                                 <td>
                                     <div class="ui blue header">
-                                        {{ measurement.measurement_calculated_values.weight_centile }}
+                                        {% if (measurement.measurement_calculated_values.weight_centile >99 and measurement.measurement_calculated_values.weight_centile < 100) or (measurement.measurement_calculated_values.weight_centile < 1 and measurement.measurement_calculated_values.weight_centile > 0) %}
+                                            {{ measurement.measurement_calculated_values.weight_centile|round(1) }}
+                                        {% elif measurement.measurement_calculated_values.weight_centile >= 100 %}
+                                            >99.6<sup>th</sup>
+                                        {% elif measurement.measurement_calculated_values.weight_centile <= 0%}
+                                            < 0.4<sup>th</sup>
+                                        {% else %}
+                                            {{ measurement.measurement_calculated_values.weight_centile|round|int}}
+                                        {% endif %}
                                     </div>
                                 </td>
                                 <td id='weight_centile' style=" border: 0px !important;">
                                     <i class="info green circle icon"></i>
                                 </td>
+                            {% else %}
+                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -323,8 +378,10 @@
                         {% for measurement in result  %}
                             {% if measurement.child_measurement_value.bmi is number %}
                                 <td>
-                                    {{ measurement.child_measurement_value.bmi }} kg/m&#178;
+                                    {{ measurement.child_measurement_value.bmi|round(1) }} kg/m&#178;
                                 </td>
+                            {% else %}
+                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -339,10 +396,12 @@
                         {% for measurement in result %}
                             {% if measurement.child_measurement_value.bmi is number %}
                                 <td>
-                                    <div class="ui blue header">
-                                        {{ measurement.measurement_calculated_values.bmi_sds }}
+                                    <div>
+                                        {{ measurement.measurement_calculated_values.bmi_sds|round(2) }}
                                     </div>
                                 </td>
+                            {% else %}
+                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -358,14 +417,25 @@
                                 {% if measurement.child_measurement_value.bmi is number %}
                                     <td>
                                         <div class="ui blue header">
-                                            {{ measurement.measurement_calculated_values.bmi_centile }}
+                                            {% if (measurement.measurement_calculated_values.bmi_centile >99 and measurement.measurement_calculated_values.bmi_centile < 100) or (measurement.measurement_calculated_values.bmi_centile < 1 and measurement.measurement_calculated_values.bmi_centile > 0) %}
+                                                {{ measurement.measurement_calculated_values.bmi_centile|round(1) }}
+                                            {% elif measurement.measurement_calculated_values.bmi_centile >= 100 %}
+                                                >99.6<sup>th</sup>
+                                            {% elif measurement.measurement_calculated_values.bmi_centile <= 0%}
+                                                < 0.4<sup>th</sup>
+                                            {% else %}
+                                                {{ measurement.measurement_calculated_values.bmi_centile|round|int}}
+                                            {% endif %}
                                         </div>
                                     </td>
+                                    <td id='bmi_centile' style=" border: 0px !important;">
+                                        <i class="info green circle icon"></i>
+                                    </td>
+                                {% else %}
+                                    <td>None</td>
                                 {% endif %}
+
                             {% endfor %}
-                            <td id='bmi_centile' style=" border: 0px !important;">
-                                <i class="info green circle icon"></i>
-                            </td>
                     </tr>
                     <tr>
                         <td>
@@ -382,6 +452,8 @@
                                 <td>
                                     {{ measurement.child_measurement_value.ofc }} cm
                                 </td>
+                            {% else %}
+                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -396,10 +468,12 @@
                         {% for measurement in result %}
                             {% if measurement.child_measurement_value.ofc is number %}
                                 <td>
-                                    <div class="ui blue header">
-                                        {{ measurement.measurement_calculated_values.ofc_sds }}
+                                    <div>
+                                        {{ measurement.measurement_calculated_values.ofc_sds|round(2) }}
                                     </div>
                                 </td>
+                            {% else %}
+                                    <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -415,12 +489,22 @@
                             {% if measurement.child_measurement_value.ofc is number %}
                                 <td>
                                     <div class="ui blue header">
-                                        {{ measurement.measurement_calculated_values.ofc_centile }}
+                                        {% if (measurement.measurement_calculated_values.ofc_centile >99 and measurement.measurement_calculated_values.ofc_centile < 100) or (measurement.measurement_calculated_values.ofc_centile < 1 and measurement.measurement_calculated_values.ofc_centile > 0) %}
+                                            {{ measurement.measurement_calculated_values.ofc_centile|round(1) }}
+                                        {% elif measurement.measurement_calculated_values.ofc_centile >= 100 %}
+                                            >99.6<sup>th</sup>
+                                        {% elif measurement.measurement_calculated_values.ofc_centile <= 0%}
+                                            < 0.4<sup>th</sup>
+                                        {% else %}
+                                            {{ measurement.measurement_calculated_values.ofc_centile|round|int}}
+                                        {% endif %}
                                     </div>
                                 </td>
                                 <td id='ofc_centile' style=" border: 0px !important; ">
                                     <i class="info green circle icon"></i>
                                 </td>
+                            {% else %}
+                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -467,13 +551,19 @@
             on: 'click',
             setFluidWidth: true,
             variation: 'wide green',
-            html: '<p><b>Clinician: </b>This is the child\'s due date.</p>'
+            html: '<p><b>Info: </b>This is the child\'s due date.</p>'
         });
         $('#corrected_gestational_age_explain').popup({
             on: 'click',
             setFluidWidth: true,
             variation: 'wide green',
-            html: '<p><b>Clinician: </b>For babies born preterm, this is their gestational age since birth up until 42 weeks.</p>'
+            html: '<p><b>Info: </b>For babies born preterm, this is their gestational age since birth up until 42 weeks.</p>'
+        });
+        $('#corrected_decimal_age').popup({
+            on: 'click',
+            setFluidWidth: true,
+            variation: 'wide green',
+            html: "<p><b>Clinician: </b>{{result[0].measurement_dates.clinician_decimal_age_comment}}</p><p><b>Parent/Carer:</b> {{result[0].measurement_dates.lay_decimal_age_comment}}</p>"
         });
         $('#height_centile').popup({
             on: 'click',

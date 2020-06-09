@@ -116,7 +116,7 @@ def correlate_weight(measurements_array: list):
     to compare the rate at which the child is gaining or losing weight.
     The formula for conditional weight gain is: (z2 – r x z1) / √1-r2
     """
-
+    measurements = [{'birth_data': {'birth_date': 'Mon, 08 Jun 2020 00:00:00 GMT', 'estimated_date_delivery': 'None', 'estimated_date_delivery_string': '', 'gestation_days': 0, 'gestation_weeks': 40, 'sex': 'male'}, 'child_measurement_value': {'bmi': 'None', 'height': None, 'ofc': None, 'weight': 3.5}, 'measurement_calculated_values': {'bmi_centile': 'None', 'bmi_sds': 'None', 'clinician_bmi_comment': '', 'clinician_height_comment': '', 'clinician_ofc_comment': '', 'clinician_weight_comment': 'On or below the 50th centile .', 'height_centile': 'None', 'height_sds': 'None', 'lay_bmi_comment': '', 'lay_height_comment': '', 'lay_ofc_comment': '', 'lay_weight_comment': 'Your child is on or just below the average weight of the population, compared with other children the same age and sex.', 'ofc_centile': 'None', 'ofc_sds': 'None', 'weight_centile': 50.0, 'weight_sds': 0.0}, 'measurement_dates': {'chronological_calendar_age': 'Happy Birthday', 'chronological_decimal_age': 0.0, 'clinician_decimal_age_comment': 'Born Term. No correction necessary.', 'corrected_calendar_age': '', 'corrected_decimal_age': 0.0, 'corrected_gestational_age': {'corrected_gestation_days': 0, 'corrected_gestation_weeks': 40}, 'lay_decimal_age_comment': 'At 40+0, your child is considered to have been born at term. No age adjustment is necessary.', 'obs_date': 'Mon, 08 Jun 2020 00:00:00 GMT'}},{'birth_data': {'birth_date': 'Mon, 01 Jun 2020 00:00:00 GMT', 'estimated_date_delivery': 'None', 'estimated_date_delivery_string': '', 'gestation_days': 0, 'gestation_weeks': 40, 'sex': 'male'}, 'child_measurement_value': {'bmi': 'None', 'height': None, 'ofc': None, 'weight': 3.6}, 'measurement_calculated_values': {'bmi_centile': 'None', 'bmi_sds': 'None', 'clinician_bmi_comment': '', 'clinician_height_comment': '', 'clinician_ofc_comment': '', 'clinician_weight_comment': 'On or below the 91st centile. Consider reviewing trend.', 'height_centile': 'None', 'height_sds': 'None', 'lay_bmi_comment': '', 'lay_height_comment': '', 'lay_ofc_comment': '', 'lay_weight_comment': 'Your child is in the top 9 percent of children the same age and sex for their weight. This does not take account of their height.', 'ofc_centile': 'None', 'ofc_sds': 'None', 'weight_centile': 76.30277592692399, 'weight_sds': 0.7160759040458319}, 'measurement_dates': {'chronological_calendar_age': '1 week', 'chronological_decimal_age': 0.019164955509924708, 'clinician_decimal_age_comment': 'Born Term. No correction necessary.', 'corrected_calendar_age': '', 'corrected_decimal_age': 0.019164955509924708, 'corrected_gestational_age': {'corrected_gestation_days': 0, 'corrected_gestation_weeks': 41}, 'lay_decimal_age_comment': 'At 40+0, your child is considered to have been born at term. No age adjustment is necessary.', 'obs_date': 'Mon, 08 Jun 2020 00:00:00 GMT'}},{'birth_data': {'birth_date': 'Mon, 25 May 2020 00:00:00 GMT', 'estimated_date_delivery': 'None', 'estimated_date_delivery_string': '', 'gestation_days': 0, 'gestation_weeks': 40, 'sex': 'male'}, 'child_measurement_value': {'bmi': 'None', 'height': None, 'ofc': None, 'weight': 3.65}, 'measurement_calculated_values': {'bmi_centile': 'None', 'bmi_sds': 'None', 'clinician_bmi_comment': '', 'clinician_height_comment': '', 'clinician_ofc_comment': '', 'clinician_weight_comment': 'On or below the 91st centile. Consider reviewing trend.', 'height_centile': 'None', 'height_sds': 'None', 'lay_bmi_comment': '', 'lay_height_comment': '', 'lay_ofc_comment': '', 'lay_weight_comment': 'Your child is in the top 9 percent of children the same age and sex for their weight. This does not take account of their height.', 'ofc_centile': 'None', 'ofc_sds': 'None', 'weight_centile': 85.86141724618928, 'weight_sds': 1.074113856068745}, 'measurement_dates': {'chronological_calendar_age': '2 weeks', 'chronological_decimal_age': 0.038329911019849415, 'clinician_decimal_age_comment': 'Born Term. No correction necessary.', 'corrected_calendar_age': '', 'corrected_decimal_age': 0.038329911019849415, 'corrected_gestational_age': {'corrected_gestation_days': None, 'corrected_gestation_weeks': None}, 'lay_decimal_age_comment': 'At 40+0, your child is considered to have been born at term. No age adjustment is necessary.', 'obs_date': 'Mon, 08 Jun 2020 00:00:00 GMT'}},{'birth_data': {'birth_date': 'Mon, 18 May 2020 00:00:00 GMT', 'estimated_date_delivery': 'None', 'estimated_date_delivery_string': '', 'gestation_days': 0, 'gestation_weeks': 40, 'sex': 'male'}, 'child_measurement_value': {'bmi': 'None', 'height': None, 'ofc': None, 'weight': 4.1}, 'measurement_calculated_values': {'bmi_centile': 'None', 'bmi_sds': 'None', 'clinician_bmi_comment': '', 'clinician_height_comment': '', 'clinician_ofc_comment': '', 'clinician_weight_comment': 'On or below the 75th centile. Consider reviewing trend.', 'height_centile': 'None', 'height_sds': 'None', 'lay_bmi_comment': '', 'lay_height_comment': '', 'lay_ofc_comment': '', 'lay_weight_comment': 'Your child is below or the same as 75 percent of children the same age and sex. This does not take account of their height.', 'ofc_centile': 'None', 'ofc_sds': 'None', 'weight_centile': 52.812447858684855, 'weight_sds': 0.07055610953540369}, 'measurement_dates': {'chronological_calendar_age': '3 weeks', 'chronological_decimal_age': 0.057494866529774126, 'clinician_decimal_age_comment': 'Born Term. No correction necessary.', 'corrected_calendar_age': '', 'corrected_decimal_age': 0.057494866529774126, 'corrected_gestational_age': {'corrected_gestation_days': None, 'corrected_gestation_weeks': None}, 'lay_decimal_age_comment': 'At 40+0, your child is considered to have been born at term. No age adjustment is necessary.', 'obs_date': 'Mon, 08 Jun 2020 00:00:00 GMT'}}]
     # import the reference
     cwd = os.path.dirname(__file__) # current location
     file_path = os.path.join(cwd, './data_tables/RCPCH weight correlation matrix by month.csv')
@@ -124,10 +124,10 @@ def correlate_weight(measurements_array: list):
 
     parameter_list=[]
 
-    if len(measurements_array) < 2:
+    if len(measurements) < 2:
         return 'Not enough data'
     else:
-        for measurement in measurements_array:
+        for measurement in measurements:
             if measurement:
                 if measurement['child_measurement_value']['weight'] is not None:
                     parameter_list.append(measurement)
@@ -147,10 +147,18 @@ def correlate_weight(measurements_array: list):
             z2 = last_weight_sds_value
             z1 = penultimate_weight_sds_value
 
+
             ## get age above penultimate age
             if penultimate_decimal_age.is_integer():
+                row = penultimate_decimal_age
+            else:
+                age_below_penultimate = nearest_age(penultimate_decimal_age)
+                r
+            if last_decimal_age.is_integer():
+                column = last_decimal_age
+            
                 ## match - look up correlation
-                r = r_for_age(penultimate_decimal_age)
+                r = r_for_age(penultimate_decimal_age, last_decimal_age)
             else:
                 ## no match - get nearest age below
                 correlation_age_below = nearest_age(penultimate_decimal_age)
@@ -181,4 +189,8 @@ def nearest_age(decimal_age)->float:
         return nearest_age - 1
     else:
         return nearest_age
-    
+
+def r_for_age():
+    r = ''
+    return r
+
