@@ -2,6 +2,7 @@
 import pandas as pd
 import os
 import math
+from scipy.interpolate import interp2d
 
 """
 These functions are experimental
@@ -114,9 +115,13 @@ def correlate_weight(measurements_array: list):
     Weight velocity of the individual child cannot be predicted without comparison against reference data velocity
     since weight velocity is age dependent. This uses a uses a correlation matrix to look up values against which
     to compare the rate at which the child is gaining or losing weight.
-    The formula for conditional weight gain is: (z2 – r x z1) / √1-r2
+    The formula for conditional weight gain is: (z2 – r x z1) / √1-r^2
+    Conditional reference charts to assess weight gain in British infants, T J Cole, Archives of Disease in Childhood 1995; 73: 8-16
     """
+
+    #test data
     measurements = [{'birth_data': {'birth_date': 'Mon, 08 Jun 2020 00:00:00 GMT', 'estimated_date_delivery': 'None', 'estimated_date_delivery_string': '', 'gestation_days': 0, 'gestation_weeks': 40, 'sex': 'male'}, 'child_measurement_value': {'bmi': 'None', 'height': None, 'ofc': None, 'weight': 3.5}, 'measurement_calculated_values': {'bmi_centile': 'None', 'bmi_sds': 'None', 'clinician_bmi_comment': '', 'clinician_height_comment': '', 'clinician_ofc_comment': '', 'clinician_weight_comment': 'On or below the 50th centile .', 'height_centile': 'None', 'height_sds': 'None', 'lay_bmi_comment': '', 'lay_height_comment': '', 'lay_ofc_comment': '', 'lay_weight_comment': 'Your child is on or just below the average weight of the population, compared with other children the same age and sex.', 'ofc_centile': 'None', 'ofc_sds': 'None', 'weight_centile': 50.0, 'weight_sds': 0.0}, 'measurement_dates': {'chronological_calendar_age': 'Happy Birthday', 'chronological_decimal_age': 0.0, 'clinician_decimal_age_comment': 'Born Term. No correction necessary.', 'corrected_calendar_age': '', 'corrected_decimal_age': 0.0, 'corrected_gestational_age': {'corrected_gestation_days': 0, 'corrected_gestation_weeks': 40}, 'lay_decimal_age_comment': 'At 40+0, your child is considered to have been born at term. No age adjustment is necessary.', 'obs_date': 'Mon, 08 Jun 2020 00:00:00 GMT'}},{'birth_data': {'birth_date': 'Mon, 01 Jun 2020 00:00:00 GMT', 'estimated_date_delivery': 'None', 'estimated_date_delivery_string': '', 'gestation_days': 0, 'gestation_weeks': 40, 'sex': 'male'}, 'child_measurement_value': {'bmi': 'None', 'height': None, 'ofc': None, 'weight': 3.6}, 'measurement_calculated_values': {'bmi_centile': 'None', 'bmi_sds': 'None', 'clinician_bmi_comment': '', 'clinician_height_comment': '', 'clinician_ofc_comment': '', 'clinician_weight_comment': 'On or below the 91st centile. Consider reviewing trend.', 'height_centile': 'None', 'height_sds': 'None', 'lay_bmi_comment': '', 'lay_height_comment': '', 'lay_ofc_comment': '', 'lay_weight_comment': 'Your child is in the top 9 percent of children the same age and sex for their weight. This does not take account of their height.', 'ofc_centile': 'None', 'ofc_sds': 'None', 'weight_centile': 76.30277592692399, 'weight_sds': 0.7160759040458319}, 'measurement_dates': {'chronological_calendar_age': '1 week', 'chronological_decimal_age': 0.019164955509924708, 'clinician_decimal_age_comment': 'Born Term. No correction necessary.', 'corrected_calendar_age': '', 'corrected_decimal_age': 0.019164955509924708, 'corrected_gestational_age': {'corrected_gestation_days': 0, 'corrected_gestation_weeks': 41}, 'lay_decimal_age_comment': 'At 40+0, your child is considered to have been born at term. No age adjustment is necessary.', 'obs_date': 'Mon, 08 Jun 2020 00:00:00 GMT'}},{'birth_data': {'birth_date': 'Mon, 25 May 2020 00:00:00 GMT', 'estimated_date_delivery': 'None', 'estimated_date_delivery_string': '', 'gestation_days': 0, 'gestation_weeks': 40, 'sex': 'male'}, 'child_measurement_value': {'bmi': 'None', 'height': None, 'ofc': None, 'weight': 3.65}, 'measurement_calculated_values': {'bmi_centile': 'None', 'bmi_sds': 'None', 'clinician_bmi_comment': '', 'clinician_height_comment': '', 'clinician_ofc_comment': '', 'clinician_weight_comment': 'On or below the 91st centile. Consider reviewing trend.', 'height_centile': 'None', 'height_sds': 'None', 'lay_bmi_comment': '', 'lay_height_comment': '', 'lay_ofc_comment': '', 'lay_weight_comment': 'Your child is in the top 9 percent of children the same age and sex for their weight. This does not take account of their height.', 'ofc_centile': 'None', 'ofc_sds': 'None', 'weight_centile': 85.86141724618928, 'weight_sds': 1.074113856068745}, 'measurement_dates': {'chronological_calendar_age': '2 weeks', 'chronological_decimal_age': 0.038329911019849415, 'clinician_decimal_age_comment': 'Born Term. No correction necessary.', 'corrected_calendar_age': '', 'corrected_decimal_age': 0.038329911019849415, 'corrected_gestational_age': {'corrected_gestation_days': None, 'corrected_gestation_weeks': None}, 'lay_decimal_age_comment': 'At 40+0, your child is considered to have been born at term. No age adjustment is necessary.', 'obs_date': 'Mon, 08 Jun 2020 00:00:00 GMT'}},{'birth_data': {'birth_date': 'Mon, 18 May 2020 00:00:00 GMT', 'estimated_date_delivery': 'None', 'estimated_date_delivery_string': '', 'gestation_days': 0, 'gestation_weeks': 40, 'sex': 'male'}, 'child_measurement_value': {'bmi': 'None', 'height': None, 'ofc': None, 'weight': 4.1}, 'measurement_calculated_values': {'bmi_centile': 'None', 'bmi_sds': 'None', 'clinician_bmi_comment': '', 'clinician_height_comment': '', 'clinician_ofc_comment': '', 'clinician_weight_comment': 'On or below the 75th centile. Consider reviewing trend.', 'height_centile': 'None', 'height_sds': 'None', 'lay_bmi_comment': '', 'lay_height_comment': '', 'lay_ofc_comment': '', 'lay_weight_comment': 'Your child is below or the same as 75 percent of children the same age and sex. This does not take account of their height.', 'ofc_centile': 'None', 'ofc_sds': 'None', 'weight_centile': 52.812447858684855, 'weight_sds': 0.07055610953540369}, 'measurement_dates': {'chronological_calendar_age': '3 weeks', 'chronological_decimal_age': 0.057494866529774126, 'clinician_decimal_age_comment': 'Born Term. No correction necessary.', 'corrected_calendar_age': '', 'corrected_decimal_age': 0.057494866529774126, 'corrected_gestational_age': {'corrected_gestation_days': None, 'corrected_gestation_weeks': None}, 'lay_decimal_age_comment': 'At 40+0, your child is considered to have been born at term. No age adjustment is necessary.', 'obs_date': 'Mon, 08 Jun 2020 00:00:00 GMT'}}]
+    
     # import the reference
     cwd = os.path.dirname(__file__) # current location
     file_path = os.path.join(cwd, './data_tables/RCPCH weight correlation matrix by month.csv')
@@ -143,54 +148,64 @@ def correlate_weight(measurements_array: list):
             last_decimal_age = last['measurement_dates']['chronological_decimal_age']
             
             ## look up age
-            ## this is the formula: (z2 – r x z1) / √1-r2
+            ## this is the formula: (z2 – r x z1) / √1-r^2 where z2 is the most recent value and z1 the penultimate
+            ## and r the correlation 
+
+            ## rows are penultimate age, columns are last age. to get r we must look up the ages on
+            ## the correlation matrix 
             z2 = last_weight_sds_value
             z1 = penultimate_weight_sds_value
-
-
-            ## get age above penultimate age
+            
             if penultimate_decimal_age.is_integer():
-                row = penultimate_decimal_age
+                final_row = penultimate_decimal_age
+                if last_decimal_age.is_integer():
+                    final_column = last_decimal_age
+                    ## we have both exact ages - can now look up r
+                    r = data_frame.at(final_row, final_column)
+                    ## enough data to simplify formula
+                    return r_for_age(z1, z2, r)
+                else:
+                    #no match - need to interpolate most recent age
+                    last_age_age_below = math.floor(last_decimal_age)
+                    last_age_age_above = math.ceil(last_decimal_age)
+                    x_array = [last_age_age_below, last_age_age_above]
+                    
+                    ## ..and associated r values
+                    last_r_below = data_frame.at(final_row, last_age_age_below)
+                    last_r_above = data_frame.at(final_row, last_age_age_above)
+                    y_array = [last_r_below, last_r_above]
+                    interpolate = interp1d(x_array, y_array)
+                    r = interpolate(last_decimal_age)
+                    ## enough data to simplify formula
+                    return r_for_age(z1, z2, r)
             else:
-                age_below_penultimate = nearest_age(penultimate_decimal_age)
-                r
-            if last_decimal_age.is_integer():
-                column = last_decimal_age
-            
-                ## match - look up correlation
-                r = r_for_age(penultimate_decimal_age, last_decimal_age)
-            else:
-                ## no match - get nearest age below
-                correlation_age_below = nearest_age(penultimate_decimal_age)
-                r_below = r_for_age(correlation_age_below)
-                r_above = r_for_age(correlation_age_below + 1)
-                r = interpolate(r_below, r_above, correlation_age_below, correlation_age_below + 1)
+                ## no match in penultimate age - need to interpolate
+                ## get age below penultimate age
+                penultimate_age_below = math.floor(penultimate_decimal_age)
+                penultimate_age_above = penultimate_age_below + 1
+                if last_decimal_age.is_integer():
+                    ### there is a match in last age
+                    x_array = [penultimate_age_below, penultimate_age_above]
+                    y_array = [data_frame.at(penultimate_age_below, last_decimal_age), data_frame.at(penultimate_age_above, last_decimal_age)]
+                    interpolate = interp1d(x_array, y_array)
+                    r = (penultimate_decimal_age)
+                    ## enough data to simplify formula
+                    return r_for_age(z1, z2, r)
+                else:
+                    ## will need bilinear interpolation
+                    last_age_below = math.floor(last_decimal_age)
+                    last_age_above = math.ceil(last_decimal_age)
+                    x_array = [penultimate_age_below, penultimate_age_above]
+                    y_array = [last_age_below, last_age_above]
+                    z_array = [[data_frame.at(penultimate_age_below, last_age_below), data_frame.at(penultimate_age_above, last_age_below)], [data_frame.at(penultimate_age_below, last_age_above), data_frame.at(penultimate_age_above, last_age_above)]]
+                    interpolate = interp2d(x_array, y_array, z_array)
+                    r = interpolate(penultimate_decimal_age,last_decimal_age)
+                    return r_for_age(z1, z2, r)
 
-            if last_decimal_age.is_integer():
-                ## match - look up correlation
-                r2 = r_for_age(last_decimal_age)
-            else:
-                correlation_age_below = nearest_age(last_decimal_age)
-                r_below = r_for_age(correlation_age_below)
-                r_above = r_for_age(correlation_age_below + 1)
-                r2 = interpolate(r_below, r_above, correlation_age_below, correlation_age_below + 1)
-
-            ## simplify
-            conditional_weight_gain = (z2 - (z1 * r)) / math.sqrt(1 - r2)
-            
-            return conditional_weight_gain
-
-
-def nearest_age(decimal_age)->float:
-    nearest_age = int(round(decimal_age))
-    age_above = 0.0
-    age_below = 0.0
-    if nearest_age > decimal_age:
-        return nearest_age - 1
-    else:
-        return nearest_age
-
-def r_for_age():
-    r = ''
-    return r
-
+def r_for_age(z1, z2, r):
+    """
+    The formula for conditional weight gain is: (z2 – r x z1) / √1-r^2
+    Conditional reference charts to assess weight gain in British infants, T J Cole, Archives of Disease in Childhood 1995; 73: 8-16
+    """
+    conditional_weight_gain = (z2 - (z1 * r)) / math.sqrt(1 - pow(r, 2))
+    return conditional_weight_gain
