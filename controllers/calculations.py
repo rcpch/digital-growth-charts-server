@@ -5,15 +5,33 @@ from rcpchgrowth.rcpchgrowth.measurement_type import Measurement_Type
 from rcpchgrowth.rcpchgrowth.dynamic_growth import velocity, acceleration
 # from rcpchgrowth.rcpchgrowth.sds_calculations import sds
 
-def perform_calculations(form):
-    birth_date = form.birth_date.data
-    observation_date = form.obs_date.data
-    height = float(form.height.data)
-    weight = float(form.weight.data)
-    ofc = float(form.ofc.data)
-    sex = form.sex.data
-    gestation_weeks = form.gestation_weeks.data
-    gestation_days = form.gestation_days.data
+# this wrapper changes form data to the right kwargs for the calculation function
+def form_wrapper(form):
+    return perform_calculations(
+        birth_date=form.birth_date.data,
+        observation_date=form.obs_date.data,
+        height=float(form.height.data),
+        weight=float(form.weight.data),
+        ofc=float(form.ofc.data),
+        sex=form.sex.data,
+        gestation_weeks=form.gestation_weeks.data,
+        gestation_days=form.gestation_days.data)
+
+
+# for clarity and safety, accepts only named (keyword) arguments, not positional arguments
+# I've used this style of indentation from clarity:
+# https://github.com/python/typing/issues/433#issuecomment-302491149
+def perform_calculations(*, 
+        birth_date: date,
+        observation_date: date,
+        height: float,
+        weight: float,
+        ofc: float,
+        sex: str,
+        gestation_weeks: int,
+        gestation_days:int):
+
+    print(weight)
 
     array_of_measurement_objects = []
     if height:
