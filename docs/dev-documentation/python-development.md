@@ -1,6 +1,6 @@
 ## Developing with Python
 
-* some of this is obvious to Python developers, but it's documented here so that we all know the _same_ obvious.
+> some of this is obvious to Python developers, but it's documented here so that we all know the _same_ obvious.
 
 ### Managing Python versions, and dependencies such as libraries
 
