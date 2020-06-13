@@ -8,7 +8,7 @@ from .constants import TWENTY_FIVE_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION, T
 
 class Measurement:
 
-    def __init__(self, sex: str, birth_date: date, observation_date, gestation_weeks: int = 0, gestation_days: int = 0,):
+    def __init__(self, sex: str, birth_date: date, observation_date, gestation_weeks: int = 0, gestation_days: int = 0, measurement_type=None, measurement_value=None):
 
         # intialise variables
 
@@ -178,6 +178,46 @@ class Measurement:
             return self.return_measurement_object
         else:
             raise LookupError('Unable to return SDS or centile values for BMI')
+    
+    def sds_and_centile_for_measurement_type(self, measurement_type: str, measurement_value: float):
+        ## returns sds for given measurement
+        ## shortcomings of this class method are that it cannot calculate bmi from height and weight
+        ## bmi must be supplied precalculated
+
+        if measurement_type == 'height':
+            self.return_measurement_object = self.calculate_height_sds_centile(measurement_value)
+        elif  measurement_type == 'weight':
+            self.return_measurement_object = self.calculate_weight_sds_centile(measurement_value)
+        elif measurement_type == 'bmi':
+            self.return_measurement_object = self.calculate_bmi_sds_centile(None, None, measurement_value)
+        elif measurement_type == 'ofc':
+            self.return_measurement_object = self.calculate_ofc_sds_centile(measurement_value)
+        else:
+            raise ValueError('Only accept measurement types: height, weight, bmi or ofc')
+        return self.return_measurement_object
+
+    def measurement_for_sds(self, measurement_type: str, requested_sds: float):
+        measurement = measurement_from_sds(measurement_type, requested_sds, self.sex, self.corrected_decimal_age)
+        if measurement_type == 'height':
+            self.height = measurement
+            self.height_sds = requested_sds
+            self.height_centile = centile(self.height_sds)
+        elif  measurement_type == 'weight':
+            self.weight = measurement
+            self.weight_sds = requested_sds
+            self.weight_centile = centile(self.weight_sds)
+        elif measurement_type == 'bmi':
+            self.bmi = measurement
+            self.bmi_sds = requested_sds
+            self.bmi_centile = centile(self.bmi_sds)
+        elif measurement_type == 'ofc':
+            self.ofc = measurement
+            self.ofc_sds = requested_sds
+            self.ofc_centile = centile(self.ofc_sds)
+        else:
+            raise ValueError('Only accept measurement types: height, weight, bmi or ofc')
+        return self.__create_measurement_object()
+
 
     def __create_measurement_object(self):
 

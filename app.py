@@ -45,6 +45,8 @@ def home():
         return render_template('measurement_form.html', form = form)
     else:
         # controllers.temp_test_functions.tim_tests_preterm()
+        # children = controllers.temp_test_functions.create_fictional_child(sex='female', measurement_type='weight', requested_sds=1.0, number_of_measurements=10, starting_decimal_age=0.5, measurement_interval_value=2.0, measurement_interval_type='weeks', gestation_weeks=0, gestation_days=0, drift=True, drift_sds_range=0.0025)
+        # print(controllers.temp_test_functions.correlate_weight())
         return render_template('measurement_form.html', form = form)
 
 @app.route("/results/<id>", methods=['GET', 'POST'])

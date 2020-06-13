@@ -376,7 +376,7 @@
                             </h4>
                         </td>
                         {% for measurement in result  %}
-                            {% if measurement.child_measurement_value.bmi is number %}
+                            {% if measurement.child_measurement_value.bmi and measurement.child_measurement_value.bmi is number %}
                                 <td>
                                     {{ measurement.child_measurement_value.bmi|round(1) }} kg/m&#178;
                                 </td>
@@ -394,7 +394,7 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                            {% if measurement.child_measurement_value.bmi is number %}
+                            {% if measurement.child_measurement_value.bmi and measurement.child_measurement_value.bmi_sds is number %}
                                 <td>
                                     <div>
                                         {{ measurement.measurement_calculated_values.bmi_sds|round(2) }}
@@ -414,7 +414,7 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                                {% if measurement.child_measurement_value.bmi is number %}
+                                {% if measurement.child_measurement_value.bmi_centile is number %}
                                     <td>
                                         <div class="ui blue header">
                                             {% if (measurement.measurement_calculated_values.bmi_centile >99 and measurement.measurement_calculated_values.bmi_centile < 100) or (measurement.measurement_calculated_values.bmi_centile < 1 and measurement.measurement_calculated_values.bmi_centile > 0) %}
