@@ -33,13 +33,7 @@ def velocity(parameter: str, measurements_array):
     else:
         for measurement in measurements_array:
             if measurement:
-                if parameter == 'height' and measurement['child_observation_value']['measurement_value'] is not None:
-                    parameter_list.append(measurement)
-                elif parameter == 'weight' and measurement['child_observation_value']['measurement_value'] is not None:
-                    parameter_list.append(measurement)
-                elif parameter == 'bmi' and measurement['child_observation_value']['measurement_value'] != "None":
-                    parameter_list.append(measurement)
-                elif parameter == 'ofc' and measurement['child_observation_value']['measurement_value'] is not None:
+                if parameter == measurement['child_observation_value']['measurement_type']:
                     parameter_list.append(measurement)
         if len(parameter_list) < 2:
             return f"There are not enough {parameter} values to calculate a velocity."
@@ -48,14 +42,7 @@ def velocity(parameter: str, measurements_array):
             penultimate = parameter_list[-2]
             time_elapsed = last['measurement_dates']['chronological_decimal_age'] - penultimate['measurement_dates']['chronological_decimal_age']
             parameter_difference = 0.0
-            if parameter == 'height':
-                parameter_difference = last['child_observation_value']['measurement_value'] - penultimate['child_observation_value']['measurement_value']
-            elif parameter == 'weight':
-                parameter_difference = last['child_observation_value']['measurement_value'] - penultimate['child_observation_value']['measurement_value']
-            elif parameter == 'bmi':
-                parameter_difference = last['child_observation_value']['measurement_value'] - penultimate['child_observation_value']['measurement_value']
-            elif parameter == 'ofc':
-                parameter_difference = last['child_observation_value']['measurement_value'] - penultimate['child_observation_value']['measurement_value']
+            parameter_difference = last['child_observation_value']['measurement_value'] - penultimate['child_observation_value']['measurement_value']
             return parameter_difference / time_elapsed
 
 def acceleration(parameter: str, measurements_array):
@@ -74,13 +61,7 @@ def acceleration(parameter: str, measurements_array):
     else:
         for measurement in measurements_array:
             if measurement:
-                if parameter == 'height' and measurement['child_observation_value']['measurement_value'] is not None:
-                    parameter_list.append(measurement)
-                elif parameter == 'weight' and measurement['child_observation_value']['measurement_value'] is not None:
-                    parameter_list.append(measurement)
-                elif parameter == 'bmi' and measurement['child_observation_value']['measurement_value'] != "None":
-                    parameter_list.append(measurement)
-                elif parameter == 'ofc' and measurement['child_observation_value']['measurement_value'] is not None:
+                if parameter == measurement['child_observation_value']['measurement_type']:
                     parameter_list.append(measurement)
         if len(parameter_list) < 3:
             return f"There are not enough {parameter} values to calculate acceleration."
@@ -92,18 +73,9 @@ def acceleration(parameter: str, measurements_array):
             last_parameter_pair_time_elapsed = last['measurement_dates']['chronological_decimal_age'] - penultimate['measurement_dates']['chronological_decimal_age']
             first_parameter_pair_difference = 0.0
             last_parameter_pair_difference = 0.0
-            if parameter == 'height':
-                last_parameter_pair_difference = last['child_observation_value']['measurement_value'] - penultimate['child_observation_value']['measurement_value']
-                first_parameter_pair_difference = penultimate['child_observation_value']['measurement_value'] - antepentultimate['child_observation_value']['measurement_value']
-            elif parameter == 'weight':
-                last_parameter_pair_difference = last['child_observation_value']['measurement_value'] - penultimate['child_observation_value']['measurement_value']
-                first_parameter_pair_difference = penultimate['child_observation_value']['measurement_value'] - antepentultimate['child_observation_value']['measurement_value']
-            elif parameter == 'bmi':
-                last_parameter_pair_difference = last['child_observation_value']['measurement_value'] - penultimate['child_observation_value']['measurement_value']
-                first_parameter_pair_difference = penultimate['child_observation_value']['measurement_value'] - antepentultimate['child_observation_value']['measurement_value']
-            elif parameter == 'ofc':
-                last_parameter_pair_difference = last['child_observation_value']['measurement_value'] - penultimate['child_observation_value']['measurement_value']
-                first_parameter_pair_difference = penultimate['child_observation_value']['measurement_value'] - antepentultimate['child_observation_value']['measurement_value']
+            
+            last_parameter_pair_difference = last['child_observation_value']['measurement_value'] - penultimate['child_observation_value']['measurement_value']
+            first_parameter_pair_difference = penultimate['child_observation_value']['measurement_value'] - antepentultimate['child_observation_value']['measurement_value']
             
             latest_velocity = last_parameter_pair_difference / last_parameter_pair_time_elapsed
             penultimate_velocity = first_parameter_pair_difference / first_parameter_pair_time_elapsed
