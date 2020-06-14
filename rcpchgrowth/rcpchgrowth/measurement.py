@@ -294,7 +294,7 @@ class Measurement:
         #                                     "measurement_value": observation_value
         #                               }
 
-        # elif measurement_type == 'weight':
+        # elif measurement_type == 'weight':chil
         #     child_observation_value = {
         #                                     "weight": observation_value
         #                                 }

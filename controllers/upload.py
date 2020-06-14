@@ -125,36 +125,42 @@ def prepare_data_as_array_of_measurement_objects(uploaded_data):
     for observation in uploaded_data:
         birth_date = datetime.strptime(observation['birth_date'], '%d/%m/%Y')
         observation_date = datetime.strptime(observation['observation_date'], '%d/%m/%Y')
-        estimated_date_delivery = datetime.strptime(observation['estimated_date_delivery'], '%d/%m/%Y')
-        chronological_calendar_age = rcpchgrowth.chronological_calendar_age(birth_date, observation_date)
-        corrected_calendar_age = rcpchgrowth.chronological_calendar_age(estimated_date_delivery, observation_date)
-        corrected_gestational_age = rcpchgrowth.corrected_gestational_age(birth_date, observation_date, observation['gestation_weeks'], observation['gestation_days'])
-        edd_string = observation['estimated_date_delivery']
-        decimal_age_comments = rcpchgrowth.comment_prematurity_correction(observation['chronological_decimal_age'], observation['corrected_decimal_age'], observation['gestation_weeks'], observation['gestation_days'])
+        # estimated_date_delivery = datetime.strptime(observation['estimated_date_delivery'], '%d/%m/%Y')
+        # chronological_calendar_age = rcpchgrowth.chronological_calendar_age(birth_date, observation_date)
+        # corrected_calendar_age = rcpchgrowth.chronological_calendar_age(estimated_date_delivery, observation_date)
+        # corrected_gestational_age = rcpchgrowth.corrected_gestational_age(birth_date, observation_date, observation['gestation_weeks'], observation['gestation_days'])
+        # edd_string = observation['estimated_date_delivery']
+        # decimal_age_comments = rcpchgrowth.comment_prematurity_correction(observation['chronological_decimal_age'], observation['corrected_decimal_age'], observation['gestation_weeks'], observation['gestation_days'])
         sex  = observation['sex']
         gestation_weeks = observation['gestation_weeks']
         gestation_days = observation['gestation_days']
-        if observation['measurement_type'] == 'height':
-            ## create return object
-            height_measurement = rcpchgrowth.Measurement(sex, birth_date, observation_date, gestation_weeks, gestation_days)
-            return_measurement_object = height_measurement.calculate_height_sds_centile(observation['measurement_value'])
-            array_of_measurement_objects.append(return_measurement_object)
-        if observation['measurement_type'] == 'weight':
-            ## create return object
-            weight_measurement = rcpchgrowth.Measurement(sex, birth_date, observation_date, gestation_weeks, gestation_days)
-            return_measurement_object = weight_measurement.calculate_weight_sds_centile(observation['measurement_value'])
-            array_of_measurement_objects.append(return_measurement_object)
-        if observation['measurement_type'] == 'bmi':
-            ## create return object
-            bmi_measurement = rcpchgrowth.Measurement(sex, birth_date, observation_date, gestation_weeks, gestation_days)
-            return_measurement_object = bmi_measurement.calculate_bmi_sds_centile(None, None, observation['measurement_value'])
-            array_of_measurement_objects.append(return_measurement_object)
-        if observation['measurement_type'] == 'ofc':
-            ## create return object
-            ofc_measurement = rcpchgrowth.Measurement(sex, birth_date, observation_date, gestation_weeks, gestation_days)
-            return_measurement_object = ofc_measurement.calculate_ofc_sds_centile(observation['measurement_value'])
-            array_of_measurement_objects.append(return_measurement_object)
-    
+        measurement_value = observation['measurement_value']
+        # if observation['measurement_type'] == 'height':
+        #     ## create return object
+        #     height_measurement_type = rcpchgrowth.Measurement_Type(measurement_type='height', height=observation['measurement_value'])
+        #     height_measurement = rcpchgrowth.Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_type=height_measurement_type, gestation_weeks=gestation_weeks, gestation_days=gestation_days, default_to_youngest_reference=False)
+        #     return_measurement_object = height_measurement.calculate_height_sds_centile(observation['measurement_value'])
+        #     array_of_measurement_objects.append(return_measurement_object)
+        # if observation['measurement_type'] == 'weight':
+        #     ## create return object
+        #     weight_measurement = rcpchgrowth.Measurement(sex, birth_date, observation_date, gestation_weeks, gestation_days)
+        #     return_measurement_object = weight_measurement.calculate_weight_sds_centile(observation['measurement_value'])
+        #     array_of_measurement_objects.append(return_measurement_object)
+        # if observation['measurement_type'] == 'bmi':
+        #     ## create return object
+        #     bmi_measurement = rcpchgrowth.Measurement(sex, birth_date, observation_date, gestation_weeks, gestation_days)
+        #     return_measurement_object = bmi_measurement.calculate_bmi_sds_centile(None, None, observation['measurement_value'])
+        #     array_of_measurement_objects.append(return_measurement_object)
+        # if observation['measurement_type'] == 'ofc':
+        #     ## create return object
+        #     ofc_measurement = rcpchgrowth.Measurement(sex, birth_date, observation_date, gestation_weeks, gestation_days)
+        #     return_measurement_object = ofc_measurement.calculate_ofc_sds_centile(observation['measurement_value'])
+        #     array_of_measurement_objects.append(return_measurement_object)
+        
+        measurement_type_object = rcpchgrowth.Measurement_Type(measurement_type=observation['measurement_type'], measurement_value=measurement_value)
+        measurement_object = rcpchgrowth.Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_type=measurement_type_object,gestation_weeks=gestation_weeks, gestation_days=gestation_days, default_to_youngest_reference=False)
+        array_of_measurement_objects.append(measurement_object.measurement)
+
     return array_of_measurement_objects    
 
 """
@@ -178,25 +184,15 @@ SHOULD ONLY RETURN ONE CALCULATION PER RECORD
             "clinician_decimal_age_comment": "This is an age which has been corrected for prematurity.",
             "lay_decimal_age_comment": "This takes into account your child's prematurity"
         },
-        "child_measurement_value": {  
-            "height": 60.7,
-            "weight": 0.0,
-            "bmi": 0.0,
-            "ofc": 0.0
+        "child_observation_value": {  
+            "child_measurement_value": 60.7,
+            "child_measurement_type": 'height'
         },
         "measurement_calculated_values": {
             "height_sds": 1.20,
             "height_centile": 88,
-            "clinician_height_commment": "This is in the top 15%. Serial data needed for comparison",
-            "lay_height_comment": "Your child is tall for their age but in the normal range",
-            "weight_sds":  NULL,
-            "weight_centile": NULL,
-            "clinician_weight_commment": NULL,
-            "lay_weight_comment": NULL,
-            "ofc_sds":  NULL,
-            "ofc_centile": NULL,
-            "clinician_ofc_commment": NULL,
-            "lay_ofc_comment": NULL,
+            "clinician_commment": "This is in the top 15%. Serial data needed for comparison",
+            "lay_comment": "Your child is tall for their age but in the normal range"
         }
     }
 ]
