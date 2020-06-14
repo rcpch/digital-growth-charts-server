@@ -238,12 +238,10 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                            {% if measurement.child_measurement_value.height is number %}
+                            {% if measurement.child_observation_value.measurement_type == 'height' %}
                                 <td>
-                                    {{ measurement.child_measurement_value.height|round(1) }} cm
+                                    {{ measurement.child_observation_value.measurement_value|round(1) }} cm
                                 </td>
-                            {% else %}
-                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -256,14 +254,12 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                            {% if measurement.child_measurement_value.height is number %}
+                        {% if measurement.child_observation_value.measurement_type == 'height' %}
                             <td>
                                 <div>
-                                    {{ measurement.measurement_calculated_values.height_sds|round(2) }}
+                                    {{ measurement.measurement_calculated_values.sds|round(2) }}
                                 </div>
                             </td>
-                            {% else %}
-                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -276,25 +272,23 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                            {% if measurement.child_measurement_value.height is number %}
+                            {% if measurement.child_observation_value.measurement_type == 'height' %}
                                 <td>
                                     <div class="ui blue header">
-                                        {% if (measurement.measurement_calculated_values.height_centile >99 and measurement.measurement_calculated_values.height_centile < 100) or (measurement.measurement_calculated_values.height_centile < 1 and measurement.measurement_calculated_values.height_centile > 0) %}
-                                            {{ measurement.measurement_calculated_values.height_centile|round(1) }}
-                                        {% elif measurement.measurement_calculated_values.height_centile >= 100 %}
+                                        {% if (measurement.measurement_calculated_values.centile >99 and measurement.measurement_calculated_values.centile < 100) or (measurement.measurement_calculated_values.centile < 1 and measurement.measurement_calculated_values.centile > 0) %}
+                                            {{ measurement.measurement_calculated_values.centile|round(1) }}
+                                        {% elif measurement.measurement_calculated_values.centile >= 100 %}
                                             >99.6<sup>th</sup>
-                                        {% elif measurement.measurement_calculated_values.height_centile <= 0%}
+                                        {% elif measurement.measurement_calculated_values.centile <= 0%}
                                             < 0.4<sup>th</sup>
                                         {% else %}
-                                            {{ measurement.measurement_calculated_values.height_centile|round|int}}
+                                            {{ measurement.measurement_calculated_values.centile|round|int}}
                                         {% endif %}
                                     </div>
                                     <td id='height_centile' style="border: 0px !important;">
                                         <i class="info green circle icon"></i>
                                     </td>
                                 </td>
-                            {% else %}
-                                    <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -307,12 +301,10 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                            {% if measurement.child_measurement_value.weight is number %}
+                            {% if measurement.child_observation_value.measurement_type == 'weight' %}
                                 <td>
-                                    {{ measurement.child_measurement_value.weight|round(2) }} kg
+                                    {{ measurement.child_observation_value.measurement_value|round(2) }} kg
                                 </td>
-                            {% else %}
-                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -325,15 +317,13 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                            {% if measurement.measurement_calculated_values.weight_sds is number %}
+                            {% if measurement.child_observation_value.measurement_type == 'weight' %}
                                 <td>
                                     <div >
-                                        {{ measurement.measurement_calculated_values.weight_sds|round(2) }}
+                                        {{ measurement.measurement_calculated_values.sds|round(2) }}
                                     </div>
                                 </td>
                             {% endif %}
-                            {% else %}
-                                <td>None</td>
                         {% endfor %}
                     </tr>
                     <tr>
@@ -345,25 +335,23 @@
                             </h4>
                         </td>
                         {% for measurement in result  %}
-                            {% if measurement.measurement_calculated_values.weight_centile is number %}
+                            {% if measurement.child_observation_value.measurement_type == 'weight' %}
                                 <td>
                                     <div class="ui blue header">
-                                        {% if (measurement.measurement_calculated_values.weight_centile >99 and measurement.measurement_calculated_values.weight_centile < 100) or (measurement.measurement_calculated_values.weight_centile < 1 and measurement.measurement_calculated_values.weight_centile > 0) %}
-                                            {{ measurement.measurement_calculated_values.weight_centile|round(1) }}
-                                        {% elif measurement.measurement_calculated_values.weight_centile >= 100 %}
+                                        {% if (measurement.measurement_calculated_values.centile >99 and measurement.measurement_calculated_values.centile < 100) or (measurement.measurement_calculated_values.centile < 1 and measurement.measurement_calculated_values.centile > 0) %}
+                                            {{ measurement.measurement_calculated_values.centile|round(1) }}
+                                        {% elif measurement.measurement_calculated_values.centile >= 100 %}
                                             >99.6<sup>th</sup>
-                                        {% elif measurement.measurement_calculated_values.weight_centile <= 0%}
+                                        {% elif measurement.measurement_calculated_values.centile <= 0%}
                                             < 0.4<sup>th</sup>
                                         {% else %}
-                                            {{ measurement.measurement_calculated_values.weight_centile|round|int}}
+                                            {{ measurement.measurement_calculated_values.centile|round|int}}
                                         {% endif %}
                                     </div>
                                 </td>
                                 <td id='weight_centile' style=" border: 0px !important;">
                                     <i class="info green circle icon"></i>
                                 </td>
-                            {% else %}
-                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -376,12 +364,10 @@
                             </h4>
                         </td>
                         {% for measurement in result  %}
-                            {% if measurement.child_measurement_value.bmi and measurement.child_measurement_value.bmi is number %}
+                            {% if measurement.child_observation_value.measurement_type == 'bmi' %}
                                 <td>
-                                    {{ measurement.child_measurement_value.bmi|round(1) }} kg/m&#178;
+                                    {{ measurement.child_observation_value.measurement_value|round(1) }} kg/m&#178;
                                 </td>
-                            {% else %}
-                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -394,14 +380,12 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                            {% if measurement.child_measurement_value.bmi and measurement.child_measurement_value.bmi_sds is number %}
+                            {% if measurement.child_observation_value.measurement_type == 'bmi' %}
                                 <td>
                                     <div>
-                                        {{ measurement.measurement_calculated_values.bmi_sds|round(2) }}
+                                        {{ measurement.measurement_calculated_values.sds|round(2) }}
                                     </div>
                                 </td>
-                            {% else %}
-                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -414,25 +398,23 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                                {% if measurement.child_measurement_value.bmi_centile is number %}
+                            {% if measurement.child_observation_value.measurement_type == 'bmi' %}
                                     <td>
                                         <div class="ui blue header">
-                                            {% if (measurement.measurement_calculated_values.bmi_centile >99 and measurement.measurement_calculated_values.bmi_centile < 100) or (measurement.measurement_calculated_values.bmi_centile < 1 and measurement.measurement_calculated_values.bmi_centile > 0) %}
-                                                {{ measurement.measurement_calculated_values.bmi_centile|round(1) }}
-                                            {% elif measurement.measurement_calculated_values.bmi_centile >= 100 %}
+                                            {% if (measurement.measurement_calculated_values.centile >99 and measurement.measurement_calculated_values.centile < 100) or (measurement.measurement_calculated_values.centile < 1 and measurement.measurement_calculated_values.centile > 0) %}
+                                                {{ measurement.measurement_calculated_values.centile|round(1) }}
+                                            {% elif measurement.measurement_calculated_values.centile >= 100 %}
                                                 >99.6<sup>th</sup>
-                                            {% elif measurement.measurement_calculated_values.bmi_centile <= 0%}
+                                            {% elif measurement.measurement_calculated_values.centile <= 0%}
                                                 < 0.4<sup>th</sup>
                                             {% else %}
-                                                {{ measurement.measurement_calculated_values.bmi_centile|round|int}}
+                                                {{ measurement.measurement_calculated_values.centile|round|int}}
                                             {% endif %}
                                         </div>
                                     </td>
                                     <td id='bmi_centile' style=" border: 0px !important;">
                                         <i class="info green circle icon"></i>
                                     </td>
-                                {% else %}
-                                    <td>None</td>
                                 {% endif %}
 
                             {% endfor %}
@@ -448,12 +430,10 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                            {% if measurement.child_measurement_value.ofc is number %}
+                            {% if measurement.child_observation_value.measurement_type == 'ofc' %}
                                 <td>
-                                    {{ measurement.child_measurement_value.ofc }} cm
+                                    {{ measurement.child_observation_value.measurement_value }} cm
                                 </td>
-                            {% else %}
-                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -466,14 +446,12 @@
                             </h4>
                         </td>
                         {% for measurement in result %}
-                            {% if measurement.child_measurement_value.ofc is number %}
+                            {% if measurement.child_observation_value.measurement_type == 'ofc' %}
                                 <td>
                                     <div>
-                                        {{ measurement.measurement_calculated_values.ofc_sds|round(2) }}
+                                        {{ measurement.measurement_calculated_values.sds|round(2) }}
                                     </div>
                                 </td>
-                            {% else %}
-                                    <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -486,25 +464,23 @@
                             </h4>
                         </td>
                         {% for measurement in result  %}
-                            {% if measurement.child_measurement_value.ofc is number %}
+                            {% if measurement.child_observation_value.measurement_type == 'ofc' %}
                                 <td>
                                     <div class="ui blue header">
-                                        {% if (measurement.measurement_calculated_values.ofc_centile >99 and measurement.measurement_calculated_values.ofc_centile < 100) or (measurement.measurement_calculated_values.ofc_centile < 1 and measurement.measurement_calculated_values.ofc_centile > 0) %}
-                                            {{ measurement.measurement_calculated_values.ofc_centile|round(1) }}
-                                        {% elif measurement.measurement_calculated_values.ofc_centile >= 100 %}
+                                        {% if (measurement.measurement_calculated_values.centile >99 and measurement.measurement_calculated_values.centile < 100) or (measurement.measurement_calculated_values.centile < 1 and measurement.measurement_calculated_values.centile > 0) %}
+                                            {{ measurement.measurement_calculated_values.centile|round(1) }}
+                                        {% elif measurement.measurement_calculated_values.centile >= 100 %}
                                             >99.6<sup>th</sup>
-                                        {% elif measurement.measurement_calculated_values.ofc_centile <= 0%}
+                                        {% elif measurement.measurement_calculated_values.centile <= 0%}
                                             < 0.4<sup>th</sup>
                                         {% else %}
-                                            {{ measurement.measurement_calculated_values.ofc_centile|round|int}}
+                                            {{ measurement.measurement_calculated_values.centile|round|int}}
                                         {% endif %}
                                     </div>
                                 </td>
                                 <td id='ofc_centile' style=" border: 0px !important; ">
                                     <i class="info green circle icon"></i>
                                 </td>
-                            {% else %}
-                                <td>None</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -569,25 +545,25 @@
             on: 'click',
             setFluidWidth: true,
             variation: 'wide green',
-            html: '<p><b>Clinician: </b>{% for measurement in result %}{% if measurement.measurement_calculated_values.clinician_height_comment and measurement.child_measurement_value.clinician_height_comment is not none %}{{measurement.measurement_calculated_values.clinician_height_comment}}</p><p><b>Parent/Carer:</b> {{measurement.measurement_calculated_values.lay_height_comment}}{%endif%}{%endfor%}</p>'
+            html: '<p><b>Clinician: </b>{% for measurement in result %}{% if measurement.measurement_calculated_values.clinician_height_comment and measurement.child_observation_value.clinician_height_comment is not none %}{{measurement.measurement_calculated_values.clinician_height_comment}}</p><p><b>Parent/Carer:</b> {{measurement.measurement_calculated_values.lay_height_comment}}{%endif%}{%endfor%}</p>'
         });
         $('#weight_centile').popup({
             on: 'click',
             setFluidWidth: true,
             variation: 'wide green',
-            html: '<p><b>Clinician: </b>{% for measurement in result %}{% if measurement.measurement_calculated_values.clinician_weight_comment and measurement.child_measurement_value.clinician_weight_comment is not none %}{{measurement.measurement_calculated_values.clinician_weight_comment}}</p><p><b>Parent/Carer:</b> {{measurement.measurement_calculated_values.lay_weight_comment}}{%endif%}{%endfor%}</p>'
+            html: '<p><b>Clinician: </b>{% for measurement in result %}{% if measurement.measurement_calculated_values.clinician_weight_comment and measurement.child_observation_value.clinician_weight_comment is not none %}{{measurement.measurement_calculated_values.clinician_weight_comment}}</p><p><b>Parent/Carer:</b> {{measurement.measurement_calculated_values.lay_weight_comment}}{%endif%}{%endfor%}</p>'
         });
         $('#bmi_centile').popup({
             on: 'click',
             setFluidWidth: true,
             variation: 'wide green',
-            html: '<p><b>Clinician: </b>{% for measurement in result %}{% if measurement.measurement_calculated_values.clinician_bmi_comment and measurement.child_measurement_value.clinician_bmi_comment is not none %}{{measurement.measurement_calculated_values.clinician_bmi_comment}}</p><p><b>Parent/Carer:</b> {{measurement.measurement_calculated_values.lay_bmi_comment}}{%endif%}{%endfor%}</p>'
+            html: '<p><b>Clinician: </b>{% for measurement in result %}{% if measurement.measurement_calculated_values.clinician_bmi_comment and measurement.child_observation_value.clinician_bmi_comment is not none %}{{measurement.measurement_calculated_values.clinician_bmi_comment}}</p><p><b>Parent/Carer:</b> {{measurement.measurement_calculated_values.lay_bmi_comment}}{%endif%}{%endfor%}</p>'
         });
         $('#ofc_centile').popup({
             on: 'click',
             setFluidWidth: true,
             variation: 'wide green',
-            html: '<p><b>Clinician: </b>{% for measurement in result %}{% if measurement.measurement_calculated_values.clinician_ofc_comment and measurement.child_measurement_value.clinician_ofc_comment is not none %}{{measurement.measurement_calculated_values.clinician_ofc_comment}}</p><p><b>Parent/Carer:</b> {{measurement.measurement_calculated_values.lay_ofc_comment}}{%endif%}{%endfor%}</p>'
+            html: '<p><b>Clinician: </b>{% for measurement in result %}{% if measurement.measurement_calculated_values.clinician_ofc_comment and measurement.child_observation_value.clinician_ofc_comment is not none %}{{measurement.measurement_calculated_values.clinician_ofc_comment}}</p><p><b>Parent/Carer:</b> {{measurement.measurement_calculated_values.lay_ofc_comment}}{%endif%}{%endfor%}</p>'
         });
 
         function returnComment(array, measurement, clinician) {

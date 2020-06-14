@@ -35,8 +35,6 @@ class Measurement:
         self.measurement_type = measurement_type.measurement_type
         self.observation_value = measurement_type.observation_value
 
-
-
         if gestation_weeks < 37 and gestation_weeks >= 23:
             born_preterm = True
         else:
@@ -285,28 +283,34 @@ class Measurement:
                                             "lay_comment": lay_comment 
                                         }
         
-        if measurement_type == 'height':
-            child_observation_value = {
-                                            "height": observation_value
+        child_observation_value = {
+                                            "measurement_type": measurement_type,
+                                            "measurement_value": observation_value
                                       }
+        
+        # if measurement_type == 'height':
+        #     child_observation_value = {
+        #                                     "measurement_type": measurement_type,
+        #                                     "measurement_value": observation_value
+        #                               }
 
-        elif measurement_type == 'weight':
-            child_observation_value = {
-                                            "weight": observation_value
-                                        }
+        # elif measurement_type == 'weight':
+        #     child_observation_value = {
+        #                                     "weight": observation_value
+        #                                 }
 
-        elif measurement_type == 'bmi':
-            child_observation_value = {
-                                            "bmi": observation_value 
-                                        }
+        # elif measurement_type == 'bmi':
+        #     child_observation_value = {
+        #                                     "bmi": observation_value 
+        #                                 }
 
-        elif measurement_type == 'ofc':
-            child_observation_value = {
-                                            "ofc": observation_value
-                                        }
+        # elif measurement_type == 'ofc':
+        #     child_observation_value = {
+        #                                     "ofc": observation_value
+        #                                 }
 
-        else:
-            raise ValueError('Incorrect measurement_type passed. Please pass height, weight, bmi or ofc.')
+        # else:
+        #     raise ValueError('Incorrect measurement_type passed. Please pass height, weight, bmi or ofc.')
 
         return {
                     "child_observation_value": child_observation_value,

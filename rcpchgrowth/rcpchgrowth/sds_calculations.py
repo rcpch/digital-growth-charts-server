@@ -148,7 +148,7 @@ def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  de
         default_to_youngest_reference (boolean): in the event of an exact age match at the threshold of a chart,
             where it is possible to choose 2 references, default will pick the youngest reference (optional)
 
-    Centile to SDS Conversion for Chart lines
+    Centile to SDS Conversion for Chart lines (2/3 of an SDS)
     0.4th -2.67
     2nd -2.00
     9th -1.33
@@ -250,11 +250,11 @@ def get_lms(age: float, measurement: str, sex: str, default_to_youngest_referenc
     
     if measurement == 'height':
         if age < TWENTY_FIVE_WEEKS_GESTATION:
-            raise ValueError('There is no reference data for length below 25 weeks')
+            raise ValueError(f'There is no reference data for length below 25 weeks ({TWENTY_FIVE_WEEKS_GESTATION} y)')
     
     if measurement == 'bmi':
         if age < FORTY_TWO_WEEKS_GESTATION:
-            raise ValueError('There is no BMI reference data available for BMI below 2 weeks')
+            raise ValueError(f'There is no BMI reference data available for BMI below 2 weeks ({FORTY_TWO_WEEKS_GESTATION} y)')
     
     if measurement == 'ofc':
         if (sex == 'male' and age > 18.0) or (sex == 'female' and age > 17.0):
