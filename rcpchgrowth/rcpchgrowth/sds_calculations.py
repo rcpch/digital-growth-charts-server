@@ -39,7 +39,7 @@ decimal_ages=[-0.325804244,-0.306639288,-0.287474333,-0.268309377,-0.249144422,-
 
 #public functions
 
-def sds(age: float, measurement: str, measurement_value: float, sex: str, default_to_youngest_reference: bool = False, born_preterm = False)->float:
+def sds(age: float, measurement: str, measurement_value: float, sex: str, default_to_youngest_reference: bool = False, born_preterm: bool = False)->float:
     """
     Public function
     Returns a standard deviation score. 
@@ -48,11 +48,8 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str, defaul
     a measurement (type of observation) ['height', 'weight', 'bmi', 'ofc']
     measurement_value (the value is standard units) [height and ofc are in cm, weight in kg bmi in kg/m2]
     sex (a standard string) ['male' or 'female']
-    default_to_youngest_reference (boolean): defaults to True. For circumstances when the age exactly matches 
-        a join between two references (or moving from lying to standing at 2y) where there are 2 ages in the reference
-        data to choose between. Defaults to the youngest reference unless the user selects false
-    born_preterm (boolean): defaults to False. If a baby is 37-42 weeks, use the uk_who_0_20_term data by default. If a baby was born
-        preterm, the UK90 gestation specific data is used up to 42 weeks
+    default_to_youngest_reference (boolean): defaults to True. For circumstances when the age exactly matches a join between two references (or moving from lying to standing at 2y) where there are 2 ages in the reference data to choose between. Defaults to the youngest reference unless the user selects false
+    born_preterm (boolean): defaults to False. If a baby is 37-42 weeks, use the uk_who_0_20_term data by default. If a baby was born preterm, the UK90 gestation specific data is used up to 42 weeks
 
     This function is specific to the UK-WHO data set as this is actually a blend of UK-90 and WHO 2006 references and necessarily has duplicate values.
 
