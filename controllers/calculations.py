@@ -1,8 +1,9 @@
-from datetime import date, datetime
+# from datetime import date, datetime
 from rcpchgrowth.rcpchgrowth.measurement import Measurement
-from rcpchgrowth.rcpchgrowth.date_calculations import chronological_decimal_age
+from rcpchgrowth.rcpchgrowth.measurement_type import Measurement_Type
+# from rcpchgrowth.rcpchgrowth.date_calculations import chronological_decimal_age
 from rcpchgrowth.rcpchgrowth.dynamic_growth import velocity, acceleration
-from rcpchgrowth.rcpchgrowth.sds_calculations import sds
+# from rcpchgrowth.rcpchgrowth.sds_calculations import sds
 
 def perform_calculations(form):
     birth_date = form.birth_date.data
@@ -16,18 +17,21 @@ def perform_calculations(form):
 
     array_of_measurement_objects = []
     if height:
-        height_measurement = Measurement(sex, birth_date, observation_date, gestation_weeks, gestation_days)
-        array_of_measurement_objects.append(height_measurement.calculate_height_sds_centile(height))
+        measurement_type = Measurement_Type('height', height=height)
+        measurement_object = Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_type=measurement_type, gestation_weeks=gestation_weeks, gestation_days=gestation_days, default_to_youngest_reference=False)
+        array_of_measurement_objects.append(measurement_object.measurement)
     if weight:
-        weight_measurement = Measurement(sex, birth_date, observation_date, gestation_weeks, gestation_days)
-        array_of_measurement_objects.append(weight_measurement.calculate_weight_sds_centile(weight))
+        measurement_type = Measurement_Type('weight', weight=weight)
+        measurement_object = Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_type=measurement_type, gestation_weeks=gestation_weeks, gestation_days=gestation_days, default_to_youngest_reference=False)
+        array_of_measurement_objects.append(measurement_object.measurement)
     if height and weight: 
-        bmi_measurement = Measurement(sex, birth_date, observation_date, gestation_weeks, gestation_days)
-        array_of_measurement_objects.append(bmi_measurement.calculate_bmi_sds_centile(height, weight))
+        measurement_type = Measurement_Type('bmi', height=height, weight=weight)
+        measurement_object = Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_type=measurement_type, gestation_weeks=gestation_weeks, gestation_days=gestation_days, default_to_youngest_reference=False)
+        array_of_measurement_objects.append(measurement_object.measurement)
     if ofc:
-        ofc_measurement = Measurement(sex, birth_date, observation_date, gestation_weeks, gestation_days)
-        array_of_measurement_objects.append(ofc_measurement.calculate_ofc_sds_centile(ofc))
-    
+        measurement_type = Measurement_Type('ofc', ofc=ofc)
+        measurement_object = Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_type=measurement_type, gestation_weeks=gestation_weeks, gestation_days=gestation_days, default_to_youngest_reference=False)
+        array_of_measurement_objects.append(measurement_object.measurement)
     return array_of_measurement_objects
 
 def calculate_velocity_acceleration(data):

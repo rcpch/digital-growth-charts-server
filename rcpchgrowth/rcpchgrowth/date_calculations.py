@@ -17,6 +17,7 @@ from .constants import FORTY_WEEKS_GESTATION, TERM_PREGNANCY_LENGTH_DAYS, TERM_L
 def decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int):
     """
     returns decimal age relative to forty weeks expressed as 0 y
+    THIS FUNCTION IS DEPRECATED
     """
     days_born_from_forty_weeks = ((gestation_weeks * 7) + gestation_days) - TERM_PREGNANCY_LENGTH_DAYS
     days_of_life_in_years = chronological_decimal_age(birth_date, observation_date)
