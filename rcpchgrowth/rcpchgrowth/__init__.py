@@ -4,5 +4,5 @@ from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import interpret, comment_prematurity_correction
 from .measurement import Measurement
 from .measurement_type import Measurement_Type
-from .dynamic_growth import velocity, acceleration, correlate_weight
+from .dynamic_growth import velocity, acceleration, correlate_weight, create_fictional_child
 from .constants import TWENTY_FOUR_WEEKS_GESTATION, TWENTY_FIVE_WEEKS_GESTATION, THIRTY_SEVEN_WEEKS_GESTATION, FORTY_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION, TERM_PREGNANCY_LENGTH_DAYS, TERM_LOWER_THRESHOLD_LENGTH_DAYS, EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS

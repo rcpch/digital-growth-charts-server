@@ -93,8 +93,8 @@ class Measurement:
             self.ofc_centile = centile(self.ofc_sds)
         else:
             raise ValueError('Only accept measurement types: height, weight, bmi or ofc')
-        return self.__create_measurement_object(measurement_type='ofc', observation_value=ofc, sds_value=ofc_sds, centile_value=ofc_centile, clinician_comment=clinician_ofc_comment, lay_comment=lay_ofc_comment)
 
+        return self.__create_measurement_object(measurement_type='ofc', observation_value=self.ofc, sds_value=self.ofc_sds, centile_value=self.ofc_centile, clinician_comment=clinician_ofc_comment, lay_comment=self.lay_ofc_comment)
 
     """
     These are all private class methods and are only accessed by this class on initialisation

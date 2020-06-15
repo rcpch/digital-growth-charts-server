@@ -31,12 +31,113 @@
                     </thead>
                 </table>
             </div>
-            <button class="ui green button" onclick="window.location.href='{{url_for("uploaded_data", id='example')}}'">View Example</button>
-            <button class="ui green button" id='upload_complete_button' style='visibility: hidden;' onclick="window.location.href='{{url_for("uploaded_data", id='excel_sheet')}}'">View Upload</button>
+            <button class="ui green button" onclick="window.location.href='{{url_for('uploaded_data', id='example')}}'">View Example</button>
+            <button class="ui green button" id='popup_button'>Create Fictional Child Data</button>
+            <button class="ui green button" id='upload_complete_button' style='visibility: hidden;' onclick="window.location.href='{{url_for('uploaded_data', id='excel_sheet')}}'">View Upload</button>
         </div>
     </div>
-
+    <div class="ui large modal">
+        <div class="ui header">
+          Create Fictional Child Data
+        </div>
+        <div class="content">
+          <p>Customise the data you want.</p>
+          <form method="post" action="{{url_for('fictional_child', id='generated_data')}}" novalidate class="ui form" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            {{ form.name }}
+            {{ form.hidden_tag() }}
+            <div class="fields">
+                <div class="four wide field">
+                  {{form.starting_age.label}}
+                  {{form.starting_age (class='ui input', type='number', placeholder='Enter a starting age in decimal years')}}
+                </div>
+                <div class="four wide field">
+                    {{form.intervals.label}}
+                    {{form.intervals (class='ui input', type='number', placeholder='number of days/weeks/months')}}
+                </div>
+                <div class="four wide field">
+                    {{form.interval_type.label}}
+                    {{form.interval_type (class='ui selection dropdown')}}
+                </div>
+            </div>
+            <div class="fields">
+                <div class="four wide field">
+                    {{form.starting_sds.label}}
+                    {{form.starting_sds (class='ui input', type='number', placeholder='enter a starting SDS')}}
+                </div>
+                <div class="fields">
+                    <div class="field">
+                        <div class="ui toggle checkbox">
+                            <label >Apply drift</label>
+                            <input type="checkbox" tabindex="0" class="hidden">
+                        </div>
+                    </div>
+                    <div class="field">
+                        {{form.drift_amount.label}}
+                        {{form.drift_amount (type='number', placeholder="degree (SDS points)", id='drift_input', disabled="true")}}
+                    </div>
+                </div>
+            </div>
+            <div class="fields">
+                <div class="four wide field">
+                    {{form.measurement_requested.label}}
+                    {{form.measurement_requested (class='ui selection dropdown')}}
+                </div>
+            </div>
+            <div class="fields">
+                <div class="six wide field">
+                    {{form.number_of_data_points (class='ui input', placeholder='Enter the number of measurements.')}}
+                </div>
+                <div class="inline field">
+                    {% for subfield in form.sex %}
+                        <!-- <div class="ui radio checkbox"> -->
+                            {{ subfield }}
+                            {{ subfield.label }}
+                        <!-- </div> -->
+                    {% endfor %}
+                    </div>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui red basic cancel inverted button">
+                <i class="remove icon"></i>
+                Cancel
+            </div>
+            {{form.submit (class="ui green ok inverted button", id='submit_data_points')}}
+            <!-- <div class="ui green basic positive inverted button" id='submit_data_points'>
+                <i class="chart line icon"></i>
+                Generate Data Points
+            </div> -->
+        </div>
+        </form>
+    </div>
+    <style>
+        .ui.modal > .actions{
+            background-color: lightgrey !important;
+        }
+        #vertical {
+            vertical-align: middle;
+        }
+    </style>
     <script type="application/javascript">
+
+        document.getElementById("popup_button").onclick = function(event){
+            $('.ui.large.modal').modal('show');
+        }
+
+        $('.ui.checkbox').checkbox({
+            onChecked: function() {
+                $('#drift_input').attr('disabled', !this.checked)
+            },
+            onChange: function() {
+                $('#drift_input').attr('disabled', !this.checked)
+            }
+        });
+
+        // document.getElementById("submit_data_points").onclick = function(event){
+        //     window.location.href="{{url_for('fictional_child', id='generated_data')}}"
+        // }
+
         Dropzone.options.dropper = {
             paramName: 'file',
             acceptedFiles: '.xls, .xlsx',

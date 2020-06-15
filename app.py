@@ -5,7 +5,7 @@ from os import path, listdir, remove
 from datetime import datetime
 from pathlib import Path
 
-from measurement_request import MeasurementForm
+from measurement_request import MeasurementForm, FictionalChildForm
 import json
 
 import controllers as controllers
@@ -108,6 +108,7 @@ def instructions():
 
 @app.route("/import", methods=['GET', 'POST'])
 def import_growth_data():
+    form = FictionalChildForm(request.form)
     if request.method == 'POST':
         ## can only receive .xls, .xlsx, or .csv files
         ## thanks to Chris Griffith, Code Calamity for this code - upload files, chunk if large
@@ -153,7 +154,12 @@ def import_growth_data():
         return make_response("Chunk upload successful", 200)
             
     else:
-        return render_template('import.html')
+        return render_template('import.html', form=form)
+
+@app.route("/fictional_child/<id>", methods=['POST'])
+def fictional_child(id):
+    data = controllers.generate_fictional_data(request.form)
+    return render_template('fictional_data.html', data=data)
 
 @app.route("/uploaded_data/<id>", methods=['GET', 'POST'])
 def uploaded_data(id):
@@ -252,10 +258,12 @@ def uploaded_data(id):
                 
             return render_template('uploaded_data.html', data=data, unique=child_data['unique'], dynamic_calculations = dynamic_calculations) #unique is a flag to indicate if unique child or multiple children
         
-        if id=='get_excel': ##broken needs fix - file deleted so can't download
+        if id=='get_excel':
             excel_file = controllers.download_excel(requested_data)
             temp_directory = Path.cwd().joinpath("static").joinpath('uploaded_data').joinpath('temp')
             return send_from_directory(temp_directory, filename='output.xlsx', as_attachment=True)
+        if id=='generated_data':
+            return render_template('uploaded_data.html', data=data, unique=child_data['unique'], dynamic_calculations = dynamic_calculations) #unique is a flag to indicate if unique child or multiple children
 
 @app.route("/references", methods=['GET'])
 def references():
