@@ -15,6 +15,10 @@
 
 ### Setup for this repository
 
+* `git clone` this repository into a suitable location on your development machine  
+`git clone https://github.com/rcpch/digital-growth-charts-flask-client.git`  
+* `cd` into the directory  
+`cd digital-growth-charts-flask-client`  
 * Install the correct Python version  
 `$ pyenv install 3.8.0`  
 * Create a virtualenv for this project 'growth-charts' abbreviated to 'gc-3.8' using Python 3.8.0  
