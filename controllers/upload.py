@@ -171,8 +171,8 @@ SHOULD ONLY RETURN ONE CALCULATION PER RECORD
             "lay_decimal_age_comment": "This takes into account your child's prematurity"
         },
         "child_observation_value": {  
-            "child_measurement_value": 60.7,
-            "child_measurement_type": 'height'
+            "measurement_value": 60.7,
+            "measurement_type": 'height'
         },
         "measurement_calculated_values": {
             "height_sds": 1.20,

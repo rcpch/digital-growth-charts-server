@@ -52,7 +52,6 @@ def home():
 @app.route("/results/<id>", methods=['GET', 'POST'])
 def results(id):
     results = session.get('results')
-    print(results)
     if id == 'table':
         return render_template('test_results.html', result = results)
     if id == 'chart':
@@ -159,6 +158,10 @@ def import_growth_data():
 @app.route("/fictional_child/<id>", methods=['POST'])
 def fictional_child(id):
     data = controllers.generate_fictional_data(request.form)
+    # store the results in a session for access by tables and charts later
+    session['results'] = data
+    # flag to differentiate between individual plot and serial data plot
+    session['serial_data'] = True
     return render_template('fictional_data.html', data=data)
 
 @app.route("/uploaded_data/<id>", methods=['GET', 'POST'])
@@ -262,8 +265,6 @@ def uploaded_data(id):
             excel_file = controllers.download_excel(requested_data)
             temp_directory = Path.cwd().joinpath("static").joinpath('uploaded_data').joinpath('temp')
             return send_from_directory(temp_directory, filename='output.xlsx', as_attachment=True)
-        if id=='generated_data':
-            return render_template('uploaded_data.html', data=data, unique=child_data['unique'], dynamic_calculations = dynamic_calculations) #unique is a flag to indicate if unique child or multiple children
 
 @app.route("/references", methods=['GET'])
 def references():

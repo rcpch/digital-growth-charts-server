@@ -3,5 +3,45 @@
   <h1>{% block title %}Fictional Data{% endblock %}</h1>
 {% endblock %}
 {% block content %}
-{{data}}
+<div class="ui centered grid">
+  <div class="fourteen wide centered column" id='data_container'>
+    <table class="ui green small collapsing table">
+      <thead>
+        <th>index</th>
+        <th>birth_date</th>
+        <th>observation_date</th>
+        <th>gestation</th>
+        <th>chronological_decimal_age</th>
+        <th>corrected_decimal_age</th>
+        <th>sex</th>
+        <th>measurement_type</th>
+        <th>measurement_value</th>
+        <th>sds</th>
+        <th>centile</th>              
+        <!-- {% for h in headers %} -->
+          <!-- <th>{{h.name}}</th> -->
+        <!-- {% endfor %} -->
+      </thead>
+      <tbody>
+        {% for m in data %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ m.birth_data.birth_date }}</td>
+          <td>{{ m.measurement_dates.observation_date }}</td>
+          <td>{{ m.birth_data.gestation_weeks}}<sup>+{{ m.birth_data.gestation_days }}</sup></td>
+          <td>{{ m.measurement_dates.chronological_decimal_age }}</td>
+          <td>{{ m.measurement_dates.corrected_decimal_age }}</td>
+          <td>{{ m.birth_data.sex }}</td>
+          <td>{{ m.child_observation_value.measurement_type }}</td>
+          <td>{{ m.child_observation_value.measurement_value }}</td>
+          <td>{{ m.measurement_calculated_values.sds }}</td>
+          <td>{{ m.measurement_calculated_values.centile}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- <div class="ui button" onclick="window.location.href='{{url_for('uploaded_data', id='generated_data')}}'">Chart</div> -->
 {% endblock %}
