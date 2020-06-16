@@ -89,19 +89,19 @@ def references():
     return jsonify(references_data)
 
 
-# API route
-@app.route("/api/v1/json/documentation", methods=['GET'])
-
-# API route
-@app.route("/chart_data", methods=['GET'])
+"""
+Chart data API route
+requires results data params
+Returns HTML content derived from the README.md of the API repository
+To amend the instructions please submit a pull request
+"""
+@app.route("/api/v1/json/chart_data", methods=['GET'])
 def chart_data():
-    # Retrieve child data for charting
-    results = session.get('results')
-    # Retrieve source of data
-    unique = session.get('serial_data')
+    results = request.args['results']
+    unique = request.args['serial_data']
     if unique:
         #data come from a table and are not formatted for the charts
-        formatted_child_data = controllers.prepare_data_as_array_of_measurement_objects(results)
+        formatted_child_data = controllers.prepare_data_as_array_of_measurement_objects(json.loads(results))
         
         # Prepare data from plotting
         child_data = controllers.create_data_plots(formatted_child_data)
@@ -123,6 +123,7 @@ def chart_data():
         'centile_data': centiles
     })
 
+
 """
 Instructions API route
 Does not expect any parameters
@@ -135,7 +136,7 @@ def instructions():
     file = path.join(path.abspath(path.dirname(__file__)), 'README.md')
     with open(file) as markdown_file:
         html = markdown.markdown(markdown_file.read())
-    return str(html)
+    return jsonify(html)
 
 
 if __name__ == '__main__':
