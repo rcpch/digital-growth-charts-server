@@ -29,7 +29,7 @@
                       <i class="circle green info icon link"></i>
                     </td>
                     <td>
-                      <a href='reference.publication_url'>{{reference.publication_reference}}</a>
+                      <a href='{{reference.publication_reference}}'>{{reference.publication_reference}}</a>
                     </td>
                     <td>
                       {{reference.acknowledgement_text}}
@@ -46,7 +46,7 @@
             on: 'click',
             setFluidWidth: true,
             variation: 'wide green',
-            html: '<p>this will be the description</p>'
+            html: '<p>{{reference.description}}</p>'
         });
 </script>
 {% endblock %}
