@@ -37,7 +37,6 @@ API DEFINITIONS SECTION
 * There are different endpoints for a simple JSON response and a more complex FHIR response
 * Each API endpoint has a distinct Controller
 """
-
 # HELLO WORLD
 # this is a testing route and should be removed once we have everything working
 @app.route("/api/v1/hello", methods=['GET'])
@@ -84,6 +83,14 @@ def api_fhir():
 
 # API route
 @app.route("/api/v1/json/references", methods=['GET'])
+def references():
+    # TODO: refactor references into YAML
+    # TODO: refactor references out into their own repo
+    with open('./resource_data/growth_reference_repository.json') as json_file:
+            data = json.load(json_file)
+            json_file.close()
+    return jsonify(data)
+
 
 # API route
 @app.route("/api/v1/json/documentation", methods=['GET'])
@@ -349,12 +356,11 @@ def uploaded_data(id):
 
 # client route, generated from references list (references in separate GH repo eventually)
 @app.route("/references", methods=['GET'])
-def references():
-    # starting with a hard-coded list, but as it grows probably belongs in database
-    with open('./resource_data/growth_reference_repository.json') as json_file:
-            data = json.load(json_file)
-            json_file.close()
-    return render_template('references.html', data=data)
+def client_references():
+    response = requests.get('http://localhost:5000/api/v1/json/references') 
+    print(response.json())        
+    return render_template('references.html', data=response.json() )
+
 
 if __name__ == '__main__':
     app.run()
