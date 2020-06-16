@@ -123,20 +123,19 @@ def chart_data():
         'centile_data': centiles
     })
 
-# potentially an API route - serve instructions from README.md as MD or something else
-@app.route("/instructions", methods=['GET'])
+"""
+Instructions API route
+Does not expect any parameters
+Returns HTML content derived from the README.md of the API repository
+To amend the instructions please submit a pull request
+"""
+@app.route("/api/v1/json/instructions", methods=['GET'])
 def instructions():
     #open README.md file
-    this_directory = path.abspath(path.dirname(__file__))
-    file = path.join(this_directory, 'README.md')
+    file = path.join(path.abspath(path.dirname(__file__)), 'README.md')
     with open(file) as markdown_file:
-
-        #read contents of file
-        content = markdown_file.read()
-
-        #convert to HTML
-        html = markdown.markdown(content)
-    return render_template('instructions.html', fill=html)
+        html = markdown.markdown(markdown_file.read())
+    return str(html)
 
 
 if __name__ == '__main__':
