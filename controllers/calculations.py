@@ -1,9 +1,8 @@
 from datetime import date, datetime
 from rcpchgrowth.rcpchgrowth.measurement import Measurement
 from rcpchgrowth.rcpchgrowth.measurement_type import Measurement_Type
-# from rcpchgrowth.rcpchgrowth.date_calculations import chronological_decimal_age
+from rcpchgrowth.rcpchgrowth.date_calculations import chronological_decimal_age
 from rcpchgrowth.rcpchgrowth.dynamic_growth import velocity, acceleration
-# from rcpchgrowth.rcpchgrowth.sds_calculations import sds
 
 # this wrapper changes form data to the right kwargs for the calculation function
 def form_wrapper(form):
