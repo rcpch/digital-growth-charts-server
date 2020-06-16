@@ -76,15 +76,17 @@ def api_fhir():
     return jsonify({'path': '/api/v1/fhir'})
 
 
-# API route
+"""
+Centile References Library API route
+Does not expect any parameters
+Returns data on the growth references that we are aware of
+To add a new reference please submit a pull request
+"""
 @app.route("/api/v1/json/references", methods=['GET'])
 def references():
-    # TODO: refactor references into YAML
-    # TODO: refactor references out into their own repo
-    with open('./resource_data/growth_reference_repository.json') as json_file:
-            data = json.load(json_file)
-            json_file.close()
-    return jsonify(data)
+    references_data = controllers.references()
+    print (references_data)
+    return jsonify(references_data)
 
 
 # API route
