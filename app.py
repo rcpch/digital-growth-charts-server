@@ -21,6 +21,7 @@ app.config['SECRET_KEY'] = 'UK_WHO' #not very secret - this will need complicati
 from app import app
 
 """
+TODO: TO BE DEPRECATED
 Uses session variables to store form or uploaded unique child data
 These session variables are accessed when user wants to download the calculated data,
 or chart them.
@@ -37,12 +38,6 @@ API DEFINITIONS SECTION
 * There are different endpoints for a simple JSON response and a more complex FHIR response
 * Each API endpoint has a distinct Controller
 """
-# HELLO WORLD
-# this is a testing route and should be removed once we have everything working
-@app.route("/api/v1/hello", methods=['GET'])
-def api_hello():
-    return jsonify( controllers.hello() )
-
 
 """
 Centile Calculations API route. Expects query params as below:
