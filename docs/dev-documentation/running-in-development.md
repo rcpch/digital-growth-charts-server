@@ -5,3 +5,15 @@
 `$ export FLASK_APP=app.py`  
 * Run Flask
 `$ flask run`  
+
+You should then see some messages from the Flask development server, which should look like
+```
+ * Serving Flask app "app.py" (lazy loading)
+ * Environment: development
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: xxx-xxx-xxx
+```
+

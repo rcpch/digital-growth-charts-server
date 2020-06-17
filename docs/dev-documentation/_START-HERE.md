@@ -1,4 +1,4 @@
-## Developing the RCPCH Growth Charts
+## Developing the RCPCH Growth Charts - WIP
 
 (WORK IN PROGRESS)
 
@@ -7,4 +7,12 @@
 * Using different reference data files
 * Adding new calculations
 * Testing
-* Contributing
+* [Contributing](contributing.md)
+* [Calculating Growth Parameters](about-calculating-growth-parameters.md)
+
+
+TODO
+* allude to other packages and why this may be more reliable
+
+
+rebase with Simon's code first

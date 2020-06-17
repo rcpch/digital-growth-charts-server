@@ -1,6 +1,6 @@
 ## Developing with Python
 
-* some of this is obvious to Python developers, but it's documented here so that we all know the _same_ obvious.
+> some of this is obvious to Python developers, but it's documented here so that we all know the _same_ obvious.
 
 ### Managing Python versions, and dependencies such as libraries
 
@@ -15,6 +15,10 @@
 
 ### Setup for this repository
 
+* `git clone` this repository into a suitable location on your development machine  
+`$ git clone https://github.com/rcpch/digital-growth-charts-flask-client.git`  
+* `cd` into the directory  
+`$ cd digital-growth-charts-flask-client`  
 * Install the correct Python version  
 `$ pyenv install 3.8.0`  
 * Create a virtualenv for this project 'growth-charts' abbreviated to 'gc-3.8' using Python 3.8.0  
@@ -28,5 +32,12 @@
 * Install the dependencies to this virtualenv  
 `$ pip install -r requirements.txt`  
 * Refer to the pyenv command reference link (previous section) if you need further information on `pyenv`  
+
+### Extra development packages that may be required on some setups
+
+* To prevent weird error messages, you may need the additional development header packages for them. On Ubuntu this required running. This should not be necessary if you're running a binary Python, it only affects setups which are compiling a specific Python version from source, on demand, such as `pyenv`.  
+`$ sudo apt-get install liblzma-dev libbz2-dev`  
+* and then recompile the Python that `pyenv` built  
+`$ pyenv install 3.8.0`  
 
 > NEXT: [Running the Growth Chart API in development](running-in-development.md)
