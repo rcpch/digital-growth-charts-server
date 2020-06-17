@@ -4,7 +4,6 @@ from werkzeug.utils import secure_filename
 from os import path, listdir, remove
 from datetime import datetime
 from pathlib import Path
-from measurement_request import MeasurementForm
 
 # imports for client only
 import markdown

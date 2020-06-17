@@ -1,0 +1,407 @@
+---
+- centile: 0.4
+  metadata:
+    name: 0.4th centile
+    equivalent_sds: -2.67
+  length:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  height:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  weight:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  bmi:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  ofc:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+- centile: 2
+  metadata:
+    name: 2nd centile
+    equivalent_sds: -2.0
+  length:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  height:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  weight:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  bmi:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  ofc:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+- centile: 3
+  metadata:
+    name: 3rd centile
+    equivalent_sds: 0.0120
+  length:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  height:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  weight:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  bmi:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  ofc:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+- centile: 5
+  metadata:
+    name: 5th centile
+    equivalent_sds: 0.0199 
+  length:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  height:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  weight:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  bmi:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  ofc:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+- centile: 9
+  metadata:
+    name: 9th centile
+    equivalent_sds: -1.33
+  length:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  height:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  weight:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  bmi:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  ofc:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+- centile: 15
+  metadata:
+    name: 15th centile
+    equivalent_sds: 0.0596
+  length:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  height:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  weight:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  bmi:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  ofc:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+- centile: 25
+  metadata:
+    name: 25th centile
+    equivalent_sds: 0.67
+  length:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  height:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  weight:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  bmi:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  ofc:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+- centile: 50
+  metadata:
+    name: 50th centile
+    equivalent_sds: 0.0
+  length:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  height:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  weight:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  bmi:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  ofc:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+- centile: 75
+  metadata:
+    name: 75th centile
+    equivalent_sds: 0.67
+  length:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  height:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  weight:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  bmi:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  ofc:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+- centile: 85
+  metadata:
+    name: 85th centile
+    equivalent_sds: 0.3023
+  length:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  height:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  weight:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  bmi:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  ofc:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+- centile: 91
+  metadata:
+    name: 91st centile
+    equivalent_sds: 1.33
+  length:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  height:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  weight:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  bmi:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  ofc:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+- centile: 97
+  metadata:
+    name: 97th centile
+    equivalent_sds: 0.3340
+  length:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  height:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  weight:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  bmi:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  ofc:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+- centile: 98
+  metadata:
+    name: 98th centile
+    equivalent_sds: 2
+  length:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  height:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  weight:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  bmi:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  ofc:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+- centile: 99.6
+  metadata:
+    name: 99.6th centile
+    equivalent_sds: 2.67
+  length:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  height:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  weight:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  bmi:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
+  ofc:
+    clinician_comment:
+      en:
+    lay_comment:
+      en:
