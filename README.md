@@ -679,27 +679,24 @@ delivered anywhere from 37 to 42 weeks gestation (3 weeks before to 2 weeks afte
 
 The due date is referred to as the Estimated Date of Delivery (EDD).
 
-_Decimal age_
-This is the age of the child based on 40 weeks gestation, each day being 1/365.25.  
-Days before 40 weeks are < 0. 
-A baby born at 24 weeks gestation would be (24 * 7) - (40 * 7) / 365.25 y
+_Gestational age / post-menstrual age_
+This is the gestation at which the infant was born and represents the number of weeks (and extra days) since last menstrual period. After delivery, the gestational age of preterm infants it is often tracked by clinicians in addition to chronological age (sometimes referred to at that point as 'corrected gestational age').
 
-_Chronological Decimal age_
-This is the time since birth irrespective of gestation at birth. A baby born at 24 weeks would
-be 16 weeks old at 40 weeks gestation (16 x 7)/365.25 y
+_Chronological decimal age_
+This is the time elapsed since birth, in years, irrespective of gestation at birth. A baby born at 24 weeks would be 16 weeks old at 40 weeks gestation (16 x 7)/365.25 y
 
 _Corrected decimal age_
-This is the age of a child that was born preterm
+This is the age of a child that was born preterm calculated from their due date, rather than from their birth date. This allows for some comparison between preterm and term babies.
 Convention is that correction occurs for all babies born before 37 weeks (definition of term):
     babies born at or above 32 weeks have the additional weeks (calculated up to 40 weeks)
-        added to their decimal age for the first year of life
-    babies born below 32 weeks have the additional weeks (calculated up to 40 weeks) added
-        to their decimal age until the age of 2 years
+        subtracted from their chronological decimal age for the first year of life
+    babies born below 32 weeks have the additional weeks (calculated up to 40 weeks) subtracted from their chronological decimal age until the age of 2 years
 
 A few other things about correction:
 - term is consider 37-42 weeks. No correction is made for any baby born between these gestations.
 Their decimal age, therefore is considered to be 0.0. This means a baby born at 42 weeks and 
-now 2 weeks of age will calculate identically to a baby born at 37 weeks and now 2 weeks of age.
+now 2 weeks of age will calculate identically to a baby born at 37 weeks and now 2 weeks of age. The outcome of discussion amongst the project board members at length regarding babies born after 42 weeks gestation is that these infants should be treated as term and be considered to have an age of 0.0 y.
+
 
 ***Constants***
 ```python
@@ -847,3 +844,4 @@ An additional future objective is to create a respository of all available growt
 4.  WHO Multicentre Growth Reference Study Group. WHO Child Growth Standards: Head circumference-for-age, arm circumference-for-age, triceps skinfold-for-age and subscapular skinfold-for age. Methods and Development. 2007. ISBN 978 92 4 154718 5. 
 5.  3-in-1 weight monitoring chart. T Cole, Lancet. 1997 Jan 11;349(9045):102-3.
 6. A chart to predict adult height from a child’s current height. T Cole, C Wright, Annals of Human Biology, November–December 2011; 38(6): 662–668
+7. Designing the New UK-WHO Growth Charts to Enhance Assessment of Growth Around Birth. Tim J Cole 1, Charlotte M Wright, Anthony F Williams, RCPCH Growth Chart Expert Group, Arch Dis Child Fetal Neonatal Ed. 2012 May;97(3):F219-22.

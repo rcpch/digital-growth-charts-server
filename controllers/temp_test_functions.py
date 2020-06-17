@@ -1,6 +1,10 @@
-from rcpchgrowth.rcpchgrowth.sds_calculations import sds
+from rcpchgrowth.rcpchgrowth import Measurement
+from rcpchgrowth.rcpchgrowth.sds_calculations import sds, measurement_from_sds
 from rcpchgrowth.rcpchgrowth.date_calculations import chronological_decimal_age, corrected_decimal_age
-from datetime import date, datetime, timedelta
+from rcpchgrowth.rcpchgrowth.dynamic_growth import correlate_weight
+from datetime import date, datetime
+from dateutil.relativedelta import relativedelta
+from random import uniform
 
 tim_gestation_weeks = [23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42,23,25,30,36,37,40,42]
 tim_gestation_days = [0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,4,4,4,4,4,4,4]
@@ -53,3 +57,71 @@ def test_sds_tim_term_heights():
             else:
                 array.append(None)
         print(array)
+    
+def test_weight_correlations():
+    correlate_weight()
+
+def create_fictional_child(sex: str, measurement_type: str, requested_sds: float, number_of_measurements: int, starting_decimal_age: float, measurement_interval_value: float, measurement_interval_type: str, gestation_weeks = 0, gestation_days = 0, drift: bool = False, drift_sds_range: float = 0.0):
+    """
+    this function will ultimately become a class method
+    It's purpose is to generate an array of Measurement objects that mimic the growth of a child
+    Mandatory params:
+    sex: a string ['male', 'female'] (lower case)
+    measurement_type: a string ['height', 'weight', 'ofc', 'bmi'] (lower case)
+    requested_sds: float value relating to start value of array
+    number_of_measurements: integer - number of growth points requested
+    starting_decimal_age: float - age from which growth data should start
+    measurement_interval_type: string - accepts parameters ['d', 'day', 'days', 'weeks', 'm', 'month', 'months', 'y', 'year', 'years']
+    measurement_interval_value: float - number relating to measurement_interval_type
+    Optional params
+    gestation_weeks: integer - specify weeks of gestation. The final age will be subject to correction depending on the chronological age
+    gestation_days: integer - specify supplementary days of gestation. The final age will be subject to correction depending on the chronological age
+    drift: a boolean value - user can request if values deviate at random from the starting SDS
+    drift_sds_range: float value, degree to which values can drift from starting SDS. May be positive or negative
+    """
+
+    fictional_child = []
+    
+    """
+    This is an unnecessary piece of growth chart trivia included for entertaintment. The first published 
+    growth chart is that of the son of Count Philibert de Montbeillard (1720-1785), François Guéneau de Montbeillard.
+    The date of birth used here is that of Francois.
+    Acknowledgement:
+    The development of growth references and growth charts, T J Cole, Ann Hum Biol. 2012 Sep; 39(5): 382–394.
+    Wikipedia: https://en.wikipedia.org/wiki/Philippe_Gu%C3%A9neau_de_Montbeillard
+    """
+    birth_date = date(1759, 4, 11) ## YYYY m d
+
+    print(drift_sds_range)
+
+    if measurement_interval_type in ['d', 'day', 'days']:
+        date_increment = relativedelta(days=measurement_interval_value)
+    elif measurement_interval_type in ['w', 'week', 'weeks']:
+        date_increment = relativedelta(weeks=measurement_interval_value)
+    elif measurement_interval_type in ['m', 'month', 'months']:
+        date_increment = relativedelta(months=measurement_interval_value)
+    elif measurement_interval_type in ['y', 'year', 'years']:
+        date_increment = relativedelta(years=measurement_interval_value)
+    else:
+        raise ValueError("parameters must be one of 'd', 'day', 'days', 'w', 'week', 'weeks', 'm', 'month', 'months', 'y', 'year' or 'years'")
+    
+    observation_date = birth_date + date_increment
+    i = 0
+
+    while i < number_of_measurements:
+        
+        new_measurement = Measurement(sex, birth_date, observation_date, gestation_weeks, gestation_days)
+        
+        # generate random sds in a range requested if drift specified
+        if drift:
+            requested_sds = requested_sds + uniform(0, drift_sds_range)
+        ##
+        fictional_child.append(new_measurement.measurement_for_sds(measurement_type, requested_sds))
+        
+        observation_date = observation_date + date_increment
+        i = i + 1
+    return fictional_child
+        
+        
+        
+        

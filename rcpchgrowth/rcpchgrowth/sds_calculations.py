@@ -12,8 +12,8 @@ from .constants import TWENTY_FOUR_WEEKS_GESTATION, TWENTY_FIVE_WEEKS_GESTATION,
 # import timeit #see below, comment back in if timing functions in this module
 
 """
-dob: date of birth
-obs_date: date of observation
+birth_date: date of birth
+observation_date: date of observation
 sex: sex (string, MALE or FEMALE)
 decimal_age: chronological, decimal
 corrected_age: corrected for prematurity, decimal
@@ -39,7 +39,7 @@ decimal_ages=[-0.325804244,-0.306639288,-0.287474333,-0.268309377,-0.249144422,-
 
 #public functions
 
-def sds(age: float, measurement: str, measurement_value: float, sex: str, default_to_youngest_reference: bool = False, born_preterm = False)->float:
+def sds(age: float, measurement: str, measurement_value: float, sex: str, default_to_youngest_reference: bool = False, born_preterm: bool = False)->float:
     """
     Public function
     Returns a standard deviation score. 
@@ -48,11 +48,8 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str, defaul
     a measurement (type of observation) ['height', 'weight', 'bmi', 'ofc']
     measurement_value (the value is standard units) [height and ofc are in cm, weight in kg bmi in kg/m2]
     sex (a standard string) ['male' or 'female']
-    default_to_youngest_reference (boolean): defaults to True. For circumstances when the age exactly matches 
-        a join between two references (or moving from lying to standing at 2y) where there are 2 ages in the reference
-        data to choose between. Defaults to the youngest reference unless the user selects false
-    born_preterm (boolean): defaults to False. If a baby is 37-42 weeks, use the uk_who_0_20_term data by default. If a baby was born
-        preterm, the UK90 gestation specific data is used up to 42 weeks
+    default_to_youngest_reference (boolean): defaults to True. For circumstances when the age exactly matches a join between two references (or moving from lying to standing at 2y) where there are 2 ages in the reference data to choose between. Defaults to the youngest reference unless the user selects false
+    born_preterm (boolean): defaults to False. If a baby is 37-42 weeks, use the uk_who_0_20_term data by default. If a baby was born preterm, the UK90 gestation specific data is used up to 42 weeks
 
     This function is specific to the UK-WHO data set as this is actually a blend of UK-90 and WHO 2006 references and necessarily has duplicate values.
 
@@ -151,7 +148,7 @@ def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  de
         default_to_youngest_reference (boolean): in the event of an exact age match at the threshold of a chart,
             where it is possible to choose 2 references, default will pick the youngest reference (optional)
 
-    Centile to SDS Conversion for Chart lines
+    Centile to SDS Conversion for Chart lines (2/3 of an SDS)
     0.4th -2.67
     2nd -2.00
     9th -1.33
@@ -253,11 +250,11 @@ def get_lms(age: float, measurement: str, sex: str, default_to_youngest_referenc
     
     if measurement == 'height':
         if age < TWENTY_FIVE_WEEKS_GESTATION:
-            raise ValueError('There is no reference data for length below 25 weeks')
+            raise ValueError(f'There is no reference data for length below 25 weeks ({TWENTY_FIVE_WEEKS_GESTATION} y)')
     
     if measurement == 'bmi':
         if age < FORTY_TWO_WEEKS_GESTATION:
-            raise ValueError('There is no BMI reference data available for BMI below 2 weeks')
+            raise ValueError(f'There is no BMI reference data available for BMI below 2 weeks ({FORTY_TWO_WEEKS_GESTATION} y)')
     
     if measurement == 'ofc':
         if (sex == 'male' and age > 18.0) or (sex == 'female' and age > 17.0):

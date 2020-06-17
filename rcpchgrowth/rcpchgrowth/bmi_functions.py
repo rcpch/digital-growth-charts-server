@@ -25,12 +25,10 @@ def bmi_from_height_weight( height: float,  weight: float) -> float:
     return bmi
 
 def weight_for_bmi_height( height: float,  bmi: float) -> float:
-    
     """
     Returns a weight from a height in cm and a BMI in kg/m2
     Does not depend on the age or sex of the child.
     """
-
     return_weight = 0.0
     return_weight = bmi*math.pow(height/100, 2)
     return return_weight

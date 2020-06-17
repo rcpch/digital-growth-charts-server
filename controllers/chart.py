@@ -58,9 +58,12 @@ def create_centile_values(sex: str):
                 if index < 2: # there is no height data below 25 weeks
                     length_for_z = None
                 else:
-                    length_for_z = rcpchgrowth.measurement_from_sds('height', sds_value, sex, age, True)
+                    try:
+                        length_for_z = rcpchgrowth.measurement_from_sds(measurement='height', requested_sds=sds_value, sex=sex, decimal_age=age, default_to_youngest_reference=False)
+                    except:
+                        length_for_z = None
                 
-                weight_for_z = rcpchgrowth.measurement_from_sds('weight', sds_value, sex, age, True)
+                weight_for_z = rcpchgrowth.measurement_from_sds(measurement='weight', requested_sds=sds_value, sex=sex, decimal_age=age, default_to_youngest_reference=False)
                 bmi_for_z = None # there is no UK90 preterm BMI data
                 
                 ofc_for_z = rcpchgrowth.measurement_from_sds('ofc', sds_value, sex, age, True)
@@ -72,10 +75,22 @@ def create_centile_values(sex: str):
 
             elif index <= WHO_2006_LENGTH_THRESHOLD_INDEX:
                 # at 2 weeks choose WHO child lying data (upper reference as default)
-                length_for_z = rcpchgrowth.measurement_from_sds('height', sds_value, sex, age, False)
-                weight_for_z = rcpchgrowth.measurement_from_sds('weight', sds_value, sex, age, False)
-                bmi_for_z = rcpchgrowth.measurement_from_sds('bmi', sds_value, sex, age, False)
-                ofc_for_z = rcpchgrowth.measurement_from_sds('ofc', sds_value, sex, age, False)
+                try:
+                    length_for_z = rcpchgrowth.measurement_from_sds('height', sds_value, sex, age, False)
+                except:
+                    length_for_z = None
+                try:
+                    weight_for_z = rcpchgrowth.measurement_from_sds('weight', sds_value, sex, age, False)
+                except:
+                    weight_for_z = None
+                try:
+                    bmi_for_z = rcpchgrowth.measurement_from_sds('bmi', sds_value, sex, age, False)
+                except:
+                    bmi_for_z = None
+                try:
+                    ofc_for_z = rcpchgrowth.measurement_from_sds('ofc', sds_value, sex, age, False)
+                except:
+                    ofc_for_z = None
 
                 if index == WHO_2006_LENGTH_THRESHOLD_INDEX:
                     # at 2 years choose WHO child lying data (lower reference as default)
@@ -140,28 +155,28 @@ def create_data_plots(child_results_array):
     for count, child_result in enumerate(child_results_array):
         if(child_result):
             data_point = {}
-            if(child_result['child_measurement_value']['height']):
+            if(child_result['child_observation_value']['measurement_type'] == 'height'):
                 data_point = {
                     'x': child_result['measurement_dates']['chronological_decimal_age'], 
-                    'y': child_result['child_measurement_value']['height']
+                    'y': child_result['child_observation_value']['measurement_value']
                 }
                 child_height_data.append(data_point)
-            if(child_result['child_measurement_value']['weight']):
+            elif(child_result['child_observation_value']['measurement_type'] == 'weight'):
                 data_point = {
                     'x': child_result['measurement_dates']['chronological_decimal_age'], 
-                    'y': child_result['child_measurement_value']['weight']
+                    'y': child_result['child_observation_value']['measurement_value']
                 }
                 child_weight_data.append(data_point)
-            if(child_result['child_measurement_value']['bmi']):
+            elif(child_result['child_observation_value']['measurement_type'] == 'bmi'):
                 data_point = {
                     'x': child_result['measurement_dates']['chronological_decimal_age'], 
-                    'y': child_result['child_measurement_value']['bmi']
+                    'y': child_result['child_observation_value']['measurement_value']
                 }
                 child_bmi_data.append(data_point)
-            if(child_result['child_measurement_value']['ofc']):
+            elif(child_result['child_observation_value']['measurement_type'] == 'ofc'):
                 data_point = {
                     'x': child_result['measurement_dates']['chronological_decimal_age'], 
-                    'y': child_result['child_measurement_value']['ofc']
+                    'y': child_result['child_observation_value']['measurement_value']
                 }
                 child_ofc_data.append(data_point)
         
@@ -173,14 +188,14 @@ def create_data_plots(child_results_array):
     }
 
 def sds_value_for_centile_value(centile: float):
-    
+
     if centile == 0.4:
         return -2.0 - (2/3)
     elif centile == 2:
         return -2.0
     elif centile == 9:
         return -1 - (1/3)
-    elif centile == 0:
+    elif centile == 25:
         return 0 - (2/3)
     elif centile == 50:
         return 0

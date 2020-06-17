@@ -6,7 +6,7 @@ from decimal import *
 from .constants import FORTY_WEEKS_GESTATION, TERM_PREGNANCY_LENGTH_DAYS, TERM_LOWER_THRESHOLD_LENGTH_DAYS, EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS
 
 """
-4 functions to calculate ages
+5 functions to calculate age related parameters
  - decimal_age: returns a decimal age from 2 dates (birth_date and observation_date) and gestational age at delivery (gestation_weeks and gestation_days), based on 40 weeks as 0. Days/Weeks before 40 weeks are negative.
  - chronological_decimal_age: returns a decimal age from 2 dates (takes birth_date and observation_date)
  - corrected_decimal_age: returns a corrected decimal age accounting for prematurity (takes birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int, pregnancy_length_day [optional])
@@ -17,10 +17,12 @@ from .constants import FORTY_WEEKS_GESTATION, TERM_PREGNANCY_LENGTH_DAYS, TERM_L
 def decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int):
     """
     returns decimal age relative to forty weeks expressed as 0 y
+    THIS FUNCTION IS DEPRECATED
     """
     days_born_from_forty_weeks = ((gestation_weeks * 7) + gestation_days) - TERM_PREGNANCY_LENGTH_DAYS
     days_of_life_in_years = chronological_decimal_age(birth_date, observation_date)
     return  (days_born_from_forty_weeks / 365.25) + days_of_life_in_years
+
 
 def chronological_decimal_age(birth_date: date, observation_date: date) -> float:
 
@@ -35,6 +37,7 @@ def chronological_decimal_age(birth_date: date, observation_date: date) -> float
     chronological_decimal_age = days_between.days / 365.25
     return chronological_decimal_age
     
+
 def corrected_decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int)->float: 
     """
     Corrects for gestational age. 
@@ -81,6 +84,7 @@ def corrected_decimal_age(birth_date: date, observation_date: date, gestation_we
     else:
         return uncorrected_age
 
+
 def chronological_calendar_age(birth_date: date, observation_date: date) -> str:
     """
     returns age in years, months, weeks and days: to return a corrected calendar age use passes EDD instead of birth date
@@ -125,6 +129,7 @@ def chronological_calendar_age(birth_date: date, observation_date: date) -> str:
     else:
         return ''
 
+
 def estimated_date_delivery(birth_date: date, gestation_weeks: int, gestation_days: int) -> date:
     """
     Returns estimated date of delivery from gestational age and birthdate
@@ -139,6 +144,7 @@ def estimated_date_delivery(birth_date: date, gestation_weeks: int, gestation_da
 
     edd = birth_date + timedelta(days=prematurity)
     return edd
+
 
 def corrected_gestational_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int)->str:
     """
@@ -169,6 +175,7 @@ def corrected_gestational_age(birth_date: date, observation_date: date, gestatio
         'corrected_gestation_weeks': corrected_weeks,
         'corrected_gestation_days': corrected_supplementary_days
     }
+
 
 def string_to_date(convert_string):
     return datetime.strptime(convert_string, '%d/%m/%Y')
