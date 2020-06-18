@@ -842,3 +842,14 @@ An additional future objective is to create a respository of all available growt
 
 ## Copyright and License
 This work is copyrighted ⓒ2020 The Royal College of Paediatrics and Child Health, and released under the GNU Affero Public License. Our [license file](./LICENSE.md) is included in this repository, with further details available here https://www.gnu.org/licenses/agpl-3.0.en.html
+
+
+## Developing the RCPCH Growth Charts - WIP
+
+* [Setting up your Python Development environment](docs/python-development.md)
+* [Running the Growth Chart API in development](docs/running-in-development.md)
+* Using different reference data files
+* Adding new calculations
+* Testing
+* [Contributing](docs/contributing.md)
+* [Calculating Growth Parameters](docs/about-calculating-growth-parameters.md)
