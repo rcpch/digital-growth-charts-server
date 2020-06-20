@@ -38,24 +38,22 @@ API DEFINITIONS SECTION
 * Each API endpoint has a distinct Controller
 """
 
+
 """
 Centile Calculations API route. Expects query params as below:
-  birth_date            STRING          date of birth of the patient in YYYY-MM-DD ISO8601 format (will be converted to Date)
-  observation_date      STRING          date of the measurement in YYYY-MM-DD ISO8601 format (will be converted to Date)
-  height_in_metres      FLOAT           the height in METRES NOT CENTIMETRES
-  weight_in_kg          FLOAT           the weight in kilograms
-  occipitofrontal_circ_in_cm  FLOAT     head circumference in CENTIMETRES
-  sex                   STRING          either 'male or 'female'
-  gestation_weeks       INTEGER         gestational age in completed weeks
-  gestation_days        INTEGER         gestational age in completed days
+    birth_date            STRING          date of birth of the patient in YYYY-MM-DD ISO8601 format (will be converted to Date)
+    observation_date      STRING          date of the measurement in YYYY-MM-DD ISO8601 format (will be converted to Date)
+    height_in_metres      FLOAT           the height in METRES NOT CENTIMETRES
+    weight_in_kg          FLOAT           the weight in kilograms
+    occipitofrontal_circ_in_cm  FLOAT     head circumference in CENTIMETRES
+    sex                   STRING          either 'male or 'female'
+    gestation_weeks       INTEGER         gestational age in completed weeks
+    gestation_days        INTEGER         gestational age in completed days
 """
 # JSON CALCULATION
 @app.route("/api/v1/json/calculations", methods=['GET'])
 def api_json_calculations():
-
     # check here for all the right query params, if not present raise error
-    print(request.args)
-
     response = controllers.perform_calculations(
         birth_date=datetime.strptime(request.args['birth_date'], '%Y-%m-%d'),
         observation_date=datetime.strptime(request.args['observation_date'], '%Y-%m-%d'),
@@ -84,7 +82,6 @@ To add a new reference please submit a pull request
 @app.route("/api/v1/json/references", methods=['GET'])
 def references():
     references_data = controllers.references()
-    print (references_data)
     return jsonify(references_data)
 
 
@@ -136,6 +133,32 @@ def instructions():
     with open(file) as markdown_file:
         html = markdown.markdown(markdown_file.read())
     return jsonify(html)
+
+"""
+Fictional Child Data Generator API route. Expects query params as below:
+    drift_amount
+    intervals
+    interval_type
+    measurement_requested
+    number_of_measurements
+    sex
+    starting_age
+    starting_sds
+Returns a series of fictional data for a child
+"""
+@app.route("/api/v1/json/fictionalchild", methods=["GET"])
+def fictionalchild():
+    fictional_child_data = controllers.generate_fictional_data(
+        drift_amount = float(request.args['drift_amount']),
+        intervals = int(request.args['intervals']),
+        interval_type = request.args['interval_type'],
+        measurement_requested = request.args['measurement_requested'],
+        number_of_measurements = int(request.args['number_of_measurements']),
+        sex = request.args['sex'],
+        starting_age = float(request.args['starting_age']),
+        starting_sds = float(request.args['starting_sds'])
+    )
+    return jsonify(fictional_child_data)
 
 
 if __name__ == '__main__':
