@@ -56,7 +56,6 @@ Centile Calculations API route. Expects query params as below:
 def api_json_calculations():
 
     # check here for all the right query params, if not present raise error
-    print(request.args)
 
     response = controllers.perform_calculations(
         birth_date=datetime.strptime(request.args['birth_date'], '%Y-%m-%d'),
@@ -98,7 +97,7 @@ To amend the instructions please submit a pull request
 """
 @app.route("/api/v1/json/chart_data", methods=['GET'])
 def chart_data():
-    results = request.args['results']
+    results = json.loads(request.args['results'])
     unique = request.args['serial_data']
     
     if unique == "true":
@@ -111,17 +110,14 @@ def chart_data():
         sex = formatted_child_data[0]['birth_data']['sex']
         
     else:
-        print(results)
-        json_loaded_data = json.loads(results)
-        
         # Prepare data from plotting
-        child_data = controllers.create_data_plots(json_loaded_data)
+        child_data = controllers.create_data_plots(results)
         # Retrieve sex of child to select correct centile charts
-        sex = json_loaded_data[0]['birth_data']['sex']
-
+        sex = results[0]['birth_data']['sex']
+        
     # Create Centile Charts
     centiles = controllers.create_centile_values(sex)
-
+    
     return jsonify({
         'sex': sex,
         'child_data': child_data,
