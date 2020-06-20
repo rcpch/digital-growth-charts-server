@@ -1,5 +1,6 @@
 # imports for API only
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response, jsonify, session
+from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from os import path, listdir, remove
 from datetime import datetime
@@ -16,6 +17,7 @@ import controllers as controllers
 
 app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = 'UK_WHO' #not very secret - this will need complicating and adding to config
+CORS(app)
 
 from app import app
 
@@ -98,7 +100,8 @@ To amend the instructions please submit a pull request
 def chart_data():
     results = request.args['results']
     unique = request.args['serial_data']
-    if unique:
+    
+    if unique == "true":
         #data come from a table and are not formatted for the charts
         formatted_child_data = controllers.prepare_data_as_array_of_measurement_objects(json.loads(results))
         
@@ -108,10 +111,13 @@ def chart_data():
         sex = formatted_child_data[0]['birth_data']['sex']
         
     else:
+        print(results)
+        json_loaded_data = json.loads(results)
+        
         # Prepare data from plotting
-        child_data = controllers.create_data_plots(results)
+        child_data = controllers.create_data_plots(json_loaded_data)
         # Retrieve sex of child to select correct centile charts
-        sex = results[0]['birth_data']['sex']
+        sex = json_loaded_data[0]['birth_data']['sex']
 
     # Create Centile Charts
     centiles = controllers.create_centile_values(sex)

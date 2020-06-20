@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../digital-growth-charts-flask-client"
+		}
+	],
+	"settings": {
+		"python.pythonPath": "/Users/SimonChapman/.pyenv/shims/python3"
+	}
+}
