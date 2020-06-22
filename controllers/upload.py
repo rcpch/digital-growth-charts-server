@@ -113,12 +113,6 @@ def sds_if_parameters(decimal_age, measurement_type, measurement_value, sex):
     else:
         return None
 
-def download_excel(json_string: str):
-    json_file = json.dumps(json_string)
-    out_file_2 = Path.cwd().joinpath("static").joinpath('uploaded_data').joinpath('temp').joinpath("output.xlsx")
-    excel_file = pd.read_json(json_file).to_excel(out_file_2)
-    return excel_file
-
 def prepare_data_as_array_of_measurement_objects(uploaded_data):
     # these data come from excel and have been formatted to present in a html table
     array_of_measurement_objects =[]

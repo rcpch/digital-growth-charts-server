@@ -56,10 +56,6 @@ Centile Calculations API route. Expects query params as below:
 @app.route("/api/v1/json/calculations", methods=['GET'])
 def api_json_calculations():
     # check here for all the right query params, if not present raise error
-<<<<<<< HEAD
-
-=======
->>>>>>> ea8f51f2dddff06fb34a65e684cd23eb87f16fa3
     response = controllers.perform_calculations(
         birth_date=datetime.strptime(request.args['birth_date'], '%Y-%m-%d'),
         observation_date=datetime.strptime(request.args['observation_date'], '%Y-%m-%d'),
