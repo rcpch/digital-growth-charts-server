@@ -69,6 +69,20 @@ def api_json_calculations():
     )
     return jsonify(response)
 
+# JSON Calculation of serial data
+@app.route("/api/v1/json/serial_data_calculations", methods=['GET'])
+def api_json_serial_data_calculations():
+
+    # check here for all the right query params, if not present raise error
+
+    serial_data = json.loads(request.args['uploaded_data']) #deserialised json
+
+    response = controllers.prepare_data_as_array_of_measurement_objects(
+        uploaded_data=serial_data
+    )
+
+    return jsonify(response)
+
 
 # FHIR CALCULATION
 @app.route("/api/v1/fhir", methods=['GET'])
@@ -98,9 +112,9 @@ To amend the instructions please submit a pull request
 @app.route("/api/v1/json/chart_data", methods=['GET'])
 def chart_data():
     results = json.loads(request.args['results'])
-    unique = request.args['serial_data']
+    unique_child = request.args['unique_child']
     
-    if unique == "true":
+    if unique_child == "true":
         #data come from a table and are not formatted for the charts
         formatted_child_data = controllers.prepare_data_as_array_of_measurement_objects(json.loads(results))
         

@@ -123,8 +123,8 @@ def prepare_data_as_array_of_measurement_objects(uploaded_data):
     # these data come from excel and have been formatted to present in a html table
     array_of_measurement_objects =[]
     for observation in uploaded_data:
-        birth_date = datetime.strptime(observation['birth_date'], '%d/%m/%Y')
-        observation_date = datetime.strptime(observation['observation_date'], '%d/%m/%Y')
+        birth_date = datetime.strptime(observation['birth_date'], '%Y-%m-%dT%H:%M:%S.%f')
+        observation_date = datetime.strptime(observation['observation_date'], '%Y-%m-%dT%H:%M:%S.%f')
         sex  = observation['sex']
         gestation_weeks = observation['gestation_weeks']
         gestation_days = observation['gestation_days']
