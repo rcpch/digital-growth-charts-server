@@ -109,19 +109,20 @@ To amend the instructions please submit a pull request
 """
 @app.route("/api/v1/json/chart_data", methods=['GET'])
 def chart_data():
-    results = json.loads(request.args['results'])
+    results=json.loads(request.args['results']) #deserialise the JSON from string
     unique_child = request.args['unique_child']
+    # unique_child = request.args['unique_child']
     
     if unique_child == "true":
-        #data come from a table and are not formatted for the charts
-        formatted_child_data = controllers.prepare_data_as_array_of_measurement_objects(json.loads(results))
+        #data are serial data points for a single child
         
         # Prepare data from plotting
-        child_data = controllers.create_data_plots(formatted_child_data)
+        child_data = controllers.create_data_plots(results)
         # Retrieve sex of child to select correct centile charts
-        sex = formatted_child_data[0]['birth_data']['sex']
+        sex = results[0]['birth_data']['sex']
         
     else:
+        
         # Prepare data from plotting
         child_data = controllers.create_data_plots(results)
         # Retrieve sex of child to select correct centile charts
