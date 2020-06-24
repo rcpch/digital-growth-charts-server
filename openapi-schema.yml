@@ -2,35 +2,92 @@ openapi: 3.0.0
 info:
   version: 0.0.1
   title: Growth Charts API
+
 servers:
-  - url: 'http://localhost:5000'
+  - url: 'http://localhost:5000/api/v1/'
+    description: for local testing
+  - url: 'https://rcpch-digital-growth-chart-api.herokuapp.com/api/v1/'
+    description: temporary remote testing endpoint
+
 paths:
-  /api:
+  /calculations:
     get:
-      summary: 'Sample endpoint: Returns details about a particular user'
-      operationId: listUser
-      tags:
-        - user
+      summary: 'Calculates digital growth chart parameters'
       parameters:
-        - name: id
+        - birth_date: 
           in: query
-          description: ID of the user
+          description: The date of birth of the patient
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
+            format: date
+
+        - observation_date:
+          in: query
+          description: The date of the observation (height, weight) taken of the patient
+          required: true
+          schema:
+            type: string  
+            format: date
+
+        - height_in_cm:
+          in: query
+          description: The height of the patient, which MUST be in centimetres to get correct results
+          required: false
+          schema:
+            type: number
+
+        - weight_in_kg:
+          in: query
+          description: The weight of the patient, which MUST be in kilograms to get correct results
+          required: false
+          schema:
+            type: number
+
+        - head_circ_in_cm:
+          in: query
+          description: > 
+            The head circumference (also described as occipito-frontal circumference) of the patient,
+            which **must** be in centimetres to get correct results.
+          required: false
+          schema:
+            type: number
+
+        - sex:
+          in: query
+          description: The sex of the patient, which can either be 'male' or 'female'
+          required: true
+          schema:
+            type: string
+            enum: ['female', 'male']
+
+        - gestation_weeks:
+          in: query
+          description: >
+            The number of completed weeks of gestation at which the patient was born.
+            This enables Gestational Age correction if the child was not born at term.
+            See also the other parameter `gestation_weeks` - both are usually required.
+          required: false
+          schema:
+            type: number
+
+        - gestation_days:
+          in: query
+          description: >
+            The number of additional days _beyond the completed weeks of gestation_ at which the patient was born.
+            This enables Gestational Age correction if the child was not born at term. See also the other parameter
+             `gestation_weeks` - both are usually required.
+          required: false
+          schema:
+            type: number
+
       responses:
         '200':
-          description: 'Sample response: Details about a user by ID'
-          headers:
-            x-next:
-              description: A link to the next page of responses
-              schema:
-                type: string
+          description: 'Calculated measurements'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/Measurement'
         default:
           description: Unexpected error
           content:
@@ -39,7 +96,7 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    User:
+    Measurement:
       type: object
       required:
         - id
