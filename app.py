@@ -43,9 +43,9 @@ API DEFINITIONS SECTION
 Centile Calculations API route. Expects query params as below:
     birth_date            STRING          date of birth of the patient in YYYY-MM-DD ISO8601 format (will be converted to Date)
     observation_date      STRING          date of the measurement in YYYY-MM-DD ISO8601 format (will be converted to Date)
-    height_in_metres      FLOAT           the height in METRES NOT CENTIMETRES
+    height_in_cm          FLOAT           the height in CENTIMETRES
     weight_in_kg          FLOAT           the weight in kilograms
-    occipitofrontal_circ_in_cm  FLOAT     head circumference in CENTIMETRES
+    head_circ_in_cm       FLOAT           head circumference in CENTIMETRES
     sex                   STRING          either 'male or 'female'
     gestation_weeks       INTEGER         gestational age in completed weeks
     gestation_days        INTEGER         gestational age in completed days
@@ -57,9 +57,9 @@ def api_json_calculations():
     response = controllers.perform_calculations(
         birth_date=datetime.strptime(request.args['birth_date'], '%Y-%m-%d'),
         observation_date=datetime.strptime(request.args['observation_date'], '%Y-%m-%d'),
-        height=float(request.args['height_in_metres']),
+        height=float(request.args['height_in_cm']),
         weight=float(request.args['weight_in_kg']),
-        ofc=float(request.args['occipitofrontal_circ_in_cm']),
+        ofc=float(request.args['head_circ_in_cm']),
         sex=str(request.args['sex']),
         gestation_weeks=int(request.args['gestation_weeks']),
         gestation_days=int(request.args['gestation_days'])
@@ -94,6 +94,7 @@ To amend the instructions please submit a pull request
 @app.route("/api/v1/json/chart_data", methods=['GET'])
 def chart_data():
     results = request.args['results']
+    print(results)
     unique = request.args['serial_data']
     if unique:
         #data come from a table and are not formatted for the charts
@@ -133,6 +134,7 @@ def instructions():
     with open(file) as markdown_file:
         html = markdown.markdown(markdown_file.read())
     return jsonify(html)
+
 
 """
 Fictional Child Data Generator API route. Expects query params as below:
