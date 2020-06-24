@@ -1,5 +1,6 @@
 # imports for API only
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response, jsonify, session
+from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from os import path, listdir, remove
 from datetime import datetime
@@ -16,6 +17,7 @@ import controllers as controllers
 
 app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = 'UK_WHO' #not very secret - this will need complicating and adding to config
+CORS(app)
 
 from app import app
 
@@ -66,6 +68,20 @@ def api_json_calculations():
     )
     return jsonify(response)
 
+# JSON Calculation of serial data
+@app.route("/api/v1/json/serial_data_calculations", methods=['GET'])
+def api_json_serial_data_calculations():
+
+    # check here for all the right query params, if not present raise error
+
+    serial_data = json.loads(request.args['uploaded_data']) #deserialised json
+
+    response = controllers.prepare_data_as_array_of_measurement_objects(
+        uploaded_data=serial_data
+    )
+
+    return jsonify(response)
+
 
 # FHIR CALCULATION
 @app.route("/api/v1/fhir", methods=['GET'])
@@ -93,27 +109,28 @@ To amend the instructions please submit a pull request
 """
 @app.route("/api/v1/json/chart_data", methods=['GET'])
 def chart_data():
-    results = request.args['results']
-    print(results)
-    unique = request.args['serial_data']
-    if unique:
-        #data come from a table and are not formatted for the charts
-        formatted_child_data = controllers.prepare_data_as_array_of_measurement_objects(json.loads(results))
+    results=json.loads(request.args['results']) #deserialise the JSON from string
+    unique_child = request.args['unique_child']
+    # unique_child = request.args['unique_child']
+    
+    if unique_child == "true":
+        #data are serial data points for a single child
         
-        # Prepare data from plotting
-        child_data = controllers.create_data_plots(formatted_child_data)
-        # Retrieve sex of child to select correct centile charts
-        sex = formatted_child_data[0]['birth_data']['sex']
-        
-    else:
         # Prepare data from plotting
         child_data = controllers.create_data_plots(results)
         # Retrieve sex of child to select correct centile charts
         sex = results[0]['birth_data']['sex']
-
+        
+    else:
+        
+        # Prepare data from plotting
+        child_data = controllers.create_data_plots(results)
+        # Retrieve sex of child to select correct centile charts
+        sex = results[0]['birth_data']['sex']
+        
     # Create Centile Charts
     centiles = controllers.create_centile_values(sex)
-
+    
     return jsonify({
         'sex': sex,
         'child_data': child_data,

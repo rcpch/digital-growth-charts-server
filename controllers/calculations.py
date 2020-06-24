@@ -30,8 +30,6 @@ def perform_calculations(*,
         gestation_weeks: int,
         gestation_days:int):
 
-    print(weight)
-
     array_of_measurement_objects = []
     if height:
         measurement_type = Measurement_Type('height', height=height)
