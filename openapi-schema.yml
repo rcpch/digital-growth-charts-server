@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   version: 0.0.1
-  title: Growth Charts API
+  title: Royal College of Paediatircs and Child Health Digital Growth Charts API
 
 servers:
   - url: 'http://localhost:5000/api/v1/'
