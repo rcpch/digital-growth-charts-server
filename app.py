@@ -45,9 +45,9 @@ API DEFINITIONS SECTION
 Centile Calculations API route. Expects query params as below:
     birth_date            STRING          date of birth of the patient in YYYY-MM-DD ISO8601 format (will be converted to Date)
     observation_date      STRING          date of the measurement in YYYY-MM-DD ISO8601 format (will be converted to Date)
-    height_in_metres      FLOAT           the height in METRES NOT CENTIMETRES
+    height_in_cm          FLOAT           the height in CENTIMETRES
     weight_in_kg          FLOAT           the weight in kilograms
-    occipitofrontal_circ_in_cm  FLOAT     head circumference in CENTIMETRES
+    head_circ_in_cm       FLOAT           head circumference in CENTIMETRES
     sex                   STRING          either 'male or 'female'
     gestation_weeks       INTEGER         gestational age in completed weeks
     gestation_days        INTEGER         gestational age in completed days
@@ -152,6 +152,7 @@ def instructions():
     with open(file) as markdown_file:
         html = markdown.markdown(markdown_file.read())
     return jsonify(html)
+
 
 """
 Fictional Child Data Generator API route. Expects query params as below:

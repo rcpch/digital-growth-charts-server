@@ -130,18 +130,7 @@ def prepare_data_as_array_of_measurement_objects(uploaded_data):
 
     return array_of_measurement_objects    
 
-def generate_fictional_data(request):
-    starting_age = float(request.get('starting_age'))
-    intervals = int(request.get('intervals'))
-    starting_sds = float(request.get('starting_sds'))
-    measurement_requested = request.get('measurement_requested')
-    drift_amount = float(request.get('drift_amount'))
-    sex = request.get('sex')
-    number_of_measurements = int(request.get('number_of_data_points'))
-    interval_type = request.get('interval_type')
-    
-    generated_measurements = rcpchgrowth.create_fictional_child(sex=sex, measurement_type=measurement_requested, requested_sds=starting_sds, number_of_measurements=number_of_measurements, starting_decimal_age=starting_age, measurement_interval_value=intervals, measurement_interval_type=interval_type, gestation_weeks=40, gestation_days=0, drift=True, drift_sds_range=drift_amount)
-    return generated_measurements
+
 
 """
 Data model for child data:
