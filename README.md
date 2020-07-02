@@ -849,9 +849,9 @@ This work is copyrighted ⓒ2020 The Royal College of Paediatrics and Child Heal
 ## Developing the RCPCH Growth Charts - WIP
 
 * [Setting up your Python Development environment](docs/dev-documentation/python-development.md)
-* [Running the Growth Chart API in development](docs/running-in-development.md)
+* [Running the Growth Chart API in development](docs/dev-documentation/running-in-development.md)
 * Using different reference data files
 * Adding new calculations
 * Testing
 * [Contributing](docs/contributing.md)
-* [Calculating Growth Parameters](docs/about-calculating-growth-parameters.md)
+* [Calculating Growth Parameters](docs/dev-documentation/about-calculating-growth-parameters.md)
