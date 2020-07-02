@@ -59,13 +59,14 @@ def api_json_calculations():
     response = controllers.perform_calculations(
         birth_date=datetime.strptime(request.args['birth_date'], '%Y-%m-%d'),
         observation_date=datetime.strptime(request.args['observation_date'], '%Y-%m-%d'),
-        height=float(request.args['height_in_metres']),
+        height=float(request.args['height_in_cm']),
         weight=float(request.args['weight_in_kg']),
-        ofc=float(request.args['occipitofrontal_circ_in_cm']),
+        ofc=float(request.args['head_circ_in_cm']),
         sex=str(request.args['sex']),
         gestation_weeks=int(request.args['gestation_weeks']),
         gestation_days=int(request.args['gestation_days'])
     )
+    print(response)
     return jsonify(response)
 
 # JSON Calculation of serial data
