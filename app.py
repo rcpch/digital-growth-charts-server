@@ -15,8 +15,8 @@ import json
 import controllers as controllers
 
 
-app = Flask(__name__, static_folder='static')
-app.config['SECRET_KEY'] = 'UK_WHO' #not very secret - this will need complicating and adding to config
+app = Flask(__name__, static_folder="static")
+app.config["SECRET_KEY"] = "UK_WHO" #not very secret - this will need complicating and adding to config
 CORS(app)
 
 from app import app
@@ -48,33 +48,33 @@ Centile Calculations API route. Expects query params as below:
     height_in_cm          FLOAT           the height in CENTIMETRES
     weight_in_kg          FLOAT           the weight in kilograms
     head_circ_in_cm       FLOAT           head circumference in CENTIMETRES
-    sex                   STRING          either 'male or 'female'
+    sex                   STRING          either "male or "female"
     gestation_weeks       INTEGER         gestational age in completed weeks
     gestation_days        INTEGER         gestational age in completed days
 """
 # JSON CALCULATION
-@app.route("/api/v1/json/calculations", methods=['GET'])
+@app.route("/api/v1/json/calculations", methods=["GET"])
 def api_json_calculations():
     # check here for all the right query params, if not present raise error
     response = controllers.perform_calculations(
-        birth_date=datetime.strptime(request.args['birth_date'], '%Y-%m-%d'),
-        observation_date=datetime.strptime(request.args['observation_date'], '%Y-%m-%d'),
-        height=float(request.args['height_in_cm']),
-        weight=float(request.args['weight_in_kg']),
-        ofc=float(request.args['head_circ_in_cm']),
-        sex=str(request.args['sex']),
-        gestation_weeks=int(request.args['gestation_weeks']),
-        gestation_days=int(request.args['gestation_days'])
+        birth_date=datetime.strptime(request.args["birth_date"], "%Y-%m-%d"),
+        observation_date=datetime.strptime(request.args["observation_date"], "%Y-%m-%d"),
+        height=float(request.args["height_in_cm"]),
+        weight=float(request.args["weight_in_kg"]),
+        ofc=float(request.args["head_circ_in_cm"]),
+        sex=str(request.args["sex"]),
+        gestation_weeks=int(request.args["gestation_weeks"]),
+        gestation_days=int(request.args["gestation_days"])
     )
     return jsonify(response)
 
 # JSON Calculation of serial data
-@app.route("/api/v1/json/serial_data_calculations", methods=['GET'])
+@app.route("/api/v1/json/serial_data_calculations", methods=["GET"])
 def api_json_serial_data_calculations():
 
     # check here for all the right query params, if not present raise error
 
-    serial_data = json.loads(request.args['uploaded_data']) #deserialised json
+    serial_data = json.loads(request.args["uploaded_data"]) #deserialised json
 
     response = controllers.prepare_data_as_array_of_measurement_objects(
         uploaded_data=serial_data
@@ -84,9 +84,9 @@ def api_json_serial_data_calculations():
 
 
 # FHIR CALCULATION
-@app.route("/api/v1/fhir", methods=['GET'])
+@app.route("/api/v1/fhir", methods=["GET"])
 def api_fhir():
-    return jsonify({'path': '/api/v1/fhir'})
+    return jsonify({"path": "/api/v1/fhir"})
 
 
 """
@@ -95,7 +95,7 @@ Does not expect any parameters
 Returns data on the growth references that we are aware of
 To add a new reference please submit a pull request
 """
-@app.route("/api/v1/json/references", methods=['GET'])
+@app.route("/api/v1/json/references", methods=["GET"])
 def references():
     references_data = controllers.references()
     return jsonify(references_data)
@@ -107,12 +107,12 @@ requires results data params
 Returns HTML content derived from the README.md of the API repository
 To amend the instructions please submit a pull request
 """
-@app.route("/api/v1/json/chart_data", methods=['GET'])
+@app.route("/api/v1/json/chart_data", methods=["GET"])
 def chart_data():
-    results=json.loads(request.args['results']) #deserialise the JSON from string
+    results=json.loads(request.args["results"]) #deserialise the JSON from string
     
-    unique_child = request.args['unique_child']
-    # unique_child = request.args['unique_child']
+    unique_child = request.args["unique_child"]
+    # unique_child = request.args["unique_child"]
     
     if unique_child == "true":
         #data are serial data points for a single child
@@ -120,22 +120,22 @@ def chart_data():
         # Prepare data from plotting
         child_data = controllers.create_data_plots(results)
         # Retrieve sex of child to select correct centile charts
-        sex = results[0]['birth_data']['sex']
+        sex = results[0]["birth_data"]["sex"]
         
     else:
         
         # Prepare data from plotting
         child_data = controllers.create_data_plots(results)
         # Retrieve sex of child to select correct centile charts
-        sex = results[0]['birth_data']['sex']
+        sex = results[0]["birth_data"]["sex"]
         
     # Create Centile Charts
     centiles = controllers.create_centile_values(sex)
     
     return jsonify({
-        'sex': sex,
-        'child_data': child_data,
-        'centile_data': centiles
+        "sex": sex,
+        "child_data": child_data,
+        "centile_data": centiles
     })
 
 
@@ -145,10 +145,10 @@ Does not expect any parameters
 Returns HTML content derived from the README.md of the API repository
 To amend the instructions please submit a pull request
 """
-@app.route("/api/v1/json/instructions", methods=['GET'])
+@app.route("/api/v1/json/instructions", methods=["GET"])
 def instructions():
     #open README.md file
-    file = path.join(path.abspath(path.dirname(__file__)), 'README.md')
+    file = path.join(path.abspath(path.dirname(__file__)), "README.md")
     with open(file) as markdown_file:
         html = markdown.markdown(markdown_file.read())
     return jsonify(html)
@@ -169,17 +169,17 @@ Returns a series of fictional data for a child
 @app.route("/api/v1/json/fictionalchild", methods=["GET"])
 def fictionalchild():
     fictional_child_data = controllers.generate_fictional_data(
-        drift_amount = float(request.args['drift_amount']),
-        intervals = int(request.args['intervals']),
-        interval_type = request.args['interval_type'],
-        measurement_requested = request.args['measurement_requested'],
-        number_of_measurements = int(request.args['number_of_measurements']),
-        sex = request.args['sex'],
-        starting_age = float(request.args['starting_age']),
-        starting_sds = float(request.args['starting_sds'])
+        drift_amount = float(request.args["drift_amount"]),
+        intervals = int(request.args["intervals"]),
+        interval_type = request.args["interval_type"],
+        measurement_requested = request.args["measurement_requested"],
+        number_of_measurements = int(request.args["number_of_measurements"]),
+        sex = request.args["sex"],
+        starting_age = float(request.args["starting_age"]),
+        starting_sds = float(request.args["starting_sds"])
     )
     return jsonify(fictional_child_data)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run()
