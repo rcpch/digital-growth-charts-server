@@ -66,7 +66,6 @@ def api_json_calculations():
         gestation_weeks=int(request.args['gestation_weeks']),
         gestation_days=int(request.args['gestation_days'])
     )
-    print(response)
     return jsonify(response)
 
 # JSON Calculation of serial data
@@ -111,6 +110,7 @@ To amend the instructions please submit a pull request
 @app.route("/api/v1/json/chart_data", methods=['GET'])
 def chart_data():
     results=json.loads(request.args['results']) #deserialise the JSON from string
+    
     unique_child = request.args['unique_child']
     # unique_child = request.args['unique_child']
     
