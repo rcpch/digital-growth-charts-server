@@ -18,7 +18,7 @@ def form_wrapper(form):
 
 
 # for clarity and safety, accepts only named (keyword) arguments, not positional arguments
-# I've used this style of indentation from clarity:
+# I"ve used this style of indentation from clarity:
 # https://github.com/python/typing/issues/433#issuecomment-302491149
 def perform_calculations(*, 
         birth_date: date,
@@ -32,39 +32,39 @@ def perform_calculations(*,
 
     array_of_measurement_objects = []
     if height:
-        measurement_type = Measurement_Type('height', height=height)
+        measurement_type = Measurement_Type("height", height=height)
         measurement_object = Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_type=measurement_type, gestation_weeks=gestation_weeks, gestation_days=gestation_days, default_to_youngest_reference=False)
         array_of_measurement_objects.append(measurement_object.measurement)
     if weight:
-        measurement_type = Measurement_Type('weight', weight=weight)
+        measurement_type = Measurement_Type("weight", weight=weight)
         measurement_object = Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_type=measurement_type, gestation_weeks=gestation_weeks, gestation_days=gestation_days, default_to_youngest_reference=False)
         array_of_measurement_objects.append(measurement_object.measurement)
     if height and weight: 
-        measurement_type = Measurement_Type('bmi', height=height, weight=weight)
+        measurement_type = Measurement_Type("bmi", height=height, weight=weight)
         measurement_object = Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_type=measurement_type, gestation_weeks=gestation_weeks, gestation_days=gestation_days, default_to_youngest_reference=False)
         array_of_measurement_objects.append(measurement_object.measurement)
     if ofc:
-        measurement_type = Measurement_Type('ofc', ofc=ofc)
+        measurement_type = Measurement_Type("ofc", ofc=ofc)
         measurement_object = Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_type=measurement_type, gestation_weeks=gestation_weeks, gestation_days=gestation_days, default_to_youngest_reference=False)
         array_of_measurement_objects.append(measurement_object.measurement)
     return array_of_measurement_objects
 
 def calculate_velocity_acceleration(data):
-    height_velocity = velocity('height', data)
-    weight_velocity = velocity('weight', data)
-    bmi_velocity = velocity('bmi', data)
-    ofc_velocity = velocity('ofc', data)
-    height_acceleration = acceleration('height', data)
-    weight_acceleration = acceleration('weight', data)
-    bmi_acceleration = acceleration('bmi', data)
-    ofc_acceleration = acceleration('ofc', data)
+    height_velocity = velocity("height", data)
+    weight_velocity = velocity("weight", data)
+    bmi_velocity = velocity("bmi", data)
+    ofc_velocity = velocity("ofc", data)
+    height_acceleration = acceleration("height", data)
+    weight_acceleration = acceleration("weight", data)
+    bmi_acceleration = acceleration("bmi", data)
+    ofc_acceleration = acceleration("ofc", data)
     return {
-        'height_velocity': height_velocity,
-        'weight_velocity': weight_velocity,
-        'bmi_velocity': bmi_velocity,
-        'ofc_velocity': ofc_velocity,
-        'height_acceleration': height_acceleration,
-        'weight_acceleration': weight_acceleration,
-        'bmi_acceleration': bmi_acceleration,
-        'ofc_acceleration': ofc_acceleration
+        "height_velocity": height_velocity,
+        "weight_velocity": weight_velocity,
+        "bmi_velocity": bmi_velocity,
+        "ofc_velocity": ofc_velocity,
+        "height_acceleration": height_acceleration,
+        "weight_acceleration": weight_acceleration,
+        "bmi_acceleration": bmi_acceleration,
+        "ofc_acceleration": ofc_acceleration
     }
