@@ -853,5 +853,5 @@ This work is copyrighted ⓒ2020 The Royal College of Paediatrics and Child Heal
 * Using different reference data files
 * Adding new calculations
 * Testing
-* [Contributing](docs/contributing.md)
+* [Contributing](docs/dev-documentation/contributing.md)
 * [Calculating Growth Parameters](docs/dev-documentation/about-calculating-growth-parameters.md)
