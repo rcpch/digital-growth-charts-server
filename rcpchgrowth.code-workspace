@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../digital-growth-charts-flask-client"
+		},
+		{
+			"path": "../../../react/digital-growth-charts-react"
 		}
 	],
 	"settings": {
