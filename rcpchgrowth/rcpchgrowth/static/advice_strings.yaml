@@ -3,60 +3,60 @@
   metadata:
     name: 0.4th centile
     equivalent_sds: -2.67
-  length:
+  length: 
     clinician_comment:
-      en:
+      en: "On or below the 0.4th centile for height. Medical review advised."
     lay_comment:
-      en:
+      en: "Your child has a lower or the same length as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
   height:
     clinician_comment:
-      en:
+      en: "Your child has a lower or the same weight as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
     lay_comment:
-      en:
+      en: "Your child has a lower or the same height as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
   weight:
     clinician_comment:
-      en:
+      en: "On or below the 0.4th centile for weight. Medical review advised."
     lay_comment:
-      en:
+      en: "Your child has a lower or the same weight as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
   bmi:
     clinician_comment:
-      en:
+      en: "On or below the 0.4th centile. Medical review advised."
     lay_comment:
-      en:
+      en: "Compared with other children the same height, age and sex, your child is below or the same weight as only 4 in every 1000 children. It is advisable to see your doctor."
   ofc:
     clinician_comment:
-      en:
+      en: "Your child 's head size is larger than or the same as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
     lay_comment:
-      en:
+      en: "On or below the 0.4th centile for head circumference. Medical review advised."
 - centile: 2
   metadata:
     name: 2nd centile
     equivalent_sds: -2.0
-  length:
+  length: 
     clinician_comment:
-      en:
+      en: "On or below the 2nd centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child is in the lowest 2 percent for length, sex and age. Consider seeing your doctor."
   height:
     clinician_comment:
-      en:
+      en: "On or below the 2nd centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child is in the lowest 2 percent for height, sex and age. Consider seeing your doctor."
   weight:
     clinician_comment:
-      en:
+      en: "On or below the 2nd centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child is in the lowest 2 percent for weight compared with other children the same age and sex. Consider seeing your doctor."
   bmi:
     clinician_comment:
-      en:
+      en: "On or below the 2nd centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Compared with other children the same height, age and sex, your child is is in the lowest 2 percent of the population for their weight. Consider seeing your doctor."
   ofc:
     clinician_comment:
-      en:
+      en: "On or below the 2nd centile for head circumference. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child's head size is in the lowest 2 percent as other children the same sex and age. Consider seeing your doctor."
 - centile: 3
   metadata:
     name: 3rd centile
@@ -123,27 +123,27 @@
     clinician_comment:
       en:
     lay_comment:
-      en:
+      en: "Your child is in the lowest 9 percent of the population for length, sex and age."
   height:
     clinician_comment:
-      en:
+      en: "On or below the 9th centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child is in the lowest 9 percent of the population for height, sex and age."
   weight:
     clinician_comment:
-      en:
+      en: "On or below the 9th centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child is in the lowest 9 percent of the population for weight compared with other children the same age and sex."
   bmi:
     clinician_comment:
-      en:
+      en: "On or below the 9th centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Compared with other children the same height, age and sex, your child is in the lowest 9 percent of the population for weight."
   ofc:
     clinician_comment:
-      en:
+      en: "On or below the 9th centile for head circumference. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child's head size is in the lowest 9 percent of the population for children the same sex and age."
 - centile: 15
   metadata:
     name: 15th centile
@@ -179,87 +179,87 @@
     equivalent_sds: 0.67
   length:
     clinician_comment:
-      en:
+      en: "On or below the 25th centile. Consider reviewing trend."
     lay_comment:
-      en:
-  height:
+      en: "Your child is in the lowest 1/4 of the population for length, sex and age."
+  height: "On or below the 25th centile. Consider reviewing trend."
     clinician_comment:
       en:
     lay_comment:
-      en:
+      en: "Your child is in the lowest 1/4 of the population for height, sex and age."
   weight:
     clinician_comment:
-      en:
+      en: "On or below the 25th centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child is in the lowest 1/4 of the population for weight, compared with other children the same age and sex."
   bmi:
     clinician_comment:
-      en:
+      en: "Compared with other children the same height, age and sex, your child is in the lowest 1/4 of the population for their weight."
     lay_comment:
-      en:
+      en: "On or below the 25th centile. Consider reviewing trend."
   ofc:
     clinician_comment:
-      en:
+      en: "On or below the 25th centile for head circumference. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child's head size is in the lowest 1/4 of the population compared with other children the same sex and age."
 - centile: 50
   metadata:
     name: 50th centile
     equivalent_sds: 0.0
   length:
     clinician_comment:
-      en:
+      en: "On or below the 50th centile."
     lay_comment:
-      en:
+      en: "Your child is on or just below the average length of the population for sex and age."
   height:
     clinician_comment:
-      en:
+      en: "On or below the 50th centile."
     lay_comment:
-      en:
+      en: "Your child is on or just below the average height of the population for sex and age."
   weight:
-    clinician_comment:
-      en:
-    lay_comment:
-      en:
+    clinician_comment: 
+      en: "On or below the 50th centile."
+    lay_comment: 
+      en: "Your child is on or just below the average weight of the population, compared with other children the same age and sex."
   bmi:
-    clinician_comment:
-      en:
-    lay_comment:
-      en:
+    clinician_comment: 
+      en: "On or below the 50th centile." 
+    lay_comment: 
+      en: "Compared with other children the same height, age and sex, your child is on or just below the average weight for the population"
   ofc:
     clinician_comment:
-      en:
+      en: "On or below the 50th centile for head circumference."
     lay_comment:
-      en:
+      en: "Your child's head circumference is on or just below the average for the population for sex and age."
 - centile: 75
   metadata:
     name: 75th centile
     equivalent_sds: 0.67
   length:
     clinician_comment:
-      en:
+      en: "On or below the 75th centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child has the same or a shorter length than 75 percent of children the same age and sex."
   height:
     clinician_comment:
-      en:
+      en: "On or below the 75th centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child has the same or a shorter height than 75 percent of children the same age and sex."
   weight:
     clinician_comment:
-      en:
+      en: "On or below the 75th centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child is below or the same as 75 percent of children the same age and sex. This does not take account of their height."
   bmi:
     clinician_comment:
-      en:
+      en: "On or below the 75th centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Compared with other children the same height, age and sex, your child is below or the same as 75 percent of children for their weight."
   ofc:
     clinician_comment:
-      en:
+      en: "On or below the 75th centile for head circumference. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child's head circumference is in the top 25 percent of children the same age and sex."
 - centile: 85
   metadata:
     name: 85th centile
@@ -295,29 +295,29 @@
     equivalent_sds: 1.33
   length:
     clinician_comment:
-      en:
+      en: "On or below the 91st centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child is in the top 9 percent of children the same age and sex for their length."
   height:
     clinician_comment:
-      en:
+      en: "On or below the 91st centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child is in the top 9 percent of children the same age and sex for their height."
   weight:
     clinician_comment:
-      en:
+      en: "On or below the 91st centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child is in the top 9 percent of children the same age and sex for their weight. This does not take account of their height."
   bmi:
     clinician_comment:
-      en:
+      en: "On or below the 91st centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Compared with other children the same height, age and sex, your child is in the top 9 percent of children for their weight."
   ofc:
     clinician_comment:
-      en:
+      en: "On or below the 91st centile for head circumference. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child's head circumference is in the top 9 percent of children the same age and sex."
 - centile: 97
   metadata:
     name: 97th centile
@@ -353,55 +353,55 @@
     equivalent_sds: 2
   length:
     clinician_comment:
-      en:
+      en: "On or below the 91st centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child is in the top 2 percent of children the same age and sex for their length."
   height:
     clinician_comment:
-      en:
+      en: "On or below the 91st centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child is in the top 2 percent of children the same age and sex for their height."
   weight:
     clinician_comment:
-      en:
+      en: "On or below the 91st centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child is in the top 2 percent of children the same age and sex for their weight. This does not take account of their height. Consider seeking medical review ."
   bmi:
     clinician_comment:
-      en:
+      en: "On or below the 91st centile. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Compared with other children the same height, age and sex, your child is in the top 2 percent of children for their weight. Consider seeing your doctor."
   ofc:
     clinician_comment:
-      en:
+      en: "On or below the 98th centile. Meets definition for being overweight. Consider reviewing trend."
     lay_comment:
-      en:
+      en: "Your child's head circumference is in the top 2 percent of children the same age and sex. Consider seeing your doctor."
 - centile: 99.6
   metadata:
     name: 99.6th centile
     equivalent_sds: 2.67
   length:
     clinician_comment:
-      en:
+      en: "On or below the 99.6th centile. Consider medical review."
     lay_comment:
-      en:
+      en: "Your child is longer than only 4 children in every 1000 the same age and sex. Consider seeking medical review."
   height:
     clinician_comment:
-      en:
+      en: "On or below the 99.6th centile. Consider medical review."
     lay_comment:
-      en:
+      en: "Your child is taller than only 4 children in every 1000 the same age and sex. Consider seeking medical review."
   weight:
     clinician_comment:
-      en:
+      en: "On or below the 99.6th centile. Consider medical review."
     lay_comment:
-      en:
+      en: "Your child is heavier than only 4 children in every 1000 the same age and sex. This does not take account of their height. Medical review is advised."
   bmi:
     clinician_comment:
-      en:
+      en: "On or below the 99.6th centile. Above obesity threshold. Consider medical review."
     lay_comment:
-      en:
+      en: "Compared with other children the same height, age and sex, your child 's  weight is lower than only 4 children in every 1000 childre. Medical review is advised."
   ofc:
     clinician_comment:
-      en:
+      en: "On or below the 99.6th centile for head circumference. Medical review is advised."
     lay_comment:
-      en:
+      en: "Your child's head circumference is larger than only 4 children in every 1000 children the same age and sex. Medical review is advised."

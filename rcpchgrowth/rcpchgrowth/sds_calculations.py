@@ -46,7 +46,7 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str, defaul
     Parameters are: 
     a decimal age (corrected or chronological), 
     a measurement (type of observation) ['height', 'weight', 'bmi', 'ofc']
-    measurement_value (the value is standard units) [height and ofc are in cm, weight in kg bmi in kg/m2]
+    measurement_value (the value is standard units) [height and ofc are in cm, weight in kg bmi in kg/m²]
     sex (a standard string) ['male' or 'female']
     default_to_youngest_reference (boolean): defaults to True. For circumstances when the age exactly matches a join between two references (or moving from lying to standing at 2y) where there are 2 ages in the reference data to choose between. Defaults to the youngest reference unless the user selects false
     born_preterm (boolean): defaults to False. If a baby is 37-42 weeks, use the uk_who_0_20_term data by default. If a baby was born preterm, the UK90 gestation specific data is used up to 42 weeks

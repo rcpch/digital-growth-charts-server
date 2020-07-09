@@ -54,509 +54,23 @@ Advice provided is of two kinds:
 
 Advice reported is based on centile cut-offs:
 
-#### 0.4th Centile
-##### ___Height/Length___
-
-###### _Parent/Carer of child aged < 2y:_ 
- ```
-"Your child has a lower or the same length as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
-```
-
-###### _Parent/Carer of child aged >= 2y_
-```
-"Your child has a lower or the same height as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
-```
-
-######  _Clinician_
-```
-"On or below the 0.4th centile for height. Medical review advised."
-```
-##### ___Weight___
-
-###### _Parent/Carer_
-```
-"Your child has a lower or the same weight as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
-```
-
-######  _Clinician_
-```
-"On or below the 0.4th centile for weight. Medical review advised."
-```
-##### ___BMI___
-
-###### _Parent/Carer_
-```
-"Compared with other children the same height, age and sex, your child is below or the same weight as only 4 in every 1000 children. It is advisable to see your doctor."
-```
-
-######  _Clinician_
-```
-"On or below the 0.4th centile. Medical review advised."
-```
-##### ___Head Circumference___
-
-###### _Parent/Carer_
-```
-"Your child 's head size is larger than or the same as only 4 in every 1000 children the same age and sex. It is advisable to see your doctor."
-```
-
-######  _Clinician_
-```
-"On or below the 0.4th centile for head circumference. Medical review advised."
-```
-***
-#### 2nd Centile
-##### ___Height/Length___
-
-###### _Parent/Care_of child aged < 2y:_
-```
-"Your child is in the lowest 2 percent for length, sex and age. Consider seeing your doctor."
-```
-
-###### _Parent/Carer of child aged >= 2y_
-```
-"Your child is in the lowest 2 percent for height, sex and age. Consider seeing your doctor."
-```
-
-######  _Clinician_
-```
-"On or below the 2nd centile. Consider reviewing trend."
-```
-##### __Weight__
-
-###### _Parent/Carer_
-```
-"Your child is in the lowest 2 percent for weight compared with other children the same age and sex. Consider seeing your doctor."
-```
-
-######  _Clinician_
-```
-"On or below the 2nd centile. Consider reviewing trend."
-```
-##### ___BMI___
-
-###### _Parent/Carer_
-```
-"Compared with other children the same height, age and sex, your child is is in the lowest 2 percent of the population for their weight. Consider seeing your doctor."
-```
-
-######  _Clinician_
-```
-"On or below the 2nd centile. Consider reviewing trend."       
-```     
-##### ___Head Circumference___
-
-###### _Parent/Carer_
-```
-"Your child's head size is in the lowest 2 percent as other children the same sex and age. Consider seeing your doctor."
-```
-
-######  _Clinician_
-```
-"On or below the 2nd centile for head circumference. Consider reviewing trend."
-```
-***
-#### 9th Centile
-##### ___Height/Length___
-__Parent/Carer_of child aged < 2y:_
-```
-"Your child is in the lowest 9 percent of the population for length, sex and age."
-```
-
-###### _Parent/Carer of child aged >= 2y_
-```
-"Your child is in the lowest 9 percent of the population for height, sex and age."
-```
-
-######  _Clinician_
-```
-"On or below the 9th centile. Consider reviewing trend."
-```
-##### ___Weight___
-
-###### _Parent/Carer_
-```
-"Your child is in the lowest 9 percent of the population for weight compared with other children the same age and sex."
-```
-
-######  _Clinician_
-```
-"On or below the 9th centile. Consider reviewing trend."
-```
-##### ___BMI___
-
-###### _Parent/Carer_
-```
-"Compared with other children the same height, age and sex, your child is in the lowest 9 percent of the population for weight."
-```
-
-######  _Clinician_
-```
-"On or below the 9th centile. Consider reviewing trend."
-```
-##### ___Head Circumference___
-
-###### _Parent/Carer_
-```
-"Your child's head size is in the lowest 9 percent of the population for children the same sex and age."
-```
-
-######  _Clinician_
-```
-"On or below the 9th centile for head circumference. Consider reviewing trend."
-```
-***
-#### 25th Centile
-##### ___Height/Length___
-
-###### _Parent/Care_of child aged < 2y:_
-```
-"Your child is in the lowest 1/4 of the population for length, sex and age."
-```
-
-###### _Parent/Carer of child aged >= 2y_
-```
-"Your child is in the lowest 1/4 of the population for height, sex and age."
-```
-
-######  _Clinician_
-```
-"On or below the 25th centile. Consider reviewing trend."
-```
-##### ___Weight___
-
-###### _Parent/Carer_
-
-```
-"Your child is in the lowest 1/4 of the population for weight, compared with other children the same age and sex."
-```
-
-######  _Clinician_
-```
-"On or below the 25th centile. Consider reviewing trend."
-```
-##### ___BMI___
-
-###### _Parent/Carer_
-```
-"Compared with other children the same height, age and sex, your child is in the lowest 1/4 of the population for their weight."
-```
-
-######  _Clinician_
-```
-"On or below the 25th centile. Consider reviewing trend."
-```
-##### ___Head Circumference___
-
-###### _Parent/Carer_
-```
-"Your child's head size is in the lowest 1/4 of the population compared with other children the same sex and age."
-```
-
-######  _Clinician_
-```
-"On or below the 25th centile for head circumference. Consider reviewing trend."
-```
-***
-#### 50th Centile
-##### ___Height/Length___
-
-###### _Parent/Care_of child aged < 2y:_
-```
-"Your child is on or just below the average length of the population for sex and age."
-```
-
-###### _Parent/Carer of child aged >= 2y_
-```
-"Your child is on or just below the average height of the population for sex and age."
-```
-
-######  _Clinician_
-```
-"On or below the 50th centile."
-```
-##### ___Weight___
-
-###### _Parent/Carer_
-```
-"Your child is on or just below the average weight of the population, compared with other children the same age and sex."
-```
-
-######  _Clinician_
-```
-"On or below the 50th centile."
-```
-##### ___BMI___
-
-###### _Parent/Carer_
-```
-"Compared with other children the same height, age and sex, your child is on or just below the average weight for the population ."
-```
-
-######  _Clinician_
-```
-"On or below the 50th centile."
-```
-##### ___Head Circumference___
-
-###### _Parent/Carer_
-```
-"Your child is on or just below the average height of the population for sex and age."
-```
-
-######  _Clinician_
-```
-"On or below the 50th centile for head circumference."
-```
-***
-#### 75th Centile
-##### ___Height/Length___
-
-###### _Parent/Care_of child aged < 2y:_
-```
-"Your child has the same or a shorter length than 75 percent of children the same age and sex."
-```
-
-###### _Parent/Carer of child aged >= 2y_
-```
-"Your child has the same or a shorter height than 75 percent of children the same age and sex."
-```
-
-######  _Clinician_
-```
-"On or below the 75th centile. Consider reviewing trend."
-```
-##### ___Weight___
-
-###### _Parent/Carer_
-```
-"Your child is below or the same as 75 percent of children the same age and sex. This does not take account of their height."
-```
-
-######  _Clinician_
-```
-"On or below the 75th centile. Consider reviewing trend."
-```
-##### ___BMI___
-
-###### _Parent/Carer_
-```
-"Compared with other children the same height, age and sex, your child is below or the same as 75 percent of children for their weight."
-```
-
-######  _Clinician_
-```
-"On or below the 75th centile. Consider reviewing trend."
-```
-
-##### _Head Circumference_
-
-###### _Parent/Carer_
-```
-"Your child's head circumference is in the top 25 percent of children the same age and sex."
-```
-
-######  _Clinician_
-```
-"On or below the 75th centile for head circumference. Consider reviewing trend."
-```
-***
-#### 91st Centile
-##### ___Height/Length___
-
-###### _Parent/Care_of child aged < 2y:_
-```
-"Your child is in the top 9 percent of children the same age and sex for their length."
-```
-
-###### _Parent/Carer of child aged >= 2y_
-```
-"Your child is in the top 9 percent of children the same age and sex for their height."
-```
-
-######  _Clinician_
-```
-"On or below the 91st centile. Consider reviewing trend."
-```
-##### ___Weight___
-
-###### _Parent/Carer_
-```
-"Your child is in the top 9 percent of children the same age and sex for their weight. This does not take account of their height."
-```
-
-######  _Clinician_
-```
-"On or below the 91st centile. Consider reviewing trend."
-```
-##### ___BMI___
-
-###### _Parent/Carer_
-```
-"Compared with other children the same height, age and sex, your child is in the top 9 percent of children for their weight."
-```
-
-######  _Clinician_
-```
-"On or below the 91st centile. Consider reviewing trend."
-```
-##### ___Head Circumference___
-
-###### _Parent/Carer_
-```
-"Your child's head circumference is in the top 9 percent of children the same age and sex."
-```
-
-######  _Clinician_
-```
-"On or below the 91st centile for head circumference. Consider reviewing trend."
-```
-***
-#### 98th Centile
-##### ___Height/Length___
-
-###### _Parent/Care_of child aged < 2y:_
-```
-"Your child is in the top 2 percent of children the same age and sex for their length."
-```
-
-###### _Parent/Carer of child aged >= 2y_
-```
-"Your child is in the top 2 percent of children the same age and sex for their height."
-```
-
-######  _Clinician_
-```
-"On or below the 91st centile. Consider reviewing trend."
-```
-##### ___Weight___
-
-###### _Parent/Carer_
-```
-"Your child is in the top 2 percent of children the same age and sex for their weight. This does not take account of their height. Consider seeking medical review ."
-```
-
-######  _Clinician_
-```
-"On or below the 91st centile. Consider reviewing trend."
-```
-##### ___BMI___
-
-###### _Parent/Carer_
-```
-"Compared with other children the same height, age and sex, your child is in the top 2 percent of children for their weight. Consider seeing your doctor."
-```
-
-######  _Clinician_
-```
-"On or below the 98th centile. Meets definition for being overweight. Consider reviewing trend."
-```
-##### ___Head Circumference___
-
-###### _Parent/Carer_
-```
-"Your child's head circumference is in the top 2 percent of children the same age and sex. Consider seeing your doctor."
-```
-
-######  _Clinician_
-```
-"On or below the 91st centile for head circumference. Consider reviewing trend."
-```
-***
-#### 99.6th Centile
-##### ___Height/Length___
-
-###### _Parent/Care_of child aged < 2y:_
-```
-"Your child is longer than only 4 children in every 1000 the same age and sex. Consider seeking medical review."
-```
-
-###### _Parent/Carer of child aged >= 2y_
-```
-"Your child is taller than only 4 children in every 1000 the same age and sex. Consider seeking medical review."
-```
-
-######  _Clinician_
-```
-"On or below the 99.6th centile. Consider medical review."
-```
-##### ___Weight___
-
-###### _Parent/Carer_
-```
-"Your child is taller than only 4 children in every 1000 the same age and sex. This does not take account of their height. Medical review is advised."
-```
-
-######  _Clinician_
-```
-"On or below the 99.6th centile. Consider medical review."
-```
-##### ___BMI___
-
-###### _Parent/Carer_
-```
-"Compared with other children the same height, age and sex, your child 's  weight is lower than only 4 children in every 1000 childre. Medical review is advised."
-```
-
-######  _Clinician_
-```
-"On or below the 99.6th centile. Above obesity threshold. Consider medical review."
-```
-##### ___Head Circumference___
-
-###### _Parent/Carer_
-```
-"Your child's head circumference is larger than only 4 children in every 1000 children the same age and sex. Medical review is advised."
-```
-
-######  _Clinician_
-```
-"On or below the 99.6th centile for head circumference. Medical review is advised."
-```
-###
-#### Errors
-If requests are made for calculations which fall outside the thresholds of the reference data, responses are as follows:
-##### ___Height/Length___
-###### _Parent/Carer_
-```
-"Height centiles cannot be calculate below 25 weeks gestation."
-```
-
-######  _Clinician_
-```
-"Length SDS and Centiles cannot be calculated below 25 weeks as there is no reference data below this threshold."
-```
-##### ___BMI___
-###### _Parent/Carer_
-```
-"BMI centiles cannot be calculated below 2 weeks of age or before your baby has reached term."
-```
-
-######  _Clinician_
-```
-"BMI SDS and Centiles cannot be calculated before 42 weeks as there is no reference data below this threshold."
-```
-##### ___Head Circumference___
-###### _Parent/Carer_
-```
-"Head circumference centiles cannot be calculated above 17 years in girls."
-or 
-"Head circumference centiles cannot be calculated above 18 years in boys."
-```
-
-######  _Clinician_
-```
-"Head circumference SDS and Centiles cannot be calculated above 17 y as there is no reference data beyond this threshold in girls."
-or
-"Head circumference SDS and Centiles cannot be calculated above 18 y as there is no reference data below this threshold in boys."
-```
+The advice text is published elsewhere in the repository.
 
 ## Technical Aspects
 ### API
 The API is written in Python 3.8.
-Mathematical and statistical calculations are made using the [SciPy](https://www.scipy.org/) and [NumPy](https://numpy.org/) libraries.
-Server middleware used is [Flask](https://flask.palletsprojects.com/en/1.1.x/quickstart/) and [FlaskForms](https://github.com/wtforms/wtforms/), [Pandas](https://pandas.pydata.org/) and [Xlrd](https://pypi.org/project/xlrd/) for data analysis.
-Frontend is provided by [Semantic UI](https://semantic-ui.com/) and [Jinja2](https://pypi.org/project/Jinja2/). Graphing is implemented with [ChartJS](https://www.chartjs.org/) and zoom plugin [chart-js-plugin-zoom](https://github.com/chartjs/chartjs-plugin-zoom).
+Mathematical and statistical calculations are made using the [SciPy](https://www.scipy.org/) and [NumPy](https://numpy.org/) libraries. [Pandas](https://pandas.pydata.org/) and [Xlrd](https://pypi.org/project/xlrd/) are used for data analysis.
+
+Server middleware used is [Flask](https://flask.palletsprojects.com/en/1.1.x/quickstart/).
+
+### Clients
+See associate repositories. There are currently two clients offered as examples of implementation for users to follow. Please be aware that rendering of charts and reporting of results must adhere to strict guidance to comply with the licensing agreement for use. This advice is published elsewhere in the repository and forms consensus opinion of the UK Growth Chart Reference Group and the Clinical Board.
+
+#### Flask
+The Flask client is provided with [Flask](https://flask.palletsprojects.com/en/1.1.x/quickstart/) and [FlaskForms](https://github.com/wtforms/wtforms/). CSS Framework is provided by [Semantic UI](https://semantic-ui.com/) and [Jinja2](https://pypi.org/project/Jinja2/). Graphing is implemented with [ChartJS](https://www.chartjs.org/) and zoom plugin [chart-js-plugin-zoom](https://github.com/chartjs/chartjs-plugin-zoom).
+
+#### React
+The React client is provided by [React](https://reactjs.org/) (16.13.1) and [React Router](https://reactrouter.com/) (5.2.0). CSS Framework is provided by [Semantic UI React](https://react.semantic-ui.com/) (0.88.2). Graphing is implemented with [ChartJS](https://www.chartjs.org/) and zoom plugin [chart-js-plugin-zoom](https://github.com/chartjs/chartjs-plugin-zoom).
 
 ### Software Licensing
 The project team agree that the growth references and the algorithms that generate reliable results should all exist in the public domain. They are published here under GNU Affero GPL3 licence.
@@ -574,42 +88,35 @@ All responses will have the form
 ### Calculate static SDS and Centile values for child anthropometric measurements
 
 #### End-points
-
-- `/` This endpoint renders a webform which accepts a POST request and returns age, centile and SDS calculations of children's growth data. A typical response is shown below in [Arguments](#Arguments). Note that growth reference data do not exist to calculate SDS or centiles for:
-1. Height/Length below 25 weeks gestation
-2. BMI below 2 weeks of age (post 40 weeks)
-3. OFC (occipitofrontal circumference) above 17y in girls and >18y in boys.
-In these circumstances, `NoneType` is returned.
-
-- `/results/table` : Reports anthropometric data entered via the webform with calculated values (ages/SDS and centile values with clinical guidance) as a table.
-
-- `/results/chart` : Plots data entered via the webform, or uploaded in .xlsx format, as growth charts. Charts have capability to zoom in and out.
-
-- `/chart_data` : a JSON dump of the centile chart data
-
-- `/import` : accepts a POST request to upload an excel spreadsheet of mixed patient data (for example for research purposes), or serial growth data over time for individual patients. The upload format for each is different and prescribed. Mandatory column names are: 'birth_date', 'observation_date', 'gestation_weeks','gestation_days', 'sex', 'measurement_type', 'measurement_value'. These are case sensitive. measurement_type must be lower case and one of 'height', 'weight', 'ofc', 'bmi'. This must be anonymised as is in the public domain. Any columns other than those prescribed will be stripped and discarded. No data is retained on the server.
-
-- `/uploaded_data/example` : this is a sample spreadsheet of fictional data for users to try
-
-- `/uploaded_data/excel_spreadsheet` : redirected here once an excel spreadsheet of data has been uploaded.
-
-- `/references` : currently is a hardcoded list (stored as JSON) of national and international growth references (not the datasets themselves), with literature references and authorship, date of publication. The intention is for this to be stored in a database and available opensource (with some governance) for users to update and use. In future it is intended to be a national standard for growth reference publication and provide guidance on growth reference development.
-
-- `/instructions` : currently renders this readme.md. In future is intended to be a resource to help users access the API, as well as details of the API licence, rules of use and disclaimers.
-
-#### Arguments
+`/api/v1/json/calculations`: GET - Accepts parameters listed below. Returns Measurement class object as JSON (see below).
+This function accepts up to 3 measurements made on the same day (height, weight and head circumference) and returns an array of up to 4 Measurement class objects as a response (BMI is also returned is height in cm and weight in kg are supplied).
+__Query Params__
 Naming is based on PEP 8 standards
-- `"birth_date": date` date as datetimestamp (mandatory). This is of format 'DD/MM/YY' (eg 01/05/2020), without timestamp or locale
-- `"observation_date": date` date as datetimestamp (mandatory). This is of format 'DD/MM/YY' (eg 01/05/2020), without timestamp or locale
+- `"birth_date": date` date of birth of the infant/child in YYYY-MM-DD ISO8601 format (will be converted to Date)
+- `"observation_date": date` date of birth of the infant/child in YYYY-MM-DD ISO8601 format (will be converted to Date)
 - `"sex": string` 'male' or 'female' (lower case mandatory)
 - `"gestation_weeks": int` length of pregnancy in weeks (optional)
 - `"gestation_days": int` days additional to length of pregnancy in weeks (optional)
-- `"gestation_total_days": int` length of pregnancy in days from conception (optional)
-- `"measurement_type": string` accepted parameters include: 'height', 'weight', 'ofc', 'bmi' (lower case mandatory)
-- `"measurement_value: float"` observation to 2 dp (mandatory)
+- `"height_in_cm": float` 
+- `"weight_in_kg": float"` 
+- `"head_circ_in_cm": float"`
+Returns an array of Measurement class objects (see below)
 
+`/api/v1/json/calculation`: GET - 
+__Query Params__
+Naming is based on PEP 8 standards
+- `"birth_date": date` date of birth of the infant/child in YYYY-MM-DD ISO8601 format (will be converted to Date)
+- `"observation_date": date` date of birth of the infant/child in YYYY-MM-DD ISO8601 format (will be converted to Date)
+- `"sex": string` 'male' or 'female' (lower case mandatory)
+- `"gestation_weeks": int` length of pregnancy in weeks (optional)
+- `"gestation_days": int` days additional to length of pregnancy in weeks (optional)
+- `"measurement_method": string` accepted parameters include: 'height', 'weight', 'ofc', 'bmi' (lower case mandatory)
+- `"observation_value: float"` measurement value (mandatory). **NOTE:** Height must be provided in __cm__, weight must be provided in __kg__, BMI must be provided in __kg/m²__ and ofc (occipitofrontal circumference or head circumference) must be provided in __cm__.
 
--`201 Created` on success
+Returns a Measurement class object (see below) as an array.
+
+##### Response
+-`200` on success
 Each growth parameter generates a new json object in an array.
 Therefore height, weight and head circumference performed on the same day report an array of 3 JSON objects.
 ```json
@@ -637,34 +144,19 @@ Therefore height, weight and head circumference performed on the same day report
             "lay_decimal_age_comment": "This takes into account your child's prematurity"
         },
         "child_measurement_value": {  
-            "height": 60.7,
-            "weight": None,
-            "bmi": None,
-            "ofc": None
+            "observation_value": 60.7,
+            "measurement_type": "height",
         },
         "measurement_calculated_values": {
             "height_sds": 1.20,
             "height_centile": 88,
             "clinician_height_commment": "This is in the top 15%. Serial data needed for comparison",
             "lay_height_comment": "Your child is tall for their age but in the normal range",
-            "weight_sds":  None,
-            "weight_centile": None,
-            "clinician_weight_commment": None,
-            "lay_weight_comment": None,
-            "ofc_sds":  None,
-            "ofc_centile": None,
-            "clinician_ofc_commment": None,
-            "lay_ofc_comment": None,
         }
     }
 ]
+
 ```
--`decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int):`
-- `"chronological_decimal_age": float` age reported to 1 d.p. calculated as the difference in days between date of birth at 00:00 and date of observation at 00:00 divided by 365.25 (to account for leap years every 4 years)
-- `"chronological_calendar_age": string` human readable representation of age in years, months, weeks, days or hours. 
-- `"corrected_decimal_age"` age reported to 1 d.p. accounting for prematurity. Correction only occurs in babies born below 32 weeks for the first 2 years of life, or if below 37 weeks, for the first year only.
-- `"corrected_calendar_age": string` human readable representation of age in years, months, weeks, days or hours, accounting for prematurity, following principle of corrected decimal age
-- `"corrected_gestational_age": string` weeks of gestation (and supplementary days) in babies born premature who have not yet reached term. Reported as a string eg '24+3 weeks'
 
 #### Functions
 
@@ -695,9 +187,8 @@ Convention is that correction occurs for all babies born before 37 weeks (defini
     babies born below 32 weeks have the additional weeks (calculated up to 40 weeks) subtracted from their chronological decimal age until the age of 2 years
 
 A few other things about correction:
-- term is consider 37-42 weeks. No correction is made for any baby born between these gestations.
-Their decimal age, therefore is considered to be 0.0. This means a baby born at 42 weeks and 
-now 2 weeks of age will calculate identically to a baby born at 37 weeks and now 2 weeks of age. The outcome of discussion amongst the project board members at length regarding babies born after 42 weeks gestation is that these infants should be treated as term and be considered to have an age of 0.0 y.
+- term is consider 37-42 weeks. No correction is made for any baby born between these gestations. Their decimal age, therefore is considered to be 0.0. This means a baby born at 42 weeks and 
+now 2 weeks of age will calculate identically to a baby born at 37 weeks and now 2 weeks of age. The outcome of discussion amongst the project board members at length regarding babies born after 42 weeks gestation is that these infants should be treated as term and be considered to have an age of 0.0 y. It also follows that babies born premature who are not yet term will have a negative decimal age.
 
 
 ***Constants***
@@ -707,43 +198,21 @@ TERM_LOWER_THRESHOLD_LENGTH_DAYS = 37 * 7
 EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS = 32 * 7
 ```
 ##### Functions
-
-```python
-decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int):
-```
-- returns a decimal age from 2 dates (birth_date and observation_date) and gestational age at delivery (gestation_weeks and gestation_days), based on 40 weeks as 0. Days/Weeks before 40 weeks are negative.
-
-```python
-chronological_decimal_age(birth_date: date, observation_date: date) -> float
-```
-- Calculates a decimal age from two dates supplied as raw dates without times.
-- Returns value floating point
-
-```python
-corrected_decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int)->float:
-```
+- `chronological_decimal_age(birth_date: date, observation_date: date) -> float` age reported to 1 d.p. calculated as the difference in days between date of birth at 00:00 and date of observation at 00:00 divided by 365.25 (to account for leap years every 4 years)
+- `"chronological_calendar_age": string` human readable representation of age in years, months, weeks, days or hours. 
+- `corrected_decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int)->float:` age reported to 1 d.p. accounting for prematurity. Returns a decimal age from 2 dates (birth_date and observation_date) and gestational age at delivery (gestation_weeks and gestation_days), based on 40 weeks as 0. Days/Weeks before 40 weeks are negative.
 - Corrects for gestational age. 
 - Corrects for 1 year, if gestation at birth >= 32 weeks and < 37 weeks
 - Corrects for 2 years, if gestation at birth <32 weeks
 - Otherwise returns decimal age without correction
 - Returns a decimal age correct for gestation even over 37 weeks
 - Depends on chronological_decimal_age function
-
-```python
-chronological_calendar_age(birth_date: date, observation_date: date) -> str:
-```
-- Returns age in years, months, weeks and days as a string: to return a corrected calendar age user passes estimated date of delivery (EDD) instead of birth date
-
-```python
-estimated_date_delivery(birth_date: date, gestation_weeks: int, gestation_days: int, pregnancy_length_days = 0) -> date:
-```
-- Returns estimated date of delivery (as a python datetime) from gestational age and birthdate
+- `"corrected_calendar_age": string` human readable representation of age in years, months, weeks, days or hours, accounting for prematurity, following principle of corrected decimal age
+- `corrected_gestational_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int)->str:` weeks of gestation (and supplementary days) in babies born premature who have not yet reached term. Reported as a string eg '24+3 weeks'
+- `estimated_date_delivery(birth_date: date, gestation_weeks: int, gestation_days: int, pregnancy_length_days = 0) -> date:`
+- Returns estimated date of delivery (as a python datetime) from gestational age and birthdate for those babies not yet 42 weeks gestation.
 - Will still calculate an estimated date of delivery if already term (>37 weeks)
 
-```python
-corrected_gestational_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int)->str:
-```
-- Returns a corrected gestational age for those babies not yet 42 weeks gestation
 
 ##### SDS and Centile Calculations
 
@@ -757,7 +226,7 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str, defaul
 - Parameters are: 
 - a decimal age (corrected or chronological), 
 - a measurement (type of observation) ['height', 'weight', 'bmi', 'ofc']
-- observation (the value is standard units) [height and ofc are in cm, weight in kg bmi in kg/m2]
+- observation (the value is standard units) [height and ofc are in cm, weight in kg bmi in kg/m²]
 - sex (a standard string) ['male' or 'female']
 - default_to_youngest_reference (boolean): defaults to False. For circumstances when the age exactly matches a join between two references (or moving from lying to standing at 2y) where there are 2 ages in the reference data to choose between.Defaults to the oldest reference unless the user selects True
 - born_preterm (boolean): defaults to False. If a baby is 37-42 weeks, use the uk_who_0_20_term data by default. If a baby was born preterm, the UK90 gestation specific data is used up to 42 weeks.
@@ -794,7 +263,7 @@ def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  de
         default_to_youngest_reference (boolean): in the event of an exact age match at the threshold of a chart,
             where it is possible to choose 2 references, default will pick the oldest reference (optional)
 
-    Centile to SDS Conversion for Chart lines
+    Centile to SDS Conversion for Chart lines (these values are rounded to 2dp but are calculated to greater accuracy in the code - each centile equates to 2/3 of a SD)
     0.4th -2.67
     2nd -2.00
     9th -1.33
@@ -823,7 +292,7 @@ bmi_from_height_weight( height: float,  weight: float) -> float:
 ```python
 weight_for_bmi_height( height: float,  bmi: float) -> float:
 ```
-- Returns a weight from a height in cm and a BMI in kg/m2. Reported to 3 d.p.
+- Returns a weight from a height in cm and a BMI in kg/m². Reported to 3 d.p.
 - Does not depend on the age or sex of the child.
 
 ##### Scope
