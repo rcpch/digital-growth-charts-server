@@ -55,6 +55,7 @@ Centile Calculations API route. Expects query params as below:
 # JSON CALCULATION
 @app.route("/api/v1/json/calculations", methods=["GET"])
 def api_json_calculations():
+    
     # check here for all the right query params, if not present raise error
     response = controllers.perform_calculations(
         birth_date=datetime.strptime(request.args["birth_date"], "%Y-%m-%d"),
@@ -67,6 +68,25 @@ def api_json_calculations():
         gestation_days=int(request.args["gestation_days"])
     )
     return jsonify(response)
+
+# JSON CALCULATION OF SINGLE MEASUREMENT_TYPE ('height', 'weight', 'bmi', 'ofc'): Note that BMI must be precalculated for this function
+@app.route("/api/v1/json/calculation", methods=["GET"])
+def api_json_calculation():
+    
+    # check here for all the right query params, if not present raise error
+    final_calculations = controllers.perform_calculation(
+        birth_date=datetime.strptime(request.args["birth_date"], "%Y-%m-%d"),
+        observation_date=datetime.strptime(request.args["observation_date"], "%Y-%m-%d"),
+        measurement_method=str(request.args["measurement_method"]),
+        observation_value =float(request.args["observation_value"]),
+        sex=str(request.args["sex"]),
+        gestation_weeks=int(request.args["gestation_weeks"]),
+        gestation_days=int(request.args["gestation_days"])
+    )
+
+    response = jsonify(final_calculations)
+
+    return response
 
 # JSON Calculation of serial data
 @app.route("/api/v1/json/serial_data_calculations", methods=["GET"])

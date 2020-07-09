@@ -21,7 +21,7 @@ class Measurement_Type:
                 raise AssertionError('Height must be passed in cm, not metres')
             elif height is not None and height < 30.0:
                 # a baby is unlikely to be < 30 cm long - probably a data entry error
-                raise AssertionError(f'The height you have entered is very short. Are you sure you meant {30} cm?')
+                raise AssertionError(f'The height you have entered is very short. Are you sure you meant {height} cm?')
             elif height and weight:
                 self.observation_value = bmi_from_height_weight(height, weight)
             elif measurement_value is not None:
@@ -37,7 +37,7 @@ class Measurement_Type:
                 raise AssertionError('Height must be passed in cm, not metres')
             elif height is not None and height < 30.0:
                 # a baby is unlikely to be < 30 cm long - probably a data entry error
-                raise AssertionError(f'The height you have entered is very short. Are you sure you meant {30} cm?')
+                raise AssertionError(f'The height you have entered is very short. Are you sure you meant {height} cm?')
             elif height:
                 self.observation_value = height
             elif measurement_value is not None:
