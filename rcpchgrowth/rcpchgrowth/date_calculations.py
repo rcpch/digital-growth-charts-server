@@ -177,8 +177,8 @@ def corrected_gestational_age(birth_date: date, observation_date: date, gestatio
     }
 
 
-def string_to_date(convert_string):
-    return datetime.strptime(convert_string, '%d/%m/%Y')
+# def string_to_date(convert_string):
+#     return datetime.strptime(convert_string, '%d/%m/%Y')
 
 
 # def tim_date_tests():
