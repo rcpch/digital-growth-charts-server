@@ -210,3 +210,35 @@ def sds_value_for_centile_value(centile: float):
     else:
         #error
         raise LookupError("SDS could not be calculated from Centile supplied")
+
+    """
+    Return object structure
+
+    [
+        {
+            childData: [
+                {
+                    x: 9.415, `this is the age of the child at date of measurement
+                    y: 120 `this is the observation value
+                }
+
+            ],
+            data: [
+                {
+                    sds: -2.666666,
+                    uk90_child_data:[.....],
+                    uk90_preterm_data: [...],
+                    who_child_data: [...],
+                    who_infant_data: [
+                        {
+                            label: 0.4, `this is the centile
+                            x: 4, `this is the decimal age
+                            y: 91.535  `this is the measurement
+                        }
+                    ]
+                }
+            ],
+            key: "height"
+        },
+        ... repeat for weight, bmi, ofc, based on which measurements supplied. If only height data supplied, only height centile data returned
+    ]

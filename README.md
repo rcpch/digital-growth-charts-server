@@ -158,6 +158,52 @@ Therefore height, weight and head circumference performed on the same day report
 
 ```
 
+`/api/v1/json/chart_data`: GET - 
+This endpoint returns plottable growth chart centiles for all the child measurements supplied, as well as the child measurements in plottable form. If only height is supplied, only height centiles are returned.
+__Query Params__
+Accepts a json request:
+`
+{
+    results: [{...}],
+    unique_child: ['true', 'false']
+}
+`
+The `results` param represents an array or Measurement Class objects. The `unique_child` param is a string enum ['true', 'false']
+which acts as a flag describing if serial data presented are from a single child or multiple children. 
+
+The return object is as follows
+
+```json
+[
+        {
+            childData: [
+                {
+                    x: 9.415, `FLOAT - this is the age of the child at date of measurement
+                    y: 120 `FLOAT - this is the observation value
+                }
+
+            ],
+            data: [
+                {
+                    sds: -2.666666, `FLOAT
+                    uk90_child_data:[.....],
+                    uk90_preterm_data: [...],
+                    who_child_data: [...],
+                    who_infant_data: [
+                        {
+                            label: 0.4, `this is the centile as a FLOAT
+                            x: 4, `this is the decimal age as a FLOAT
+                            y: 91.535  `this is the measurement as a FLOAT
+                        }
+                    ]
+                }
+            ],
+            key: "height" `string, one of ['height', 'weight', 'bmi', 'ofc']
+        },
+        ... repeat for weight, bmi, ofc, based on which measurements supplied. If only height data supplied, only height centile data returned
+    ]
+```
+
 #### Functions
 
 ##### Date and age calculations
