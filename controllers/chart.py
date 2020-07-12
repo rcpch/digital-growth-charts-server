@@ -139,10 +139,10 @@ def create_centile_values(sex: str):
                 uk90_child_bmi_sds.append({"label": centile, "x": age, "y": bmi_for_z})
                 uk90_child_ofc_sds.append({"label": centile, "x": age, "y": ofc_for_z}) 
             
-        height_sds.append({"sds": sds_value, "uk90_preterm_data": uk90_preterm_length_sds, "who_infant_data": who_infant_length_sds, "who_child_data": who_child_height_sds, "uk90_child_data": uk90_child_height_sds})
-        weight_sds.append({"sds": sds_value, "uk90_preterm_data": uk90_preterm_weight_sds, "who_infant_data": who_infant_weight_sds, "who_child_data": who_child_weight_sds, "uk90_child_data": uk90_child_weight_sds})
-        bmi_sds.append({"sds": sds_value, "uk90_preterm_data": uk90_preterm_bmi_sds, "who_infant_data": who_infant_bmi_sds, "who_child_data": who_child_bmi_sds, "uk90_child_data": uk90_child_bmi_sds})
-        ofc_sds.append({"sds": sds_value, "uk90_preterm_data": uk90_preterm_ofc_sds, "who_infant_data": who_infant_ofc_sds, "who_child_data": who_child_ofc_sds, "uk90_child_data": uk90_child_ofc_sds})
+        height_sds.append({"sds": sds_value, "centile": centile, "uk90_preterm_data": uk90_preterm_length_sds, "who_infant_data": who_infant_length_sds, "who_child_data": who_child_height_sds, "uk90_child_data": uk90_child_height_sds})
+        weight_sds.append({"sds": sds_value, "centile": centile, "uk90_preterm_data": uk90_preterm_weight_sds, "who_infant_data": who_infant_weight_sds, "who_child_data": who_child_weight_sds, "uk90_child_data": uk90_child_weight_sds})
+        bmi_sds.append({"sds": sds_value, "centile": centile, "uk90_preterm_data": uk90_preterm_bmi_sds, "who_infant_data": who_infant_bmi_sds, "who_child_data": who_child_bmi_sds, "uk90_child_data": uk90_child_bmi_sds})
+        ofc_sds.append({"sds": sds_value, "centile": centile, "uk90_preterm_data": uk90_preterm_ofc_sds, "who_infant_data": who_infant_ofc_sds, "who_child_data": who_child_ofc_sds, "uk90_child_data": uk90_child_ofc_sds})
     
     centiles = {"height": height_sds, "weight": weight_sds, "bmi": bmi_sds, "ofc": ofc_sds}
     return centiles
