@@ -68,10 +68,10 @@ def create_centile_values(sex: str):
                 
                 ofc_for_z = rcpchgrowth.measurement_from_sds("ofc", sds_value, sex, age, True)
 
-                uk90_preterm_length_sds.append({"label": sds_value, "x": age, "y": length_for_z})
-                uk90_preterm_weight_sds.append({"label": sds_value, "x": age, "y": weight_for_z})
-                uk90_preterm_bmi_sds.append({"label": sds_value, "x": age, "y": bmi_for_z})
-                uk90_preterm_ofc_sds.append({"label": sds_value, "x": age, "y": ofc_for_z})
+                uk90_preterm_length_sds.append({"label": centile, "x": age, "y": length_for_z})
+                uk90_preterm_weight_sds.append({"label": centile, "x": age, "y": weight_for_z})
+                uk90_preterm_bmi_sds.append({"label": centile, "x": age, "y": bmi_for_z})
+                uk90_preterm_ofc_sds.append({"label": centile, "x": age, "y": ofc_for_z})
 
             elif index <= WHO_2006_LENGTH_THRESHOLD_INDEX:
                 # at 2 weeks choose WHO child lying data (upper reference as default)
@@ -99,10 +99,10 @@ def create_centile_values(sex: str):
                     bmi_for_z = rcpchgrowth.measurement_from_sds("bmi", sds_value, sex, age, True)
                     ofc_for_z = rcpchgrowth.measurement_from_sds("ofc", sds_value, sex, age, True)
 
-                who_infant_length_sds.append({"label": sds_value, "x": age, "y": length_for_z})
-                who_infant_weight_sds.append({"label": sds_value, "x": age, "y": weight_for_z})
-                who_infant_bmi_sds.append({"label": sds_value, "x": age, "y": bmi_for_z})
-                who_infant_ofc_sds.append({"label": sds_value, "x": age, "y": ofc_for_z})
+                who_infant_length_sds.append({"label": centile, "x": age, "y": length_for_z})
+                who_infant_weight_sds.append({"label": centile, "x": age, "y": weight_for_z})
+                who_infant_bmi_sds.append({"label": centile, "x": age, "y": bmi_for_z})
+                who_infant_ofc_sds.append({"label": centile, "x": age, "y": ofc_for_z})
 
             elif index <= WHO_2006_UPPER_THRESHOLD_INDEX:
                 # at 2y choose WHO child standing data (upper reference as default)
@@ -118,10 +118,10 @@ def create_centile_values(sex: str):
                     bmi_for_z = rcpchgrowth.measurement_from_sds("bmi", sds_value, sex, age, True)
                     ofc_for_z = rcpchgrowth.measurement_from_sds("ofc", sds_value, sex, age, True)
 
-                who_child_height_sds.append({"label": sds_value, "x": age, "y": length_for_z})
-                who_child_weight_sds.append({"label": sds_value, "x": age, "y": weight_for_z})
-                who_child_bmi_sds.append({"label": sds_value, "x": age, "y": bmi_for_z})
-                who_child_ofc_sds.append({"label": sds_value, "x": age, "y": ofc_for_z})
+                who_child_height_sds.append({"label": centile, "x": age, "y": length_for_z})
+                who_child_weight_sds.append({"label": centile, "x": age, "y": weight_for_z})
+                who_child_bmi_sds.append({"label": centile, "x": age, "y": bmi_for_z})
+                who_child_ofc_sds.append({"label": centile, "x": age, "y": ofc_for_z})
             else:
                 #choose upper reference by default - no duplicate ages in this dataset
                 length_for_z = rcpchgrowth.measurement_from_sds("height", sds_value, sex, age, False)
@@ -134,10 +134,10 @@ def create_centile_values(sex: str):
                 else:
                     ofc_for_z = None
 
-                uk90_child_height_sds.append({"label": sds_value, "x": age, "y": length_for_z}) 
-                uk90_child_weight_sds.append({"label": sds_value, "x": age, "y": weight_for_z}) 
-                uk90_child_bmi_sds.append({"label": sds_value, "x": age, "y": bmi_for_z})
-                uk90_child_ofc_sds.append({"label": sds_value, "x": age, "y": ofc_for_z}) 
+                uk90_child_height_sds.append({"label": centile, "x": age, "y": length_for_z}) 
+                uk90_child_weight_sds.append({"label": centile, "x": age, "y": weight_for_z}) 
+                uk90_child_bmi_sds.append({"label": centile, "x": age, "y": bmi_for_z})
+                uk90_child_ofc_sds.append({"label": centile, "x": age, "y": ofc_for_z}) 
             
         height_sds.append({"sds": sds_value, "uk90_preterm_data": uk90_preterm_length_sds, "who_infant_data": who_infant_length_sds, "who_child_data": who_child_height_sds, "uk90_child_data": uk90_child_height_sds})
         weight_sds.append({"sds": sds_value, "uk90_preterm_data": uk90_preterm_weight_sds, "who_infant_data": who_infant_weight_sds, "who_child_data": who_child_weight_sds, "uk90_child_data": uk90_child_weight_sds})
