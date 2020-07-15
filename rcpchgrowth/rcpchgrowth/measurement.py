@@ -127,8 +127,8 @@ class Measurement:
                             "corrected_gestation_weeks": self.corrected_gestational_age["corrected_gestation_weeks"],
                             "corrected_gestation_days": self.corrected_gestational_age["corrected_gestation_days"],
                         }, 
-                        # "clinician_decimal_age_comment": self.clinician_decimal_age_comment, 
-                        # "lay_decimal_age_comment": self.lay_decimal_age_comment
+                        "clinician_decimal_age_comment": self.clinician_decimal_age_comment, 
+                        "lay_decimal_age_comment": self.lay_decimal_age_comment
                     }
         
         child_age_calculations = {
@@ -258,8 +258,8 @@ class Measurement:
                                             "measurement_type": measurement_type,
                                             "sds": sds_value, 
                                             "centile": centile_value, 
-                                            "clinician_comment": clinician_comment,
-                                            "lay_comment": lay_comment 
+                                            # "clinician_comment": clinician_comment,
+                                            # "lay_comment": lay_comment 
                                         }
         
         child_observation_value = {
