@@ -8,3 +8,5 @@
 * [Why Did We Choose Python for the RCPCH dGC API?](why-python.md)
 * [About Calculation of Growth Parameters in Code](about-calculating-growth-parameters.md)
 * [Frequently Asked Questions](frequently-asked-questions.md)
+* [Client Specification](client_specification.md)
+* [Acknowledgements](acknowledgements.md)
