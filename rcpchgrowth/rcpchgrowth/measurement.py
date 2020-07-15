@@ -30,6 +30,9 @@ class Measurement:
         # All Measurement objects return the "birth_data" and "measurement_dates" elements
         # Only those calculations relevant to the measurement_type requested populate the final JSON 
         # object.
+
+        NOTE - THE ADVICE STRINGS HAVE BEEN DEPRECATED AS OF JULY 2020 - THE CALLS AND FUNCTION REMAIN IN PLACE,
+        BUT THE STRINGS BEEN COMMENTED OUT IN THE FINAL JSON
         """
 
         self.measurement_type = measurement_type.measurement_type
@@ -71,37 +74,6 @@ class Measurement:
         else:
             raise ValueError('Only the following measurement types are accepted: height, weight, bmi or ofc')
         return self.return_measurement_object
-
-    # def measurement_for_sds(self, measurement_type: str, requested_sds: float, sex: str, age: float, default_to_youngest_reference: bool=False):
-    #     ## returns the original measurement for a given SDS in an already initialised class
-    #     measurement = measurement_from_sds(measurement=measurement_type, requested_sds=requested_sds, sex=sex, decimal_age=age, default_to_youngest_reference=default_to_youngest_reference)
-    #     if measurement_type == 'height':
-    #         self.height = measurement
-    #         self.height_sds = requested_sds
-    #         self.height_centile = centile(self.height_sds)
-    #     elif  measurement_type == 'weight':
-    #         self.weight = measurement
-    #         self.weight_sds = requested_sds
-    #         self.weight_centile = centile(self.weight_sds)
-    #     elif measurement_type == 'bmi':
-    #         self.bmi = measurement
-    #         self.bmi_sds = requested_sds
-    #         self.bmi_centile = centile(self.bmi_sds)
-    #     elif measurement_type == 'ofc':
-    #         self.ofc = measurement
-    #         self.ofc_sds = requested_sds
-    #         self.ofc_centile = centile(self.ofc_sds)
-    #     else:
-    #         raise ValueError('Only accept measurement types: height, weight, bmi or ofc')
-
-    #     return self.__create_measurement_object(
-    #         measurement_type='ofc',
-    #         observation_value=self.ofc,
-    #         sds_value=self.ofc_sds,
-    #         centile_value=self.ofc_centile,
-    #         clinician_comment=clinician_ofc_comment,
-    #         lay_comment=self.lay_ofc_comment
-    #     )
 
     """
     These are all private class methods and are only accessed by this class on initialisation
@@ -155,8 +127,8 @@ class Measurement:
                             "corrected_gestation_weeks": self.corrected_gestational_age["corrected_gestation_weeks"],
                             "corrected_gestation_days": self.corrected_gestational_age["corrected_gestation_days"],
                         }, 
-                        "clinician_decimal_age_comment": self.clinician_decimal_age_comment, 
-                        "lay_decimal_age_comment": self.lay_decimal_age_comment
+                        # "clinician_decimal_age_comment": self.clinician_decimal_age_comment, 
+                        # "lay_decimal_age_comment": self.lay_decimal_age_comment
                     }
         
         child_age_calculations = {
