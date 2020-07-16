@@ -1,7 +1,7 @@
 # Calculating Growth Parameters - WIP
 
-use this page to document the gotchas and difficulties that arise when doing Centiles etc in code  
-clinico-statistical centiles gotchas that we've had to work through  
+This page is to document the gotchas and difficulties that arise when doing Centiles etc in code / 
+clinico-statistical centiles gotchas that we've had to work through.
 
 * cubic interpolation
 * term dates averaging

@@ -1,7 +1,10 @@
 # Clinical Advice regarding Centile results
 
+# DEPRECATED
+THIS HAS BEEN INCLUDED IN THE DOCS BUT IS NOLONGER ACTIVELY MAINTAINED AND IS LEFT FOR LEGACY REASONS. THE PROJECT BOARD DECIDED THAT SUPPLYING ADVICE ON INDIVIDUAL GROWTH POINTS WAS UNHELPFUL AND ASKED THAT THIS FUNCTION BE DEPRECATED. IT IS ANTICIPATED THAT ONCE THE API IS ABLE TO RECEIVE AN ARRAY OF DATAPOINTS, THEN INDIVIDUALISED ADVICE CAN BE CONSIDERED BUT THERE IS LARGE PIECE OF WORK STILL TO BE DONE TO VALIDATE IT.
+
 ## Background
-As part of commissioning for the RCPCH charts, a stipulation was made that the API not only provide accurate and reliable SDS and centiles for measurements of children, but some contextual advice be also reported, tailored to the user. This is contraversial, as interpretation of growth data can only be made understanding a child's context and their growth history. Adevice therefore is reported as follows, as MVP (minimum viable product) currently does not consider multiple data points at the current time, though plans are in place in future for this to be possible.
+As part of commissioning for the RCPCH charts, a stipulation was made that the API not only provide accurate and reliable SDS and centiles for measurements of children, but some contextual advice be also reported, tailored to the user. This is contraversial, as interpretation of growth data can only be made understanding a child's context and their growth history. Advice therefore is reported as follows, as MVP (minimum viable product) currently does not consider multiple data points at the current time, though plans are in place in future for this to be possible.
 
 #### 0.4th Centile
 ##### ___Height/Length___
