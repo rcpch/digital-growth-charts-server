@@ -1,4 +1,3 @@
-
 ## How to contribute
 
 * Fork the repository to your own GitHub account
