@@ -13,7 +13,7 @@ def generate_fictional_data(
 
     return rcpchgrowth.create_fictional_child(
         sex=sex,
-        measurement_type=measurement_requested,
+        measurement_method=measurement_requested,
         requested_sds=starting_sds,
         number_of_measurements=number_of_measurements,
         starting_decimal_age=starting_age,

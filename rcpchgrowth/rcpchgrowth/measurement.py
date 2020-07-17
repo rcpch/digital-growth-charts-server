@@ -35,7 +35,7 @@ class Measurement:
         BUT THE STRINGS BEEN COMMENTED OUT IN THE FINAL JSON
         """
 
-        self.measurement_type = measurement_type.measurement_type
+        self.measurement_method = measurement_type.measurement_method
         self.observation_value = measurement_type.observation_value
 
         if gestation_weeks < 37 and gestation_weeks >= 23:
@@ -46,7 +46,7 @@ class Measurement:
         ## the age_object receives birth_data and measurement_dates objects
         ages_object = self.__calculate_ages(sex=sex, birth_date=birth_date, observation_date=observation_date, gestation_weeks=gestation_weeks, gestation_days=gestation_days)
         ## the calculate_measurements_object receives the child_observation_value and measurement_calculated_values objects
-        calculate_measurements_object = self.sds_and_centile_for_measurement_type(sex=sex, age=ages_object['measurement_dates']['corrected_decimal_age'], measurement_type=self.measurement_type, observation_value=self.observation_value, born_preterm=born_preterm, default_to_youngest_reference = default_to_youngest_reference)
+        calculate_measurements_object = self.sds_and_centile_for_measurement_method(sex=sex, age=ages_object['measurement_dates']['corrected_decimal_age'], measurement_method=self.measurement_method, observation_value=self.observation_value, born_preterm=born_preterm, default_to_youngest_reference = default_to_youngest_reference)
         
         self.measurement = {
             'birth_data': ages_object['birth_data'],
@@ -59,20 +59,20 @@ class Measurement:
     These are 2 public class methods
     """
     
-    def sds_and_centile_for_measurement_type(self, sex: str, age: float, measurement_type: str, observation_value: float, born_preterm: bool = False, default_to_youngest_reference: bool=False):
+    def sds_and_centile_for_measurement_method(self, sex: str, age: float, measurement_method: str, observation_value: float, born_preterm: bool = False, default_to_youngest_reference: bool=False):
         ## returns sds for given measurement
         ## bmi must be supplied precalculated
 
-        if measurement_type == 'height':
+        if measurement_method == 'height':
             self.return_measurement_object = self.__calculate_height_sds_centile(sex=sex, age=age, height=observation_value, born_preterm=born_preterm, default_to_youngest_reference=default_to_youngest_reference)
-        elif  measurement_type == 'weight':
+        elif  measurement_method == 'weight':
             self.return_measurement_object = self.__calculate_weight_sds_centile(sex=sex, age=age, weight=observation_value, born_preterm=born_preterm, default_to_youngest_reference=default_to_youngest_reference)
-        elif measurement_type == 'bmi':
+        elif measurement_method == 'bmi':
             self.return_measurement_object = self.__calculate_bmi_sds_centile(sex=sex, age=age, bmi=observation_value, born_preterm=born_preterm, default_to_youngest_reference=default_to_youngest_reference)
-        elif measurement_type == 'ofc':
+        elif measurement_method == 'ofc':
             self.return_measurement_object = self.__calculate_ofc_sds_centile(sex=sex, age=age, ofc=observation_value, born_preterm=born_preterm, default_to_youngest_reference=default_to_youngest_reference)
         else:
-            raise ValueError('Only the following measurement types are accepted: height, weight, bmi or ofc')
+            raise ValueError('Only the following measurement methods are accepted: height, weight, bmi or ofc')
         return self.return_measurement_object
 
     """
@@ -153,7 +153,7 @@ class Measurement:
                 clinician_height_comment = comment["clinician_comment"]
                 lay_height_comment = comment["lay_comment"]
             
-            return_measurement_object = self.__create_measurement_object(measurement_type='height', observation_value=height, sds_value=height_sds, centile_value=height_centile, clinician_comment=clinician_height_comment, lay_comment=lay_height_comment)
+            return_measurement_object = self.__create_measurement_object(measurement_method='height', observation_value=height, sds_value=height_sds, centile_value=height_centile, clinician_comment=clinician_height_comment, lay_comment=lay_height_comment)
             return return_measurement_object
         else:
             raise LookupError("Unable to return SDS or centile values for height")
@@ -166,7 +166,7 @@ class Measurement:
             clinician_weight_comment = comment['clinician_comment']
             lay_weight_comment = comment['lay_comment']
             ## create return object
-            return_measurement_object = self.__create_measurement_object(measurement_type='weight', observation_value=weight, sds_value=weight_sds, centile_value=weight_centile, clinician_comment=clinician_weight_comment, lay_comment=lay_weight_comment)
+            return_measurement_object = self.__create_measurement_object(measurement_method='weight', observation_value=weight, sds_value=weight_sds, centile_value=weight_centile, clinician_comment=clinician_weight_comment, lay_comment=lay_weight_comment)
             return return_measurement_object
         else:
             raise LookupError("Unable to return SDS or centile values for weight.")
@@ -188,7 +188,7 @@ class Measurement:
                 clinician_bmi_comment = comment['clinician_comment']
                 lay_bmi_comment = comment['lay_comment']
                 ## create return object
-                return_measurement_object = self.__create_measurement_object(measurement_type='bmi', observation_value=bmi, sds_value=bmi_sds, centile_value=bmi_centile, clinician_comment=clinician_bmi_comment, lay_comment=lay_bmi_comment)
+                return_measurement_object = self.__create_measurement_object(measurement_method='bmi', observation_value=bmi, sds_value=bmi_sds, centile_value=bmi_centile, clinician_comment=clinician_bmi_comment, lay_comment=lay_bmi_comment)
             else:
                 bmi_sds = None
                 bmi_centile = None
@@ -196,7 +196,7 @@ class Measurement:
                 clinician_bmi_comment = comment['clinician_comment']
                 lay_bmi_comment = comment['lay_comment']
                 ## create return object
-                return_measurement_object = self.__create_measurement_object(measurement_type='bmi', observation_value=bmi, sds_value=bmi_sds, centile_value=bmi_centile, clinician_comment=clinician_bmi_comment, lay_comment=lay_bmi_comment)
+                return_measurement_object = self.__create_measurement_object(measurement_method='bmi', observation_value=bmi, sds_value=bmi_sds, centile_value=bmi_centile, clinician_comment=clinician_bmi_comment, lay_comment=lay_bmi_comment)
             return return_measurement_object
         elif bmi and bmi > 0.0:
             if age >= FORTY_TWO_WEEKS_GESTATION: # BMI data not present < 42 weeks gestation
@@ -206,7 +206,7 @@ class Measurement:
                 clinician_bmi_comment = comment['clinician_comment']
                 lay_bmi_comment = comment['lay_comment']
                 ## create return object
-                return_measurement_object = self.__create_measurement_object(measurement_type='bmi', observation_value=bmi, sds_value=bmi_sds, centile_value=bmi_centile, clinician_comment=clinician_bmi_comment, lay_comment=lay_bmi_comment)
+                return_measurement_object = self.__create_measurement_object(measurement_method='bmi', observation_value=bmi, sds_value=bmi_sds, centile_value=bmi_centile, clinician_comment=clinician_bmi_comment, lay_comment=lay_bmi_comment)
             else:
                 bmi_centile = None
                 bmi_sds = None
@@ -214,7 +214,7 @@ class Measurement:
                 clinician_bmi_comment = comment['clinician_comment']
                 lay_bmi_comment = comment['lay_comment']
                 ## create return object
-                return_measurement_object = self.__create_measurement_object(measurement_type='bmi', observation_value=bmi, sds_value=bmi_sds, centile_value=bmi_centile, clinician_comment=clinician_bmi_comment, lay_comment=lay_bmi_comment)
+                return_measurement_object = self.__create_measurement_object(measurement_method='bmi', observation_value=bmi, sds_value=bmi_sds, centile_value=bmi_centile, clinician_comment=clinician_bmi_comment, lay_comment=lay_bmi_comment)
             return return_measurement_object
         else:
             raise LookupError('Unable to return SDS or centile values for BMI')
@@ -227,7 +227,7 @@ class Measurement:
                 comment = interpret( measurement='ofc', centile=ofc_centile, age=age, sex=sex)
                 clinician_ofc_comment = comment['clinician_comment']
                 lay_ofc_comment = comment['lay_comment']
-                return_measurement_object = self.__create_measurement_object(measurement_type='ofc', observation_value=ofc, sds_value=ofc_sds, centile_value=ofc_centile, clinician_comment=clinician_ofc_comment, lay_comment=lay_ofc_comment)
+                return_measurement_object = self.__create_measurement_object(measurement_method='ofc', observation_value=ofc, sds_value=ofc_sds, centile_value=ofc_centile, clinician_comment=clinician_ofc_comment, lay_comment=lay_ofc_comment)
             else:
                 ofc_sds = None
                 ofc_centile = None
@@ -235,27 +235,27 @@ class Measurement:
                 clinician_ofc_comment = comment['clinician_comment']
                 lay_ofc_comment = comment['lay_comment']
                 ## create return object
-                return_measurement_object = self.__create_measurement_object(measurement_type='ofc', observation_value=ofc, sds_value=ofc_sds, centile_value=ofc_centile, clinician_comment=clinician_ofc_comment, lay_comment=lay_ofc_comment)
+                return_measurement_object = self.__create_measurement_object(measurement_method='ofc', observation_value=ofc, sds_value=ofc_sds, centile_value=ofc_centile, clinician_comment=clinician_ofc_comment, lay_comment=lay_ofc_comment)
             return return_measurement_object
         else:
             raise LookupError('Unable to return SDS or centile values for head circumference')
 
-    def __create_measurement_object(self, measurement_type: str, observation_value: float, sds_value: float, centile_value: float, clinician_comment: str, lay_comment: str):
+    def __create_measurement_object(self, measurement_method: str, observation_value: float, sds_value: float, centile_value: float, clinician_comment: str, lay_comment: str):
         """
         private class method
         This is the end step, having calculated dates, SDS/Centiles and selected appropriate clinical advice,
-        to then create a bespoke json Measurement object with values relevant only to the measurement_type requested
-        @params: measurement_type: string accepting only 'height', 'weight', 'bmi', 'ofc' lowercase only
+        to then create a bespoke json Measurement object with values relevant only to the measurement_method requested
+        @params: measurement_method: string accepting only 'height', 'weight', 'bmi', 'ofc' lowercase only
         """
 
         # Measurement object is made up of 4 JSON elements: "birth_data", "measurement_dates",
         #  "child_observation_value" and "measurement_calculated_values"
         # All Measurement objects return the "birth_data" and "measurement_dates" elements
-        # Only those calculations relevant to the measurement_type requested populate the final JSON 
+        # Only those calculations relevant to the measurement_method requested populate the final JSON 
         # object.
 
         measurement_calculated_values = {
-                                            "measurement_type": measurement_type,
+                                            "measurement_method": measurement_method,
                                             "sds": sds_value, 
                                             "centile": centile_value, 
                                             # "clinician_comment": clinician_comment,
@@ -263,7 +263,7 @@ class Measurement:
                                         }
         
         child_observation_value = {
-                                            "measurement_type": measurement_type,
+                                            "measurement_method": measurement_method,
                                             "measurement_value": observation_value
                                       }
 

@@ -39,7 +39,7 @@ def velocity(parameter: str, measurements_array):
     else:
         for measurement in measurements_array:
             if measurement:
-                if parameter == measurement['child_observation_value']['measurement_type']:
+                if parameter == measurement['child_observation_value']['measurement_method']:
                     parameter_list.append(measurement)
         if len(parameter_list) < 2:
             return f"There are not enough {parameter} values to calculate a velocity."
@@ -67,7 +67,7 @@ def acceleration(parameter: str, measurements_array):
     else:
         for measurement in measurements_array:
             if measurement:
-                if parameter == measurement['child_observation_value']['measurement_type']:
+                if parameter == measurement['child_observation_value']['measurement_method']:
                     parameter_list.append(measurement)
         if len(parameter_list) < 3:
             return f"There are not enough {parameter} values to calculate acceleration."
@@ -203,13 +203,13 @@ def r_for_age(z1, z2, r):
     conditional_weight_gain = (z2 - (z1 * r)) / math.sqrt(1 - pow(r, 2))
     return conditional_weight_gain
 
-def create_fictional_child(sex: str, measurement_type: str, requested_sds: float, number_of_measurements: int, starting_decimal_age: float, measurement_interval_value: int, measurement_interval_type: str, gestation_weeks = 0, gestation_days = 0, drift: bool = False, drift_sds_range: float = 0.0):
+def create_fictional_child(sex: str, measurement_method: str, requested_sds: float, number_of_measurements: int, starting_decimal_age: float, measurement_interval_value: int, measurement_interval_type: str, gestation_weeks = 0, gestation_days = 0, drift: bool = False, drift_sds_range: float = 0.0):
     """
     this function will ultimately become a class method
     It's purpose is to generate an array of Measurement objects that mimic the growth of a child
     Mandatory params:
     sex: a string ['male', 'female'] (lower case)
-    measurement_type: a string ['height', 'weight', 'ofc', 'bmi'] (lower case)
+    measurement_method: a string ['height', 'weight', 'ofc', 'bmi'] (lower case)
     requested_sds: float value relating to start value of array
     number_of_measurements: integer - number of growth points requested
     starting_decimal_age: float - age from which growth data should start

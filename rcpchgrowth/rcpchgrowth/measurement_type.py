@@ -2,16 +2,16 @@ from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 
 class Measurement_Type:
 
-    def __init__(self, measurement_type: str, height: float = None, weight: float = None, bmi: float = None, ofc: float = None, measurement_value: float = None):
+    def __init__(self, measurement_method: str, height: float = None, weight: float = None, bmi: float = None, ofc: float = None, measurement_value: float = None):
         
-        ## Measurement_Type class initalizes with a measurement type (height, weight, bmi or ofc)
-        ## It can also accept a measurement_value if the measurement_type is specified
-        ## and has two attribute measurement_type and observation_value
+        ## Measurement_Type class initalizes with a measurement method (height, weight, bmi or ofc)
+        ## It can also accept a measurement_value if the measurement_method is specified
+        ## and has two attribute measurement_method and observation_value
 
-        self.measurement_type: str = measurement_type
+        self.measurement_method: str = measurement_method
         self.observation_value: float = None
 
-        if measurement_type == 'bmi':
+        if measurement_method == 'bmi':
             if height is None and measurement_value is None:
                 raise ValueError('Missing value for height. Cannot calculate a BMI.')
             elif weight is None and measurement_value is None:
@@ -27,9 +27,9 @@ class Measurement_Type:
             elif measurement_value is not None:
                 self.observation_value = measurement_value
             else:
-                raise ValueError('Missing or incorrect measurement_type passed. Height in cm and weight in kg are required.')
+                raise ValueError('Missing or incorrect measurement_method passed. Height in cm and weight in kg are required.')
 
-        elif measurement_type == 'height':
+        elif measurement_method == 'height':
             if height is None and measurement_value is None:
                 raise ValueError('Missing value for height. Please pass a height in cm.')
             elif height is not None and height < 2:
@@ -43,9 +43,9 @@ class Measurement_Type:
             elif measurement_value is not None:
                 self.observation_value = measurement_value
             else:
-                raise ValueError('Missing or incorrect measurement_type passed. Height in cm is required.')
+                raise ValueError('Missing or incorrect measurement_method passed. Height in cm is required.')
 
-        elif measurement_type == 'weight':
+        elif measurement_method == 'weight':
             if weight is None and measurement_value is None:
                 raise ValueError('Missing value for weight. Please pass a weight in kilograms.')
             elif weight is not None and weight < 0.20:
@@ -61,9 +61,9 @@ class Measurement_Type:
             elif measurement_value is not None:
                 self.observation_value = measurement_value
             else:
-                raise ValueError('Missing or incorrect measurement_type passed. Weight in kg is required.')
+                raise ValueError('Missing or incorrect measurement_method passed. Weight in kg is required.')
 
-        elif measurement_type == 'ofc':
+        elif measurement_method == 'ofc':
             if ofc is None and measurement_value is None:
                 raise ValueError('No value for head circumference. Please pass a head circumference in cm.')
             elif ofc is not None and ofc < 5.0:
@@ -77,4 +77,4 @@ class Measurement_Type:
             elif measurement_value is not None:
                 self.observation_value = measurement_value
             else:
-                raise ValueError('Missing or incorrect measurement_type passed. Head circumference in cm is required.')
+                raise ValueError('Missing or incorrect measurement_method passed. Head circumference in cm is required.')

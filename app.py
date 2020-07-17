@@ -69,7 +69,7 @@ def api_json_calculations():
     )
     return jsonify(response)
 
-# JSON CALCULATION OF SINGLE MEASUREMENT_TYPE ('height', 'weight', 'bmi', 'ofc'): Note that BMI must be precalculated for this function
+# JSON CALCULATION OF SINGLE MEASUREMENT_METHOD ('height', 'weight', 'bmi', 'ofc'): Note that BMI must be precalculated for this function
 @app.route("/api/v1/json/calculation", methods=["GET"])
 def api_json_calculation():
     

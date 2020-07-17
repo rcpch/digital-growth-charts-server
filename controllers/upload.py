@@ -18,20 +18,20 @@ def import_excel_sheet(file_path: str, can_delete: bool):
         remove(file_path)
 
     ## check all columns present
-    expected_column_names = ['birth_date', 'observation_date', 'gestation_weeks','gestation_days', 'sex', 'measurement_type', 'measurement_value']
-    # essential_column_names = ['birth_date', 'sex', 'measurement_type', 'measurement_value']
+    expected_column_names = ['birth_date', 'observation_date', 'gestation_weeks','gestation_days', 'sex', 'measurement_method', 'measurement_value']
+    # essential_column_names = ['birth_date', 'sex', 'measurement_method', 'measurement_value']
     columns = data_frame.columns.ravel().tolist()
     for column in columns:
         ## flag if column_names are missing or extra
         if column not in expected_column_names: 
-            raise LookupError('Please include only the headings: birth_date, observation_date, gestation_days, sex, measurement_type, measurement_value')
+            raise LookupError('Please include only the headings: birth_date, observation_date, gestation_days, sex, measurement_method, measurement_value')
     if len(columns) != len(expected_column_names):
-        raise LookupError('Please include ALL the headings (even if columns left blank): birth_date, observation_date, gestation_days, sex, measurement_type, measurement_value')
+        raise LookupError('Please include ALL the headings (even if columns left blank): birth_date, observation_date, gestation_days, sex, measurement_method, measurement_value')
 
     ## check no missing data in essential columns
-    if(pd.isnull(data_frame['birth_date']).values.any() or pd.isnull(data_frame['observation_date']).values.any() or pd.isnull(data_frame['sex']).values.any() or pd.isnull(data_frame['measurement_type']).values.any() or pd.isnull(data_frame['measurement_value']).values.any()):
+    if(pd.isnull(data_frame['birth_date']).values.any() or pd.isnull(data_frame['observation_date']).values.any() or pd.isnull(data_frame['sex']).values.any() or pd.isnull(data_frame['measurement_method']).values.any() or pd.isnull(data_frame['measurement_value']).values.any()):
         remove(file_path)
-        raise ValueError('birth_date, sex, measurement_type and measurement_value are all essential data fields and cannot be blank.')
+        raise ValueError('birth_date, sex, measurement_method and measurement_value are all essential data fields and cannot be blank.')
 
     ## check columns data-type correct
     data_frame['gestation_days'] = data_frame['gestation_days'].fillna(0).astype(int) 
@@ -40,19 +40,19 @@ def import_excel_sheet(file_path: str, can_delete: bool):
     data_frame['birth_date']=data_frame['birth_date'].astype('datetime64[ns]')
     data_frame['observation_date']=data_frame['observation_date'].astype('datetime64[ns]')
     # data_frame['estimated_date_delivery']= data_frame['estimated_date_delivery'].astype('datetime64[ns]')
-    data_frame['measurement_type']=data_frame['measurement_type'].astype(str)
-    data_frame['measurement_type']=data_frame.apply(lambda  row: row['measurement_type'].lower(), axis=1) ## ensure sex and measurement_type are lowercase
+    data_frame['measurement_method']=data_frame['measurement_method'].astype(str)
+    data_frame['measurement_method']=data_frame.apply(lambda  row: row['measurement_method'].lower(), axis=1) ## ensure sex and measurement_method are lowercase
     data_frame['sex']=data_frame['sex'].astype(str)
-    data_frame['sex']=data_frame.apply(lambda  row: row['sex'].lower(), axis=1) ## ensure sex and measurement_type are lowercase
+    data_frame['sex']=data_frame.apply(lambda  row: row['sex'].lower(), axis=1) ## ensure sex and measurement_method are lowercase
     
     ## add the calculated columns (SDS and Centile, corrected and chronological decimal age)
     data_frame['corrected_decimal_age']=data_frame.apply(lambda row: rcpchgrowth.corrected_decimal_age(row['birth_date'], row['observation_date'], row['gestation_weeks'], row['gestation_days']), axis=1)
     data_frame['chronological_decimal_age']=data_frame.apply(lambda row: rcpchgrowth.chronological_decimal_age(row['birth_date'], row['observation_date']), axis=1)
     data_frame['estimated_date_delivery']=data_frame.apply(lambda row: rcpchgrowth.estimated_date_delivery(row['birth_date'], row['gestation_weeks'], row['gestation_days']), axis=1)
-    data_frame['sds']=data_frame.apply(lambda row: sds_if_parameters(row['corrected_decimal_age'], row['measurement_type'], row['measurement_value'], row['sex']), axis=1)
+    data_frame['sds']=data_frame.apply(lambda row: sds_if_parameters(row['corrected_decimal_age'], row['measurement_method'], row['measurement_value'], row['sex']), axis=1)
     data_frame['centile']=data_frame.apply(lambda row: rcpchgrowth.centile(row['sds']), axis=1)
-    data_frame['height'] = data_frame.apply(lambda row: value_for_measurement('height', row['measurement_type'], row['measurement_value']), axis=1)
-    data_frame['weight'] = data_frame.apply(lambda row: value_for_measurement('weight', row['measurement_type'], row['measurement_value']), axis=1)
+    data_frame['height'] = data_frame.apply(lambda row: value_for_measurement('height', row['measurement_method'], row['measurement_value']), axis=1)
+    data_frame['weight'] = data_frame.apply(lambda row: value_for_measurement('weight', row['measurement_method'], row['measurement_value']), axis=1)
     same_date_data_frame = data_frame[data_frame.duplicated(['birth_date', 'observation_date'], keep=False)]
     height = 0.0
     weight = 0.0
@@ -79,7 +79,7 @@ def import_excel_sheet(file_path: str, can_delete: bool):
             else:
                 bmi_sds = None
                 bmi_centile = None
-            new_row = {'birth_date': height_birth_date, 'observation_date': height_date, 'gestation_weeks': row['gestation_weeks'], 'gestation_days': row['gestation_days'], 'estimated_date_delivery': row['estimated_date_delivery'], 'chronological_decimal_age': row['chronological_decimal_age'], 'corrected_decimal_age': row['corrected_decimal_age'], 'sex': row['sex'], 'measurement_type': 'bmi', 'measurement_value': bmi, 'sds': bmi_sds, 'centile': bmi_centile, 'height': None, 'weight': None}
+            new_row = {'birth_date': height_birth_date, 'observation_date': height_date, 'gestation_weeks': row['gestation_weeks'], 'gestation_days': row['gestation_days'], 'estimated_date_delivery': row['estimated_date_delivery'], 'chronological_decimal_age': row['chronological_decimal_age'], 'corrected_decimal_age': row['corrected_decimal_age'], 'sex': row['sex'], 'measurement_method': 'bmi', 'measurement_value': bmi, 'sds': bmi_sds, 'centile': bmi_centile, 'height': None, 'weight': None}
             extra_rows.append(new_row)
 
     if len(extra_rows) > 0:
@@ -103,10 +103,10 @@ def value_for_measurement(measurement_requested, measurement_parsed, value):
     else:
         return None
 
-def sds_if_parameters(decimal_age, measurement_type, measurement_value, sex):
-    if decimal_age and measurement_type and measurement_value and sex:
+def sds_if_parameters(decimal_age, measurement_method, measurement_value, sex):
+    if decimal_age and measurement_method and measurement_value and sex:
         try:
-            return rcpchgrowth.sds(decimal_age, measurement_type, measurement_value, sex)
+            return rcpchgrowth.sds(decimal_age, measurement_method, measurement_value, sex)
         except:
             print('could not calculate this value')
             return None
@@ -124,7 +124,7 @@ def prepare_data_as_array_of_measurement_objects(uploaded_data):
         gestation_days = observation['gestation_days']
         measurement_value = observation['measurement_value']
         
-        measurement_type_object = rcpchgrowth.Measurement_Type(measurement_type=observation['measurement_type'], measurement_value=measurement_value)
+        measurement_type_object = rcpchgrowth.Measurement_Type(measurement_method=observation['measurement_method'], measurement_value=measurement_value)
         measurement_object = rcpchgrowth.Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_type=measurement_type_object,gestation_weeks=gestation_weeks, gestation_days=gestation_days, default_to_youngest_reference=False)
         array_of_measurement_objects.append(measurement_object.measurement)
 
@@ -155,7 +155,7 @@ SHOULD ONLY RETURN ONE CALCULATION PER RECORD
         },
         "child_observation_value": {  
             "measurement_value": 60.7,
-            "measurement_type": 'height'
+            "measurement_otype": 'height'
         },
         "measurement_calculated_values": {
             "height_sds": 1.20,

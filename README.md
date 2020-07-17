@@ -150,7 +150,7 @@ Therefore height, weight and head circumference performed on the same day report
         },
         "child_measurement_value": {  
             "observation_value": 60.7,
-            "measurement_type": "height",
+            "measurement_method": "height",
         },
         "measurement_calculated_values": {
             "height_sds": 1.20,

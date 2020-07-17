@@ -155,25 +155,25 @@ def create_data_plots(child_results_array):
     for count, child_result in enumerate(child_results_array):
         if(child_result):
             data_point = {}
-            if(child_result["child_observation_value"]["measurement_type"] == "height"):
+            if(child_result["child_observation_value"]["measurement_method"] == "height"):
                 data_point = {
                     "x": child_result["measurement_dates"]["chronological_decimal_age"], 
                     "y": child_result["child_observation_value"]["measurement_value"]
                 }
                 child_height_data.append(data_point)
-            elif(child_result["child_observation_value"]["measurement_type"] == "weight"):
+            elif(child_result["child_observation_value"]["measurement_method"] == "weight"):
                 data_point = {
                     "x": child_result["measurement_dates"]["chronological_decimal_age"], 
                     "y": child_result["child_observation_value"]["measurement_value"]
                 }
                 child_weight_data.append(data_point)
-            elif(child_result["child_observation_value"]["measurement_type"] == "bmi"):
+            elif(child_result["child_observation_value"]["measurement_method"] == "bmi"):
                 data_point = {
                     "x": child_result["measurement_dates"]["chronological_decimal_age"], 
                     "y": child_result["child_observation_value"]["measurement_value"]
                 }
                 child_bmi_data.append(data_point)
-            elif(child_result["child_observation_value"]["measurement_type"] == "ofc"):
+            elif(child_result["child_observation_value"]["measurement_method"] == "ofc"):
                 data_point = {
                     "x": child_result["measurement_dates"]["chronological_decimal_age"], 
                     "y": child_result["child_observation_value"]["measurement_value"]

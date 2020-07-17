@@ -9,9 +9,9 @@ clinico-statistical centiles gotchas that we've had to work through.
 
 ## Gold Standard
 
-The current gold standard for LMS calculation is (LMS Growth)[https://www.healthforallchildren.com/shop-base/shop/software/lmsgrowth/], an Excel add-in written in visual basic by Huiqi Pan and Tim Cole (copyright Medical Research Council 2002–10).
+The current 'gold standard' for LMS calculation is (LMS Growth)[https://www.healthforallchildren.com/shop-base/shop/software/lmsgrowth/], an Excel add-in written in visual basic by Huiqi Pan and Tim Cole (copyright Medical Research Council 2002–10).
 
-Results from RCPCHGrowth agree with LMS Growth to 3 dp, though beyond this there are discrepancies. Part of the reason for this relates to the decimal age calculation - in LMS Growth months and weeks are handled differently to RCPCHGrowth which uses the python date-utils library to calculate differences between dates.
+Results from RCPCHGrowth agree with LMS Growth to 3 decimal places, though beyond this there are discrepancies. Part of the reason for this relates to the decimal age calculation - in LMS Growth months and weeks are handled differently to RCPCHGrowth which uses the python date-utils library to calculate differences between dates.
 
 ### Interpolation
 
