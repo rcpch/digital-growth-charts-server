@@ -1,9 +1,9 @@
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6b1137d60067b8aedfea#?env%5Blocalhost%3A5000-testing%5D=W3sia2V5IjoiYmFzZVVybCIsInZhbHVlIjoibG9jYWxob3N0OjUwMDAiLCJlbmFibGVkIjp0cnVlfV0=)
 ![Deployment Status - rcpch-dgc-server-alpha](https://github.com/rcpch/digital-growth-charts-server/workflows/Build%20and%20deploy%20Python%20app%20to%20Azure%20Web%20App%20-%20rcpch-dgc-server-alpha/badge.svg?branch=alpha)
 
-![RCPCH Logo](static/rcpch-logo.png)
-![Python Logo](static/python-logo.png)
-![Flask Logo](static/flask-logo.png)
+<p align="center">
+  <img width="200" src="static/rcpch-logo.png">
+</p>
 
 # RCPCH Digital Growth Charts API Server
 A Python/Flask-based API server which calculates Digital Growth Chart parameters and other growth related data.
