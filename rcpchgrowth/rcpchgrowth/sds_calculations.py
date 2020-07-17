@@ -67,7 +67,7 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str, defaul
      - There is only BMI reference data from 2 weeks of age to aged 20y
      - Head circumference reference data is available from 23 weeks gestation to 17y in girls and 18y in boys
     """
-
+    
     if age < TWENTY_FOUR_WEEKS_GESTATION or age > 20:
         # extremes of chart
         return None
@@ -100,6 +100,7 @@ def sds(age: float, measurement: str, measurement_value: float, sex: str, defaul
     s = lms ['s']
 
     sds = z_score(l, m, s, measurement_value)
+    
     return sds
 
 def centile(z_score: float):
