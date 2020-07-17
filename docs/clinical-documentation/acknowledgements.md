@@ -1,4 +1,4 @@
-# Acknowledgements WIP
+# Acknowledgements
 
 ## Project Board
 

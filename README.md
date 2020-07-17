@@ -1,16 +1,21 @@
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6b1137d60067b8aedfea#?env%5Blocalhost%3A5000-testing%5D=W3sia2V5IjoiYmFzZVVybCIsInZhbHVlIjoibG9jYWxob3N0OjUwMDAiLCJlbmFibGVkIjp0cnVlfV0=)
+![Deployment Status - rcpch-dgc-server-alpha](https://github.com/rcpch/digital-growth-charts-server/workflows/Build%20and%20deploy%20Python%20app%20to%20Azure%20Web%20App%20-%20rcpch-dgc-server-alpha/badge.svg?branch=alpha)
 
-![RCPCH Logo](https://www.rcpch.ac.uk/themes/rcpch/images/logo-desktop.svg)
-# CALCULATIONS FOR GROWTH CHARTS USING UK-WHO GROWTH REFERENCES 
-Marcus Baw, Helen Bedford, Simon Chapman, Tim Cole, Mary Fewtrell, Victoria Jackson, Liz Marder, Rachel McKeown, Jonathan Miall, Andy Palmer, Charlotte Weldon, Charlotte Wright, Magdalena Umerska.
+![RCPCH Logo](static/rcpch-logo.png)
+![Python Logo](static/python-logo.png)
+![Flask Logo](static/flask-logo.png)
+
+# RCPCH Digital Growth Charts API Server
+A Python/Flask-based API server which calculates Digital Growth Chart parameters and other growth related data.
+
+See our other repositories for example clients which implement RCPCH developed standards for the display of Growth Charts to users.
+
+## The UK RCPCH Growth Chart Application Program Interface (API) Project (RCPCHGrowth)
+This is the first national effort to produce validated and reliable SDS and Centile scores from UK Children's growth data. The project team was commissioned by NHS England to produce, in the first instance, an API (application program interface) to generate reliable results for growth data from children 1 y and below. The project team began work in May 2020.
 
 ## Clinical Aspects
 ### Introduction
-#### The Charts
 The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any child born after that date should be plotted on a UK-WHO Growth chart.  Children born before May 11th 2009 are plotted on British 1990 (UK90) charts and subsequent measurements must be plotted using those charts. There should be no switch over of existing children to the new UK-WHO Charts.  After age 4 we revert to using UK90 charts. The source data for these charts (UK90 and WHO 2006) together define the UK-WHO growth charts, containing LMS values by age.  These data are freely available and can be used without charge as long as their source is acknowledged in any publications or products using them. Users may not claim any IP rights over them, derive financial gain from supplying the data to others, seek to restrict use of the data by others or use them for the purposes of advertising or promoting other products. Notwithstanding this limited grant of rights, the original copyright notices must continue to be reproduced in any copies of these materials.
-
-#### The UK RCPCH Growth Chart Application Program Interface (API) Project (RCPCHGrowth)
-This is the first national effort to produce validated and reliable SDS and Centile scores from UK Children's growth data. The project team was commissioned by NHS England to produce, in the first instance, an API (application program interface) to generate reliable results for growth data from children 1 y and below. The project team began work in May 2020.
 
 ### The LMS Method
 It is now common practice to express child growth status in the form of SD scores. The LMS method provides a way of obtaining normalized growth centile standards which simplifies this assessment, and which deals quite generally with skewness which may be present in the distribution of the measurement (eg height, weight, circumferences or skinfolds). It assumes that the data can be normalized by using a power transformation, which stretches one tail of the distribution and shrinks the other, removing the skewness. The optimal power to obtain normality is calculated for each of a series of age groups and the trend summarized by a smooth (L) curve. Trends in the mean (M) and coefficient of variation (S) are similarly smoothed. The resulting L, M and S curves contain the information to draw any centile curve, and to convert measurements (even extreme values) into exact SD scores.
