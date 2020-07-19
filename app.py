@@ -133,6 +133,9 @@ def chart_data():
     
     unique_child = request.args["unique_child"]
     # unique_child = request.args["unique_child"]
+
+    # born preterm flag to pass to charts
+    born_preterm = (results[0]["birth_data"]["gestation_weeks"]!= 0 and results[0]["birth_data"]["gestation_weeks"] < 37)
     
     if unique_child == "true":
         #data are serial data points for a single child
@@ -150,7 +153,7 @@ def chart_data():
         sex = results[0]["birth_data"]["sex"]
         
     # Create Centile Charts
-    centiles = controllers.create_centile_values(sex)
+    centiles = controllers.create_centile_values(sex, born_preterm=born_preterm)
     
     return jsonify({
         "sex": sex,
