@@ -137,7 +137,7 @@ def percentage_median_bmi( age: float, actual_bmi: float, sex: str)->float:
     percent_median_bmi = (actual_bmi/m)*100.0
     return percent_median_bmi
 
-def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  decimal_age: float, default_to_youngest_reference: bool = False) -> float:
+def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  decimal_age: float, default_to_youngest_reference: bool = False, born_preterm = False) -> float:
     """
     Public method
     Returns the measurement from a given SDS.
@@ -148,6 +148,7 @@ def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  de
         sex (a standard string) ['male' or 'female']
         default_to_youngest_reference (boolean): in the event of an exact age match at the threshold of a chart,
             where it is possible to choose 2 references, default will pick the youngest reference (optional)
+        born_preterm: a boolean flag to track whether to use UK90 premature data or UK90-WHO term data for 37-42 weeks
 
     Centile to SDS Conversion for Chart lines (2/3 of an SDS)
     0.4th -2.67
@@ -163,7 +164,14 @@ def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  de
 
     measurement_value = 0.0
     try:
-        lms= get_lms(decimal_age, measurement, sex, default_to_youngest_reference)
+        if(decimal_age < FORTY_TWO_WEEKS_GESTATION and born_preterm):
+            lms= get_lms(decimal_age, measurement, sex, default_to_youngest_reference)
+        elif(decimal_age < FORTY_TWO_WEEKS_GESTATION and born_preterm==False):
+            lms=get_term_lms(measurement=measurement, sex=sex)
+        else:
+            # the UK90 prematurity data file is continuous to 20y and confusingly named. Any children caught here
+            # will be post term and will be calculated correctly on WHO data if < 4 or UK90 if >= 4y
+            lms= get_lms(decimal_age, measurement, sex, default_to_youngest_reference)
     except:
         raise
     else:
