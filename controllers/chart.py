@@ -61,9 +61,9 @@ def create_centile_values(sex: str, born_preterm=False):
                     if index < 2: # there is no height data below 25 weeks
                         length_for_z = None
                     else:
-                        length_for_z = rcpchgrowth.measurement_from_sds(measurement="height", requested_sds=sds_value, sex=sex, decimal_age=age, default_to_youngest_reference=False, born_preterm=born_preterm)
-                    weight_for_z = rcpchgrowth.measurement_from_sds(measurement="weight", requested_sds=sds_value, sex=sex, decimal_age=age, default_to_youngest_reference=False, born_preterm=born_preterm)
-                    ofc_for_z = rcpchgrowth.measurement_from_sds("ofc", sds_value, sex, age, True, born_preterm=born_preterm)
+                        length_for_z = rcpchgrowth.measurement_from_sds(measurement="height", requested_sds=sds_value, sex=sex, decimal_age=age, default_to_youngest_reference=True, born_preterm=born_preterm)
+                    weight_for_z = rcpchgrowth.measurement_from_sds(measurement="weight", requested_sds=sds_value, sex=sex, decimal_age=age, default_to_youngest_reference=True, born_preterm=born_preterm)
+                    ofc_for_z = rcpchgrowth.measurement_from_sds(measurement="ofc", requested_sds=sds_value, sex=sex, decimal_age=age, default_to_youngest_reference=True, born_preterm=born_preterm)
                     bmi_for_z = None # there is no UK90 preterm BMI data
                 else:
                     ## centile curves are unwanted in term babies up to 2 weeks
