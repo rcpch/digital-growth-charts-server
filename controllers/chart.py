@@ -65,17 +65,22 @@ def create_centile_values(sex: str, born_preterm=False):
                     weight_for_z = rcpchgrowth.measurement_from_sds(measurement="weight", requested_sds=sds_value, sex=sex, decimal_age=age, default_to_youngest_reference=True, born_preterm=born_preterm)
                     ofc_for_z = rcpchgrowth.measurement_from_sds(measurement="ofc", requested_sds=sds_value, sex=sex, decimal_age=age, default_to_youngest_reference=True, born_preterm=born_preterm)
                     bmi_for_z = None # there is no UK90 preterm BMI data
+
+                    uk90_preterm_length_sds.append({"label": centile, "x": age, "y": length_for_z})
+                    uk90_preterm_weight_sds.append({"label": centile, "x": age, "y": weight_for_z})
+                    uk90_preterm_bmi_sds.append({"label": centile, "x": age, "y": bmi_for_z})
+                    uk90_preterm_ofc_sds.append({"label": centile, "x": age, "y": ofc_for_z})
                 else:
-                    ## centile curves are unwanted in term babies up to 2 weeks
+                    ## centile curves are unwanted in term babies up to 2 weeks - age should start at 0
                     length_for_z = None
                     weight_for_z = None
                     bmi_for_z = None
                     ofc_for_z = None
 
-                uk90_preterm_length_sds.append({"label": centile, "x": age, "y": length_for_z})
-                uk90_preterm_weight_sds.append({"label": centile, "x": age, "y": weight_for_z})
-                uk90_preterm_bmi_sds.append({"label": centile, "x": age, "y": bmi_for_z})
-                uk90_preterm_ofc_sds.append({"label": centile, "x": age, "y": ofc_for_z})
+                    uk90_preterm_length_sds=[]
+                    uk90_preterm_weight_sds=[]
+                    uk90_preterm_bmi_sds=[]
+                    uk90_preterm_ofc_sds=[]
 
             elif index <= WHO_2006_LENGTH_THRESHOLD_INDEX:
                 # at 2 weeks choose WHO child lying data (upper reference as default)
