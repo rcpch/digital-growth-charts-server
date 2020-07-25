@@ -256,9 +256,9 @@ def create_fictional_child(sex: str, measurement_method: str, requested_sds: flo
         # calculate age at new measurement 
         child_age_at_measurement_date = corrected_decimal_age(birth_date=birth_date,observation_date=observation_date,gestation_weeks=gestation_weeks, gestation_days=gestation_days)
         # calculate measurement_value back from new SDS
-        new_measurement_value=measurement_from_sds(measurement=measurement_type, requested_sds=requested_sds, sex=sex, decimal_age=child_age_at_measurement_date, default_to_youngest_reference=False)
+        new_measurement_value=measurement_from_sds(measurement=measurement_method, requested_sds=requested_sds, sex=sex, decimal_age=child_age_at_measurement_date, default_to_youngest_reference=False)
         # convert this to Measurement_Type
-        new_measurement_type = Measurement_Type(measurement_type=measurement_type, measurement_value=new_measurement_value)
+        new_measurement_type = Measurement_Type(measurement_method=measurement_method, measurement_value=new_measurement_value)
         # pass Measurement_Type object to Measurement object with dates
         new_measurement = Measurement(sex, birth_date, observation_date, new_measurement_type, gestation_weeks, gestation_days, default_to_youngest_reference=False)
         
