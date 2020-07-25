@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 from os import path, listdir, remove
 from datetime import datetime
 from pathlib import Path
+from controllers import import_excel_as_python_dict, import_excel_sheet, import_excel_file
 
 # imports for client only
 import markdown
@@ -203,6 +204,20 @@ def fictionalchild():
     )
     return jsonify(fictional_child_data)
 
+
+@app.route("/api/v1/json/spreadsheet", methods=["POST"])
+def spreadsheet():
+    excel_file = request.files["excel_file"]
+    calculated_results = import_excel_file(excel_file)
+    return calculated_results
+   
+# return value from upload.py
+# {
+#         data: [an array of Measurement class objects]
+#         unique: boolean - refers to whether data is from one child or many children
+#         valid: boolean - refers to whether imported data was valid for calculation
+#         error: string  - error message if invalid file
+# }
 
 if __name__ == "__main__":
     app.run()

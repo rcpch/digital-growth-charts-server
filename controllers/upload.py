@@ -6,9 +6,53 @@ from datetime import date, datetime
 import json
 import urllib
 
+def import_excel_file(file):
+    """
+    this receives an excel file, converts to a dataframe and returns the following object
+    {
+        data: [an array of Measurement class objects]
+        unique: boolean - refers to whether data is from one child or many children
+        valid: boolean - refers to whether imported data was valid for calculation
+        error: string  - error message if invalid file
+    }
+    """
 
+    data_frame = pd.read_excel(file)
+    
+    validation = validate_columns_in_data_frame(data_frame)
+    if (validation["valid"]==True):
+        calculation = return_calculated_data_as_measurement_objects(validation['clean_data'])
+        return {
+            "data": calculation['data'],
+            "unique_child": calculation['unique'],
+            "error": None,
+            "valid": True
+        }
+    else:
+        return {
+            "data": None,
+            "unique_child": False,
+            "error": validation["error"],
+            "valid": validation["valid"]
+        }
+
+def import_excel_as_python_dict(dict_list):
+
+    #extract the json into a dataframe
+    data_frame = pd.DataFrame(dict_list)
+    data_frame_valid = validate_columns_in_data_frame(data_frame)
+    if (data_frame_valid["valid"]==True):
+        return return_calculated_data_as_measurement_objects(data_frame_valid['clean_data'], unique=False)
+    else:
+        return data_frame_valid
 
 def import_excel_sheet(file_path: str, can_delete: bool):
+    """
+    receives the filepath of excel spreadsheet
+    This is validated to ensure correct columns present, then converted to dataframe or returns error
+    can_delete is boolean flag to sanction delete of temp file
+    This is because there is a dummy example file in the flask client that should not be removed
+    """
     
     data_frame = pd.read_excel(file_path)
     unique = True
@@ -17,21 +61,51 @@ def import_excel_sheet(file_path: str, can_delete: bool):
     if can_delete:
         remove(file_path)
 
+    data_frame_valid = validate_columns_in_data_frame(data_frame)
+
+    if (data_frame_valid["valid"]): 
+        return return_calculated_data_as_measurement_objects(data_frame=data_frame, unique=unique)
+    else:
+        remove(file_path)
+        return data_frame_valid["error"]
+
+def validate_columns_in_data_frame(data_frame):
+    """
+    Validates the dataframe to ensure no extra columns, all essential columns are present.
+    Return boolean and an error message
+    """
+    
     ## check all columns present
     expected_column_names = ['birth_date', 'observation_date', 'gestation_weeks','gestation_days', 'sex', 'measurement_method', 'measurement_value']
-    # essential_column_names = ['birth_date', 'sex', 'measurement_method', 'measurement_value']
     columns = data_frame.columns.ravel().tolist()
     for column in columns:
-        ## flag if column_names are missing or extra
-        if column not in expected_column_names: 
-            raise LookupError('Please include only the headings: birth_date, observation_date, gestation_days, sex, measurement_method, measurement_value')
-    if len(columns) != len(expected_column_names):
-        raise LookupError('Please include ALL the headings (even if columns left blank): birth_date, observation_date, gestation_days, sex, measurement_method, measurement_value')
+        ## flag if column_names are extra or missing
+        if column not in expected_column_names: #extra columns are removed
+            data_frame = data_frame.drop(columns=[column], axis=1)
+    
+    if len(data_frame.columns) < len(expected_column_names): #if essential columns missing error flagged
+        return {
+            "valid": False,
+            "error": 'Please include ALL the headings (even if columns left blank): birth_date, observation_date, gestation_days, sex, measurement_method, measurement_value'
+        }
 
     ## check no missing data in essential columns
-    if(pd.isnull(data_frame['birth_date']).values.any() or pd.isnull(data_frame['observation_date']).values.any() or pd.isnull(data_frame['sex']).values.any() or pd.isnull(data_frame['measurement_method']).values.any() or pd.isnull(data_frame['measurement_value']).values.any()):
-        remove(file_path)
-        raise ValueError('birth_date, sex, measurement_method and measurement_value are all essential data fields and cannot be blank.')
+    if (pd.isnull(data_frame['birth_date']).values.any() or pd.isnull(data_frame['observation_date']).values.any() or pd.isnull(data_frame['sex']).values.any() or pd.isnull(data_frame['measurement_method']).values.any() or pd.isnull(data_frame['measurement_value']).values.any()):
+        return {
+            "valid": False,
+            "error": 'birth_date, sex, measurement_method and measurement_value are all essential data fields and cannot be blank.'
+        }
+    else:
+        return {
+            "valid": True,
+            "error": None,
+            "clean_data": data_frame
+        }
+        
+    
+
+def return_calculated_data_as_measurement_objects(data_frame, unique=True):
+    
 
     ## check columns data-type correct
     data_frame['gestation_days'] = data_frame['gestation_days'].fillna(0).astype(int) 
@@ -95,6 +169,7 @@ def import_excel_sheet(file_path: str, can_delete: bool):
         'data': data_frame.to_json(orient='records', date_format='epoch'),
         'unique': unique
     }
+
 
 def value_for_measurement(measurement_requested, measurement_parsed, value):
     ##parses measurements into columns - currently not used
