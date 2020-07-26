@@ -74,7 +74,6 @@ def api_json_calculations():
 # JSON CALCULATION OF SINGLE MEASUREMENT_METHOD ('height', 'weight', 'bmi', 'ofc'): Note that BMI must be precalculated for this function
 @app.route("/api/v1/json/calculation", methods=["POST"])
 def api_json_calculation():
-    
     # check here for all the right query params, if not present raise error
     final_calculations = controllers.perform_calculation(
         birth_date=datetime.strptime(request.form["birth_date"], "%Y-%m-%d"),
@@ -131,9 +130,7 @@ To amend the instructions please submit a pull request
 """
 @app.route("/api/v1/json/chart_data", methods=["POST"])
 def chart_data():
-    print(request.form["results"])
     results=json.loads(request.form["results"])
-    
     unique_child = request.form["unique_child"]
     # unique_child = request.args["unique_child"]
 
@@ -216,7 +213,7 @@ def spreadsheet():
 # return value from upload.py
 # {
 #         data: [an array of Measurement class objects]
-#         unique: boolean - refers to whether data is from one child or many children
+#         unique_child: boolean - refers to whether data is from one child or many children
 #         valid: boolean - refers to whether imported data was valid for calculation
 #         error: string  - error message if invalid file
 # }

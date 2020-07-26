@@ -11,7 +11,7 @@ def import_excel_file(file):
     this receives an excel file, converts to a dataframe and returns the following object
     {
         data: [an array of Measurement class objects]
-        unique: boolean - refers to whether data is from one child or many children
+        unique_child: boolean - refers to whether data is from one child or many children
         valid: boolean - refers to whether imported data was valid for calculation
         error: string  - error message if invalid file
     }
@@ -24,7 +24,7 @@ def import_excel_file(file):
         calculation = return_calculated_data_as_measurement_objects(validation['clean_data'])
         return {
             "data": calculation['data'],
-            "unique_child": calculation['unique'],
+            "unique_child": calculation['unique_child'],
             "error": None,
             "valid": True
         }
@@ -42,7 +42,7 @@ def import_excel_as_python_dict(dict_list):
     data_frame = pd.DataFrame(dict_list)
     data_frame_valid = validate_columns_in_data_frame(data_frame)
     if (data_frame_valid["valid"]==True):
-        return return_calculated_data_as_measurement_objects(data_frame_valid['clean_data'], unique=False)
+        return return_calculated_data(data_frame_valid['clean_data'], unique=False)
     else:
         return data_frame_valid
 
@@ -64,7 +64,7 @@ def import_excel_sheet(file_path: str, can_delete: bool):
     data_frame_valid = validate_columns_in_data_frame(data_frame)
 
     if (data_frame_valid["valid"]): 
-        return return_calculated_data_as_measurement_objects(data_frame=data_frame, unique=unique)
+        return return_calculated_data(data_frame=data_frame, unique=unique)
     else:
         remove(file_path)
         return data_frame_valid["error"]
@@ -102,10 +102,86 @@ def validate_columns_in_data_frame(data_frame):
             "clean_data": data_frame
         }
         
-    
-
 def return_calculated_data_as_measurement_objects(data_frame, unique=True):
+    ## receives a validated dataframe
+    ## iterates to return an array of measurement objects and unique_child flag
+
+   ## check columns data-type correct
+    data_frame['gestation_days'] = data_frame['gestation_days'].fillna(0).astype(int) 
+    data_frame['gestation_weeks'] = data_frame['gestation_weeks'].fillna(0).astype(int)
+    # data_frame['decimal_age'] = data_frame['decimal_age'].fillna(0).astype(float)
+    data_frame['birth_date']=data_frame['birth_date'].astype('datetime64[ns]')
+    data_frame['observation_date']=data_frame['observation_date'].astype('datetime64[ns]')
+    # data_frame['estimated_date_delivery']= data_frame['estimated_date_delivery'].astype('datetime64[ns]')
+    data_frame['measurement_method']=data_frame['measurement_method'].astype(str)
+    data_frame['measurement_method']=data_frame.apply(lambda  row: row['measurement_method'].lower(), axis=1) ## ensure sex and measurement_method are lowercase
+    data_frame['sex']=data_frame['sex'].astype(str)
+    data_frame['sex']=data_frame.apply(lambda  row: row['sex'].lower(), axis=1) ## ensure sex and measurement_method are lowercase
     
+    ## add the calculated columns (SDS and Centile, corrected and chronological decimal age)
+    data_frame['corrected_decimal_age']=data_frame.apply(lambda row: rcpchgrowth.corrected_decimal_age(row['birth_date'], row['observation_date'], row['gestation_weeks'], row['gestation_days']), axis=1)
+    data_frame['chronological_decimal_age']=data_frame.apply(lambda row: rcpchgrowth.chronological_decimal_age(row['birth_date'], row['observation_date']), axis=1)
+    data_frame['estimated_date_delivery']=data_frame.apply(lambda row: rcpchgrowth.estimated_date_delivery(row['birth_date'], row['gestation_weeks'], row['gestation_days']), axis=1)
+    data_frame['sds']=data_frame.apply(lambda row: sds_if_parameters(row['corrected_decimal_age'], row['measurement_method'], row['measurement_value'], row['sex']), axis=1)
+    data_frame['centile']=data_frame.apply(lambda row: rcpchgrowth.centile(row['sds']), axis=1)
+    data_frame['height'] = data_frame.apply(lambda row: value_for_measurement('height', row['measurement_method'], row['measurement_value']), axis=1)
+    data_frame['weight'] = data_frame.apply(lambda row: value_for_measurement('weight', row['measurement_method'], row['measurement_value']), axis=1)
+    same_date_data_frame = data_frame[data_frame.duplicated(['birth_date', 'observation_date'], keep=False)]
+    height = 0.0
+    weight = 0.0
+    weight_date = ''
+    height_date = '' 
+    weight_birth_date = ''
+    height_birth_date = ''
+
+    extra_rows = []
+    for index, row in same_date_data_frame.iterrows():
+        if pd.notnull(row['height']):
+            height = row['height']
+            height_date = row['observation_date']
+            height_birth_date = row['birth_date']
+        if pd.notnull(row['weight']):
+            weight = row['weight']
+            weight_date = row['observation_date']
+            weight_birth_date = row['birth_date']
+        if height > 0.0 and weight > 0.0 and height_date == weight_date and height_birth_date == weight_birth_date:
+            bmi = rcpchgrowth.bmi_from_height_weight(height, weight)
+            if row['corrected_decimal_age'] > 0.038329911: 
+                bmi_sds = rcpchgrowth.sds(row['corrected_decimal_age'], 'bmi', bmi, row['sex'])
+                bmi_centile = rcpchgrowth.centile(bmi_sds)
+            else:
+                bmi_sds = None
+                bmi_centile = None
+            new_row = {'birth_date': height_birth_date, 'observation_date': height_date, 'gestation_weeks': row['gestation_weeks'], 'gestation_days': row['gestation_days'], 'estimated_date_delivery': row['estimated_date_delivery'], 'chronological_decimal_age': row['chronological_decimal_age'], 'corrected_decimal_age': row['corrected_decimal_age'], 'sex': row['sex'], 'measurement_method': 'bmi', 'measurement_value': bmi, 'sds': bmi_sds, 'centile': bmi_centile, 'height': None, 'weight': None}
+            extra_rows.append(new_row)
+
+    if len(extra_rows) > 0:
+        data_frame = data_frame.append(extra_rows, ignore_index=True)
+        data_frame = data_frame.drop_duplicates(ignore_index=True)
+        
+
+    if data_frame['birth_date'].nunique() > 1:
+        print('these are not all data from the same patient. They cannot be charted.') #do not chart these values
+        unique = False
+    
+    ## create measurement objects
+
+    measurement_object_array = []
+
+    for index, row in data_frame.iterrows():
+        new_measurement_type = rcpchgrowth.Measurement_Type(measurement_method=row['measurement_method'], measurement_value=row['measurement_value'])
+        new_measurement = rcpchgrowth.Measurement(sex=row['sex'], birth_date=row['birth_date'], observation_date=row['observation_date'], measurement_type=new_measurement_type, gestation_weeks=row['gestation_weeks'], gestation_days=row['gestation_days'])
+        measurement_object_array.append(new_measurement.measurement)
+
+    return {
+        'data': measurement_object_array,
+        'unique_child': unique
+    }
+
+def return_calculated_data(data_frame, unique=True):
+
+    # receives a dataframe, returns a dataframe of same structure to excel sheet plus calculated rows for bmi and columns for 
+    # sds, centiles and date calculations, with unique_child flag
 
     ## check columns data-type correct
     data_frame['gestation_days'] = data_frame['gestation_days'].fillna(0).astype(int) 
@@ -167,7 +243,7 @@ def return_calculated_data_as_measurement_objects(data_frame, unique=True):
 
     return {
         'data': data_frame.to_json(orient='records', date_format='epoch'),
-        'unique': unique
+        'unique_child': unique
     }
 
 

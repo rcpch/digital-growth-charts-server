@@ -197,7 +197,6 @@ def create_data_plots(child_results_array):
         "ofcs": child_ofc_data
     }
 
-    print(result)
     return result
 
 
