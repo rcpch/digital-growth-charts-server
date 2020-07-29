@@ -14,6 +14,13 @@ class TestSDS(unittest.TestCase):
         """
         z = sds(0, 'height', 60.0, 'male')
         self.assertEqual(z, 0.8870636550308009)
+
+    def test_sds_pre_term_boy_at_birth_length(self):
+        """
+        calculate the length sds of a boy born pre-term (35 weeks)
+        """
+        z = sds(-0.095824778, 'height', 46.1415, 'male')
+        self.assertEqual(z, 0)
     
     def test_sds_term_girl_at_birth_length(self):
         """

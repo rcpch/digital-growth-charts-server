@@ -37,4 +37,5 @@ virtualenvwrapper==4.8.4
 Werkzeug==1.0.1
 wrapt==1.12.1
 WTForms==2.3.1
+xlrd==1.2.0
 zipp==3.1.0
