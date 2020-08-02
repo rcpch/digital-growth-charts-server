@@ -103,8 +103,8 @@ Naming is based on PEP 8 standards
 - `"gestation_weeks": int` length of pregnancy in weeks (optional)
 - `"gestation_days": int` days additional to length of pregnancy in weeks (optional)
 - `"height_in_cm": float` 
-- `"weight_in_kg": float"` 
-- `"head_circ_in_cm": float"`
+- `"weight_in_kg": float` 
+- `"head_circ_in_cm": float`
 Returns an array of Measurement class objects (see below)
 
 `/api/v1/json/calculation`: GET - 
@@ -116,7 +116,7 @@ Naming is based on PEP 8 standards
 - `"gestation_weeks": int` length of pregnancy in weeks (optional)
 - `"gestation_days": int` days additional to length of pregnancy in weeks (optional)
 - `"measurement_method": string` accepted parameters include: 'height', 'weight', 'ofc', 'bmi' (lower case mandatory)
-- `"observation_value: float"` measurement value (mandatory). **NOTE:** Height must be provided in __cm__, weight must be provided in __kg__, BMI must be provided in __kg/m²__ and ofc (occipitofrontal circumference or head circumference) must be provided in __cm__.
+- `"observation_value": float` measurement value (mandatory). **NOTE:** Height must be provided in __cm__, weight must be provided in __kg__, BMI must be provided in __kg/m²__ and ofc (occipitofrontal circumference or head circumference) must be provided in __cm__.
 
 Returns a Measurement class object (see below) as an array.
 
