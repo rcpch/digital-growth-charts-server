@@ -4,49 +4,75 @@ from ..sds_calculations import sds
 from datetime import datetime
 from ..date_calculations import chronological_decimal_age, corrected_decimal_age, estimated_date_delivery
 
+
 class TestSDS(unittest.TestCase):
 
-    ## Tests for term children
+    # Tests for length/height:
 
+    def test_sds_term_boy_at_30weeks_length(self):
+
+      # calculate the length sds of a boy born at 30 weeks
+
+        z = sds(-0.095824778, 'height', 46.1415, 'male')
+        self.assertEqual(z, 0)
+
+    def test_sds_term_boy_at_term_length(self):
+
+      # calculate the length sds of a boy born at Term (40 weeks)
+
+        z = sds(0, 'height', 51, 'male')
+        self.assertEqual(z, 0)
+
+    def test_sds_term_boy_at_term_length(self):
+
+      # calculate the length sds of a boy born at Term (40 weeks)
+
+        z = sds(0, 'height', 51, 'male')
+        self.assertEqual(z, 0)
+
+
+"""
     def test_sds_term_boy_at_birth_length(self):
-        """
-        calculate the length sds of a boy born at term
-        """
+
+        # calculate the length sds of a boy born at term
+
         z = sds(0, 'height', 60.0, 'male')
         self.assertEqual(z, 0.8870636550308009)
+
+
     
     def test_sds_term_girl_at_birth_length(self):
-        """
-        calculate the length sds of a girl born at term
-        """
+        
+        ##calculate the length sds of a girl born at term
+        
         z = sds(0, 'height', 60, 'female')
         self.assertEqual(z, 0.8870636550308009)
     
     def test_sds_term_boy_at_birth_weight(self):
-        """
-        calculate the weight sds of a boy born at term
-        """
+        
+        ##calculate the weight sds of a boy born at term
+    
         z = sds(0, 'weight', 3.5, 'male')
         self.assertEqual(z, 0.8870636550308009)
     
     def test_sds_term_girl_at_birth_weight(self):
-        """
-        calculate the weight sds of a girl born at term
-        """
+
+        ##calculate the weight sds of a girl born at term
+        
         z = sds(0.0, 'weight', 2.7, 'female')
         self.assertEqual(z, -1.39508903)
     
     def test_sds_term_boy_at_birth_ofc(self):
-        """
-        calculate the ofc sds of a boy born at term
-        """
+        
+        ##calculate the ofc sds of a boy born at term
+        
         z = sds(0, 'ofc', 45.0, 'male')
         self.assertEqual(z, 0.8870636550308009)
     
     def test_sds_term_girl_at_birth_ofc(self):
-        """
-        calculate the ofc sds of a girl born at term
-        """
+               
+        ##calculate the ofc sds of a girl born at term
+        
         z = sds(0, 'ofc', 45, 'female')
         self.assertEqual(z, 0.8870636550308009)
 
@@ -68,8 +94,8 @@ class TestSDS(unittest.TestCase):
             if lengths[counter] != "None":
                 z = sds(age, 'height', lengths[counter], sexes[counter], True)
                 self.assertEqual(round(z, 2), correct_height_sds_scores[counter])
-    
-    
-    
+"""
+
+
 if __name__ == '__main__':
     unittest.main()
