@@ -36,7 +36,49 @@ from ..date_calculations import chronological_decimal_age, corrected_decimal_age
             0, 'height', 51, 'male', True, False,  0, id="Height, Boy, Term"
         ),
         pytest.param(
+            0, 'weight',3.5, 'male', True, False,  0, id="Weight, Boy, Term"
+        ),
+ #       pytest.param(
+ #           0, 'bmi', 51, 'male', True, False,  0, id="BMI, Boy, Term"
+ #       ),
+        pytest.param(
+            0, 'ofc', 35, 'male', True, False,  0, id="OFC, Boy, Term"
+        ),
+        pytest.param(
+            0, 'height', 50, 'female', True, False,  0, id="Height, Girl, Term"
+        ),
+        pytest.param(
+            0, 'weight', 3.36 , 'female', True, False,  0, id="Weight, Girl, Term"
+        ),
+#        pytest.param(
+#            0, 'bmi', 51, 'female', True, False,  0, id="BMI, Girl, Term"
+#        ),
+        pytest.param(
+            0, 'ofc', 34, 'female', True, False,  0, id="OFC, Girl, Term"
+        ),
+        pytest.param(
             5, 'height', 109.59, 'male', True, False, 0,  id="Height, Boy, 5 years"
+        ),
+        pytest.param(
+            5, 'weight', 18.633, 'male', True, False, 0,  id="Weight, Boy, 5 years"
+        ),
+        pytest.param(
+            5, 'bmi', 15.547, 'male', True, False, 0,  id="BMI, Boy, 5 years"
+        ),
+        pytest.param(
+            5, 'ofc', 52.747, 'male', True, False, 0,  id="OFC, Boy, 5 years"
+        ),
+        pytest.param(
+            5, 'height', 108.86, 'female', True, False, 0,  id="Height, Girl, 5 years"
+        ),
+        pytest.param(
+            5, 'weight', 18.299, 'female', True, False, 0,  id="Weight, Girl, 5 years"
+        ),
+        pytest.param(
+            5, 'bmi',15.483, 'female', True, False, 0,  id="BMI, Girl, 5 years"
+        ),
+        pytest.param(
+            5, 'ofc', 51.681, 'female', True, False, 0,  id="OFC, Girl, 5 years"
         )
     ],
 )
