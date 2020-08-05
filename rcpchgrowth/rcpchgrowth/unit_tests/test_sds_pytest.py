@@ -21,6 +21,18 @@ from ..date_calculations import chronological_decimal_age, corrected_decimal_age
             -0.191649555, 'weight', 1.436, 'male', True, True, 0,  id= "Weight, Boy, 30Weeks"            
         ),
         pytest.param(
+            -0.191649555, 'ofc', 28.48013, 'male', True, True, 0,  id= "OFC, Boy, 30Weeks"            
+        ),
+        pytest.param(
+            -0.191649555, 'height', 39.94117, 'female', True, True, 0, id= "Height, Girl, 30Weeks"
+         ), 
+        pytest.param(
+            -0.191649555, 'weight', 1.3593, 'female', True, True, 0,  id= "Weight, Girl, 30Weeks"            
+        ),
+        pytest.param(
+            -0.191649555, 'ofc', 28.15286, 'female', True, True, 0,  id= "OFC, Girl, 30Weeks"            
+        ),
+        pytest.param(
             0, 'height', 51, 'male', True, False,  0, id="Height, Boy, Term"
         ),
         pytest.param(
