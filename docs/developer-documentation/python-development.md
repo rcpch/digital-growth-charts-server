@@ -36,7 +36,7 @@
 ### Extra development packages that may be required on some setups
 
 * To prevent weird error messages, you may need the additional development header packages for them. On Ubuntu this required running. This should not be necessary if you're running a binary Python, it only affects setups which are compiling a specific Python version from source, on demand, such as `pyenv`.  
-`$ sudo apt-get install liblzma-dev libbz2-dev`  
+`$ sudo apt-get install liblzma-dev libbz2-dev zlib1g-dev`  
 * and then recompile the Python that `pyenv` built  
 `$ pyenv install 3.8.0`  
 
