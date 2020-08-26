@@ -1,10 +1,7 @@
-### Running the Flask application
-* Tell Flask you are in Development mode  
-`$ export FLASK_ENV=development`
-* Set up Flask so it knows what your app is called  
-`$ export FLASK_APP=app.py`  
-* Run Flask
-`$ flask run`  
+### Running the API server application
+
+Simply type 
+`$ s/start-server` in the application root
 
 You should then see some messages from the Flask development server, which should look like
 ```
@@ -17,3 +14,6 @@ You should then see some messages from the Flask development server, which shoul
  * Debugger PIN: xxx-xxx-xxx
 ```
 
+If you need to vary any of the parameters passed to Flask, you can either modify the startup script or simply pass the commands to the shell manually.
+
+Scripts are located in the `s/` folder in the application root.
