@@ -6,7 +6,7 @@ from datetime import date, datetime
 import json
 import urllib
 
-def import_excel_file(file):
+def import_csv_file(file):
     """
     this receives an excel file, converts to a dataframe and returns the following object
     {
@@ -17,8 +17,9 @@ def import_excel_file(file):
     }
     """
 
-    data_frame = pd.read_excel(file)
-    
+    # data_frame = pd.read_excel(file)
+    data_frame = pd.read_csv(file)
+
     validation = validate_columns_in_data_frame(data_frame)
     if (validation["valid"]==True):
         calculation = return_calculated_data_as_measurement_objects(validation['clean_data'])
@@ -35,39 +36,6 @@ def import_excel_file(file):
             "error": validation["error"],
             "valid": validation["valid"]
         }
-
-def import_excel_as_python_dict(dict_list):
-
-    #extract the json into a dataframe
-    data_frame = pd.DataFrame(dict_list)
-    data_frame_valid = validate_columns_in_data_frame(data_frame)
-    if (data_frame_valid["valid"]==True):
-        return return_calculated_data(data_frame_valid['clean_data'], unique=False)
-    else:
-        return data_frame_valid
-
-def import_excel_sheet(file_path: str, can_delete: bool):
-    """
-    receives the filepath of excel spreadsheet
-    This is validated to ensure correct columns present, then converted to dataframe or returns error
-    can_delete is boolean flag to sanction delete of temp file
-    This is because there is a dummy example file in the flask client that should not be removed
-    """
-    
-    data_frame = pd.read_excel(file_path)
-    unique = True
-    
-    ## delete the file if not dummy_data.xlsx
-    if can_delete:
-        remove(file_path)
-
-    data_frame_valid = validate_columns_in_data_frame(data_frame)
-
-    if (data_frame_valid["valid"]): 
-        return return_calculated_data(data_frame=data_frame, unique=unique)
-    else:
-        remove(file_path)
-        return data_frame_valid["error"]
 
 def validate_columns_in_data_frame(data_frame):
     """

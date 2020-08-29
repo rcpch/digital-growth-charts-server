@@ -2,5 +2,5 @@ from .calculations import form_wrapper, perform_calculation, perform_calculation
 from .chart import create_centile_values, create_data_plots
 from .references import references
 from .temp_test_functions import test_sds_tim_term_heights, tim_tests_preterm
-from .upload import import_excel_sheet, prepare_data_as_array_of_measurement_objects, import_excel_as_python_dict, import_excel_file
+from .upload import prepare_data_as_array_of_measurement_objects, import_csv_file
 from .fictional_child_data import generate_fictional_data

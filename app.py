@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 from os import path, listdir, remove
 from datetime import datetime
 from pathlib import Path
-from controllers import import_excel_as_python_dict, import_excel_sheet, import_excel_file
+from controllers import import_csv_file
 
 # imports for client only
 import markdown
@@ -130,10 +130,11 @@ To amend the instructions please submit a pull request
 """
 @app.route("/api/v1/json/chart_data", methods=["POST"])
 def chart_data():
+
     results=json.loads(request.form["results"])
     unique_child = request.form["unique_child"]
     # unique_child = request.args["unique_child"]
-
+    
     # born preterm flag to pass to charts
     born_preterm = (results[0]["birth_data"]["gestation_weeks"]!= 0 and results[0]["birth_data"]["gestation_weeks"] < 37)
     
@@ -206,8 +207,8 @@ def fictionalchild():
 
 @app.route("/api/v1/json/spreadsheet", methods=["POST"])
 def spreadsheet():
-    excel_file = request.files["excel_file"]
-    calculated_results = import_excel_file(excel_file)
+    csv_file = request.files["csv_file"]
+    calculated_results = import_csv_file(csv_file)
     return calculated_results
    
 # return value from upload.py
