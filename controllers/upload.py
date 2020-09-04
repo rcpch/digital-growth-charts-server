@@ -18,8 +18,9 @@ def import_csv_file(file):
     """
 
     # data_frame = pd.read_excel(file)
+    
     data_frame = pd.read_csv(file)
-
+    
     validation = validate_columns_in_data_frame(data_frame)
     if (validation["valid"]==True):
         calculation = return_calculated_data_as_measurement_objects(validation['clean_data'])
@@ -77,10 +78,10 @@ def return_calculated_data_as_measurement_objects(data_frame, unique=True):
    ## check columns data-type correct
     data_frame['gestation_days'] = data_frame['gestation_days'].fillna(0).astype(int) 
     data_frame['gestation_weeks'] = data_frame['gestation_weeks'].fillna(0).astype(int)
-    # data_frame['decimal_age'] = data_frame['decimal_age'].fillna(0).astype(float)
-    data_frame['birth_date']=data_frame['birth_date'].astype('datetime64[ns]')
-    data_frame['observation_date']=data_frame['observation_date'].astype('datetime64[ns]')
-    # data_frame['estimated_date_delivery']= data_frame['estimated_date_delivery'].astype('datetime64[ns]')
+    
+    data_frame['birth_date']=pd.to_datetime(data_frame['birth_date'], dayfirst=True)
+    data_frame['observation_date']=pd.to_datetime(data_frame['observation_date'], dayfirst=True) #.astype('datetime64[ns]')
+
     data_frame['measurement_method']=data_frame['measurement_method'].astype(str)
     data_frame['measurement_method']=data_frame.apply(lambda  row: row['measurement_method'].lower(), axis=1) ## ensure sex and measurement_method are lowercase
     data_frame['sex']=data_frame['sex'].astype(str)
@@ -154,10 +155,13 @@ def return_calculated_data(data_frame, unique=True):
     ## check columns data-type correct
     data_frame['gestation_days'] = data_frame['gestation_days'].fillna(0).astype(int) 
     data_frame['gestation_weeks'] = data_frame['gestation_weeks'].fillna(0).astype(int)
-    # data_frame['decimal_age'] = data_frame['decimal_age'].fillna(0).astype(float)
-    data_frame['birth_date']=data_frame['birth_date'].astype('datetime64[ns]')
-    data_frame['observation_date']=data_frame['observation_date'].astype('datetime64[ns]')
-    # data_frame['estimated_date_delivery']= data_frame['estimated_date_delivery'].astype('datetime64[ns]')
+    
+    # data_frame['birth_date']=data_frame['birth_date'].astype('datetime64[ns]')
+    # data_frame['observation_date']=data_frame['observation_date'].astype('datetime64[ns]')
+    
+    data_frame['birth_date']=pd.to_datetime(data_frame['birth_date'], infer_datetime_format=True)
+    data_frame['observation_date']=pd.to_datetime(data_frame['observation_date'], infer_datetime_format=True)
+
     data_frame['measurement_method']=data_frame['measurement_method'].astype(str)
     data_frame['measurement_method']=data_frame.apply(lambda  row: row['measurement_method'].lower(), axis=1) ## ensure sex and measurement_method are lowercase
     data_frame['sex']=data_frame['sex'].astype(str)
