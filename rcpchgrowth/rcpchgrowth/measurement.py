@@ -264,7 +264,6 @@ class Measurement:
                 observation_value=weight,
                 sds_value=weight_sds,
                 centile_value=weight_centile)
-            return return_measurement_object
         else:
             raise LookupError(
                 "Unable to return SDS or centile values for weight.")
