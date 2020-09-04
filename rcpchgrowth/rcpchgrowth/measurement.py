@@ -18,6 +18,7 @@ class Measurement:
             gestation_weeks: int = 0,
             gestation_days: int = 0,
             default_to_youngest_reference: bool = False):
+
         """
         The Measurement Class is the gatekeeper to all the functions in the RCPCHGrowth package, although the public
         functions can be accessed independently. The bulk of the error handling happens here so be aware that calling 
@@ -81,7 +82,15 @@ class Measurement:
     These are 2 public class methods
     """
 
-    def sds_and_centile_for_measurement_method(self, sex: str, age: float, measurement_method: str, observation_value: float, born_preterm: bool = False, default_to_youngest_reference: bool = False):
+    def sds_and_centile_for_measurement_method(
+        self,
+        sex: str,
+        age: float,
+        measurement_method: str,
+        observation_value: float,
+        born_preterm: bool = False,
+        default_to_youngest_reference: bool = False):
+
         # returns sds for given measurement
         # bmi must be supplied precalculated
 
@@ -122,7 +131,14 @@ class Measurement:
     These are all private class methods and are only accessed by this class on initialisation
     """
 
-    def __calculate_ages(self, sex: str, birth_date: date, observation_date: date, gestation_weeks: int = 0, gestation_days=0):
+    def __calculate_ages(
+        self,
+        sex: str,
+        birth_date: date,
+        observation_date: date,
+        gestation_weeks: int = 0,
+        gestation_days=0):
+
         if gestation_weeks == 0:
             # if gestation not specified, set to 40 weeks
             gestation_weeks = 40
@@ -196,7 +212,14 @@ class Measurement:
         }
         return child_age_calculations
 
-    def __calculate_height_sds_centile(self, sex: str, age: float, height: float, born_preterm: bool = False, default_to_youngest_reference: bool = False):
+    def __calculate_height_sds_centile(
+        self,
+        sex: str,
+        age: float,
+        height: float,
+        born_preterm: bool = False,
+        default_to_youngest_reference: bool = False):
+
         if height and height > 0.0:
             if age >= TWENTY_FIVE_WEEKS_GESTATION:  # there is no length data below 25 weeks gestation
                 height_sds = sds(
@@ -219,10 +242,22 @@ class Measurement:
             raise LookupError(
                 "Unable to return SDS or centile values for height")
 
-    def __calculate_weight_sds_centile(self, sex: str, age: float, weight: float, default_to_youngest_reference: bool = False, born_preterm: bool = False):
+    def __calculate_weight_sds_centile(
+        self,
+        sex: str,
+        age: float,
+        weight: float,
+        default_to_youngest_reference: bool = False,
+        born_preterm: bool = False):
+
         if weight and weight > 0.0:
-            weight_sds = sds(age=age, measurement='weight', measurement_value=weight,
-                             sex=sex, default_to_youngest_reference=False, born_preterm=born_preterm)
+            weight_sds = sds(
+                age=age,
+                measurement='weight',
+                measurement_value=weight,
+                sex=sex,
+                default_to_youngest_reference=False,
+                born_preterm=born_preterm)           
             weight_centile = centile(weight_sds)
             return self.__create_measurement_object(
                 measurement_method='weight',
@@ -234,7 +269,16 @@ class Measurement:
             raise LookupError(
                 "Unable to return SDS or centile values for weight.")
 
-    def __calculate_bmi_sds_centile(self, sex: str, age: float, born_preterm: bool = False, default_to_youngest_reference: bool = False, height: float = 0.0, weight: float = 0.0, bmi: float = 0.0):
+    def __calculate_bmi_sds_centile(
+        self,
+        sex: str,
+        age: float,
+        born_preterm: bool = False,
+        default_to_youngest_reference: bool = False,
+        height: float = 0.0,
+        weight: float = 0.0,
+        bmi: float = 0.0):
+
         """
         This method calculates bmi SDS and centiles. It has been refactored and originally it took a
         height and weight in cm before calculating a bmi which then was used to generate SDS and centile.
@@ -291,7 +335,14 @@ class Measurement:
         else:
             raise LookupError('Unable to return SDS or centile values for BMI')
 
-    def __calculate_ofc_sds_centile(self, sex: str, age: float, ofc: float, default_to_youngest_reference: bool = False, born_preterm: bool = False):
+    def __calculate_ofc_sds_centile(
+        self,
+        sex: str,
+        age: float,
+        ofc: float,
+        default_to_youngest_reference: bool = False,
+        born_preterm: bool = False):
+
         if ofc and ofc > 0.0:
             # OFC data not present >17y in girls or >18y in boys
             if (age <= 17 and sex == 'female') or (age <= 18.0 and sex == 'male'):
@@ -321,6 +372,7 @@ class Measurement:
         observation_value: float,
         sds_value: float,
         centile_value: float):
+
         """
         private class method
         This is the end step, having calculated dates, SDS/Centiles and selected appropriate clinical advice,
