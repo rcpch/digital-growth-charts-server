@@ -52,31 +52,14 @@ class Measurement:
             born_preterm = True
         else:
             born_preterm = False
-<<<<<<< HEAD
-
-        # the age_object receives birth_data and measurement_dates objects
-        ages_object = self.__calculate_ages(
-            sex=sex,
-            birth_date=birth_date,
-            observation_date=observation_date,
-            gestation_weeks=gestation_weeks,
-            gestation_days=gestation_days
-        )
-
-        # the calculate_measurements_object receives the child_observation_value and measurement_calculated_values objects
-        calculate_measurements_object = self.sds_and_centile_for_measurement_method(
-            sex=sex,
-            age=ages_object['measurement_dates']['corrected_decimal_age'],
-            measurement_method=self.measurement_method,
-            observation_value=self.observation_value,
-            born_preterm=born_preterm,
-            default_to_youngest_reference=default_to_youngest_reference
-        )
-
-=======
         
         ## the age_object receives birth_data and measurement_dates objects
-        ages_object = self.__calculate_ages(sex=sex, birth_date=birth_date, observation_date=observation_date, gestation_weeks=gestation_weeks, gestation_days=gestation_days)
+        ages_object = self.__calculate_ages(
+            sex=sex, 
+            birth_date=birth_date, 
+            observation_date=observation_date, 
+            gestation_weeks=gestation_weeks, 
+            gestation_days=gestation_days)
         ## the calculate_measurements_object receives the child_observation_value and measurement_calculated_values objects
         calculate_measurements_object = self.sds_and_centile_for_measurement_method(
             sex=sex, 
@@ -86,7 +69,6 @@ class Measurement:
             born_preterm=born_preterm, 
             default_to_youngest_reference = default_to_youngest_reference)
         
->>>>>>> d361496... removed lay and clinician comments from measurement class, included centile bands. Centile values not yet deprecated
         self.measurement = {
             'birth_data': ages_object['birth_data'],
             'measurement_dates': ages_object['measurement_dates'],
@@ -227,16 +209,6 @@ class Measurement:
             "measurement_dates": measurement_dates
         }
         return child_age_calculations
-<<<<<<< HEAD
-
-    def __calculate_height_sds_centile(
-        self,
-        sex: str,
-        age: float,
-        height: float,
-        born_preterm: bool = False,
-        default_to_youngest_reference: bool = False):
-=======
     
     def __calculate_height_sds_centile(
         self, 
@@ -248,7 +220,6 @@ class Measurement:
         """
         Private class method to return SDS and centile for height measurement
         """
->>>>>>> d361496... removed lay and clinician comments from measurement class, included centile bands. Centile values not yet deprecated
 
         if height and height > 0.0:
             if age >= TWENTY_FIVE_WEEKS_GESTATION:  # there is no length data below 25 weeks gestation
@@ -260,16 +231,6 @@ class Measurement:
                     default_to_youngest_reference=default_to_youngest_reference,
                     born_preterm=born_preterm)
                 height_centile = centile(height_sds)
-<<<<<<< HEAD
-            else:
-                height_sds = None
-                height_centile = None
-            return self.__create_measurement_object(
-                measurement_method='height',
-                observation_value=height,
-                sds_value=height_sds,
-                centile_value=height_centile)
-=======
                 height_centile_band = centile_band_for_centile(height_sds)
                 
                 ## Deprecating comments
@@ -296,35 +257,10 @@ class Measurement:
                 # lay_comment=lay_height_comment
                 )
             return return_measurement_object
->>>>>>> d361496... removed lay and clinician comments from measurement class, included centile bands. Centile values not yet deprecated
         else:
             raise LookupError(
                 "Unable to return SDS or centile values for height")
 
-    def __calculate_weight_sds_centile(
-        self,
-        sex: str,
-        age: float,
-        weight: float,
-        default_to_youngest_reference: bool = False,
-        born_preterm: bool = False):
-
-<<<<<<< HEAD
-        if weight and weight > 0.0:
-            weight_sds = sds(
-                age=age,
-                measurement='weight',
-                measurement_value=weight,
-                sex=sex,
-                default_to_youngest_reference=False,
-                born_preterm=born_preterm)           
-            weight_centile = centile(weight_sds)
-            return self.__create_measurement_object(
-                measurement_method='weight',
-                observation_value=weight,
-                sds_value=weight_sds,
-                centile_value=weight_centile)
-=======
     def __calculate_weight_sds_centile(
         self, 
         sex: str, 
@@ -364,7 +300,6 @@ class Measurement:
                 # lay_comment=lay_weight_comment
                 )
             return return_measurement_object
->>>>>>> d361496... removed lay and clinician comments from measurement class, included centile bands. Centile values not yet deprecated
         else:
             raise LookupError(
                 "Unable to return SDS or centile values for weight.")
@@ -379,18 +314,6 @@ class Measurement:
         weight: float = 0.0,
         bmi: float = 0.0):
 
-<<<<<<< HEAD
-=======
-    def __calculate_bmi_sds_centile(
-        self, 
-        sex: str, 
-        age: float, 
-        born_preterm: bool = False, 
-        default_to_youngest_reference: bool=False, 
-        height: float = 0.0, 
-        weight: float = 0.0, 
-        bmi: float = 0.0):
->>>>>>> d361496... removed lay and clinician comments from measurement class, included centile bands. Centile values not yet deprecated
         """
         This method calculates bmi SDS and centiles. It has been refactored and originally it took a
         height and weight in cm before calculating a bmi which then was used to generate SDS and centile.
@@ -400,82 +323,6 @@ class Measurement:
         """
         if (height and height > 0.0) and (weight and weight > 0.0):
             bmi = bmi_from_height_weight(height, weight)
-<<<<<<< HEAD
-            if age > FORTY_TWO_WEEKS_GESTATION:  # BMI data not present < 42 weeks gestation
-                bmi_sds = sds(age=age,
-                    measurement='bmi',
-                    measurement_value=bmi,
-                    sex=sex,
-                    default_to_youngest_reference=default_to_youngest_reference,
-                    born_preterm=born_preterm)  # does not default to youngest reference
-                bmi_centile = centile(z_score=bmi_sds)
-                return self.__create_measurement_object(
-                    measurement_method='bmi',
-                    observation_value=bmi,
-                    sds_value=bmi_sds,
-                    centile_value=bmi_centile)
-            else:
-                bmi_sds = None
-                bmi_centile = None
-                return self.__create_measurement_object(
-                    measurement_method='bmi',
-                    observation_value=bmi,
-                    sds_value=bmi_sds,
-                    centile_value=bmi_centile)
-        elif bmi and bmi > 0.0:
-            if age >= FORTY_TWO_WEEKS_GESTATION:  # BMI data not present < 42 weeks gestation
-                bmi_sds = sds(
-                    age=age,
-                    measurement='bmi',
-                    measurement_value=bmi,
-                    sex=sex,
-                    default_to_youngest_reference=default_to_youngest_reference,
-                    born_preterm=born_preterm)  # does not default to youngest reference
-                bmi_centile = centile(z_score=bmi_sds)
-                return self.__create_measurement_object(
-                    measurement_method='bmi',
-                    observation_value=bmi,
-                    sds_value=bmi_sds,
-                    centile_value=bmi_centile)
-            else:
-                bmi_centile = None
-                bmi_sds = None
-                return self.__create_measurement_object(
-                    measurement_method='bmi',
-                    observation_value=bmi,
-                    sds_value=bmi_sds,
-                    centile_value=bmi_centile)
-        else:
-            raise LookupError('Unable to return SDS or centile values for BMI')
-
-    def __calculate_ofc_sds_centile(
-        self,
-        sex: str,
-        age: float,
-        ofc: float,
-        default_to_youngest_reference: bool = False,
-        born_preterm: bool = False):
-
-        if ofc and ofc > 0.0:
-            # OFC data not present >17y in girls or >18y in boys
-            if (age <= 17 and sex == 'female') or (age <= 18.0 and sex == 'male'):
-                ofc_sds = sds(age=age, measurement='ofc', measurement_value=ofc, sex=sex,
-                              default_to_youngest_reference=default_to_youngest_reference, born_preterm=born_preterm)
-                ofc_centile = centile(z_score=ofc_sds)
-                return self.__create_measurement_object(
-                    measurement_method='ofc',
-                    observation_value=ofc,
-                    sds_value=ofc_sds,
-                    centile_value=ofc_centile)
-            else:
-                ofc_sds = None
-                ofc_centile = None
-                return self.__create_measurement_object(
-                    measurement_method='ofc',
-                    observation_value=ofc,
-                    sds_value=ofc_sds,
-                    centile_value=ofc_centile)
-=======
             if age > FORTY_TWO_WEEKS_GESTATION: # BMI data not present < 42 weeks gestation
                 bmi_sds = sds(
                     age=age, 
@@ -628,20 +475,9 @@ class Measurement:
                     # lay_comment=lay_ofc_comment
                     )
             return return_measurement_object
->>>>>>> d361496... removed lay and clinician comments from measurement class, included centile bands. Centile values not yet deprecated
         else:
-            raise LookupError(
-                'Unable to return SDS or centile values for head circumference')
+            raise LookupError('Unable to return SDS or centile values for head circumference')
 
-    def __create_measurement_object(
-        self,
-        measurement_method: str,
-        observation_value: float,
-        sds_value: float,
-        centile_value: float):
-
-<<<<<<< HEAD
-=======
     def __create_measurement_object(
         self, 
         measurement_method: str, 
@@ -652,7 +488,6 @@ class Measurement:
         # clinician_comment: str, 
         # lay_comment: str
         ):
->>>>>>> d361496... removed lay and clinician comments from measurement class, included centile bands. Centile values not yet deprecated
         """
         private class method
         This is the end step, having calculated dates, SDS/Centiles and selected appropriate clinical advice,
@@ -667,13 +502,6 @@ class Measurement:
         # object.
 
         measurement_calculated_values = {
-<<<<<<< HEAD
-            "measurement_method": measurement_method,
-            "sds": sds_value,
-            "centile": centile_value,
-        }
-
-=======
                                             "measurement_method": measurement_method,
                                             "sds": sds_value, 
                                             "centile": centile_value, ## this is deprecating
@@ -682,7 +510,6 @@ class Measurement:
                                             # "lay_comment": lay_comment 
                                         }
         
->>>>>>> d361496... removed lay and clinician comments from measurement class, included centile bands. Centile values not yet deprecated
         child_observation_value = {
             "measurement_method": measurement_method,
             "measurement_value": observation_value

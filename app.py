@@ -18,7 +18,7 @@ import controllers as controllers
 
 app = Flask(__name__, static_folder="static")
 app.config["SECRET_KEY"] = "UK_WHO" #not very secret - this will need complicating and adding to config
-CORS(app)
+CORS(app) # TODO #75
 
 from app import app
 
