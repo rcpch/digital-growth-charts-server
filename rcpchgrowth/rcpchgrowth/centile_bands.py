@@ -23,55 +23,61 @@
 # 2.84	6.00	Above 99.6th	Above normal range	Severely obese
 # 	>6.00		Probable error	Probable error
 
-def centile_band_for_centile(sds: float)->str:
+def centile_band_for_centile(sds: float, measurement_method: str)->str:
     ## this function returns a centile band into which the sds falls
     ## params: accepts a sds: float
+    ## params: accepts a measurement_method as string
 
     centile_band=""
 
+    if measurement_method=="bmi":
+        measurement_method="body mass index"
+    if measurement_method=="ofc":
+        measurement_method="head circumference"
+
     if sds <=-6:
-        centile_band = 'This measurement is well below the normal range. Please review its accuracy.'
+        centile_band = 'This ' + measurement_method + ' measurement is well below the normal range. Please review its accuracy.'
     elif sds <=-2.84:
-        centile_band = "This measurement is on or near the 0.4th centile."
+        centile_band = "This " + measurement_method + " measurement is on or near the 0.4th centile."
     elif sds <=-2.5:
-        centile_band = "This measurement is below the normal range."
+        centile_band = "This " + measurement_method + " measurement is below the normal range."
     elif sds <=-2.17: 
-        centile_band = "This measurement is between the 0.4th and 2nd centiles."
+        centile_band = "This " + measurement_method + " measurement is between the 0.4th and 2nd centiles."
     elif sds <=-2.17: 
-        centile_band = "This measurement is between the 0.4th and 2nd centiles."
+        centile_band = "This " + measurement_method + " measurement is between the 0.4th and 2nd centiles."
     elif sds <=-1.83:
-        centile_band = "This measurement is on or near the 2nd centile."
+        centile_band = "This " + measurement_method + " measurement is on or near the 2nd centile."
     elif sds <=-1.5:
-        centile_band = "This measurement is between the 2nd and 9th centiles."
+        centile_band = "This " + measurement_method + " measurement is between the 2nd and 9th centiles."
     elif sds <=-1.16:
-        centile_band = "This measurement is on or near the 9th centile."
+        centile_band = "This " + measurement_method + " measurement is on or near the 9th centile."
     elif sds <=-0.84:
-        centile_band = "This measurement is between the 9th and 25th centiles."
+        centile_band = "This " + measurement_method + " measurement is between the 9th and 25th centiles."
     elif sds <=-0.5:
-        centile_band = "This measurement is on or near the 25th centile."
+        centile_band = "This " + measurement_method + " measurement is on or near the 25th centile."
     elif sds <=-0.17:
-        centile_band = "This measurement is between the 25th and 50th centiles."
+        centile_band = "This " + measurement_method + " measurement is between the 25th and 50th centiles."
     elif sds <=0.17:
-        centile_band = "This measurement is on or near the 50th centile."
+        centile_band = "This " + measurement_method + " measurement is on or near the 50th centile."
     elif sds <=0.5:
-        centile_band = "This measurement is between the 50th and 75th centiles."
+        centile_band = "This " + measurement_method + " measurement is between the 50th and 75th centiles."
     elif sds <=0.84:
-        centile_band = "This measurement is on or near the 75th centile."
+        centile_band = "This " + measurement_method + " measurement is on or near the 75th centile."
     elif sds <=1.16:
-        centile_band = "This measurement is between the 75th and 91st centiles."
+        centile_band = "This " + measurement_method + " measurement is between the 75th and 91st centiles."
     elif sds <=1.5:
-        centile_band = "This measurement is on or near the 91st centile."
+        centile_band = "This " + measurement_method + " measurement is on or near the 91st centile."
     elif sds <=1.83:
-        centile_band = "This measurement is between the 91st and 98th centiles."
+        centile_band = "This " + measurement_method + " measurement is between the 91st and 98th centiles."
     elif sds <=2.17:
-        centile_band = "This measurement is on or near the 98th centile."
+        centile_band = "This " + measurement_method + " measurement is on or near the 98th centile."
     elif sds <=2.5:
-        centile_band = "This measurement is between the 98th and 99.6th centiles."
+        centile_band = "This " + measurement_method + " measurement is between the 98th and 99.6th centiles."
     elif sds <=2.84:
-        centile_band = "This measurement is on or near the 99.6th centile."
+        centile_band = "This " + measurement_method + " measurement is on or near the 99.6th centile."
     elif sds <=6:
-        centile_band= "This measurement is above the normal range."
+        centile_band= "This " + measurement_method + " measurement is above the normal range."
     else:
-        centile_band="This measurement is well above the normal range. Please review its accuracy."
+        centile_band="This " + measurement_method + " measurement is well above the normal range. Please review its accuracy."
 
     return centile_band

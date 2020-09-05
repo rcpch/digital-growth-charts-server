@@ -231,7 +231,7 @@ class Measurement:
                     default_to_youngest_reference=default_to_youngest_reference,
                     born_preterm=born_preterm)
                 height_centile = centile(height_sds)
-                height_centile_band = centile_band_for_centile(height_sds)
+                height_centile_band = centile_band_for_centile(sds=height_sds, measurement_method="height")
                 
                 ## Deprecating comments
                 # comment = interpret(measurement='height', centile=height_centile, age=age, sex=sex)
@@ -282,7 +282,7 @@ class Measurement:
                 default_to_youngest_reference=False, 
                 born_preterm=born_preterm)
             weight_centile = centile(weight_sds)
-            weight_centile_band = centile_band_for_centile(weight_sds)
+            weight_centile_band = centile_band_for_centile(sds=weight_sds, measurement_method="weight")
 
             ## Deprecating comments
             # comment = interpret(measurement='weight', centile=weight_centile, age=age, sex=sex)
@@ -332,7 +332,7 @@ class Measurement:
                     default_to_youngest_reference=default_to_youngest_reference, 
                     born_preterm=born_preterm) ## does not default to youngest reference
                 bmi_centile = centile(z_score=bmi_sds)
-                bmi_centile_band = centile_band_for_centile(bmi_sds)
+                bmi_centile_band = centile_band_for_centile(sds=bmi_sds, measurement_method="bmi")
                 
                 ## Deprecating comments
                 # comment = interpret(measurement='bmi', centile=bmi_centile, age=age, sex=sex)
@@ -380,7 +380,7 @@ class Measurement:
                     default_to_youngest_reference=default_to_youngest_reference, 
                     born_preterm=born_preterm) ## does not default to youngest reference
                 bmi_centile = centile(z_score=bmi_sds)
-                bmi_centile_band=centile_band_for_centile(bmi_sds)
+                bmi_centile_band=centile_band_for_centile(sds=bmi_sds, measurement_method="bmi")
                 
                 ## Deprecating comments
                 # comment = interpret(measurement='bmi', centile=bmi_centile, age=age, sex=sex)
@@ -440,7 +440,7 @@ class Measurement:
                     default_to_youngest_reference=default_to_youngest_reference, 
                     born_preterm=born_preterm)
                 ofc_centile = centile(z_score=ofc_sds)
-                ofc_centile_band = centile_band_for_centile(ofc_sds)
+                ofc_centile_band = centile_band_for_centile(sds=ofc_sds, measurement_method="ofc")
                 ## Deprecating comments
                 # comment = interpret( measurement='ofc', centile=ofc_centile, age=age, sex=sex)
                 # clinician_ofc_comment = comment['clinician_comment']
