@@ -501,10 +501,16 @@ class Measurement:
         # Only those calculations relevant to the measurement_method requested populate the final JSON
         # object.
 
+        if centile_value>99 or centile_value < 1:
+            centile_value=round(centile_value, 1)
+        else:
+            centile_value=int(centile_value)
+        
+
         measurement_calculated_values = {
                                             "measurement_method": measurement_method,
                                             "sds": sds_value, 
-                                            "centile": centile_value, ## this is deprecating
+                                            "centile": centile_value, ## TODO #76 Should only return centiles as integers or 1dp if <1 or >99
                                             "centile_band": centile_band
                                             # "clinician_comment": clinician_comment,
                                             # "lay_comment": lay_comment 
