@@ -8,7 +8,7 @@ import numpy as np
 from datetime import date
 import json
 import pkg_resources
-from .constants import TWENTY_FOUR_WEEKS_GESTATION, TWENTY_FIVE_WEEKS_GESTATION, THIRTY_SEVEN_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION, TERM_LOWER_THRESHOLD_LENGTH_DAYS
+from .constants import TWENTY_FOUR_WEEKS_GESTATION, TWENTY_FIVE_WEEKS_GESTATION, THIRTY_SEVEN_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION, TERM_LOWER_THRESHOLD_LENGTH_DAYS, DECIMAL_AGES
 # import timeit #see below, comment back in if timing functions in this module
 
 """
@@ -192,13 +192,13 @@ def nearest_age_below_index(age: float)->int:
     Uses the NumPy library to do this quickly - identifies the first incidence of a value in a sorted array.
     """
     result_index = 0
-    decimal_ages_as_np_array = np.asarray(decimal_ages)
+    decimal_ages_as_np_array = np.asarray(DECIMAL_AGES)
     idx = np.searchsorted(decimal_ages_as_np_array, age, side="left")
-    if idx > 0 and (idx == len(decimal_ages) or math.fabs(age - decimal_ages[idx-1]) < math.fabs(age - decimal_ages[idx])):
-        result = decimal_ages[idx-1]
+    if idx > 0 and (idx == len(DECIMAL_AGES) or math.fabs(age - DECIMAL_AGES[idx-1]) < math.fabs(age - DECIMAL_AGES[idx])):
+        result = DECIMAL_AGES[idx-1]
         result_index = idx-1
     else:
-        result = decimal_ages[idx]
+        result = DECIMAL_AGES[idx]
         result_index = idx
     if result <= age:
         return result_index
@@ -253,7 +253,7 @@ def get_lms(age: float, measurement: str, sex: str, default_to_youngest_referenc
     
     try:
         #this child is < or > the extremes of the chart
-        assert (age >= decimal_ages[0] or age <= decimal_ages[-1]), 'Cannot be younger than 23 weeks or older than 20y'
+        assert (age >= DECIMAL_AGES[0] or age <= DECIMAL_AGES[-1]), 'Cannot be younger than 23 weeks or older than 20y'
     except IndexError as chart_extremes_msg:
         print(chart_extremes_msg)
     
@@ -270,7 +270,7 @@ def get_lms(age: float, measurement: str, sex: str, default_to_youngest_referenc
             raise ValueError('There is no head circumference data available in girls over 17y or boys over 18y')
 
     age_index_one_below = nearest_age_below_index(age)
-    if age == decimal_ages[age_index_one_below]:
+    if age == DECIMAL_AGES[age_index_one_below]:
         """
         child's age matches a reference age - no interpolation necessary
         defaults to the highest reference if at reference threshold
@@ -369,10 +369,10 @@ def cubic_interpolation( age: float, age_index_below: int, parameter_two_below: 
     t13 = 0.0
     t23 = 0.0
 
-    age_two_below = decimal_ages[age_index_below-1]
-    age_one_below = decimal_ages[age_index_below]
-    age_one_above = decimal_ages[age_index_below+1]
-    age_two_above = decimal_ages[age_index_below+2]
+    age_two_below = DECIMAL_AGES[age_index_below-1]
+    age_one_below = DECIMAL_AGES[age_index_below]
+    age_one_above = DECIMAL_AGES[age_index_below+1]
+    age_two_above = DECIMAL_AGES[age_index_below+2]
     
     t = age
 
@@ -410,8 +410,8 @@ def linear_interpolation( decimal_age: float, age_index_below: int, parameter_on
     """
     
     linear_interpolated_value = 0.0
-    age_below = decimal_ages[age_index_below]
-    age_above = decimal_ages[age_index_below+1]
+    age_below = DECIMAL_AGES[age_index_below]
+    age_above = DECIMAL_AGES[age_index_below+1]
     # linear_interpolated_value = parameter_one_above + (((decimal_age - age_below)*parameter_one_above-parameter_one_below))/(age_above-age_below)
     x_array = [age_below, age_above]
     y_array = [parameter_one_below, parameter_one_above]
