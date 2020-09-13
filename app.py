@@ -143,6 +143,7 @@ def chart_data():
         
         # Prepare data from plotting
         child_data = controllers.create_data_plots(results)
+
         # Retrieve sex of child to select correct centile charts
         sex = results[0]["birth_data"]["sex"]
         
