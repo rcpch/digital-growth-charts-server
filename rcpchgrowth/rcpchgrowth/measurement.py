@@ -273,6 +273,21 @@ class Measurement:
         private class method to return sds and centile for weight meaasurement
         """
 
+<<<<<<< HEAD
+=======
+    def __calculate_weight_sds_centile(
+        self, 
+        sex: str, 
+        age: float, 
+        weight: float, 
+        default_to_youngest_reference: bool=False, 
+        born_preterm: bool = False):
+
+        """
+        private class method to return sds and centile for weight meaasurement
+        """
+
+>>>>>>> origin
         if weight and weight > 0.0:
             weight_sds = sds(
                 age=age, 
@@ -282,7 +297,11 @@ class Measurement:
                 default_to_youngest_reference=False, 
                 born_preterm=born_preterm)
             weight_centile = centile(weight_sds)
+<<<<<<< HEAD
             weight_centile_band = centile_band_for_centile(sds=weight_sds, measurement_method="weight")
+=======
+            weight_centile_band = centile_band_for_centile(weight_sds)
+>>>>>>> origin
 
             ## Deprecating comments
             # comment = interpret(measurement='weight', centile=weight_centile, age=age, sex=sex)
@@ -314,6 +333,18 @@ class Measurement:
         weight: float = 0.0,
         bmi: float = 0.0):
 
+<<<<<<< HEAD
+=======
+    def __calculate_bmi_sds_centile(
+        self, 
+        sex: str, 
+        age: float, 
+        born_preterm: bool = False, 
+        default_to_youngest_reference: bool=False, 
+        height: float = 0.0, 
+        weight: float = 0.0, 
+        bmi: float = 0.0):
+>>>>>>> origin
         """
         This method calculates bmi SDS and centiles. It has been refactored and originally it took a
         height and weight in cm before calculating a bmi which then was used to generate SDS and centile.
@@ -332,7 +363,11 @@ class Measurement:
                     default_to_youngest_reference=default_to_youngest_reference, 
                     born_preterm=born_preterm) ## does not default to youngest reference
                 bmi_centile = centile(z_score=bmi_sds)
+<<<<<<< HEAD
                 bmi_centile_band = centile_band_for_centile(sds=bmi_sds, measurement_method="bmi")
+=======
+                bmi_centile_band = centile_band_for_centile(bmi_sds)
+>>>>>>> origin
                 
                 ## Deprecating comments
                 # comment = interpret(measurement='bmi', centile=bmi_centile, age=age, sex=sex)
@@ -380,7 +415,11 @@ class Measurement:
                     default_to_youngest_reference=default_to_youngest_reference, 
                     born_preterm=born_preterm) ## does not default to youngest reference
                 bmi_centile = centile(z_score=bmi_sds)
+<<<<<<< HEAD
                 bmi_centile_band=centile_band_for_centile(sds=bmi_sds, measurement_method="bmi")
+=======
+                bmi_centile_band=centile_band_for_centile(bmi_sds)
+>>>>>>> origin
                 
                 ## Deprecating comments
                 # comment = interpret(measurement='bmi', centile=bmi_centile, age=age, sex=sex)
@@ -440,7 +479,11 @@ class Measurement:
                     default_to_youngest_reference=default_to_youngest_reference, 
                     born_preterm=born_preterm)
                 ofc_centile = centile(z_score=ofc_sds)
+<<<<<<< HEAD
                 ofc_centile_band = centile_band_for_centile(sds=ofc_sds, measurement_method="ofc")
+=======
+                ofc_centile_band = centile_band_for_centile(ofc_sds)
+>>>>>>> origin
                 ## Deprecating comments
                 # comment = interpret( measurement='ofc', centile=ofc_centile, age=age, sex=sex)
                 # clinician_ofc_comment = comment['clinician_comment']
@@ -510,7 +553,11 @@ class Measurement:
         measurement_calculated_values = {
                                             "measurement_method": measurement_method,
                                             "sds": sds_value, 
+<<<<<<< HEAD
                                             "centile": centile_value, ## TODO #76 Should only return centiles as integers or 1dp if <1 or >99
+=======
+                                            "centile": centile_value, ## this is deprecating
+>>>>>>> origin
                                             "centile_band": centile_band
                                             # "clinician_comment": clinician_comment,
                                             # "lay_comment": lay_comment 
