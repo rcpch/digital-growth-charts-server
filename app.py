@@ -1,4 +1,4 @@
-# imports for API only
+### IMPORTS
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response, jsonify, session
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
@@ -12,11 +12,21 @@ import json
 import controllers as controllers
 
 
-app = Flask(__name__, static_folder="static")
-app.config["SECRET_KEY"] = "UK_WHO" #not very secret - this will need complicating and adding to config
-CORS(app) # TODO #75
+### ENVIRONMENT
+### Load the secret key from the ENV if it has been set
+if "FLASK_SECRET_KEY" in environ:
+    app.secret_key = environ["FLASK_SECRET_KEY"]
+    print(f"{OKGREEN} * FLASK_SECRET_KEY was loaded from the environment{ENDC}")
+# Otherwise create a new one. (NB: We don't need session persistence between reboots of the app)
+else:
+    app.secret_key = urandom(16)
+    print(f"{OKGREEN} * A new SECRET_KEY for Flask was automatically generated{ENDC}")
 
+
+### FLASK
+app = Flask(__name__, static_folder="static")
 from app import app
+CORS(app)
 
 """
 TODO: TO BE DEPRECATED
