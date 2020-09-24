@@ -1,18 +1,26 @@
 openapi: 3.0.0
+
 info:
-  version: 0.1.1
+  version: 0.0.2
   title: Royal College of Paediatrics and Child Health Digital Growth Charts API
+  description: API for calculation of growth parameters
+  termsOfService: dev.rcpch.ac.uk
+  contact: 
+    name: API Support
+    url: dev.rcpch.ac.uk
+    email: support@example.com
+  license:
+    name: GNU Affero General Public License,
+    url: https://www.gnu.org/licenses/agpl-3.0.en.html
 
 servers:
-  - url: 'http://localhost:5000/api/v1/'
-    description: for local testing
-  - url: 'https://rcpch-digital-growth-chart-api.herokuapp.com/api/v1/'
-    description: temporary remote testing endpoint
+  - url: 'https//api.rcpch.ac.uk/growth'
+    description: 'RCPCH Production API Gateway'
 
 paths:
-  /uk-who:
+  /growth/ukwho/:
     /calculations:
-      get:
+      post:
         summary: 'Calculates digital growth chart parameters'
         parameters:
           - in: query
@@ -111,6 +119,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      /references:
+        get:
 components:
   schemas:
     Measurement:
