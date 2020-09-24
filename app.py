@@ -56,8 +56,9 @@ Centile Calculations API route. Expects parameters in the body as below:
 """
 # JSON CALCULATION OF MULTIPLE MEASUREMENT METHODS AT SAME TIME
 # CURRENTLY USED BY THE FLASK DEMO CLIENT
-@app.route("ukwho/json/calculations", methods=["POST"])
-def ukwho_json_calculations():
+# MARKED FOR DEPRECATION
+@app.route("/growth/ukwho/height_weight_ofc_bmi_same_day", methods=["POST"])
+def ukwho_height_weight_ofc_bmi_same_day():
         # check here for all the right query params, if not present raise error
     response = controllers.perform_calculations(
         birth_date=datetime.strptime(request.form["birth_date"], "%Y-%m-%d"),
@@ -71,9 +72,10 @@ def ukwho_json_calculations():
     )
     return jsonify(response)
 
+
 # JSON CALCULATION OF SINGLE MEASUREMENT_METHOD ('height', 'weight', 'bmi', 'ofc'): Note that BMI must be precalculated for this function
 # USED BY THE REACT DEMO CLIENT
-@app.route("ukwho/json/calculation", methods=["POST"])
+@app.route("/growth/ukwho/measurement_method", methods=["POST"])
 def ukwho_json_calculation():
     # check here for all the right query params, if not present raise error
     final_calculations = controllers.perform_calculation(
@@ -87,25 +89,6 @@ def ukwho_json_calculation():
     )
     return jsonify(final_calculations)
 
-# JSON CALCULATION OF SERIAL DATA
-@app.route("ukwho/json/serial_data_calculations", methods=["POST"])
-def ukwho_json_serial_data_calculations():
-    # check here for all the right query params, if not present raise error
-    serial_data = json.loads(request.form["uploaded_data"])
-    response = controllers.prepare_data_as_array_of_measurement_objects(
-        uploaded_data=serial_data
-    )
-    return jsonify(response)
-
-
-# FHIR SINGLE CALCULATION
-@app.route("ukwho/fhir/calculation", methods=["POST"])
-def ukwho_fhir_calculation():
-    return jsonify({
-        "path": "/api/v1/fhir",
-        "status": "not yet implemented"
-        })
-
 
 """
 Centile References Library API route
@@ -113,8 +96,8 @@ Does not expect any parameters
 Returns data on the growth references that we are aware of
 To add a new reference please submit a pull request
 """
-@app.route("utilities/json/references", methods=["GET"])
-def references():
+@app.route("/growth/utilities/references", methods=["GET"])
+def utilities_references():
     references_data = controllers.references()
     return jsonify(references_data)
 
@@ -125,7 +108,7 @@ requires results data params
 Returns HTML content derived from the README.md of the API repository
 To amend the instructions please submit a pull request
 """
-@app.route("ukwho/json/chart_data", methods=["POST"])
+@app.route("/growth/ukwho/chart_data", methods=["POST"])
 def chart_data():
     results=json.loads(request.form["results"])
     unique_child = request.form["unique_child"]
@@ -153,19 +136,15 @@ def chart_data():
     })
 
 
-"""
-Instructions API route
-Does not expect any parameters
-Returns HTML content derived from the README.md of the API repository
-To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
-"""
-@app.route("utilities/json/instructions", methods=["GET"])
-def instructions():
-    #open README.md file
-    file = path.join(path.abspath(path.dirname(__file__)), "README.md")
-    with open(file) as markdown_file:
-        html = markdown.markdown(markdown_file.read())
-    return jsonify(html)
+
+
+
+
+@app.route("/growth/ukwho/spreadsheet", methods=["POST"])
+def ukwho_spreadsheet():
+    csv_file = request.files["csv_file"]
+    calculated_results = import_csv_file(csv_file)
+    return calculated_results
 
 
 """
@@ -180,8 +159,8 @@ Fictional Child Data Generator API route. Expects query params as below:
     starting_sds
 Returns a series of fictional data for a child
 """
-@app.route("ukwho/json/fictionalchild", methods=["POST"])
-def ukwho_fictionalchild():
+@app.route("growth/utilities/create_fictional_child_measurements", methods=["POST"])
+def utilities_create_fictional_child_measurements():
     fictional_child_data = controllers.generate_fictional_data(
         drift_amount = float(request.form["drift_amount"]),
         intervals = int(request.form["intervals"]),
@@ -195,12 +174,20 @@ def ukwho_fictionalchild():
     return jsonify(fictional_child_data)
 
 
-@app.route("ukwho/json/spreadsheet", methods=["POST"])
-def ukwho_spreadsheet():
-    csv_file = request.files["csv_file"]
-    calculated_results = import_csv_file(csv_file)
-    return calculated_results
-   
+"""
+Instructions API route
+Does not expect any parameters
+Returns HTML content derived from the README.md of the API repository
+To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
+"""
+@app.route("growth/utilities/instructions", methods=["GET"])
+def utilities_instructions():
+    #open README.md file
+    file = path.join(path.abspath(path.dirname(__file__)), "README.md")
+    with open(file) as markdown_file:
+        html = markdown.markdown(markdown_file.read())
+    return jsonify(html)
+
 
 if __name__ == "__main__":
     app.run()
