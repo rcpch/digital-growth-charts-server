@@ -1,14 +1,16 @@
-### IMPORTS
+### LIBRARY IMPORTS
+from datetime import datetime
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response, jsonify, session
 from flask_cors import CORS
-from werkzeug.utils import secure_filename
-from os import path, listdir, remove
-from datetime import datetime
-from pathlib import Path
-from controllers import import_csv_file
 from flask_restx import Resource, Api, reqparse
-import markdown
 import json
+import markdown
+from os import path, listdir, remove
+from pathlib import Path
+from werkzeug.utils import secure_filename
+
+### INTERNAL IMPORTS
+from controllers import import_csv_file
 import controllers as controllers
 
 
