@@ -1,22 +1,33 @@
-### LIBRARY IMPORTS
-from app import app
-from datetime import datetime
-from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response, jsonify
-from flask_cors import CORS
-from flask_restx import Resource, Api, reqparse
 import json
-import markdown
-from os import path, listdir, remove
+from datetime import datetime
+from os import environ, listdir, path, remove, urandom
 from pathlib import Path
+
+import markdown
+from flask import (Flask, flash, jsonify, make_response, redirect,
+                   render_template, request, send_from_directory, url_for)
+from flask_cors import CORS
+from flask_restx import Api, Resource, reqparse
 from werkzeug.utils import secure_filename
 
-### INTERNAL IMPORTS
-from controllers import import_csv_file
 import controllers as controllers
+from controllers import import_csv_file
 
 
-### ENVIRONMENT
-### Load the secret key from the ENV if it has been set
+#######################
+##### FLASK SETUP #####
+app = Flask(__name__, static_folder="static")
+CORS(app)
+
+# Declare shell colour variables for logging output
+OKBLUE = "\033[94m"
+OKGREEN = "\033[92m"
+WARNING = "\033[93m"
+FAIL = "\033[91m"
+ENDC = "\033[0m"
+
+# ENVIRONMENT
+# Load the secret key from the ENV if it has been set
 if "FLASK_SECRET_KEY" in environ:
     app.secret_key = environ["FLASK_SECRET_KEY"]
     print(f"{OKGREEN} * FLASK_SECRET_KEY was loaded from the environment{ENDC}")
@@ -25,10 +36,10 @@ else:
     app.secret_key = urandom(16)
     print(f"{OKGREEN} * A new SECRET_KEY for Flask was automatically generated{ENDC}")
 
+from app import app     # position of this import is important. Don't allow it to be autoformatted alphabetically to the top of the imports!
 
-### FLASK
-app = Flask(__name__, static_folder="static")
-CORS(app)
+##### END FLASK SETUP #####
+###########################
 
 
 """
@@ -56,9 +67,11 @@ Centile Calculations API route. Expects parameters in the body as below:
 # JSON CALCULATION OF MULTIPLE MEASUREMENT METHODS AT SAME TIME
 # CURRENTLY USED BY THE FLASK DEMO CLIENT
 # MARKED FOR DEPRECATION
+
+
 @app.route("/growth/ukwho/height_weight_ofc_bmi_same_day", methods=["POST"])
 def ukwho_height_weight_ofc_bmi_same_day():
-        # check here for all the right query params, if not present raise error
+    # check here for all the right query params, if not present raise error
     response = controllers.perform_calculations(
         birth_date=datetime.strptime(request.form["birth_date"], "%Y-%m-%d"),
         observation_date=datetime.strptime(
@@ -97,6 +110,8 @@ Does not expect any parameters
 Returns data on the growth references that we are aware of
 To add a new reference please submit a pull request
 """
+
+
 @app.route("/growth/utilities/references", methods=["GET"])
 def utilities_references():
     references_data = controllers.references()
@@ -109,6 +124,8 @@ requires results data params
 Returns HTML content derived from the README.md of the API repository
 To amend the instructions please submit a pull request
 """
+
+
 @app.route("/growth/ukwho/chart_data", methods=["POST"])
 def chart_data():
     results = json.loads(request.form["results"])
@@ -118,7 +135,7 @@ def chart_data():
     born_preterm = (results[0]["birth_data"]["gestation_weeks"]
                     != 0 and results[0]["birth_data"]["gestation_weeks"] < 37)
     if unique_child == "true":
-        #data are serial data points for a single child
+        # data are serial data points for a single child
         # Prepare data from plotting
         child_data = controllers.create_data_plots(results)
 
@@ -137,10 +154,6 @@ def chart_data():
         "child_data": child_data,
         "centile_data": centiles
     })
-
-
-
-
 
 
 @app.route("/growth/ukwho/spreadsheet", methods=["POST"])
@@ -162,6 +175,8 @@ Fictional Child Data Generator API route. Expects query params as below:
     starting_sds
 Returns a series of fictional data for a child
 """
+
+
 @app.route("growth/utilities/create_fictional_child_measurements", methods=["POST"])
 def utilities_create_fictional_child_measurements():
     fictional_child_data = controllers.generate_fictional_data(
@@ -183,9 +198,11 @@ Does not expect any parameters
 Returns HTML content derived from the README.md of the API repository
 To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
 """
+
+
 @app.route("growth/utilities/instructions", methods=["GET"])
 def utilities_instructions():
-    #open README.md file
+    # open README.md file
     file = path.join(path.abspath(path.dirname(__file__)), "README.md")
     with open(file) as markdown_file:
         html = markdown.markdown(markdown_file.read())
