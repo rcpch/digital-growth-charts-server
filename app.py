@@ -6,12 +6,8 @@ from os import path, listdir, remove
 from datetime import datetime
 from pathlib import Path
 from controllers import import_csv_file
-
-# imports for client only
+from flask_restx import Resource, Api, reqparse
 import markdown
-import requests
-
-# imports for both
 import json
 import controllers as controllers
 
