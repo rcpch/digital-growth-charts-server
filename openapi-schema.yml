@@ -14,12 +14,12 @@ info:
     url: https://www.gnu.org/licenses/agpl-3.0.en.html
 
 servers:
-  - url: 'https//api.rcpch.ac.uk/growth'
+  - url: 'https//api.rcpch.ac.uk/'
     description: 'RCPCH Production API Gateway'
 
 paths:
   ### MULTIPLE CALCULATIONS
-  /growth/ukwho/calculations:
+  /ukwho/calculations:
     post:
     summary: 'Calculates multiple digital growth chart parameters'
     parameters:
@@ -105,10 +105,30 @@ paths:
               $ref: '#/components/schemas/Error'
 
   ### SINGLE CALCULATION
-  /growth/ukwho/calculation:
+  /ukwho/calculation:
     post:
-    summary: 
-        - name: measurement_method
+    summary: Returns a single calculation for weight-centile, height-centile, ofc-centile or BMI-centile.
+    description: >
+      This endpoint accepts a patient observation, and a measurement_method
+    parameters:
+
+      - name: birth_date
+        in: header
+        description: date of birth of the patient in YYYY-MM-DD ISO8601 format
+        required: true
+        schema:
+            type: string
+            format: date
+
+      - name: observation_date
+        in: header
+        description: The date that the measurement was taken, in YYYY-MM-DD ISO8601 format
+        required: true
+        schema:
+            type: string  
+            format: date
+
+      - name: measurement_method
         in: header
         description: The type of measurement performed ('height', 'weight', 'bmi' or 'ofc') on the infant or child. The value 
             is supplied as observation_value. The measurements represent height in cm, weight in kg, body mass index in kg/m² and occipitofrontal circumference (head circumference) in cm.
@@ -117,27 +137,57 @@ paths:
             type: string
             enum: ['height', 'weight', 'bmi', 'ofc']
 
-              - name: observation_value
+      - name: observation_value
         in: query
         description: The value of the measurement supplied. Used in conjunction with type of measurement performed ('height', 'weight', 'bmi' or 'ofc') on the infant or child.
         required: true
         schema:
             type: number
 
-  ### CHART DATA
-  /growth/ukwho/chart_data:
+      - name: sex
+        in: header
+        description: The sex of the patient, which can either be 'male' or 'female'
+        required: true
+        schema:
+            type: string
+            enum: ['female', 'male']
 
-  ### SPREADSHEET
-  /growth/ukwho/spreadsheet:
+      - name: gestation_weeks
+        in: header
+        description: >
+            The number of completed weeks of gestation at which the patient was born.
+            This enables Gestational Age correction if the child was not born at term.
+            See also the other parameter `gestation_days` - both are usually required.
+        required: false
+        schema:
+            type: number
+
+      - name: gestation_days
+        in: header
+        description: >
+            The number of additional days _beyond the completed weeks of gestation_ at which the patient was born.
+            This enables Gestational Age correction if the child was not born at term. See also the other parameter
+            `gestation_weeks` - both are usually required.
+        required: false
+        schema:
+            type: number
+
+  ### CHART DATA
+  /ukwho/chart_data:
+    get:
+    summary: Returns chart plotting data 
+
+  ### SPREADSHEET UPLOAD
+  /ukwho/spreadsheet:
 
   ### GROWTH REFERENCES
-  /growth/utilities/references:
+  /utilities/references:
     get:
-      summary: 'Returns a JSON object containin details of all the growth references that we have collected'
+      summary: Returns a JSON object containin details of all the growth references that we have collected as part of the Digital Growth Charts project
     responses:
 
   ### INSTRUCTIONS
-  /growth/utilities/instructions:
+  /utilities/instructions:
 
 
 components:
