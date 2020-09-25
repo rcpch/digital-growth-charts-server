@@ -1,7 +1,5 @@
-aniso8601==8.0.0
 appdirs==1.4.3
 astroid==2.4.0
-attrs==20.2.0
 autopep8==1.5.4
 cachelib==0.1.1
 certifi==2020.4.5.2
@@ -13,7 +11,6 @@ filelock==3.0.12
 Flask==1.1.2
 Flask-Cors==3.0.8
 Flask-Dropzone==1.5.4
-flask-restx==0.2.0
 Flask-Session==0.3.2
 Flask-WTF==0.14.3
 gunicorn==20.0.4
@@ -23,7 +20,6 @@ isort==4.3.21
 itsdangerous==1.1.0
 jdcal==1.4.1
 Jinja2==2.11.2
-jsonschema==3.2.0
 lazy-object-proxy==1.4.3
 Markdown==2.6.11
 MarkupSafe==1.1.1
@@ -32,9 +28,9 @@ numpy==1.18.4
 openpyxl==3.0.4
 pandas==1.0.4
 pbr==5.4.5
+pip-autoremove==0.9.1
 pycodestyle==2.6.0
 pylint==2.5.0
-pyrsistent==0.17.3
 python-dateutil==2.8.1
 python-dotenv==0.14.0
 pytz==2020.1
