@@ -1,4 +1,5 @@
 apispec==3.3.2
+apispec-webframeworks==0.5.2
 appdirs==1.4.3
 astroid==2.4.0
 attrs==20.2.0
