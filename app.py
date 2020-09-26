@@ -54,17 +54,16 @@ spec = APISpec(
     version="0.0.3",
     openapi_version="3.0.2",
     info=dict(
-        description="Royal College of Paediatrics and Child Health Digital Growth Charts API Server"),
+        description="Royal College of Paediatrics and Child Health Digital Growth Charts API Server",
+        license={"name": "GNU Affero General Public License",
+                 "url": "https://www.gnu.org/licenses/agpl-3.0.en.html"}),
     plugins=[MarshmallowPlugin(), FlaskPlugin()],
     servers=[{"url": 'https://api.rcpch.ac.uk/',
               "description": 'RCPCH Production API Gateway'},
              {"url": 'https://localhost:5000/',
-              "description": 'Your local development API'}]
+              "description": 'Your local development API'}],
 )
 
-# license:
-#     name: GNU Affero General Public License,
-#     url: https: // www.gnu.org / licenses / agpl - 3.0.en.html
 
 ##### END API SPEC ########
 ###########################
@@ -74,7 +73,7 @@ spec = APISpec(
 # USED BY THE FLASK DEMO CLIENT
 @app.route("/uk-who/calculations", methods=["POST"])
 def ukwho_calculations():
-    """Multiple Calculations API. Returns height centile
+    """Multiple Calculations API. Returns centiles for height, weight, BMI and OFC when supplied the required input values.
     ---
     post:
       parameters:
@@ -83,6 +82,7 @@ def ukwho_calculations():
       summary: 'Calculates multiple digital growth chart parameters'
       responses:
         200:
+          description: "Centile calculations corresponding to the supplied data"
           content:
             application/json:
               schema: MultipleCalculationsResponseSchema
@@ -101,25 +101,24 @@ def ukwho_calculations():
     return jsonify(response)
 
 
-spec.components.schema(
-    "Calculations", schema=MultipleCalculationsResponseSchema)
+spec.components.schema("Calculations", schema=MultipleCalculationsResponseSchema)
 with app.test_request_context():
     spec.path(view=ukwho_calculations)
-
-# JSON CALCULATION OF SINGLE MEASUREMENT_METHOD ('height', 'weight', 'bmi', 'ofc'): Note that BMI must be precalculated for this function
-# USED BY THE REACT DEMO CLIENT
 
 
 @app.route("/uk-who/calculation", methods=["POST"])
 def ukwho_calculation():
-    """Single Calculations API.
+    """Single Calculations API. Used by the React demo client.
+    JSON CALCULATION OF SINGLE MEASUREMENT_METHOD ('height', 'weight', 'bmi', 'ofc'): Note that BMI must be precalculated for this function
     ---
     post:
       parameters:
       - in: header
         schema: SingleCalculationRequestParameters
+      summary: 'Calculates single digital growth chart parameters'
       responses:
         200:
+          description: "Centile calculation (single) according to the supplied data"
           content:
             application/json:
               schema: SingleCalculationResponseSchema
@@ -141,30 +140,35 @@ spec.components.schema("Calculation", schema=SingleCalculationResponseSchema)
 with app.test_request_context():
     spec.path(view=ukwho_calculation)
 
-"""
-Centile References Library API route
-Does not expect any parameters
-Returns data on the growth references that we are aware of
-To add a new reference please submit a pull request
-"""
 
 
 @app.route("/growth/utilities/references", methods=["GET"])
 def utilities_references():
+    """
+    Centile References Library API route. Does not expect any parameters. Returns data on the growth reference data sounrces that we are aware of in this project. To add a new reference please submit a pull request
+    ---
+    get:
+      responses:
+        200:
+          description: "Growth reference data"
+          content:
+            application/json:
+              schema: ReferencesSchema
+    """
     references_data = controllers.references()
     return jsonify(references_data)
 
 
-"""
-Chart data API route
-requires results data params
-Returns HTML content derived from the README.md of the API repository
-To amend the instructions please submit a pull request
-"""
 
 
 @app.route("/growth/ukwho/chart_data", methods=["POST"])
 def chart_data():
+    """
+    Chart data API route
+    requires results data params
+    Returns HTML content derived from the README.md of the API repository
+    To amend the instructions please submit a pull request
+    """
     results = json.loads(request.form["results"])
     unique_child = request.form["unique_child"]
     # unique_child = request.args["unique_child"]
