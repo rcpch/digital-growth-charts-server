@@ -18,93 +18,92 @@ servers:
     description: 'RCPCH Production API Gateway'
 
 paths:
-  /growth/ukwho/:
-    /calculations:
-      post:
-        summary: 'Calculates digital growth chart parameters'
-        parameters:
-          - in: query
-            name: birth_date
-            description: The date of birth of the patient
-            required: true
-            schema:
-              type: string
-              format: date
+    /growth/ukwho/calculations:
+    post:
+    summary: 'Calculates digital growth chart parameters'
+    parameters:
+        - in: header
+        name: birth_date
+        description: date of birth of the patient in YYYY-MM-DD ISO8601 format
+        required: true
+        schema:
+            type: string
+            format: date
 
-          - in: query
-            name: observation_date
-            description: The date of the observation (height, weight) taken of the patient
-            required: true
-            schema:
-              type: string  
-              format: date
-          
-          - in: query
-            name: measurement_method
-            description: The type of measurement performed ('height', 'weight', 'bmi' or 'ofc') on the infant or child. The value 
-              is supplied as observation_value. The measurements represent height in cm, weight in kg, body mass index in kg/m² and occipitofrontal circumference (head circumference) in cm.
-            required: true
-            schema:
-              type: string
-              enum: ['height', 'weight', 'bmi', 'ofc']
-          
-          - in: query
-            name: observation_value
-            description: The value of the measurement supplied. Used in conjunction with type of measurement performed ('height', 'weight', 'bmi' or 'ofc') on the infant or child.
-            required: true
-            schema:
-              type: number
+        - in: header
+        name: observation_date
+        description: The date of the observation (height, weight) taken of the patient
+        required: true
+        schema:
+            type: string  
+            format: date
+        
+        - in: header
+        name: measurement_method
+        description: The type of measurement performed ('height', 'weight', 'bmi' or 'ofc') on the infant or child. The value 
+            is supplied as observation_value. The measurements represent height in cm, weight in kg, body mass index in kg/m² and occipitofrontal circumference (head circumference) in cm.
+        required: true
+        schema:
+            type: string
+            enum: ['height', 'weight', 'bmi', 'ofc']
+        
+        - in: query
+        name: observation_value
+        description: The value of the measurement supplied. Used in conjunction with type of measurement performed ('height', 'weight', 'bmi' or 'ofc') on the infant or child.
+        required: true
+        schema:
+            type: number
 
-          - in: query
-            name: height_in_cm
-            description: The height of the patient, which MUST be in centimetres to get correct results [TO BE DEPRECATED]
-            required: false
-            schema:
-              type: number
+        - in: query
+        name: height_in_cm
+        description: The height of the patient, which MUST be in centimetres to get correct results [TO BE DEPRECATED]
+        required: false
+        schema:
+            type: number
 
-          - in: query
-            name: weight_in_kg
-            description: The weight of the patient, which MUST be in kilograms to get correct results [TO BE DEPRECATED]
-            required: false
-            schema:
-              type: number
+        - in: query
+        name: weight_in_kg
+        description: The weight of the patient, which MUST be in kilograms to get correct results [TO BE DEPRECATED]
+        required: false
+        schema:
+            type: number
 
-          - in: query
-            name: head_circ_in_cm
-            description: > 
-              The head circumference (also described as occipito-frontal circumference) of the patient,
-              which **must** be in centimetres to get correct results. [TO BE DEPRECATED]
-            required: false
-            schema:
-              type: number
+        - in: query
+        name: head_circ_in_cm
+        description: > 
+            The head circumference (also described as occipito-frontal circumference) of the patient,
+            which **must** be in centimetres to get correct results. [TO BE DEPRECATED]
+        required: false
+        schema:
+            type: number
 
-          - in: query
-            name: sex
-            description: The sex of the patient, which can either be 'male' or 'female'
-            required: true
-            schema:
-              type: string
-              enum: ['female', 'male']
+        - in: query
+        name: sex
+        description: The sex of the patient, which can either be 'male' or 'female'
+        required: true
+        schema:
+            type: string
+            enum: ['female', 'male']
 
-          - in: query
-            name: gestation_weeks
-            description: >
-              The number of completed weeks of gestation at which the patient was born.
-              This enables Gestational Age correction if the child was not born at term.
-              See also the other parameter `gestation_days` - both are usually required.
-            required: false
-            schema:
-              type: number
+        - in: query
+        name: gestation_weeks
+        description: >
+            The number of completed weeks of gestation at which the patient was born.
+            This enables Gestational Age correction if the child was not born at term.
+            See also the other parameter `gestation_days` - both are usually required.
+        required: false
+        schema:
+            type: number
 
-          - in: query
-            name: gestation_days
-            description: >
-              The number of additional days _beyond the completed weeks of gestation_ at which the patient was born.
-              This enables Gestational Age correction if the child was not born at term. See also the other parameter
-              `gestation_weeks` - both are usually required.
-            required: false
-            schema:
-              type: number
+        - in: query
+        name: gestation_days
+        description: >
+            The number of additional days _beyond the completed weeks of gestation_ at which the patient was born.
+            This enables Gestational Age correction if the child was not born at term. See also the other parameter
+            `gestation_weeks` - both are usually required.
+        required: false
+        schema:
+            type: number
 
       responses:
         '200':
