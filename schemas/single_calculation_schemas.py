@@ -13,7 +13,7 @@ class SingleCalculationRequestParameters(Schema):
     measurement_method = fields.String(
         required=True,
         enum=["height", "weight", "bmi", "ofc"],
-        description="The type of measurement performed on the infant or child (`height`, `weight`, `bmi` or `ofc`). The value of this measurement is supplied as  `observation_value`. The measurements represent height in cm, weight in kg, body mass index in kg / m² and occipitofrontal circumference (head circumference) in cm.")
+        description="The type of measurement performed on the infant or child (`height`, `weight`, `bmi` or `ofc`). The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre²** and occipitofrontal circumference (head circumference, OFC) **in centimetres**.")
     observation_value = fields.Float(
         required=True,
         description="The value of the measurement supplied. Used in conjunction with type of measurement performed(`height`, `weight`, `bmi` or `ofc`) on the infant or child.")
@@ -29,5 +29,4 @@ class SingleCalculationRequestParameters(Schema):
 
 class SingleCalculationResponseSchema(Schema):
     # Defines the schema of the API response. This is compiled into the openAPI spec.
-    height = fields.Nested(MeasurementResponseSchema())
-    weight = fields.Nested(MeasurementResponseSchema())
+    calculation = fields.Nested(MeasurementResponseSchema())

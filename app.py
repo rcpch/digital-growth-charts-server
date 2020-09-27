@@ -15,7 +15,8 @@ from werkzeug.utils import secure_filename
 import controllers as controllers
 from controllers import import_csv_file
 from schemas import (SingleCalculationRequestParameters, SingleCalculationResponseSchema,
-                     MultipleCalculationsRequestParameters, MultipleCalculationsResponseSchema,)
+                     MultipleCalculationsRequestParameters, MultipleCalculationsResponseSchema,
+                     ReferencesResponseSchema)
 
 
 #######################
@@ -108,7 +109,8 @@ with app.test_request_context():
 
 @app.route("/uk-who/calculation", methods=["POST"])
 def ukwho_calculation():
-    """Single Calculations API. Used by the React demo client.
+    """Single Calculations API.
+    (Used by the React demo client)
     JSON CALCULATION OF SINGLE MEASUREMENT_METHOD ('height', 'weight', 'bmi', 'ofc'): Note that BMI must be precalculated for this function
     ---
     post:
@@ -123,7 +125,7 @@ def ukwho_calculation():
             application/json:
               schema: SingleCalculationResponseSchema
     """
-    final_calculations = controllers.perform_calculation(
+    calculation = controllers.perform_calculation(
         birth_date=datetime.strptime(request.form["birth_date"], "%Y-%m-%d"),
         observation_date=datetime.strptime(
             request.form["observation_date"], "%Y-%m-%d"),
@@ -133,30 +135,12 @@ def ukwho_calculation():
         gestation_weeks=int(request.form["gestation_weeks"]),
         gestation_days=int(request.form["gestation_days"])
     )
-    return jsonify(final_calculations)
+    return jsonify(calculation)
 
 
 spec.components.schema("Calculation", schema=SingleCalculationResponseSchema)
 with app.test_request_context():
     spec.path(view=ukwho_calculation)
-
-
-
-@app.route("/growth/utilities/references", methods=["GET"])
-def utilities_references():
-    """
-    Centile References Library API route. Does not expect any parameters. Returns data on the growth reference data sounrces that we are aware of in this project. To add a new reference please submit a pull request
-    ---
-    get:
-      responses:
-        200:
-          description: "Growth reference data"
-          content:
-            application/json:
-              schema: ReferencesSchema
-    """
-    references_data = controllers.references()
-    return jsonify(references_data)
 
 
 
@@ -197,29 +181,52 @@ def chart_data():
     })
 
 
-@app.route("/growth/ukwho/spreadsheet", methods=["POST"])
+@app.route("/uk-who/spreadsheet", methods=["POST"])
 def ukwho_spreadsheet():
     csv_file = request.files["csv_file"]
     calculated_results = import_csv_file(csv_file)
     return calculated_results
 
 
-"""
-Fictional Child Data Generator API route. Expects query params as below:
-    drift_amount
-    intervals
-    interval_type
-    measurement_requested
-    number_of_measurements
-    sex
-    starting_age
-    starting_sds
-Returns a series of fictional data for a child
-"""
+@app.route("/utilities/references", methods=["GET"])
+def utilities_references():
+    """
+    Centile References Library API route. Does not expect any parameters. Returns data on the growth reference data sources that this project is aware of. To add a new reference please submit a pull request, create a GitHub Issue, or otherwise contact the Growth Charts team.
+    ---
+    get:
+      responses:
+        200:
+          description: "Reference data"
+          content:
+            application/json:
+              schema: ReferencesResponseSchema
+    """
+    references_data = controllers.references()
+    return jsonify(references_data)
 
 
-@app.route("/growth/utilities/create_fictional_child_measurements", methods=["POST"])
+spec.components.schema("References", schema=ReferencesResponseSchema)
+with app.test_request_context():
+    spec.path(view=utilities_references)
+
+
+@app.route("/utilities/create_fictional_child_measurements", methods=["POST"])
 def utilities_create_fictional_child_measurements():
+    """
+    Fictional Child Data Generator API route. Returns a series of fictional measurement data for a child.
+    Used for testing, demonstration and research purposes.
+    ---
+    post:
+      parameters:
+      - in: header
+        schema: FictionalChildRequestParameters
+      responses:
+        200:
+          description: "'Fictional child' test data generation endpoint"
+          content:
+            application/json:
+              schema: FictionalChildResponseSchema
+    """
     fictional_child_data = controllers.generate_fictional_data(
         drift_amount=float(request.form["drift_amount"]),
         intervals=int(request.form["intervals"]),
@@ -233,16 +240,13 @@ def utilities_create_fictional_child_measurements():
     return jsonify(fictional_child_data)
 
 
-"""
-Instructions API route
-Does not expect any parameters
-Returns HTML content derived from the README.md of the API repository
-To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
-"""
-
-
 @app.route("/utilities/instructions", methods=["GET"])
 def utilities_instructions():
+    """
+    Instructions API route. Does not expect any parameters.
+    Returns HTML content derived from the README.md of the API repository
+    To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
+    """
     # open README.md file
     file = path.join(path.abspath(path.dirname(__file__)), "README.md")
     with open(file) as markdown_file:

@@ -19,14 +19,16 @@ components:
       type: object
     Calculation:
       properties:
-        height:
-          $ref: '#/components/schemas/MeasurementResponse'
-        weight:
+        calculation:
           $ref: '#/components/schemas/MeasurementResponse'
       type: object
     Calculations:
       properties:
+        bmi:
+          $ref: '#/components/schemas/MeasurementResponse'
         height:
+          $ref: '#/components/schemas/MeasurementResponse'
+        ofc:
           $ref: '#/components/schemas/MeasurementResponse'
         weight:
           $ref: '#/components/schemas/MeasurementResponse'
@@ -63,6 +65,40 @@ components:
         measurement_dates:
           $ref: '#/components/schemas/MeasurementDates'
       type: object
+    Reference:
+      properties:
+        acknowledgement_text:
+          description: Acknowledgement text regarding the origin of the reference
+            data (if available)
+          type: string
+        author:
+          description: The published authors of the Reference data (if available)
+          type: string
+        chart_name:
+          description: The common name of the reference data (if available)
+          type: string
+        date:
+          description: Date of publication of the reference data (if available)
+          type: string
+        description:
+          description: 'Description of the reference data: type of data, intended
+            usage, limitations, applicable age ranges (if available)'
+          type: string
+        file_name:
+          description: File name of the reference within our codebase (if available)
+          type: string
+        publication_reference:
+          description: Standard publication citation (if available)
+          type: string
+        publication_url:
+          description: URL for the publication (if available)
+          type: string
+      type: object
+    References:
+      properties:
+        references:
+          $ref: '#/components/schemas/Reference'
+      type: object
 info:
   description: Royal College of Paediatrics and Child Health Digital Growth Charts
     API Server
@@ -76,22 +112,12 @@ paths:
   /uk-who/calculations:
     post:
       parameters:
-      - description: The sex of the patient, as a string value which can either be
-          `male` or `female`. Abbreviations or alternatives are not accepted
+      - description: The number of additional days _beyond the completed weeks of
+          gestation_ at which the patient was born. This enables Gestational Age correction
+          if the child was not born at term. See also the other parameter `gestation_weeks`
+          - both are usually required.
         in: header
-        name: sex
-        required: true
-        schema:
-          enum:
-          - male
-          - female
-          type: string
-      - description: The number of completed weeks of gestation at which the patient
-          was born. This enables Gestational Age correction if the child was not born
-          at term. See also the other parameter `gestation_days` - both are usually
-          required.
-        in: header
-        name: gestation_weeks
+        name: gestation_days
         required: false
         schema:
           type: number
@@ -102,34 +128,20 @@ paths:
         schema:
           format: date
           type: string
+      - description: The sex of the patient, as a string value which can either be
+          `male` or `female`. Abbreviations or alternatives are not accepted
+        in: header
+        name: sex
+        required: true
+        schema:
+          enum:
+          - male
+          - female
+          type: string
       - description: The weight of the patient, which MUST be in kilograms to get
           correct results.
         in: header
         name: weight
-        required: false
-        schema:
-          type: number
-      - description: The height of the patient, which MUST be in centimetres to get
-          correct results.
-        in: header
-        name: height
-        required: false
-        schema:
-          type: number
-      - description: The number of additional days _beyond the completed weeks of
-          gestation_ at which the patient was born. This enables Gestational Age correction
-          if the child was not born at term. See also the other parameter `gestation_weeks`
-          - both are usually required.
-        in: header
-        name: gestation_days
-        required: false
-        schema:
-          type: number
-      - description: The head circumference (also described as occipito-frontal circumference,
-          or 'OFC') of the patient, which **must** be in centimetres to get correct
-          results.
-        in: header
-        name: ofc
         required: false
         schema:
           type: number
@@ -141,6 +153,30 @@ paths:
         schema:
           format: date
           type: string
+      - description: The number of completed weeks of gestation at which the patient
+          was born. This enables Gestational Age correction if the child was not born
+          at term. See also the other parameter `gestation_days` - both are usually
+          required.
+        in: header
+        name: gestation_weeks
+        required: false
+        schema:
+          type: number
+      - description: The head circumference (also described as occipito-frontal circumference,
+          or 'OFC') of the patient, which **must** be in centimetres to get correct
+          results.
+        in: header
+        name: ofc
+        required: false
+        schema:
+          type: number
+      - description: The height of the patient, which MUST be in centimetres to get
+          correct results.
+        in: header
+        name: height
+        required: false
+        schema:
+          type: number
       responses:
         '200':
           content:
@@ -152,6 +188,37 @@ paths:
   /uk-who/calculation:
     post:
       parameters:
+      - description: The number of additional days _beyond the completed weeks of
+          gestation_ at which the patient was born. This enables Gestational Age correction
+          if the child was not born at term. See also the other parameter `gestation_weeks`
+          - both are usually required.
+        in: header
+        name: gestation_days
+        required: false
+        schema:
+          type: number
+      - description: "The type of measurement performed on the infant or child (`height`,\
+          \ `weight`, `bmi` or `ofc`). The value of this measurement is supplied as\
+          \ the `observation_value` parameter. The measurements represent height **in\
+          \ centimetres**, weight *in kilograms**, body mass index **in kilograms/metre\xB2\
+          ** and occipitofrontal circumference (head circumference, OFC) **in centimetres**."
+        in: header
+        name: measurement_method
+        required: true
+        schema:
+          enum:
+          - height
+          - weight
+          - bmi
+          - ofc
+          type: string
+      - description: Date of birth of the patient in YYYY-MM-DD ISO8601 format.
+        in: header
+        name: birth_date
+        required: true
+        schema:
+          format: date
+          type: string
       - description: The sex of the patient, as a string value which can either be
           `male` or `female`. Abbreviations or alternatives are not accepted
         in: header
@@ -161,22 +228,6 @@ paths:
           enum:
           - male
           - female
-          type: string
-      - description: The number of completed weeks of gestation at which the patient
-          was born. This enables Gestational Age correction if the child was not born
-          at term. See also the other parameter `gestation_days` - both are usually
-          required.
-        in: header
-        name: gestation_weeks
-        required: false
-        schema:
-          type: number
-      - description: Date of birth of the patient in YYYY-MM-DD ISO8601 format.
-        in: header
-        name: birth_date
-        required: true
-        schema:
-          format: date
           type: string
       - description: The date that the measurement was taken, in YYYY-MM-DD ISO8601
           format.
@@ -195,30 +246,15 @@ paths:
         schema:
           format: float
           type: number
-      - description: The number of additional days _beyond the completed weeks of
-          gestation_ at which the patient was born. This enables Gestational Age correction
-          if the child was not born at term. See also the other parameter `gestation_weeks`
-          - both are usually required.
+      - description: The number of completed weeks of gestation at which the patient
+          was born. This enables Gestational Age correction if the child was not born
+          at term. See also the other parameter `gestation_days` - both are usually
+          required.
         in: header
-        name: gestation_days
+        name: gestation_weeks
         required: false
         schema:
           type: number
-      - description: "The type of measurement performed on the infant or child (`height`,\
-          \ `weight`, `bmi` or `ofc`). The value of this measurement is supplied as\
-          \  `observation_value`. The measurements represent height in cm, weight\
-          \ in kg, body mass index in kg / m\xB2 and occipitofrontal circumference\
-          \ (head circumference) in cm."
-        in: header
-        name: measurement_method
-        required: true
-        schema:
-          enum:
-          - height
-          - weight
-          - bmi
-          - ofc
-          type: string
       responses:
         '200':
           content:
@@ -227,6 +263,15 @@ paths:
                 $ref: '#/components/schemas/Calculation'
           description: Centile calculation (single) according to the supplied data
       summary: Calculates single digital growth chart parameters
+  /utilities/references:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/References'
+          description: Reference data
 servers:
 - description: RCPCH Production API Gateway
   url: https://api.rcpch.ac.uk/

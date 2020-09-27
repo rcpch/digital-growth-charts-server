@@ -30,3 +30,5 @@ class MultipleCalculationsResponseSchema(Schema):
     # Defines the schema of the API response. This is compiled into the openAPI spec.
     height = fields.Nested(MeasurementResponseSchema())
     weight = fields.Nested(MeasurementResponseSchema())
+    bmi = fields.Nested(MeasurementResponseSchema())
+    ofc = fields.Nested(MeasurementResponseSchema())

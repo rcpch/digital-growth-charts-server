@@ -203,7 +203,19 @@ def r_for_age(z1, z2, r):
     conditional_weight_gain = (z2 - (z1 * r)) / math.sqrt(1 - pow(r, 2))
     return conditional_weight_gain
 
-def create_fictional_child(sex: str, measurement_method: str, requested_sds: float, number_of_measurements: int, starting_decimal_age: float, measurement_interval_value: int, measurement_interval_type: str, gestation_weeks = 0, gestation_days = 0, drift: bool = False, drift_sds_range: float = 0.0):
+
+def create_fictional_child(
+        sex: str,
+        measurement_method: str,
+        requested_sds: float,
+        number_of_measurements: int,
+        starting_decimal_age: float,
+        measurement_interval_value: int,
+        measurement_interval_type: str,
+        gestation_weeks=0,
+        gestation_days=0,
+        drift: bool = False,
+        drift_sds_range: float = 0.0):
     """
     this function will ultimately become a class method
     It's purpose is to generate an array of Measurement objects that mimic the growth of a child
