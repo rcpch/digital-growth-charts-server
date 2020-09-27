@@ -16,7 +16,8 @@ import controllers as controllers
 from controllers import import_csv_file
 from schemas import (SingleCalculationRequestParameters, SingleCalculationResponseSchema,
                      MultipleCalculationsRequestParameters, MultipleCalculationsResponseSchema,
-                     ReferencesResponseSchema)
+                     ReferencesResponseSchema,
+                     FictionalChildRequestParameters, FictionalChildResponseSchema)
 
 
 #######################
@@ -231,13 +232,18 @@ def utilities_create_fictional_child_measurements():
         drift_amount=float(request.form["drift_amount"]),
         intervals=int(request.form["intervals"]),
         interval_type=request.form["interval_type"],
-        measurement_requested=request.form["measurement_requested"],
+        measurement_method=request.form["measurement_method"],
         number_of_measurements=int(request.form["number_of_measurements"]),
         sex=request.form["sex"],
         starting_age=float(request.form["starting_age"]),
         starting_sds=float(request.form["starting_sds"])
     )
     return jsonify(fictional_child_data)
+
+
+spec.components.schema("Fictional Child", schema=FictionalChildResponseSchema)
+with app.test_request_context():
+    spec.path(view=utilities_create_fictional_child_measurements)
 
 
 @app.route("/utilities/instructions", methods=["GET"])

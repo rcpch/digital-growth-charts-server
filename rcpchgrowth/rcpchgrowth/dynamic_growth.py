@@ -237,7 +237,7 @@ def create_fictional_child(
     fictional_child = []
 
     """
-    This is an unnecessary piece of growth chart trivia included for entertaintment. The first published 
+    This is an unnecessary piece of growth chart trivia included for entertainment. The first published 
     growth chart is that of the son of Count Philibert de Montbeillard (1720-1785), François Guéneau de Montbeillard.
     The date of birth used here is that of Francois.
     Acknowledgement:

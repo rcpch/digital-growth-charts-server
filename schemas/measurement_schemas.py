@@ -18,22 +18,22 @@ class ChildObservationValueSchema(Schema):
 class MeasurementCalculatedValues(Schema):
     centile = fields.Float()
     centile_band = fields.String()
-    measurement_method: fields.String()
-    sds: centile = fields.Float()
+    measurement_method = fields.String()
+    sds = fields.Float()
 
 
 class MeasurementDatesSchema(Schema):
-    chronological_calendar_age: fields.String()
-    chronological_decimal_age: fields.Float()
-    clinician_decimal_age_comment: fields.String()
-    corrected_calendar_age: fields.String()
-    corrected_decimal_age: fields.Float()
-    #  corrected_gestational_age: {
+    chronological_calendar_age = fields.String()
+    chronological_decimal_age = fields.Float()
+    clinician_decimal_age_comment = fields.String()
+    corrected_calendar_age = fields.String()
+    corrected_decimal_age = fields.Float()
+    #  corrected_gestational_age = fields.{
     #      corrected_gestation_days: null,
     #      corrected_gestation_weeks: null
     #  },
-    lay_decimal_age_comment: fields.String()
-    observation_date: fields.DateTime()
+    lay_decimal_age_comment = fields.String()
+    observation_date = fields.DateTime()
 
 
 # This is a composite of the preceding nested data types

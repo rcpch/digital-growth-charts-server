@@ -22,4 +22,4 @@ class ReferenceSchema(Schema):
 
 class ReferencesResponseSchema(Schema):
     # Defines the schema of the API response. This is compiled into the openAPI spec.
-    references = fields.Nested(ReferenceSchema())
+    references = fields.List(fields.Nested(ReferenceSchema()))
