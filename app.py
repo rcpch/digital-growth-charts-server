@@ -91,18 +91,22 @@ def uk_who_calculations():
             application/json:
               schema: MultipleCalculationsResponseSchema
     """
-    response = controllers.perform_calculations(
-        birth_date=datetime.strptime(request.form["birth_date"], "%Y-%m-%d"),
-        observation_date=datetime.strptime(
-            request.form["observation_date"], "%Y-%m-%d"),
-        height=float(request.form["height_in_cm"]),
-        weight=float(request.form["weight_in_kg"]),
-        ofc=float(request.form["head_circ_in_cm"]),
-        sex=str(request.form["sex"]),
-        gestation_weeks=int(request.form["gestation_weeks"]),
-        gestation_days=int(request.form["gestation_days"])
-    )
-    return jsonify(response)
+    if request.is_json:
+        req = request.get_json()
+        response = controllers.perform_calculations(
+            birth_date=datetime.strptime(req["birth_date"], "%Y-%m-%d"),
+            observation_date=datetime.strptime(
+                req["observation_date"], "%Y-%m-%d"),
+            height=float(req["height_in_cm"]),
+            weight=float(req["weight_in_kg"]),
+            ofc=float(req["head_circ_in_cm"]),
+            sex=str(req["sex"]),
+            gestation_weeks=int(req["gestation_weeks"]),
+            gestation_days=int(req["gestation_days"])
+        )
+        return jsonify(response), 200
+    else:
+        return "Request body mimetype should be application/json", 400
 
 
 spec.components.schema(
@@ -134,18 +138,21 @@ def uk_who_calculation():
             application/json:
               schema: SingleCalculationResponseSchema
     """
-    calculation = controllers.perform_calculation(
-        birth_date=datetime.strptime(request.form["birth_date"], "%Y-%m-%d"),
-        observation_date=datetime.strptime(
-            request.form["observation_date"], "%Y-%m-%d"),
-        measurement_method=str(request.form["measurement_method"]),
-        observation_value=float(request.form["observation_value"]),
-        sex=str(request.form["sex"]),
-        gestation_weeks=int(request.form["gestation_weeks"]),
-        gestation_days=int(request.form["gestation_days"])
-    )
-    return jsonify(calculation)
-
+    if request.is_json:
+        req = request.get_json()
+        calculation = controllers.perform_calculation(
+            birth_date=datetime.strptime(req["birth_date"], "%Y-%m-%d"),
+            observation_date=datetime.strptime(
+                req["observation_date"], "%Y-%m-%d"),
+            measurement_method=str(req["measurement_method"]),
+            observation_value=float(req["observation_value"]),
+            sex=str(req["sex"]),
+            gestation_weeks=int(req["gestation_weeks"]),
+            gestation_days=int(req["gestation_days"])
+        )
+        return jsonify(calculation)
+    else:
+        return "Request body mimetype should be application/json", 400
 
 spec.components.schema("calculation", schema=SingleCalculationResponseSchema)
 with app.test_request_context():
@@ -166,7 +173,7 @@ def uk_who_chart_data():
       requestBody:
         content:
           application/json:
-           schema: ChartDataRequestParameters
+            schema: ChartDataRequestParameters
 
       responses:
         200:
@@ -175,32 +182,35 @@ def uk_who_chart_data():
             application/json:
               schema: ChartDataResponseSchema
     """
-    results = json.loads(request.form["results"])
-    unique_child = request.form["unique_child"]
-    # unique_child = request.args["unique_child"]
-    # born preterm flag to pass to charts
-    born_preterm = (results[0]["birth_data"]["gestation_weeks"]
-                    != 0 and results[0]["birth_data"]["gestation_weeks"] < 37)
-    if unique_child == "true":
-        # data are serial data points for a single child
-        # Prepare data from plotting
-        child_data = controllers.create_data_plots(results)
-
-        # Retrieve sex of child to select correct centile charts
-        sex = results[0]["birth_data"]["sex"]
+    if request.is_json:
+        req = request.get_json()
+        results = req["results"]
+        unique_child = req["unique_child"]
+        # born preterm flag to pass to charts
+        born_preterm = (results[0]["birth_data"]["gestation_weeks"]
+                        != 0 and results[0]["birth_data"]["gestation_weeks"] < 37)
+        if unique_child == "true":
+            # data are serial data points for a single child
+            # Prepare data from plotting
+            child_data = controllers.create_data_plots(results)
+            # Retrieve sex of child to select correct centile charts
+            sex = results[0]["birth_data"]["sex"]
+        else:
+            # if unique_child = False then the series of calculations are from different children
+            # Prepare data from plotting
+            child_data = controllers.create_data_plots(results)
+            # Retrieve sex of child to select correct centile charts
+            sex = results[0]["birth_data"]["sex"]
+        # Create Centile Charts
+        centiles = controllers.create_centile_values(
+            sex, born_preterm=born_preterm)
+        return jsonify({
+            "sex": sex,
+            "child_data": child_data,
+            "centile_data": centiles
+        })
     else:
-        # Prepare data from plotting
-        child_data = controllers.create_data_plots(results)
-        # Retrieve sex of child to select correct centile charts
-        sex = results[0]["birth_data"]["sex"]
-    # Create Centile Charts
-    centiles = controllers.create_centile_values(
-        sex, born_preterm=born_preterm)
-    return jsonify({
-        "sex": sex,
-        "child_data": child_data,
-        "centile_data": centiles
-    })
+        return "Request body should be application/json", 400
 
 
 spec.components.schema("chartData", schema=ChartDataResponseSchema)
@@ -210,6 +220,27 @@ with app.test_request_context():
 
 @app.route("/uk-who/spreadsheet", methods=["POST"])
 def ukwho_spreadsheet():
+    """
+    ***INCOMPLETE***
+    Spreadsheet file upload API route.
+    ---
+    post:
+      summary: |
+        Spreadsheet file upload API route.
+        This endpoint is used for development and testing only and it is not envisaged that it will be in the live API
+
+      requestBody:
+        content:
+          text/csv:
+            schema: ChartDataRequestParameters
+
+      responses:
+        200:
+          description: "Chart data for plotting a traditional growth chart"
+          content:
+            application/json:
+              schema: ChartDataResponseSchema
+    """
     csv_file = request.files["csv_file"]
     calculated_results = controllers.import_csv_file(csv_file)
     return calculated_results

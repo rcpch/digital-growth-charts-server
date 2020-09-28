@@ -57,17 +57,21 @@ def create_fictional_child_measurements():
             application/json:
               schema: FictionalChildResponseSchema
     """
-    fictional_child_data = controllers.generate_fictional_data(
-        drift_amount=float(request.form["drift_amount"]),
-        intervals=int(request.form["intervals"]),
-        interval_type=request.form["interval_type"],
-        measurement_method=request.form["measurement_method"],
-        number_of_measurements=int(request.form["number_of_measurements"]),
-        sex=request.form["sex"],
-        starting_age=float(request.form["starting_age"]),
-        starting_sds=float(request.form["starting_sds"])
-    )
-    return jsonify(fictional_child_data)
+    if request.is_json:
+        req = request.get_json()
+        fictional_child_data = controllers.generate_fictional_data(
+            drift_amount=float(req["drift_amount"]),
+            intervals=int(req["intervals"]),
+            interval_type=req["interval_type"],
+            measurement_method=req["measurement_method"],
+            number_of_measurements=int(req["number_of_measurements"]),
+            sex=req["sex"],
+            starting_age=float(req["starting_age"]),
+            starting_sds=float(req["starting_sds"])
+        )
+        return jsonify(fictional_child_data)
+    else:
+        return "Request body should be application/json", 400
 
 
 @utilities.route("/instructions", methods=["GET"])
@@ -80,7 +84,7 @@ def instructions():
         Instructions API route. Does not expect any parameters.
         Returns HTML content derived from the README.md of the API repository
         To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
-        
+
       responses:
         200:
           description: "API Instructions and information endpoint"
