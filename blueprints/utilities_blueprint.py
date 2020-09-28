@@ -1,8 +1,6 @@
 """
 This module contains the Utilities endpoints as Flask Blueprints
 """
-
-
 from os import path
 from flask import Blueprint
 from flask import jsonify, request
@@ -77,7 +75,8 @@ def instructions():
                 type: string
     """
     # open README.md file
-    file = path.join(path.abspath(path.dirname(__file__)), "README.md")
+    file = path.join(path.abspath(path.dirname(
+        path.dirname(__file__))), "README.md")
     with open(file) as markdown_file:
         html = markdown.markdown(markdown_file.read())
     return jsonify(html)

@@ -11,9 +11,8 @@ from apispec.ext.marshmallow import MarshmallowPlugin
 from apispec_webframeworks.flask import FlaskPlugin
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import utilities
+import blueprints
 import controllers
-from controllers import import_csv_file
 from schemas import (SingleCalculationResponseSchema, MultipleCalculationsResponseSchema,
                      ReferencesResponseSchema, FictionalChildResponseSchema, ChartDataResponseSchema)
 
@@ -22,7 +21,8 @@ from schemas import (SingleCalculationResponseSchema, MultipleCalculationsRespon
 ##### FLASK SETUP #####
 app = Flask(__name__, static_folder="static")
 CORS(app)
-app.register_blueprint(utilities, url_prefix='/utilities')
+app.register_blueprint(
+    blueprints.utilities_blueprint.utilities, url_prefix='/utilities')
 
 # Declare shell colour variables for logging output
 OKBLUE = "\033[94m"
@@ -101,7 +101,7 @@ def uk_who_calculations():
 
 
 spec.components.schema(
-    "Calculations", schema=MultipleCalculationsResponseSchema)
+    "calculations", schema=MultipleCalculationsResponseSchema)
 with app.test_request_context():
     spec.path(view=uk_who_calculations)
 
@@ -138,12 +138,12 @@ def uk_who_calculation():
     return jsonify(calculation)
 
 
-spec.components.schema("Calculation", schema=SingleCalculationResponseSchema)
+spec.components.schema("calculation", schema=SingleCalculationResponseSchema)
 with app.test_request_context():
     spec.path(view=uk_who_calculation)
 
 
-@app.route("/uk-who/chart_data", methods=["POST"])
+@app.route("/uk-who/chart-data", methods=["POST"])
 def uk_who_chart_data():
     """
     Chart data API route. Requires results data params from a call to the calculation endpoint.
@@ -188,7 +188,7 @@ def uk_who_chart_data():
     })
 
 
-spec.components.schema("Chart Data", schema=ChartDataResponseSchema)
+spec.components.schema("chartData", schema=ChartDataResponseSchema)
 with app.test_request_context():
     spec.path(view=uk_who_chart_data)
 
@@ -196,21 +196,21 @@ with app.test_request_context():
 @app.route("/uk-who/spreadsheet", methods=["POST"])
 def ukwho_spreadsheet():
     csv_file = request.files["csv_file"]
-    calculated_results = import_csv_file(csv_file)
+    calculated_results = controllers.import_csv_file(csv_file)
     return calculated_results
 
 
 ### Utilities refactored out into Blueprints ###
-spec.components.schema("References", schema=ReferencesResponseSchema)
+spec.components.schema("references", schema=ReferencesResponseSchema)
 with app.test_request_context():
-    spec.path(view=utilities.references)
+    spec.path(view=blueprints.references)
 
-spec.components.schema("Fictional Child", schema=FictionalChildResponseSchema)
+spec.components.schema("fictionalChild", schema=FictionalChildResponseSchema)
 with app.test_request_context():
-    spec.path(view=utilities.create_fictional_child_measurements)
+    spec.path(view=blueprints.create_fictional_child_measurements)
 
 with app.test_request_context():
-    spec.path(view=utilities.instructions)
+    spec.path(view=blueprints.instructions)
 
 
 

@@ -1,9 +1,8 @@
 from marshmallow import Schema, fields
-from .measurement_schemas import MeasurementResponseSchema
 
 
 class ChartDataRequestParameters(Schema):
-    results = fields.List(fields.Nested(MeasurementResponseSchema()))
+    results = fields.String()
 
 
 class ChartDataResponseSchema(Schema):
