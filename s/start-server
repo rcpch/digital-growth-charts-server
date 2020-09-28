@@ -3,4 +3,6 @@
 # runs the API server in development mode with the default settings
 # port: 5000 (Flask's default)
 
-export FLASK_ENV=development;export FLASK_APP=app.py;flask run
+export FLASK_ENV=development
+export FLASK_APP=app.py
+flask run
