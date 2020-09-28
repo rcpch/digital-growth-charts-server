@@ -1,29 +1,28 @@
+"""
+RCPCH Growth Charts API Server
+"""
+
 import json
 from datetime import datetime
-from os import environ, listdir, path, remove, urandom
-from pathlib import Path
+from os import environ, urandom
 
-import markdown
 from apispec import APISpec
 from apispec.ext.marshmallow import MarshmallowPlugin
 from apispec_webframeworks.flask import FlaskPlugin
-from flask import (Flask, flash, jsonify, make_response, redirect,
-                   render_template, request, send_from_directory, url_for)
+from flask import Flask, jsonify, request
 from flask_cors import CORS
-from werkzeug.utils import secure_filename
-
-import controllers as controllers
+import utilities
+import controllers
 from controllers import import_csv_file
-from schemas import (SingleCalculationRequestParameters, SingleCalculationResponseSchema,
-                     MultipleCalculationsRequestParameters, MultipleCalculationsResponseSchema,
-                     ReferencesResponseSchema,
-                     FictionalChildRequestParameters, FictionalChildResponseSchema)
+from schemas import (SingleCalculationResponseSchema, MultipleCalculationsResponseSchema,
+                     ReferencesResponseSchema, FictionalChildResponseSchema, ChartDataResponseSchema)
 
 
 #######################
 ##### FLASK SETUP #####
 app = Flask(__name__, static_folder="static")
 CORS(app)
+app.register_blueprint(utilities, url_prefix='/utilities')
 
 # Declare shell colour variables for logging output
 OKBLUE = "\033[94m"
@@ -65,8 +64,6 @@ spec = APISpec(
              {"url": 'https://localhost:5000/',
               "description": 'Your local development API'}],
 )
-
-
 ##### END API SPEC ########
 ###########################
 
@@ -74,7 +71,7 @@ spec = APISpec(
 # JSON CALCULATION OF MULTIPLE MEASUREMENT METHODS AT SAME TIME
 # USED BY THE FLASK DEMO CLIENT
 @app.route("/uk-who/calculations", methods=["POST"])
-def ukwho_calculations():
+def uk_who_calculations():
     """Multiple Calculations API. Returns centiles for height, weight, BMI and OFC when supplied the required input values.
     ---
     post:
@@ -103,16 +100,18 @@ def ukwho_calculations():
     return jsonify(response)
 
 
-spec.components.schema("Calculations", schema=MultipleCalculationsResponseSchema)
+spec.components.schema(
+    "Calculations", schema=MultipleCalculationsResponseSchema)
 with app.test_request_context():
-    spec.path(view=ukwho_calculations)
+    spec.path(view=uk_who_calculations)
 
 
 @app.route("/uk-who/calculation", methods=["POST"])
-def ukwho_calculation():
+def uk_who_calculation():
     """Single Calculations API.
     (Used by the React demo client)
-    JSON CALCULATION OF SINGLE MEASUREMENT_METHOD ('height', 'weight', 'bmi', 'ofc'): Note that BMI must be precalculated for this function
+    JSON CALCULATION OF SINGLE MEASUREMENT_METHOD ('height', 'weight', 'bmi', 'ofc')
+    Note that BMI must be precalculated for the `bmi` function.
     ---
     post:
       parameters:
@@ -141,18 +140,25 @@ def ukwho_calculation():
 
 spec.components.schema("Calculation", schema=SingleCalculationResponseSchema)
 with app.test_request_context():
-    spec.path(view=ukwho_calculation)
+    spec.path(view=uk_who_calculation)
 
 
-
-
-@app.route("/growth/ukwho/chart_data", methods=["POST"])
-def chart_data():
+@app.route("/uk-who/chart_data", methods=["POST"])
+def uk_who_chart_data():
     """
-    Chart data API route
-    requires results data params
-    Returns HTML content derived from the README.md of the API repository
-    To amend the instructions please submit a pull request
+    Chart data API route. Requires results data params from a call to the calculation endpoint.
+    ---
+    post:
+      parameters:
+      - in: header
+        schema: ChartDataRequestParameters
+      summary: 'Returns geometry data for constructing the lines of a traditional growth chart'
+      responses:
+        200:
+          description: "Chart data for plotting a traditional growth chart"
+          content:
+            application/json:
+              schema: ChartDataResponseSchema
     """
     results = json.loads(request.form["results"])
     unique_child = request.form["unique_child"]
@@ -182,6 +188,11 @@ def chart_data():
     })
 
 
+spec.components.schema("Chart Data", schema=ChartDataResponseSchema)
+with app.test_request_context():
+    spec.path(view=uk_who_chart_data)
+
+
 @app.route("/uk-who/spreadsheet", methods=["POST"])
 def ukwho_spreadsheet():
     csv_file = request.files["csv_file"]
@@ -189,79 +200,22 @@ def ukwho_spreadsheet():
     return calculated_results
 
 
-@app.route("/utilities/references", methods=["GET"])
-def utilities_references():
-    """
-    Centile References Library API route. Does not expect any parameters. Returns data on the growth reference data sources that this project is aware of. To add a new reference please submit a pull request, create a GitHub Issue, or otherwise contact the Growth Charts team.
-    ---
-    get:
-      responses:
-        200:
-          description: "Reference data"
-          content:
-            application/json:
-              schema: ReferencesResponseSchema
-    """
-    references_data = controllers.references()
-    return jsonify(references_data)
-
-
+### Utilities refactored out into Blueprints ###
 spec.components.schema("References", schema=ReferencesResponseSchema)
 with app.test_request_context():
-    spec.path(view=utilities_references)
-
-
-@app.route("/utilities/create_fictional_child_measurements", methods=["POST"])
-def utilities_create_fictional_child_measurements():
-    """
-    Fictional Child Data Generator API route. Returns a series of fictional measurement data for a child.
-    Used for testing, demonstration and research purposes.
-    ---
-    post:
-      parameters:
-      - in: header
-        schema: FictionalChildRequestParameters
-      responses:
-        200:
-          description: "'Fictional child' test data generation endpoint"
-          content:
-            application/json:
-              schema: FictionalChildResponseSchema
-    """
-    fictional_child_data = controllers.generate_fictional_data(
-        drift_amount=float(request.form["drift_amount"]),
-        intervals=int(request.form["intervals"]),
-        interval_type=request.form["interval_type"],
-        measurement_method=request.form["measurement_method"],
-        number_of_measurements=int(request.form["number_of_measurements"]),
-        sex=request.form["sex"],
-        starting_age=float(request.form["starting_age"]),
-        starting_sds=float(request.form["starting_sds"])
-    )
-    return jsonify(fictional_child_data)
-
+    spec.path(view=utilities.references)
 
 spec.components.schema("Fictional Child", schema=FictionalChildResponseSchema)
 with app.test_request_context():
-    spec.path(view=utilities_create_fictional_child_measurements)
+    spec.path(view=utilities.create_fictional_child_measurements)
+
+with app.test_request_context():
+    spec.path(view=utilities.instructions)
 
 
-@app.route("/utilities/instructions", methods=["GET"])
-def utilities_instructions():
-    """
-    Instructions API route. Does not expect any parameters.
-    Returns HTML content derived from the README.md of the API repository
-    To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
-    """
-    # open README.md file
-    file = path.join(path.abspath(path.dirname(__file__)), "README.md")
-    with open(file) as markdown_file:
-        html = markdown.markdown(markdown_file.read())
-    return jsonify(html)
 
-
-################
-### API SPEC ###
+################################
+### API SPEC AUTO GENERATION ###
 
 # Create JSON OpenAPI Spec and serve it at /
 @app.route("/", methods=["GET"])
@@ -278,8 +232,8 @@ try:
 except:
     print(f"{FAIL} * An error occurred while processing the openAPI3.0 spec{ENDC}")
 
-### END API SPEC ###
-####################
+### END API SPEC AUTO GENERATION ###
+####################################
 
 
 if __name__ == "__main__":
