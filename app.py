@@ -72,13 +72,18 @@ spec = APISpec(
 # USED BY THE FLASK DEMO CLIENT
 @app.route("/uk-who/calculations", methods=["POST"])
 def uk_who_calculations():
-    """Multiple Calculations API. Returns centiles for height, weight, BMI and OFC when supplied the required input values.
+    """Multiple Calculations API route.
     ---
     post:
-      parameters:
-      - in: header
-        schema: MultipleCalculationsRequestParameters
-      summary: 'Calculates multiple digital growth chart parameters'
+      summary: |-
+        Calculates *multiple* digital growth chart parameters.
+        Returns centiles for height, weight, BMI and OFC when supplied the required input values.
+
+      requestBody:
+        content:
+          application/json:
+            schema: MultipleCalculationsRequestParameters
+
       responses:
         200:
           description: "Centile calculations corresponding to the supplied data"
@@ -108,16 +113,20 @@ with app.test_request_context():
 
 @app.route("/uk-who/calculation", methods=["POST"])
 def uk_who_calculation():
-    """Single Calculations API.
-    (Used by the React demo client)
-    JSON CALCULATION OF SINGLE MEASUREMENT_METHOD ('height', 'weight', 'bmi', 'ofc')
-    Note that BMI must be precalculated for the `bmi` function.
+    """Single Calculations API route.
     ---
     post:
-      parameters:
-      - in: header
-        schema: SingleCalculationRequestParameters
-      summary: 'Calculates single digital growth chart parameters'
+      summary: |
+        Calculates *single* digital growth chart parameters.
+        Returns a single calculation for the selected `measurement_method`.
+        Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
+        Note that BMI must be precalculated for the `bmi` function.
+
+      requestBody:
+        content:
+          application/json:
+            schema: SingleCalculationRequestParameters
+
       responses:
         200:
           description: "Centile calculation (single) according to the supplied data"
@@ -146,13 +155,19 @@ with app.test_request_context():
 @app.route("/uk-who/chart-data", methods=["POST"])
 def uk_who_chart_data():
     """
-    Chart data API route. Requires results data params from a call to the calculation endpoint.
+    Chart data API route.
     ---
     post:
-      parameters:
-      - in: header
-        schema: ChartDataRequestParameters
-      summary: 'Returns geometry data for constructing the lines of a traditional growth chart'
+      summary: |
+        Chart data API route.
+        Requires results data paramaters from a call to the calculation endpoint.
+        Returns geometry data for constructing the lines of a traditional growth chart.
+
+      requestBody:
+        content:
+          application/json:
+           schema: ChartDataRequestParameters
+
       responses:
         200:
           description: "Chart data for plotting a traditional growth chart"
@@ -211,7 +226,6 @@ with app.test_request_context():
 
 with app.test_request_context():
     spec.path(view=blueprints.instructions)
-
 
 
 ################################

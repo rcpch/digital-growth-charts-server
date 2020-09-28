@@ -17,11 +17,78 @@ components:
         sex:
           type: string
       type: object
+    ChartDataRequestParameters:
+      properties:
+        results:
+          type: string
+      type: object
     ChildObservationValue:
       properties:
         measurement_method:
           type: string
         measurement_value:
+          type: number
+      type: object
+    FictionalChildRequestParameters:
+      properties:
+        drift_amount:
+          description: The SDS range over which you want serial generated values to
+            drift, simulating growth or pathological state
+          type: string
+        interval_type:
+          description: The length of the time intervals used. Can be `d`, `day`, `days`,
+            `weeks`, `m`, `month`, `months`, `y`, `year`, `years`. For example, setting
+            the time interval to `months` and the intervals to `3` would generate
+            fictional child growth data at 3-monthly intervals
+          enum:
+          - d
+          - day
+          - days
+          - weeks
+          - m
+          - month
+          - months
+          - y
+          - year
+          - years
+          type: string
+        intervals:
+          description: The value of the time intervals between generated measurements.
+            Set the time intervals using the `interval_type` parameter.
+          format: int32
+          type: integer
+        measurement_method:
+          description: 'The type of measurement requested: can be `height`, `weight`,
+            `ofc` or `bmi`'
+          enum:
+          - height
+          - weight
+          - ofc
+          - bmi
+          type: string
+        number_of_measurements:
+          description: The number of sequential measurements you would like the API
+            to generate, at intervals specified by the `intervals` and `interval_type`
+            parameters.
+          format: int32
+          type: integer
+        sex:
+          description: The sex of the child
+          enum:
+          - male
+          - female
+          type: string
+        starting_age:
+          description: The **decimal** age at which the fictional child data series
+            should start. Decimal ages are the child's age in years as a floating
+            point number
+          format: float
+          type: number
+        starting_sds:
+          description: The starting SDS at which you want the API to generate fictional
+            measurements. This SDS values will drift upwards or downwards over the
+            time series, according to the `drift_amount` parameter.
+          format: float
           type: number
       type: object
     MeasurementCalculatedValues:
@@ -68,6 +135,54 @@ components:
         measurement_dates:
           $ref: '#/components/schemas/MeasurementDates'
       type: object
+    MultipleCalculationsRequestParameters:
+      properties:
+        birth_date:
+          description: Date of birth of the patient in YYYY-MM-DD ISO8601 format.
+          format: date
+          type: string
+        gestation_days:
+          description: The number of additional days _beyond the completed weeks of
+            gestation_ at which the patient was born. This enables Gestational Age
+            correction if the child was not born at term. See also the other parameter
+            `gestation_weeks` - both are usually required.
+          type: number
+        gestation_weeks:
+          description: The number of completed weeks of gestation at which the patient
+            was born. This enables Gestational Age correction if the child was not
+            born at term. See also the other parameter `gestation_days` - both are
+            usually required.
+          type: number
+        height:
+          description: The height of the patient, which MUST be in centimetres to
+            get correct results.
+          type: number
+        observation_date:
+          description: The date that the measurement was taken, in YYYY-MM-DD ISO8601
+            format.
+          format: date
+          type: string
+        ofc:
+          description: The head circumference (also described as occipito-frontal
+            circumference, or 'OFC') of the patient, which **must** be in centimetres
+            to get correct results.
+          type: number
+        sex:
+          description: The sex of the patient, as a string value which can either
+            be `male` or `female`. Abbreviations or alternatives are not accepted
+          enum:
+          - male
+          - female
+          type: string
+        weight:
+          description: The weight of the patient, which MUST be in kilograms to get
+            correct results.
+          type: number
+      required:
+      - birth_date
+      - observation_date
+      - sex
+      type: object
     Reference:
       properties:
         acknowledgement_text:
@@ -96,6 +211,61 @@ components:
         publication_url:
           description: URL for the publication (if available)
           type: string
+      type: object
+    SingleCalculationRequestParameters:
+      properties:
+        birth_date:
+          description: Date of birth of the patient in YYYY-MM-DD ISO8601 format.
+          format: date
+          type: string
+        gestation_days:
+          description: The number of additional days _beyond the completed weeks of
+            gestation_ at which the patient was born. This enables Gestational Age
+            correction if the child was not born at term. See also the other parameter
+            `gestation_weeks` - both are usually required.
+          type: number
+        gestation_weeks:
+          description: The number of completed weeks of gestation at which the patient
+            was born. This enables Gestational Age correction if the child was not
+            born at term. See also the other parameter `gestation_days` - both are
+            usually required.
+          type: number
+        measurement_method:
+          description: "The type of measurement performed on the infant or child (`height`,\
+            \ `weight`, `bmi` or `ofc`). The value of this measurement is supplied\
+            \ as the `observation_value` parameter. The measurements represent height\
+            \ **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre\xB2\
+            ** and occipitofrontal circumference (head circumference, OFC) **in centimetres**."
+          enum:
+          - height
+          - weight
+          - bmi
+          - ofc
+          type: string
+        observation_date:
+          description: The date that the measurement was taken, in YYYY-MM-DD ISO8601
+            format.
+          format: date
+          type: string
+        observation_value:
+          description: The value of the measurement supplied. Used in conjunction
+            with type of measurement performed(`height`, `weight`, `bmi` or `ofc`)
+            on the infant or child.
+          format: float
+          type: number
+        sex:
+          description: The sex of the patient, as a string value which can either
+            be `male` or `female`. Abbreviations or alternatives are not accepted
+          enum:
+          - male
+          - female
+          type: string
+      required:
+      - birth_date
+      - measurement_method
+      - observation_date
+      - observation_value
+      - sex
       type: object
     calculation:
       properties:
@@ -146,72 +316,11 @@ openapi: 3.0.2
 paths:
   /uk-who/calculations:
     post:
-      parameters:
-      - description: The weight of the patient, which MUST be in kilograms to get
-          correct results.
-        in: header
-        name: weight
-        required: false
-        schema:
-          type: number
-      - description: The sex of the patient, as a string value which can either be
-          `male` or `female`. Abbreviations or alternatives are not accepted
-        in: header
-        name: sex
-        required: true
-        schema:
-          enum:
-          - male
-          - female
-          type: string
-      - description: The date that the measurement was taken, in YYYY-MM-DD ISO8601
-          format.
-        in: header
-        name: observation_date
-        required: true
-        schema:
-          format: date
-          type: string
-      - description: The number of additional days _beyond the completed weeks of
-          gestation_ at which the patient was born. This enables Gestational Age correction
-          if the child was not born at term. See also the other parameter `gestation_weeks`
-          - both are usually required.
-        in: header
-        name: gestation_days
-        required: false
-        schema:
-          type: number
-      - description: The head circumference (also described as occipito-frontal circumference,
-          or 'OFC') of the patient, which **must** be in centimetres to get correct
-          results.
-        in: header
-        name: ofc
-        required: false
-        schema:
-          type: number
-      - description: Date of birth of the patient in YYYY-MM-DD ISO8601 format.
-        in: header
-        name: birth_date
-        required: true
-        schema:
-          format: date
-          type: string
-      - description: The height of the patient, which MUST be in centimetres to get
-          correct results.
-        in: header
-        name: height
-        required: false
-        schema:
-          type: number
-      - description: The number of completed weeks of gestation at which the patient
-          was born. This enables Gestational Age correction if the child was not born
-          at term. See also the other parameter `gestation_days` - both are usually
-          required.
-        in: header
-        name: gestation_weeks
-        required: false
-        schema:
-          type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MultipleCalculationsRequestParameters'
       responses:
         '200':
           content:
@@ -219,77 +328,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/calculations'
           description: Centile calculations corresponding to the supplied data
-      summary: Calculates multiple digital growth chart parameters
+      summary: 'Calculates *multiple* digital growth chart parameters.
+
+        Returns centiles for height, weight, BMI and OFC when supplied the required
+        input values.'
   /uk-who/calculation:
     post:
-      parameters:
-      - description: The sex of the patient, as a string value which can either be
-          `male` or `female`. Abbreviations or alternatives are not accepted
-        in: header
-        name: sex
-        required: true
-        schema:
-          enum:
-          - male
-          - female
-          type: string
-      - description: The date that the measurement was taken, in YYYY-MM-DD ISO8601
-          format.
-        in: header
-        name: observation_date
-        required: true
-        schema:
-          format: date
-          type: string
-      - description: The number of additional days _beyond the completed weeks of
-          gestation_ at which the patient was born. This enables Gestational Age correction
-          if the child was not born at term. See also the other parameter `gestation_weeks`
-          - both are usually required.
-        in: header
-        name: gestation_days
-        required: false
-        schema:
-          type: number
-      - description: The value of the measurement supplied. Used in conjunction with
-          type of measurement performed(`height`, `weight`, `bmi` or `ofc`) on the
-          infant or child.
-        in: header
-        name: observation_value
-        required: true
-        schema:
-          format: float
-          type: number
-      - description: Date of birth of the patient in YYYY-MM-DD ISO8601 format.
-        in: header
-        name: birth_date
-        required: true
-        schema:
-          format: date
-          type: string
-      - description: "The type of measurement performed on the infant or child (`height`,\
-          \ `weight`, `bmi` or `ofc`). The value of this measurement is supplied as\
-          \ the `observation_value` parameter. The measurements represent height **in\
-          \ centimetres**, weight *in kilograms**, body mass index **in kilograms/metre\xB2\
-          ** and occipitofrontal circumference (head circumference, OFC) **in centimetres**."
-        in: header
-        name: measurement_method
-        required: true
-        schema:
-          enum:
-          - height
-          - weight
-          - bmi
-          - ofc
-          type: string
-      - description: The number of completed weeks of gestation at which the patient
-          was born. This enables Gestational Age correction if the child was not born
-          at term. See also the other parameter `gestation_days` - both are usually
-          required.
-        in: header
-        name: gestation_weeks
-        required: false
-        schema:
-          type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingleCalculationRequestParameters'
       responses:
         '200':
           content:
@@ -297,15 +346,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/calculation'
           description: Centile calculation (single) according to the supplied data
-      summary: Calculates single digital growth chart parameters
+      summary: 'Calculates *single* digital growth chart parameters.
+
+        Returns a single calculation for the selected `measurement_method`.
+
+        Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC
+        = occipitofrontal circumference = ''head circumference'').
+
+        Note that BMI must be precalculated for the `bmi` function.
+
+        '
   /uk-who/chart-data:
     post:
-      parameters:
-      - in: header
-        name: results
-        required: false
-        schema:
-          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChartDataRequestParameters'
       responses:
         '200':
           content:
@@ -313,8 +370,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/chartData'
           description: Chart data for plotting a traditional growth chart
-      summary: Returns geometry data for constructing the lines of a traditional growth
-        chart
+      summary: 'Chart data API route.
+
+        Requires results data paramaters from a call to the calculation endpoint.
+
+        Returns geometry data for constructing the lines of a traditional growth chart.
+
+        '
   /utilities/references:
     get:
       responses:
@@ -324,92 +386,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/references'
           description: Reference data
+      summary: 'Centile References Library API route.
+
+        Does not expect any parameters.
+
+        Returns data on the growth reference data sources that this project is aware
+        of.
+
+        To add a new reference please submit a pull request, create a GitHub Issue,
+        or otherwise contact the Growth Charts team.
+
+        '
   /utilities/create_fictional_child_measurements:
     post:
-      parameters:
-      - description: The SDS range over which you want serial generated values to
-          drift, simulating growth or pathological state
-        in: header
-        name: drift_amount
-        required: false
-        schema:
-          type: string
-      - description: The sex of the child
-        in: header
-        name: sex
-        required: false
-        schema:
-          enum:
-          - male
-          - female
-          type: string
-      - description: The starting SDS at which you want the API to generate fictional
-          measurements. This SDS values will drift upwards or downwards over the time
-          series, according to the `drift_amount` parameter.
-        in: header
-        name: starting_sds
-        required: false
-        schema:
-          format: float
-          type: number
-      - description: The value of the time intervals between generated measurements.
-          Set the time intervals using the `interval_type` parameter.
-        in: header
-        name: intervals
-        required: false
-        schema:
-          format: int32
-          type: integer
-      - description: The length of the time intervals used. Can be `d`, `day`, `days`,
-          `weeks`, `m`, `month`, `months`, `y`, `year`, `years`. For example, setting
-          the time interval to `months` and the intervals to `3` would generate fictional
-          child growth data at 3-monthly intervals
-        in: header
-        name: interval_type
-        required: false
-        schema:
-          enum:
-          - d
-          - day
-          - days
-          - weeks
-          - m
-          - month
-          - months
-          - y
-          - year
-          - years
-          type: string
-      - description: The **decimal** age at which the fictional child data series
-          should start. Decimal ages are the child's age in years as a floating point
-          number
-        in: header
-        name: starting_age
-        required: false
-        schema:
-          format: float
-          type: number
-      - description: 'The type of measurement requested: can be `height`, `weight`,
-          `ofc` or `bmi`'
-        in: header
-        name: measurement_method
-        required: false
-        schema:
-          enum:
-          - height
-          - weight
-          - ofc
-          - bmi
-          type: string
-      - description: The number of sequential measurements you would like the API
-          to generate, at intervals specified by the `intervals` and `interval_type`
-          parameters.
-        in: header
-        name: number_of_measurements
-        required: false
-        schema:
-          format: int32
-          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FictionalChildRequestParameters'
       responses:
         '200':
           content:
@@ -417,6 +411,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/fictionalChild'
           description: Fictional child test data generation endpoint
+      summary: 'Fictional Child Data Generator API route.
+
+        Returns a series of generated fictional measurement data for a child.
+
+        Used for testing, demonstration and research purposes.
+
+        '
   /utilities/instructions:
     get:
       responses:
@@ -426,6 +427,13 @@ paths:
               schema:
                 type: string
           description: API Instructions and information endpoint
+      summary: 'Instructions API route. Does not expect any parameters.
+
+        Returns HTML content derived from the README.md of the API repository
+
+        To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
+
+        '
 servers:
 - description: RCPCH Production API Gateway
   url: https://api.rcpch.ac.uk/

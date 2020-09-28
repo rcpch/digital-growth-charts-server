@@ -14,9 +14,15 @@ utilities = Blueprint("utilities", __name__)
 @utilities.route("/references", methods=["GET"])
 def references():
     """
-    Centile References Library API route. Does not expect any parameters. Returns data on the growth reference data sources that this project is aware of. To add a new reference please submit a pull request, create a GitHub Issue, or otherwise contact the Growth Charts team.
+    Centile References Library API route.
     ---
     get:
+      summary: |
+        Centile References Library API route.
+        Does not expect any parameters.
+        Returns data on the growth reference data sources that this project is aware of.
+        To add a new reference please submit a pull request, create a GitHub Issue, or otherwise contact the Growth Charts team.
+
       responses:
         200:
           description: "Reference data"
@@ -31,13 +37,19 @@ def references():
 @utilities.route("/create_fictional_child_measurements", methods=["POST"])
 def create_fictional_child_measurements():
     """
-    Fictional Child Data Generator API route. Returns a series of fictional measurement data for a child.
-    Used for testing, demonstration and research purposes.
+    Fictional Child Data Generator API route.
     ---
     post:
-      parameters:
-      - in: header
-        schema: FictionalChildRequestParameters
+      summary: |
+        Fictional Child Data Generator API route.
+        Returns a series of generated fictional measurement data for a child.
+        Used for testing, demonstration and research purposes.
+
+      requestBody:
+        content:
+          application/json:
+            schema: FictionalChildRequestParameters
+
       responses:
         200:
           description: "Fictional child test data generation endpoint"
@@ -61,11 +73,14 @@ def create_fictional_child_measurements():
 @utilities.route("/instructions", methods=["GET"])
 def instructions():
     """
-    Instructions API route. Does not expect any parameters.
-    Returns HTML content derived from the README.md of the API repository
-    To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
+    Instructions API route.
     ---
     get:
+      summary: |
+        Instructions API route. Does not expect any parameters.
+        Returns HTML content derived from the README.md of the API repository
+        To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
+        
       responses:
         200:
           description: "API Instructions and information endpoint"
