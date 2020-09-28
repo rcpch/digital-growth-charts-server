@@ -147,58 +147,10 @@ paths:
   /uk-who/calculations:
     post:
       parameters:
-      - description: The date that the measurement was taken, in YYYY-MM-DD ISO8601
-          format.
-        in: header
-        name: observation_date
-        required: true
-        schema:
-          format: date
-          type: string
-      - description: The number of completed weeks of gestation at which the patient
-          was born. This enables Gestational Age correction if the child was not born
-          at term. See also the other parameter `gestation_days` - both are usually
-          required.
-        in: header
-        name: gestation_weeks
-        required: false
-        schema:
-          type: number
-      - description: The number of additional days _beyond the completed weeks of
-          gestation_ at which the patient was born. This enables Gestational Age correction
-          if the child was not born at term. See also the other parameter `gestation_weeks`
-          - both are usually required.
-        in: header
-        name: gestation_days
-        required: false
-        schema:
-          type: number
-      - description: The height of the patient, which MUST be in centimetres to get
-          correct results.
-        in: header
-        name: height
-        required: false
-        schema:
-          type: number
-      - description: Date of birth of the patient in YYYY-MM-DD ISO8601 format.
-        in: header
-        name: birth_date
-        required: true
-        schema:
-          format: date
-          type: string
       - description: The weight of the patient, which MUST be in kilograms to get
           correct results.
         in: header
         name: weight
-        required: false
-        schema:
-          type: number
-      - description: The head circumference (also described as occipito-frontal circumference,
-          or 'OFC') of the patient, which **must** be in centimetres to get correct
-          results.
-        in: header
-        name: ofc
         required: false
         schema:
           type: number
@@ -212,6 +164,54 @@ paths:
           - male
           - female
           type: string
+      - description: The date that the measurement was taken, in YYYY-MM-DD ISO8601
+          format.
+        in: header
+        name: observation_date
+        required: true
+        schema:
+          format: date
+          type: string
+      - description: The number of additional days _beyond the completed weeks of
+          gestation_ at which the patient was born. This enables Gestational Age correction
+          if the child was not born at term. See also the other parameter `gestation_weeks`
+          - both are usually required.
+        in: header
+        name: gestation_days
+        required: false
+        schema:
+          type: number
+      - description: The head circumference (also described as occipito-frontal circumference,
+          or 'OFC') of the patient, which **must** be in centimetres to get correct
+          results.
+        in: header
+        name: ofc
+        required: false
+        schema:
+          type: number
+      - description: Date of birth of the patient in YYYY-MM-DD ISO8601 format.
+        in: header
+        name: birth_date
+        required: true
+        schema:
+          format: date
+          type: string
+      - description: The height of the patient, which MUST be in centimetres to get
+          correct results.
+        in: header
+        name: height
+        required: false
+        schema:
+          type: number
+      - description: The number of completed weeks of gestation at which the patient
+          was born. This enables Gestational Age correction if the child was not born
+          at term. See also the other parameter `gestation_days` - both are usually
+          required.
+        in: header
+        name: gestation_weeks
+        required: false
+        schema:
+          type: number
       responses:
         '200':
           content:
@@ -223,6 +223,16 @@ paths:
   /uk-who/calculation:
     post:
       parameters:
+      - description: The sex of the patient, as a string value which can either be
+          `male` or `female`. Abbreviations or alternatives are not accepted
+        in: header
+        name: sex
+        required: true
+        schema:
+          enum:
+          - male
+          - female
+          type: string
       - description: The date that the measurement was taken, in YYYY-MM-DD ISO8601
           format.
         in: header
@@ -231,6 +241,15 @@ paths:
         schema:
           format: date
           type: string
+      - description: The number of additional days _beyond the completed weeks of
+          gestation_ at which the patient was born. This enables Gestational Age correction
+          if the child was not born at term. See also the other parameter `gestation_weeks`
+          - both are usually required.
+        in: header
+        name: gestation_days
+        required: false
+        schema:
+          type: number
       - description: The value of the measurement supplied. Used in conjunction with
           type of measurement performed(`height`, `weight`, `bmi` or `ofc`) on the
           infant or child.
@@ -240,6 +259,13 @@ paths:
         schema:
           format: float
           type: number
+      - description: Date of birth of the patient in YYYY-MM-DD ISO8601 format.
+        in: header
+        name: birth_date
+        required: true
+        schema:
+          format: date
+          type: string
       - description: "The type of measurement performed on the infant or child (`height`,\
           \ `weight`, `bmi` or `ofc`). The value of this measurement is supplied as\
           \ the `observation_value` parameter. The measurements represent height **in\
@@ -264,32 +290,6 @@ paths:
         required: false
         schema:
           type: number
-      - description: The number of additional days _beyond the completed weeks of
-          gestation_ at which the patient was born. This enables Gestational Age correction
-          if the child was not born at term. See also the other parameter `gestation_weeks`
-          - both are usually required.
-        in: header
-        name: gestation_days
-        required: false
-        schema:
-          type: number
-      - description: Date of birth of the patient in YYYY-MM-DD ISO8601 format.
-        in: header
-        name: birth_date
-        required: true
-        schema:
-          format: date
-          type: string
-      - description: The sex of the patient, as a string value which can either be
-          `male` or `female`. Abbreviations or alternatives are not accepted
-        in: header
-        name: sex
-        required: true
-        schema:
-          enum:
-          - male
-          - female
-          type: string
       responses:
         '200':
           content:
@@ -327,18 +327,31 @@ paths:
   /utilities/create_fictional_child_measurements:
     post:
       parameters:
-      - description: 'The type of measurement requested: can be `height`, `weight`,
-          `ofc` or `bmi`'
+      - description: The SDS range over which you want serial generated values to
+          drift, simulating growth or pathological state
         in: header
-        name: measurement_method
+        name: drift_amount
+        required: false
+        schema:
+          type: string
+      - description: The sex of the child
+        in: header
+        name: sex
         required: false
         schema:
           enum:
-          - height
-          - weight
-          - ofc
-          - bmi
+          - male
+          - female
           type: string
+      - description: The starting SDS at which you want the API to generate fictional
+          measurements. This SDS values will drift upwards or downwards over the time
+          series, according to the `drift_amount` parameter.
+        in: header
+        name: starting_sds
+        required: false
+        schema:
+          format: float
+          type: number
       - description: The value of the time intervals between generated measurements.
           Set the time intervals using the `interval_type` parameter.
         in: header
@@ -367,12 +380,26 @@ paths:
           - year
           - years
           type: string
-      - description: The SDS range over which you want serial generated values to
-          drift, simulating growth or pathological state
+      - description: The **decimal** age at which the fictional child data series
+          should start. Decimal ages are the child's age in years as a floating point
+          number
         in: header
-        name: drift_amount
+        name: starting_age
         required: false
         schema:
+          format: float
+          type: number
+      - description: 'The type of measurement requested: can be `height`, `weight`,
+          `ofc` or `bmi`'
+        in: header
+        name: measurement_method
+        required: false
+        schema:
+          enum:
+          - height
+          - weight
+          - ofc
+          - bmi
           type: string
       - description: The number of sequential measurements you would like the API
           to generate, at intervals specified by the `intervals` and `interval_type`
@@ -383,33 +410,6 @@ paths:
         schema:
           format: int32
           type: integer
-      - description: The **decimal** age at which the fictional child data series
-          should start. Decimal ages are the child's age in years as a floating point
-          number
-        in: header
-        name: starting_age
-        required: false
-        schema:
-          format: float
-          type: number
-      - description: The starting SDS at which you want the API to generate fictional
-          measurements. This SDS values will drift upwards or downwards over the time
-          series, according to the `drift_amount` parameter.
-        in: header
-        name: starting_sds
-        required: false
-        schema:
-          format: float
-          type: number
-      - description: The sex of the child
-        in: header
-        name: sex
-        required: false
-        schema:
-          enum:
-          - male
-          - female
-          type: string
       responses:
         '200':
           content:
