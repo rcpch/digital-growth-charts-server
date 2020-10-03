@@ -350,7 +350,11 @@ def get_lms(age: float, measurement: str, sex: str, default_to_youngest_referenc
         l = linear_interpolation(age, age_index_one_below, l_one_below, l_one_above)
         m = linear_interpolation(age, age_index_one_below, m_one_below, m_one_above)
         s = linear_interpolation(age, age_index_one_below, s_one_below, s_one_above)
-    # print(f"actual age: {round(age, 9)} l,m,s interpolated: {l} {m} {s} lower: {l_one_below} {m_one_below} {s_one_below}") #debugging as accuracy currently uncertain 
+    print(f"actual age: {round(age, 9)} l,m,s interpolated: {l} {m} {s} ") #debugging as accuracy currently uncertain 
+    print(f"2 lower: {l_two_below} {m_two_below} {s_two_below}")
+    print(f"1 lower: {l_one_below} {m_one_below} {s_one_below}")
+    print(f"1 above: l: {l_one_above} m:{m_one_above} s:{s_one_above}")
+    print(f"2 above: l: {l_two_above} m:{m_two_above} s:{s_two_above}")
     # print(f"{l}, {m}, {s}")
     lms = {
         'l': l,
@@ -360,7 +364,7 @@ def get_lms(age: float, measurement: str, sex: str, default_to_youngest_referenc
     return lms
 
 def cubic_interpolation( age: float, age_index_below: int, parameter_two_below: float, parameter_one_below: float, parameter_one_above: float, parameter_two_above: float) -> float:
-    print('cubic interpolating')
+
     """
     See sds function. This method tests if the age of the child (either corrected for prematurity or chronological) is at a threshold of the reference data
     This method is specific to the UK-WHO data set.
@@ -416,7 +420,7 @@ def cubic_interpolation( age: float, age_index_below: int, parameter_two_below: 
     return cubic_interpolated_value
 
 def linear_interpolation( decimal_age: float, age_index_below: int, parameter_one_below: float, parameter_one_above: float) -> float:
-    print('linear interpolating')
+
     """
     See sds function. This method is to do linear interpolation of L, M and S values for children whose ages are at the threshold of the reference data, making cubic interpolation impossible
     """
