@@ -140,6 +140,7 @@ def uk_who_calculation():
     """
     if request.is_json:
         req = request.get_json()
+        print(req)
         calculation = controllers.perform_calculation(
             birth_date=datetime.strptime(req["birth_date"], "%Y-%m-%d"),
             observation_date=datetime.strptime(

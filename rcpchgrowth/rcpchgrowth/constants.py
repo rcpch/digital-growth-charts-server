@@ -1,8 +1,3 @@
-TWENTY_FOUR_WEEKS_GESTATION = round((-((40 * 7)/365.25) - ((24 * 7)/365.25)), 9)
-TWENTY_FIVE_WEEKS_GESTATION = round((-((40 * 7)/365.25) - ((25 * 7)/365.25)), 9)
-FORTY_WEEKS_GESTATION = 0
-FORTY_TWO_WEEKS_GESTATION =   round(((42 * 7)/365.25 - ((40 * 7)/365.25)), 9)
-THIRTY_SEVEN_WEEKS_GESTATION = round((((37 * 7)-(40 * 7))/365.25), 9)
 TERM_PREGNANCY_LENGTH_DAYS = 40 * 7
 TERM_LOWER_THRESHOLD_LENGTH_DAYS = 37 * 7
 EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS = 32 * 7
@@ -12,31 +7,38 @@ Debate here: cf issue #51
 LMSGrowth, our current gold standard, written in visual basic for Excel by Pan Huiqi and Tim Cole does not 
 agree with RCPCHGrowth beyond ~6 decimal places.On reexamining the original LMS Growth code reasons for this are not clear.
 
-The difficulty with floating point numbers is that these constants, which act as cut offs often between references,
- at 16 dp may be more accurate than the ages supplied. For example, calculating decimal ages from 2 dates, where days are
- whole integers, 14 days for example may actually calculate out to 13.999999999999998.
-
- For this reason, constants have been rounded to 9 dp, ensuring that any cut offs should be respected.
+Precision is constrained to 9 dp for decimal ages here.
 """
 
 ## Indices for thresholds in the references - Where the first in the array is 0
-### These are used in sds_calculations but not from here
-"""
+### These are used in sds_calculations
+
 TWENTY_THREE_WEEKS_GESTATION_INDEX = 0
+TWENTY_FOUR_WEEKS_GESTATION_INDEX = 1
 TWENTY_FIVE_WEEKS_GESTATION_INDEX = 2
+TWENTY_SIX_WEEKS_GESTATION_INDEX = 3
+THIRTY_SEVEN_WEEKS_GESTATION_INDEX = 14
+FORTY_WEEKS_GESTATION_INDEX = 17
+FORTY_ONE_WEEKS_GESTATION_INDEX = 18
 FORTY_TWO_WEEKS_GESTATION_INDEX = 19
 TWO_WEEKS_INDEX = 20
+THREE_WEEKS_INDEX = 21
+PENULTIMATE_TWO_YEARS_LYING_INDEX = 54
 TWO_YEARS_LYING_INDEX = 55
 TWO_YEARS_STANDING_INDEX = 56
+SECOND_FOLLOWING_TWO_YEARS_STANDING_INDEX = 57
+PENULTIMATE_FOUR_YEARS_WHO_INDEX = 79
 FOUR_YEARS_WHO_INDEX = 80
 FOUR_YEARS_UK90_INDEX = 81
+SECOND_FOLLOWING_FOUR_YEARS_UK90_INDEX = 82
+PENULTIMATE_SEVENTEEN_YEARS_INDEX = 236
 SEVENTEEN_YEARS_INDEX = 237
+PENULTIMATE_EIGHTEEN_YEARS_INDEX = 248
 EIGHTEEN_YEARS_INDEX = 249
+PENULTIMATE_TWENTY_YEARS_UK90_INDEX = 272
 TWENTY_YEARS_INDEX = 273
 
-
-
-
+"""
 These are the decimal age constants calculated to 9dp
 They represent ages in decimal years for UK-WHO reference 23 weeks to 20 years, including duplicate ages where the 
 references overlap.

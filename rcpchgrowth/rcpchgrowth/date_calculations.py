@@ -2,8 +2,7 @@ from datetime import date, datetime
 from datetime import timedelta
 from dateutil import relativedelta
 import math
-from decimal import *
-from .constants import FORTY_WEEKS_GESTATION, TERM_PREGNANCY_LENGTH_DAYS, TERM_LOWER_THRESHOLD_LENGTH_DAYS, EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS
+from .constants import TERM_PREGNANCY_LENGTH_DAYS, TERM_LOWER_THRESHOLD_LENGTH_DAYS, EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS
 
 """
 5 functions to calculate age related parameters
