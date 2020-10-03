@@ -18,7 +18,7 @@ observation_date: date of observation
 sex: sex (string, MALE or FEMALE)
 decimal_age: chronological, decimal
 corrected_age: corrected for prematurity, decimal
-measurement: height, weight, bmi, ofc (decimal)
+measurement_method: height, weight, bmi, ofc (decimal)
 observation: value (float)
 gestation_weeks: gestational age(weeks), integer
 gestation_days: supplementary days of gestation
@@ -47,7 +47,7 @@ def sds(age: float, measurement_method: str, measurement_value: float, sex: str,
     Returns a standard deviation score. 
     Parameters are: 
     a decimal age (corrected or chronological), 
-    a measurement (type of observation) ['height', 'weight', 'bmi', 'ofc']
+    a measurement_method (type of observation) ['height', 'weight', 'bmi', 'ofc']
     measurement_value (the value is standard units) [height and ofc are in cm, weight in kg bmi in kg/m²]
     sex (a standard string) ['male' or 'female']
     default_to_youngest_reference (boolean): defaults to True. For circumstances when the age exactly matches a join between two references (or moving from lying to standing at 2y) where there are 2 ages in the reference data to choose between. Defaults to the youngest reference unless the user selects false
@@ -139,12 +139,12 @@ def percentage_median_bmi( age: float, actual_bmi: float, sex: str)->float:
     percent_median_bmi = (actual_bmi/m)*100.0
     return percent_median_bmi
 
-def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  decimal_age: float, default_to_youngest_reference: bool = False, born_preterm = False) -> float:
+def measurement_from_sds(measurement_method: str,  requested_sds: float,  sex: str,  decimal_age: float, default_to_youngest_reference: bool = False, born_preterm = False) -> float:
     """
     Public method
-    Returns the measurement from a given SDS.
+    Returns the measurement value from a given SDS.
     Parameters are: 
-        measurement (type of observation) ['height', 'weight', 'bmi', 'ofc']
+        measurement_method (type of observation) ['height', 'weight', 'bmi', 'ofc']
         decimal age (corrected or chronological),
         requested_sds
         sex (a standard string) ['male' or 'female']
@@ -167,13 +167,13 @@ def measurement_from_sds(measurement: str,  requested_sds: float,  sex: str,  de
     measurement_value = 0.0
     try:
         if(decimal_age < DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX] and born_preterm):
-            lms= get_lms(decimal_age, measurement, sex, default_to_youngest_reference)
+            lms= get_lms(decimal_age, measurement_method, sex, default_to_youngest_reference)
         elif(decimal_age < DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX] and born_preterm==False):
-            lms=get_term_lms(measurement=measurement, sex=sex)
+            lms=get_term_lms(measurement_method=measurement_method, sex=sex)
         else:
             # the UK90 prematurity data file is continuous to 20y and confusingly named. Any children caught here
             # will be post term and will be calculated correctly on WHO data if < 4 or UK90 if >= 4y
-            lms= get_lms(decimal_age, measurement, sex, default_to_youngest_reference)
+            lms= get_lms(decimal_age, measurement_method, sex, default_to_youngest_reference)
     except:
         raise
     else:
@@ -236,14 +236,14 @@ def cubic_interpolation_possible(age: float, measurement_method, sex):
     else:
         return True
 
-def get_term_lms(measurement: str, sex: str):
+def get_term_lms(measurement_method: str, sex: str):
     """
     For babies at 37-42 weeks not preterm, L, M, S are averaged across the 5 weeks. For babies born preterm
     but are now term gestation, this method is not called and the UK90 preterm data is used upto 42 weeks
     """
-    l = term_data['measurement'][measurement][sex][0]["L"]
-    m = term_data['measurement'][measurement][sex][0]["M"]
-    s = term_data['measurement'][measurement][sex][0]["S"]
+    l = term_data['measurement'][measurement_method][sex][0]["L"]
+    m = term_data['measurement'][measurement_method][sex][0]["M"]
+    s = term_data['measurement'][measurement_method][sex][0]["S"]
 
     lms = {
             'l': l,
@@ -253,9 +253,9 @@ def get_term_lms(measurement: str, sex: str):
     return lms
 
 
-def get_lms(age: float, measurement: str, sex: str, default_to_youngest_reference: bool = False)->list:
+def get_lms(age: float, measurement_method: str, sex: str, default_to_youngest_reference: bool = False)->list:
     """
-    Returns an interpolated L, M and S value as an array [l, m, s] against a decimal age, sex and measurement
+    Returns an interpolated L, M and S value as an array [l, m, s] against a decimal age, sex and measurement_method
 
     default_to_youngest_reference (boolean): in the event of an exact age match at the threshold of a chart,
             where it is possible to choose 2 references, default will pick the oldest reference (optional)
@@ -269,15 +269,15 @@ def get_lms(age: float, measurement: str, sex: str, default_to_youngest_referenc
     except IndexError as chart_extremes_msg:
         print(chart_extremes_msg)
     
-    if measurement == 'height':
+    if measurement_method == 'height':
         if age < DECIMAL_AGES[TWENTY_FIVE_WEEKS_GESTATION_INDEX]:
             raise ValueError(f'There is no reference data for length below 25 weeks ({DECIMAL_AGES[TWENTY_FIVE_WEEKS_GESTATION_INDEX]} y)')
     
-    if measurement == 'bmi':
+    if measurement_method == 'bmi':
         if age < DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX]:
             raise ValueError(f'There is no BMI reference data available for BMI below 2 weeks ({DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX]} y)')
     
-    if measurement == 'ofc':
+    if measurement_method == 'ofc':
         if (sex == 'male' and age > DECIMAL_AGES[EIGHTEEN_YEARS_INDEX]) or (sex == 'female' and age > DECIMAL_AGES[SEVENTEEN_YEARS_INDEX]):
             raise ValueError('There is no head circumference data available in girls over 17y or boys over 18y')
 
@@ -302,12 +302,12 @@ def get_lms(age: float, measurement: str, sex: str, default_to_youngest_referenc
         NB: if age == 0.038329911 (2 weeks of age) and we are requesting BMI, must start at 
         WHO ref data. This is index 20, not 19
         """
-        if measurement == 'bmi' and age_index_one_below == 19:
+        if measurement_method == 'bmi' and age_index_one_below == 19:
             age_index_one_below = 20
 
-        l = data['measurement'][measurement][sex][age_index_one_below]["L"]
-        m = data['measurement'][measurement][sex][age_index_one_below]["M"]
-        s = data['measurement'][measurement][sex][age_index_one_below]["S"]
+        l = data['measurement'][measurement_method][sex][age_index_one_below]["L"]
+        m = data['measurement'][measurement_method][sex][age_index_one_below]["M"]
+        s = data['measurement'][measurement_method][sex][age_index_one_below]["S"]
         lms = {
             'l': l,
             'm': m,
@@ -316,36 +316,36 @@ def get_lms(age: float, measurement: str, sex: str, default_to_youngest_referenc
         return lms
         
 
-    if cubic_interpolation_possible(age, measurement, sex):
+    if cubic_interpolation_possible(age, measurement_method, sex):
         #collect all L, M and S above and below lower age index for cubic interpolation
-        l_one_below = data['measurement'][measurement][sex][age_index_one_below]["L"]
-        m_one_below = data['measurement'][measurement][sex][age_index_one_below]["M"]
-        s_one_below = data['measurement'][measurement][sex][age_index_one_below]["S"]
+        l_one_below = data['measurement'][measurement_method][sex][age_index_one_below]["L"]
+        m_one_below = data['measurement'][measurement_method][sex][age_index_one_below]["M"]
+        s_one_below = data['measurement'][measurement_method][sex][age_index_one_below]["S"]
 
-        l_two_below = data['measurement'][measurement][sex][age_index_one_below-1]["L"]
-        m_two_below = data['measurement'][measurement][sex][age_index_one_below-1]["M"]
-        s_two_below = data['measurement'][measurement][sex][age_index_one_below-1]["S"]
+        l_two_below = data['measurement'][measurement_method][sex][age_index_one_below-1]["L"]
+        m_two_below = data['measurement'][measurement_method][sex][age_index_one_below-1]["M"]
+        s_two_below = data['measurement'][measurement_method][sex][age_index_one_below-1]["S"]
 
-        l_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["L"]
-        m_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["M"]
-        s_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["S"]
+        l_one_above = data['measurement'][measurement_method][sex][age_index_one_below+1]["L"]
+        m_one_above = data['measurement'][measurement_method][sex][age_index_one_below+1]["M"]
+        s_one_above = data['measurement'][measurement_method][sex][age_index_one_below+1]["S"]
 
-        l_two_above = data['measurement'][measurement][sex][age_index_one_below+2]["L"]
-        m_two_above = data['measurement'][measurement][sex][age_index_one_below+2]["M"]
-        s_two_above = data['measurement'][measurement][sex][age_index_one_below+2]["S"]
+        l_two_above = data['measurement'][measurement_method][sex][age_index_one_below+2]["L"]
+        m_two_above = data['measurement'][measurement_method][sex][age_index_one_below+2]["M"]
+        s_two_above = data['measurement'][measurement_method][sex][age_index_one_below+2]["S"]
         
         l = cubic_interpolation(age, age_index_one_below, l_two_below, l_one_below, l_one_above, l_two_above)
         m = cubic_interpolation(age, age_index_one_below, m_two_below, m_one_below, m_one_above, m_two_above)
         s = cubic_interpolation(age, age_index_one_below, s_two_below, s_one_below, s_one_above, s_two_above)
     else:
         #a chart threshold: collect one L, M and S above and below lower age index for linear interpolation
-        l_one_below = data['measurement'][measurement][sex][age_index_one_below]["L"]
-        m_one_below = data['measurement'][measurement][sex][age_index_one_below]["M"]
-        s_one_below = data['measurement'][measurement][sex][age_index_one_below]["S"]
+        l_one_below = data['measurement'][measurement_method][sex][age_index_one_below]["L"]
+        m_one_below = data['measurement'][measurement_method][sex][age_index_one_below]["M"]
+        s_one_below = data['measurement'][measurement_method][sex][age_index_one_below]["S"]
 
-        l_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["L"]
-        m_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["M"]
-        s_one_above = data['measurement'][measurement][sex][age_index_one_below+1]["S"]
+        l_one_above = data['measurement'][measurement_method][sex][age_index_one_below+1]["L"]
+        m_one_above = data['measurement'][measurement_method][sex][age_index_one_below+1]["M"]
+        s_one_above = data['measurement'][measurement_method][sex][age_index_one_below+1]["S"]
 
         l = linear_interpolation(age, age_index_one_below, l_one_below, l_one_above)
         m = linear_interpolation(age, age_index_one_below, m_one_below, m_one_above)
