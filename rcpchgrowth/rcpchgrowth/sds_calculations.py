@@ -350,11 +350,11 @@ def get_lms(age: float, measurement_method: str, sex: str, default_to_youngest_r
         l = linear_interpolation(age, age_index_one_below, l_one_below, l_one_above)
         m = linear_interpolation(age, age_index_one_below, m_one_below, m_one_above)
         s = linear_interpolation(age, age_index_one_below, s_one_below, s_one_above)
-    print(f"actual age: {round(age, 9)} l,m,s interpolated: {l} {m} {s} ") #debugging as accuracy currently uncertain 
-    print(f"2 lower: {l_two_below} {m_two_below} {s_two_below}")
-    print(f"1 lower: {l_one_below} {m_one_below} {s_one_below}")
-    print(f"1 above: l: {l_one_above} m:{m_one_above} s:{s_one_above}")
-    print(f"2 above: l: {l_two_above} m:{m_two_above} s:{s_two_above}")
+    # print(f"actual age: {age} l,m,s interpolated: {l} {m} {s} ") #debugging as accuracy currently uncertain 
+    # print(f"2 lower: {l_two_below} {m_two_below} {s_two_below}")
+    # print(f"1 lower: {l_one_below} {m_one_below} {s_one_below}")
+    # print(f"1 above: l: {l_one_above} m:{m_one_above} s:{s_one_above}")
+    # print(f"2 above: l: {l_two_above} m:{m_two_above} s:{s_two_above}")
     # print(f"{l}, {m}, {s}")
     lms = {
         'l': l,
