@@ -7,7 +7,6 @@ from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from random import uniform
 from .measurement import Measurement
-from .measurement_type import Measurement_Type
 from .sds_calculations import measurement_from_sds
 from .date_calculations import corrected_decimal_age
 
@@ -269,10 +268,17 @@ def create_fictional_child(
         child_age_at_measurement_date = corrected_decimal_age(birth_date=birth_date,observation_date=observation_date,gestation_weeks=gestation_weeks, gestation_days=gestation_days)
         # calculate measurement_value back from new SDS
         new_measurement_value=measurement_from_sds(measurement_method=measurement_method, requested_sds=requested_sds, sex=sex, decimal_age=child_age_at_measurement_date, default_to_youngest_reference=False)
-        # convert this to Measurement_Type
-        new_measurement_type = Measurement_Type(measurement_method=measurement_method, measurement_value=new_measurement_value)
-        # pass Measurement_Type object to Measurement object with dates
-        new_measurement = Measurement(sex, birth_date, observation_date, new_measurement_type, gestation_weeks, gestation_days, default_to_youngest_reference=False)
+        
+        # create Measurement object with dates
+        new_measurement = Measurement(
+            sex=sex, 
+            birth_date=birth_date, 
+            observation_date=observation_date,
+            measurement_method=measurement_method, 
+            observation_value=new_measurement_value, 
+            gestation_weeks=gestation_weeks, 
+            gestation_days=gestation_days, 
+            default_to_youngest_reference=False)
         
         #store in array
         fictional_child.append(new_measurement.measurement)

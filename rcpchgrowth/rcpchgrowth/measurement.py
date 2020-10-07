@@ -5,7 +5,6 @@ from .date_calculations import chronological_decimal_age, corrected_decimal_age,
 from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import comment_prematurity_correction
 from .constants import *
-# from .measurement_type import Measurement_Type
 
 
 class Measurement:
