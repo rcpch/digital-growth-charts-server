@@ -5,7 +5,7 @@ from .date_calculations import chronological_decimal_age, corrected_decimal_age,
 from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import comment_prematurity_correction
 from .constants import *
-from .measurement_type import Measurement_Type
+# from .measurement_type import Measurement_Type
 
 
 class Measurement:
@@ -15,7 +15,8 @@ class Measurement:
             sex: str,
             birth_date: date,
             observation_date,
-            measurement_type: Measurement_Type,
+            measurement_method: str,
+            observation_value: float,
             gestation_weeks: int = 0,
             gestation_days: int = 0,
             default_to_youngest_reference: bool = False):
@@ -44,10 +45,15 @@ class Measurement:
         BUT THE STRINGS BEEN COMMENTED OUT IN THE FINAL JSON
         """
 
-        self.measurement_method = measurement_type.measurement_method
-        self.observation_value = measurement_type.observation_value
+        # self.measurement_method = measurement_type.measurement_method
+        # self.observation_value = measurement_type.observation_value
+        self.measurement_method = measurement_method
+        self.observation_value = observation_value
 
-        print(self.measurement_method)
+        valid = self.__validate_measurement_method(measurement_method=measurement_method, observation_value=observation_value)
+            
+        if valid == False:
+            return
 
         if gestation_weeks < 37 and gestation_weeks >= 23:
             born_preterm = True
@@ -294,8 +300,6 @@ class Measurement:
             age: float,
             born_preterm: bool = False,
             default_to_youngest_reference: bool = False,
-            height: float = 0.0,
-            weight: float = 0.0,
             bmi: float = 0.0):
         """
         This method calculates bmi SDS and centiles. It has been refactored and originally it took a
@@ -439,3 +443,58 @@ class Measurement:
             "child_observation_value": child_observation_value,
             "measurement_calculated_values": measurement_calculated_values
         }
+
+    def __validate_measurement_method(
+        self, 
+        measurement_method: str, 
+        observation_value: float
+        ):
+        
+            ## Private method which accepts a measurement_method (height, weight, bmi or ofc) and 
+            ## and returns True if valid
+
+            is_valid = False
+
+            if measurement_method == 'bmi':
+                if observation_value is None:
+                    raise ValueError('Missing value for BMI.')
+
+            elif measurement_method == 'height':
+                if observation_value is None:
+                    raise ValueError('Missing value for height. Please pass a height in cm.')
+                elif observation_value < 2:
+                    # most likely metres passed instead of cm.
+                    raise AssertionError('Height must be passed in cm, not metres')
+                elif observation_value < 30.0:
+                    # a baby is unlikely to be < 30 cm long - probably a data entry error
+                    raise AssertionError(f'The height you have entered is very short. Are you sure you meant {observation_value} cm?')
+                else:
+                    is_valid = True
+
+            elif measurement_method == 'weight':
+                if observation_value is None:
+                    raise ValueError('Missing value for weight. Please pass a weight in kilograms.')
+                elif observation_value < 0.20:
+                    # 200g is very small. Like this is an error
+                    raise AssertionError(f'Error. {observation_value} kg is very low. Please pass an accurate weight in kilograms')
+                elif observation_value > 500.0:
+                    # it is likely the weight is passed in grams, not kg. The heaviest man according to google is 
+                    # Jon Brower Minnoch (US), who had suffered from obesity since childhood. In September 1976,
+                    # he measured 185 cm (6 ft 1 in) tall and weighed 442 kg (974 lb; 69 st 9 lb)
+                    raise AssertionError(f"{observation_value} kg is very high. Weight must be passed in kg.")
+                else:
+                    is_valid = True
+
+            elif measurement_method == 'ofc':
+                if observation_value is None:
+                    raise ValueError('No value for head circumference. Please pass a head circumference in cm.')
+                elif observation_value < 5.0:
+                    # A head circumference less than 5 cm is likely to be an error
+                    raise AssertionError(f'{observation_value} cm is likely an error. Please pass an accurate head circumference in cm.')
+                elif observation_value > 150.0:
+                    # A head circumference > 150 cm is likely to be an error
+                    raise AssertionError(f'{observation_value} is likley an error. Please pass an accurate head circumference in cm.')
+                else:
+                    is_valid = True
+            
+            return is_valid
