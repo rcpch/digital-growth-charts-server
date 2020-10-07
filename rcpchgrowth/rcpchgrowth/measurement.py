@@ -4,7 +4,7 @@ from .centile_bands import centile_band_for_centile
 from .date_calculations import chronological_decimal_age, corrected_decimal_age, chronological_calendar_age, estimated_date_delivery, corrected_gestational_age
 from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import comment_prematurity_correction
-from .constants import TWENTY_FIVE_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION, THIRTY_SEVEN_WEEKS_GESTATION
+from .constants import *
 from .measurement_type import Measurement_Type
 
 
@@ -221,10 +221,10 @@ class Measurement:
         """
 
         if height and height > 0.0:
-            if age >= TWENTY_FIVE_WEEKS_GESTATION:  # there is no length data below 25 weeks gestation
+            if age >= DECIMAL_AGES[TWENTY_FIVE_WEEKS_GESTATION_INDEX]:  # there is no length data below 25 weeks gestation
                 height_sds = sds(
                     age=age,
-                    measurement='height',
+                    measurement_method='height',
                     measurement_value=height,
                     sex=sex,
                     default_to_youngest_reference=default_to_youngest_reference,
@@ -275,7 +275,7 @@ class Measurement:
         if weight and weight > 0.0:
             weight_sds = sds(
                 age=age,
-                measurement='weight',
+                measurement_method='weight',
                 measurement_value=weight,
                 sex=sex,
                 default_to_youngest_reference=False,
@@ -322,16 +322,16 @@ class Measurement:
         """
         if (height and height > 0.0) and (weight and weight > 0.0):
             bmi = bmi_from_height_weight(height, weight)
-            if age > FORTY_TWO_WEEKS_GESTATION:  # BMI data not present < 42 weeks gestation
+            if age > DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX]:  # BMI data not present < 42 weeks gestation
                 bmi_sds = sds(
                     age=age,
-                    measurement='bmi',
+                    measurement_method='bmi',
                     measurement_value=bmi,
                     sex=sex,
                     default_to_youngest_reference=default_to_youngest_reference,
                     born_preterm=born_preterm)  # does not default to youngest reference
                 bmi_centile = centile(z_score=bmi_sds)
-                bmi_centile_band = centile_band_for_centile(bmi_sds)
+                bmi_centile_band = centile_band_for_centile(sds=bmi_sds, measurement_method="bmi")
 
                 # Deprecating comments
                 # comment = interpret(measurement='bmi', centile=bmi_centile, age=age, sex=sex)
@@ -370,10 +370,10 @@ class Measurement:
                 )
             return return_measurement_object
         elif bmi and bmi > 0.0:
-            if age >= FORTY_TWO_WEEKS_GESTATION:  # BMI data not present < 42 weeks gestation
+            if age >= DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX]:  # BMI data not present < 42 weeks gestation
                 bmi_sds = sds(
                     age=age,
-                    measurement='bmi',
+                    measurement_method='bmi',
                     measurement_value=bmi,
                     sex=sex,
                     default_to_youngest_reference=default_to_youngest_reference,
@@ -436,7 +436,7 @@ class Measurement:
             if (age <= 17 and sex == 'female') or (age <= 18.0 and sex == 'male'):
                 ofc_sds = sds(
                     age=age,
-                    measurement='ofc',
+                    measurement_method='ofc',
                     measurement_value=ofc,
                     sex=sex,
                     default_to_youngest_reference=default_to_youngest_reference,
