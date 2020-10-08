@@ -5,4 +5,5 @@ from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import comment_prematurity_correction
 from .measurement import Measurement
 from .dynamic_growth import velocity, acceleration, correlate_weight, create_fictional_child
+from .fictional_children import generate_fictional_children_data
 from .constants import *
