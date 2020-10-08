@@ -95,15 +95,15 @@ def uk_who_calculations():
     if request.is_json:
         req = request.get_json()
         response = controllers.perform_calculations(
-            birth_date=datetime.strptime(req["birth_date"], "%Y-%m-%d"),
-            observation_date=datetime.strptime(
-                req["observation_date"], "%Y-%m-%d"),
-            height=float(req["height_in_cm"]),
-            weight=float(req["weight_in_kg"]),
-            ofc=float(req["head_circ_in_cm"]),
-            sex=str(req["sex"]),
-            gestation_weeks=int(req["gestation_weeks"]),
-            gestation_days=int(req["gestation_days"])
+          birth_date=datetime.strptime(req["birth_date"], "%Y-%m-%d"),
+          observation_date=datetime.strptime(
+              req["observation_date"], "%Y-%m-%d"),
+          height=float(req["height_in_cm"]),
+          weight=float(req["weight_in_kg"]),
+          ofc=float(req["head_circ_in_cm"]),
+          sex=str(req["sex"]),
+          gestation_weeks=int(req["gestation_weeks"]),
+          gestation_days=int(req["gestation_days"])
         )
         return jsonify(response), 200
     else:
