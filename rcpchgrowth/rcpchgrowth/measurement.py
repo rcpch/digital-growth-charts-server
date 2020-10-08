@@ -507,7 +507,7 @@ class Measurement:
             elif observation_value > 150.0:
                 # A head circumference > 150 cm is likely to be an error
                 raise AssertionError(
-                    f'{observation_value} is likley an error. Please pass an accurate head circumference in cm.')
+                    f'{observation_value} is likely an error. Please pass an accurate head circumference in cm.')
             else:
                 is_valid = True
 
