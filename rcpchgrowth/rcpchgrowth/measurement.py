@@ -4,8 +4,7 @@ from .centile_bands import centile_band_for_centile
 from .date_calculations import chronological_decimal_age, corrected_decimal_age, chronological_calendar_age, estimated_date_delivery, corrected_gestational_age
 from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import comment_prematurity_correction
-from .constants import TWENTY_FIVE_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION, THIRTY_SEVEN_WEEKS_GESTATION
-from .measurement_type import Measurement_Type
+from .constants import *
 
 
 class Measurement:
@@ -15,13 +14,14 @@ class Measurement:
             sex: str,
             birth_date: date,
             observation_date,
-            measurement_type: Measurement_Type,
+            measurement_method: str,
+            observation_value: float,
             gestation_weeks: int = 0,
             gestation_days: int = 0,
             default_to_youngest_reference: bool = False):
         """
         The Measurement Class is the gatekeeper to all the functions in the RCPCHGrowth package, although the public
-        functions can be accessed independently. The bulk of the error handling happens here so be aware that calling 
+        functions can be accessed independently. The bulk of the error handling happens here so be aware that calling
         other functions independently may yield unexpected results.
         It is initialised with this parameters:
         birth_date (Python datetime object)
@@ -31,48 +31,61 @@ class Measurement:
         Optional parameters:
         gestation_weeks: gestation at birth in weeks (integer)
         gestation_days: supplemental days in addition to gestation_weeks at birth (integer)
-        default_to_youngest_reference: boolean. If the request is for an age where 2 references overlap, the user 
+        default_to_youngest_reference: boolean. If the request is for an age where 2 references overlap, the user
             can override the default to use the 'oldest' one
 
         # Measurement object is made up of 4 JSON elements: "birth_data", "measurement_dates",
         #  "child_observation_value" and "measurement_calculated_values"
         # All Measurement objects return the "birth_data" and "measurement_dates" elements
-        # Only those calculations relevant to the measurement_type requested populate the final JSON 
+        # Only those calculations relevant to the measurement_type requested populate the final JSON
         # object.
 
         NOTE - THE ADVICE STRINGS HAVE BEEN DEPRECATED AS OF JULY 2020 - THE CALLS AND FUNCTION REMAIN IN PLACE,
         BUT THE STRINGS BEEN COMMENTED OUT IN THE FINAL JSON
         """
 
-        self.measurement_method = measurement_type.measurement_method
-        self.observation_value = measurement_type.observation_value
+        # self.measurement_method = measurement_type.measurement_method
+        # self.observation_value = measurement_type.observation_value
+        self.sex = sex
+        self.birth_date = birth_date
+        self.observation_date = observation_date
+        self.measurement_method = measurement_method
+        self.observation_value = observation_value
+        self.gestation_weeks = gestation_weeks
+        self.gestation_days = gestation_days
+        self.default_to_youngest_reference = default_to_youngest_reference
+
+        valid = self.__validate_measurement_method(
+            measurement_method=measurement_method, observation_value=observation_value)
+        if valid == False:
+            return
 
         if gestation_weeks < 37 and gestation_weeks >= 23:
-            born_preterm = True
+            self.born_preterm = True
         else:
-            born_preterm = False
+            self.born_preterm = False
 
         # the age_object receives birth_data and measurement_dates objects
-        ages_object = self.__calculate_ages(
-            sex=sex,
-            birth_date=birth_date,
-            observation_date=observation_date,
-            gestation_weeks=gestation_weeks,
-            gestation_days=gestation_days)
+        self.ages_object = self.__calculate_ages(
+            sex=self.sex,
+            birth_date=self.birth_date,
+            observation_date=self.observation_date,
+            gestation_weeks=self.gestation_weeks,
+            gestation_days=self.gestation_days)
         # the calculate_measurements_object receives the child_observation_value and measurement_calculated_values objects
-        calculate_measurements_object = self.sds_and_centile_for_measurement_method(
-            sex=sex,
-            age=ages_object['measurement_dates']['corrected_decimal_age'],
+        self.calculate_measurements_object = self.sds_and_centile_for_measurement_method(
+            sex=self.sex,
+            age=self.ages_object['measurement_dates']['corrected_decimal_age'],
             measurement_method=self.measurement_method,
             observation_value=self.observation_value,
-            born_preterm=born_preterm,
-            default_to_youngest_reference=default_to_youngest_reference)
+            born_preterm=self.born_preterm,
+            default_to_youngest_reference=self.default_to_youngest_reference)
 
         self.measurement = {
-            'birth_data': ages_object['birth_data'],
-            'measurement_dates': ages_object['measurement_dates'],
-            'child_observation_value': calculate_measurements_object['child_observation_value'],
-            'measurement_calculated_values': calculate_measurements_object['measurement_calculated_values']
+            'birth_data': self.ages_object['birth_data'],
+            'measurement_dates': self.ages_object['measurement_dates'],
+            'child_observation_value': self.calculate_measurements_object['child_observation_value'],
+            'measurement_calculated_values': self.calculate_measurements_object['measurement_calculated_values']
         }
 
     """
@@ -221,10 +234,11 @@ class Measurement:
         """
 
         if height and height > 0.0:
-            if age >= TWENTY_FIVE_WEEKS_GESTATION:  # there is no length data below 25 weeks gestation
+            # there is no length data below 25 weeks gestation
+            if age >= DECIMAL_AGES[TWENTY_FIVE_WEEKS_GESTATION_INDEX]:
                 height_sds = sds(
                     age=age,
-                    measurement='height',
+                    measurement_method='height',
                     measurement_value=height,
                     sex=sex,
                     default_to_youngest_reference=default_to_youngest_reference,
@@ -233,19 +247,10 @@ class Measurement:
                 height_centile_band = centile_band_for_centile(
                     sds=height_sds, measurement_method="height")
 
-                # Deprecating comments
-                # comment = interpret(measurement='height', centile=height_centile, age=age, sex=sex)
-                # clinician_height_comment = comment["clinician_comment"]
-                # lay_height_comment = comment["lay_comment"]
             else:
                 height_sds = None
                 height_centile = None
                 height_centile_band = ""
-
-                # Deprecating comments
-                # comment = interpret(measurement='height', centile=height_centile, age=age, sex=sex) # returns ref data error to user
-                # clinician_height_comment = comment["clinician_comment"]
-                # lay_height_comment = comment["lay_comment"]
 
             return_measurement_object = self.__create_measurement_object(
                 measurement_method='height',
@@ -253,8 +258,6 @@ class Measurement:
                 sds_value=height_sds,
                 centile_value=height_centile,
                 centile_band=height_centile_band
-                # clinician_comment=clinician_height_comment,
-                # lay_comment=lay_height_comment
             )
             return return_measurement_object
         else:
@@ -275,7 +278,7 @@ class Measurement:
         if weight and weight > 0.0:
             weight_sds = sds(
                 age=age,
-                measurement='weight',
+                measurement_method='weight',
                 measurement_value=weight,
                 sex=sex,
                 default_to_youngest_reference=False,
@@ -284,11 +287,6 @@ class Measurement:
             weight_centile_band = centile_band_for_centile(
                 sds=weight_sds, measurement_method="weight")
 
-            # Deprecating comments
-            # comment = interpret(measurement='weight', centile=weight_centile, age=age, sex=sex)
-            # clinician_weight_comment = comment['clinician_comment']
-            # lay_weight_comment = comment['lay_comment']
-
             # create return object
             return_measurement_object = self.__create_measurement_object(
                 measurement_method='weight',
@@ -296,8 +294,6 @@ class Measurement:
                 sds_value=weight_sds,
                 centile_value=weight_centile,
                 centile_band=weight_centile_band
-                # clinician_comment=clinician_weight_comment,
-                # lay_comment=lay_weight_comment
             )
             return return_measurement_object
         else:
@@ -310,70 +306,20 @@ class Measurement:
             age: float,
             born_preterm: bool = False,
             default_to_youngest_reference: bool = False,
-            height: float = 0.0,
-            weight: float = 0.0,
             bmi: float = 0.0):
         """
         This method calculates bmi SDS and centiles. It has been refactored and originally it took a
         height and weight in cm before calculating a bmi which then was used to generate SDS and centile.
         The Measurement_Type class now calculates BMI from height and weight and passes this to this method.
-        The original ability to pass a height and weight is retained, but has essentially been deprecated 
+        The original ability to pass a height and weight is retained, but has essentially been deprecated
         and in future iterations is likely to be removed.
         """
-        if (height and height > 0.0) and (weight and weight > 0.0):
-            bmi = bmi_from_height_weight(height, weight)
-            if age > FORTY_TWO_WEEKS_GESTATION:  # BMI data not present < 42 weeks gestation
+        if bmi and bmi > 0.0:
+            # BMI data not present < 42 weeks gestation
+            if age >= DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX]:
                 bmi_sds = sds(
                     age=age,
-                    measurement='bmi',
-                    measurement_value=bmi,
-                    sex=sex,
-                    default_to_youngest_reference=default_to_youngest_reference,
-                    born_preterm=born_preterm)  # does not default to youngest reference
-                bmi_centile = centile(z_score=bmi_sds)
-                bmi_centile_band = centile_band_for_centile(bmi_sds)
-
-                # Deprecating comments
-                # comment = interpret(measurement='bmi', centile=bmi_centile, age=age, sex=sex)
-                # clinician_bmi_comment = comment['clinician_comment']
-                # lay_bmi_comment = comment['lay_comment']
-
-                # create return object
-                return_measurement_object = self.__create_measurement_object(
                     measurement_method='bmi',
-                    observation_value=bmi,
-                    sds_value=bmi_sds,
-                    centile_value=bmi_centile,
-                    centile_band=bmi_centile_band
-                    # clinician_comment=clinician_bmi_comment,
-                    # lay_comment=lay_bmi_comment
-                )
-            else:
-                bmi_sds = None
-                bmi_centile = None
-                bmi_centile_band = ""
-
-                # Deprecating comments
-                # comment = interpret(measurement='bmi', centile=bmi_centile, age=age, sex=sex)
-                # clinician_bmi_comment = comment['clinician_comment']
-                # lay_bmi_comment = comment['lay_comment']
-
-                # create return object
-                return_measurement_object = self.__create_measurement_object(
-                    measurement_method='bmi',
-                    observation_value=bmi,
-                    sds_value=bmi_sds,
-                    centile_value=bmi_centile,
-                    centile_band=bmi_centile_band
-                    # clinician_comment=clinician_bmi_comment,
-                    # lay_comment=lay_bmi_comment
-                )
-            return return_measurement_object
-        elif bmi and bmi > 0.0:
-            if age >= FORTY_TWO_WEEKS_GESTATION:  # BMI data not present < 42 weeks gestation
-                bmi_sds = sds(
-                    age=age,
-                    measurement='bmi',
                     measurement_value=bmi,
                     sex=sex,
                     default_to_youngest_reference=default_to_youngest_reference,
@@ -382,12 +328,6 @@ class Measurement:
                 bmi_centile_band = centile_band_for_centile(
                     sds=bmi_sds,
                     measurement_method="bmi")
-
-                # Deprecating comments
-                # comment = interpret(measurement='bmi', centile=bmi_centile, age=age, sex=sex)
-                # clinician_bmi_comment = comment['clinician_comment']
-                # lay_bmi_comment = comment['lay_comment']
-
                 # create return object
                 return_measurement_object = self.__create_measurement_object(
                     measurement_method='bmi',
@@ -395,17 +335,12 @@ class Measurement:
                     sds_value=bmi_sds,
                     centile_value=bmi_centile,
                     centile_band=bmi_centile_band
-                    # clinician_comment=clinician_bmi_comment,
-                    # lay_comment=lay_bmi_comment
                 )
             else:
                 bmi_centile = None
                 bmi_sds = None
-                bmi_sds = ""
-                # Deprecating comments
-                # comment = interpret(measurement='bmi', centile=bmi_centile, age=age, sex=sex)
-                # clinician_bmi_comment = comment['clinician_comment']
-                # lay_bmi_comment = comment['lay_comment']
+                bmi_centile_band = ""
+
                 # create return object
                 return_measurement_object = self.__create_measurement_object(
                     measurement_method='bmi',
@@ -413,8 +348,7 @@ class Measurement:
                     sds_value=bmi_sds,
                     centile_value=bmi_centile,
                     centile_band=bmi_centile_band
-                    # clinician_comment=clinician_bmi_comment,
-                    # lay_comment=lay_bmi_comment
+
                 )
             return return_measurement_object
         else:
@@ -436,7 +370,7 @@ class Measurement:
             if (age <= 17 and sex == 'female') or (age <= 18.0 and sex == 'male'):
                 ofc_sds = sds(
                     age=age,
-                    measurement='ofc',
+                    measurement_method='ofc',
                     measurement_value=ofc,
                     sex=sex,
                     default_to_youngest_reference=default_to_youngest_reference,
@@ -445,10 +379,6 @@ class Measurement:
                 ofc_centile_band = centile_band_for_centile(
                     sds=ofc_sds,
                     measurement_method="ofc")
-                # Deprecating comments
-                # comment = interpret( measurement='ofc', centile=ofc_centile, age=age, sex=sex)
-                # clinician_ofc_comment = comment['clinician_comment']
-                # lay_ofc_comment = comment['lay_comment']
 
                 return_measurement_object = self.__create_measurement_object(
                     measurement_method='ofc',
@@ -456,17 +386,11 @@ class Measurement:
                     sds_value=ofc_sds,
                     centile_value=ofc_centile,
                     centile_band=ofc_centile_band
-                    # clinician_comment=clinician_ofc_comment,
-                    # lay_comment=lay_ofc_comment
                 )
             else:
                 ofc_sds = None
                 ofc_centile = None
                 ofc_centile_band = ""
-                # Deprecating comments
-                # comment = interpret( measurement='ofc', centile=ofc_centile, age=age, sex=sex)
-                # clinician_ofc_comment = comment['clinician_comment']
-                # lay_ofc_comment = comment['lay_comment']
 
                 # create return object
                 return_measurement_object = self.__create_measurement_object(
@@ -475,8 +399,6 @@ class Measurement:
                     sds_value=ofc_sds,
                     centile_value=ofc_centile,
                     centile_band=ofc_centile_band
-                    # clinician_comment=clinician_ofc_comment,
-                    # lay_comment=lay_ofc_comment
                 )
             return return_measurement_object
         else:
@@ -490,8 +412,6 @@ class Measurement:
         sds_value: float,
         centile_value: float,
         centile_band: str,
-        # clinician_comment: str,
-        # lay_comment: str
     ):
         """
         private class method
@@ -506,19 +426,17 @@ class Measurement:
         # Only those calculations relevant to the measurement_method requested populate the final JSON
         # object.
 
-        if centile_value > 99 or centile_value < 1:
-            centile_value = round(centile_value, 1)
-        else:
-            centile_value = int(centile_value)
+        if centile_value:
+            if centile_value > 99 or centile_value < 1:
+                centile_value = round(centile_value, 1)
+            else:
+                centile_value = int(centile_value)
 
         measurement_calculated_values = {
             "measurement_method": measurement_method,
             "sds": sds_value,
-            # TODO #76 Should only return centiles as integers or 1dp if <1 or >99
             "centile": centile_value,
             "centile_band": centile_band
-            # "clinician_comment": clinician_comment,
-            # "lay_comment": lay_comment
         }
 
         child_observation_value = {
@@ -530,3 +448,67 @@ class Measurement:
             "child_observation_value": child_observation_value,
             "measurement_calculated_values": measurement_calculated_values
         }
+
+    def __validate_measurement_method(
+            self,
+            measurement_method: str,
+            observation_value: float):
+
+        # Private method which accepts a measurement_method (height, weight, bmi or ofc) and
+        # and returns True if valid
+
+        is_valid = False
+        if measurement_method == 'bmi':
+            if observation_value is None:
+                raise ValueError('Missing value for BMI.')
+            else:
+                is_valid = True
+
+        elif measurement_method == 'height':
+            if observation_value is None:
+                raise ValueError(
+                    'Missing value for height. Please pass a height in cm.')
+            elif observation_value < 2:
+                # most likely metres passed instead of cm.
+                raise AssertionError(
+                    'Height must be passed in cm, not metres')
+            elif observation_value < 30.0:
+                # a baby is unlikely to be < 30 cm long - probably a data entry error
+                raise AssertionError(
+                    f'The height you have entered is very short. Are you sure you meant {observation_value} cm?')
+            else:
+                is_valid = True
+
+        elif measurement_method == 'weight':
+            if observation_value is None:
+                raise ValueError(
+                    'Missing value for weight. Please pass a weight in kilograms.')
+            elif observation_value < 0.20:
+                # 200g is very small. Like this is an error
+                raise AssertionError(
+                    f'Error. {observation_value} kg is very low. Please pass an accurate weight in kilograms')
+            elif observation_value > 500.0:
+                # it is likely the weight is passed in grams, not kg. The heaviest man according to google is
+                # Jon Brower Minnoch (US), who had suffered from obesity since childhood. In September 1976,
+                # he measured 185 cm (6 ft 1 in) tall and weighed 442 kg (974 lb; 69 st 9 lb)
+                raise AssertionError(
+                    f"{observation_value} kg is very high. Weight must be passed in kg.")
+            else:
+                is_valid = True
+
+        elif measurement_method == 'ofc':
+            if observation_value is None:
+                raise ValueError(
+                    'No value for head circumference. Please pass a head circumference in cm.')
+            elif observation_value < 5.0:
+                # A head circumference less than 5 cm is likely to be an error
+                raise AssertionError(
+                    f'{observation_value} cm is likely an error. Please pass an accurate head circumference in cm.')
+            elif observation_value > 150.0:
+                # A head circumference > 150 cm is likely to be an error
+                raise AssertionError(
+                    f'{observation_value} is likely an error. Please pass an accurate head circumference in cm.')
+            else:
+                is_valid = True
+
+        return is_valid

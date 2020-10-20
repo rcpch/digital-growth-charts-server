@@ -7,7 +7,6 @@ from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from random import uniform
 from .measurement import Measurement
-from .measurement_type import Measurement_Type
 from .sds_calculations import measurement_from_sds
 from .date_calculations import corrected_decimal_age
 
@@ -203,7 +202,19 @@ def r_for_age(z1, z2, r):
     conditional_weight_gain = (z2 - (z1 * r)) / math.sqrt(1 - pow(r, 2))
     return conditional_weight_gain
 
-def create_fictional_child(sex: str, measurement_method: str, requested_sds: float, number_of_measurements: int, starting_decimal_age: float, measurement_interval_value: int, measurement_interval_type: str, gestation_weeks = 0, gestation_days = 0, drift: bool = False, drift_sds_range: float = 0.0):
+
+def create_fictional_child(
+        sex: str,
+        measurement_method: str,
+        requested_sds: float,
+        number_of_measurements: int,
+        starting_decimal_age: float,
+        measurement_interval_value: int,
+        measurement_interval_type: str,
+        gestation_weeks=0,
+        gestation_days=0,
+        drift: bool = False,
+        drift_sds_range: float = 0.0):
     """
     this function will ultimately become a class method
     It's purpose is to generate an array of Measurement objects that mimic the growth of a child
@@ -225,7 +236,7 @@ def create_fictional_child(sex: str, measurement_method: str, requested_sds: flo
     fictional_child = []
 
     """
-    This is an unnecessary piece of growth chart trivia included for entertaintment. The first published 
+    This is an unnecessary piece of growth chart trivia included for entertainment. The first published 
     growth chart is that of the son of Count Philibert de Montbeillard (1720-1785), François Guéneau de Montbeillard.
     The date of birth used here is that of Francois.
     Acknowledgement:
@@ -256,11 +267,18 @@ def create_fictional_child(sex: str, measurement_method: str, requested_sds: flo
         # calculate age at new measurement 
         child_age_at_measurement_date = corrected_decimal_age(birth_date=birth_date,observation_date=observation_date,gestation_weeks=gestation_weeks, gestation_days=gestation_days)
         # calculate measurement_value back from new SDS
-        new_measurement_value=measurement_from_sds(measurement=measurement_method, requested_sds=requested_sds, sex=sex, decimal_age=child_age_at_measurement_date, default_to_youngest_reference=False)
-        # convert this to Measurement_Type
-        new_measurement_type = Measurement_Type(measurement_method=measurement_method, measurement_value=new_measurement_value)
-        # pass Measurement_Type object to Measurement object with dates
-        new_measurement = Measurement(sex, birth_date, observation_date, new_measurement_type, gestation_weeks, gestation_days, default_to_youngest_reference=False)
+        new_measurement_value=measurement_from_sds(measurement_method=measurement_method, requested_sds=requested_sds, sex=sex, decimal_age=child_age_at_measurement_date, default_to_youngest_reference=False)
+        
+        # create Measurement object with dates
+        new_measurement = Measurement(
+            sex=sex, 
+            birth_date=birth_date, 
+            observation_date=observation_date,
+            measurement_method=measurement_method, 
+            observation_value=new_measurement_value, 
+            gestation_weeks=gestation_weeks, 
+            gestation_days=gestation_days, 
+            default_to_youngest_reference=False)
         
         #store in array
         fictional_child.append(new_measurement.measurement)

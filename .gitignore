@@ -140,5 +140,8 @@ cython_debug/
 # VS Code
 .vscode/
 
+#private files
+rcpchgrowth/rcpchgrowth/data_tables/huiqi_cole_methods.bas
+
 # Prevent Mac User Related Damage
 .DS_Store

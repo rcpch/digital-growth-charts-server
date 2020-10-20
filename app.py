@@ -1,224 +1,289 @@
-# imports for API only
-from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, make_response, jsonify, session
-from flask_cors import CORS
-from werkzeug.utils import secure_filename
-from os import path, listdir, remove
-from datetime import datetime
-from pathlib import Path
-from controllers import import_csv_file
+"""
+RCPCH Growth Charts API Server
+"""
 
-# imports for client only
-import markdown
-import requests
-
-# imports for both
 import json
-import controllers as controllers
+from datetime import datetime
+from os import environ, urandom
+
+from apispec import APISpec
+from apispec.ext.marshmallow import MarshmallowPlugin
+from apispec_webframeworks.flask import FlaskPlugin
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+import blueprints
+import controllers
+from schemas import (SingleCalculationResponseSchema, MultipleCalculationsResponseSchema,
+                     ReferencesResponseSchema, FictionalChildResponseSchema, ChartDataResponseSchema)
 
 
+#######################
+##### FLASK SETUP #####
 app = Flask(__name__, static_folder="static")
-app.config["SECRET_KEY"] = "UK_WHO" #not very secret - this will need complicating and adding to config
-CORS(app) # TODO #75
+CORS(app)
+app.register_blueprint(
+    blueprints.utilities_blueprint.utilities, url_prefix='/utilities')
 
-from app import app
+# Declare shell colour variables for logging output
+OKBLUE = "\033[94m"
+OKGREEN = "\033[92m"
+WARNING = "\033[93m"
+FAIL = "\033[91m"
+ENDC = "\033[0m"
 
-"""
-TODO: TO BE DEPRECATED
-Uses session variables to store form or uploaded unique child data
-These session variables are accessed when user wants to download the calculated data,
-or chart them.
-    session["results"] are the form data entered by the user or uploaded from excel
-    session["serial_data"] is a boolean value flagging if data are single measurements 
-    or serial unique patient data
-"""  
+# ENVIRONMENT
+# Load the secret key from the ENV if it has been set
+if "FLASK_SECRET_KEY" in environ:
+    app.secret_key = environ["FLASK_SECRET_KEY"]
+    print(f"{OKGREEN} * FLASK_SECRET_KEY was loaded from the environment{ENDC}")
+# Otherwise create a new one. (NB: We don't need session persistence between reboots of the app)
+else:
+    app.secret_key = urandom(16)
+    print(f"{OKGREEN} * A new SECRET_KEY for Flask was automatically generated{ENDC}")
 
-"""
-API DEFINITIONS SECTION
-* The API is versioned in a hard-coded fashion for now, however in time the versioning
-  will happen at the level of the API management layer, which will direct requests to the
-  correct versioned server accordingly
-* There are different endpoints for a simple JSON response and a more complex FHIR response
-* Although the API is stateless
-* Each API endpoint has a distinct Controller
-"""
+from app import app     # position of this import is important. Don't allow it to be autoformatted alphabetically to the top of the imports!
 
-
-"""
-Centile Calculations API route. Expects parameters in the body as below:
-    birth_date            STRING          date of birth of the patient in YYYY-MM-DD ISO8601 format (will be converted to Date)
-    observation_date      STRING          date of the measurement in YYYY-MM-DD ISO8601 format (will be converted to Date)
-    height_in_cm          FLOAT           the height in CENTIMETRES
-    weight_in_kg          FLOAT           the weight in kilograms
-    head_circ_in_cm       FLOAT           head circumference in CENTIMETRES
-    sex                   STRING          either "male or "female"
-    gestation_weeks       INTEGER         gestational age in completed weeks
-    gestation_days        INTEGER         gestational age in completed days
-"""
-# JSON CALCULATION
-@app.route("/api/v1/json/calculations", methods=["POST"])
-def api_json_calculations():
-    
-    # check here for all the right query params, if not present raise error
-    response = controllers.perform_calculations(
-        birth_date=datetime.strptime(request.form["birth_date"], "%Y-%m-%d"),
-        observation_date=datetime.strptime(request.form["observation_date"], "%Y-%m-%d"),
-        height=float(request.form["height_in_cm"]),
-        weight=float(request.form["weight_in_kg"]),
-        ofc=float(request.form["head_circ_in_cm"]),
-        sex=str(request.form["sex"]),
-        gestation_weeks=int(request.form["gestation_weeks"]),
-        gestation_days=int(request.form["gestation_days"])
-    )
-    return jsonify(response)
-
-# JSON CALCULATION OF SINGLE MEASUREMENT_METHOD ('height', 'weight', 'bmi', 'ofc'): Note that BMI must be precalculated for this function
-@app.route("/api/v1/json/calculation", methods=["POST"])
-def api_json_calculation():
-    # check here for all the right query params, if not present raise error
-    final_calculations = controllers.perform_calculation(
-        birth_date=datetime.strptime(request.form["birth_date"], "%Y-%m-%d"),
-        observation_date=datetime.strptime(request.form["observation_date"], "%Y-%m-%d"),
-        measurement_method=str(request.form["measurement_method"]),
-        observation_value =float(request.form["observation_value"]),
-        sex=str(request.form["sex"]),
-        gestation_weeks=int(request.form["gestation_weeks"]),
-        gestation_days=int(request.form["gestation_days"])
-    )
-
-    response = jsonify(final_calculations)
-
-    return response
-
-# JSON Calculation of serial data
-@app.route("/api/v1/json/serial_data_calculations", methods=["POST"])
-def api_json_serial_data_calculations():
-
-    # check here for all the right query params, if not present raise error
-
-    serial_data = json.loads(request.form["uploaded_data"])
-
-    response = controllers.prepare_data_as_array_of_measurement_objects(
-        uploaded_data=serial_data
-    )
-
-    return jsonify(response)
+##### END FLASK SETUP #####
+###########################
 
 
-# FHIR CALCULATION
-@app.route("/api/v1/fhir", methods=["POST"])
-def api_fhir():
-    return jsonify({"path": "/api/v1/fhir"})
+###########################
+##### API SPEC ############
+# API spec is autogenerated using the 'api-spec' library, and saved in the project root
+# as well as being served on the root '/' endpoint for consumption by services
+spec = APISpec(
+    title="RCPCH Digital Growth Charts API Server",
+    version="0.0.3",
+    openapi_version="3.0.2",
+    info=dict(
+        description="Royal College of Paediatrics and Child Health Digital Growth Charts API Server",
+        license={"name": "GNU Affero General Public License",
+                 "url": "https://www.gnu.org/licenses/agpl-3.0.en.html"}),
+    plugins=[MarshmallowPlugin(), FlaskPlugin()],
+    servers=[{"url": 'https://api.rcpch.ac.uk/',
+              "description": 'RCPCH Production API Gateway'},
+             {"url": 'https://localhost:5000/',
+              "description": 'Your local development API'}],
+)
+##### END API SPEC ########
+###########################
 
 
-"""
-Centile References Library API route
-Does not expect any parameters
-Returns data on the growth references that we are aware of
-To add a new reference please submit a pull request
-"""
-@app.route("/api/v1/json/references", methods=["GET"])
-def references():
-    references_data = controllers.references()
-    return jsonify(references_data)
+# JSON CALCULATION OF MULTIPLE MEASUREMENT METHODS AT SAME TIME
+# USED BY THE FLASK DEMO CLIENT
+@app.route("/uk-who/calculations", methods=["POST"])
+def uk_who_calculations():
+    """Multiple Calculations API route.
+    ---
+    post:
+      summary: |-
+        Calculates *multiple* digital growth chart parameters.
+        Returns centiles for height, weight, BMI and OFC when supplied the required input values.
 
+      requestBody:
+        content:
+          application/json:
+            schema: MultipleCalculationsRequestParameters
 
-"""
-Chart data API route
-requires results data params
-Returns HTML content derived from the README.md of the API repository
-To amend the instructions please submit a pull request
-"""
-@app.route("/api/v1/json/chart_data", methods=["POST"])
-def chart_data():
-
-    results=json.loads(request.form["results"])
-    unique_child = request.form["unique_child"]
-    # unique_child = request.args["unique_child"]
-    
-    # born preterm flag to pass to charts
-    born_preterm = (results[0]["birth_data"]["gestation_weeks"]!= 0 and results[0]["birth_data"]["gestation_weeks"] < 37)
-    
-    if unique_child == "true":
-        #data are serial data points for a single child
-        
-        # Prepare data from plotting
-        child_data = controllers.create_data_plots(results)
-
-        # Retrieve sex of child to select correct centile charts
-        sex = results[0]["birth_data"]["sex"]
-        
+      responses:
+        200:
+          description: "Centile calculations corresponding to the supplied data"
+          content:
+            application/json:
+              schema: MultipleCalculationsResponseSchema
+    """
+    if request.is_json:
+        req = request.get_json()
+        response = controllers.perform_calculations(
+          birth_date=datetime.strptime(req["birth_date"], "%Y-%m-%d"),
+          observation_date=datetime.strptime(
+              req["observation_date"], "%Y-%m-%d"),
+          height=float(req["height_in_cm"]),
+          weight=float(req["weight_in_kg"]),
+          ofc=float(req["head_circ_in_cm"]),
+          sex=str(req["sex"]),
+          gestation_weeks=int(req["gestation_weeks"]),
+          gestation_days=int(req["gestation_days"])
+        )
+        return jsonify(response), 200
     else:
-        
-        # Prepare data from plotting
-        child_data = controllers.create_data_plots(results)
-        # Retrieve sex of child to select correct centile charts
-        sex = results[0]["birth_data"]["sex"]
-        
-    # Create Centile Charts
-    centiles = controllers.create_centile_values(sex, born_preterm=born_preterm)
-    
-    return jsonify({
-        "sex": sex,
-        "child_data": child_data,
-        "centile_data": centiles
-    })
+        return "Request body mimetype should be application/json", 400
 
 
-"""
-Instructions API route
-Does not expect any parameters
-Returns HTML content derived from the README.md of the API repository
-To amend the instructions please submit a pull request
-"""
-@app.route("/api/v1/json/instructions", methods=["GET"])
-def instructions():
-    #open README.md file
-    file = path.join(path.abspath(path.dirname(__file__)), "README.md")
-    with open(file) as markdown_file:
-        html = markdown.markdown(markdown_file.read())
-    return jsonify(html)
+spec.components.schema(
+    "calculations", schema=MultipleCalculationsResponseSchema)
+with app.test_request_context():
+    spec.path(view=uk_who_calculations)
 
 
-"""
-Fictional Child Data Generator API route. Expects query params as below:
-    drift_amount
-    intervals
-    interval_type
-    measurement_requested
-    number_of_measurements
-    sex
-    starting_age
-    starting_sds
-Returns a series of fictional data for a child
-"""
-@app.route("/api/v1/json/fictionalchild", methods=["POST"])
-def fictionalchild():
-    fictional_child_data = controllers.generate_fictional_data(
-        drift_amount = float(request.form["drift_amount"]),
-        intervals = int(request.form["intervals"]),
-        interval_type = request.form["interval_type"],
-        measurement_requested = request.form["measurement_requested"],
-        number_of_measurements = int(request.form["number_of_measurements"]),
-        sex = request.form["sex"],
-        starting_age = float(request.form["starting_age"]),
-        starting_sds = float(request.form["starting_sds"])
-    )
-    return jsonify(fictional_child_data)
+@app.route("/uk-who/calculation", methods=["POST"])
+def uk_who_calculation():
+    """Single Calculations API route.
+    ---
+    post:
+      summary: |
+        Calculates *single* digital growth chart parameters.
+        Returns a single calculation for the selected `measurement_method`.
+        Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
+        Note that BMI must be precalculated for the `bmi` function.
+
+      requestBody:
+        content:
+          application/json:
+            schema: SingleCalculationRequestParameters
+
+      responses:
+        200:
+          description: "Centile calculation (single) according to the supplied data"
+          content:
+            application/json:
+              schema: SingleCalculationResponseSchema
+    """
+    if request.is_json:
+        req = request.get_json()
+        print(req)
+        calculation = controllers.perform_calculation(
+            birth_date=datetime.strptime(req["birth_date"], "%Y-%m-%d"),
+            observation_date=datetime.strptime(
+                req["observation_date"], "%Y-%m-%d"),
+            measurement_method=str(req["measurement_method"]),
+            observation_value=float(req["observation_value"]),
+            sex=str(req["sex"]),
+            gestation_weeks=int(req["gestation_weeks"]),
+            gestation_days=int(req["gestation_days"])
+        )
+        return jsonify(calculation)
+    else:
+        return "Request body mimetype should be application/json", 400
 
 
-@app.route("/api/v1/json/spreadsheet", methods=["POST"])
-def spreadsheet():
+spec.components.schema("calculation", schema=SingleCalculationResponseSchema)
+with app.test_request_context():
+    spec.path(view=uk_who_calculation)
+
+
+@app.route("/uk-who/chart-data", methods=["POST"])
+def uk_who_chart_data():
+    """
+    Chart data API route.
+    ---
+    post:
+      summary: |
+        Chart data API route.
+        Requires results data paramaters from a call to the calculation endpoint.
+        Returns geometry data for constructing the lines of a traditional growth chart.
+
+      requestBody:
+        content:
+          application/json:
+            schema: ChartDataRequestParameters
+
+      responses:
+        200:
+          description: "Chart data for plotting a traditional growth chart"
+          content:
+            application/json:
+              schema: ChartDataResponseSchema
+    """
+    if request.is_json:
+        req = request.get_json()
+        results = req["results"]
+        print(type(results))
+        unique_child = req["unique_child"]
+        # born preterm flag to pass to charts
+        born_preterm = (results[0]["birth_data"]["gestation_weeks"]
+                        != 0 and results[0]["birth_data"]["gestation_weeks"] < 37)
+        if unique_child == "true":
+            # data are serial data points for a single child
+            # Prepare data from plotting
+            child_data = controllers.create_data_plots(results)
+            # Retrieve sex of child to select correct centile charts
+            sex = results[0]["birth_data"]["sex"]
+        else:
+            # if unique_child = False then the series of calculations are from different children
+            # Prepare data from plotting
+            child_data = controllers.create_data_plots(results)
+            # Retrieve sex of child to select correct centile charts
+            sex = results[0]["birth_data"]["sex"]
+        # Create Centile Charts
+        centiles = controllers.create_centile_values(
+            sex, born_preterm=born_preterm)
+        return jsonify({
+            "sex": sex,
+            "child_data": child_data,
+            "centile_data": centiles
+        })
+    else:
+        return "Request body should be application/json", 400
+
+
+spec.components.schema("chartData", schema=ChartDataResponseSchema)
+with app.test_request_context():
+    spec.path(view=uk_who_chart_data)
+
+
+@app.route("/uk-who/spreadsheet", methods=["POST"])
+def ukwho_spreadsheet():
+    """
+    ***INCOMPLETE***
+    Spreadsheet file upload API route.
+    ---
+    post:
+      summary: |
+        Spreadsheet file upload API route.
+        This endpoint is used for development and testing only and it is not envisaged that it will be in the live API
+
+      requestBody:
+        content:
+          text/csv:
+            schema: ChartDataRequestParameters
+
+      responses:
+        200:
+          description: "Chart data for plotting a traditional growth chart"
+          content:
+            application/json:
+              schema: ChartDataResponseSchema
+    """
     csv_file = request.files["csv_file"]
-    calculated_results = import_csv_file(csv_file)
+    calculated_results = controllers.import_csv_file(csv_file)
     return calculated_results
-   
-# return value from upload.py
-# {
-#         data: [an array of Measurement class objects]
-#         unique_child: boolean - refers to whether data is from one child or many children
-#         valid: boolean - refers to whether imported data was valid for calculation
-#         error: string  - error message if invalid file
-# }
+
+
+### Utilities refactored out into Blueprints ###
+spec.components.schema("references", schema=ReferencesResponseSchema)
+with app.test_request_context():
+    spec.path(view=blueprints.references)
+
+spec.components.schema("fictionalChild", schema=FictionalChildResponseSchema)
+with app.test_request_context():
+    spec.path(view=blueprints.create_fictional_child_measurements)
+
+with app.test_request_context():
+    spec.path(view=blueprints.instructions)
+
+
+################################
+### API SPEC AUTO GENERATION ###
+
+# Create JSON OpenAPI Spec and serve it at /
+@app.route("/", methods=["GET"])
+def apispec():
+    return json.dumps(spec.to_dict())
+
+
+# Create YAML OpenAPI Spec and serialise it to file
+try:
+    with open(r'openapi.yaml', 'w') as file:
+        openapi_spec = file.write(spec.to_yaml())
+        print(f"{OKGREEN} * openAPI3.0 spec was generated and saved to the repo{ENDC}")
+
+except:
+    print(f"{FAIL} * An error occurred while processing the openAPI3.0 spec{ENDC}")
+
+### END API SPEC AUTO GENERATION ###
+####################################
+
 
 if __name__ == "__main__":
     app.run()
