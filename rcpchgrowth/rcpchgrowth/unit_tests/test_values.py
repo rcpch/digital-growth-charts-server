@@ -31,10 +31,10 @@ def pytest_generate_tests(metafunc):
  """
 
 @pytest.mark.parametrize(
-    "'birth_date','observation_date', 'gestation_weeks', 'gestation_days', 'sex', 'measurement_method', 'observation_value', expected", 
+    "birth_date, observation_date, gestation_weeks, gestation_days, sex, measurement_method, observation_value, expected", 
     [
         pytest.param(
-            '2020-01-01', '2020-01-01', 'height', 40.48008, 'male', True, True, approx(0, abs=accuracy), id= "Height, Boy, 30Weeks"
+            date(2015, 12, 7), date(2016,11,16), 27, 2, 'female', 'weight', 7.27, 0 , id= "Height, Boy, 30Weeks"
 
         )
     ]
