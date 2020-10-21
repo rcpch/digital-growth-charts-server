@@ -12,6 +12,8 @@ def create_plottable_child_data(child_results_array):
             chronological_data_point = {
                 "x": child_result["measurement_dates"]["chronological_decimal_age"], 
                 "y": child_result["child_observation_value"]["measurement_value"],
+                "centile_band": child_result["measurement_calculated_values"]["centile_band"],
+                "centile_value": child_result["measurement_calculated_values"]["centile"],
                 "label": "chronological_age",
                 "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
                 "corrected_gestational_weeks": child_result["corrected_gestational_age"]["corrected_gestational_weeks"],
@@ -20,6 +22,8 @@ def create_plottable_child_data(child_results_array):
             corrected_data_point = {
                 "x": child_result["measurement_dates"]["corrected_decimal_age"], 
                 "y": child_result["child_observation_value"]["measurement_value"],
+                "centile_band": child_result["measurement_calculated_values"]["centile_band"],
+                "centile_value": child_result["measurement_calculated_values"]["centile"],
                 "label": "corrected_age",
                 "calendar_age": child_result["measurement_dates"]["corrected_calendar_age"],
                 "corrected_gestational_weeks": child_result["corrected_gestational_age"]["corrected_gestational_weeks"],
@@ -110,6 +114,8 @@ def sds_value_for_centile_value(centile: float):
             {
                 x: 9.415, `this is the age of the child at date of measurement in decimal years
                 y: 120 `this is the observation value - the units will be added in the client
+                "centile_band": 'You childs height is between the 75th and 91st centiles' `a text advice string for labelling,
+                "centile_value": 86 `centile number value - reported but not used: the project board do not like exact centile numbers,
                 "label": "corrected_age", `this is a flag to differentiate the two ages for the same observation_value
                 "calendar_age": "9 years and 4 months" `this is the calendar age for labelling
                 "corrected_gestational_weeks": 23 `the corrected gestational age if relevant for labelling
