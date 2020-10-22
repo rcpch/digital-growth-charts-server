@@ -23,25 +23,20 @@ class Measurement:
         The Measurement Class is the gatekeeper to all the functions in the RCPCHGrowth package, although the public
         functions can be accessed independently. The bulk of the error handling happens here so be aware that calling
         other functions independently may yield unexpected results.
-        It is initialised with this parameters:
-        birth_date (Python datetime object)
-        observation_date (Python object)
-        measurement_type: Custom class Measurement_Type (see documentation separately): attributes include a string
-            'height', 'weight', 'bmi' or 'ofc', and an observation_value (float)
-        Optional parameters:
-        gestation_weeks: gestation at birth in weeks (integer)
-        gestation_days: supplemental days in addition to gestation_weeks at birth (integer)
-        default_to_youngest_reference: boolean. If the request is for an age where 2 references overlap, the user
-            can override the default to use the 'oldest' one
 
-        # Measurement object is made up of 4 JSON elements: "birth_data", "measurement_dates",
-        #  "child_observation_value" and "measurement_calculated_values"
-        # All Measurement objects return the "birth_data" and "measurement_dates" elements
-        # Only those calculations relevant to the measurement_type requested populate the final JSON
-        # object.
+        It is initialised with the following Required parameters:
 
-        NOTE - THE ADVICE STRINGS HAVE BEEN DEPRECATED AS OF JULY 2020 - THE CALLS AND FUNCTION REMAIN IN PLACE,
-        BUT THE STRINGS BEEN COMMENTED OUT IN THE FINAL JSON
+        `birth_date`: (Python datetime object) The date of birth of the subject.
+        `observation_date`: (Python datetime object) The date that the observation was made.
+        `measurement_type`: (string) 'height', 'weight', 'bmi' or 'ofc' only are accepted.
+        `observation_value`: (float) The value of the height, weight, BMI or ofc observation.
+
+        Additionally there are the following optional parameters:
+
+        `gestation_weeks`: (integer) gestation at birth in weeks.
+        `gestation_days`: (integer) supplemental days in addition to gestation_weeks at birth.
+        `default_to_youngest_reference`: (boolean) If the request is for an age where 2 references overlap, the user
+            can override the default to use the 'oldest' reference.
         """
 
         # self.measurement_method = measurement_type.measurement_method
