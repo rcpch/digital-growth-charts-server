@@ -63,7 +63,7 @@ def create_plottable_child_data(child_results_array):
                 child_height_sds_data.append(measurement_sds_data_points)
             elif(child_result["child_observation_value"]["measurement_method"] == "weight"):
                 child_weight_data.append(measurement_data_points)
-                child_weight_sds_data..append(measurement_sds_data_points)
+                child_weight_sds_data.append(measurement_sds_data_points)
             elif(child_result["child_observation_value"]["measurement_method"] == "bmi"):
                 child_bmi_data.append(measurement_data_points)
                 child_bmi_sds_data.append(measurement_sds_data_points)

@@ -297,6 +297,13 @@ components:
         response:
           type: string
       type: object
+    plottableChildData:
+      properties:
+        child_data:
+          type: string
+        sex:
+          type: string
+      type: object
     references:
       properties:
         references:
@@ -375,6 +382,30 @@ paths:
         Requires results data paramaters from a call to the calculation endpoint.
 
         Returns geometry data for constructing the lines of a traditional growth chart.
+
+        '
+  /uk-who/plottable-child-data:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChartDataRequestParameters'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/chartData'
+          description: Child growth data in plottable format (x and y parameters,
+            centile and age labels)
+      summary: 'Child growth data in plottable format
+
+        Requires results data paramaters from a call to the calculation endpoint.
+
+        Returns child measurement data in a plottable format (x and y parameters),
+
+        with centiles and ages for labels.
 
         '
   /utilities/references:

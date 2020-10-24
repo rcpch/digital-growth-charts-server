@@ -14,7 +14,8 @@ from flask_cors import CORS
 import blueprints
 import controllers
 from schemas import (SingleCalculationResponseSchema, MultipleCalculationsResponseSchema,
-                     ReferencesResponseSchema, FictionalChildResponseSchema, ChartDataResponseSchema)
+                     ReferencesResponseSchema, FictionalChildResponseSchema, ChartDataResponseSchema,
+                     PlottableChildDataResponseSchema)
 
 
 #######################
@@ -222,7 +223,7 @@ with app.test_request_context():
     spec.path(view=uk_who_chart_data)
 
 @app.route("/uk-who/plottable-child-data", methods=["POST"])
-def plottable_child_data():
+def uk_who_plottable_child_data():
     """
     Child growth data in plottable format API route.
     ---
