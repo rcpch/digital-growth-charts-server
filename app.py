@@ -265,6 +265,10 @@ def plottable_child_data():
     else:
         return "Request body should be application/json", 400
 
+spec.components.schema("plottableChildData", schema=PlottableChildDataResponseSchema)
+with app.test_request_context():
+    spec.path(view=uk_who_plottable_child_data)
+
 @app.route("/uk-who/spreadsheet", methods=["POST"])
 def ukwho_spreadsheet():
     """

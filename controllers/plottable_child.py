@@ -9,6 +9,15 @@ def create_plottable_child_data(child_results_array):
     child_ofc_sds_data = []
     for count, child_result in enumerate(child_results_array):
         if(child_result):
+
+            ## create 4 plottable return objects for each measurement: one for each corrected and chronological age
+            ## per measurement and per SDS score
+            ## These measurement pairs and SDS pairs are stored in a 2 2-value arrays, so that each measurement/SDS
+            ## can be plotted as a series in the charts.
+            ## If there are multiple values to plot, the return array will be a string of arrays of paired values,
+            ## which allows them to be plotted as pairs: this is because corrected and chronological values should be
+            ## linked by a line, the chronological value denotes as a dot, the corrected value as a cross.
+
             chronological_data_point = {
                 "x": child_result["measurement_dates"]["chronological_decimal_age"], 
                 "y": child_result["child_observation_value"]["measurement_value"],
@@ -45,28 +54,23 @@ def create_plottable_child_data(child_results_array):
                 "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
                 "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"]
             }
-            if(child_result["child_observation_value"]["measurement_method"] == "height"):
-                child_height_data.append(corrected_data_point)
-                child_height_data.append(chronological_data_point)
-                child_height_sds_data.append(corrected_sds_data_point)
-                child_height_sds_data.append(chronological_sds_data_point)
-            elif(child_result["child_observation_value"]["measurement_method"] == "weight"):
-                child_weight_data.append(corrected_data_point)
-                child_weight_data.append(chronological_data_point)
-                child_weight_sds_data.append(corrected_sds_data_point)
-                child_weight_sds_data.append(chronological_sds_data_point)
-            elif(child_result["child_observation_value"]["measurement_method"] == "bmi"):
-                child_bmi_data.append(corrected_data_point)
-                child_bmi_data.append(chronological_data_point)
-                child_bmi_sds_data.append(corrected_sds_data_point)
-                child_bmi_sds_data.append(chronological_sds_data_point)
-            elif(child_result["child_observation_value"]["measurement_method"] == "ofc"):
-                child_ofc_data.append(corrected_data_point)
-                child_ofc_data.append(chronological_data_point)
-                child_ofc_sds_data.append(corrected_sds_data_point)
-                child_ofc_sds_data.append(chronological_sds_data_point)
 
-        
+            measurement_data_points=[corrected_data_point, chronological_data_point]
+            measurement_sds_data_points=[corrected_sds_data_point, chronological_sds_data_point]
+
+            if(child_result["child_observation_value"]["measurement_method"] == "height"):
+                child_height_data.append(measurement_data_points)
+                child_height_sds_data.append(measurement_sds_data_points)
+            elif(child_result["child_observation_value"]["measurement_method"] == "weight"):
+                child_weight_data.append(measurement_data_points)
+                child_weight_sds_data..append(measurement_sds_data_points)
+            elif(child_result["child_observation_value"]["measurement_method"] == "bmi"):
+                child_bmi_data.append(measurement_data_points)
+                child_bmi_sds_data.append(measurement_sds_data_points)
+            elif(child_result["child_observation_value"]["measurement_method"] == "ofc"):
+                child_ofc_data.append(measurement_data_points)
+                child_ofc_sds_data.append(measurement_sds_data_points)
+
     result = {
         "heights": child_height_data,
         "height_sds": child_height_sds_data,
