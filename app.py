@@ -14,7 +14,8 @@ from flask_cors import CORS
 import blueprints
 import controllers
 from schemas import (SingleCalculationResponseSchema, MultipleCalculationsResponseSchema,
-                     ReferencesResponseSchema, FictionalChildResponseSchema, ChartDataResponseSchema)
+                     ReferencesResponseSchema, FictionalChildResponseSchema, ChartDataResponseSchema,
+                     PlottableChildDataResponseSchema)
 
 
 #######################
@@ -221,6 +222,53 @@ spec.components.schema("chartData", schema=ChartDataResponseSchema)
 with app.test_request_context():
     spec.path(view=uk_who_chart_data)
 
+@app.route("/uk-who/plottable-child-data", methods=["POST"])
+def uk_who_plottable_child_data():
+    """
+    Child growth data in plottable format API route.
+    ---
+    post:
+      summary: |
+        Child growth data in plottable format
+        Requires results data paramaters from a call to the calculation endpoint.
+        Returns child measurement data in a plottable format (x and y parameters), 
+        with centiles and ages for labels.
+
+      requestBody:
+        content:
+          application/json:
+            schema: ChartDataRequestParameters
+
+      responses:
+        200:
+          description: "Child growth data in plottable format (x and y parameters, centile and age labels)"
+          content:
+            application/json:
+              schema: ChartDataResponseSchema
+    """
+    if request.is_json:
+        req = request.get_json()
+        results = req["results"]
+        # born preterm flag to pass to charts
+        # born_preterm = (results[0]["birth_data"]["gestation_weeks"]
+        #                 != 0 and results[0]["birth_data"]["gestation_weeks"] < 37)
+
+        # data are serial data points for a single child
+        # Prepare data from plotting
+        child_data = controllers.create_plottable_child_data(results)
+        # Retrieve sex of child to select correct centile charts
+        sex = results[0]["birth_data"]["sex"]
+        
+        return jsonify({
+            "sex": sex,
+            "child_data": child_data,
+        })
+    else:
+        return "Request body should be application/json", 400
+
+spec.components.schema("plottableChildData", schema=PlottableChildDataResponseSchema)
+with app.test_request_context():
+    spec.path(view=uk_who_plottable_child_data)
 
 @app.route("/uk-who/spreadsheet", methods=["POST"])
 def ukwho_spreadsheet():
