@@ -23,29 +23,22 @@ class Measurement:
         The Measurement Class is the gatekeeper to all the functions in the RCPCHGrowth package, although the public
         functions can be accessed independently. The bulk of the error handling happens here so be aware that calling
         other functions independently may yield unexpected results.
-        It is initialised with this parameters:
-        birth_date (Python datetime object)
-        observation_date (Python object)
-        measurement_type: Custom class Measurement_Type (see documentation separately): attributes include a string
-            'height', 'weight', 'bmi' or 'ofc', and an observation_value (float)
-        Optional parameters:
-        gestation_weeks: gestation at birth in weeks (integer)
-        gestation_days: supplemental days in addition to gestation_weeks at birth (integer)
-        default_to_youngest_reference: boolean. If the request is for an age where 2 references overlap, the user
-            can override the default to use the 'oldest' one
 
-        # Measurement object is made up of 4 JSON elements: "birth_data", "measurement_dates",
-        #  "child_observation_value" and "measurement_calculated_values"
-        # All Measurement objects return the "birth_data" and "measurement_dates" elements
-        # Only those calculations relevant to the measurement_type requested populate the final JSON
-        # object.
+        It is initialised with the following Required parameters:
 
-        NOTE - THE ADVICE STRINGS HAVE BEEN DEPRECATED AS OF JULY 2020 - THE CALLS AND FUNCTION REMAIN IN PLACE,
-        BUT THE STRINGS BEEN COMMENTED OUT IN THE FINAL JSON
+        `birth_date`: (Python datetime object) The date of birth of the subject.
+        `observation_date`: (Python datetime object) The date that the observation was made.
+        `measurement_type`: (string) 'height', 'weight', 'bmi' or 'ofc' only are accepted.
+        `observation_value`: (float) The value of the height, weight, BMI or ofc observation.
+
+        Additionally there are the following optional parameters:
+
+        `gestation_weeks`: (integer) gestation at birth in weeks.
+        `gestation_days`: (integer) supplemental days in addition to gestation_weeks at birth.
+        `default_to_youngest_reference`: (boolean) If the request is for an age where 2 references overlap, the user
+            can override the default to use the 'oldest' reference.
         """
 
-        # self.measurement_method = measurement_type.measurement_method
-        # self.observation_value = measurement_type.observation_value
         self.sex = sex
         self.birth_date = birth_date
         self.observation_date = observation_date
@@ -458,56 +451,58 @@ class Measurement:
         # and returns True if valid
 
         is_valid = False
+
         if measurement_method == 'bmi':
             if observation_value is None:
-                raise ValueError('Missing value for BMI.')
+                raise ValueError(
+                    
+                    
+                    'Missing observation_value for Body Mass Index. Please pass a Body Mass Index in kilograms per metre squared (kg/m2)')
             else:
                 is_valid = True
 
         elif measurement_method == 'height':
             if observation_value is None:
                 raise ValueError(
-                    'Missing value for height. Please pass a height in cm.')
+                    'Missing observation_value for height/length. Please pass a height/length in cm.')
             elif observation_value < 2:
                 # most likely metres passed instead of cm.
                 raise AssertionError(
-                    'Height must be passed in cm, not metres')
+                    'Height/length must be passed in cm, not metres')
             elif observation_value < 30.0:
                 # a baby is unlikely to be < 30 cm long - probably a data entry error
                 raise AssertionError(
-                    f'The height you have entered is very short. Are you sure you meant {observation_value} cm?')
+                    f'The height/length you have entered is very low and likely to be an error. Are you sure you meant {observation_value} centimetres?')
             else:
                 is_valid = True
 
         elif measurement_method == 'weight':
             if observation_value is None:
                 raise ValueError(
-                    'Missing value for weight. Please pass a weight in kilograms.')
+                    'Missing observation_value for weight. Please pass a weight in kilograms.')
             elif observation_value < 0.20:
                 # 200g is very small. Like this is an error
                 raise AssertionError(
-                    f'Error. {observation_value} kg is very low. Please pass an accurate weight in kilograms')
+                    f'Error. {observation_value} kilograms is very low. Please pass an accurate weight in kilograms')
             elif observation_value > 500.0:
                 # it is likely the weight is passed in grams, not kg. The heaviest man according to google is
                 # Jon Brower Minnoch (US), who had suffered from obesity since childhood. In September 1976,
                 # he measured 185 cm (6 ft 1 in) tall and weighed 442 kg (974 lb; 69 st 9 lb)
                 raise AssertionError(
-                    f"{observation_value} kg is very high. Weight must be passed in kg.")
+                    f"{observation_value} kilograms is very high. Weight must be passed in kilograms.")
             else:
                 is_valid = True
 
         elif measurement_method == 'ofc':
             if observation_value is None:
                 raise ValueError(
-                    'No value for head circumference. Please pass a head circumference in cm.')
+                    'Missing observation_value for head circumference. Please pass a head circumference in centimetres.')
             elif observation_value < 5.0:
-                # A head circumference less than 5 cm is likely to be an error
                 raise AssertionError(
-                    f'{observation_value} cm is likely an error. Please pass an accurate head circumference in cm.')
+                    f'Please check this value: {observation_value}. A head circumference less than 5 centimetres is likely an error. Please pass an accurate head circumference in centimetres.')
             elif observation_value > 150.0:
-                # A head circumference > 150 cm is likely to be an error
                 raise AssertionError(
-                    f'{observation_value} is likely an error. Please pass an accurate head circumference in cm.')
+                    f'Please check this value: {observation_value}. A head circumference > 150 centimetres is likely an error. Please pass an accurate head circumference in cm.')
             else:
                 is_valid = True
 
