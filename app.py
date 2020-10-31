@@ -13,7 +13,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import blueprints
 import controllers
-from schemas import (SingleCalculationResponseSchema, MultipleCalculationsResponseSchema,
+from schemas import (SingleCalculationResponseSchema,
                      ReferencesResponseSchema, FictionalChildResponseSchema, ChartDataResponseSchema,
                      PlottableChildDataResponseSchema)
 
@@ -68,54 +68,6 @@ spec = APISpec(
 )
 ##### END API SPEC ########
 ###########################
-
-
-# JSON CALCULATION OF MULTIPLE MEASUREMENT METHODS AT SAME TIME
-# USED BY THE FLASK DEMO CLIENT
-@app.route("/uk-who/calculations", methods=["POST"])
-def uk_who_calculations():
-    """
-    Multiple Calculations API route.
-    ---
-    post:
-      summary: |-
-        Calculates *multiple* digital growth chart parameters.  
-        Returns centiles for height, weight, BMI and OFC when supplied the required input values.
-
-      requestBody:
-        content:
-          application/json:
-            schema: MultipleCalculationsRequestParameters
-
-      responses:
-        200:
-          description: "Centile calculations corresponding to the supplied data"
-          content:
-            application/json:
-              schema: MultipleCalculationsResponseSchema
-    """
-    if request.is_json:
-        req = request.get_json()
-        response = controllers.perform_calculations(
-            birth_date=datetime.strptime(req["birth_date"], "%Y-%m-%d"),
-            observation_date=datetime.strptime(
-                req["observation_date"], "%Y-%m-%d"),
-            height=float(req["height_in_cm"]),
-            weight=float(req["weight_in_kg"]),
-            ofc=float(req["head_circ_in_cm"]),
-            sex=str(req["sex"]),
-            gestation_weeks=int(req["gestation_weeks"]),
-            gestation_days=int(req["gestation_days"])
-        )
-        return jsonify(response), 200
-    else:
-        return "Request body mimetype should be application/json", 400
-
-
-spec.components.schema(
-    "calculations", schema=MultipleCalculationsResponseSchema)
-with app.test_request_context():
-    spec.path(view=uk_who_calculations)
 
 
 @app.route("/uk-who/calculation", methods=["POST"])

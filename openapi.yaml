@@ -135,54 +135,6 @@ components:
         measurement_dates:
           $ref: '#/components/schemas/MeasurementDates'
       type: object
-    MultipleCalculationsRequestParameters:
-      properties:
-        birth_date:
-          description: Date of birth of the patient in YYYY-MM-DD ISO8601 format.
-          format: date
-          type: string
-        gestation_days:
-          description: The number of additional days _beyond the completed weeks of
-            gestation_ at which the patient was born. This enables Gestational Age
-            correction if the child was not born at term. See also the other parameter
-            `gestation_weeks` - both are usually required.
-          type: number
-        gestation_weeks:
-          description: The number of completed weeks of gestation at which the patient
-            was born. This enables Gestational Age correction if the child was not
-            born at term. See also the other parameter `gestation_days` - both are
-            usually required.
-          type: number
-        height:
-          description: The height of the patient, which MUST be in centimetres to
-            get correct results.
-          type: number
-        observation_date:
-          description: The date that the measurement was taken, in YYYY-MM-DD ISO8601
-            format.
-          format: date
-          type: string
-        ofc:
-          description: The head circumference (also described as occipito-frontal
-            circumference, or 'OFC') of the patient, which **must** be in centimetres
-            to get correct results.
-          type: number
-        sex:
-          description: The sex of the patient, as a string value which can either
-            be `male` or `female`. Abbreviations or alternatives are not accepted
-          enum:
-          - male
-          - female
-          type: string
-        weight:
-          description: The weight of the patient, which MUST be in kilograms to get
-            correct results.
-          type: number
-      required:
-      - birth_date
-      - observation_date
-      - sex
-      type: object
     Reference:
       properties:
         acknowledgement_text:
@@ -272,17 +224,6 @@ components:
         calculation:
           $ref: '#/components/schemas/MeasurementResponse'
       type: object
-    calculations:
-      properties:
-        bmi:
-          $ref: '#/components/schemas/MeasurementResponse'
-        height:
-          $ref: '#/components/schemas/MeasurementResponse'
-        ofc:
-          $ref: '#/components/schemas/MeasurementResponse'
-        weight:
-          $ref: '#/components/schemas/MeasurementResponse'
-      type: object
     chartData:
       properties:
         centile_data:
@@ -320,24 +261,6 @@ info:
   version: 0.0.3
 openapi: 3.0.2
 paths:
-  /uk-who/calculations:
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MultipleCalculationsRequestParameters'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/calculations'
-          description: Centile calculations corresponding to the supplied data
-      summary: 'Calculates *multiple* digital growth chart parameters.
-
-        Returns centiles for height, weight, BMI and OFC when supplied the required
-        input values.'
   /uk-who/calculation:
     post:
       description: '* Returns a single centile/SDS calculation for the selected `measurement_method`.
