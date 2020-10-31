@@ -1,0 +1,7 @@
+#!/bin/bash
+
+app="rcpch-dgc-server"
+docker build -t ${app} .
+docker run -d -p 5000:5000 \
+  --name=${app} \
+  --volume $PWD:/app ${app}
