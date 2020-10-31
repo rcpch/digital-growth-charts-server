@@ -275,7 +275,7 @@ paths:
         content:
           application/json:
             example:
-              term-2-monther:
+              term-2-months-male:
                 birth_date: '2020-04-12'
                 gestation_days: 4
                 gestation_weeks: 40
@@ -307,7 +307,6 @@ paths:
       requestBody:
         content:
           application/json:
-            example: null
             schema:
               $ref: '#/components/schemas/ChartDataRequestParameters'
       responses:
@@ -330,7 +329,6 @@ paths:
       requestBody:
         content:
           application/json:
-            example: null
             schema:
               $ref: '#/components/schemas/ChartDataRequestParameters'
       responses:

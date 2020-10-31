@@ -87,7 +87,7 @@ def uk_who_calculation():
           application/json:
             schema: SingleCalculationRequestParameters
             example:
-              term-2-monther:
+              term-2-months-male:
                 birth_date: '2020-04-12'
                 observation_date: '2020-06-12'
                 height_in_cm: 60
@@ -142,7 +142,6 @@ def uk_who_chart_data():
         content:
           application/json:
             schema: ChartDataRequestParameters
-            example: 
 
       responses:
         200:
@@ -203,7 +202,6 @@ def uk_who_plottable_child_data():
         content:
           application/json:
             schema: ChartDataRequestParameters
-            example:
 
       responses:
         200:
