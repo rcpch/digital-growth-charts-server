@@ -2,7 +2,7 @@
 ![Deployment Status - rcpch-dgc-server-alpha](https://github.com/rcpch/digital-growth-charts-server/workflows/Build%20and%20deploy%20Python%20app%20to%20Azure%20Web%20App%20-%20rcpch-dgc-server-alpha/badge.svg?branch=alpha)
 
 <p align="center">
-  <img width="200" src="static/rcpch-logo.png">
+  <img width="200" src="https://github.com/rcpch/digital-growth-charts-server/raw/alpha/static/rcpch-logo.png">
 </p>
 
 # RCPCH Digital Growth Charts API Server
