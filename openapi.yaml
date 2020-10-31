@@ -340,6 +340,14 @@ paths:
         input values.'
   /uk-who/calculation:
     post:
+      description: 'Returns a single calculation for the selected `measurement_method`.
+
+        Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC
+        = occipitofrontal circumference = ''head circumference'').
+
+        Note that BMI must be precalculated for the `bmi` function.
+
+        '
       requestBody:
         content:
           application/json:
@@ -362,14 +370,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/calculation'
           description: Centile calculation (single) according to the supplied data
-      summary: 'Calculates *single* digital growth chart parameters.
-
-        Returns a single calculation for the selected `measurement_method`.
-
-        Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC
-        = occipitofrontal circumference = ''head circumference'').
-
-        Note that BMI must be precalculated for the `bmi` function.
+      summary: 'Calculates single digital growth chart parameters.
 
         '
   /uk-who/chart-data:

@@ -123,7 +123,8 @@ def uk_who_calculation():
     ---
     post:
       summary: |
-        Calculates *single* digital growth chart parameters.
+        Calculates single digital growth chart parameters.
+      description : |
         Returns a single calculation for the selected `measurement_method`.
         Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
         Note that BMI must be precalculated for the `bmi` function.
