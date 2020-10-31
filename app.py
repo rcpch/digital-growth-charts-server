@@ -78,7 +78,8 @@ def uk_who_calculation():
     post:
       summary: Calculates single digital growth chart parameters.
       description: |
-        * Returns a single centile/SDS calculation for the selected `measurement_method`.  
+        * Returns a single centile/SDS calculation for the selected `measurement_method`.
+        * Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.
         * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
         * Note that BMI must be precalculated for the `bmi` function.
 
