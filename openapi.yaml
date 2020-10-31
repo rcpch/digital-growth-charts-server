@@ -313,7 +313,6 @@ components:
       type: object
 info:
   description: Royal College of Paediatrics and Child Health Digital Growth Charts
-    API Server
   license:
     name: GNU Affero General Public License
     url: https://www.gnu.org/licenses/agpl-3.0.en.html
@@ -344,6 +343,16 @@ paths:
       requestBody:
         content:
           application/json:
+            example:
+              term-2-monther:
+                birth_date: '2020-04-12'
+                gestation_days: 4
+                gestation_weeks: 40
+                head_circ_in_cm: 40
+                height_in_cm: 60
+                observation_date: '2020-06-12'
+                sex: male
+                weight_in_kg: 6
             schema:
               $ref: '#/components/schemas/SingleCalculationRequestParameters'
       responses:
@@ -401,7 +410,7 @@ paths:
             centile and age labels)
       summary: 'Child growth data in plottable format
 
-        Requires results data paramaters from a call to the calculation endpoint.
+        Requires results data parameters from a call to the calculation endpoint.
 
         Returns child measurement data in a plottable format (x and y parameters),
 

@@ -57,7 +57,7 @@ spec = APISpec(
     version="0.0.3",
     openapi_version="3.0.2",
     info=dict(
-        description="Royal College of Paediatrics and Child Health Digital Growth Charts API Server",
+        description="Royal College of Paediatrics and Child Health Digital Growth Charts",
         license={"name": "GNU Affero General Public License",
                  "url": "https://www.gnu.org/licenses/agpl-3.0.en.html"}),
     plugins=[MarshmallowPlugin(), FlaskPlugin()],
@@ -78,7 +78,7 @@ def uk_who_calculations():
     ---
     post:
       summary: |-
-        Calculates *multiple* digital growth chart parameters.
+        Calculates *multiple* digital growth chart parameters.  
         Returns centiles for height, weight, BMI and OFC when supplied the required input values.
 
       requestBody:
@@ -96,15 +96,15 @@ def uk_who_calculations():
     if request.is_json:
         req = request.get_json()
         response = controllers.perform_calculations(
-          birth_date=datetime.strptime(req["birth_date"], "%Y-%m-%d"),
-          observation_date=datetime.strptime(
-              req["observation_date"], "%Y-%m-%d"),
-          height=float(req["height_in_cm"]),
-          weight=float(req["weight_in_kg"]),
-          ofc=float(req["head_circ_in_cm"]),
-          sex=str(req["sex"]),
-          gestation_weeks=int(req["gestation_weeks"]),
-          gestation_days=int(req["gestation_days"])
+            birth_date=datetime.strptime(req["birth_date"], "%Y-%m-%d"),
+            observation_date=datetime.strptime(
+                req["observation_date"], "%Y-%m-%d"),
+            height=float(req["height_in_cm"]),
+            weight=float(req["weight_in_kg"]),
+            ofc=float(req["head_circ_in_cm"]),
+            sex=str(req["sex"]),
+            gestation_weeks=int(req["gestation_weeks"]),
+            gestation_days=int(req["gestation_days"])
         )
         return jsonify(response), 200
     else:
@@ -132,6 +132,16 @@ def uk_who_calculation():
         content:
           application/json:
             schema: SingleCalculationRequestParameters
+            example:
+              term-2-monther:
+                birth_date: '2020-04-12'
+                observation_date: '2020-06-12'
+                height_in_cm: 60
+                weight_in_kg: 6
+                head_circ_in_cm: 40
+                sex: male
+                gestation_weeks: 40
+                gestation_days: 4
 
       responses:
         200:
@@ -222,6 +232,7 @@ spec.components.schema("chartData", schema=ChartDataResponseSchema)
 with app.test_request_context():
     spec.path(view=uk_who_chart_data)
 
+
 @app.route("/uk-who/plottable-child-data", methods=["POST"])
 def uk_who_plottable_child_data():
     """
@@ -230,7 +241,7 @@ def uk_who_plottable_child_data():
     post:
       summary: |
         Child growth data in plottable format
-        Requires results data paramaters from a call to the calculation endpoint.
+        Requires results data parameters from a call to the calculation endpoint.
         Returns child measurement data in a plottable format (x and y parameters), 
         with centiles and ages for labels.
 
@@ -258,7 +269,7 @@ def uk_who_plottable_child_data():
         child_data = controllers.create_plottable_child_data(results)
         # Retrieve sex of child to select correct centile charts
         sex = results[0]["birth_data"]["sex"]
-        
+
         return jsonify({
             "sex": sex,
             "child_data": child_data,
@@ -266,9 +277,12 @@ def uk_who_plottable_child_data():
     else:
         return "Request body should be application/json", 400
 
-spec.components.schema("plottableChildData", schema=PlottableChildDataResponseSchema)
+
+spec.components.schema("plottableChildData",
+                       schema=PlottableChildDataResponseSchema)
 with app.test_request_context():
     spec.path(view=uk_who_plottable_child_data)
+
 
 @app.route("/uk-who/spreadsheet", methods=["POST"])
 def ukwho_spreadsheet():
