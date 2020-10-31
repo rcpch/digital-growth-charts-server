@@ -89,7 +89,6 @@ def uk_who_calculations():
 
       responses:
         200:
-          summary: OK
           description: "Centile calculations corresponding to the supplied data"
           content:
             application/json:
@@ -148,7 +147,6 @@ def uk_who_calculation():
 
       responses:
         200:
-          summary: OK
           description: "Centile calculation (single) according to the supplied data was returned"
           content:
             application/json:
@@ -196,7 +194,6 @@ def uk_who_chart_data():
 
       responses:
         200:
-          summary: OK
           description: "Chart data for plotting a traditional growth chart was returned"
           content:
             application/json:
@@ -258,7 +255,6 @@ def uk_who_plottable_child_data():
 
       responses:
         200:
-          summary: OK
           description: |
             * Child growth data in plottable format (x and y parameters, centile and age labels) was returned.
           content:
@@ -310,7 +306,6 @@ def ukwho_spreadsheet():
 
       responses:
         200:
-          summary: OK
           description: |
             * Chart data for plotting a traditional growth chart was returned.
           content:
@@ -353,7 +348,6 @@ def apispec():
 
       responses:
         200:
-          summary: OK
           description: |
             * openAPI3.0 Specification in JSON format, conforming to https://swagger.io/specification/, was returned.
           content:

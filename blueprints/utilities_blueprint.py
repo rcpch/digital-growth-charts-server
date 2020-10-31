@@ -25,7 +25,6 @@ def references():
 
       responses:
         200:
-          summary: OK
           description: "Reference data was returned"
           content:
             application/json:
@@ -53,7 +52,6 @@ def create_fictional_child_measurements():
 
       responses:
         200:
-          summary: OK
           description: "Fictional child test data was returned"
           content:
             application/json:
@@ -90,7 +88,6 @@ def instructions():
 
       responses:
         200:
-          summary: OK
           description: "API Instructions and information was returned"
           content:
             application/json:

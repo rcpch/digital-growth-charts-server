@@ -371,7 +371,6 @@ paths:
                 $ref: '#/components/schemas/calculation'
           description: Centile calculation (single) according to the supplied data
             was returned
-          summary: OK
       summary: Calculates single digital growth chart parameters.
   /uk-who/chart-data:
     post:
@@ -395,7 +394,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/chartData'
           description: Chart data for plotting a traditional growth chart was returned
-          summary: OK
       summary: Chart data API route.
   /uk-who/plottable-child-data:
     post:
@@ -422,7 +420,6 @@ paths:
             centile and age labels) was returned.
 
             '
-          summary: OK
       summary: Child growth data in plottable format.
   /utilities/references:
     get:
@@ -442,7 +439,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/references'
           description: Reference data was returned
-          summary: OK
       summary: Centile References Library API route.
   /utilities/create_fictional_child_measurements:
     post:
@@ -464,7 +460,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/fictionalChild'
           description: Fictional child test data was returned
-          summary: OK
       summary: Fictional Child Data Generator API route.
   /utilities/instructions:
     get:
@@ -482,7 +477,6 @@ paths:
               schema:
                 type: string
           description: API Instructions and information was returned
-          summary: OK
       summary: Instructions API route.
 servers:
 - description: RCPCH Production API Gateway
