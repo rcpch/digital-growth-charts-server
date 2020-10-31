@@ -297,7 +297,7 @@ paths:
                 $ref: '#/components/schemas/calculation'
           description: Centile calculation (single) according to the supplied data
             was returned
-      summary: Calculates single digital growth chart parameters.
+      summary: Centile and SDS Calculation route.
   /uk-who/chart-data:
     post:
       description: '* Requires results data paramaters from a call to the calculation

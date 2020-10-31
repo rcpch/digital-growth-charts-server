@@ -76,7 +76,7 @@ def uk_who_calculation():
     Single Calculations API route.
     ---
     post:
-      summary: Calculates single digital growth chart parameters.
+      summary: Centile and SDS Calculation route.
       description: |
         * Returns a single centile/SDS calculation for the selected `measurement_method`.
         * Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.
