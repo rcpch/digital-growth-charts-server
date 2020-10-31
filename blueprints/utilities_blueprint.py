@@ -17,15 +17,16 @@ def references():
     Centile References Library API route.
     ---
     get:
-      summary: |
-        Centile References Library API route.
-        Does not expect any parameters.
-        Returns data on the growth reference data sources that this project is aware of.
-        To add a new reference please submit a pull request, create a GitHub Issue, or otherwise contact the Growth Charts team.
+      summary: Centile References Library API route.
+      description: |
+        * Does not expect any parameters.
+        * Returns data on the growth reference data sources that this project is aware of.
+        * To add a new reference please submit a pull request, create a GitHub Issue, or otherwise contact the Growth Charts team.
 
       responses:
         200:
-          description: "Reference data"
+          summary: OK
+          description: "Reference data was returned"
           content:
             application/json:
               schema: ReferencesResponseSchema
@@ -40,10 +41,10 @@ def create_fictional_child_measurements():
     Fictional Child Data Generator API route.
     ---
     post:
-      summary: |
-        Fictional Child Data Generator API route.
-        Returns a series of generated fictional measurement data for a child.
-        Used for testing, demonstration and research purposes.
+      summary: Fictional Child Data Generator API route.
+      description: |
+        * Returns a series of generated fictional measurement data for a child.
+        * Used for testing, demonstration and research purposes.
 
       requestBody:
         content:
@@ -52,7 +53,8 @@ def create_fictional_child_measurements():
 
       responses:
         200:
-          description: "Fictional child test data generation endpoint"
+          summary: OK
+          description: "Fictional child test data was returned"
           content:
             application/json:
               schema: FictionalChildResponseSchema
@@ -80,20 +82,21 @@ def instructions():
     Instructions API route.
     ---
     get:
-      summary: |
-        Instructions API route. Does not expect any parameters.
-        Returns HTML content derived from the README.md of the API repository
-        To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
+      summary: Instructions API route.
+      description: |
+        * Does not expect any parameters.
+        * Returns HTML content derived from the README.md of the API repository
+        * To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
 
       responses:
         200:
-          description: "API Instructions and information endpoint"
+          summary: OK
+          description: "API Instructions and information was returned"
           content:
             application/json:
               schema:
                 type: string
     """
-    # open README.md file
     file = path.join(path.abspath(path.dirname(
         path.dirname(__file__))), "README.md")
     with open(file) as markdown_file:

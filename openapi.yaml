@@ -340,12 +340,12 @@ paths:
         input values.'
   /uk-who/calculation:
     post:
-      description: 'Returns a single calculation for the selected `measurement_method`.
+      description: '* Returns a single centile/SDS calculation for the selected `measurement_method`.
 
-        Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC
-        = occipitofrontal circumference = ''head circumference'').
+        * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc`
+        (OFC = occipitofrontal circumference = ''head circumference'').
 
-        Note that BMI must be precalculated for the `bmi` function.
+        * Note that BMI must be precalculated for the `bmi` function.
 
         '
       requestBody:
@@ -370,35 +370,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/calculation'
           description: Centile calculation (single) according to the supplied data
-      summary: 'Calculates single digital growth chart parameters.
-
-        '
+            was returned
+          summary: OK
+      summary: Calculates single digital growth chart parameters.
   /uk-who/chart-data:
     post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ChartDataRequestParameters'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/chartData'
-          description: Chart data for plotting a traditional growth chart
-      summary: 'Chart data API route.
+      description: '* Requires results data paramaters from a call to the calculation
+        endpoint.
 
-        Requires results data paramaters from a call to the calculation endpoint.
-
-        Returns geometry data for constructing the lines of a traditional growth chart.
+        * Returns geometry data for constructing the lines of a traditional growth
+        chart.
 
         '
-  /uk-who/plottable-child-data:
-    post:
       requestBody:
         content:
           application/json:
+            example: null
             schema:
               $ref: '#/components/schemas/ChartDataRequestParameters'
       responses:
@@ -407,39 +394,64 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/chartData'
-          description: Child growth data in plottable format (x and y parameters,
-            centile and age labels)
-      summary: 'Child growth data in plottable format
+          description: Chart data for plotting a traditional growth chart was returned
+          summary: OK
+      summary: Chart data API route.
+  /uk-who/plottable-child-data:
+    post:
+      description: '* Requires results data parameters from a call to the calculation
+        endpoint.
 
-        Requires results data parameters from a call to the calculation endpoint.
-
-        Returns child measurement data in a plottable format (x and y parameters),
-
+        * Returns child measurement data in a plottable format (x and y parameters),
         with centiles and ages for labels.
 
         '
+      requestBody:
+        content:
+          application/json:
+            example: null
+            schema:
+              $ref: '#/components/schemas/ChartDataRequestParameters'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/chartData'
+          description: '* Child growth data in plottable format (x and y parameters,
+            centile and age labels) was returned.
+
+            '
+          summary: OK
+      summary: Child growth data in plottable format.
   /utilities/references:
     get:
+      description: '* Does not expect any parameters.
+
+        * Returns data on the growth reference data sources that this project is aware
+        of.
+
+        * To add a new reference please submit a pull request, create a GitHub Issue,
+        or otherwise contact the Growth Charts team.
+
+        '
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/references'
-          description: Reference data
-      summary: 'Centile References Library API route.
-
-        Does not expect any parameters.
-
-        Returns data on the growth reference data sources that this project is aware
-        of.
-
-        To add a new reference please submit a pull request, create a GitHub Issue,
-        or otherwise contact the Growth Charts team.
-
-        '
+          description: Reference data was returned
+          summary: OK
+      summary: Centile References Library API route.
   /utilities/create_fictional_child_measurements:
     post:
+      description: '* Returns a series of generated fictional measurement data for
+        a child.
+
+        * Used for testing, demonstration and research purposes.
+
+        '
       requestBody:
         content:
           application/json:
@@ -451,30 +463,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/fictionalChild'
-          description: Fictional child test data generation endpoint
-      summary: 'Fictional Child Data Generator API route.
-
-        Returns a series of generated fictional measurement data for a child.
-
-        Used for testing, demonstration and research purposes.
-
-        '
+          description: Fictional child test data was returned
+          summary: OK
+      summary: Fictional Child Data Generator API route.
   /utilities/instructions:
     get:
+      description: '* Does not expect any parameters.
+
+        * Returns HTML content derived from the README.md of the API repository
+
+        * To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
+
+        '
       responses:
         '200':
           content:
             application/json:
               schema:
                 type: string
-          description: API Instructions and information endpoint
-      summary: 'Instructions API route. Does not expect any parameters.
-
-        Returns HTML content derived from the README.md of the API repository
-
-        To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
-
-        '
+          description: API Instructions and information was returned
+          summary: OK
+      summary: Instructions API route.
 servers:
 - description: RCPCH Production API Gateway
   url: https://api.rcpch.ac.uk/

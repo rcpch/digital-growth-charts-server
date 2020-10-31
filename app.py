@@ -74,7 +74,8 @@ spec = APISpec(
 # USED BY THE FLASK DEMO CLIENT
 @app.route("/uk-who/calculations", methods=["POST"])
 def uk_who_calculations():
-    """Multiple Calculations API route.
+    """
+    Multiple Calculations API route.
     ---
     post:
       summary: |-
@@ -88,6 +89,7 @@ def uk_who_calculations():
 
       responses:
         200:
+          summary: OK
           description: "Centile calculations corresponding to the supplied data"
           content:
             application/json:
@@ -119,15 +121,15 @@ with app.test_request_context():
 
 @app.route("/uk-who/calculation", methods=["POST"])
 def uk_who_calculation():
-    """Single Calculations API route.
+    """
+    Single Calculations API route.
     ---
     post:
-      summary: |
-        Calculates single digital growth chart parameters.
-      description : |
-        Returns a single calculation for the selected `measurement_method`.
-        Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
-        Note that BMI must be precalculated for the `bmi` function.
+      summary: Calculates single digital growth chart parameters.
+      description: |
+        * Returns a single centile/SDS calculation for the selected `measurement_method`.  
+        * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
+        * Note that BMI must be precalculated for the `bmi` function.
 
       requestBody:
         content:
@@ -146,7 +148,8 @@ def uk_who_calculation():
 
       responses:
         200:
-          description: "Centile calculation (single) according to the supplied data"
+          summary: OK
+          description: "Centile calculation (single) according to the supplied data was returned"
           content:
             application/json:
               schema: SingleCalculationResponseSchema
@@ -180,19 +183,21 @@ def uk_who_chart_data():
     Chart data API route.
     ---
     post:
-      summary: |
-        Chart data API route.
-        Requires results data paramaters from a call to the calculation endpoint.
-        Returns geometry data for constructing the lines of a traditional growth chart.
+      summary: Chart data API route.
+      description: |
+        * Requires results data paramaters from a call to the calculation endpoint.
+        * Returns geometry data for constructing the lines of a traditional growth chart.
 
       requestBody:
         content:
           application/json:
             schema: ChartDataRequestParameters
+            example: 
 
       responses:
         200:
-          description: "Chart data for plotting a traditional growth chart"
+          summary: OK
+          description: "Chart data for plotting a traditional growth chart was returned"
           content:
             application/json:
               schema: ChartDataResponseSchema
@@ -240,20 +245,22 @@ def uk_who_plottable_child_data():
     Child growth data in plottable format API route.
     ---
     post:
-      summary: |
-        Child growth data in plottable format
-        Requires results data parameters from a call to the calculation endpoint.
-        Returns child measurement data in a plottable format (x and y parameters), 
-        with centiles and ages for labels.
+      summary: Child growth data in plottable format.
+      description: |
+        * Requires results data parameters from a call to the calculation endpoint.
+        * Returns child measurement data in a plottable format (x and y parameters), with centiles and ages for labels.
 
       requestBody:
         content:
           application/json:
             schema: ChartDataRequestParameters
+            example:
 
       responses:
         200:
-          description: "Child growth data in plottable format (x and y parameters, centile and age labels)"
+          summary: OK
+          description: |
+            * Child growth data in plottable format (x and y parameters, centile and age labels) was returned.
           content:
             application/json:
               schema: ChartDataResponseSchema
@@ -292,9 +299,9 @@ def ukwho_spreadsheet():
     Spreadsheet file upload API route.
     ---
     post:
-      summary: |
-        Spreadsheet file upload API route.
-        This endpoint is used for development and testing only and it is not envisaged that it will be in the live API
+      summary: Spreadsheet file upload API route.
+      description: |
+        * This endpoint is used for development and testing only and it is not envisaged that it will be in the live API.
 
       requestBody:
         content:
@@ -303,7 +310,9 @@ def ukwho_spreadsheet():
 
       responses:
         200:
-          description: "Chart data for plotting a traditional growth chart"
+          summary: OK
+          description: |
+            * Chart data for plotting a traditional growth chart was returned.
           content:
             application/json:
               schema: ChartDataResponseSchema
@@ -332,6 +341,24 @@ with app.test_request_context():
 # Create JSON OpenAPI Spec and serve it at /
 @app.route("/", methods=["GET"])
 def apispec():
+    """
+    openAPI3.0 Specification route.
+    ---
+    get:
+      summary: openAPI3.0 Specification.
+      description: |
+        * The root endpoint of the dGC API returns the openAPI3.0 specification in JSON format.
+        * This can be used to autogenerate clients and tests.
+        * We use it internally to generate all documentation, Postman collections and tests.
+
+      responses:
+        200:
+          summary: OK
+          description: |
+            * openAPI3.0 Specification in JSON format, conforming to https://swagger.io/specification/, was returned.
+          content:
+            application/json:
+    """
     return json.dumps(spec.to_dict())
 
 
