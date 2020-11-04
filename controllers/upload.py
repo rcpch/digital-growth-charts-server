@@ -138,8 +138,8 @@ def return_calculated_data_as_measurement_objects(data_frame, unique=True):
     measurement_object_array = []
 
     for index, row in data_frame.iterrows():
-        new_measurement_type = rcpchgrowth.Measurement_Type(measurement_method=row['measurement_method'], measurement_value=row['measurement_value'])
-        new_measurement = rcpchgrowth.Measurement(sex=row['sex'], birth_date=row['birth_date'], observation_date=row['observation_date'], measurement_type=new_measurement_type, gestation_weeks=row['gestation_weeks'], gestation_days=row['gestation_days'])
+        # new_measurement_type = rcp chgrowth.Measurement_Type(measurement_method=row['measurement_method'], measurement_value=row['measurement_value'])
+        new_measurement = rcpchgrowth.Measurement(sex=row['sex'], birth_date=row['birth_date'], observation_date=row['observation_date'], measurement_method=row['measurement_method'], observation_value=row['measurement_value'], gestation_weeks=row['gestation_weeks'], gestation_days=row['gestation_days'])
         measurement_object_array.append(new_measurement.measurement)
 
     return {
@@ -247,8 +247,8 @@ def prepare_data_as_array_of_measurement_objects(uploaded_data):
         gestation_days = observation['gestation_days']
         measurement_value = observation['measurement_value']
         
-        measurement_type_object = rcpchgrowth.Measurement_Type(measurement_method=observation['measurement_method'], measurement_value=measurement_value)
-        measurement_object = rcpchgrowth.Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_type=measurement_type_object,gestation_weeks=gestation_weeks, gestation_days=gestation_days, default_to_youngest_reference=False)
+        # measurement_type_object = rcpchgrowth.Measurement_Type(measurement_method=observation['measurement_method'], measurement_value=measurement_value)
+        measurement_object = rcpchgrowth.Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_method=observation['measurement_method'], observation_value=measurement_value,gestation_weeks=gestation_weeks, gestation_days=gestation_days, default_to_youngest_reference=False)
         array_of_measurement_objects.append(measurement_object.measurement)
 
     return array_of_measurement_objects    
