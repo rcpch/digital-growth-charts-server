@@ -455,8 +455,6 @@ class Measurement:
         if measurement_method == 'bmi':
             if observation_value is None:
                 raise ValueError(
-                    
-                    
                     'Missing observation_value for Body Mass Index. Please pass a Body Mass Index in kilograms per metre squared (kg/m2)')
             else:
                 is_valid = True
@@ -467,12 +465,15 @@ class Measurement:
                     'Missing observation_value for height/length. Please pass a height/length in cm.')
             elif observation_value < 2:
                 # most likely metres passed instead of cm.
-                raise AssertionError(
+                raise ValueError(
                     'Height/length must be passed in cm, not metres')
-            elif observation_value < 30.0:
+            elif observation_value < MINIMUM_LENGTH_CM:
                 # a baby is unlikely to be < 30 cm long - probably a data entry error
-                raise AssertionError(
-                    f'The height/length you have entered is very low and likely to be an error. Are you sure you meant {observation_value} centimetres?')
+                raise ValueError(
+                    f'The height/length you have entered is very low and likely to be an error. Are you sure you meant a height of{observation_value} centimetres?')
+            elif observation_value > MAXIMUM_HEIGHT_CM:
+                raise ValueError(
+                    f'The height/length you have entered is very high and likely to be an error. Are you sure you meant a height of{observation_value} centimetres?')
             else:
                 is_valid = True
 
@@ -480,16 +481,13 @@ class Measurement:
             if observation_value is None:
                 raise ValueError(
                     'Missing observation_value for weight. Please pass a weight in kilograms.')
-            elif observation_value < 0.20:
-                # 200g is very small. Like this is an error
-                raise AssertionError(
+            elif observation_value < MINIMUM_WEIGHT_KG:
+                raise ValueError(
                     f'Error. {observation_value} kilograms is very low. Please pass an accurate weight in kilograms')
-            elif observation_value > 500.0:
-                # it is likely the weight is passed in grams, not kg. The heaviest man according to google is
-                # Jon Brower Minnoch (US), who had suffered from obesity since childhood. In September 1976,
-                # he measured 185 cm (6 ft 1 in) tall and weighed 442 kg (974 lb; 69 st 9 lb)
-                raise AssertionError(
-                    f"{observation_value} kilograms is very high. Weight must be passed in kilograms.")
+            elif observation_value > MAXIMUM_WEIGHT_KG:
+                # it is likely the weight is passed in grams, not kg.
+                raise ValueError(
+                    f'{observation_value} kilograms is very high. Weight must be passed in kilograms.')
             else:
                 is_valid = True
 
@@ -497,11 +495,11 @@ class Measurement:
             if observation_value is None:
                 raise ValueError(
                     'Missing observation_value for head circumference. Please pass a head circumference in centimetres.')
-            elif observation_value < 5.0:
-                raise AssertionError(
+            elif observation_value < MINIMUM_OFC_CM:
+                raise ValueError(
                     f'Please check this value: {observation_value}. A head circumference less than 5 centimetres is likely an error. Please pass an accurate head circumference in centimetres.')
-            elif observation_value > 150.0:
-                raise AssertionError(
+            elif observation_value > MAXIMUM_OFC_CM:
+                raise ValueError(
                     f'Please check this value: {observation_value}. A head circumference > 150 centimetres is likely an error. Please pass an accurate head circumference in cm.')
             else:
                 is_valid = True

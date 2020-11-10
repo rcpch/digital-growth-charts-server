@@ -3,7 +3,10 @@ from .measurement_schemas import MeasurementResponseSchema
 
 
 class SingleCalculationRequestParameters(Schema):
-    # Defines the schema that the API expects to receive. This is compiled into the openAPI spec, and used for data validation
+    """
+    Defines the schema that the API expects to receive. This is compiled into the openAPI spec, and used for data validation
+    """
+
     birth_date = fields.Date(
         required=True,
         description="Date of birth of the patient in YYYY-MM-DD ISO8601 format.")
@@ -28,5 +31,8 @@ class SingleCalculationRequestParameters(Schema):
 
 
 class SingleCalculationResponseSchema(Schema):
-    # Defines the schema of the API response. This is compiled into the openAPI spec.
+    """
+    Defines the schema of the API response. This is compiled into the openAPI spec.
+    """
+
     calculation = fields.Nested(MeasurementResponseSchema())
