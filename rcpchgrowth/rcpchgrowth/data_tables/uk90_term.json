@@ -1,0 +1,41 @@
+{
+    "acknowledgement_text": "UK 1990 reference data, reanalysed 2009.",
+    "notes": "",
+    "filename": "uk_who_0_20_term",
+    "measurement": {
+        "height": {
+            "male": [
+                {"S": 0.0451, "M": 51, "L": 1.0, "decimal_age": 0.0}
+            ],
+            "female":[
+                {"S": 0.0399, "M": 50.0, "L": 1.0, "decimal_age": 0.0}
+            ]
+        },
+        "weight": {
+            "male": [
+                {"S": 0.1427, "M": 3.5, "L": 1.0, "decimal_age": 0.0}
+            ],
+            "female":[
+                {"S": 0.1408, "M": 3.36, "L": 1.0, "decimal_age": 0.0}
+            ]
+        },
+        "bmi": {
+            "male":
+            [
+                {"S": "", "M": "", "L": "", "decimal_age": 0.0}
+            ],
+            "female":
+            [
+                {"S": "", "M": "", "L": "", "decimal_age": 0.0}        
+            ]
+            },
+        "ofc": {
+            "male": [
+                {"S": 0.0382, "M": 35.0, "L": 1.0, "decimal_age": 0.0}
+            ],
+            "female": [
+                {"S": 0.0334, "M": 34, "L": 1.0, "decimal_age": 0.0}
+            ]
+        }
+    }
+}
