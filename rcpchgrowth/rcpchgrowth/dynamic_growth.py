@@ -7,7 +7,7 @@ from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from random import uniform
 from .measurement import Measurement
-from .sds_calculations import measurement_from_sds
+from .uk_who import measurement_from_sds
 from .date_calculations import corrected_decimal_age
 
 """
