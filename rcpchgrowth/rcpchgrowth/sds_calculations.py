@@ -45,12 +45,16 @@ WHO_CHILD_DATA =
 
 
 #public functions
-def uk_who_sds_calculation
+def uk_who_sds_calculation():
+
+    # Get the correct reference from the patchwork of references that make up UK-WHO
     uk_who_reference()
+
     uk_who_measurement_lms_data(
     measurement_method: str,
     sex: str,
     reference_data): sds()
+
     sds()
 
 def uk_who_reference(age: float, measurement_method: str, sex: str, born_preterm: bool = False)->List:
@@ -63,17 +67,16 @@ def uk_who_reference(age: float, measurement_method: str, sex: str, born_preterm
     # CONSTANTS RELEVANT ONLY TO UK-WHO REFERENCE-SELECTION LOGIC
     # 23 weeks is the lowest decimal age available on the UK90 charts
     UK_90_LOWEST_DECIMAL_AGE = ((23 * 7) - 40) / 365.25  # 23 weeks as decimal age
-
-    UK_90_LOW_CUTOFF_TERM_REFERENCES = ((37 * 7) - 40) / 365.25  # 37 weeks as decimal age
+    UK_90_TERM_REFERENCE_LOWER_THRESHOLD = ((37 * 7) - 40) / 365.25  # 37 weeks as decimal age
     
-    UK_90_HIGH_CUTOFF_TERM_REFERENCES = ((42 * 7) - 40) / 365.25  # 42 weeks as decimal age
+    UK_90_TERM_REFERENCE_UPPER_THRESHOLD = ((42 * 7) - 40) / 365.25  # 42 weeks as decimal age
     
     # The WHO references change from measuring infants in the lying position to measuring children in the standing position at 2.0 years.
-    WHO_INFANT_CHILD_SWITCH_POINT = 2.0  # 2 years as decimal age
+    WHO_CHILD_LOWER_THRESHOLD = 2.0  # 2 years as decimal age
     
     # The UK-WHO standard is complicated because it switches from the WHO references to UK90 references at the age of 4.0 years
-    WHO_TO_UK90_SWITCH_POINT = 4.0
-    UK90_UPPER_THRESHOLD
+    WHO_CHILD_UPPER_LIMIT = 4.0
+    UK90_UPPER_THRESHOLD = 20
 
     if age < UK_90_LOWEST_DECIMAL_AGE:
         # Below the range for which we have reference data, we can't provide a calculation.

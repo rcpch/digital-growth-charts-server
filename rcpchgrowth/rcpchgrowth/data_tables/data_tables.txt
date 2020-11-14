@@ -7,4 +7,5 @@
 //             - L : float
 //             - M : float
 //             - S : float
+//             - decimal_age: float
 //     the data are imported from microsoft .xlsx files and stored as JSON
