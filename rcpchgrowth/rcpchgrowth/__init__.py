@@ -8,3 +8,4 @@ from .dynamic_growth import velocity, acceleration, correlate_weight, create_fic
 from .measurement import Measurement
 from .fictional_children import generate_fictional_children_data
 from .constants import *
+from .trisomy_21 import t21_sds_calculation

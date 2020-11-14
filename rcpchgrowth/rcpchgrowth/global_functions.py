@@ -98,4 +98,65 @@ def measurement_for_z(z: float, l: float, m:float, s:float)->float:
     else:
         measurement_value = math.exp(s*z)*m
     return measurement_value
+
+
+def nearest_lowest_index(
+        lms_array:list, 
+        age: float
+    )->int:
+    """
+    loops through the array of LMS values and returns either 
+    the index of an exact match or the lowest nearest decimal age
+    """
+    lowest_index=0
+    for num, lms_element in enumerate(lms_array):
+        if lms_element["decimal_age"]==age:
+            lowest_index = num
+            break
+        else:
+            if lms_element["decimal_age"] < age:
+                lowest_index = num
+    return lowest_index
+
+def fetch_lms(age: float, lms_value_array_for_measurement: list):
+    """
+    Retuns the LMS 
+    """
+    age_matched_index = nearest_lowest_index(lms_value_array_for_measurement, age) # returns nearest LMS for age
+    if lms_value_array_for_measurement[age_matched_index]["decimal_age"] == age:
+        ## there is an exact match in the data with the requested age
+        l = lms_value_array_for_measurement[age_matched_index]["L"]
+        m = lms_value_array_for_measurement[age_matched_index]["M"]
+        s = lms_value_array_for_measurement[age_matched_index]["S"]
+    else:
+        # there has not been an exact match in the reference data
+        # Interpolation will be required. 
+        # The age_matched_index is one below the age supplied. There
+        # needs to be a value below that, and two values above, 
+        # for cubic interpolation to be possible.
+        age_one_below = lms_value_array_for_measurement[age_matched_index]["decimal_age"]
+        age_one_above = lms_value_array_for_measurement[age_matched_index+1]["decimal_age"]
+        parameter_one_below = lms_value_array_for_measurement[age_matched_index]
+        parameter_one_above = lms_value_array_for_measurement[age_matched_index+1]
+
+        if age_matched_index >= 1 and age_matched_index < len(lms_value_array_for_measurement)-2:
+            # cubic interpolation is possible
+            age_two_below = lms_value_array_for_measurement[age_matched_index-1]["decimal_age"]
+            age_two_above = lms_value_array_for_measurement[age_matched_index+2]["decimal_age"]
+            parameter_two_below = lms_value_array_for_measurement[age_matched_index-1]
+            parameter_two_above = lms_value_array_for_measurement[age_matched_index+2]
+            l = cubic_interpolation(age=age, age_one_below=age_one_below, age_two_below=age_two_below, age_one_above=age_one_above, age_two_above=age_two_above, parameter_two_below=parameter_two_below["L"], parameter_one_below=parameter_one_below["L"], parameter_one_above=parameter_one_above["L"], parameter_two_above=parameter_two_above["L"])
+            m = cubic_interpolation(age=age, age_one_below=age_one_below, age_two_below=age_two_below, age_one_above=age_one_above, age_two_above=age_two_above, parameter_two_below=parameter_two_below["M"], parameter_one_below=parameter_one_below["M"], parameter_one_above=parameter_one_above["M"], parameter_two_above=parameter_two_above["M"])
+            s = cubic_interpolation(age=age, age_one_below=age_one_below, age_two_below=age_two_below, age_one_above=age_one_above, age_two_above=age_two_above, parameter_two_below=parameter_two_below["S"], parameter_one_below=parameter_one_below["S"], parameter_one_above=parameter_one_above["S"], parameter_two_above=parameter_two_above["S"])
+        else:
+            # we are at the thresholds of this reference. Only linear interpolation is possible
+            l = linear_interpolation(age=age, age_one_below=age_one_below, age_one_above=age_one_above, parameter_one_below=parameter_one_below["L"], parameter_one_above=parameter_one_above["L"])
+            m = linear_interpolation(age=age, age_one_below=age_one_below, age_one_above=age_one_above, parameter_one_below=parameter_one_below["M"], parameter_one_above=parameter_one_above["M"])
+            s = linear_interpolation(age=age, age_one_below=age_one_below, age_one_above=age_one_above, parameter_one_below=parameter_one_below["S"], parameter_one_above=parameter_one_above["S"])
+            
+    return {
+        "l": l,
+        "m": m,
+        "s": s
+    }
     
