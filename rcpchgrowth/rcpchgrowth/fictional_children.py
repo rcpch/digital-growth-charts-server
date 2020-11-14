@@ -3,8 +3,7 @@ import random
 
 def generate_fictional_children_data(
     measurement_method: str,
-    sex: str,
-    default_to_youngest_reference: bool=False
+    sex: str
 ):
     # This function generates an array of decimal ages, sequential values alternating between an exact match 
     # of the decimal ages in the reference data with a randomly generated age between them.

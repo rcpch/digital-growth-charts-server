@@ -87,7 +87,7 @@
                 {"interval": "months", "M": 15.8497, "L": -0.1028, "value": 45, "S": 0.12586, "decimal_age": 3.75},
                 {"interval": "months", "M": 16.0163, "L": -0.1063, "value": 46, "S": 0.12643, "decimal_age": 3.8333333333333335},
                 {"interval": "months", "M": 16.1827, "L": -0.1097, "value": 47, "S": 0.127, "decimal_age": 3.9166666666666665},
-                {"interval": "months", "M": 16.3489, "L": -0.1131, "value": 48, "S": 0.12759, "decimal_age": 4.0},
+                {"interval": "months", "M": 16.3489, "L": -0.1131, "value": 48, "S": 0.12759, "decimal_age": 4.0}
             ],
             "female":[
                 {"interval": "months", "M": 11.4775, "L": -0.2941, "value": 24, "S": 0.1239, "decimal_age": 2.0},
