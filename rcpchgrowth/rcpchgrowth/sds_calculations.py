@@ -6,7 +6,6 @@ from scipy.interpolate import interp1d
 from datetime import date
 import json
 import pkg_resources
-# from .constants import TWENTY_FOUR_WEEKS_GESTATION, TWENTY_FIVE_WEEKS_GESTATION, THIRTY_SEVEN_WEEKS_GESTATION, FORTY_TWO_WEEKS_GESTATION, TERM_LOWER_THRESHOLD_LENGTH_DAYS, DECIMAL_AGES, FORTY_TWO_WEEKS_GESTATION_INDEX, TWO_YEARS_LYING_INDEX, FOUR_YEARS_WHO_INDEX
 from .constants import *
 # import timeit #see below, comment back in if timing functions in this module
 
@@ -255,31 +254,38 @@ def centile(z_score: float):
     centile = (stats.norm.cdf(z_score) * 100)
     return centile
 
-# def percentage_median_bmi( age: float, actual_bmi: float, sex: str)->float:
+def percentage_median_bmi( age: float, actual_bmi: float, sex: str, born_preterm=False)->float:
 
-#     """
-#     public method
-#     This returns a child"s BMI expressed as a percentage of the median value for age and sex.
-#     It is used widely in the assessment of malnutrition particularly in children and young people with eating disorders.
-#     """
+    """
+    public method
+    This returns a child"s BMI expressed as a percentage of the median value for age and sex.
+    It is used widely in the assessment of malnutrition particularly in children and young people with eating disorders.
+    """
     
-#     age_index_one_below = nearest_age_below_index(age)
+    # Get the correct reference from the patchwork of references that make up UK-WHO
+    try:
+        selected_reference = uk_who_reference(age=age, born_preterm=born_preterm)
+    except: # there is no reference for the age supplied
+        return ValueError("There is no reference for the age supplied.")
 
-#     if cubic_interpolation_possible(age, "bmi", sex):
-#         m_one_below = data["measurement"]["bmi"][sex][age_index_one_below]["M"]
-#         m_two_below = data["measurement"]["bmi"][sex][age_index_one_below-1]["M"]
-#         m_one_above = data["measurement"]["bmi"][sex][age_index_one_below+1]["M"]
-#         m_two_above = data["measurement"]["bmi"][sex][age_index_one_below+2]["M"]
-        
-#         m = cubic_interpolation(age, age_index_one_below, m_two_below, m_one_below, m_one_above, m_two_above)
-#     else:
-#         m_one_below = data["measurement"]["bmi"][sex][age_index_one_below]["M"]
-#         m_one_above = data["measurement"]["bmi"][sex][age_index_one_below+1]["M"]
-        
-#         m = linear_interpolation(age, age_index_one_below, m_one_below, m_one_above)
+    # Check that the measurement requested has reference data at that age
+    if reference_data_absent(
+        age=age, 
+        reference=selected_reference, 
+        measurement_method="bmi", 
+        sex=sex):
+        return ValueError("There is no reference data for BMI at this age")
+
+    # fetch the LMS values for the requested measurement
+    lms_value_array_for_measurement = selected_reference["measurement"]['bmi'][sex]
+
+    # get LMS values from the reference: check for age match, interpolate if none
+    lms = fetch_lms(age=age, born_preterm=born_preterm, lms_value_array_for_measurement=lms_value_array_for_measurement)
     
-#     percent_median_bmi = (actual_bmi/m)*100.0
-#     return percent_median_bmi
+    m = lms["m"] # this is the median BMI
+    
+    percent_median_bmi = (actual_bmi/m)*100.0
+    return percent_median_bmi
 
 def measurement_from_sds(
     measurement_method: str,  
@@ -359,11 +365,6 @@ def cubic_interpolation( age: float, age_one_below: float, age_two_below: float,
     t12 = 0.0
     t13 = 0.0
     t23 = 0.0
-
-    # age_two_below = DECIMAL_AGES[age_index_below-1]
-    # age_one_below = DECIMAL_AGES[age_index_below]
-    # age_one_above = DECIMAL_AGES[age_index_below+1]
-    # age_two_above = DECIMAL_AGES[age_index_below+2]
     
     t = age
 
@@ -383,7 +384,7 @@ def cubic_interpolation( age: float, age_one_below: float, age_two_below: float,
     cubic_interpolated_value = parameter_two_below * tt1 * tt2 * tt3 /t01 / t02 / t03 - parameter_one_below * tt0 * tt2 * tt3 / t01 / t12 /t13 + parameter_one_above * tt0 * tt1 * tt3 / t02/ t12 / t23 - parameter_two_above * tt0 * tt1 * tt2 / t03 / t13 / t23
 
     # prerequisite arrays for either of below functions
-    # xpoints = [DECIMAL_AGES[age_index_below-1], DECIMAL_AGES[age_index_below], DECIMAL_AGES[age_index_below+1], DECIMAL_AGES[age_index_below+2]]
+    # xpoints = [age_two_below, age_one_below, age_one_above, age_two_above]
     # ypoints = [parameter_two_below, parameter_one_below, parameter_one_above, parameter_two_above]
 
     # this is the scipy cubic spline interpolation function...
@@ -403,8 +404,7 @@ def linear_interpolation( age: float, age_one_below: float, age_one_above: float
     """
     
     linear_interpolated_value = 0.0
-    # age_below = DECIMAL_AGES[age_index_below]
-    # age_above = DECIMAL_AGES[age_index_below+1]
+
     # linear_interpolated_value = parameter_one_above + (((decimal_age - age_below)*parameter_one_above-parameter_one_below))/(age_above-age_below)
     x_array = [age_one_below, age_one_above]
     y_array = [parameter_one_below, parameter_one_above]

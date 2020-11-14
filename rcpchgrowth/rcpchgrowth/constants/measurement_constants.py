@@ -10,6 +10,7 @@ agree with RCPCHGrowth beyond ~6 decimal places.On reexamining the original LMS 
 Precision is constrained to 9 dp for decimal ages here.
 """
 
+TWENTY_FIVE_WEEKS_GESTATION = ((25 * 7) - (40*7)) / 365.25  # 25 weeks as decimal age
 THIRTY_SEVEN_WEEKS_GESTATION = ((37 * 7) - (40*7)) / 365.25  # 37 weeks as decimal age
 FORTY_TWO_WEEKS_GESTATION = ((42 * 7) - (40*7)) / 365.25  # 42 weeks as decimal age
 TWENTY_THREE_WEEKS_GESTATION = ((23 * 7) - (40*7)) / 365.25  # 23 weeks as decimal age

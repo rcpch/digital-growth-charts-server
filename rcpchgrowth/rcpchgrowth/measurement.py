@@ -227,7 +227,7 @@ class Measurement:
 
         if height and height > 0.0:
             # there is no length data below 25 weeks gestation
-            if age >= DECIMAL_AGES[TWENTY_FIVE_WEEKS_GESTATION_INDEX]:
+            if age >= TWENTY_FIVE_WEEKS_GESTATION:
                 height_sds = uk_who_sds_calculation(
                     age=age,
                     measurement_method='height',
@@ -304,7 +304,7 @@ class Measurement:
         """
         if bmi and bmi > 0.0:
             # BMI data not present < 42 weeks gestation
-            if age >= DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX]:
+            if age >= FORTY_TWO_WEEKS_GESTATION:
                 bmi_sds = uk_who_sds_calculation(
                     age=age,
                     measurement_method='bmi',
