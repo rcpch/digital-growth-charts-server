@@ -46,7 +46,6 @@ class Measurement:
         self.observation_value = observation_value
         self.gestation_weeks = gestation_weeks
         self.gestation_days = gestation_days
-        self. = 
 
         valid = self.__validate_measurement_method(
             measurement_method=measurement_method, observation_value=observation_value)
@@ -72,7 +71,7 @@ class Measurement:
             measurement_method=self.measurement_method,
             observation_value=self.observation_value,
             born_preterm=self.born_preterm,
-            =self.)
+            )
 
         self.measurement = {
             'birth_data': self.ages_object['birth_data'],
@@ -221,7 +220,7 @@ class Measurement:
             age: float,
             height: float,
             born_preterm: bool = False,
-            : bool = False):
+        ):
         """
         Private class method to return SDS and centile for height measurement
         """
@@ -261,7 +260,6 @@ class Measurement:
             sex: str,
             age: float,
             weight: float,
-            : bool = False,
             born_preterm: bool = False):
         """
         private class method to return sds and centile for weight meaasurement
@@ -296,7 +294,6 @@ class Measurement:
             sex: str,
             age: float,
             born_preterm: bool = False,
-            : bool = False,
             bmi: float = 0.0):
         """
         This method calculates bmi SDS and centiles. It has been refactored and originally it took a
@@ -349,7 +346,6 @@ class Measurement:
             sex: str,
             age: float,
             ofc: float,
-            : bool = False,
             born_preterm: bool = False):
         """
         private class method to calculate sds and centile for ofc

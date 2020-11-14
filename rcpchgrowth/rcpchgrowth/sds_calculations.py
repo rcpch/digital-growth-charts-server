@@ -138,9 +138,9 @@ def fetch_lms(age: float, born_preterm: bool, lms_value_array_for_measurement: l
                 s = linear_interpolation(age=age, age_one_below=age_one_below, age_one_above=age_one_above, parameter_one_below=parameter_one_below["S"], parameter_one_above=parameter_one_above["S"])
             
     return {
-        l: l,
-        m: m,
-        s: s
+        "l": l,
+        "m": m,
+        "s": s
     }
 
 def nearest_lowest_index(
