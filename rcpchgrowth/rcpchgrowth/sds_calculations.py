@@ -23,33 +23,34 @@ observation: value (float)
 gestation_weeks: gestational age(weeks), integer
 gestation_days: supplementary days of gestation
 lms: L, M or S
+reference: reference data
 """
 
 #load the reference data
-data = pkg_resources.resource_filename(__name__, "/data_tables/uk_who_0_20_preterm.json")
-with open(data) as json_file:
-            data = json.load(json_file)
-            json_file.close()
-term_data = pkg_resources.resource_filename(__name__, "/data_tables/uk_who_0_20_term.json")
-with open(term_data) as json_file:
-            term_data = json.load(json_file)
-            json_file.close()
+# data = pkg_resources.resource_filename(__name__, "/data_tables/uk_who_0_20_preterm.json")
+# with open(data) as json_file:
+#             data = json.load(json_file)
+#             json_file.close()
+# term_data = pkg_resources.resource_filename(__name__, "/data_tables/uk_who_0_20_term.json")
+# with open(term_data) as json_file:
+#             term_data = json.load(json_file)
+#             json_file.close()
 
 UK90_DATA = pkg_resources.resource_filename(__name__, "/data_tables/uk90.json")
-with open(data) as json_file:
-            data = json.load(json_file)
+with open(UK90_DATA) as json_file:
+            UK90_DATA = json.load(json_file)
             json_file.close()
 UK90_TERM_DATA = pkg_resources.resource_filename(__name__, "/data_tables/uk90_term.json")
-with open(data) as json_file:
-            data = json.load(json_file)
+with open(UK90_TERM_DATA) as json_file:
+            UK90_TERM_DATA = json.load(json_file)
             json_file.close()
 WHO_INFANTS_DATA = pkg_resources.resource_filename(__name__, "/data_tables/who_infants.json")
-with open(data) as json_file:
-            data = json.load(json_file)
+with open(WHO_INFANTS_DATA) as json_file:
+            WHO_INFANTS_DATA = json.load(json_file)
             json_file.close()
 WHO_CHILD_DATA = pkg_resources.resource_filename(__name__, "/data_tables/who_children.json")
-with open(data) as json_file:
-            data = json.load(json_file)
+with open(WHO_CHILD_DATA) as json_file:
+            WHO_CHILD_DATA = json.load(json_file)
             json_file.close()
 
 # reference decimal ages - these are now all 9dp and moved to constants.py
@@ -57,24 +58,151 @@ with open(data) as json_file:
 
 
 #public functions
-def uk_who_sds_calculation():
+def uk_who_sds_calculation(
+    age: float,
+    born_preterm: bool = False,
+    measurement_method: str,
+    measurement_value: float,
+    sex: str):
+
+    """
+    The is the caller function to calculate an SDS for a child specifically using the UK-WHO dataset(s).
+    
+    """
 
     # Get the correct reference from the patchwork of references that make up UK-WHO
-    # uk_who_reference()
+    try:
+        selected_reference = uk_who_reference(age=age, born_preterm=born_preterm)
+    except: # there is no reference for the age supplied
+        raise ValueError("There is no reference for the age supplied.")
 
-    # uk_who_measurement_lms_data(
-    # measurement_method: str,
-    # sex: str,
-    # reference_data): sds()
+    # Check that the measurement requested has reference data at that age
+    if reference_data_absent(
+        age=age, 
+        reference=selected_reference, 
+        measurement_method=measurement_method, 
+        sex=sex):
+        return ValueError("There is no reference data for this measurement at this age")
 
-    # sds()
+    # fetch the LMS values for the requested measurement
+    lms_values_for_measurement = selected_reference["measurement"][measurement_method][sex]
 
-def uk_who_reference(age: float, measurement_method: str, sex: str, born_preterm: bool = False)->List:
-    # the purpose of this function is to choose the correct reference for calculation, 
-    # for the UK-WHO standard, which is an unusual case because it combines two different reference sources.
-    #  UK90 reference runs from 23 weeks to 20 y
-    #  WHO 2006 runs from 2 weeks to 4 years
-    # Returns the appropriate reference file
+    # Define if there is a match for this age in the reference selected.
+    # Note: if the child is 37-42 weeks and not born preterm, no interpolation is required
+    # as reference data only have one L, M and S
+    FORTY_WEEKS_GESTATION = ((42 * 7) - 40) / 365.25  # 42 weeks as decimal age
+    THIRTY_SEVEN_WEEKS_GESTATION = ((37 * 7) - 40) / 365.25  # 37 weeks as decimal age
+    if age >= THIRTY_SEVEN_WEEKS_GESTATION and age < FORTY_TWO_WEEKS_GESTATION_INDEX and (born_preterm is False):
+        l = lms_values_for_measurement[0]["L"]
+        m = lms_values_for_measurement[0]["M"]
+        s = lms_values_for_measurement[0]["S"]
+    else:
+        age_matched_index = nearest_lowest_index(lms_values_for_measurement, age) # returns nearest LMS for age
+        if lms_values_for_measurement[age_matched_index]["decimal_age"] == age:
+            ## there is an exact match in the data with the requested age
+            l = lms_values_for_measurement[age_matched_index]["L"]
+            m = lms_values_for_measurement[age_matched_index]["M"]
+            s = lms_values_for_measurement[age_matched_index]["S"]
+        else:
+            # there has not been an exact match in the reference data
+            # Interpolation will be required. 
+            # The age_matched_index is one below the age supplied. There
+            # needs to be a value below that, and two values above, 
+            # for cubic interpolation to be possible.
+            age_one_below = lms_values_for_measurement[age_matched_index]["decimal_age"]
+            age_one_above = lms_values_for_measurement[age_matched_index+1]["decimal_age"]
+            parameter_one_below = lms_values_for_measurement[age_matched_index]
+            parameter_one_above = lms_values_for_measurement[age_matched_index+1]
+
+            if age_matched_index > 1 or age_matched_index < lms_values_for_measurement[-2]:
+                age_two_below = lms_values_for_measurement[age_matched_index-1]["decimal_age"]
+                age_two_above = lms_values_for_measurement[age_matched_index+2]["decimal_age"]
+                parameter_two_below = lms_values_for_measurement[age_matched_index-1]
+                parameter_two_above = lms_values_for_measurement[age_matched_index+2]
+                l = cubic_interpolation(age=age, age_one_below=age_one_below, age_two_below=age_two_below, age_one_above=age_one_above, age_two_above=age_two_above, parameter_two_below=parameter_two_below["L"], parameter_one_below=parameter_one_below["L"], parameter_one_above=parameter_one_above["L"], parameter_two_above=parameter_two_above["L"])
+                m = cubic_interpolation(age=age, age_one_below=age_one_below, age_two_below=age_two_below, age_one_above=age_one_above, age_two_above=age_two_above, parameter_two_below=parameter_two_below["M"], parameter_one_below=parameter_one_below["M"], parameter_one_above=parameter_one_above["M"], parameter_two_above=parameter_two_above["M"])
+                s = cubic_interpolation(age=age, age_one_below=age_one_below, age_two_below=age_two_below, age_one_above=age_one_above, age_two_above=age_two_above, parameter_two_below=parameter_two_below["S"], parameter_one_below=parameter_one_below["S"], parameter_one_above=parameter_one_above["S"], parameter_two_above=parameter_two_above["S"])
+            else:
+                # we are at the thresholds of this reference. Only linear interpolation is possible
+                l = linear_interpolation(age=age, age_one_below=age_one_below, age_one_above=age_one_above, parameter_one_below=parameter_one_below["L"], parameter_one_above=parameter_one_above["L"])
+                m = linear_interpolation(age=age, age_one_below=age_one_below, age_one_above=age_one_above, parameter_one_below=parameter_one_below["M"], parameter_one_above=parameter_one_above["M"])
+                s = linear_interpolation(age=age, age_one_below=age_one_below, age_one_above=age_one_above, parameter_one_below=parameter_one_below["S"], parameter_one_above=parameter_one_above["S"])
+    
+    ## calculate the SDS from the L, M and S values
+
+    return z_score(l=l, m=m, s=s, observation=measurement_value)
+
+def nearest_lowest_index(lms_array: list, age: float)->int:
+    """
+    loops through the array of LMS values and returns either 
+    thie index of an exact match or the lowest nearest decimal age
+    """
+    lowest_index=0
+    for num, lms_element in enumerate(list):
+        if lms_element["decimal_age"]==age:
+            lowest_index = num
+            break
+        else:
+            if lms_element["decimal_age"] < age:
+                lowest_index = num
+
+
+def reference_data_absent( 
+    age: float,
+    reference: json,
+    measurement_method: str,
+    sex: str
+    ) -> bool:
+    """
+    Helper function.
+    Returns boolean
+    Tests presence of valid reference data for a given measurement request
+
+    Reference data is not complete for all ages/sexes/measurements.
+     - Length data is not available until 25 weeks gestation, though weight date is available from 23 weeks
+     - There is only BMI reference data from 2 weeks of age to aged 20y
+     - Head circumference reference data is available from 23 weeks gestation to 17y in girls and 18y in boys
+     - lowest threshold is 23 weeks, upper threshold is 20y
+    """
+
+    TWENTY_THREE_WEEKS_GESTATION = ((23 * 7) - 40) / 365.25  # 23 weeks as decimal age
+    TWENTY_FIVE_WEEKS_GESTATION = ((25 * 7) - 40) / 365.25  # 25 weeks as decimal age
+    FORTY_WEEKS_GESTATION = ((42 * 7) - 40) / 365.25  # 42 weeks as decimal age
+    SEVENTEEN_YEARS = 17.0
+    EIGHTEEN_YEARS = 18.0
+    TWENTY_YEARS = 20.0
+
+    if age < TWENTY_THREE_WEEKS_GESTATION: # lower threshold of UK90 data
+        return True
+    
+    if age > TWENTY_YEARS: # upper threshold of UK90 data
+        return True
+
+    if measurement_method == "height" and age < TWENTY_FIVE_WEEKS_GESTATION:
+        return True
+        
+    elif measurement_method == "bmi" and age < FORTY_TWO_WEEKS_GESTATION:
+        return True
+    
+    elif measurement_method == "ofc":
+        if (sex == "male" and age > EIGHTEEN_YEARS) or (sex == "female" and age > SEVENTEEN_YEARS):
+            return True
+        else:
+            return False
+    else:
+        return False
+
+def uk_who_reference(
+    age: float, 
+    born_preterm: bool = False ) -> json:
+    """
+    The purpose of this function is to choose the correct reference for calculation.
+    The UK-WHO standard is an unusual case because it combines two different reference sources.
+    - UK90 reference runs from 23 weeks to 20 y
+    - WHO 2006 runs from 2 weeks to 4 years
+    - UK90 then resumes from 4 years to 20 years
+    The function return the appropriate reference file as json
+    """
 
     # CONSTANTS RELEVANT ONLY TO UK-WHO REFERENCE-SELECTION LOGIC
     # 23 weeks is the lowest decimal age available on the UK90 charts
@@ -91,17 +219,17 @@ def uk_who_reference(age: float, measurement_method: str, sex: str, born_preterm
 
     #These conditionals are to select the correct reference
     if age < UK90_REFERENCE_LOWER_THRESHOLD:
-        # Below the range for which we have reference data, we can't provide a calculation.
+        # Below the range for which we have reference data, we can"t provide a calculation.
         raise ValueError("There is no reference data below 23 weeks gestation")
     elif age < UK90_TERM_REFERENCE_LOWER_THRESHOLD:
         # Below 37 weeks, the UK90 preterm data is always used
-        return UK90_PRETERM_DATA
+        return UK90_DATA
 
-    elif age < UK_90_HIGH_CUTOFF_TERM_REFERENCES:
+    elif age < UK90_TERM_REFERENCE_UPPER_THRESHOLD:
         # Below 42 weeks
         if born_preterm:
             # Preterm children should continue to be plotted using the preterm references
-            return UK90_PRETERM_DATA
+            return UK90_DATA
         else:
             return UK90_TERM_DATA
     
@@ -113,100 +241,86 @@ def uk_who_reference(age: float, measurement_method: str, sex: str, born_preterm
         # Children beyond 2 years but below 4 years are measured standing up using WHO data
         return WHO_CHILD_DATA
     
-    elif age <= 20:
+    elif age <= UK90_UPPER_THRESHOLD:
         # All children 4 years and above are measured using UK90 child data
-        return UK90_PRETERM_DATA
+        return UK90_DATA
 
     else:
         raise ValueError("There is no reference data above the age of 20 years.")
 
-def uk_who_measurement_lms_data(
-    measurement_method: str,
-    sex: str,
-    reference_data):
+# def sds(
+#     age: float, 
+#     measurement_method: str, 
+#     measurement_value: float, 
+#     sex: str, 
+#     # default_to_youngest_reference: bool = False, 
+#     born_preterm: bool = False)->float:
+#     """
+#     Public function
+#     Returns a standard deviation score. 
+#     Parameters are: 
+#     a decimal age (corrected or chronological), 
+#     a measurement_method (type of observation) 
+#     measurement_value (the value is standard units) [height and ofc are in cm, weight in kg bmi in kg/m²]
+#     sex (a standard string) ["male" or "female"]
+#     default_to_youngest_reference (boolean): defaults to True. For circumstances when the age exactly matches a join between two references (or moving from lying to standing at 2y) where there are 2 ages in the reference data to choose between. Defaults to the youngest reference unless the user selects false
+#     born_preterm (boolean): defaults to False. If a baby is 37-42 weeks, use the uk_who_0_20_term data by default. If a baby was born preterm, the UK90 gestation specific data is used up to 42 weeks
+
+#     This function is specific to the UK-WHO data set as this is actually a blend of UK-90 and WHO 2006 references and necessarily has duplicate values.
+
+#     SDS is generated by passing the interpolated L, M and S values for age through an equation.
+#     Cubic interpolation is used for most values, but where ages of children are at the extremes of the growth reference,
+#     linear interpolation is used instead. These are:
+#     1. 23 weeks gestation
+#     2. 42 weeks gestation or 2 weeks post term delivery - the reference data here changes from UK90 to WHO 2006
+#     3. 2 years - children at this age stop being measured lying down and are instead measured standing, leading to a small decrease
+#     4. 4 years - the reference data here changes back to UK90 data
+#     5. 20 years - the threshold of the reference data
+
+#     Other considerations
+#      - Length data is not available until 25 weeks gestation, though weight date is available from 23 weeks
+#      - There is only BMI reference data from 2 weeks of age to aged 20y
+#      - Head circumference reference data is available from 23 weeks gestation to 17y in girls and 18y in boys
+#     """
     
-    """
-    Helper function which handles obtaining the correct LMS values from the reference data it is passed.
-    """
-    if measurement_method == 'height':
-        return reference_data['measurement']['height'][sex]
+#     # TODO Extremes of the chart should be handled from introspection of the 
+#     # reference table, not hard-coded
+#     if age < DECIMAL_AGES[TWENTY_THREE_WEEKS_GESTATION_INDEX] or age > DECIMAL_AGES[TWENTY_YEARS_INDEX]:
+#         # extremes of chart
+#         return None
+
+#     if measurement_method == "height":
+#         if age < DECIMAL_AGES[TWENTY_FIVE_WEEKS_GESTATION_INDEX]:
+#             return None # There is no reference data for length below 25 weeks"
+    
+#     if measurement_method == "bmi":
+#         if age < DECIMAL_AGES[TWO_WEEKS_INDEX]:
+#             return None # There is no BMI reference data available for BMI below 2 weeks
+    
+#     if measurement_method == "ofc":
+#         if (sex == "male" and age > DECIMAL_AGES[EIGHTEEN_YEARS_INDEX]) or (sex == "female" and age > DECIMAL_AGES[SEVENTEEN_YEARS_INDEX]):
+#             return None # There is no head circumference data available in girls over 17y or boys over 18y
+
+#     ## if this is a baby now term, use the term data set unless the child was born preterm and is now term,
+#     ## in which case continue to use the preterm data set
+    
+#     if age >= DECIMAL_AGES[THIRTY_SEVEN_WEEKS_GESTATION_INDEX]  and age < DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX] and born_preterm == False:
+#         lms = get_term_lms(measurement_method, sex)
+#     else:
+#         try:
+#             lms = get_lms(age, measurement_method, sex, default_to_youngest_reference)
+#         except:
+#             raise
         
-    if measurement_method == 'weight':
-        return reference_data['measurement']['weight'][sex]
+#     l = lms["l"]
+#     m = lms ["m"]
+#     s = lms ["s"]
 
-    if measurement_method == 'bmi':
-        return reference_data['measurement']['bmi'][sex]
+#     print(f"l: {l} m:{m} s:{s}")
 
-    if measurement_method == 'ofc':
-        return reference_data['measurement']['ofc'][sex]
-
-def sds(age: float, measurement_method: str, measurement_value: float, sex: str, default_to_youngest_reference: bool = False, born_preterm: bool = False)->float:
-    """
-    Public function
-    Returns a standard deviation score. 
-    Parameters are: 
-    a decimal age (corrected or chronological), 
-    a measurement_method (type of observation) ['height', 'weight', 'bmi', 'ofc']
-    measurement_value (the value is standard units) [height and ofc are in cm, weight in kg bmi in kg/m²]
-    sex (a standard string) ['male' or 'female']
-    default_to_youngest_reference (boolean): defaults to True. For circumstances when the age exactly matches a join between two references (or moving from lying to standing at 2y) where there are 2 ages in the reference data to choose between. Defaults to the youngest reference unless the user selects false
-    born_preterm (boolean): defaults to False. If a baby is 37-42 weeks, use the uk_who_0_20_term data by default. If a baby was born preterm, the UK90 gestation specific data is used up to 42 weeks
-
-    This function is specific to the UK-WHO data set as this is actually a blend of UK-90 and WHO 2006 references and necessarily has duplicate values.
-
-    SDS is generated by passing the interpolated L, M and S values for age through an equation.
-    Cubic interpolation is used for most values, but where ages of children are at the extremes of the growth reference,
-    linear interpolation is used instead. These are:
-    1. 23 weeks gestation
-    2. 42 weeks gestation or 2 weeks post term delivery - the reference data here changes from UK90 to WHO 2006
-    3. 2 years - children at this age stop being measured lying down and are instead measured standing, leading to a small decrease
-    4. 4 years - the reference data here changes back to UK90 data
-    5. 20 years - the threshold of the reference data
-
-    Other considerations
-     - Length data is not available until 25 weeks gestation, though weight date is available from 23 weeks
-     - There is only BMI reference data from 2 weeks of age to aged 20y
-     - Head circumference reference data is available from 23 weeks gestation to 17y in girls and 18y in boys
-    """
+#     sds = z_score(l, m, s, measurement_value)
     
-    # TODO Extremes of the chart should be handled from introspection of the 
-    # reference table, not hard-coded
-    if age < DECIMAL_AGES[TWENTY_THREE_WEEKS_GESTATION_INDEX] or age > DECIMAL_AGES[TWENTY_YEARS_INDEX]:
-        # extremes of chart
-        return None
-
-    if measurement_method == 'height':
-        if age < DECIMAL_AGES[TWENTY_FIVE_WEEKS_GESTATION_INDEX]:
-            return None # There is no reference data for length below 25 weeks'
-    
-    if measurement_method == 'bmi':
-        if age < DECIMAL_AGES[TWO_WEEKS_INDEX]:
-            return None # There is no BMI reference data available for BMI below 2 weeks
-    
-    if measurement_method == 'ofc':
-        if (sex == 'male' and age > DECIMAL_AGES[EIGHTEEN_YEARS_INDEX]) or (sex == 'female' and age > DECIMAL_AGES[SEVENTEEN_YEARS_INDEX]):
-            return None # There is no head circumference data available in girls over 17y or boys over 18y
-
-    ## if this is a baby now term, use the term data set unless the child was born preterm and is now term,
-    ## in which case continue to use the preterm data set
-    
-    if age >= DECIMAL_AGES[THIRTY_SEVEN_WEEKS_GESTATION_INDEX]  and age < DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX] and born_preterm == False:
-        lms = get_term_lms(measurement_method, sex)
-    else:
-        try:
-            lms = get_lms(age, measurement_method, sex, default_to_youngest_reference)
-        except:
-            raise
-        
-    l = lms['l']
-    m = lms ['m']
-    s = lms ['s']
-
-    print(f'l: {l} m:{m} s:{s}')
-
-    sds = z_score(l, m, s, measurement_value)
-    
-    return sds
+#     return sds
 
 def centile(z_score: float):
     """
@@ -220,22 +334,22 @@ def percentage_median_bmi( age: float, actual_bmi: float, sex: str)->float:
 
     """
     public method
-    This returns a child's BMI expressed as a percentage of the median value for age and sex.
+    This returns a child"s BMI expressed as a percentage of the median value for age and sex.
     It is used widely in the assessment of malnutrition particularly in children and young people with eating disorders.
     """
     
     age_index_one_below = nearest_age_below_index(age)
 
-    if cubic_interpolation_possible(age, 'bmi', sex):
-        m_one_below = data['measurement']["bmi"][sex][age_index_one_below]["M"]
-        m_two_below = data['measurement']["bmi"][sex][age_index_one_below-1]["M"]
-        m_one_above = data['measurement']["bmi"][sex][age_index_one_below+1]["M"]
-        m_two_above = data['measurement']["bmi"][sex][age_index_one_below+2]["M"]
+    if cubic_interpolation_possible(age, "bmi", sex):
+        m_one_below = data["measurement"]["bmi"][sex][age_index_one_below]["M"]
+        m_two_below = data["measurement"]["bmi"][sex][age_index_one_below-1]["M"]
+        m_one_above = data["measurement"]["bmi"][sex][age_index_one_below+1]["M"]
+        m_two_above = data["measurement"]["bmi"][sex][age_index_one_below+2]["M"]
         
         m = cubic_interpolation(age, age_index_one_below, m_two_below, m_one_below, m_one_above, m_two_above)
     else:
-        m_one_below = data['measurement']["bmi"][sex][age_index_one_below]["M"]
-        m_one_above = data['measurement']["bmi"][sex][age_index_one_below+1]["M"]
+        m_one_below = data["measurement"]["bmi"][sex][age_index_one_below]["M"]
+        m_one_above = data["measurement"]["bmi"][sex][age_index_one_below+1]["M"]
         
         m = linear_interpolation(age, age_index_one_below, m_one_below, m_one_above)
     
@@ -247,10 +361,10 @@ def measurement_from_sds(measurement_method: str,  requested_sds: float,  sex: s
     Public method
     Returns the measurement value from a given SDS.
     Parameters are: 
-        measurement_method (type of observation) ['height', 'weight', 'bmi', 'ofc']
+        measurement_method (type of observation) ["height", "weight", "bmi", "ofc"]
         decimal age (corrected or chronological),
         requested_sds
-        sex (a standard string) ['male' or 'female']
+        sex (a standard string) ["male" or "female"]
         default_to_youngest_reference (boolean): in the event of an exact age match at the threshold of a chart,
             where it is possible to choose 2 references, default will pick the youngest reference (optional)
         born_preterm: a boolean flag to track whether to use UK90 premature data or UK90-WHO term data for 37-42 weeks
@@ -280,9 +394,9 @@ def measurement_from_sds(measurement_method: str,  requested_sds: float,  sex: s
     except:
         raise
     else:
-        l = lms['l']
-        m = lms['m']
-        s = lms['s']
+        l = lms["l"]
+        m = lms["m"]
+        s = lms["s"]
 
         if l != 0.0:
             measurement_value = math.pow((1+l*s*requested_sds),1/l)*m
@@ -291,182 +405,182 @@ def measurement_from_sds(measurement_method: str,  requested_sds: float,  sex: s
         return measurement_value
 
 #private methods
-def nearest_age_below_index(age: float)->int:
-    """
-    Returns the array index of the nearest (lowest) age (or a match) in the reference data below the calculated decimal age (either chronological or corrected for gestational age)
-    Uses the NumPy library to do this quickly - identifies the first incidence of a value in a sorted array.
-    """
-    result_index = 0
-    decimal_ages_as_np_array = np.asarray(DECIMAL_AGES)
-    idx = np.searchsorted(decimal_ages_as_np_array, age, side="left")
-    if idx > 0 and (idx == len(DECIMAL_AGES) or math.fabs(age - DECIMAL_AGES[idx-1]) < math.fabs(age - DECIMAL_AGES[idx])):
-        result = DECIMAL_AGES[idx-1]
-        result_index = idx-1
-    else:
-        result = DECIMAL_AGES[idx]
-        result_index = idx
-    if result <= age:
-        return result_index
-    else:
-        return result_index-1
+# def nearest_age_below_index(age: float)->int:
+#     """
+#     Returns the array index of the nearest (lowest) age (or a match) in the reference data below the calculated decimal age (either chronological or corrected for gestational age)
+#     Uses the NumPy library to do this quickly - identifies the first incidence of a value in a sorted array.
+#     """
+#     result_index = 0
+#     decimal_ages_as_np_array = np.asarray(DECIMAL_AGES)
+#     idx = np.searchsorted(decimal_ages_as_np_array, age, side="left")
+#     if idx > 0 and (idx == len(DECIMAL_AGES) or math.fabs(age - DECIMAL_AGES[idx-1]) < math.fabs(age - DECIMAL_AGES[idx])):
+#         result = DECIMAL_AGES[idx-1]
+#         result_index = idx-1
+#     else:
+#         result = DECIMAL_AGES[idx]
+#         result_index = idx
+#     if result <= age:
+#         return result_index
+#     else:
+#         return result_index-1
 
-def cubic_interpolation_possible(age: float, measurement_method, sex):
-    """
-    See sds function. This method tests if the age of the child (either corrected for prematurity or chronological) is at a threshold of the reference data
-    This method is specific to the UK-WHO data set.
-    Thresholds wehere cubic interpolation is not possible:
-    - Start of viability: [-0.325804244,-0.306639288....], indices are 0, 1
-    - Threshold of UK90 term data and start of WHO data at 2 weeks of age (42 weeks): [...0,0.019164956,0.038329911,0.038329911,0.057494867...], indices are 17, 18, 19, 20, 21
-    - Threshold at 2 years [1.916666667,2.0,2.0,2.083333333] - this is the same data set but children are measured standing not lying > 2y, indices 54, 55, 56, 57
-    - Threshold of WHO 2006 data at 4y and reverts to UK90: [...3.916666667,4.0,4.0,4.083...], indices 79, 80, 81, 82
-    - End of UK90 data set at 20y: [...19.917,20.0], indices 272, 273
-    - Height in boys and girls below 27 weeks (no data below 25 weeks) [-0.2683093771] index 3
-    - BMI in boys and girls below 4 weeks (no data below 2 weeks) [0.07665982204] index 22
-    - OFC in boys > 17.917y index 248 (no data over 18y) or in girls > 16.917y index 236 (no data over 17y)
-    """
-    if (
-        age <= DECIMAL_AGES[TWENTY_FOUR_WEEKS_GESTATION_INDEX] or 
-        (age > DECIMAL_AGES[FORTY_ONE_WEEKS_GESTATION_INDEX] and age < DECIMAL_AGES[THREE_WEEKS_INDEX]) or 
-        (age > DECIMAL_AGES[PENULTIMATE_TWO_YEARS_LYING_INDEX] and age < DECIMAL_AGES[SECOND_FOLLOWING_TWO_YEARS_STANDING_INDEX]) or 
-        (age > DECIMAL_AGES[PENULTIMATE_FOUR_YEARS_WHO_INDEX] and age < DECIMAL_AGES[SECOND_FOLLOWING_FOUR_YEARS_UK90_INDEX]) or 
-        age > DECIMAL_AGES[PENULTIMATE_TWENTY_YEARS_UK90_INDEX] or 
-        (age < DECIMAL_AGES[TWENTY_SIX_WEEKS_GESTATION_INDEX] and measurement_method == 'height') or 
-        (age < DECIMAL_AGES[THREE_WEEKS_INDEX] and measurement_method == 'bmi') or 
-        (age > DECIMAL_AGES[PENULTIMATE_EIGHTEEN_YEARS_INDEX] and measurement_method == 'ofc' and sex=='male') or 
-        (age > DECIMAL_AGES[PENULTIMATE_SEVENTEEN_YEARS_INDEX] and measurement_method == 'ofc' and sex=='female')
-    ):
-        return False
-    else:
-        return True
+# def cubic_interpolation_possible(age: float, measurement_method, sex):
+#     """
+#     See sds function. This method tests if the age of the child (either corrected for prematurity or chronological) is at a threshold of the reference data
+#     This method is specific to the UK-WHO data set.
+#     Thresholds wehere cubic interpolation is not possible:
+#     - Start of viability: [-0.325804244,-0.306639288....], indices are 0, 1
+#     - Threshold of UK90 term data and start of WHO data at 2 weeks of age (42 weeks): [...0,0.019164956,0.038329911,0.038329911,0.057494867...], indices are 17, 18, 19, 20, 21
+#     - Threshold at 2 years [1.916666667,2.0,2.0,2.083333333] - this is the same data set but children are measured standing not lying > 2y, indices 54, 55, 56, 57
+#     - Threshold of WHO 2006 data at 4y and reverts to UK90: [...3.916666667,4.0,4.0,4.083...], indices 79, 80, 81, 82
+#     - End of UK90 data set at 20y: [...19.917,20.0], indices 272, 273
+#     - Height in boys and girls below 27 weeks (no data below 25 weeks) [-0.2683093771] index 3
+#     - BMI in boys and girls below 4 weeks (no data below 2 weeks) [0.07665982204] index 22
+#     - OFC in boys > 17.917y index 248 (no data over 18y) or in girls > 16.917y index 236 (no data over 17y)
+#     """
+#     if (
+#         age <= DECIMAL_AGES[TWENTY_FOUR_WEEKS_GESTATION_INDEX] or 
+#         (age > DECIMAL_AGES[FORTY_ONE_WEEKS_GESTATION_INDEX] and age < DECIMAL_AGES[THREE_WEEKS_INDEX]) or 
+#         (age > DECIMAL_AGES[PENULTIMATE_TWO_YEARS_LYING_INDEX] and age < DECIMAL_AGES[SECOND_FOLLOWING_TWO_YEARS_STANDING_INDEX]) or 
+#         (age > DECIMAL_AGES[PENULTIMATE_FOUR_YEARS_WHO_INDEX] and age < DECIMAL_AGES[SECOND_FOLLOWING_FOUR_YEARS_UK90_INDEX]) or 
+#         age > DECIMAL_AGES[PENULTIMATE_TWENTY_YEARS_UK90_INDEX] or 
+#         (age < DECIMAL_AGES[TWENTY_SIX_WEEKS_GESTATION_INDEX] and measurement_method == "height") or 
+#         (age < DECIMAL_AGES[THREE_WEEKS_INDEX] and measurement_method == "bmi") or 
+#         (age > DECIMAL_AGES[PENULTIMATE_EIGHTEEN_YEARS_INDEX] and measurement_method == "ofc" and sex=="male") or 
+#         (age > DECIMAL_AGES[PENULTIMATE_SEVENTEEN_YEARS_INDEX] and measurement_method == "ofc" and sex=="female")
+#     ):
+#         return False
+#     else:
+#         return True
 
-def get_term_lms(measurement_method: str, sex: str):
-    """
-    For babies at 37-42 weeks not preterm, L, M, S are averaged across the 5 weeks. For babies born preterm
-    but are now term gestation, this method is not called and the UK90 preterm data is used upto 42 weeks
-    """
-    l = term_data['measurement'][measurement_method][sex][0]["L"]
-    m = term_data['measurement'][measurement_method][sex][0]["M"]
-    s = term_data['measurement'][measurement_method][sex][0]["S"]
+# def get_term_lms(measurement_method: str, sex: str):
+#     """
+#     For babies at 37-42 weeks not preterm, L, M, S are averaged across the 5 weeks. For babies born preterm
+#     but are now term gestation, this method is not called and the UK90 preterm data is used upto 42 weeks
+#     """
+#     l = term_data["measurement"][measurement_method][sex][0]["L"]
+#     m = term_data["measurement"][measurement_method][sex][0]["M"]
+#     s = term_data["measurement"][measurement_method][sex][0]["S"]
 
-    lms = {
-            'l': l,
-            'm': m,
-            's': s
-        }
-    return lms
+#     lms = {
+#             "l": l,
+#             "m": m,
+#             "s": s
+#         }
+#     return lms
 
 
-def get_lms(age: float, measurement_method: str, sex: str, default_to_youngest_reference: bool = False)->list:
-    """
-    Returns an interpolated L, M and S value as an array [l, m, s] against a decimal age, sex and measurement_method
+# def get_lms(age: float, measurement_method: str, sex: str, default_to_youngest_reference: bool = False)->list:
+#     """
+#     Returns an interpolated L, M and S value as an array [l, m, s] against a decimal age, sex and measurement_method
 
-    default_to_youngest_reference (boolean): in the event of an exact age match at the threshold of a chart,
-            where it is possible to choose 2 references, default will pick the oldest reference (optional)
-            eg at exactly 2 y, the function will therefore always select UK-WHO child and not infant data, unless
-            this flag specifies otherwise
-    """
+#     default_to_youngest_reference (boolean): in the event of an exact age match at the threshold of a chart,
+#             where it is possible to choose 2 references, default will pick the oldest reference (optional)
+#             eg at exactly 2 y, the function will therefore always select UK-WHO child and not infant data, unless
+#             this flag specifies otherwise
+#     """
     
-    try:
-        #this child is < or > the extremes of the chart
-        assert (age >= DECIMAL_AGES[0] or age <= DECIMAL_AGES[-1]), 'Cannot be younger than 23 weeks or older than 20y'
-    except IndexError as chart_extremes_msg:
-        print(chart_extremes_msg)
+#     try:
+#         #this child is < or > the extremes of the chart
+#         assert (age >= DECIMAL_AGES[0] or age <= DECIMAL_AGES[-1]), "Cannot be younger than 23 weeks or older than 20y"
+#     except IndexError as chart_extremes_msg:
+#         print(chart_extremes_msg)
     
-    if measurement_method == 'height':
-        if age < DECIMAL_AGES[TWENTY_FIVE_WEEKS_GESTATION_INDEX]:
-            raise ValueError(f'There is no reference data for length below 25 weeks ({DECIMAL_AGES[TWENTY_FIVE_WEEKS_GESTATION_INDEX]} y)')
+#     if measurement_method == "height":
+#         if age < DECIMAL_AGES[TWENTY_FIVE_WEEKS_GESTATION_INDEX]:
+#             raise ValueError(f"There is no reference data for length below 25 weeks ({DECIMAL_AGES[TWENTY_FIVE_WEEKS_GESTATION_INDEX]} y)")
     
-    if measurement_method == 'bmi':
-        if age < DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX]:
-            raise ValueError(f'There is no BMI reference data available for BMI below 2 weeks ({DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX]} y)')
+#     if measurement_method == "bmi":
+#         if age < DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX]:
+#             raise ValueError(f"There is no BMI reference data available for BMI below 2 weeks ({DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX]} y)")
     
-    if measurement_method == 'ofc':
-        if (sex == 'male' and age > DECIMAL_AGES[EIGHTEEN_YEARS_INDEX]) or (sex == 'female' and age > DECIMAL_AGES[SEVENTEEN_YEARS_INDEX]):
-            raise ValueError('There is no head circumference data available in girls over 17y or boys over 18y')
+#     if measurement_method == "ofc":
+#         if (sex == "male" and age > DECIMAL_AGES[EIGHTEEN_YEARS_INDEX]) or (sex == "female" and age > DECIMAL_AGES[SEVENTEEN_YEARS_INDEX]):
+#             raise ValueError("There is no head circumference data available in girls over 17y or boys over 18y")
 
-    age_index_one_below = nearest_age_below_index(age)
-    if age == DECIMAL_AGES[age_index_one_below]:
-        """
-        child's age matches a reference age - no interpolation necessary
-        defaults to the highest reference if at reference threshold
-        unless default_to_youngest_reference is false
-        or bmi at 2 weeks of age is requested as no data at 42 weeks gestation
-        """
+#     age_index_one_below = nearest_age_below_index(age)
+#     if age == DECIMAL_AGES[age_index_one_below]:
+#         """
+#         child"s age matches a reference age - no interpolation necessary
+#         defaults to the highest reference if at reference threshold
+#         unless default_to_youngest_reference is false
+#         or bmi at 2 weeks of age is requested as no data at 42 weeks gestation
+#         """
 
-        # age_matches = [0.038329911, 2.0, 4.0]
-        lower_index = [FORTY_TWO_WEEKS_GESTATION_INDEX, TWO_YEARS_LYING_INDEX, FOUR_YEARS_WHO_INDEX]
-        # upper_index = [20, 56, 81]
+#         # age_matches = [0.038329911, 2.0, 4.0]
+#         lower_index = [FORTY_TWO_WEEKS_GESTATION_INDEX, TWO_YEARS_LYING_INDEX, FOUR_YEARS_WHO_INDEX]
+#         # upper_index = [20, 56, 81]
 
-        if (age_index_one_below in lower_index) and (default_to_youngest_reference == False):
-            age_index_one_below = age_index_one_below + 1
+#         if (age_index_one_below in lower_index) and (default_to_youngest_reference == False):
+#             age_index_one_below = age_index_one_below + 1
 
 
-        """
-        NB: if age == 0.038329911 (2 weeks of age) and we are requesting BMI, must start at 
-        WHO ref data. This is index 20, not 19
-        """
-        if measurement_method == 'bmi' and age_index_one_below == 19:
-            age_index_one_below = 20
+#         """
+#         NB: if age == 0.038329911 (2 weeks of age) and we are requesting BMI, must start at 
+#         WHO ref data. This is index 20, not 19
+#         """
+#         if measurement_method == "bmi" and age_index_one_below == 19:
+#             age_index_one_below = 20
 
-        l = data['measurement'][measurement_method][sex][age_index_one_below]["L"]
-        m = data['measurement'][measurement_method][sex][age_index_one_below]["M"]
-        s = data['measurement'][measurement_method][sex][age_index_one_below]["S"]
-        lms = {
-            'l': l,
-            'm': m,
-            's': s
-        }
-        return lms
+#         l = data["measurement"][measurement_method][sex][age_index_one_below]["L"]
+#         m = data["measurement"][measurement_method][sex][age_index_one_below]["M"]
+#         s = data["measurement"][measurement_method][sex][age_index_one_below]["S"]
+#         lms = {
+#             "l": l,
+#             "m": m,
+#             "s": s
+#         }
+#         return lms
         
 
-    if cubic_interpolation_possible(age, measurement_method, sex):
-        #collect all L, M and S above and below lower age index for cubic interpolation
-        l_one_below = data['measurement'][measurement_method][sex][age_index_one_below]["L"]
-        m_one_below = data['measurement'][measurement_method][sex][age_index_one_below]["M"]
-        s_one_below = data['measurement'][measurement_method][sex][age_index_one_below]["S"]
+#     if cubic_interpolation_possible(age, measurement_method, sex):
+#         #collect all L, M and S above and below lower age index for cubic interpolation
+#         l_one_below = data["measurement"][measurement_method][sex][age_index_one_below]["L"]
+#         m_one_below = data["measurement"][measurement_method][sex][age_index_one_below]["M"]
+#         s_one_below = data["measurement"][measurement_method][sex][age_index_one_below]["S"]
 
-        l_two_below = data['measurement'][measurement_method][sex][age_index_one_below-1]["L"]
-        m_two_below = data['measurement'][measurement_method][sex][age_index_one_below-1]["M"]
-        s_two_below = data['measurement'][measurement_method][sex][age_index_one_below-1]["S"]
+#         l_two_below = data["measurement"][measurement_method][sex][age_index_one_below-1]["L"]
+#         m_two_below = data["measurement"][measurement_method][sex][age_index_one_below-1]["M"]
+#         s_two_below = data["measurement"][measurement_method][sex][age_index_one_below-1]["S"]
 
-        l_one_above = data['measurement'][measurement_method][sex][age_index_one_below+1]["L"]
-        m_one_above = data['measurement'][measurement_method][sex][age_index_one_below+1]["M"]
-        s_one_above = data['measurement'][measurement_method][sex][age_index_one_below+1]["S"]
+#         l_one_above = data["measurement"][measurement_method][sex][age_index_one_below+1]["L"]
+#         m_one_above = data["measurement"][measurement_method][sex][age_index_one_below+1]["M"]
+#         s_one_above = data["measurement"][measurement_method][sex][age_index_one_below+1]["S"]
 
-        l_two_above = data['measurement'][measurement_method][sex][age_index_one_below+2]["L"]
-        m_two_above = data['measurement'][measurement_method][sex][age_index_one_below+2]["M"]
-        s_two_above = data['measurement'][measurement_method][sex][age_index_one_below+2]["S"]
+#         l_two_above = data["measurement"][measurement_method][sex][age_index_one_below+2]["L"]
+#         m_two_above = data["measurement"][measurement_method][sex][age_index_one_below+2]["M"]
+#         s_two_above = data["measurement"][measurement_method][sex][age_index_one_below+2]["S"]
         
-        l = cubic_interpolation(age, age_index_one_below, l_two_below, l_one_below, l_one_above, l_two_above)
-        m = cubic_interpolation(age, age_index_one_below, m_two_below, m_one_below, m_one_above, m_two_above)
-        s = cubic_interpolation(age, age_index_one_below, s_two_below, s_one_below, s_one_above, s_two_above)
-    else:
-        #a chart threshold: collect one L, M and S above and below lower age index for linear interpolation
-        l_one_below = data['measurement'][measurement_method][sex][age_index_one_below]["L"]
-        m_one_below = data['measurement'][measurement_method][sex][age_index_one_below]["M"]
-        s_one_below = data['measurement'][measurement_method][sex][age_index_one_below]["S"]
+#         l = cubic_interpolation(age, age_index_one_below, l_two_below, l_one_below, l_one_above, l_two_above)
+#         m = cubic_interpolation(age, age_index_one_below, m_two_below, m_one_below, m_one_above, m_two_above)
+#         s = cubic_interpolation(age, age_index_one_below, s_two_below, s_one_below, s_one_above, s_two_above)
+#     else:
+#         #a chart threshold: collect one L, M and S above and below lower age index for linear interpolation
+#         l_one_below = data["measurement"][measurement_method][sex][age_index_one_below]["L"]
+#         m_one_below = data["measurement"][measurement_method][sex][age_index_one_below]["M"]
+#         s_one_below = data["measurement"][measurement_method][sex][age_index_one_below]["S"]
 
-        l_one_above = data['measurement'][measurement_method][sex][age_index_one_below+1]["L"]
-        m_one_above = data['measurement'][measurement_method][sex][age_index_one_below+1]["M"]
-        s_one_above = data['measurement'][measurement_method][sex][age_index_one_below+1]["S"]
+#         l_one_above = data["measurement"][measurement_method][sex][age_index_one_below+1]["L"]
+#         m_one_above = data["measurement"][measurement_method][sex][age_index_one_below+1]["M"]
+#         s_one_above = data["measurement"][measurement_method][sex][age_index_one_below+1]["S"]
 
-        l = linear_interpolation(age, age_index_one_below, l_one_below, l_one_above)
-        m = linear_interpolation(age, age_index_one_below, m_one_below, m_one_above)
-        s = linear_interpolation(age, age_index_one_below, s_one_below, s_one_above)
-    # print(f"actual age: {age} l,m,s interpolated: {l} {m} {s} ") #debugging as accuracy currently uncertain 
-    # print(f"2 lower: {l_two_below} {m_two_below} {s_two_below}")
-    # print(f"1 lower: {l_one_below} {m_one_below} {s_one_below}")
-    # print(f"1 above: l: {l_one_above} m:{m_one_above} s:{s_one_above}")
-    # print(f"2 above: l: {l_two_above} m:{m_two_above} s:{s_two_above}")
-    # print(f"{l}, {m}, {s}")
-    lms = {
-        'l': l,
-        'm': m,
-        's': s
-        }
-    return lms
+#         l = linear_interpolation(age, age_index_one_below, l_one_below, l_one_above)
+#         m = linear_interpolation(age, age_index_one_below, m_one_below, m_one_above)
+#         s = linear_interpolation(age, age_index_one_below, s_one_below, s_one_above)
+#     # print(f"actual age: {age} l,m,s interpolated: {l} {m} {s} ") #debugging as accuracy currently uncertain 
+#     # print(f"2 lower: {l_two_below} {m_two_below} {s_two_below}")
+#     # print(f"1 lower: {l_one_below} {m_one_below} {s_one_below}")
+#     # print(f"1 above: l: {l_one_above} m:{m_one_above} s:{s_one_above}")
+#     # print(f"2 above: l: {l_two_above} m:{m_two_above} s:{s_two_above}")
+#     # print(f"{l}, {m}, {s}")
+#     lms = {
+#         "l": l,
+#         "m": m,
+#         "s": s
+#         }
+#     return lms
 
-def cubic_interpolation( age: float, age_index_below: int, parameter_two_below: float, parameter_one_below: float, parameter_one_above: float, parameter_two_above: float) -> float:
+def cubic_interpolation( age: float, age_one_below: float, age_two_below: float, age_one_above: float, age_two_above: float, parameter_two_below: float, parameter_one_below: float, parameter_one_above: float, parameter_two_above: float) -> float:
 
     """
     See sds function. This method tests if the age of the child (either corrected for prematurity or chronological) is at a threshold of the reference data
@@ -475,7 +589,7 @@ def cubic_interpolation( age: float, age_index_below: int, parameter_two_below: 
 
     cubic_interpolated_value = 0.0
 
-    t = 0.0 #actual age ///This commented function is Tim Cole's used in LMSGrowth to perform cubic interpolation - 50000000 loops, best of 5: 7.37 nsec per loop
+    t = 0.0 #actual age ///This commented function is Tim Cole"s used in LMSGrowth to perform cubic interpolation - 50000000 loops, best of 5: 7.37 nsec per loop
     tt0 = 0.0
     tt1 = 0.0
     tt2 = 0.0
@@ -488,10 +602,10 @@ def cubic_interpolation( age: float, age_index_below: int, parameter_two_below: 
     t13 = 0.0
     t23 = 0.0
 
-    age_two_below = DECIMAL_AGES[age_index_below-1]
-    age_one_below = DECIMAL_AGES[age_index_below]
-    age_one_above = DECIMAL_AGES[age_index_below+1]
-    age_two_above = DECIMAL_AGES[age_index_below+2]
+    # age_two_below = DECIMAL_AGES[age_index_below-1]
+    # age_one_below = DECIMAL_AGES[age_index_below]
+    # age_one_above = DECIMAL_AGES[age_index_below+1]
+    # age_two_above = DECIMAL_AGES[age_index_below+2]
     
     t = age
 
@@ -515,26 +629,26 @@ def cubic_interpolation( age: float, age_index_below: int, parameter_two_below: 
     # ypoints = [parameter_two_below, parameter_one_below, parameter_one_above, parameter_two_above]
 
     # this is the scipy cubic spline interpolation function...
-    # cs = CubicSpline(xpoints,ypoints,bc_type='natural')
+    # cs = CubicSpline(xpoints,ypoints,bc_type="natural")
     # cubic_interpolated_value = cs(age) # this also works, but not as accurate: 50000000 loops, best of 5: 7.42 nsec per loop
 
     # this is the scipy splrep function
     # tck = interpolate.splrep(xpoints, ypoints)
-    # cubic_interpolated_value = interpolate.splev(age, tck)   #Matches Tim Cole's for accuracy but slower: speed - 50000000 loops, best of 5: 7.62 nsec per loop
+    # cubic_interpolated_value = interpolate.splev(age, tck)   #Matches Tim Cole"s for accuracy but slower: speed - 50000000 loops, best of 5: 7.62 nsec per loop
 
     return cubic_interpolated_value
 
-def linear_interpolation( decimal_age: float, age_index_below: int, parameter_one_below: float, parameter_one_above: float) -> float:
+def linear_interpolation( age: float, age_one_below: float, age_one_above: float, parameter_one_below: float, parameter_one_above: float) -> float:
 
     """
     See sds function. This method is to do linear interpolation of L, M and S values for children whose ages are at the threshold of the reference data, making cubic interpolation impossible
     """
     
     linear_interpolated_value = 0.0
-    age_below = DECIMAL_AGES[age_index_below]
-    age_above = DECIMAL_AGES[age_index_below+1]
+    # age_below = DECIMAL_AGES[age_index_below]
+    # age_above = DECIMAL_AGES[age_index_below+1]
     # linear_interpolated_value = parameter_one_above + (((decimal_age - age_below)*parameter_one_above-parameter_one_below))/(age_above-age_below)
-    x_array = [age_below, age_above]
+    x_array = [age_one_above, age_one_above]
     y_array = [parameter_one_below, parameter_one_above]
     intermediate = interp1d(x_array, y_array)
     linear_interpolated_value = intermediate(decimal_age)
@@ -581,14 +695,14 @@ Commented out but left for documentation to show process behind evaluation of ea
 
 # def time_functions():
 #     Used to test function run time. Needs timeit package importing also
-#     return sds(-0.249144422,'weight',1.21,'female')
+#     return sds(-0.249144422,"weight",1.21,"female")
 
 # def test_data():
 #     array_to_add=[]
 #     decimal_ages=[0.021902806,0.021902806,0.021902806,0.186173854,0.353182752,0.52019165,0.689938398,0.856947296,1.023956194,1.185489391,1.352498289,1.519507187,1.689253936,1.856262834,2.023271732,2.184804928,2.351813826,2.518822724,2.688569473,2.855578371,3.022587269,3.184120465,3.351129363,3.518138261,3.68788501,3.854893908,4.021902806,4.186173854,4.353182752,4.52019165,4.689938398,4.856947296,5.023956194,5.185489391,5.352498289,5.519507187,5.689253936,5.856262834,6.023271732,6.184804928]
 #     measurement_types=["height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height","weight","ofc","height"]
 #     for i in range(len(decimal_ages)):
-#         value = measurement_from_sds(measurement_types[i], 0.67, 'male', decimal_ages[i])
+#         value = measurement_from_sds(measurement_types[i], 0.67, "male", decimal_ages[i])
 #         array_to_add.append(value)
 #     return array_to_add
 
@@ -604,15 +718,15 @@ def run_lms_test():
     for num, age in enumerate(ages):
         lms = get_lms(age, measurements[num], sexes[num], False)
         calc_sds = sds(age, measurements[num], values[num], sexes[num], False)
-        ls.append(lms['l'])
-        ms.append(lms['m'])
-        ss.append(lms['s'])
+        ls.append(lms["l"])
+        ms.append(lms["m"])
+        ss.append(lms["s"])
         sdss.append(calc_sds)
-    print('ls: ')
+    print("ls: ")
     print(ls)
-    print('ms: ')
+    print("ms: ")
     print(ms)
-    print('ss: ')
+    print("ss: ")
     print(ss)
     print(sdss)
 
