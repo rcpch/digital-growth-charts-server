@@ -43,16 +43,6 @@ with open(WHO_CHILD_DATA) as json_file:
             WHO_CHILD_DATA = json.load(json_file)
             json_file.close()
 
-# Constants            
-THIRTY_SEVEN_WEEKS_GESTATION = ((37 * 7) - (40*7)) / 365.25  # 37 weeks as decimal age
-FORTY_TWO_WEEKS_GESTATION = ((42 * 7) - (40*7)) / 365.25  # 42 weeks as decimal age
-TWENTY_THREE_WEEKS_GESTATION = ((23 * 7) - (40*7)) / 365.25  # 23 weeks as decimal age
-TWENTY_FIVE_WEEKS_GESTATION = ((25 * 7) - (40*7)) / 365.25  # 25 weeks as decimal age
-FORTY_TWO_WEEKS_GESTATION = ((42 * 7) - (40*7)) / 365.25  # 42 weeks as decimal age
-SEVENTEEN_YEARS = 17.0
-EIGHTEEN_YEARS = 18.0
-TWENTY_YEARS = 20.0
-
 #public functions
 def uk_who_sds_calculation(
         age: float,
