@@ -1,3 +1,9 @@
+# Contributing
+
+* We're a friendly bunch and we're happy to chat. You can get in touch with the primary developers to talk about the project using:
+marcusbaw@gmail.com (Marcus Baw) or eatyourpeasapps@gmail.com (Simon Chapman)
+* We aim to eventually have an RCPCH forum up and running which you will also be able to use to talk about the project.
+
 ## How to contribute
 
 * Fork the repository to your own GitHub account
@@ -18,7 +24,10 @@ https://google.github.io/styleguide/pyguide.html
 
 ## Intellectual Property (IP)
 
-* The copyright over the IP in this repository is owned by the Royal College of Paediatrics and Child Health, which releases it under an open source license.
-* If you submit a contribution to the repository, you agree to transfer all IP rights over the contribution, both now and in the future, to the Royal College of Paediatrics and Child Health, in perpetuity.
+* The copyright over the IP in this and other Growth Chart related repositories is owned by the Royal College of Paediatrics and Child Health, which releases it under an open source license. Consult the individual repository for specifics on which license we have used.
+
+* If you submit a contribution to the repository, you agree to transfer all IP rights over the contribution, both now and in the future, to the Royal College of Paediatrics and Child Health, in perpetuity. This clause is purely to allow RCPCH to continue to exert an unchallenged copyright over the work.
+
 * For larger contributions we may require a Contributor Covenant to support this agreement over transfer of title, however for small contributions it is probably sufficient that you should have read and understood this document, and that the act of submitting a PR is acceptance of these terms.
-* All contributors will be acknowledged in the [Acknowledgements](acknowledgements.md) section.
+
+* All contributors will, of course, proudly be acknowledged in the [Acknowledgements](acknowledgements.md) section.
