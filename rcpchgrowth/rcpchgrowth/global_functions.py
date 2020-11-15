@@ -92,6 +92,30 @@ def centile(z_score: float):
     centile = (stats.norm.cdf(z_score) * 100)
     return centile
 
+def sds_value_for_centile_value(centile: float):
+
+    if centile == 0.4:
+        return -2.0 - (2/3)
+    elif centile == 2:
+        return -2.0
+    elif centile == 9:
+        return -1 - (1/3)
+    elif centile == 25:
+        return 0 - (2/3)
+    elif centile == 50:
+        return 0
+    elif centile == 75:
+        return 2/3
+    elif centile == 91:
+        return 1 + (1/3)
+    elif centile == 98:
+        return 2.0
+    elif centile == 99.6:
+        return 2 + (2/3)
+    else:
+        #error
+        raise LookupError("SDS could not be calculated from Centile supplied")
+
 def measurement_for_z(z: float, l: float, m:float, s:float)->float:
     if l != 0.0:
         measurement_value = math.pow((1+l*s*z),1/l)*m

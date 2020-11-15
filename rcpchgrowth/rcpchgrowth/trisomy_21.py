@@ -20,7 +20,7 @@ reference: reference data
 
 #load the reference data
 
-T21_DATA = pkg_resources.resource_filename(__name__, "/data_tables/uk90.json")
+T21_DATA = pkg_resources.resource_filename(__name__, "/data_tables/trisomy_21.json")
 with open(T21_DATA) as json_file:
             T21_DATA = json.load(json_file)
             json_file.close()
