@@ -1,7 +1,7 @@
 import json
 import pkg_resources
 from .constants import *
-from .global_functions import z_score, cubic_interpolation, linear_interpolation, centile, measurement_for_z, nearest_lowest_index, fetch_lms
+from .global_functions import z_score, fetch_lms, measurement_for_z
 # import timeit #see below, comment back in if timing functions in this module
 
 """
@@ -20,12 +20,12 @@ reference: reference data
 
 #load the reference data
 
-T21_DATA = pkg_resources.resource_filename(__name__, "/data_tables/uk90.json")
-with open(T21_DATA) as json_file:
-            T21_DATA = json.load(json_file)
+TURNER_DATA = pkg_resources.resource_filename(__name__, "/data_tables/uk90.json")
+with open(TURNER_DATA) as json_file:
+            TURNER_DATA = json.load(json_file)
             json_file.close()
 
-def t21_sds_calculation(
+def turner_sds_calculation(
     age: float,
     measurement_method: str,
     measurement_value: float,
@@ -33,21 +33,22 @@ def t21_sds_calculation(
     )->float:
 
     """
-    The is the caller function to calculate an SDS for a child specifically using the Down's syndrome dataset.
+    The is the caller function to calculate an SDS for a child specifically using the Turner"s syndrome dataset.
     
     """
 
+    # Get the correct reference from the patchwork of references that make up UK-WHO
     try:
-        selected_reference = T21_DATA
+        selected_reference = TURNER_DATA
     except: # there is no reference for the age supplied
-        return ValueError("The Down's syndrom reference cannot be found.")
+        return ValueError("The Turner's syndrome reference cannot be found.")
 
     # Check that the measurement requested has reference data at that age
     if reference_data_absent(
         age=age, 
         measurement_method=measurement_method, 
         sex=sex):
-        return ValueError("There is no reference data for this measurement at this age")
+        return ValueError("There is no reference data for this measurement.")
 
     # fetch the LMS values for the requested measurement
     lms_value_array_for_measurement = selected_reference["measurement"][measurement_method][sex]
@@ -71,26 +72,19 @@ def reference_data_absent(
     Returns boolean
     Tests presence of valid reference data for a given measurement request
 
-    Reference data is not complete for all ages/sexes/measurements.
-     - There is only BMI reference data until 18.92y
-     - Head circumference reference data is available until 18.0y
-     - lowest threshold is 0 weeks, upper threshold is 20y
+    Turners syndrome
+    Data are available for girls heights at year intervals from 1-20y
+    No other reference data are available
     """
 
-    if age < 0: # lower threshold of T21 data
+    if age < 1: # lower threshold of Turner data
         return True
-    
-    if age > TWENTY_YEARS: # upper threshold of T21 data
+    elif age > TWENTY_YEARS: # upper threshold of Turner data
         return True
-        
-    elif measurement_method == "bmi" and age > 18.82:
+    elif measurement_method=="weight" or measurement_method=="bmi" or measurement_method=="ofc":
         return True
-    
-    elif measurement_method == "ofc":
-        if age > EIGHTEEN_YEARS:
-            return True
-        else:
-            return False
+    elif sex == "male":
+        return True
     else:
         return False
 
@@ -123,11 +117,11 @@ def measurement_from_sds(
     """
 
     # fetch the LMS values for the requested measurement
-    lms_value_array_for_measurement = T21_DATA["measurement"][measurement_method][sex]
+    lms_value_array_for_measurement = TURNER_DATA["measurement"][measurement_method][sex]
 
     # test reference data exists for age
     if reference_data_absent(age=age, measurement_method=measurement_method, sex=sex):
-        return ValueError(f'There is no reference data for this measurement at {age} years.')
+        return ValueError(f"There is no reference data for this measurement at {age} years.")
     else:
         # get LMS values from the reference: check for age match, interpolate if none
         lms = fetch_lms(age=age, lms_value_array_for_measurement=lms_value_array_for_measurement)
