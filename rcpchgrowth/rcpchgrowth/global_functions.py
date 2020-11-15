@@ -156,7 +156,7 @@ def fetch_lms(age: float, lms_value_array_for_measurement: list):
         # there has not been an exact match in the reference data
         # Interpolation will be required. 
         # The age_matched_index is one below the age supplied. There
-        # needs to be a value below that, and two values above, 
+        # needs to be a value below that, and two values above the supplied age, 
         # for cubic interpolation to be possible.
         age_one_below = lms_value_array_for_measurement[age_matched_index]["decimal_age"]
         age_one_above = lms_value_array_for_measurement[age_matched_index+1]["decimal_age"]
