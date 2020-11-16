@@ -275,7 +275,7 @@ weight_for_bmi_height( height: float,  bmi: float) -> float:
 - Returns a weight from a height in cm and a BMI in kg/m². Reported to 3 d.p.
 - Does not depend on the age or sex of the child.
 
-# Scope
+## Scope
 
 Currently the minimum viable product is to provide reliable calculations for all children in the UK under the age of 1 year for height, weight, body mass index (BMI) and head circumference ('occipitofrontal circumference' - OFC).
 
@@ -291,11 +291,11 @@ An additional future objective is to create a repository of all available growth
 
 - [References](docs/references.md)
 
-# Copyright and License
+## Copyright and License
 
 This work is copyrighted ⓒ2020 The Royal College of Paediatrics and Child Health, and released under the GNU Affero Public License. Our [license file](./LICENSE.md) is included in this repository, with further details available here https://www.gnu.org/licenses/agpl-3.0.en.html
 
 ## Developer documentation
 
 If you are reviewing, developing, extending or simply curious about the RCPCH dGC API server, then the developer documentation is here.
-[Developer documentation](docs/dev-documentation/README.md)
+[Developer documentation](docs/developer-documentation/README.md)
