@@ -1,9 +1,3 @@
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6b1137d60067b8aedfea#?env%5Blocalhost%3A5000-testing%5D=W3sia2V5IjoiYmFzZVVybCIsInZhbHVlIjoibG9jYWxob3N0OjUwMDAiLCJlbmFibGVkIjp0cnVlfV0=)
-
-![rcpch-dgc-server-alpha](https://github.com/rcpch/digital-growth-charts-server/workflows/Build%20and%20deploy%20Python%20app%20to%20Azure%20Web%20App%20-%20rcpch-dgc-server-alpha/badge.svg?branch=alpha)
-
-![rcpch-dgc-server-unstable](https://github.com/rcpch/digital-growth-charts-server/workflows/Build%20and%20deploy%20Python%20app%20to%20Azure%20Web%20App%20-%20rcpch-dgc-server-unstable/badge.svg?branch=unstable)
-
 <p align="center">
   <a href="https://www.thehtn.co.uk/health-tech-awards-2020-live/"><img width="150px" src="static/htn-awards-winner-202-logo.jpg" alt="Best Health Solution 2020 - Health Tech Awards" /></a>
 </p>
@@ -14,35 +8,33 @@
 
 # RCPCH Digital Growth Charts API Server
 
-A Python/Flask-based API server and suite of tools which calculates Digital Growth Chart parameters and other growth related data.
+An API server and suite of tools which calculates growth centiles and other growth related data for children. This is the basis of the RCPCH Digital Growth Charts API.
+
+API documentation can be found at <dev.rcpch.ac.uk>
+A demo client in React can be seen at <growth.rcpch.ac.uk>
 
 This is the main documentation for the project
 
 <!-- TOC -->
 
 - [RCPCH Digital Growth Charts API Server](#rcpch-digital-growth-charts-api-server)
-    - [About the UK RCPCH Growth Chart Application Program Interface (API) Project (RCPCHGrowth)](#about-the-uk-rcpch-growth-chart-application-program-interface-api-project-rcpchgrowth)
-    - [Clinical Aspects](#clinical-aspects)
-        - [Introduction](#introduction)
-        - [The LMS Method](#the-lms-method)
-        - [How the LMS method is used](#how-the-lms-method-is-used)
-        - [UK Growth References](#uk-growth-references)
-        - [Medical Recommendations](#medical-recommendations)
-    - [Technical Aspects](#technical-aspects)
-        - [API](#api)
-        - [Clients](#clients)
-            - [Flask](#flask)
-            - [React](#react)
-        - [Software Licensing](#software-licensing)
-        - [API Endpoints and operations](#api-endpoints-and-operations)
-            - [Functions](#functions)
-                - [Date and age calculations](#date-and-age-calculations)
-                - [Functions](#functions-1)
-                - [SDS and Centile Calculations](#sds-and-centile-calculations)
-                - [Functions](#functions-2)
+  - [About the UK RCPCH Growth Chart Application Program Interface (API) Project (RCPCHGrowth)](#about-the-uk-rcpch-growth-chart-application-program-interface-api-project-rcpchgrowth)
+  - [Clinical Aspects](#clinical-aspects)
+    - [Introduction](#introduction)
+    - [The LMS Method](#the-lms-method)
+    - [How the LMS method is used](#how-the-lms-method-is-used)
+    - [UK Growth References](#uk-growth-references)
+    - [Medical Recommendations](#medical-recommendations)
+- [API](#api)
+  - [API Documentation](#api-documentation)
+- [Demo Clients](#demo-clients)
+  - [React demo client](#react-demo-client)
+  - [Flask demo client (deprecated)](#flask-demo-client-deprecated)
+- [Software Licensing](#software-licensing) - [Functions](#functions)
+- [Build Status](#build-status)
+- [Postman tooling](#postman-tooling) - [Date and age calculations](#date-and-age-calculations) - [Functions](#functions-1) - [SDS and Centile Calculations](#sds-and-centile-calculations) - [Functions](#functions-2)
 
 <!-- /TOC -->
-
 
 ## About the UK RCPCH Growth Chart Application Program Interface (API) Project (RCPCHGrowth)
 
@@ -104,36 +96,47 @@ Advice reported is based on centile cut-offs:
 
 The advice text is published elsewhere in the repository.
 
-## Technical Aspects
+# API
 
-### API
-
-The API is written in Python 3.8.
-Mathematical and statistical calculations are made using the [SciPy](https://www.scipy.org/) and [NumPy](https://numpy.org/) libraries. [Pandas](https://pandas.pydata.org/) and [Xlrd](https://pypi.org/project/xlrd/) are used for data analysis.
+The API is written in Python 3.8. Mathematical and statistical calculations are made using the [SciPy](https://www.scipy.org/) and [NumPy](https://numpy.org/) libraries. [Pandas](https://pandas.pydata.org/) and [Xlrd](https://pypi.org/project/xlrd/) are used for data analysis.
 
 Server middleware used is [Flask](https://flask.palletsprojects.com/en/1.1.x/quickstart/).
 
-### Clients
+## API Documentation
 
-See associate repositories. There are currently two clients offered as examples of implementation for users to follow. Please be aware that rendering of charts and reporting of results must adhere to strict guidance to comply with the licensing agreement for use. This advice is published elsewhere in the repository and forms consensus opinion of the UK Growth Chart Reference Group and the Clinical Board.
+All API related documentation is hosted here on our developer portal <https://dev.rcpch.ac.uk/>. FOr consumers of the API service who want to implement it, this is the best starting point.
 
-#### Flask
+# Demo Clients
 
-The Flask client is provided with [Flask](https://flask.palletsprojects.com/en/1.1.x/quickstart/) and [FlaskForms](https://github.com/wtforms/wtforms/). CSS Framework is provided by [Semantic UI](https://semantic-ui.com/) and [Jinja2](https://pypi.org/project/Jinja2/). Graphing is implemented with [ChartJS](https://www.chartjs.org/) and zoom plugin [chart-js-plugin-zoom](https://github.com/chartjs/chartjs-plugin-zoom).
+See associate repositories. There are currently two demo clients offered as examples of implementation for users to follow. Please be aware that rendering of charts and reporting of results must adhere to strict guidance to comply with the licensing agreement for use. This advice is published elsewhere in the repository and forms consensus opinion of the UK Growth Chart Reference Group and the Clinical Board.
 
-#### React
+## React demo client
 
-The React client is provided by [React](https://reactjs.org/) (16.13.1) and [React Router](https://reactrouter.com/) (5.2.0). CSS Framework is provided by [Semantic UI React](https://react.semantic-ui.com/) (0.88.2). Graphing is implemented with [ChartJS](https://www.chartjs.org/) and zoom plugin [chart-js-plugin-zoom](https://github.com/chartjs/chartjs-plugin-zoom).
+All information about the React demo client can be found at the repository
+<https://github.com/rcpch/digital-growth-charts-react-client>
 
-### Software Licensing
+## Flask demo client (deprecated)
+
+All information about the React demo client can be found at the repository
+<https://github.com/rcpch/digital-growth-charts-flask-client>
+
+# Software Licensing
 
 The project team agree that the growth references and the algorithms that generate reliable results should all exist in the public domain. They are published here under GNU Affero GPL3 licence.
 
-### API Endpoints and operations
-
-All API related documentation is hosted here on our developer portal https://dev.rcpch.ac.uk/
-
 #### Functions
+
+# Build Status
+
+![rcpch-dgc-server-alpha](https://github.com/rcpch/digital-growth-charts-server/workflows/Build%20and%20deploy%20Python%20app%20to%20Azure%20Web%20App%20-%20rcpch-dgc-server-alpha/badge.svg?branch=alpha)
+
+![rcpch-dgc-server-unstable](https://github.com/rcpch/digital-growth-charts-server/workflows/Build%20and%20deploy%20Python%20app%20to%20Azure%20Web%20App%20-%20rcpch-dgc-server-unstable/badge.svg?branch=unstable)
+
+# Postman tooling
+
+We have used Postman extensively in the devleopment
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6b1137d60067b8aedfea#?env%5Blocalhost%3A5000-testing%5D=W3sia2V5IjoiYmFzZVVybCIsInZhbHVlIjoibG9jYWxob3N0OjUwMDAiLCJlbmFibGVkIjp0cnVlfV0=)
 
 ##### Date and age calculations
 
@@ -272,7 +275,7 @@ weight_for_bmi_height( height: float,  bmi: float) -> float:
 - Returns a weight from a height in cm and a BMI in kg/m². Reported to 3 d.p.
 - Does not depend on the age or sex of the child.
 
-##### Scope
+# Scope
 
 Currently the minimum viable product is to provide reliable calculations for all children in the UK under the age of 1 year for height, weight, body mass index (BMI) and head circumference ('occipitofrontal circumference' - OFC).
 
@@ -284,20 +287,15 @@ It is planned that the API will in future be able to receive longitudinal growth
 
 It separately aimed that this project in future standardise the data format for all growth references.
 
-An additional future objective is to create a respository of all available growth references.
+An additional future objective is to create a repository of all available growth references.
 
 - [References](docs/references.md)
 
-## Copyright and License
+# Copyright and License
 
 This work is copyrighted ⓒ2020 The Royal College of Paediatrics and Child Health, and released under the GNU Affero Public License. Our [license file](./LICENSE.md) is included in this repository, with further details available here https://www.gnu.org/licenses/agpl-3.0.en.html
 
-## Developing the RCPCH Growth Charts - WIP
+## Developer documentation
 
-- [Setting up your Python Development environment](docs/dev-documentation/python-development.md)
-- [Running the Growth Chart API in development](docs/dev-documentation/running-in-development.md)
-- Using different reference data files
-- Adding new calculations
-- Testing
-- [Contributing](docs/dev-documentation/contributing.md)
-- [Calculating Growth Parameters](docs/dev-documentation/about-calculating-growth-parameters.md)
+If you are reviewing, developing, extending or simply curious about the RCPCH dGC API server, then the developer documentation is here.
+[Developer documentation](docs/dev-documentation/README.md)
