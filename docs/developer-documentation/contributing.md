@@ -18,8 +18,8 @@ marcusbaw@gmail.com (Marcus Baw) or eatyourpeasapps@gmail.com (Simon Chapman)
 * We are not Python experts but we would encourage use of Python best practices where possible.
 * We are not going to get too pedantic over style though.
 * Some helpful sources of information on Python style are:  
-https://www.python.org/dev/peps/pep-0008  
-https://google.github.io/styleguide/pyguide.html  
+<https://www.python.org/dev/peps/pep-0008>  
+<https://google.github.io/styleguide/pyguide.html>  
 
 
 ## Intellectual Property (IP)
