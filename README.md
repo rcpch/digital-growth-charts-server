@@ -1,10 +1,12 @@
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6b1137d60067b8aedfea#?env%5Blocalhost%3A5000-testing%5D=W3sia2V5IjoiYmFzZVVybCIsInZhbHVlIjoibG9jYWxob3N0OjUwMDAiLCJlbmFibGVkIjp0cnVlfV0=)
 
-![Deployment Status - rcpch-dgc-server-alpha](https://github.com/rcpch/digital-growth-charts-server/workflows/Build%20and%20deploy%20Python%20app%20to%20Azure%20Web%20App%20-%20rcpch-dgc-server-alpha/badge.svg?branch=alpha)
+![rcpch-dgc-server-alpha](https://github.com/rcpch/digital-growth-charts-server/workflows/Build%20and%20deploy%20Python%20app%20to%20Azure%20Web%20App%20-%20rcpch-dgc-server-alpha/badge.svg?branch=alpha)
 
-![Build and deploy Python app to Azure Web App - rcpch-dgc-server-unstable](https://github.com/rcpch/digital-growth-charts-server/workflows/Build%20and%20deploy%20Python%20app%20to%20Azure%20Web%20App%20-%20rcpch-dgc-server-unstable/badge.svg?branch=unstable)
+![rcpch-dgc-server-unstable](https://github.com/rcpch/digital-growth-charts-server/workflows/Build%20and%20deploy%20Python%20app%20to%20Azure%20Web%20App%20-%20rcpch-dgc-server-unstable/badge.svg?branch=unstable)
 
-<a href="https://www.thehtn.co.uk/health-tech-awards-2020-live/"><img width="150px" src="static/htn-awards-winner-202-logo.jpg" alt="Best Health Solution 2020 - Health Tech Awards" /><a/>
+<p align="center">
+  <a href="https://www.thehtn.co.uk/health-tech-awards-2020-live/"><img width="150px" src="static/htn-awards-winner-202-logo.jpg" alt="Best Health Solution 2020 - Health Tech Awards" /></a>
+</p>
 
 <p align="center">
   <img width="200" src="https://github.com/rcpch/digital-growth-charts-server/raw/alpha/static/rcpch-logo.png">
@@ -12,11 +14,37 @@
 
 # RCPCH Digital Growth Charts API Server
 
-A Python/Flask-based API server which calculates Digital Growth Chart parameters and other growth related data.
+A Python/Flask-based API server and suite of tools which calculates Digital Growth Chart parameters and other growth related data.
 
-See our other repositories for example clients which implement RCPCH developed standards for the display of Growth Charts to users.
+This is the main documentation for the project
 
-## The UK RCPCH Growth Chart Application Program Interface (API) Project (RCPCHGrowth)
+<!-- TOC -->
+
+- [RCPCH Digital Growth Charts API Server](#rcpch-digital-growth-charts-api-server)
+    - [About the UK RCPCH Growth Chart Application Program Interface (API) Project (RCPCHGrowth)](#about-the-uk-rcpch-growth-chart-application-program-interface-api-project-rcpchgrowth)
+    - [Clinical Aspects](#clinical-aspects)
+        - [Introduction](#introduction)
+        - [The LMS Method](#the-lms-method)
+        - [How the LMS method is used](#how-the-lms-method-is-used)
+        - [UK Growth References](#uk-growth-references)
+        - [Medical Recommendations](#medical-recommendations)
+    - [Technical Aspects](#technical-aspects)
+        - [API](#api)
+        - [Clients](#clients)
+            - [Flask](#flask)
+            - [React](#react)
+        - [Software Licensing](#software-licensing)
+        - [API Endpoints and operations](#api-endpoints-and-operations)
+            - [Functions](#functions)
+                - [Date and age calculations](#date-and-age-calculations)
+                - [Functions](#functions-1)
+                - [SDS and Centile Calculations](#sds-and-centile-calculations)
+                - [Functions](#functions-2)
+
+<!-- /TOC -->
+
+
+## About the UK RCPCH Growth Chart Application Program Interface (API) Project (RCPCHGrowth)
 
 This is the first national effort to produce validated and reliable SDS and Centile scores from UK Children's growth data. The project team was commissioned by NHS England to produce, in the first instance, an API (application program interface) to generate reliable results for growth data from children 1 y and below. The project team began work in May 2020.
 
