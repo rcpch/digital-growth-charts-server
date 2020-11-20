@@ -283,14 +283,13 @@ paths:
         content:
           application/json:
             example:
-              term-2-months-male-height:
-                birth_date: 2020-04-12
-                gestation_days: 4
-                gestation_weeks: 40
-                measurement_method: height
-                observation_date: 2020-06-12
-                observation_value: 60
-                sex: male
+              birth_date: '2020-04-12'
+              gestation_days: 4
+              gestation_weeks: 40
+              measurement_method: height
+              observation_date: '2020-06-12'
+              observation_value: 60
+              sex: male
             schema:
               $ref: '#/components/schemas/SingleCalculationRequestParameters'
       responses:

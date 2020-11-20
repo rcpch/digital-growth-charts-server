@@ -86,11 +86,10 @@ def uk_who_calculation():
           application/json:
             schema: SingleCalculationRequestParameters
             example:
-              term-2-months-male-height:
-                birth_date: 2020-04-12
-                observation_date: 2020-06-12
+                birth_date: "2020-04-12"
+                observation_date: "2020-06-12"
                 observation_value: 60
-                measurement_method: height
+                measurement_method: "height"
                 sex: male
                 gestation_weeks: 40
                 gestation_days: 4
