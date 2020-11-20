@@ -173,6 +173,7 @@ def uk_who_chart_data():
         # Create Centile Charts
         centiles = controllers.create_centile_values(
             sex, born_preterm=born_preterm)
+
         return jsonify({
             "sex": sex,
             "child_data": child_data,

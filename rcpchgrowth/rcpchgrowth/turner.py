@@ -20,7 +20,7 @@ reference: reference data
 
 #load the reference data
 
-TURNER_DATA = pkg_resources.resource_filename(__name__, "/data_tables/uk90.json")
+TURNER_DATA = pkg_resources.resource_filename(__name__, "/data_tables/turner.json")
 with open(TURNER_DATA) as json_file:
             TURNER_DATA = json.load(json_file)
             json_file.close()

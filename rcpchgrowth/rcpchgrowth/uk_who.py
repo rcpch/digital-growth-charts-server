@@ -246,14 +246,16 @@ def measurement_from_sds(
     try:
         selected_reference = uk_who_reference(age=age, born_preterm=born_preterm)
     except: # there is no reference for the age supplied
-        return ValueError("There is no reference for the age supplied.")
+        print("There is no reference for this age group.")
+        return None
 
     # Check that the measurement requested has reference data at that age
     if reference_data_absent(
         age=age,
         measurement_method=measurement_method, 
         sex=sex):
-        return ValueError("There is no reference data for this measurement at this age")
+        print(f"There is no reference data for {measurement_method} at {age} years.")
+        return None
 
     # fetch the LMS values for the requested measurement
     lms_value_array_for_measurement = selected_reference["measurement"][measurement_method][sex]

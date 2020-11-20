@@ -3,6 +3,7 @@ import rcpchgrowth.rcpchgrowth as rcpchgrowth
 import numpy as np
 import os 
 from datetime import datetime
+from flask import jsonify
 
 UK90_PREMATURITY_LOWER_THRESHOLD_INDEX = 0 # -0.268309377y or 24 weeks
 UK90_TERM_UPPER_THRESHOLD_INDEX = 19 # 42 weeks 0.03833
@@ -63,9 +64,9 @@ def create_centile_values(sex: str, born_preterm=False):
                     if index < 2: # there is no height data below 25 weeks
                         length_for_z = None
                     else:
-                        length_for_z = rcpchgrowth.measurement_from_sds(measurement_method="height", requested_sds=sds_value, sex=sex, decimal_age=age, born_preterm=born_preterm)
-                    weight_for_z = rcpchgrowth.measurement_from_sds(measurement_method="weight", requested_sds=sds_value, sex=sex, decimal_age=age, born_preterm=born_preterm)
-                    ofc_for_z = rcpchgrowth.measurement_from_sds(measurement_method="ofc", requested_sds=sds_value, sex=sex, decimal_age=age, born_preterm=born_preterm)
+                        length_for_z = rcpchgrowth.measurement_from_sds(measurement_method="height", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
+                    weight_for_z = rcpchgrowth.measurement_from_sds(measurement_method="weight", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
+                    ofc_for_z = rcpchgrowth.measurement_from_sds(measurement_method="ofc", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
                     bmi_for_z = None # there is no UK90 preterm BMI data
 
                     uk90_preterm_length_sds.append({"label": centile, "x": age, "y": length_for_z})
@@ -87,28 +88,28 @@ def create_centile_values(sex: str, born_preterm=False):
             elif index <= WHO_2006_LENGTH_THRESHOLD_INDEX:
                 # at 2 weeks choose WHO child lying data (upper reference as default)
                 try:
-                    length_for_z = rcpchgrowth.measurement_from_sds("height", sds_value, sex, age, False, born_preterm=born_preterm)
+                    length_for_z = rcpchgrowth.measurement_from_sds(measurement_method="height", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
                 except:
                     length_for_z = None
                 try:
-                    weight_for_z = rcpchgrowth.measurement_from_sds("weight", sds_value, sex, age, False, born_preterm=born_preterm)
+                    weight_for_z = rcpchgrowth.measurement_from_sds(measurement_method="weight", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
                 except:
                     weight_for_z = None
                 try:
-                    bmi_for_z = rcpchgrowth.measurement_from_sds("bmi", sds_value, sex, age, False, born_preterm=born_preterm)
+                    bmi_for_z = rcpchgrowth.measurement_from_sds(measurement_method="bmi", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
                 except:
                     bmi_for_z = None
                 try:
-                    ofc_for_z = rcpchgrowth.measurement_from_sds("ofc", sds_value, sex, age, False, born_preterm=born_preterm)
+                    ofc_for_z = rcpchgrowth.measurement_from_sds(measurement_method="ofc", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
                 except:
                     ofc_for_z = None
 
                 if index == WHO_2006_LENGTH_THRESHOLD_INDEX:
                     # at 2 years choose WHO child lying data (lower reference as default)
-                    length_for_z = rcpchgrowth.measurement_from_sds("height", sds_value, sex, age, True, born_preterm=born_preterm)
-                    weight_for_z = rcpchgrowth.measurement_from_sds("weight", sds_value, sex, age, True, born_preterm=born_preterm)
-                    bmi_for_z = rcpchgrowth.measurement_from_sds("bmi", sds_value, sex, age, True, born_preterm=born_preterm)
-                    ofc_for_z = rcpchgrowth.measurement_from_sds("ofc", sds_value, sex, age, True, born_preterm=born_preterm)
+                    length_for_z = rcpchgrowth.measurement_from_sds(measurement_method="height", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
+                    weight_for_z = rcpchgrowth.measurement_from_sds(measurement_method="weight", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
+                    bmi_for_z = rcpchgrowth.measurement_from_sds(measurement_method="bmi", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
+                    ofc_for_z = rcpchgrowth.measurement_from_sds(measurement_method="ofc", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
 
                 who_infant_length_sds.append({"label": centile, "x": age, "y": length_for_z})
                 who_infant_weight_sds.append({"label": centile, "x": age, "y": weight_for_z})
@@ -117,17 +118,17 @@ def create_centile_values(sex: str, born_preterm=False):
 
             elif index <= WHO_2006_UPPER_THRESHOLD_INDEX:
                 # at 2y choose WHO child standing data (upper reference as default)
-                length_for_z = rcpchgrowth.measurement_from_sds("height", sds_value, sex, age, False, born_preterm=born_preterm)
-                weight_for_z = rcpchgrowth.measurement_from_sds("weight", sds_value, sex, age, False, born_preterm=born_preterm)
-                bmi_for_z = rcpchgrowth.measurement_from_sds("bmi", sds_value, sex, age, False, born_preterm=born_preterm)
-                ofc_for_z = rcpchgrowth.measurement_from_sds("ofc", sds_value, sex, age, False, born_preterm=born_preterm)
+                length_for_z = rcpchgrowth.measurement_from_sds(measurement_method="height", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
+                weight_for_z = rcpchgrowth.measurement_from_sds(measurement_method="weight", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
+                bmi_for_z = rcpchgrowth.measurement_from_sds(measurement_method="bmi", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
+                ofc_for_z = rcpchgrowth.measurement_from_sds(measurement_method="ofc", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
 
                 # at 4y choose WHO child standing data, not UK90 child standing data (lower reference as default)
                 if index == WHO_2006_UPPER_THRESHOLD_INDEX:
-                    length_for_z = rcpchgrowth.measurement_from_sds("height", sds_value, sex, age, True, born_preterm=born_preterm)
-                    weight_for_z = rcpchgrowth.measurement_from_sds("weight", sds_value, sex, age, True, born_preterm=born_preterm)
-                    bmi_for_z = rcpchgrowth.measurement_from_sds("bmi", sds_value, sex, age, True, born_preterm=born_preterm)
-                    ofc_for_z = rcpchgrowth.measurement_from_sds("ofc", sds_value, sex, age, True, born_preterm=born_preterm)
+                    length_for_z = rcpchgrowth.measurement_from_sds(measurement_method="height", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
+                    weight_for_z = rcpchgrowth.measurement_from_sds(measurement_method="weight", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
+                    bmi_for_z = rcpchgrowth.measurement_from_sds(measurement_method="bmi", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
+                    ofc_for_z = rcpchgrowth.measurement_from_sds(measurement_method="ofc", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
 
                 who_child_height_sds.append({"label": centile, "x": age, "y": length_for_z})
                 who_child_weight_sds.append({"label": centile, "x": age, "y": weight_for_z})
@@ -135,13 +136,13 @@ def create_centile_values(sex: str, born_preterm=False):
                 who_child_ofc_sds.append({"label": centile, "x": age, "y": ofc_for_z})
             else:
                 #choose upper reference by default - no duplicate ages in this dataset
-                length_for_z = rcpchgrowth.measurement_from_sds("height", sds_value, sex, age, False, born_preterm=born_preterm)
-                weight_for_z = rcpchgrowth.measurement_from_sds("weight", sds_value, sex, age, False, born_preterm=born_preterm)
-                bmi_for_z = rcpchgrowth.measurement_from_sds("bmi", sds_value, sex, age, False, born_preterm=born_preterm)
+                length_for_z = rcpchgrowth.measurement_from_sds(measurement_method="height", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
+                weight_for_z = rcpchgrowth.measurement_from_sds(measurement_method="weight", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
+                bmi_for_z = rcpchgrowth.measurement_from_sds(measurement_method="bmi", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
                 
                 if (index <= 237 and sex=="female") or (index <= 249 and sex=="male"):
                     # there is no OFC data > 17y in girls or > 18y in boys
-                    ofc_for_z = rcpchgrowth.measurement_from_sds("ofc", sds_value, sex, age, False, born_preterm=born_preterm)
+                    ofc_for_z = rcpchgrowth.measurement_from_sds(measurement_method="ofc", requested_sds=sds_value, sex=sex, age=age, born_preterm=born_preterm)
                 else:
                     ofc_for_z = None
 
@@ -154,7 +155,6 @@ def create_centile_values(sex: str, born_preterm=False):
         weight_sds.append({"sds": sds_value, "centile": centile, "uk90_preterm_data": uk90_preterm_weight_sds, "who_infant_data": who_infant_weight_sds, "who_child_data": who_child_weight_sds, "uk90_child_data": uk90_child_weight_sds})
         bmi_sds.append({"sds": sds_value, "centile": centile, "uk90_preterm_data": uk90_preterm_bmi_sds, "who_infant_data": who_infant_bmi_sds, "who_child_data": who_child_bmi_sds, "uk90_child_data": uk90_child_bmi_sds})
         ofc_sds.append({"sds": sds_value, "centile": centile, "uk90_preterm_data": uk90_preterm_ofc_sds, "who_infant_data": who_infant_ofc_sds, "who_child_data": who_child_ofc_sds, "uk90_child_data": uk90_child_ofc_sds})
-    
     centiles = {"height": height_sds, "weight": weight_sds, "bmi": bmi_sds, "ofc": ofc_sds}
     return centiles
 
