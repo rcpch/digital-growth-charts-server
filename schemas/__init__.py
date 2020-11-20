@@ -2,5 +2,6 @@ from .chart_data_schemas import ChartDataRequestParameters, ChartDataResponseSch
 from .plottable_child_data_schemas import PlottableChildDataRequestParameters, PlottableChildDataResponseSchema
 from .fictional_child_schemas import FictionalChildRequestParameters, FictionalChildResponseSchema
 from .measurement_schemas import MeasurementResponseSchema
+from .openapi_schemas import OpenApiSchema
 from .references_schemas import ReferencesResponseSchema
 from .single_calculation_schemas import SingleCalculationRequestParameters, SingleCalculationResponseSchema

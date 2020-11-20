@@ -135,6 +135,11 @@ components:
         measurement_dates:
           $ref: '#/components/schemas/MeasurementDates'
       type: object
+    OpenApi:
+      properties:
+        results:
+          type: string
+      type: object
     Reference:
       properties:
         acknowledgement_text:
@@ -257,7 +262,7 @@ info:
   license:
     name: GNU Affero General Public License
     url: https://www.gnu.org/licenses/agpl-3.0.en.html
-  title: RCPCH Digital Growth Charts API Server
+  title: RCPCH Digital Growth Charts API
   version: 0.0.3
 openapi: 3.0.2
 paths:
@@ -401,6 +406,28 @@ paths:
                 type: string
           description: API Instructions and information was returned
       summary: Instructions API route.
+  /:
+    get:
+      description: '* The root endpoint of the dGC API returns the openAPI3.0 specification
+        in JSON format.
+
+        * This can be used to autogenerate clients and tests.
+
+        * We use it internally to generate all documentation, Postman collections
+        and tests.
+
+        '
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenApi'
+          description: '* openAPI3.0 Specification in JSON format, conforming to https://swagger.io/specification/,
+            is returned.
+
+            '
+      summary: openAPI3.0 Specification.
 servers:
 - description: RCPCH Production API Gateway
   url: https://api.rcpch.ac.uk/
