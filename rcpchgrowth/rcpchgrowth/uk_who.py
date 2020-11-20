@@ -199,7 +199,6 @@ def percentage_median_bmi( age: float, actual_bmi: float, sex: str, born_preterm
     # Check that the measurement requested has reference data at that age
     if reference_data_absent(
         age=age, 
-        reference=selected_reference, 
         measurement_method="bmi", 
         sex=sex):
         return ValueError("There is no reference data for BMI at this age")
@@ -251,8 +250,7 @@ def measurement_from_sds(
 
     # Check that the measurement requested has reference data at that age
     if reference_data_absent(
-        age=age, 
-        reference=selected_reference, 
+        age=age,
         measurement_method=measurement_method, 
         sex=sex):
         return ValueError("There is no reference data for this measurement at this age")
