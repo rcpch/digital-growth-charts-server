@@ -284,7 +284,8 @@ def create_fictional_child(
             measurement_method=measurement_method, 
             observation_value=new_measurement_value, 
             gestation_weeks=gestation_weeks, 
-            gestation_days=gestation_days, 
+            gestation_days=gestation_days,
+            reference="UKWHO"
             )
         
         #store in array

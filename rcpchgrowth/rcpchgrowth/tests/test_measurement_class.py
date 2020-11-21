@@ -38,7 +38,8 @@ def test_measurement_class_with_valid_data_set(line):
         measurement_method=str(line["measurement_method"]),
         observation_value=float(line["observation_value"]),
         gestation_weeks=int(line["gestation_weeks"]),
-        gestation_days=int(line["gestation_days"])
+        gestation_days=int(line["gestation_days"]),
+        reference="UKWHO"
     )
 
     rcpchgrowth_result = measurement_object.measurement["measurement_calculated_values"]['sds']

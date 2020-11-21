@@ -5,6 +5,8 @@ from .date_calculations import chronological_decimal_age, corrected_decimal_age,
 from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import comment_prematurity_correction
 from .constants import *
+from .turner import turner_sds_calculation
+from .trisomy_21 import t21_sds_calculation
 
 
 class Measurement:
@@ -13,11 +15,12 @@ class Measurement:
             self,
             sex: str,
             birth_date: date,
-            observation_date,
+            observation_date: date,
             measurement_method: str,
             observation_value: float,
+            reference: str,
             gestation_weeks: int = 0,
-            gestation_days: int = 0,
+            gestation_days: int = 0
         ):
         """
         The Measurement Class is the gatekeeper to all the functions in the RCPCHGrowth package, although the public
@@ -35,8 +38,7 @@ class Measurement:
 
         `gestation_weeks`: (integer) gestation at birth in weeks.
         `gestation_days`: (integer) supplemental days in addition to gestation_weeks at birth.
-        ``: (boolean) If the request is for an age where 2 references overlap, the user
-            can override the default to use the 'oldest' reference.
+        `reference`: ENUM refering to which reference dataset to use: ['UKWHO', 'TURNER', 'T21']
         """
 
         self.sex = sex
@@ -46,6 +48,7 @@ class Measurement:
         self.observation_value = observation_value
         self.gestation_weeks = gestation_weeks
         self.gestation_days = gestation_days
+        self.reference = reference
 
         valid = self.__validate_measurement_method(
             measurement_method=measurement_method, observation_value=observation_value)
@@ -71,6 +74,7 @@ class Measurement:
             measurement_method=self.measurement_method,
             observation_value=self.observation_value,
             born_preterm=self.born_preterm,
+            reference=self.reference
             )
 
         self.measurement = {
@@ -90,43 +94,46 @@ class Measurement:
             age: float,
             measurement_method: str,
             observation_value: float,
+            reference: str,
             born_preterm: bool = False,
         ):
 
         # returns sds for given measurement
         # bmi must be supplied precalculated
 
-        if measurement_method == 'height':
-            self.return_measurement_object = self.__calculate_height_sds_centile(
-                sex=sex,
+        if reference == 'UKWHO':
+            measurement_sds = uk_who_sds_calculation(
                 age=age,
-                height=observation_value,
-                born_preterm=born_preterm,
-            )
-        elif measurement_method == 'weight':
-            self.return_measurement_object = self.__calculate_weight_sds_centile(
+                measurement_method=measurement_method,
+                measurement_value=observation_value,
                 sex=sex,
-                age=age,
-                weight=observation_value,
-                born_preterm=born_preterm,
+                born_preterm=born_preterm
             )
-        elif measurement_method == 'bmi':
-            self.return_measurement_object = self.__calculate_bmi_sds_centile(
-                sex=sex,
+        elif reference == "TURNER":
+            measurement_sds = turner_sds_calculation(
                 age=age,
-                bmi=observation_value,
-                born_preterm=born_preterm,
+                measurement_method=measurement_method,
+                measurement_value=observation_value,
+                sex=sex
             )
-        elif measurement_method == 'ofc':
-            self.return_measurement_object = self.__calculate_ofc_sds_centile(
-                sex=sex,
+        elif reference == "T21":
+            measurement_sds == t21_sds_calculation(
                 age=age,
-                ofc=observation_value,
-                born_preterm=born_preterm,
+                measurement_method=measurement_method,
+                measurement_value=observation_value,
+                sex=sex
             )
-        else:
-            raise ValueError(
-                'Only the following measurement methods are accepted: height, weight, bmi or ofc')
+
+        measurement_centile = centile(z_score=measurement_sds)
+        centile_band = centile_band_for_centile(sds=measurement_sds, measurement_method=measurement_method)
+        self.return_measurement_object = self.__create_measurement_object(
+            measurement_method=measurement_method,
+            observation_value=observation_value,
+            sds_value=measurement_sds,
+            centile_value=measurement_centile,
+            centile_band=centile_band
+        )
+
         return self.return_measurement_object
 
     """
@@ -213,182 +220,6 @@ class Measurement:
             "measurement_dates": measurement_dates
         }
         return child_age_calculations
-
-    def __calculate_height_sds_centile(
-            self,
-            sex: str,
-            age: float,
-            height: float,
-            born_preterm: bool = False,
-        ):
-        """
-        Private class method to return SDS and centile for height measurement
-        """
-
-        if height and height > 0.0:
-            # there is no length data below 25 weeks gestation
-            if age >= TWENTY_FIVE_WEEKS_GESTATION:
-                height_sds = uk_who_sds_calculation(
-                    age=age,
-                    measurement_method='height',
-                    measurement_value=height,
-                    sex=sex,
-                    born_preterm=born_preterm)
-                height_centile = centile(height_sds)
-                height_centile_band = centile_band_for_centile(
-                    sds=height_sds, measurement_method="height")
-
-            else:
-                height_sds = None
-                height_centile = None
-                height_centile_band = ""
-
-            return_measurement_object = self.__create_measurement_object(
-                measurement_method='height',
-                observation_value=height,
-                sds_value=height_sds,
-                centile_value=height_centile,
-                centile_band=height_centile_band
-            )
-            return return_measurement_object
-        else:
-            raise LookupError(
-                "Unable to return SDS or centile values for height")
-
-    def __calculate_weight_sds_centile(
-            self,
-            sex: str,
-            age: float,
-            weight: float,
-            born_preterm: bool = False):
-        """
-        private class method to return sds and centile for weight meaasurement
-        """
-
-        if weight and weight > 0.0:
-            weight_sds = uk_who_sds_calculation(
-                age=age,
-                measurement_method='weight',
-                measurement_value=weight,
-                sex=sex,
-                born_preterm=born_preterm)
-            weight_centile = centile(weight_sds)
-            weight_centile_band = centile_band_for_centile(
-                sds=weight_sds, measurement_method="weight")
-
-            # create return object
-            return_measurement_object = self.__create_measurement_object(
-                measurement_method='weight',
-                observation_value=weight,
-                sds_value=weight_sds,
-                centile_value=weight_centile,
-                centile_band=weight_centile_band
-            )
-            return return_measurement_object
-        else:
-            raise LookupError(
-                "Unable to return SDS or centile values for weight.")
-
-    def __calculate_bmi_sds_centile(
-            self,
-            sex: str,
-            age: float,
-            born_preterm: bool = False,
-            bmi: float = 0.0):
-        """
-        This method calculates bmi SDS and centiles. It has been refactored and originally it took a
-        height and weight in cm before calculating a bmi which then was used to generate SDS and centile.
-        The Measurement_Type class now calculates BMI from height and weight and passes this to this method.
-        The original ability to pass a height and weight is retained, but has essentially been deprecated
-        and in future iterations is likely to be removed.
-        """
-        if bmi and bmi > 0.0:
-            # BMI data not present < 42 weeks gestation
-            if age >= FORTY_TWO_WEEKS_GESTATION:
-                bmi_sds = uk_who_sds_calculation(
-                    age=age,
-                    measurement_method='bmi',
-                    measurement_value=bmi,
-                    sex=sex,
-                    born_preterm=born_preterm)  # does not default to youngest reference
-                bmi_centile = centile(z_score=bmi_sds)
-                bmi_centile_band = centile_band_for_centile(
-                    sds=bmi_sds,
-                    measurement_method="bmi")
-                # create return object
-                return_measurement_object = self.__create_measurement_object(
-                    measurement_method='bmi',
-                    observation_value=bmi,
-                    sds_value=bmi_sds,
-                    centile_value=bmi_centile,
-                    centile_band=bmi_centile_band
-                )
-            else:
-                bmi_centile = None
-                bmi_sds = None
-                bmi_centile_band = ""
-
-                # create return object
-                return_measurement_object = self.__create_measurement_object(
-                    measurement_method='bmi',
-                    observation_value=bmi,
-                    sds_value=bmi_sds,
-                    centile_value=bmi_centile,
-                    centile_band=bmi_centile_band
-
-                )
-            return return_measurement_object
-        else:
-            raise LookupError('Unable to return SDS or centile values for BMI')
-
-    def __calculate_ofc_sds_centile(
-            self,
-            sex: str,
-            age: float,
-            ofc: float,
-            born_preterm: bool = False):
-        """
-        private class method to calculate sds and centile for ofc
-        """
-
-        if ofc and ofc > 0.0:
-            # OFC data not present >17y in girls or >18y in boys
-            if (age <= 17 and sex == 'female') or (age <= 18.0 and sex == 'male'):
-                ofc_sds = uk_who_sds_calculation(
-                    age=age,
-                    measurement_method='ofc',
-                    measurement_value=ofc,
-                    sex=sex,
-                    born_preterm=born_preterm)
-                ofc_centile = centile(z_score=ofc_sds)
-                ofc_centile_band = centile_band_for_centile(
-                    sds=ofc_sds,
-                    measurement_method="ofc")
-
-                return_measurement_object = self.__create_measurement_object(
-                    measurement_method='ofc',
-                    observation_value=ofc,
-                    sds_value=ofc_sds,
-                    centile_value=ofc_centile,
-                    centile_band=ofc_centile_band
-                )
-            else:
-                ofc_sds = None
-                ofc_centile = None
-                ofc_centile_band = ""
-
-                # create return object
-                return_measurement_object = self.__create_measurement_object(
-                    measurement_method='ofc',
-                    observation_value=ofc,
-                    sds_value=ofc_sds,
-                    centile_value=ofc_centile,
-                    centile_band=ofc_centile_band
-                )
-            return return_measurement_object
-        else:
-            raise LookupError(
-                'Unable to return SDS or centile values for head circumference')
 
     def __create_measurement_object(
         self,
