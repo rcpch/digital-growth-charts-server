@@ -220,7 +220,6 @@ def uk_who_plottable_child_data():
         child_data = controllers.create_plottable_child_data(results)
         # Retrieve sex of child to select correct centile charts
         sex = results[0]["birth_data"]["sex"]
-
         return jsonify({
             "sex": sex,
             "child_data": child_data,
