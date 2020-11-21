@@ -183,4 +183,22 @@ def fetch_lms(age: float, lms_value_array_for_measurement: list):
         "m": m,
         "s": s
     }
+
+def measurement_from_sds(
+        lms_value_array_for_measurement: list,  
+        requested_sds: float,  
+        sex: str,  
+        age: float, 
+        born_preterm = False
+    )->float:
+
+    # get LMS values from the reference: check for age match, interpolate if none
+    lms = fetch_lms(age=age, lms_value_array_for_measurement=lms_value_array_for_measurement)
+    l = lms["l"]
+    m = lms["m"]
+    s = lms["s"]
+
+    observation_value = measurement_for_z(z=requested_sds, l=l, m=m, s=s)
+    return observation_value
+
     
