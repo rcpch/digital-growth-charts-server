@@ -248,7 +248,7 @@ def prepare_data_as_array_of_measurement_objects(uploaded_data):
         measurement_value = observation['measurement_value']
         
         # measurement_type_object = rcpchgrowth.Measurement_Type(measurement_method=observation['measurement_method'], measurement_value=measurement_value)
-        measurement_object = rcpchgrowth.Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_method=observation['measurement_method'], observation_value=measurement_value,gestation_weeks=gestation_weeks, gestation_days=gestation_days, default_to_youngest_reference=False)
+        measurement_object = rcpchgrowth.Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_method=observation['measurement_method'], observation_value=measurement_value,gestation_weeks=gestation_weeks, gestation_days=gestation_days)
         array_of_measurement_objects.append(measurement_object.measurement)
 
     return array_of_measurement_objects    

@@ -26,8 +26,7 @@ def perform_calculation(*,
         measurement_method=measurement_method,
         observation_value=float(observation_value),
         gestation_weeks=gestation_weeks,
-        gestation_days=gestation_days,
-        default_to_youngest_reference=False
+        gestation_days=gestation_days
     ).measurement
 
 

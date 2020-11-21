@@ -7,7 +7,7 @@ from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from random import uniform
 from .measurement import Measurement
-from .sds_calculations import measurement_from_sds
+from .uk_who import measurement_from_sds
 from .date_calculations import corrected_decimal_age
 
 """
@@ -245,6 +245,13 @@ def create_fictional_child(
     """
     birth_date = date(1759, 4, 11) ## YYYY m d
 
+    born_preterm = False
+
+    if gestation_weeks == 0:
+        gestation_weeks = 40
+    if gestation_weeks < 37:
+        born_preterm = True
+
     i = 0
 
     while i < number_of_measurements:
@@ -267,7 +274,7 @@ def create_fictional_child(
         # calculate age at new measurement 
         child_age_at_measurement_date = corrected_decimal_age(birth_date=birth_date,observation_date=observation_date,gestation_weeks=gestation_weeks, gestation_days=gestation_days)
         # calculate measurement_value back from new SDS
-        new_measurement_value=measurement_from_sds(measurement_method=measurement_method, requested_sds=requested_sds, sex=sex, decimal_age=child_age_at_measurement_date, default_to_youngest_reference=False)
+        new_measurement_value=measurement_from_sds(measurement_method=measurement_method, requested_sds=requested_sds, sex=sex, age=child_age_at_measurement_date, born_preterm=born_preterm)
         
         # create Measurement object with dates
         new_measurement = Measurement(
@@ -278,7 +285,7 @@ def create_fictional_child(
             observation_value=new_measurement_value, 
             gestation_weeks=gestation_weeks, 
             gestation_days=gestation_days, 
-            default_to_youngest_reference=False)
+            )
         
         #store in array
         fictional_child.append(new_measurement.measurement)

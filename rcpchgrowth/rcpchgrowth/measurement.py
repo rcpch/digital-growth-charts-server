@@ -1,5 +1,5 @@
 from datetime import date
-from .sds_calculations import sds, centile, percentage_median_bmi, measurement_from_sds
+from .uk_who import centile, uk_who_sds_calculation, measurement_from_sds
 from .centile_bands import centile_band_for_centile
 from .date_calculations import chronological_decimal_age, corrected_decimal_age, chronological_calendar_age, estimated_date_delivery, corrected_gestational_age
 from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
@@ -18,7 +18,7 @@ class Measurement:
             observation_value: float,
             gestation_weeks: int = 0,
             gestation_days: int = 0,
-            default_to_youngest_reference: bool = False):
+        ):
         """
         The Measurement Class is the gatekeeper to all the functions in the RCPCHGrowth package, although the public
         functions can be accessed independently. The bulk of the error handling happens here so be aware that calling
@@ -35,7 +35,7 @@ class Measurement:
 
         `gestation_weeks`: (integer) gestation at birth in weeks.
         `gestation_days`: (integer) supplemental days in addition to gestation_weeks at birth.
-        `default_to_youngest_reference`: (boolean) If the request is for an age where 2 references overlap, the user
+        ``: (boolean) If the request is for an age where 2 references overlap, the user
             can override the default to use the 'oldest' reference.
         """
 
@@ -46,7 +46,6 @@ class Measurement:
         self.observation_value = observation_value
         self.gestation_weeks = gestation_weeks
         self.gestation_days = gestation_days
-        self.default_to_youngest_reference = default_to_youngest_reference
 
         valid = self.__validate_measurement_method(
             measurement_method=measurement_method, observation_value=observation_value)
@@ -72,7 +71,7 @@ class Measurement:
             measurement_method=self.measurement_method,
             observation_value=self.observation_value,
             born_preterm=self.born_preterm,
-            default_to_youngest_reference=self.default_to_youngest_reference)
+            )
 
         self.measurement = {
             'birth_data': self.ages_object['birth_data'],
@@ -92,7 +91,7 @@ class Measurement:
             measurement_method: str,
             observation_value: float,
             born_preterm: bool = False,
-            default_to_youngest_reference: bool = False):
+        ):
 
         # returns sds for given measurement
         # bmi must be supplied precalculated
@@ -103,28 +102,28 @@ class Measurement:
                 age=age,
                 height=observation_value,
                 born_preterm=born_preterm,
-                default_to_youngest_reference=default_to_youngest_reference)
+            )
         elif measurement_method == 'weight':
             self.return_measurement_object = self.__calculate_weight_sds_centile(
                 sex=sex,
                 age=age,
                 weight=observation_value,
                 born_preterm=born_preterm,
-                default_to_youngest_reference=default_to_youngest_reference)
+            )
         elif measurement_method == 'bmi':
             self.return_measurement_object = self.__calculate_bmi_sds_centile(
                 sex=sex,
                 age=age,
                 bmi=observation_value,
                 born_preterm=born_preterm,
-                default_to_youngest_reference=default_to_youngest_reference)
+            )
         elif measurement_method == 'ofc':
             self.return_measurement_object = self.__calculate_ofc_sds_centile(
                 sex=sex,
                 age=age,
                 ofc=observation_value,
                 born_preterm=born_preterm,
-                default_to_youngest_reference=default_to_youngest_reference)
+            )
         else:
             raise ValueError(
                 'Only the following measurement methods are accepted: height, weight, bmi or ofc')
@@ -221,20 +220,19 @@ class Measurement:
             age: float,
             height: float,
             born_preterm: bool = False,
-            default_to_youngest_reference: bool = False):
+        ):
         """
         Private class method to return SDS and centile for height measurement
         """
 
         if height and height > 0.0:
             # there is no length data below 25 weeks gestation
-            if age >= DECIMAL_AGES[TWENTY_FIVE_WEEKS_GESTATION_INDEX]:
-                height_sds = sds(
+            if age >= TWENTY_FIVE_WEEKS_GESTATION:
+                height_sds = uk_who_sds_calculation(
                     age=age,
                     measurement_method='height',
                     measurement_value=height,
                     sex=sex,
-                    default_to_youngest_reference=default_to_youngest_reference,
                     born_preterm=born_preterm)
                 height_centile = centile(height_sds)
                 height_centile_band = centile_band_for_centile(
@@ -262,19 +260,17 @@ class Measurement:
             sex: str,
             age: float,
             weight: float,
-            default_to_youngest_reference: bool = False,
             born_preterm: bool = False):
         """
         private class method to return sds and centile for weight meaasurement
         """
 
         if weight and weight > 0.0:
-            weight_sds = sds(
+            weight_sds = uk_who_sds_calculation(
                 age=age,
                 measurement_method='weight',
                 measurement_value=weight,
                 sex=sex,
-                default_to_youngest_reference=False,
                 born_preterm=born_preterm)
             weight_centile = centile(weight_sds)
             weight_centile_band = centile_band_for_centile(
@@ -298,7 +294,6 @@ class Measurement:
             sex: str,
             age: float,
             born_preterm: bool = False,
-            default_to_youngest_reference: bool = False,
             bmi: float = 0.0):
         """
         This method calculates bmi SDS and centiles. It has been refactored and originally it took a
@@ -309,13 +304,12 @@ class Measurement:
         """
         if bmi and bmi > 0.0:
             # BMI data not present < 42 weeks gestation
-            if age >= DECIMAL_AGES[FORTY_TWO_WEEKS_GESTATION_INDEX]:
-                bmi_sds = sds(
+            if age >= FORTY_TWO_WEEKS_GESTATION:
+                bmi_sds = uk_who_sds_calculation(
                     age=age,
                     measurement_method='bmi',
                     measurement_value=bmi,
                     sex=sex,
-                    default_to_youngest_reference=default_to_youngest_reference,
                     born_preterm=born_preterm)  # does not default to youngest reference
                 bmi_centile = centile(z_score=bmi_sds)
                 bmi_centile_band = centile_band_for_centile(
@@ -352,7 +346,6 @@ class Measurement:
             sex: str,
             age: float,
             ofc: float,
-            default_to_youngest_reference: bool = False,
             born_preterm: bool = False):
         """
         private class method to calculate sds and centile for ofc
@@ -361,12 +354,11 @@ class Measurement:
         if ofc and ofc > 0.0:
             # OFC data not present >17y in girls or >18y in boys
             if (age <= 17 and sex == 'female') or (age <= 18.0 and sex == 'male'):
-                ofc_sds = sds(
+                ofc_sds = uk_who_sds_calculation(
                     age=age,
                     measurement_method='ofc',
                     measurement_value=ofc,
                     sex=sex,
-                    default_to_youngest_reference=default_to_youngest_reference,
                     born_preterm=born_preterm)
                 ofc_centile = centile(z_score=ofc_sds)
                 ofc_centile_band = centile_band_for_centile(
