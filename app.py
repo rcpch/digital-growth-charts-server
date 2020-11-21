@@ -150,7 +150,6 @@ def uk_who_chart_data():
     if request.is_json:
         req = request.get_json()
         results = req["results"]
-        print(type(results))
         unique_child = req["unique_child"]
         # born preterm flag to pass to charts
         born_preterm = (results[0]["birth_data"]["gestation_weeks"]

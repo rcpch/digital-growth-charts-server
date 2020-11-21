@@ -20,7 +20,7 @@ def create_plottable_child_data(child_results_array):
 
             chronological_data_point = {
                 "x": child_result["measurement_dates"]["chronological_decimal_age"], 
-                "y": child_result["child_observation_value"]["measurement_value"],
+                "y": child_result["child_observation_value"]["observation_value"],
                 "centile_band": child_result["measurement_calculated_values"]["centile_band"],
                 "centile_value": child_result["measurement_calculated_values"]["centile"],
                 "label": "chronological_age",
@@ -30,7 +30,7 @@ def create_plottable_child_data(child_results_array):
             }
             corrected_data_point = {
                 "x": child_result["measurement_dates"]["corrected_decimal_age"], 
-                "y": child_result["child_observation_value"]["measurement_value"],
+                "y": child_result["child_observation_value"]["observation_value"],
                 "centile_band": child_result["measurement_calculated_values"]["centile_band"],
                 "centile_value": child_result["measurement_calculated_values"]["centile"],
                 "label": "corrected_age",

@@ -105,7 +105,7 @@ class Measurement:
             measurement_sds = uk_who_sds_calculation(
                 age=age,
                 measurement_method=measurement_method,
-                measurement_value=observation_value,
+                observation_value=observation_value,
                 sex=sex,
                 born_preterm=born_preterm
             )
@@ -113,14 +113,14 @@ class Measurement:
             measurement_sds = turner_sds_calculation(
                 age=age,
                 measurement_method=measurement_method,
-                measurement_value=observation_value,
+                observation_value=observation_value,
                 sex=sex
             )
         elif reference == "T21":
             measurement_sds == t21_sds_calculation(
                 age=age,
                 measurement_method=measurement_method,
-                measurement_value=observation_value,
+                observation_value=observation_value,
                 sex=sex
             )
 
@@ -257,7 +257,7 @@ class Measurement:
 
         child_observation_value = {
             "measurement_method": measurement_method,
-            "measurement_value": observation_value
+            "observation_value": observation_value
         }
 
         return {

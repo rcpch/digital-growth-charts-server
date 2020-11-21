@@ -12,7 +12,7 @@ class BirthDataSchema(Schema):
 
 class ChildObservationValueSchema(Schema):
     measurement_method = fields.String()
-    measurement_value = fields.Number()
+    observation_value = fields.Number()
 
 
 class MeasurementCalculatedValues(Schema):
