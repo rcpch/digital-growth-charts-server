@@ -1,12 +1,11 @@
 from datetime import date
-from .uk_who import centile, uk_who_sds_calculation, measurement_from_sds
 from .centile_bands import centile_band_for_centile
 from .date_calculations import chronological_decimal_age, corrected_decimal_age, chronological_calendar_age, estimated_date_delivery, corrected_gestational_age
 from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import comment_prematurity_correction
+from .global_functions import sds_for_measurement, measurement_from_sds, centile
 from .constants import *
-from .turner import turner_sds_calculation
-from .trisomy_21 import t21_sds_calculation
+
 
 
 class Measurement:
@@ -101,28 +100,8 @@ class Measurement:
         # returns sds for given measurement
         # bmi must be supplied precalculated
 
-        if reference == 'UKWHO':
-            measurement_sds = uk_who_sds_calculation(
-                age=age,
-                measurement_method=measurement_method,
-                observation_value=observation_value,
-                sex=sex,
-                born_preterm=born_preterm
-            )
-        elif reference == "TURNER":
-            measurement_sds = turner_sds_calculation(
-                age=age,
-                measurement_method=measurement_method,
-                observation_value=observation_value,
-                sex=sex
-            )
-        elif reference == "T21":
-            measurement_sds == t21_sds_calculation(
-                age=age,
-                measurement_method=measurement_method,
-                observation_value=observation_value,
-                sex=sex
-            )
+        ## calculate sds based on reference, age, measurement, sex and prematurity
+        measurement_sds = sds_for_measurement(reference=reference, age=age, measurement_method=measurement_method, observation_value=observation_value, sex=sex, born_preterm=born_preterm)
 
         measurement_centile = centile(z_score=measurement_sds)
         centile_band = centile_band_for_centile(sds=measurement_sds, measurement_method=measurement_method)

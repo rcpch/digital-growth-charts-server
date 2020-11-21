@@ -3,6 +3,9 @@ import scipy.stats as stats
 from scipy.interpolate import interp1d
 # from scipy import interpolate  #see below, comment back in if swapping interpolation method
 # from scipy.interpolate import CubicSpline #see below, comment back in if swapping interpolation method
+from .uk_who import uk_who_lms_array_for_measurement_and_sex
+from .turner import turner_lms_array_for_measurement_and_sex
+from .trisomy_21 import trisomy_21_lms_array_for_measurement_and_sex
 
 def cubic_interpolation( age: float, age_one_below: float, age_two_below: float, age_one_above: float, age_two_above: float, parameter_two_below: float, parameter_one_below: float, parameter_one_above: float, parameter_two_above: float) -> float:
 
@@ -185,13 +188,21 @@ def fetch_lms(age: float, lms_value_array_for_measurement: list):
     }
 
 def measurement_from_sds(
-        lms_value_array_for_measurement: list,  
-        requested_sds: float,  
+        reference: str,  
+        requested_sds: float,
+        measurement_method: str,  
         sex: str,  
-        age: float, 
-        born_preterm = False
+        age: float,
+        born_preterm: bool=False
     )->float:
 
+    if reference == "UKWHO":
+        lms_value_array_for_measurement=uk_who_lms_array_for_measurement_and_sex(age=age, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
+    elif reference == "TURNER":
+        lms_value_array_for_measurement=turner_lms_array_for_measurement_and_sex(measurement_method=measurement_method, sex=sex)
+    elif reference == "T21":
+        lms_value_array_for_measurement=trisomy_21_lms_array_for_measurement_and_sex(measurement_method=measurement_method, sex=sex)
+    
     # get LMS values from the reference: check for age match, interpolate if none
     lms = fetch_lms(age=age, lms_value_array_for_measurement=lms_value_array_for_measurement)
     l = lms["l"]
@@ -201,4 +212,59 @@ def measurement_from_sds(
     observation_value = measurement_for_z(z=requested_sds, l=l, m=m, s=s)
     return observation_value
 
+
+def sds_for_measurement(
+        reference: str,
+        age: float,
+        measurement_method: str,
+        observation_value: float,
+        sex: str,
+        born_preterm: bool = False
+    )->float:
+
+    if reference == "UKWHO":
+        lms_value_array_for_measurement=uk_who_lms_array_for_measurement_and_sex(age=age, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
+    elif reference == "TURNER":
+        lms_value_array_for_measurement=turner_lms_array_for_measurement_and_sex(measurement_method=measurement_method, sex=sex)
+    elif reference == "T21":
+        lms_value_array_for_measurement=trisomy_21_lms_array_for_measurement_and_sex(measurement_method=measurement_method, sex=sex)
     
+    # get LMS values from the reference: check for age match, interpolate if none
+    lms = fetch_lms(age=age, lms_value_array_for_measurement=lms_value_array_for_measurement)
+    l = lms["l"]
+    m = lms["m"]
+    s = lms["s"]
+
+    return z_score(l=l, m=m, s=s, observation=observation_value)
+
+# def percentage_median_bmi( age: float, actual_bmi: float, sex: str, born_preterm=False)->float:
+
+#     """
+#     public method
+#     This returns a child"s BMI expressed as a percentage of the median value for age and sex.
+#     It is used widely in the assessment of malnutrition particularly in children and young people with eating disorders.
+#     """
+    
+#     # Get the correct reference from the patchwork of references that make up UK-WHO
+#     try:
+#         selected_reference = uk_who_reference(age=age, born_preterm=born_preterm)
+#     except: # there is no reference for the age supplied
+#         return ValueError("There is no reference for the age supplied.")
+
+#     # Check that the measurement requested has reference data at that age
+#     if reference_data_absent(
+#         age=age, 
+#         measurement_method="bmi", 
+#         sex=sex):
+#         return ValueError("There is no reference data for BMI at this age")
+
+#     # fetch the LMS values for the requested measurement
+#     lms_value_array_for_measurement = selected_reference["measurement"]['bmi'][sex]
+
+#     # get LMS values from the reference: check for age match, interpolate if none
+#     lms = fetch_lms(age=age, lms_value_array_for_measurement=lms_value_array_for_measurement)
+    
+#     m = lms["m"] # this is the median BMI
+    
+#     percent_median_bmi = (actual_bmi/m)*100.0
+#     return percent_median_bmi

@@ -1,7 +1,7 @@
 import json
 import pkg_resources
 from .constants import *
-from .global_functions import z_score, cubic_interpolation, linear_interpolation, centile, measurement_for_z, nearest_lowest_index, fetch_lms
+# from .global_functions import z_score, cubic_interpolation, linear_interpolation, centile, measurement_for_z, nearest_lowest_index, fetch_lms
 # import timeit #see below, comment back in if timing functions in this module
 
 """
@@ -42,51 +42,40 @@ with open(UK90_CHILD_DATA) as json_file:
             json_file.close()
 
 #public functions
-def uk_who_sds_calculation(
-        age: float,
-        measurement_method: str,
-        observation_value: float,
-        sex: str,
-        born_preterm: bool = False
-    )->float:
+# def uk_who_sds_calculation(
+#         age: float,
+#         measurement_method: str,
+#         observation_value: float,
+#         sex: str,
+#         born_preterm: bool = False
+#     )->float:
 
-    """
-    The is the caller function to calculate an SDS for a child specifically using the UK-WHO dataset(s).
+#     """
+#     The is the caller function to calculate an SDS for a child specifically using the UK-WHO dataset(s).
     
-    """
+#     """
+#     # fetch the LMS values for the requested measurement
+#     try:
+#         lms_value_array_for_measurement=uk_who_lms_array_for_measurement_and_sex(age=age, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
+#     except:
+#         print("There is no data in UKWHO for this measurement, age and sex.")
+#         return None
 
-    # Get the correct reference from the patchwork of references that make up UK-WHO
-    try:
-        selected_reference = uk_who_reference(age=age, born_preterm=born_preterm)
-    except: # there is no reference for the age supplied
-        return ValueError("There is no reference for the age supplied.")
+#     # get LMS values from the reference: check for age match, interpolate if none
+#     # Note: if the child is 37-42 weeks and not born preterm, no interpolation is required
+#     # as reference data only have one L, M and S
+#     if age >= THIRTY_SEVEN_WEEKS_GESTATION and age < FORTY_TWO_WEEKS_GESTATION and (born_preterm is False):
+#         l = lms_value_array_for_measurement[0]["L"]
+#         m = lms_value_array_for_measurement[0]["M"]
+#         s = lms_value_array_for_measurement[0]["S"]
+#     else:
+#         lms = fetch_lms(age=age, lms_value_array_for_measurement=lms_value_array_for_measurement)
+#         l = lms["l"]
+#         m = lms["m"]
+#         s = lms["s"]
+#     ## calculate the SDS from the L, M and S values
 
-    # Check that the measurement requested has reference data at that age
-    if reference_data_absent(
-        age=age, 
-        measurement_method=measurement_method, 
-        sex=sex):
-        return ValueError("There is no reference data for this measurement at this age")
-
-    # fetch the LMS values for the requested measurement
-    lms_value_array_for_measurement = selected_reference["measurement"][measurement_method][sex]
-
-    # get LMS values from the reference: check for age match, interpolate if none
-    # Note: if the child is 37-42 weeks and not born preterm, no interpolation is required
-    # as reference data only have one L, M and S
-    if age >= THIRTY_SEVEN_WEEKS_GESTATION and age < FORTY_TWO_WEEKS_GESTATION and (born_preterm is False):
-        l = lms_value_array_for_measurement[0]["L"]
-        m = lms_value_array_for_measurement[0]["M"]
-        s = lms_value_array_for_measurement[0]["S"]
-    else:
-        lms = fetch_lms(age=age, lms_value_array_for_measurement=lms_value_array_for_measurement)
-        l = lms["l"]
-        m = lms["m"]
-        s = lms["s"]
-    ## calculate the SDS from the L, M and S values
-
-    return z_score(l=l, m=m, s=s, observation=observation_value)
-
+#     return z_score(l=l, m=m, s=s, observation=observation_value)
 
 def reference_data_absent( 
         age: float,
@@ -182,15 +171,15 @@ def uk_who_reference(
     else:
         return ValueError("There is no reference data above the age of 20 years.")
 
-def percentage_median_bmi( age: float, actual_bmi: float, sex: str, born_preterm=False)->float:
+def uk_who_lms_array_for_measurement_and_sex(
+        age: float,
+        measurement_method: str,
+        sex: str,
+        born_preterm
+    )->list:
 
-    """
-    public method
-    This returns a child"s BMI expressed as a percentage of the median value for age and sex.
-    It is used widely in the assessment of malnutrition particularly in children and young people with eating disorders.
-    """
-    
-    # Get the correct reference from the patchwork of references that make up UK-WHO
+    ## selects the correct lms data array from the patchwork of references that make up UK-WHO
+
     try:
         selected_reference = uk_who_reference(age=age, born_preterm=born_preterm)
     except: # there is no reference for the age supplied
@@ -199,75 +188,67 @@ def percentage_median_bmi( age: float, actual_bmi: float, sex: str, born_preterm
     # Check that the measurement requested has reference data at that age
     if reference_data_absent(
         age=age, 
-        measurement_method="bmi", 
-        sex=sex):
-        return ValueError("There is no reference data for BMI at this age")
-
-    # fetch the LMS values for the requested measurement
-    lms_value_array_for_measurement = selected_reference["measurement"]['bmi'][sex]
-
-    # get LMS values from the reference: check for age match, interpolate if none
-    lms = fetch_lms(age=age, lms_value_array_for_measurement=lms_value_array_for_measurement)
-    
-    m = lms["m"] # this is the median BMI
-    
-    percent_median_bmi = (actual_bmi/m)*100.0
-    return percent_median_bmi
-
-def measurement_from_sds(
-    measurement_method: str,  
-    requested_sds: float,  
-    sex: str,  
-    age: float, 
-    born_preterm = False) -> float:
-    """
-    Public method
-    Returns the measurement value from a given SDS.
-    Parameters are: 
-        measurement_method (type of observation) ["height", "weight", "bmi", "ofc"]
-        decimal age (corrected or chronological),
-        requested_sds
-        sex (a standard string) ["male" or "female"]
-        born_preterm: a boolean flag to track whether to use UK90 premature data or UK90-WHO term data for 37-42 weeks
-
-    Centile to SDS Conversion for Chart lines (2/3 of an SDS)
-    0.4th -2.67
-    2nd -2.00
-    9th -1.33
-    25th -0.67
-    50th 0
-    75th 0.67
-    91st 1.33
-    98th 2.00
-    99.6th 2.67
-    """
-
-    # Get the correct reference from the patchwork of references that make up UK-WHO
-    try:
-        selected_reference = uk_who_reference(age=age, born_preterm=born_preterm)
-    except: # there is no reference for the age supplied
-        print("There is no reference for this age group.")
-        return None
-
-    # Check that the measurement requested has reference data at that age
-    if reference_data_absent(
-        age=age,
         measurement_method=measurement_method, 
         sex=sex):
-        print(f"There is no reference data for {measurement_method} at {age} years.")
+        print("There is no reference data for this measurement at this age")
         return None
+    else:
+        return selected_reference["measurement"][measurement_method][sex]
 
-    # fetch the LMS values for the requested measurement
-    lms_value_array_for_measurement = selected_reference["measurement"][measurement_method][sex]
+# def uk_who_measurement_from_sds(
+#     measurement_method: str,  
+#     requested_sds: float,  
+#     sex: str,  
+#     age: float, 
+#     born_preterm = False) -> float:
+#     """
+#     Public method
+#     Returns the measurement value from a given SDS.
+#     Parameters are: 
+#         measurement_method (type of observation) ["height", "weight", "bmi", "ofc"]
+#         decimal age (corrected or chronological),
+#         requested_sds
+#         sex (a standard string) ["male" or "female"]
+#         born_preterm: a boolean flag to track whether to use UK90 premature data or UK90-WHO term data for 37-42 weeks
 
-    # get LMS values from the reference: check for age match, interpolate if none
-    lms = fetch_lms(age=age, lms_value_array_for_measurement=lms_value_array_for_measurement)
-    l = lms["l"]
-    m = lms["m"]
-    s = lms["s"]
+#     Centile to SDS Conversion for Chart lines (2/3 of an SDS)
+#     0.4th -2.67
+#     2nd -2.00
+#     9th -1.33
+#     25th -0.67
+#     50th 0
+#     75th 0.67
+#     91st 1.33
+#     98th 2.00
+#     99.6th 2.67
+#     """
 
-    observation_value = measurement_for_z(z=requested_sds, l=l, m=m, s=s)
-    return observation_value
+#     # Get the correct reference from the patchwork of references that make up UK-WHO
+#     try:
+#         selected_reference = uk_who_reference(age=age, born_preterm=born_preterm)
+#     except: # there is no reference for the age supplied
+#         print("There is no reference for this age group.")
+#         return None
+
+    # # Check that the measurement requested has reference data at that age
+    # if reference_data_absent(
+    #     age=age,
+    #     measurement_method=measurement_method, 
+    #     sex=sex):
+    #     print(f"There is no reference data for {measurement_method} at {age} years.")
+    #     return None
+
+#     # fetch the LMS values for the requested measurement
+#     lms_value_array_for_measurement = selected_reference["measurement"][measurement_method][sex]
+
+#     # get LMS values from the reference: check for age match, interpolate if none
+#     lms = fetch_lms(age=age, lms_value_array_for_measurement=lms_value_array_for_measurement)
+#     l = lms["l"]
+#     m = lms["m"]
+#     s = lms["s"]
+
+#     observation_value = measurement_for_z(z=requested_sds, l=l, m=m, s=s)
+#     return observation_value
 
 """
 These functions are for testing accuracy.

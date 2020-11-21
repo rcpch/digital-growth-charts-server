@@ -7,7 +7,7 @@ from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from random import uniform
 from .measurement import Measurement
-from .uk_who import measurement_from_sds
+from .global_functions import measurement_from_sds
 from .date_calculations import corrected_decimal_age
 
 """
@@ -214,7 +214,8 @@ def create_fictional_child(
         gestation_weeks=0,
         gestation_days=0,
         drift: bool = False,
-        drift_sds_range: float = 0.0):
+        drift_sds_range: float = 0.0,
+        reference: str = "UKWHO"):
     """
     this function will ultimately become a class method
     It's purpose is to generate an array of Measurement objects that mimic the growth of a child
@@ -274,7 +275,7 @@ def create_fictional_child(
         # calculate age at new measurement 
         child_age_at_measurement_date = corrected_decimal_age(birth_date=birth_date,observation_date=observation_date,gestation_weeks=gestation_weeks, gestation_days=gestation_days)
         # calculate observation_value back from new SDS
-        new_measurement_value=measurement_from_sds(measurement_method=measurement_method, requested_sds=requested_sds, sex=sex, age=child_age_at_measurement_date, born_preterm=born_preterm)
+        new_measurement_value=measurement_from_sds(reference=reference, measurement_method=measurement_method, requested_sds=requested_sds, sex=sex, age=child_age_at_measurement_date, born_preterm=born_preterm)
         
         # create Measurement object with dates
         new_measurement = Measurement(
