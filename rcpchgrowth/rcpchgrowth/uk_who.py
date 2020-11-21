@@ -45,7 +45,7 @@ with open(UK90_CHILD_DATA) as json_file:
 def uk_who_sds_calculation(
         age: float,
         measurement_method: str,
-        measurement_value: float,
+        observation_value: float,
         sex: str,
         born_preterm: bool = False
     )->float:
@@ -85,7 +85,7 @@ def uk_who_sds_calculation(
         s = lms["s"]
     ## calculate the SDS from the L, M and S values
 
-    return z_score(l=l, m=m, s=s, observation=measurement_value)
+    return z_score(l=l, m=m, s=s, observation=observation_value)
 
 
 def reference_data_absent( 
@@ -266,8 +266,8 @@ def measurement_from_sds(
     m = lms["m"]
     s = lms["s"]
 
-    measurement_value = measurement_for_z(z=requested_sds, l=l, m=m, s=s)
-    return measurement_value
+    observation_value = measurement_for_z(z=requested_sds, l=l, m=m, s=s)
+    return observation_value
 
 """
 These functions are for testing accuracy.

@@ -47,7 +47,7 @@ def velocity(parameter: str, measurements_array):
             penultimate = parameter_list[-2]
             time_elapsed = last['measurement_dates']['chronological_decimal_age'] - penultimate['measurement_dates']['chronological_decimal_age']
             parameter_difference = 0.0
-            parameter_difference = last['child_observation_value']['measurement_value'] - penultimate['child_observation_value']['measurement_value']
+            parameter_difference = last['child_observation_value']['observation_value'] - penultimate['child_observation_value']['observation_value']
             return parameter_difference / time_elapsed
 
 def acceleration(parameter: str, measurements_array):
@@ -79,8 +79,8 @@ def acceleration(parameter: str, measurements_array):
             first_parameter_pair_difference = 0.0
             last_parameter_pair_difference = 0.0
             
-            last_parameter_pair_difference = last['child_observation_value']['measurement_value'] - penultimate['child_observation_value']['measurement_value']
-            first_parameter_pair_difference = penultimate['child_observation_value']['measurement_value'] - antepentultimate['child_observation_value']['measurement_value']
+            last_parameter_pair_difference = last['child_observation_value']['observation_value'] - penultimate['child_observation_value']['observation_value']
+            first_parameter_pair_difference = penultimate['child_observation_value']['observation_value'] - antepentultimate['child_observation_value']['observation_value']
             
             latest_velocity = last_parameter_pair_difference / last_parameter_pair_time_elapsed
             penultimate_velocity = first_parameter_pair_difference / first_parameter_pair_time_elapsed
@@ -273,7 +273,7 @@ def create_fictional_child(
 
         # calculate age at new measurement 
         child_age_at_measurement_date = corrected_decimal_age(birth_date=birth_date,observation_date=observation_date,gestation_weeks=gestation_weeks, gestation_days=gestation_days)
-        # calculate measurement_value back from new SDS
+        # calculate observation_value back from new SDS
         new_measurement_value=measurement_from_sds(measurement_method=measurement_method, requested_sds=requested_sds, sex=sex, age=child_age_at_measurement_date, born_preterm=born_preterm)
         
         # create Measurement object with dates

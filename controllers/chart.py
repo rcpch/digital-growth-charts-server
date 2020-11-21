@@ -171,11 +171,11 @@ def create_data_plots(child_results_array):
         if(child_result):
             chronological_data_point = {
                     "x": child_result["measurement_dates"]["chronological_decimal_age"], 
-                    "y": child_result["child_observation_value"]["measurement_value"]
+                    "y": child_result["child_observation_value"]["observation_value"]
                 }
             corrected_data_point = {
                 "x": child_result["measurement_dates"]["corrected_decimal_age"], 
-                "y": child_result["child_observation_value"]["measurement_value"]
+                "y": child_result["child_observation_value"]["observation_value"]
             }
             chronological_sds_data_point = {
                     "x": child_result["measurement_dates"]["chronological_decimal_age"], 

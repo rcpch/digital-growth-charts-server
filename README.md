@@ -191,7 +191,7 @@ A few other things about correction:
 ##### Functions
 
 ```python
-def sds(age: float, measurement: str, measurement_value: float, sex: str, default_to_youngest_reference: bool = True)->float:
+def sds(age: float, measurement: str, observation_value: float, sex: str, default_to_youngest_reference: bool = True)->float:
 ```
 
 - **This function is specific to the UK-WHO data set as this is actually a blend of UK-90 and WHO 2006 references and necessarily has duplicate values.**

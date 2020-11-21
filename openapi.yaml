@@ -26,7 +26,7 @@ components:
       properties:
         measurement_method:
           type: string
-        measurement_value:
+        observation_value:
           type: number
       type: object
     FictionalChildRequestParameters:

@@ -28,7 +28,7 @@ with open(T21_DATA) as json_file:
 def t21_sds_calculation(
     age: float,
     measurement_method: str,
-    measurement_value: float,
+    observation_value: float,
     sex: str,
     )->float:
 
@@ -59,7 +59,7 @@ def t21_sds_calculation(
     s = lms["s"]
     ## calculate the SDS from the L, M and S values
 
-    return z_score(l=l, m=m, s=s, observation=measurement_value)
+    return z_score(l=l, m=m, s=s, observation=observation_value)
 
 def reference_data_absent( 
         age: float,
@@ -135,5 +135,5 @@ def measurement_from_sds(
         m = lms["m"]
         s = lms["s"]
 
-        measurement_value = measurement_for_z(z=requested_sds, l=l, m=m, s=s)
-        return measurement_value
+        observation_value = measurement_for_z(z=requested_sds, l=l, m=m, s=s)
+        return observation_value

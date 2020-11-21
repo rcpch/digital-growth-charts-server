@@ -45,7 +45,7 @@ def validate_columns_in_data_frame(data_frame):
     """
     
     ## check all columns present
-    expected_column_names = ['birth_date', 'observation_date', 'gestation_weeks','gestation_days', 'sex', 'measurement_method', 'measurement_value']
+    expected_column_names = ['birth_date', 'observation_date', 'gestation_weeks','gestation_days', 'sex', 'measurement_method', 'observation_value']
     columns = data_frame.columns.ravel().tolist()
     for column in columns:
         ## flag if column_names are extra or missing
@@ -55,14 +55,14 @@ def validate_columns_in_data_frame(data_frame):
     if len(data_frame.columns) < len(expected_column_names): #if essential columns missing error flagged
         return {
             "valid": False,
-            "error": 'Please include ALL the headings (even if columns left blank): birth_date, observation_date, gestation_days, sex, measurement_method, measurement_value'
+            "error": 'Please include ALL the headings (even if columns left blank): birth_date, observation_date, gestation_days, sex, measurement_method, observation_value'
         }
 
     ## check no missing data in essential columns
-    if (pd.isnull(data_frame['birth_date']).values.any() or pd.isnull(data_frame['observation_date']).values.any() or pd.isnull(data_frame['sex']).values.any() or pd.isnull(data_frame['measurement_method']).values.any() or pd.isnull(data_frame['measurement_value']).values.any()):
+    if (pd.isnull(data_frame['birth_date']).values.any() or pd.isnull(data_frame['observation_date']).values.any() or pd.isnull(data_frame['sex']).values.any() or pd.isnull(data_frame['measurement_method']).values.any() or pd.isnull(data_frame['observation_value']).values.any()):
         return {
             "valid": False,
-            "error": 'birth_date, sex, measurement_method and measurement_value are all essential data fields and cannot be blank.'
+            "error": 'birth_date, sex, measurement_method and observation_value are all essential data fields and cannot be blank.'
         }
     else:
         return {
@@ -91,10 +91,10 @@ def return_calculated_data_as_measurement_objects(data_frame, unique=True):
     data_frame['corrected_decimal_age']=data_frame.apply(lambda row: rcpchgrowth.corrected_decimal_age(row['birth_date'], row['observation_date'], row['gestation_weeks'], row['gestation_days']), axis=1)
     data_frame['chronological_decimal_age']=data_frame.apply(lambda row: rcpchgrowth.chronological_decimal_age(row['birth_date'], row['observation_date']), axis=1)
     data_frame['estimated_date_delivery']=data_frame.apply(lambda row: rcpchgrowth.estimated_date_delivery(row['birth_date'], row['gestation_weeks'], row['gestation_days']), axis=1)
-    data_frame['sds']=data_frame.apply(lambda row: sds_if_parameters(row['corrected_decimal_age'], row['measurement_method'], row['measurement_value'], row['sex']), axis=1)
+    data_frame['sds']=data_frame.apply(lambda row: sds_if_parameters(row['corrected_decimal_age'], row['measurement_method'], row['observation_value'], row['sex']), axis=1)
     data_frame['centile']=data_frame.apply(lambda row: rcpchgrowth.centile(row['sds']), axis=1)
-    data_frame['height'] = data_frame.apply(lambda row: value_for_measurement('height', row['measurement_method'], row['measurement_value']), axis=1)
-    data_frame['weight'] = data_frame.apply(lambda row: value_for_measurement('weight', row['measurement_method'], row['measurement_value']), axis=1)
+    data_frame['height'] = data_frame.apply(lambda row: value_for_measurement('height', row['measurement_method'], row['observation_value']), axis=1)
+    data_frame['weight'] = data_frame.apply(lambda row: value_for_measurement('weight', row['measurement_method'], row['observation_value']), axis=1)
     same_date_data_frame = data_frame[data_frame.duplicated(['birth_date', 'observation_date'], keep=False)]
     height = 0.0
     weight = 0.0
@@ -121,7 +121,7 @@ def return_calculated_data_as_measurement_objects(data_frame, unique=True):
             else:
                 bmi_sds = None
                 bmi_centile = None
-            new_row = {'birth_date': height_birth_date, 'observation_date': height_date, 'gestation_weeks': row['gestation_weeks'], 'gestation_days': row['gestation_days'], 'estimated_date_delivery': row['estimated_date_delivery'], 'chronological_decimal_age': row['chronological_decimal_age'], 'corrected_decimal_age': row['corrected_decimal_age'], 'sex': row['sex'], 'measurement_method': 'bmi', 'measurement_value': bmi, 'sds': bmi_sds, 'centile': bmi_centile, 'height': None, 'weight': None}
+            new_row = {'birth_date': height_birth_date, 'observation_date': height_date, 'gestation_weeks': row['gestation_weeks'], 'gestation_days': row['gestation_days'], 'estimated_date_delivery': row['estimated_date_delivery'], 'chronological_decimal_age': row['chronological_decimal_age'], 'corrected_decimal_age': row['corrected_decimal_age'], 'sex': row['sex'], 'measurement_method': 'bmi', 'observation_value': bmi, 'sds': bmi_sds, 'centile': bmi_centile, 'height': None, 'weight': None}
             extra_rows.append(new_row)
 
     if len(extra_rows) > 0:
@@ -138,8 +138,8 @@ def return_calculated_data_as_measurement_objects(data_frame, unique=True):
     measurement_object_array = []
 
     for index, row in data_frame.iterrows():
-        # new_measurement_type = rcp chgrowth.Measurement_Type(measurement_method=row['measurement_method'], measurement_value=row['measurement_value'])
-        new_measurement = rcpchgrowth.Measurement(sex=row['sex'], birth_date=row['birth_date'], observation_date=row['observation_date'], measurement_method=row['measurement_method'], observation_value=row['measurement_value'], gestation_weeks=row['gestation_weeks'], gestation_days=row['gestation_days'], reference="UKWH)")
+        # new_measurement_type = rcp chgrowth.Measurement_Type(measurement_method=row['measurement_method'], observation_value=row['observation_value'])
+        new_measurement = rcpchgrowth.Measurement(sex=row['sex'], birth_date=row['birth_date'], observation_date=row['observation_date'], measurement_method=row['measurement_method'], observation_value=row['observation_value'], gestation_weeks=row['gestation_weeks'], gestation_days=row['gestation_days'], reference="UKWH)")
         measurement_object_array.append(new_measurement.measurement)
 
     return {
@@ -171,10 +171,10 @@ def return_calculated_data(data_frame, unique=True):
     data_frame['corrected_decimal_age']=data_frame.apply(lambda row: rcpchgrowth.corrected_decimal_age(row['birth_date'], row['observation_date'], row['gestation_weeks'], row['gestation_days']), axis=1)
     data_frame['chronological_decimal_age']=data_frame.apply(lambda row: rcpchgrowth.chronological_decimal_age(row['birth_date'], row['observation_date']), axis=1)
     data_frame['estimated_date_delivery']=data_frame.apply(lambda row: rcpchgrowth.estimated_date_delivery(row['birth_date'], row['gestation_weeks'], row['gestation_days']), axis=1)
-    data_frame['sds']=data_frame.apply(lambda row: sds_if_parameters(row['corrected_decimal_age'], row['measurement_method'], row['measurement_value'], row['sex']), axis=1)
+    data_frame['sds']=data_frame.apply(lambda row: sds_if_parameters(row['corrected_decimal_age'], row['measurement_method'], row['observation_value'], row['sex']), axis=1)
     data_frame['centile']=data_frame.apply(lambda row: rcpchgrowth.centile(row['sds']), axis=1)
-    data_frame['height'] = data_frame.apply(lambda row: value_for_measurement('height', row['measurement_method'], row['measurement_value']), axis=1)
-    data_frame['weight'] = data_frame.apply(lambda row: value_for_measurement('weight', row['measurement_method'], row['measurement_value']), axis=1)
+    data_frame['height'] = data_frame.apply(lambda row: value_for_measurement('height', row['measurement_method'], row['observation_value']), axis=1)
+    data_frame['weight'] = data_frame.apply(lambda row: value_for_measurement('weight', row['measurement_method'], row['observation_value']), axis=1)
     same_date_data_frame = data_frame[data_frame.duplicated(['birth_date', 'observation_date'], keep=False)]
     height = 0.0
     weight = 0.0
@@ -201,7 +201,7 @@ def return_calculated_data(data_frame, unique=True):
             else:
                 bmi_sds = None
                 bmi_centile = None
-            new_row = {'birth_date': height_birth_date, 'observation_date': height_date, 'gestation_weeks': row['gestation_weeks'], 'gestation_days': row['gestation_days'], 'estimated_date_delivery': row['estimated_date_delivery'], 'chronological_decimal_age': row['chronological_decimal_age'], 'corrected_decimal_age': row['corrected_decimal_age'], 'sex': row['sex'], 'measurement_method': 'bmi', 'measurement_value': bmi, 'sds': bmi_sds, 'centile': bmi_centile, 'height': None, 'weight': None}
+            new_row = {'birth_date': height_birth_date, 'observation_date': height_date, 'gestation_weeks': row['gestation_weeks'], 'gestation_days': row['gestation_days'], 'estimated_date_delivery': row['estimated_date_delivery'], 'chronological_decimal_age': row['chronological_decimal_age'], 'corrected_decimal_age': row['corrected_decimal_age'], 'sex': row['sex'], 'measurement_method': 'bmi', 'observation_value': bmi, 'sds': bmi_sds, 'centile': bmi_centile, 'height': None, 'weight': None}
             extra_rows.append(new_row)
 
     if len(extra_rows) > 0:
@@ -226,10 +226,10 @@ def value_for_measurement(measurement_requested, measurement_parsed, value):
     else:
         return None
 
-def sds_if_parameters(decimal_age, measurement_method, measurement_value, sex):
-    if decimal_age and measurement_method and measurement_value and sex:
+def sds_if_parameters(decimal_age, measurement_method, observation_value, sex):
+    if decimal_age and measurement_method and observation_value and sex:
         try:
-            return rcpchgrowth.sds(decimal_age, measurement_method, measurement_value, sex)
+            return rcpchgrowth.sds(decimal_age, measurement_method, observation_value, sex)
         except:
             print('could not calculate this value')
             return None
@@ -245,10 +245,10 @@ def prepare_data_as_array_of_measurement_objects(uploaded_data):
         sex  = observation['sex']
         gestation_weeks = observation['gestation_weeks']
         gestation_days = observation['gestation_days']
-        measurement_value = observation['measurement_value']
+        observation_value = observation['observation_value']
         
-        # measurement_type_object = rcpchgrowth.Measurement_Type(measurement_method=observation['measurement_method'], measurement_value=measurement_value)
-        measurement_object = rcpchgrowth.Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_method=observation['measurement_method'], observation_value=measurement_value,gestation_weeks=gestation_weeks, gestation_days=gestation_days, reference="UKWHO")
+        # measurement_type_object = rcpchgrowth.Measurement_Type(measurement_method=observation['measurement_method'], observation_value=observation_value)
+        measurement_object = rcpchgrowth.Measurement(sex=sex, birth_date=birth_date, observation_date=observation_date, measurement_method=observation['measurement_method'], observation_value=observation_value,gestation_weeks=gestation_weeks, gestation_days=gestation_days, reference="UKWHO")
         array_of_measurement_objects.append(measurement_object.measurement)
 
     return array_of_measurement_objects    
@@ -277,7 +277,7 @@ SHOULD ONLY RETURN ONE CALCULATION PER RECORD
             "lay_decimal_age_comment": "This takes into account your child's prematurity"
         },
         "child_observation_value": {  
-            "measurement_value": 60.7,
+            "observation_value": 60.7,
             "measurement_otype": 'height'
         },
         "measurement_calculated_values": {
