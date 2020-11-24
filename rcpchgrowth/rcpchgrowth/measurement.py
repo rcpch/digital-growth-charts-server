@@ -7,7 +7,7 @@ from .global_functions import sds_for_measurement, measurement_from_sds, centile
 from .constants import *
 
 
-class BROKENMeasurement:
+class Measurement:
 
     def __init__(
         self,
