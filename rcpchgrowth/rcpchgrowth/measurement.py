@@ -7,20 +7,19 @@ from .global_functions import sds_for_measurement, measurement_from_sds, centile
 from .constants import *
 
 
-
-class Measurement:
+class BROKENMeasurement:
 
     def __init__(
-            self,
-            sex: str,
-            birth_date: date,
-            observation_date: date,
-            measurement_method: str,
-            observation_value: float,
-            reference: str,
-            gestation_weeks: int = 0,
-            gestation_days: int = 0
-        ):
+        self,
+        sex: str,
+        birth_date: date,
+        observation_date: date,
+        measurement_method: str,
+        observation_value: float,
+        reference: str,
+        gestation_weeks: int = 0,
+        gestation_days: int = 0
+    ):
         """
         The Measurement Class is the gatekeeper to all the functions in the RCPCHGrowth package, although the public
         functions can be accessed independently. The bulk of the error handling happens here so be aware that calling
@@ -74,7 +73,7 @@ class Measurement:
             observation_value=self.observation_value,
             born_preterm=self.born_preterm,
             reference=self.reference
-            )
+        )
 
         self.measurement = {
             'birth_data': self.ages_object['birth_data'],
@@ -88,23 +87,25 @@ class Measurement:
     """
 
     def sds_and_centile_for_measurement_method(
-            self,
-            sex: str,
-            age: float,
-            measurement_method: str,
-            observation_value: float,
-            reference: str,
-            born_preterm: bool = False,
-        ):
+        self,
+        sex: str,
+        age: float,
+        measurement_method: str,
+        observation_value: float,
+        reference: str,
+        born_preterm: bool = False,
+    ):
 
         # returns sds for given measurement
         # bmi must be supplied precalculated
 
-        ## calculate sds based on reference, age, measurement, sex and prematurity
-        measurement_sds = sds_for_measurement(reference=reference, age=age, measurement_method=measurement_method, observation_value=observation_value, sex=sex, born_preterm=born_preterm)
+        # calculate sds based on reference, age, measurement, sex and prematurity
+        measurement_sds = sds_for_measurement(reference=reference, age=age, measurement_method=measurement_method,
+                                              observation_value=observation_value, sex=sex, born_preterm=born_preterm)
 
         measurement_centile = centile(z_score=measurement_sds)
-        centile_band = centile_band_for_centile(sds=measurement_sds, measurement_method=measurement_method)
+        centile_band = centile_band_for_centile(
+            sds=measurement_sds, measurement_method=measurement_method)
         self.return_measurement_object = self.__create_measurement_object(
             measurement_method=measurement_method,
             observation_value=observation_value,
