@@ -24,7 +24,7 @@ CORS(app)
 # Mount all Utilities endpoints from the blueprint
 app.register_blueprint(
     blueprints.utilities_blueprint.utilities, url_prefix='/utilities')
-  
+
 # Mount all UK-WHO endpoints from the blueprint
 app.register_blueprint(
     blueprints.uk_who_blueprint.uk_who, url_prefix='/uk-who')
@@ -71,6 +71,7 @@ spec = APISpec(
               "description": 'Your local development API'}],
 )
 
+# UK-WHO endpoints as blueprints
 spec.components.schema("calculation", schema=SingleCalculationResponseSchema)
 with app.test_request_context():
     spec.path(view=blueprints.uk_who_blueprint.uk_who_calculation)
@@ -79,58 +80,26 @@ spec.components.schema("chartData", schema=ChartDataResponseSchema)
 with app.test_request_context():
     spec.path(view=blueprints.uk_who_blueprint.uk_who_chart_coordinates)
 
-##### END API SPEC ########
-###########################
-
-
-@app.route("/uk-who/plottable-child-data", methods=["POST"])
-def uk_who_plottable_child_data():
-    """
-    Child growth data in plottable format.
-    ---
-    post:
-      summary: Child growth data in plottable format.
-      description: |
-        * Requires results data parameters from a call to the calculation endpoint.
-        * Returns child measurement data in a plottable format (x and y parameters), with centiles and ages for labels.
-
-      requestBody:
-        content:
-          application/json:
-            schema: ChartDataRequestParameters
-
-      responses:
-        200:
-          description: |
-            * Child growth data in plottable format (x and y parameters, centile and age labels) was returned.
-          content:
-            application/json:
-              schema: ChartDataResponseSchema
-    """
-    if request.is_json:
-        req = request.get_json()
-        results = req["results"]
-        # born preterm flag to pass to charts
-        # born_preterm = (results[0]["birth_data"]["gestation_weeks"]
-        #                 != 0 and results[0]["birth_data"]["gestation_weeks"] < 37)
-
-        # data are serial data points for a single child
-        # Prepare data from plotting
-        child_data = controllers.create_plottable_child_data(results)
-        # Retrieve sex of child to select correct centile charts
-        sex = results[0]["birth_data"]["sex"]
-        return jsonify({
-            "sex": sex,
-            "child_data": child_data,
-        })
-    else:
-        return "Request body should be application/json", 400
-
-
 spec.components.schema("plottableChildData",
                        schema=PlottableChildDataResponseSchema)
 with app.test_request_context():
-    spec.path(view=uk_who_plottable_child_data)
+    spec.path(view=blueprints.uk_who_blueprint.uk_who_plottable_child_data)
+
+# Utilities endpoints as blueprints
+spec.components.schema("references", schema=ReferencesResponseSchema)
+with app.test_request_context():
+    spec.path(view=blueprints.utilities_blueprint.references)
+
+spec.components.schema("fictionalChild", schema=FictionalChildResponseSchema)
+with app.test_request_context():
+    spec.path(
+        view=blueprints.utilities_blueprint.create_fictional_child_measurements)
+
+with app.test_request_context():
+    spec.path(view=blueprints.utilities_blueprint.instructions)
+
+##### END API SPEC ########
+###########################
 
 
 @app.route("/uk-who/spreadsheet", methods=["POST"])
@@ -160,19 +129,6 @@ def ukwho_spreadsheet():
     csv_file = request.files["csv_file"]
     calculated_results = controllers.import_csv_file(csv_file)
     return calculated_results
-
-
-### Utilities refactored out into Blueprints ###
-spec.components.schema("references", schema=ReferencesResponseSchema)
-with app.test_request_context():
-    spec.path(view=blueprints.references)
-
-spec.components.schema("fictionalChild", schema=FictionalChildResponseSchema)
-with app.test_request_context():
-    spec.path(view=blueprints.create_fictional_child_measurements)
-
-with app.test_request_context():
-    spec.path(view=blueprints.instructions)
 
 
 ################################
