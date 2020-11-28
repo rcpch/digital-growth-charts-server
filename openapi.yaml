@@ -183,9 +183,13 @@ components:
           type: number
         gestation_weeks:
           description: The number of completed weeks of gestation at which the patient
-            was born. This enables Gestational Age correction if the child was not
+            was born. This enables Gestational Age Correction if the child was not
             born at term. See also the other parameter `gestation_days` - both are
-            usually required.
+            usually required. If the child is term then any value between 37 and 42
+            will be handled the same, and a value must be provided. Values outside
+            the validation range will return errors.
+          maximum: 44
+          minimum: 22
           type: number
         measurement_method:
           description: "The type of measurement performed on the infant or child (`height`,\
@@ -301,13 +305,15 @@ paths:
           description: Centile calculation (single) according to the supplied data
             was returned
       summary: Centile and SDS Calculation route.
-  /uk-who/chart-data:
+  /uk-who/chart-coordinates:
     post:
-      description: '* Requires results data paramaters from a call to the calculation
-        endpoint.
+      description: '* Requires calculated child measurement results from a preceding
+        call to the `uk-who/calculation` endpoint.
 
-        * Returns geometry data for constructing the lines of a traditional growth
-        chart.
+        * Pass these results back in as the JSON body payload.
+
+        * Returns coordinates for constructing the lines of a traditional growth chart,
+        in JSON format
 
         '
       requestBody:
@@ -322,7 +328,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/chartData'
           description: Chart data for plotting a traditional growth chart was returned
-      summary: Chart data API route.
+      summary: UK-WHO Chart coordinates in plottable format, including the plottable
+        child measuremnt coordinates
   /uk-who/plottable-child-data:
     post:
       description: '* Requires results data parameters from a call to the calculation

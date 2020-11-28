@@ -20,8 +20,14 @@ from schemas import *
 ##### FLASK SETUP #####
 app = Flask(__name__, static_folder="static")
 CORS(app)
+
+# Mount all Utilities endpoints from the blueprint
 app.register_blueprint(
     blueprints.utilities_blueprint.utilities, url_prefix='/utilities')
+  
+# Mount all UK-WHO endpoints from the blueprint
+app.register_blueprint(
+    blueprints.uk_who_blueprint.uk_who, url_prefix='/uk-who')
 
 # Declare shell colour variables for logging output
 OKBLUE = "\033[94m"
@@ -64,124 +70,17 @@ spec = APISpec(
              {"url": 'https://localhost:5000/',
               "description": 'Your local development API'}],
 )
-##### END API SPEC ########
-###########################
-
-
-@app.route("/uk-who/calculation", methods=["POST"])
-def uk_who_calculation():
-    """
-    Centile calculation.
-    ---
-    post:
-      summary: Centile and SDS Calculation route.
-      description: |
-        * Returns a single centile/SDS calculation for the selected `measurement_method`.
-        * Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.
-        * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
-        * Note that BMI must be precalculated for the `bmi` function.
-
-      requestBody:
-        content:
-          application/json:
-            schema: SingleCalculationRequestParameters
-            example:
-                birth_date: "2020-04-12"
-                observation_date: "2020-06-12"
-                observation_value: 60
-                measurement_method: "height"
-                sex: male
-                gestation_weeks: 40
-                gestation_days: 4
-
-      responses:
-        200:
-          description: "Centile calculation (single) according to the supplied data was returned"
-          content:
-            application/json:
-              schema: SingleCalculationResponseSchema
-    """
-    if request.is_json:
-        req = request.get_json()
-        print(req)
-        calculation = controllers.perform_calculation(
-            birth_date=datetime.strptime(req["birth_date"], "%Y-%m-%d"),
-            observation_date=datetime.strptime(
-                req["observation_date"], "%Y-%m-%d"),
-            measurement_method=str(req["measurement_method"]),
-            observation_value=float(req["observation_value"]),
-            sex=str(req["sex"]),
-            gestation_weeks=int(req["gestation_weeks"]),
-            gestation_days=int(req["gestation_days"])
-        )
-        return jsonify(calculation)
-    else:
-        return "Request body mimetype should be application/json", 400
-
 
 spec.components.schema("calculation", schema=SingleCalculationResponseSchema)
 with app.test_request_context():
-    spec.path(view=uk_who_calculation)
-
-
-@app.route("/uk-who/chart-data", methods=["POST"])
-def uk_who_chart_data():
-    """
-    Chart data.
-    ---
-    post:
-      summary: Chart data API route.
-      description: |
-        * Requires results data paramaters from a call to the calculation endpoint.
-        * Returns geometry data for constructing the lines of a traditional growth chart.
-
-      requestBody:
-        content:
-          application/json:
-            schema: ChartDataRequestParameters
-
-      responses:
-        200:
-          description: "Chart data for plotting a traditional growth chart was returned"
-          content:
-            application/json:
-              schema: ChartDataResponseSchema
-    """
-    if request.is_json:
-        req = request.get_json()
-        results = req["results"]
-        unique_child = req["unique_child"]
-        # born preterm flag to pass to charts
-        born_preterm = (results[0]["birth_data"]["gestation_weeks"]
-                        != 0 and results[0]["birth_data"]["gestation_weeks"] < 37)
-        if unique_child == "true":
-            # data are serial data points for a single child
-            # Prepare data from plotting
-            child_data = controllers.create_data_plots(results)
-            # Retrieve sex of child to select correct centile charts
-            sex = results[0]["birth_data"]["sex"]
-        else:
-            # if unique_child = False then the series of calculations are from different children
-            # Prepare data from plotting
-            child_data = controllers.create_data_plots(results)
-            # Retrieve sex of child to select correct centile charts
-            sex = results[0]["birth_data"]["sex"]
-        # Create Centile Charts
-        centiles = controllers.create_centile_values(
-            sex, born_preterm=born_preterm)
-
-        return jsonify({
-            "sex": sex,
-            "child_data": child_data,
-            "centile_data": centiles
-        })
-    else:
-        return "Request body should be application/json", 400
-
+    spec.path(view=blueprints.uk_who_blueprint.uk_who_calculation)
 
 spec.components.schema("chartData", schema=ChartDataResponseSchema)
 with app.test_request_context():
-    spec.path(view=uk_who_chart_data)
+    spec.path(view=blueprints.uk_who_blueprint.uk_who_chart_coordinates)
+
+##### END API SPEC ########
+###########################
 
 
 @app.route("/uk-who/plottable-child-data", methods=["POST"])

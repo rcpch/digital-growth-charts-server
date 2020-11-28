@@ -298,7 +298,7 @@ def generate_centile(z: float, centile: float, measurement_method: str, sex:str,
     return {
         "sds": z,
         "centile": centile,
-        "turner_data": centile_measurements
+        reference: centile_measurements
     }
 
 def create_chart(reference: str, measurement_method:str, sex: str, age: float, born_preterm=False):
@@ -313,7 +313,7 @@ def create_chart(reference: str, measurement_method:str, sex: str, age: float, b
         z=sds_value_for_centile_value(centile=centile)
         centile_line = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_value_array_for_measurement, reference=reference)
         chart_values.append(centile_line)
-    return {"data": chart_values, "key": measurement_method}
+    return {"centile_data": {measurement_method: chart_values}}
 
 def sds_value_for_centile_value(centile: float):
     

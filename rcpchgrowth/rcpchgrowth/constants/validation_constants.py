@@ -32,3 +32,9 @@ MAXIMUM_BMI_KGM2 = 105
 # Again, John Brower Minnoch comes to our rescue here. HIs body mass index
 # at the time of his death was 105 kg/m2. In terms of the lowest body mass index ever recorded
 # there was nly limited web search information that suggested 7.5 kg.m2 as the lowest ever.
+
+# GESTATION CONSTANTS
+MINIMUM_GESTATION_WEEKS = 22
+MINIMUM_GESTATION_WEEKS_ERROR = f'It is very unlikely that a gestational age of less than {MINIMUM_GESTATION_WEEKS} weeks is correct'
+MAXIMUM_GESTATION_WEEKS = 44
+MINIMUM_GESTATION_WEEKS_ERROR = f'It is very unlikely that a gestational age of more than {MAXIMUM_GESTATION_WEEKS} weeks is correct'
