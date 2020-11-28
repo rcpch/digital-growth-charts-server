@@ -1,10 +1,15 @@
 from datetime import date
+from pprint import pprint
+
+from marshmallow import ValidationError
+
 from .centile_bands import centile_band_for_centile
 from .date_calculations import chronological_decimal_age, corrected_decimal_age, chronological_calendar_age, estimated_date_delivery, corrected_gestational_age
 from .bmi_functions import bmi_from_height_weight, weight_for_bmi_height
 from .growth_interpretations import comment_prematurity_correction
 from .global_functions import sds_for_measurement, measurement_from_sds, centile
 from .constants import *
+from .schemas import *
 
 
 class Measurement:
@@ -36,7 +41,7 @@ class Measurement:
 
         `gestation_weeks`: (integer) gestation at birth in weeks.
         `gestation_days`: (integer) supplemental days in addition to gestation_weeks at birth.
-        `reference`: ENUM refering to which reference dataset to use: ['UKWHO', 'TURNER', 'T21']
+        `reference`: ENUM refering to which reference dataset to use: ['uk-who', 'turners-syndrome', 'trisomy-21']
         """
 
         self.sex = sex
@@ -48,6 +53,21 @@ class Measurement:
         self.gestation_days = gestation_days
         self.reference = reference
 
+        # Validate using the Marshmallow Schema
+        try:
+            MeasurementClassSchema().load({
+                sex,
+                birth_date,
+                observation_date,
+                measurement_method,
+                observation_value,
+                gestation_weeks,
+                gestation_days,
+                reference
+            })
+        except ValidationError as err:
+            pass  # pprint(err.messages)
+
         valid = self.__validate_measurement_method(
             measurement_method=measurement_method, observation_value=observation_value)
         if valid == False:
@@ -58,7 +78,7 @@ class Measurement:
         else:
             self.born_preterm = False
 
-        # the age_object receives birth_data and measurement_dates objects
+        # the ages_object receives birth_data and measurement_dates objects
         self.ages_object = self.__calculate_ages(
             sex=self.sex,
             birth_date=self.birth_date,
