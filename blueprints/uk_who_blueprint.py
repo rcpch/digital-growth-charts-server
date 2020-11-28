@@ -2,15 +2,14 @@
 This module contains the UK-WHO endpoints as Flask Blueprints
 """
 
-from flask import Blueprint
-import controllers
-from flask import Flask, jsonify, request
 import json
-from datetime import datetime
-from schemas import *
-from rcpchgrowth.rcpchgrowth.constants.measurement_constants import *
-from marshmallow import ValidationError
 from pprint import pprint
+from flask import Blueprint
+from flask import jsonify, request
+from marshmallow import ValidationError
+from rcpchgrowth.rcpchgrowth.constants.measurement_constants import *
+from schemas import *
+import controllers
 
 uk_who = Blueprint("uk_who", __name__)
 

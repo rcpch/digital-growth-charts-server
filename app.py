@@ -6,14 +6,15 @@ import json
 from datetime import datetime
 from os import environ, urandom
 
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 from apispec import APISpec
 from apispec.ext.marshmallow import MarshmallowPlugin
 from apispec_webframeworks.flask import FlaskPlugin
-from flask import Flask, jsonify, request
-from flask_cors import CORS
-import blueprints
+
 import controllers
-from schemas import *
+import blueprints
+import schemas
 
 
 #######################
@@ -72,25 +73,27 @@ spec = APISpec(
 )
 
 # UK-WHO endpoints as blueprints
-spec.components.schema("calculation", schema=SingleCalculationResponseSchema)
+spec.components.schema(
+    "calculation", schema=schemas.SingleCalculationResponseSchema)
 with app.test_request_context():
     spec.path(view=blueprints.uk_who_blueprint.uk_who_calculation)
 
-spec.components.schema("chartData", schema=ChartDataResponseSchema)
+spec.components.schema("chartData", schema=schemas.ChartDataResponseSchema)
 with app.test_request_context():
     spec.path(view=blueprints.uk_who_blueprint.uk_who_chart_coordinates)
 
 spec.components.schema("plottableChildData",
-                       schema=PlottableChildDataResponseSchema)
+                       schema=schemas.PlottableChildDataResponseSchema)
 with app.test_request_context():
     spec.path(view=blueprints.uk_who_blueprint.uk_who_plottable_child_data)
 
 # Utilities endpoints as blueprints
-spec.components.schema("references", schema=ReferencesResponseSchema)
+spec.components.schema("references", schema=schemas.ReferencesResponseSchema)
 with app.test_request_context():
     spec.path(view=blueprints.utilities_blueprint.references)
 
-spec.components.schema("fictionalChild", schema=FictionalChildResponseSchema)
+spec.components.schema(
+    "fictionalChild", schema=schemas.FictionalChildResponseSchema)
 with app.test_request_context():
     spec.path(
         view=blueprints.utilities_blueprint.create_fictional_child_measurements)
@@ -98,8 +101,44 @@ with app.test_request_context():
 with app.test_request_context():
     spec.path(view=blueprints.utilities_blueprint.instructions)
 
+
+# TODO Trisomy 21 endpoint
+
+# TODO Turner's syndrome endpoint
+
 ##### END API SPEC ########
 ###########################
+
+# Create JSON OpenAPI Spec and serve it at /
+
+
+@app.route("/", methods=["GET"])
+def openapi_endpoint():
+    """
+    openAPI3.0 Specification.
+    ---
+    get:
+      summary: openAPI3.0 Specification.
+      description: |
+        * The root endpoint of the Digital Growth Charts API returns the openAPI3.0 specification in JSON format.
+        * This can be used to autogenerate client scaffolding and tests.
+        * We use it internally to generate all documentation, Postman collections and tests.
+        * The openAPI specification is also available in YAML form, in the root of the Server codebase at https://github.com/rcpch/digital-growth-charts-server
+
+      responses:
+        200:
+          description: |
+            * openAPI3.0 Specification in JSON format, conforming to https://swagger.io/specification/, is returned.
+          content:
+            application/json:
+              schema: OpenApiSchema
+    """
+    return json.dumps(spec.to_dict()), 200
+
+
+# OpenAPI3 specification endpoint
+with app.test_request_context():
+    spec.path(view=openapi_endpoint)
 
 
 @app.route("/uk-who/spreadsheet", methods=["POST"])
@@ -133,34 +172,6 @@ def ukwho_spreadsheet():
 
 ################################
 ### API SPEC AUTO GENERATION ###
-
-# Create JSON OpenAPI Spec and serve it at /
-@app.route("/", methods=["GET"])
-def apispec():
-    """
-    openAPI3.0 Specification.
-    ---
-    get:
-      summary: openAPI3.0 Specification.
-      description: |
-        * The root endpoint of the Digital Growth Charts API returns the openAPI3.0 specification in JSON format.
-        * This can be used to autogenerate client scaffolding and tests.
-        * We use it internally to generate all documentation, Postman collections and tests.
-        * The openAPI specification is also available in YAML form, in the root of the Server codebase at https://github.com/rcpch/digital-growth-charts-server
-
-      responses:
-        200:
-          description: |
-            * openAPI3.0 Specification in JSON format, conforming to https://swagger.io/specification/, is returned.
-          content:
-            application/json:
-              schema: OpenApiSchema
-    """
-    return json.dumps(spec.to_dict())
-
-
-with app.test_request_context():
-    spec.path(view=apispec)
 
 # Create YAML OpenAPI Spec and serialise it to file
 try:
