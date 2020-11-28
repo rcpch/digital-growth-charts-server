@@ -288,9 +288,10 @@ def apispec():
     get:
       summary: openAPI3.0 Specification.
       description: |
-        * The root endpoint of the dGC API returns the openAPI3.0 specification in JSON format.
-        * This can be used to autogenerate clients and tests.
+        * The root endpoint of the Digital Growth Charts API returns the openAPI3.0 specification in JSON format.
+        * This can be used to autogenerate client scaffolding and tests.
         * We use it internally to generate all documentation, Postman collections and tests.
+        * The openAPI specification is also available in YAML form, in the root of the Server codebase at https://github.com/rcpch/digital-growth-charts-server
 
       responses:
         200:

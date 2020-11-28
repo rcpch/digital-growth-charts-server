@@ -12,8 +12,6 @@ def perform_calculation(*,
                         sex: str,
                         gestation_weeks: int,
                         gestation_days: int):
-
-
     """
     This function takes a measurement_method as a string ('height', 'weight', 'bmi' or 'ofc') and returns a Measurement object with the calculated values.
     Note that BMI must be provided already calculated as a parameter to this function.
@@ -27,7 +25,7 @@ def perform_calculation(*,
         observation_value=float(observation_value),
         gestation_weeks=gestation_weeks,
         gestation_days=gestation_days,
-        reference="UKWHO"
+        reference="uk-who"
     ).measurement
 
 
