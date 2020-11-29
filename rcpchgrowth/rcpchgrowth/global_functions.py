@@ -7,6 +7,7 @@ from .uk_who import uk_who_lms_array_for_measurement_and_sex
 from .turner import turner_lms_array_for_measurement_and_sex
 from .trisomy_21 import trisomy_21_lms_array_for_measurement_and_sex
 import logging
+import json
 
 
 def cubic_interpolation(age: float, age_one_below: float, age_two_below: float, age_one_above: float, age_two_above: float, parameter_two_below: float, parameter_one_below: float, parameter_one_above: float, parameter_two_above: float) -> float:
@@ -121,7 +122,8 @@ def nearest_lowest_index(
     """
     lowest_index = 0
     for num, lms_element in enumerate(lms_array):
-        if lms_element["decimal_age"] == age:
+        reference_age = lms_element["decimal_age"]
+        if round(reference_age, 16) == round(age, 16):
             lowest_index = num
             break
         else:
@@ -139,7 +141,7 @@ def fetch_lms(age: float, lms_value_array_for_measurement: list):
     """
     age_matched_index = nearest_lowest_index(
         lms_value_array_for_measurement, age)  # returns nearest LMS for age
-    if lms_value_array_for_measurement[age_matched_index]["decimal_age"] == age:
+    if round(lms_value_array_for_measurement[age_matched_index]["decimal_age"], 16) == round(age, 16):
         # there is an exact match in the data with the requested age
         l = lms_value_array_for_measurement[age_matched_index]["L"]
         m = lms_value_array_for_measurement[age_matched_index]["M"]
@@ -161,6 +163,7 @@ def fetch_lms(age: float, lms_value_array_for_measurement: list):
             age_two_above = lms_value_array_for_measurement[age_matched_index + 2]["decimal_age"]
             parameter_two_below = lms_value_array_for_measurement[age_matched_index - 1]
             parameter_two_above = lms_value_array_for_measurement[age_matched_index + 2]
+            
             l = cubic_interpolation(age=age, age_one_below=age_one_below, age_two_below=age_two_below, age_one_above=age_one_above, age_two_above=age_two_above,
                                     parameter_two_below=parameter_two_below["L"], parameter_one_below=parameter_one_below["L"], parameter_one_above=parameter_one_above["L"], parameter_two_above=parameter_two_above["L"])
             m = cubic_interpolation(age=age, age_one_below=age_one_below, age_two_below=age_two_below, age_one_above=age_one_above, age_two_above=age_two_above,
@@ -301,43 +304,100 @@ def generate_centile(z: float, centile: float, measurement_method: str, sex: str
     min_age = lms_array_for_measurement[0]["decimal_age"]
     max_age = lms_array_for_measurement[-1]["decimal_age"]
 
-    # ages=[1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0, 3.2, 3.4, 3.6, 3.8, 4.0, 4.2, 4.4, 4.6, 4.8, 5.0, 5.2, 5.4, 5.6, 5.8, 6.0, 6.2, 6.4, 6.6, 6.8, 7.0, 7.2, 7.4, 7.6, 7.8, 8.0, 8.2, 8.4, 8.6, 8.8, 9.0, 9.2, 9.4, 9.6, 9.8, 10.0, 10.2, 10.4, 10.6, 10.8, 11.0, 11.2, 11.4, 11.6, 11.8, 12.0, 12.2, 12.4, 12.6, 12.8, 13.0, 13.2, 13.4, 13.6, 13.8, 14.0, 14.2, 14.4, 14.6, 14.8, 15.0, 15.2, 15.4, 15.6, 15.8, 16.0, 16.2, 16.4, 16.6, 16.8, 17.0, 17.2, 17.4, 17.6, 17.8, 18.0, 18.2, 18.4, 18.6, 18.8, 19.0, 19.2, 19.4, 19.6, 19.8]
     centile_measurements = []
     age = min_age
-    while age < max_age:
+    while age <= max_age:
         # loop through the reference in steps of 0.1y
-        measurement = measurement_from_sds(
-            reference=reference, measurement_method=measurement_method, requested_sds=z, sex=sex, age=age)
+        try:
+            measurement = measurement_from_sds(
+                reference=reference, measurement_method=measurement_method, requested_sds=z, sex=sex, age=age, born_preterm=True)
+        except ValueError as err:
+            print(err)
+            measurement = None
         # creates a data point
+        if measurement is not None:
+            rounded = round(measurement, 2)
+        else:
+            rounded = None
         value = {
-            "label": centile,
-            "x": age,
-            "y": measurement
+            "l": centile,
+            "x": round(age,2),
+            "y": rounded
         }
         centile_measurements.append(value)
-        age += 0.1
-    return {
-        "sds": z,
-        "centile": centile,
-        reference: centile_measurements
-    }
+        age += (7/365.25) # weekly intervals
+    return centile_measurements
 
 
-def create_chart(reference: str, measurement_method: str, sex: str, age: float, born_preterm=False):
+def create_chart(reference: str, measurement_method: str, sex: str, born_preterm=False):
+    ## creates a chart for 9 centiles
     centile_array = [0.4, 2, 9, 25, 50, 75, 91, 98, 99.6]
-    try:
-        lms_value_array_for_measurement = lms_value_array_for_measurement_for_reference(
-            reference=reference, age=age, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
-    except LookupError as err:
-        print(err)
-        return
-    chart_values = []
+    lms_value_array_list = []
+
+    if reference == 'uk-who': 
+        # The UK-WHO reference is made up of 4 separate references, so these each need fetching
+        # Not all references are used for all measurement: eg bmi is not used in the preterm references
+        # The references which are used are added to an array (lms_value_array_list), which is used to generate
+        # the nine centiles
+
+        try:
+            uk90_preterm_reference = uk_who_lms_array_for_measurement_and_sex(
+                age=-0.01, 
+                measurement_method=measurement_method, 
+                sex=sex, 
+                born_preterm=born_preterm)
+        except:
+            uk90_preterm_reference = []
+        try:
+            uk_who_infants_reference = uk_who_lms_array_for_measurement_and_sex(
+                age=0.04, 
+                measurement_method=measurement_method, 
+                sex=sex, 
+                born_preterm=born_preterm)
+        except:
+            uk_who_infants_reference = []
+        try:
+            uk_who_children_reference = uk_who_lms_array_for_measurement_and_sex(
+                age=2.0, 
+                measurement_method=measurement_method, 
+                sex=sex, 
+                born_preterm=born_preterm)
+        except:
+            uk_who_children_reference = []
+        try:
+            uk90_children_reference = uk_who_lms_array_for_measurement_and_sex(
+                age=4.0, 
+                measurement_method=measurement_method, 
+                sex=sex, 
+                born_preterm=born_preterm)
+        except:
+            uk90_children_reference=[]
+        array_list = [{"reference_name": "uk90_preterm_data", "data": uk90_preterm_reference}, {"reference_name":"who_infant_data", "data": uk_who_infants_reference}, {"reference_name":"who_child_data", "data": uk_who_children_reference}, {"reference_name":"uk90_child_data", "data": uk90_children_reference}]
+        for element in array_list:
+            if len(element["data"]) > 0:
+                lms_value_array_list.append(element)
+    else:
+        try:
+            # the Turner and T21 references are single references
+            lms_value_array_for_measurement = lms_value_array_for_measurement_for_reference(
+                reference=reference, age=1.0, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
+            lms_value_array_list.append(lms_value_array_for_measurement)
+        except LookupError as err:
+            print(err)
+            return
+    
+    nine_centiles = []
     for index, centile in enumerate(centile_array):
+        # iterate through the 9 centiles
+        single_centile = []
         z = sds_value_for_centile_value(centile=centile)
-        centile_line = generate_centile(z=z, centile=centile, measurement_method=measurement_method,
-                                        sex=sex, lms_array_for_measurement=lms_value_array_for_measurement, reference=reference)
-        chart_values.append(centile_line)
-    return {"centile_data": {measurement_method: chart_values}}
+        for index, reference_data in enumerate(lms_value_array_list):
+            # each centile is made of difference references
+            centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=reference_data["data"], reference=reference)
+            single_centile.append({reference_data["reference_name"]: centile_data})
+        nine_centiles.append(single_centile)
+    return_object = {"centile_data": {measurement_method: nine_centiles}}
+    return return_object
 
 
 def sds_value_for_centile_value(centile: float):
@@ -395,5 +455,8 @@ def sds_value_for_centile_value(centile: float):
         },
         ... repeat for weight, bmi, ofc, based on which measurements supplied. If only height data supplied, only height centile data returned
     ]
+
+    heights: {"decimal_age": -0.3258042436687201, "interval": "weeks", "M": "", "L": "", "value": 23, "S": ""},
+                {"decimal_age": -0.3066392881587953, "interval": "weeks", "M": "", "L": "", "value": 24, "S": ""},
 
     """

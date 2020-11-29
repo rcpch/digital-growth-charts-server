@@ -15,7 +15,7 @@ def perform_calculation(*,
     """
     * This function takes a measurement_method as a string ('height', 'weight', 'bmi' or 'ofc') and returns a Measurement object with the calculated values.
     
-    * Note that BMI must be provided already calculated as a parameter to this function.
+    * Note that BMI must be provided already calculated as a parameter to this function.git 
     
     * Note that measurement_method is a string passed by the form and is distinct from Measurement_Type which is a class relating to the same.
     

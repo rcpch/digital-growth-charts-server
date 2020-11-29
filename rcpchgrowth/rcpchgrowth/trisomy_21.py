@@ -20,9 +20,9 @@ reference: reference data
 
 #load the reference data
 
-T21_DATA = pkg_resources.resource_filename(__name__, "/data_tables/trisomy_21.json")
-with open(T21_DATA) as json_file:
-            T21_DATA = json.load(json_file)
+trisomy_21_DATA = pkg_resources.resource_filename(__name__, "/data_tables/trisomy_21.json")
+with open(trisomy_21_DATA) as json_file:
+            trisomy_21_DATA = json.load(json_file)
             json_file.close()
 
 def reference_data_absent( 
@@ -41,10 +41,10 @@ def reference_data_absent(
      - lowest threshold is 0 weeks, upper threshold is 20y
     """
 
-    if age < 0: # lower threshold of T21 data
+    if age < 0: # lower threshold of trisomy_21 data
         return True, "Trisomy 21 reference data does not include prematurity."
     
-    if age > TWENTY_YEARS: # upper threshold of T21 data
+    if age > TWENTY_YEARS: # upper threshold of trisomy_21 data
         return True
         
     elif measurement_method == "bmi" and age > 18.82:
@@ -69,4 +69,4 @@ def trisomy_21_lms_array_for_measurement_and_sex(
     if data_invalid:
         raise LookupError(data_error)
     else:
-        return T21_DATA["measurement"][measurement_method][sex]
+        return trisomy_21_DATA["measurement"][measurement_method][sex]
