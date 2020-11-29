@@ -5,8 +5,6 @@
     "measurement": {
         "height": {
             "male": [
-                {"decimal_age": -0.3258042436687201, "interval": "weeks", "M": "", "L": "", "value": 23, "S": ""},
-                {"decimal_age": -0.3066392881587953, "interval": "weeks", "M": "", "L": "", "value": 24, "S": ""},
                 {"decimal_age": -0.2874743326488706, "interval": "weeks", "M": 35.42414, "L": 1, "value": 25, "S": 0.08132453},
                 {"decimal_age": -0.2683093771389459, "interval": "weeks", "M": 36.42492, "L": 1, "value": 26, "S": 0.07862004},
                 {"decimal_age": -0.24914442162902123, "interval": "weeks", "M": 37.42772, "L": 1, "value": 27, "S": 0.07590725},
@@ -28,8 +26,6 @@
             ],
             "female":
             [
-                {"decimal_age": -0.3258042436687201, "interval": "weeks", "M": "", "L": "", "value": 23, "S": ""},
-                {"decimal_age": -0.3066392881587953, "interval": "weeks", "M": "", "L": "", "value": 24, "S": ""},
                 {"decimal_age": -0.2874743326488706, "interval": "weeks", "M": 34.59544, "L": 1, "value": 25, "S": 0.08086044},
                 {"decimal_age": -0.2683093771389459, "interval": "weeks", "M": 35.59771, "L": 1, "value": 26, "S": 0.07735533},
                 {"decimal_age": -0.24914442162902123, "interval": "weeks", "M": 36.60905, "L": 1, "value": 27, "S": 0.07386597},
