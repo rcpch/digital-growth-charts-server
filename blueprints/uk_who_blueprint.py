@@ -30,7 +30,7 @@ def uk_who_calculation():
       requestBody:
         content:
           application/json:
-            schema: SingleCalculationRequestParameters
+            schema: CalculationRequestParameters
             example:
                 birth_date: "2020-04-12"
                 observation_date: "2020-06-12"
@@ -45,7 +45,7 @@ def uk_who_calculation():
           description: "Centile calculation (single) according to the supplied data was returned"
           content:
             application/json:
-              schema: SingleCalculationResponseSchema
+              schema: CalculationResponseSchema
     """
     if request.is_json:
         req = request.get_json()
@@ -65,7 +65,7 @@ def uk_who_calculation():
 
         # Validate the request with Marshmallow
         try:
-            SingleCalculationRequestParameters().load(values)
+            CalculationRequestParameters().load(values)
         except ValidationError as err:
             pprint(err.messages)
             return json.dumps(err.messages), 422

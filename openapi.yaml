@@ -17,6 +17,65 @@ components:
         sex:
           type: string
       type: object
+    CalculationRequestParameters:
+      properties:
+        birth_date:
+          description: Date of birth of the patient in YYYY-MM-DD ISO8601 format.
+          format: date
+          type: string
+        gestation_days:
+          description: The number of additional days _beyond the completed weeks of
+            gestation_ at which the patient was born. This enables Gestational Age
+            correction if the child was not born at term. See also the other parameter
+            `gestation_weeks` - both are usually required.
+          type: number
+        gestation_weeks:
+          description: The number of completed weeks of gestation at which the patient
+            was born. This enables Gestational Age Correction if the child was not
+            born at term. See also the other parameter `gestation_days` - both are
+            usually required. If the child is term then any value between 37 and 42
+            will be handled the same, and a value must be provided. Values outside
+            the validation range will return errors.
+          maximum: 44
+          minimum: 22
+          type: number
+        measurement_method:
+          description: "The type of measurement performed on the infant or child (`height`,\
+            \ `weight`, `bmi` or `ofc`). The value of this measurement is supplied\
+            \ as the `observation_value` parameter. The measurements represent height\
+            \ **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre\xB2\
+            ** and occipitofrontal circumference (head circumference, OFC) **in centimetres**."
+          enum:
+          - height
+          - weight
+          - bmi
+          - ofc
+          type: string
+        observation_date:
+          description: The date that the measurement was taken, in YYYY-MM-DD ISO8601
+            format.
+          format: date
+          type: string
+        observation_value:
+          description: The value of the measurement supplied. Used in conjunction
+            with type of measurement performed(`height`, `weight`, `bmi` or `ofc`)
+            on the infant or child.
+          format: float
+          type: number
+        sex:
+          description: The sex of the patient, as a string value which can either
+            be `male` or `female`. Abbreviations or alternatives are not accepted
+          enum:
+          - male
+          - female
+          type: string
+      required:
+      - birth_date
+      - measurement_method
+      - observation_date
+      - observation_value
+      - sex
+      type: object
     ChartDataRequestParameters:
       properties:
         results:
@@ -169,65 +228,6 @@ components:
           description: URL for the publication (if available)
           type: string
       type: object
-    SingleCalculationRequestParameters:
-      properties:
-        birth_date:
-          description: Date of birth of the patient in YYYY-MM-DD ISO8601 format.
-          format: date
-          type: string
-        gestation_days:
-          description: The number of additional days _beyond the completed weeks of
-            gestation_ at which the patient was born. This enables Gestational Age
-            correction if the child was not born at term. See also the other parameter
-            `gestation_weeks` - both are usually required.
-          type: number
-        gestation_weeks:
-          description: The number of completed weeks of gestation at which the patient
-            was born. This enables Gestational Age Correction if the child was not
-            born at term. See also the other parameter `gestation_days` - both are
-            usually required. If the child is term then any value between 37 and 42
-            will be handled the same, and a value must be provided. Values outside
-            the validation range will return errors.
-          maximum: 44
-          minimum: 22
-          type: number
-        measurement_method:
-          description: "The type of measurement performed on the infant or child (`height`,\
-            \ `weight`, `bmi` or `ofc`). The value of this measurement is supplied\
-            \ as the `observation_value` parameter. The measurements represent height\
-            \ **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre\xB2\
-            ** and occipitofrontal circumference (head circumference, OFC) **in centimetres**."
-          enum:
-          - height
-          - weight
-          - bmi
-          - ofc
-          type: string
-        observation_date:
-          description: The date that the measurement was taken, in YYYY-MM-DD ISO8601
-            format.
-          format: date
-          type: string
-        observation_value:
-          description: The value of the measurement supplied. Used in conjunction
-            with type of measurement performed(`height`, `weight`, `bmi` or `ofc`)
-            on the infant or child.
-          format: float
-          type: number
-        sex:
-          description: The sex of the patient, as a string value which can either
-            be `male` or `female`. Abbreviations or alternatives are not accepted
-          enum:
-          - male
-          - female
-          type: string
-      required:
-      - birth_date
-      - measurement_method
-      - observation_date
-      - observation_value
-      - sex
-      type: object
     calculation:
       properties:
         calculation:
@@ -295,7 +295,7 @@ paths:
               observation_value: 60
               sex: male
             schema:
-              $ref: '#/components/schemas/SingleCalculationRequestParameters'
+              $ref: '#/components/schemas/CalculationRequestParameters'
       responses:
         '200':
           content:

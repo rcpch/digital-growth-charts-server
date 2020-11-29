@@ -74,7 +74,7 @@ spec = APISpec(
 
 # UK-WHO endpoints as blueprints
 spec.components.schema(
-    "calculation", schema=schemas.SingleCalculationResponseSchema)
+    "calculation", schema=schemas.CalculationResponseSchema)
 with app.test_request_context():
     spec.path(view=blueprints.uk_who_blueprint.uk_who_calculation)
 
