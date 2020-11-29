@@ -2,15 +2,14 @@
 This module contains the UK-WHO endpoints as Flask Blueprints
 """
 
-from flask import Blueprint
-import controllers
-from flask import Flask, jsonify, request
 import json
-from datetime import datetime
-from schemas import *
-from rcpchgrowth.rcpchgrowth.constants.measurement_constants import *
-from marshmallow import ValidationError
 from pprint import pprint
+from flask import Blueprint
+from flask import jsonify, request
+from marshmallow import ValidationError
+from rcpchgrowth.rcpchgrowth.constants.measurement_constants import *
+from schemas import *
+import controllers
 
 uk_who = Blueprint("uk_who", __name__)
 
@@ -31,7 +30,7 @@ def uk_who_calculation():
       requestBody:
         content:
           application/json:
-            schema: SingleCalculationRequestParameters
+            schema: CalculationRequestParameters
             example:
                 birth_date: "2020-04-12"
                 observation_date: "2020-06-12"
@@ -46,7 +45,7 @@ def uk_who_calculation():
           description: "Centile calculation (single) according to the supplied data was returned"
           content:
             application/json:
-              schema: SingleCalculationResponseSchema
+              schema: CalculationResponseSchema
     """
     if request.is_json:
         req = request.get_json()
@@ -66,7 +65,7 @@ def uk_who_calculation():
 
         # Validate the request with Marshmallow
         try:
-            SingleCalculationRequestParameters().load(values)
+            CalculationRequestParameters().load(values)
         except ValidationError as err:
             pprint(err.messages)
             return json.dumps(err.messages), 422

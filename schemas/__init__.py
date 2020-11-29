@@ -4,4 +4,4 @@ from .fictional_child_schemas import FictionalChildRequestParameters, FictionalC
 from .measurement_schemas import MeasurementResponseSchema
 from .openapi_schemas import OpenApiSchema
 from .references_schemas import ReferencesResponseSchema
-from .single_calculation_schemas import SingleCalculationRequestParameters, SingleCalculationResponseSchema
+from .calculation_schemas import CalculationRequestParameters, CalculationResponseSchema

@@ -3,7 +3,7 @@ from .measurement_schemas import MeasurementResponseSchema
 from rcpchgrowth.rcpchgrowth.constants.validation_constants import *
 
 
-class SingleCalculationRequestParameters(Schema):
+class CalculationRequestParameters(Schema):
     """
     Defines the schema that the API expects to receive. This is compiled into the openAPI spec, and used for data validation
     """
@@ -28,13 +28,14 @@ class SingleCalculationRequestParameters(Schema):
         validate=validate.OneOf(['male', 'female']),
         description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted")
     gestation_weeks = fields.Number(
-        validate=validate.Range(min=MINIMUM_GESTATION_WEEKS, max=MAXIMUM_GESTATION_WEEKS),
+        validate=validate.Range(
+            min=MINIMUM_GESTATION_WEEKS, max=MAXIMUM_GESTATION_WEEKS),
         description="The number of completed weeks of gestation at which the patient was born. This enables Gestational Age Correction if the child was not born at term. See also the other parameter `gestation_days` - both are usually required. If the child is term then any value between 37 and 42 will be handled the same, and a value must be provided. Values outside the validation range will return errors.")
     gestation_days = fields.Number(
         description="The number of additional days _beyond the completed weeks of gestation_ at which the patient was born. This enables Gestational Age correction if the child was not born at term. See also the other parameter `gestation_weeks` - both are usually required.")
 
 
-class SingleCalculationResponseSchema(Schema):
+class CalculationResponseSchema(Schema):
     """
     Defines the schema of the API response. This is compiled into the openAPI spec.
     """
