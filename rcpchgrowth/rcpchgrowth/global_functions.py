@@ -397,9 +397,6 @@ def create_chart(reference: str, measurement_method: str, sex: str, born_preterm
             single_centile.append({reference_data["reference_name"]: centile_data})
         nine_centiles.append(single_centile)
     return_object = {"centile_data": {measurement_method: nine_centiles}}
-    with open('girls_height.json', "w") as file:
-        file.write(json.dumps(return_object))
-        file.close()
     return return_object
 
 
