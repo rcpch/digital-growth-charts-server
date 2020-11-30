@@ -10,6 +10,15 @@ from flask_cors import CORS
 import controllers
 import blueprints
 import schemas
+import apispec_generation
+
+
+# Declare shell colour variables for pretty logging output
+OKBLUE = "\033[94m"
+OKGREEN = "\033[92m"
+WARNING = "\033[93m"
+FAIL = "\033[91m"
+ENDC = "\033[0m"
 
 
 #######################
@@ -33,67 +42,15 @@ app.register_blueprint(
 # Load the secret key from the ENV if it has been set
 if "FLASK_SECRET_KEY" in environ:
     app.secret_key = environ["FLASK_SECRET_KEY"]
-    print(f"{blueprints.OKGREEN} * FLASK_SECRET_KEY was loaded from the environment{blueprints.ENDC}")
+    print(f"{OKGREEN} * FLASK_SECRET_KEY was loaded from the environment{ENDC}")
 # Otherwise create a new one. (NB: We don't need session persistence between reboots of the app)
 else:
     app.secret_key = urandom(16)
-    print(f"{blueprints.OKGREEN} * A new SECRET_KEY for Flask was automatically generated{blueprints.ENDC}")
+    print(f"{OKGREEN} * A new SECRET_KEY for Flask was automatically generated{ENDC}")
 
 from app import app     # position of this import is important. Don't allow it to be autoformatted alphabetically to the top of the imports!
 
 ##### END FLASK SETUP #####
-###########################
-
-
-######################
-##### BLUEPRINTS #####
-
-# UK-WHO calculation endpoint as blueprint
-blueprints.spec.components.schema(
-    "calculation", schema=schemas.CalculationResponseSchema)
-with app.test_request_context():
-    blueprints.spec.path(view=blueprints.uk_who_blueprint.uk_who_calculation)
-
-# UK-WHO chart data endpoint as blueprint
-blueprints.spec.components.schema(
-    "chartData", schema=schemas.ChartDataResponseSchema)
-with app.test_request_context():
-    blueprints.spec.path(
-        view=blueprints.uk_who_blueprint.uk_who_chart_coordinates)
-
-blueprints.spec.components.schema(
-    "plottableChildData",
-    schema=schemas.PlottableChildDataResponseSchema)
-with app.test_request_context():
-    blueprints.spec.path(
-        view=blueprints.uk_who_blueprint.uk_who_plottable_child_data)
-
-# Utilities endpoints as blueprints
-blueprints.spec.components.schema(
-    "references", schema=schemas.ReferencesResponseSchema)
-with app.test_request_context():
-    blueprints.spec.path(view=blueprints.utilities_blueprint.references)
-
-# TODO #122 Fictional child endpoint may be better renamed as a researcher tool?
-blueprints.spec.components.schema(
-    "fictionalChild", schema=schemas.FictionalChildResponseSchema)
-with app.test_request_context():
-    blueprints.spec.path(
-        view=blueprints.utilities_blueprint.create_fictional_child_measurements)
-
-# Instructions endpoint (TODO: #121 #120 candidate for deprecation)
-with app.test_request_context():
-    blueprints.spec.path(view=blueprints.utilities_blueprint.instructions)
-
-# OpenAPI3 specification endpoint
-with app.test_request_context():
-    blueprints.spec.path(view=blueprints.openapi_blueprint.openapi_endpoint)
-
-# TODO Trisomy 21 endpoint
-
-# TODO Turner's syndrome endpoint
-
-##### END API SPEC ########
 ###########################
 
 
@@ -125,6 +82,16 @@ def ukwho_spreadsheet():
     csv_file = request.files["csv_file"]
     calculated_results = controllers.import_csv_file(csv_file)
     return calculated_results
+
+
+# generate the API spec
+try:
+    spec = apispec_generation.generate(app)
+    print(f"{OKGREEN} * openAPI3.0 spec was generated and saved to the repo{ENDC}")
+
+except Exception as error:
+    print(f"{FAIL} * An error occurred while processing the openAPI3.0 spec{ENDC}")
+    print(f"{FAIL} *  > {error} {ENDC}")
 
 
 if __name__ == "__main__":
