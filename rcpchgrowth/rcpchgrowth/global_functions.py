@@ -389,14 +389,27 @@ def create_chart(reference: str, measurement_method: str, sex: str, born_preterm
     nine_centiles = []
     for index, centile in enumerate(centile_array):
         # iterate through the 9 centiles
-        single_centile = []
+        uk90_preterm, who_infants, who_children, uk90_children = [], [], [], []
         z = sds_value_for_centile_value(centile=centile)
         for index, reference_data in enumerate(lms_value_array_list):
             # each centile is made of difference references
             centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=reference_data["data"], reference=reference)
-            single_centile.append({reference_data["reference_name"]: centile_data})
-        nine_centiles.append(single_centile)
-    return_object = {"centile_data": {measurement_method: nine_centiles}}
+            if reference_data['reference_name']==array_list[0]['reference_name']:
+                uk90_preterm = centile_data
+            elif reference_data['reference_name']==array_list[1]['reference_name']:
+                who_infants = centile_data
+            elif reference_data['reference_name']==array_list[2]['reference_name']:
+                who_children = centile_data
+            elif reference_data['reference_name']==array_list[3]['reference_name']:
+                uk90_children = centile_data
+        nine_centiles.append({"sds": z, "centile": centile, array_list[0]['reference_name']:uk90_preterm, array_list[1]['reference_name'] : who_infants, array_list[2]['reference_name']: who_children, array_list[3]['reference_name']:uk90_children})
+    return_object = {"centile_data": { measurement_method: nine_centiles}}
+    
+    # This stores the data to file if the raw data is needed: too big to dump to console
+    # with open('data.json', 'w') as file:
+    #     file.write(json.dumps(return_object))
+    #     file.close()
+    
     return return_object
 
 
