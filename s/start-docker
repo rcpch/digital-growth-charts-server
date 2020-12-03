@@ -1,7 +1,16 @@
 #!/bin/bash
 
+# names the container as below
 app="rcpch-dgc-server"
-docker build -t ${app} .
-docker run -d -p 5000:5000 \
+
+# usage: `s/start-docker`
+# run the container
+# will error if a container already exists
+# `docker container rm rcpch-dgc-server` to remove container
+# or use the `s/rebuild-docker` script
+
+docker run -it -p 5000:5000 \
   --name=${app} \
-  --volume $PWD:/app ${app}
+  ${app}
+
+#--volume $PWD:/app \
