@@ -2,7 +2,7 @@
 RCPCH Growth Charts API Server
 """
 
-from os import environ, urandom
+from os import environ, urandom, path
 
 from flask import Flask, request, json
 from flask_cors import CORS
@@ -11,7 +11,8 @@ import controllers
 import blueprints
 import schemas
 import apispec_generation
-from rcpchgrowth.rcpchgrowth import create_chart
+from rcpchgrowth.rcpchgrowth import create_uk_who_chart
+from rcpchgrowth.rcpchgrowth.constants.parameter_constants import *
 
 
 # Declare shell colour variables for pretty logging output
@@ -26,6 +27,9 @@ ENDC = "\033[0m"
 ##### FLASK SETUP #####
 app = Flask(__name__, static_folder="static")
 CORS(app)
+
+# Declare growth chart folder for growth chart data
+chart_data_folder = path.join(app.root_path, 'chart_data')
 
 # Mount all Utilities endpoints from the blueprint
 app.register_blueprint(
@@ -57,12 +61,14 @@ from app import app     # position of this import is important. Don't allow it t
 
 # create all the charts and store in chart_data
 try:  
-  result = create_chart("uk-who")
+  result = create_uk_who_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
   filename = "uk_who_chart_data.json"
-  with open(filename, 'w') as file:
+  file_path = path.join(chart_data_folder, filename)
+  with open(file_path, 'w') as file:
+      print("now writing to file...")
       file.write(json.dumps(result, separators=(',', ':')))
       file.close()
-      print(f" * {OKGREEN} New Chart Data has been generated.")
+      print(f" * {OKGREEN}New Chart Data has been generated.")
 except:
   raise ValueError("Unable to create charts")
 
@@ -77,12 +83,10 @@ def ukwho_spreadsheet():
       summary: Spreadsheet file upload API route.
       description: |
         * This endpoint is used for development and testing only and it is not envisaged that it will be in the live API.
-
       requestBody:
         content:
           text/csv:
             schema: ChartDataRequestParameters
-
       responses:
         200:
           description: |

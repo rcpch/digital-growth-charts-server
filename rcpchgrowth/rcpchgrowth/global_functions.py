@@ -326,164 +326,119 @@ def generate_centile(z: float, centile: float, measurement_method: str, sex: str
             "y": rounded
         }
         centile_measurements.append(value)
-        age += (7/365.25) # weekly intervals
+
+        ## weekly intervals until 2 y, then monthly 
+        if age <=2:
+            age += (7/365.25) # weekly intervals
+        else:
+            age += 1/12
     return centile_measurements
 
+def create_uk_who_chart(centile_selection: str=COLE_TWO_THIRDS_SDS_NINE_CENTILES):
 
-def create_chart(reference: str):
-    ## creates a chart of 9 centiles
-    nine_centile_array = [0.4, 2, 9, 25, 50, 75, 91, 98, 99.6]
-    centile_array_experiment = [3, 25, 50, 75, 97 ]
-    lms_value_array_list = []
-    all_measurements = []
-    all_sexes = []
+    ## user selects which centile collection they want
+    ## If the Cole method is selected, conversion between centile and SDS
+    ## is different as SDS is rounded to the nearest 2/3
+    ## Cole method selection is stored in the cole_method flag.
+    ## If no parameter is passed, default is the Cole method
 
-    for num, sex in enumerate(SEXES):
-        for index, measurement_method in enumerate(MEASUREMENT_METHODS):
-            # generates a dictionary of centiles for each measurement
+    centile_collection = []
 
-            if reference == 'uk-who': 
-                # The UK-WHO reference is made up of 4 separate references, so these each need fetching
-                # Not all references are used for all measurement: eg bmi is not used in the preterm references
-                # The references which are used are added to an array (lms_value_array_list), which is used to generate
-                # the nine centiles
-
-                #select all the UK-WHO references for this measurement and sex and store it in a reference-specific variable as an array list
-                lms_value_array_list = select_reference_data_for_uk_who_chart(measurement_method=measurement_method, sex=sex)
-            else:
-                try:
-                    # the Turner and T21 references are single references
-                    lms_value_array_for_measurement = lms_value_array_for_measurement_for_reference(
-                        reference=reference, age=1.0, measurement_method=measurement_method, sex=sex, born_preterm=False)
-                    # store the lms data in lms_value_array_list
-                    lms_value_array_list = [{"reference_name": reference, "data": lms_value_array_for_measurement}]
-                    
-                except LookupError as err:
-                    print(err)
-                    return
+    if centile_selection == COLE_TWO_THIRDS_SDS_NINE_CENTILES:
+        centile_collection = COLE_TWO_THIRDS_SDS_NINE_CENTILE_COLLECTION
+        cole_method = True
+    else:
+        centile_collection = THREE_PERCENT_CENTILE_COLLECTION
+        cole_method = False
     
-            nine_centiles = []
-            for index, centile in enumerate(nine_centile_array):
-                # iterate through the 9 centiles
-                uk90_preterm, who_infants, who_children, uk90_children = [], [], [], []
-                z = sds_value_for_centile_value(centile=centile)
-                for index, reference_data in enumerate(lms_value_array_list):
-                    # each centile is made of difference references
-                    try:
-                        centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=reference_data["data"], reference=reference)
-                    except:
-                        name = reference_data["reference_name"]
-                        print(f"There is no data for {measurement_method} in {name} reference.")
-                        centile_data = []
-                    if reference == 'uk-who':
-                        if reference_data['reference_name']==UK90_PRETERM:
-                            uk90_preterm = centile_data
-                        elif reference_data['reference_name']==UK_WHO_INFANT:
-                            who_infants = centile_data
-                        elif reference_data['reference_name']==UK_WHO_CHILD:
-                            who_children = centile_data
-                        elif reference_data['reference_name']==UK90_CHILD:
-                            uk90_children = centile_data
-                        nine_centiles.append({"sds": z, "centile": centile, reference_data['reference_name']: centile_data})
+    ##
+    # iterate through the 4 references that make up UK-WHO
+    # There will be a list for each one
+    ##
+
+    
+    
+    
+    reference_data = [] # all data for a given reference are stored here: this is returned to the user
+
+    for reference_index, reference in enumerate(UK_WHO_REFERENCES):
+        sex_list: dict = {} # all the data for a given sex are stored here
+        ## For each reference we have 2 sexes
+        for sex_index, sex in enumerate(SEXES):
+            ##For each sex we have 4 measurement_methods
+
+            measurements: dict = {} # all the data for a given measurement_method are stored here
+
+            for measurement_index, measurement_method in enumerate(MEASUREMENT_METHODS):
+                ## for every measurement method we have as many centiles
+                ## as have been requested
+
+                centiles=[] # all generated centiles for a selected centile collection are stored here
+
+                for centile_index, centile in enumerate(centile_collection):
+                    ## we must create a z for each requested centile
+                    ## if the Cole 9 centiles were selected, these are rounded,
+                    ## so conversion to SDS is different
+                    ## Otherwise standard conversation of centile to z is used
+                    if cole_method:
+                        z = rounded_sds_for_centile(centile)
                     else:
-                        ## turner or T21 data
-                        nine_centiles.append({"sds": z, "centile": centile, reference_data["reference_name"]: centile_data})
-            all_measurements.append({measurement_method: nine_centiles})
-        all_sexes.append({sex: all_measurements})
+                        z = sds_for_centile(centile)
+                    
+                    ## Collect the LMS values from the correct reference
+                    lms_array_for_measurement=select_reference_data_for_uk_who_chart(uk_who_reference=reference, measurement_method=measurement_method, sex=sex)
+                    
+                    ## Generate a centile. there will be nine of these if Cole method selected.
+                    ## Some data does not exist at all ages, so any error reflects missing data.
+                    ## If this happens, an empty list is returned.
+                    try:
+                        centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference="uk-who")
+                    except:
+                        print(f"There is no data for {measurement_method} at this age.")
+                        centile_data = []
+
+                    ## Store this centile for a given measurement
+                    centiles.append({"sds": round(z*100)/100, "centile": centile, "data": centile_data})
+                    
+                ## this is the end of the centile_collection for loop
+                ## All the centiles for this measurement, sex and reference are added to the measurements list
+                measurements.update({measurement_method: centiles})
+            
+            ## this is the end of the measurement_methods loop
+            ## All data for all measurement_methods for this sex are added to the sex_list list
+
+            sex_list.update({sex: measurements})
+                
+        ## all data can now be tagged by reference_name and added to reference_data
+        reference_data.append({reference: sex_list})
         
-    return all_sexes
-
-def create_all_charts():
-    ## Creates all charts for all references. 
-    ## Only to be used by python package for interested uses. Not used in production
-    ## Be aware will generate a large amount of data.
-
-    all_charts=[]
-    for number, reference in enumerate(REFERENCES):
-        for index, sex in enumerate(SEXES):
-            for place, measurement_method in enumerate(MEASUREMENT_METHODS):
-                born_preterm = False
-                if reference=="uk-who":
-                    born_preterm = True
-                try:
-                    data = create_chart(reference=reference)
-                except:
-                    data = []
-                all_charts.append(data)
-    return all_charts
+    ## returns a list of 4 references, each containing 2 lists for each sex, 
+    ## each sex in turn containing 4 datasets for each measurement_method
+    return reference_data
 
     """
+
     structure:
 
-    sex: {
-        height: [
-                sds: -2.6667,
-                centile: 0.4,
-                uk90_preterm: [{l: , x: , y: }, ....]
-                uk_who_infants: [{l: , x: , y: }, ....]
-                uk_who_children: [{l: , x: , y: }, ....]
-                uk90_children: [{l: , x: , y: }, ....]
-            ],
-        weight: [ ....],
-        ofc: [ ....],
-        bmi: [ ....],
-    },
-    female: {
-        height: [ ....],
-        weight: [ ....],
-        ofc: [ ....],
-        bmi: [ ....],
-    }
-
-    or
+    UK_WHO generates 4 json objects, each structure as below
 
     uk90_preterm: {
         male: {
             height: [
-                sds: -2.667,
-                centile: 0.4
-                data: [{l: , x: , y: }, ....]
+                {
+                    sds: -2.667,
+                    centile: 0.4
+                    data: [{l: , x: , y: }, ....]
+                }
             ],
             weight: [...]
         },
         female {...}
     }
 
-    uk_who: {
-        male: {
-            height: [
-                sds: -2.6667,
-                centile: 0.4,
-                uk90_preterm: [{l: , x: , y: }, ....]
-                uk_who_infants: [{l: , x: , y: }, ....]
-                uk_who_children: [{l: , x: , y: }, ....]
-                uk90_children: [{l: , x: , y: }, ....]
-            ],
-            weight: [ ....],
-            ofc: [ ....],
-            bmi: [ ....],
-        },
-        female:{
-
-        }
-    }
-
-    but
-    trisomy-21: {
-        male: {
-            height: [
-                sds: -2.6667,
-                centile: 0.4,
-                trisomy-21: [{l: , x: , y: }, ....]
-            ],
-            weight: [ ....],
-            ofc: [ ....],
-            bmi: [ ....],
-        },
-        female:{
-
-        }
-    }
+    uk_who_infant: {...}
+    uk_who_child:{...}
+    uk90_child: {...}
 
     """
 
@@ -507,6 +462,7 @@ def sds_for_centile(centile: float)->float:
 
 
 def sds_value_for_centile_value(centile: float):
+    ## to be deprecated
 
     if centile == 0.4:
         return -2.0 - (2 / 3)
@@ -530,39 +486,3 @@ def sds_value_for_centile_value(centile: float):
         # error
         raise LookupError("SDS could not be calculated from Centile supplied")
 
-    """
-    Return object structure
-
-    [
-        {
-            childData: [
-                {
-                    x: 9.415, `this is the age of the child at date of measurement
-                    y: 120 `this is the observation value
-                }
-
-            ],
-            data: [
-                {
-                    sds: -2.666666,
-                    uk90_child_data:[.....],
-                    uk90_preterm_data: [...],
-                    who_child_data: [...],
-                    who_infant_data: [
-                        {
-                            label: 0.4, `this is the centile
-                            x: 4, `this is the decimal age
-                            y: 91.535  `this is the measurement
-                        }
-                    ]
-                }
-            ],
-            key: "height"
-        },
-        ... repeat for weight, bmi, ofc, based on which measurements supplied. If only height data supplied, only height centile data returned
-    ]
-
-    heights: {"decimal_age": -0.3258042436687201, "interval": "weeks", "M": "", "L": "", "value": 23, "S": ""},
-                {"decimal_age": -0.3066392881587953, "interval": "weeks", "M": "", "L": "", "value": 24, "S": ""},
-
-    """

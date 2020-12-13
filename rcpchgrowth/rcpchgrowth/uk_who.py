@@ -166,49 +166,51 @@ def uk_who_lms_array_for_measurement_and_sex(
     else:
         return selected_reference["measurement"][measurement_method][sex]
 
-def select_reference_data_for_uk_who_chart(measurement_method: str, sex: str, born_preterm=True):
 
-    # function called by global_functions
-    # returns reference data to be used to create charts
+def select_reference_data_for_uk_who_chart(uk_who_reference: str, measurement_method: str, sex: str):
 
-    try:
-        uk90_preterm_reference = uk_who_lms_array_for_measurement_and_sex(
-            age=-0.01,
-            measurement_method=measurement_method, 
-            sex=sex, 
-            born_preterm=born_preterm)
-    except:
-        uk90_preterm_reference = []
-    try:
-        uk_who_infants_reference = uk_who_lms_array_for_measurement_and_sex(
-            age=0.04, 
-            measurement_method=measurement_method, 
-            sex=sex, 
-            born_preterm=born_preterm)
-    except:
-        uk_who_infants_reference = []
-    try:
-        uk_who_children_reference = uk_who_lms_array_for_measurement_and_sex(
-            age=2.0, 
-            measurement_method=measurement_method, 
-            sex=sex, 
-            born_preterm=born_preterm)
-    except:
-        uk_who_children_reference = []
-    try:
-        uk90_children_reference = uk_who_lms_array_for_measurement_and_sex(
-            age=4.0, 
-            measurement_method=measurement_method, 
-            sex=sex, 
-            born_preterm=born_preterm)
-    except:
-        uk90_children_reference=[]
-    
-    ## Build an array of all the references
-    array_list = [{"reference_name": UK90_PRETERM, "data": uk90_preterm_reference}, {"reference_name":UK_WHO_INFANT, "data": uk_who_infants_reference}, {"reference_name":UK_WHO_CHILD, "data": uk_who_children_reference}, {"reference_name":UK90_CHILD, "data": uk90_children_reference}]
-    # ## Pare the array_list down to include only those references which have been selected. Store this as lms_value_array_list
-    # for element in array_list:
-    #     if len(element["data"]) > 0:
-    #         lms_value_array_list.append(element)
+    # takes a uk_who_reference name (see parameter constants), measurement_method and sex to return
+    # reference data
 
-    return array_list
+    if uk_who_reference == UK90_PRETERM:
+        try:
+            uk90_preterm_reference = uk_who_lms_array_for_measurement_and_sex(
+                age=-0.01,
+                measurement_method=measurement_method, 
+                sex=sex, 
+                born_preterm=True)
+        except:
+            uk90_preterm_reference = []
+        return uk90_preterm_reference
+    elif uk_who_reference == UK_WHO_INFANT:
+        try:
+            uk_who_infants_reference = uk_who_lms_array_for_measurement_and_sex(
+                age=0.04, 
+                measurement_method=measurement_method, 
+                sex=sex, 
+                born_preterm=True)
+        except:
+            uk_who_infants_reference = []
+        return uk_who_infants_reference
+    elif uk_who_reference == UK_WHO_CHILD:
+        try:
+            uk_who_children_reference = uk_who_lms_array_for_measurement_and_sex(
+                age=2.0, 
+                measurement_method=measurement_method, 
+                sex=sex, 
+                born_preterm=True)
+        except:
+            uk_who_children_reference = []
+        return uk_who_children_reference
+    elif uk_who_reference == UK90_CHILD:
+        try:
+            uk90_children_reference = uk_who_lms_array_for_measurement_and_sex(
+                age=4.0, 
+                measurement_method=measurement_method, 
+                sex=sex, 
+                born_preterm=True)
+        except:
+            uk90_children_reference=[]
+        return uk90_children_reference
+    else:
+        raise LookupError(f"No data found for {measurement_method} in {sex}s in {uk_who_reference}")
