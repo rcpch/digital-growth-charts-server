@@ -316,12 +316,12 @@ def generate_centile(z: float, centile: float, measurement_method: str, sex: str
             measurement = None
         # creates a data point
         if measurement is not None:
-            rounded = round(measurement, 2)
+            rounded = round(measurement, 4)
         else:
             rounded = None
         value = {
             "l": centile,
-            "x": round(age,2),
+            "x": round(age,4),
             "y": rounded
         }
         centile_measurements.append(value)
@@ -330,8 +330,9 @@ def generate_centile(z: float, centile: float, measurement_method: str, sex: str
 
 
 def create_chart(reference: str, measurement_method: str, sex: str, born_preterm=False):
-    ## creates a chart for 9 centiles
-    centile_array = [0.4, 2, 9, 25, 50, 75, 91, 98, 99.6]
+    ## creates a chart of 9 centiles
+    nine_centile_array = [0.4, 2, 9, 25, 50, 75, 91, 98, 99.6]
+    centile_array_experiment = [3, 25, 50, 75, 97 ]
     lms_value_array_list = []
 
     if reference == 'uk-who': 
@@ -340,6 +341,7 @@ def create_chart(reference: str, measurement_method: str, sex: str, born_preterm
         # The references which are used are added to an array (lms_value_array_list), which is used to generate
         # the nine centiles
 
+        #select the correct reference data and store it in a reference-specific variable as an array
         try:
             uk90_preterm_reference = uk_who_lms_array_for_measurement_and_sex(
                 age=-0.01, 
@@ -372,7 +374,11 @@ def create_chart(reference: str, measurement_method: str, sex: str, born_preterm
                 born_preterm=born_preterm)
         except:
             uk90_children_reference=[]
+        
+        ## Build an array of all the references
         array_list = [{"reference_name": "uk90_preterm_data", "data": uk90_preterm_reference}, {"reference_name":"who_infant_data", "data": uk_who_infants_reference}, {"reference_name":"who_child_data", "data": uk_who_children_reference}, {"reference_name":"uk90_child_data", "data": uk90_children_reference}]
+
+        ## Pare the array_list down to include only those references which have been selected. Store this as lms_value_array_list
         for element in array_list:
             if len(element["data"]) > 0:
                 lms_value_array_list.append(element)
@@ -381,36 +387,78 @@ def create_chart(reference: str, measurement_method: str, sex: str, born_preterm
             # the Turner and T21 references are single references
             lms_value_array_for_measurement = lms_value_array_for_measurement_for_reference(
                 reference=reference, age=1.0, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
-            lms_value_array_list.append(lms_value_array_for_measurement)
+            # store the lms data in lms_value_array_list
+            lms_value_array_list = [{"reference_name": reference, "data": lms_value_array_for_measurement}]
+            
         except LookupError as err:
             print(err)
             return
     
     nine_centiles = []
-    for index, centile in enumerate(centile_array):
+    for index, centile in enumerate(nine_centile_array):
         # iterate through the 9 centiles
         uk90_preterm, who_infants, who_children, uk90_children = [], [], [], []
         z = sds_value_for_centile_value(centile=centile)
         for index, reference_data in enumerate(lms_value_array_list):
             # each centile is made of difference references
             centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=reference_data["data"], reference=reference)
-            if reference_data['reference_name']==array_list[0]['reference_name']:
-                uk90_preterm = centile_data
-            elif reference_data['reference_name']==array_list[1]['reference_name']:
-                who_infants = centile_data
-            elif reference_data['reference_name']==array_list[2]['reference_name']:
-                who_children = centile_data
-            elif reference_data['reference_name']==array_list[3]['reference_name']:
-                uk90_children = centile_data
-        nine_centiles.append({"sds": z, "centile": centile, array_list[0]['reference_name']:uk90_preterm, array_list[1]['reference_name'] : who_infants, array_list[2]['reference_name']: who_children, array_list[3]['reference_name']:uk90_children})
+            if reference == 'uk-who':
+                if reference_data['reference_name']==array_list[0]['reference_name']:
+                    uk90_preterm = centile_data
+                elif reference_data['reference_name']==array_list[1]['reference_name']:
+                    who_infants = centile_data
+                elif reference_data['reference_name']==array_list[2]['reference_name']:
+                    who_children = centile_data
+                elif reference_data['reference_name']==array_list[3]['reference_name']:
+                    uk90_children = centile_data
+                nine_centiles.append({"sds": z, "centile": centile, array_list[0]['reference_name']:uk90_preterm, array_list[1]['reference_name'] : who_infants, array_list[2]['reference_name']: who_children, array_list[3]['reference_name']:uk90_children})
+            else:
+                ## turner or T21 data
+                nine_centiles.append({"sds": z, "centile": centile, reference_data["reference_name"]: centile_data})
+        
     return_object = {"centile_data": { measurement_method: nine_centiles}}
+
+    filename = f"{reference}-{measurement_method}-{sex}.json"
     
     # This stores the data to file if the raw data is needed: too big to dump to console
-    # with open('data.json', 'w') as file:
-    #     file.write(json.dumps(return_object))
-    #     file.close()
+    with open(filename, 'w') as file:
+        file.write(json.dumps(return_object, separators=(',', ':')))
+        file.close()
     
     return return_object
+
+def create_all_charts():
+    sexes = ["male", "female"]
+    references = ["trisomy-21", "turners-syndrome", 'uk-who']
+    measurement_methods = ['height', 'weight', 'ofc', 'bmi']
+    for number, reference in enumerate(references):
+        for index, sex in enumerate(sexes):
+            for place, measurement_method in enumerate(measurement_methods):
+                born_preterm = False
+                if reference=="uk-who":
+                    born_preterm = True
+                try:
+                    data = create_chart(reference=reference, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
+                except:
+                    data = []
+
+def rounded_sds_for_centile(centile:float)->float:
+    """
+    converts a centile (supplied as a percentage) using the scipy package to the nearest 2/3 SDS.
+    """
+    sds = stats.norm.ppf(centile/100)
+    if sds == 0:
+        return sds
+    else:
+        rounded_to_nearest_two_thirds = round(sds/(2/3))
+        return rounded_to_nearest_two_thirds*(2/3)
+
+def sds_for_centile(centile: float)->float:
+    """
+    converts a centile (supplied as a percentage) using the scipy package to an SDS.
+    """
+    sds = stats.norm.ppf(centile/100)
+    return sds
 
 
 def sds_value_for_centile_value(centile: float):
