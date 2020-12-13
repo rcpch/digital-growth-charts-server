@@ -11,6 +11,7 @@ import controllers
 import blueprints
 import schemas
 import apispec_generation
+from rcpchgrowth.rcpchgrowth import create_all_charts
 
 
 # Declare shell colour variables for pretty logging output
@@ -93,6 +94,27 @@ except Exception as error:
     print(f"{FAIL} * An error occurred while processing the openAPI3.0 spec{ENDC}")
     print(f"{FAIL} *  > {error} {ENDC}")
 
+try:
+  # create all the charts and store in chart_data
+  references = ["trisomy-21", "turners-syndrome", 'uk-who']
+  for references in enumerate(references):
+    for index, sex in enumerate(sexes):
+            for place, measurement_method in enumerate(measurement_methods):
+                born_preterm = False
+                if reference=="uk-who":
+                    born_preterm = True
+                try:
+                    data = create_chart(reference=reference, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
+                except:
+                    data = []
+                return_object = { f"{reference}-{measurement_method}-{sex}": }
+                all_charts.append(data)
+   # This stores the data to file if the raw data is needed: too big to dump to console
+  with open(filename, 'w') as file:
+      file.write(json.dumps(return_object, separators=(',', ':')))
+      file.close()
+except:
+  raise ValueError("Unable to create charts")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')

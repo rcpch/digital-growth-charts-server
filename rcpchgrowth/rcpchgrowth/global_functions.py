@@ -417,20 +417,13 @@ def create_chart(reference: str, measurement_method: str, sex: str, born_preterm
                 nine_centiles.append({"sds": z, "centile": centile, reference_data["reference_name"]: centile_data})
         
     return_object = {"centile_data": { measurement_method: nine_centiles}}
-
-    filename = f"{reference}-{measurement_method}-{sex}.json"
-    
-    # This stores the data to file if the raw data is needed: too big to dump to console
-    with open(filename, 'w') as file:
-        file.write(json.dumps(return_object, separators=(',', ':')))
-        file.close()
-    
     return return_object
 
 def create_all_charts():
     sexes = ["male", "female"]
     references = ["trisomy-21", "turners-syndrome", 'uk-who']
     measurement_methods = ['height', 'weight', 'ofc', 'bmi']
+    all_charts=[]
     for number, reference in enumerate(references):
         for index, sex in enumerate(sexes):
             for place, measurement_method in enumerate(measurement_methods):
@@ -441,6 +434,25 @@ def create_all_charts():
                     data = create_chart(reference=reference, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
                 except:
                     data = []
+                return_object = { f"{reference}-{measurement_method}-{sex}": }
+                all_charts.append(data)
+    return all_charts
+
+    """
+    structure:
+
+    sex: {
+        height: [{l: , x: , y: }, ....],
+        weight: [{l: , x: , y: }, ....],
+        ofc: [{l: , x: , y: }, ....],
+        bmi: [{l: , x: , y: }, ....],
+    },
+    female: {
+        height: [{l: , x: , y: }, ....],
+        weight: [{l: , x: , y: }, ....],
+        ofc: [{l: , x: , y: }, ....],
+        bmi: [{l: , x: , y: }, ....],
+    }
 
 def rounded_sds_for_centile(centile:float)->float:
     """
