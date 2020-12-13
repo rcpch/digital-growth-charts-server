@@ -3,9 +3,10 @@ import scipy.stats as stats
 from scipy.interpolate import interp1d
 # from scipy import interpolate  #see below, comment back in if swapping interpolation method
 # from scipy.interpolate import CubicSpline #see below, comment back in if swapping interpolation method
-from .uk_who import uk_who_lms_array_for_measurement_and_sex
+from .uk_who import uk_who_lms_array_for_measurement_and_sex, select_reference_data_for_uk_who_chart
 from .turner import turner_lms_array_for_measurement_and_sex
 from .trisomy_21 import trisomy_21_lms_array_for_measurement_and_sex
+from .constants.parameter_constants import *
 import logging
 import json
 
@@ -329,112 +330,85 @@ def generate_centile(z: float, centile: float, measurement_method: str, sex: str
     return centile_measurements
 
 
-def create_chart(reference: str, measurement_method: str, sex: str, born_preterm=False):
+def create_chart(reference: str):
     ## creates a chart of 9 centiles
     nine_centile_array = [0.4, 2, 9, 25, 50, 75, 91, 98, 99.6]
     centile_array_experiment = [3, 25, 50, 75, 97 ]
     lms_value_array_list = []
+    all_measurements = []
+    all_sexes = []
 
-    if reference == 'uk-who': 
-        # The UK-WHO reference is made up of 4 separate references, so these each need fetching
-        # Not all references are used for all measurement: eg bmi is not used in the preterm references
-        # The references which are used are added to an array (lms_value_array_list), which is used to generate
-        # the nine centiles
+    for num, sex in enumerate(SEXES):
+        for index, measurement_method in enumerate(MEASUREMENT_METHODS):
+            # generates a dictionary of centiles for each measurement
 
-        #select the correct reference data and store it in a reference-specific variable as an array
-        try:
-            uk90_preterm_reference = uk_who_lms_array_for_measurement_and_sex(
-                age=-0.01, 
-                measurement_method=measurement_method, 
-                sex=sex, 
-                born_preterm=born_preterm)
-        except:
-            uk90_preterm_reference = []
-        try:
-            uk_who_infants_reference = uk_who_lms_array_for_measurement_and_sex(
-                age=0.04, 
-                measurement_method=measurement_method, 
-                sex=sex, 
-                born_preterm=born_preterm)
-        except:
-            uk_who_infants_reference = []
-        try:
-            uk_who_children_reference = uk_who_lms_array_for_measurement_and_sex(
-                age=2.0, 
-                measurement_method=measurement_method, 
-                sex=sex, 
-                born_preterm=born_preterm)
-        except:
-            uk_who_children_reference = []
-        try:
-            uk90_children_reference = uk_who_lms_array_for_measurement_and_sex(
-                age=4.0, 
-                measurement_method=measurement_method, 
-                sex=sex, 
-                born_preterm=born_preterm)
-        except:
-            uk90_children_reference=[]
-        
-        ## Build an array of all the references
-        array_list = [{"reference_name": "uk90_preterm_data", "data": uk90_preterm_reference}, {"reference_name":"who_infant_data", "data": uk_who_infants_reference}, {"reference_name":"who_child_data", "data": uk_who_children_reference}, {"reference_name":"uk90_child_data", "data": uk90_children_reference}]
+            if reference == 'uk-who': 
+                # The UK-WHO reference is made up of 4 separate references, so these each need fetching
+                # Not all references are used for all measurement: eg bmi is not used in the preterm references
+                # The references which are used are added to an array (lms_value_array_list), which is used to generate
+                # the nine centiles
 
-        ## Pare the array_list down to include only those references which have been selected. Store this as lms_value_array_list
-        for element in array_list:
-            if len(element["data"]) > 0:
-                lms_value_array_list.append(element)
-    else:
-        try:
-            # the Turner and T21 references are single references
-            lms_value_array_for_measurement = lms_value_array_for_measurement_for_reference(
-                reference=reference, age=1.0, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
-            # store the lms data in lms_value_array_list
-            lms_value_array_list = [{"reference_name": reference, "data": lms_value_array_for_measurement}]
-            
-        except LookupError as err:
-            print(err)
-            return
-    
-    nine_centiles = []
-    for index, centile in enumerate(nine_centile_array):
-        # iterate through the 9 centiles
-        uk90_preterm, who_infants, who_children, uk90_children = [], [], [], []
-        z = sds_value_for_centile_value(centile=centile)
-        for index, reference_data in enumerate(lms_value_array_list):
-            # each centile is made of difference references
-            centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=reference_data["data"], reference=reference)
-            if reference == 'uk-who':
-                if reference_data['reference_name']==array_list[0]['reference_name']:
-                    uk90_preterm = centile_data
-                elif reference_data['reference_name']==array_list[1]['reference_name']:
-                    who_infants = centile_data
-                elif reference_data['reference_name']==array_list[2]['reference_name']:
-                    who_children = centile_data
-                elif reference_data['reference_name']==array_list[3]['reference_name']:
-                    uk90_children = centile_data
-                nine_centiles.append({"sds": z, "centile": centile, array_list[0]['reference_name']:uk90_preterm, array_list[1]['reference_name'] : who_infants, array_list[2]['reference_name']: who_children, array_list[3]['reference_name']:uk90_children})
+                #select all the UK-WHO references for this measurement and sex and store it in a reference-specific variable as an array list
+                lms_value_array_list = select_reference_data_for_uk_who_chart(measurement_method=measurement_method, sex=sex)
             else:
-                ## turner or T21 data
-                nine_centiles.append({"sds": z, "centile": centile, reference_data["reference_name"]: centile_data})
+                try:
+                    # the Turner and T21 references are single references
+                    lms_value_array_for_measurement = lms_value_array_for_measurement_for_reference(
+                        reference=reference, age=1.0, measurement_method=measurement_method, sex=sex, born_preterm=False)
+                    # store the lms data in lms_value_array_list
+                    lms_value_array_list = [{"reference_name": reference, "data": lms_value_array_for_measurement}]
+                    
+                except LookupError as err:
+                    print(err)
+                    return
+    
+            nine_centiles = []
+            for index, centile in enumerate(nine_centile_array):
+                # iterate through the 9 centiles
+                uk90_preterm, who_infants, who_children, uk90_children = [], [], [], []
+                z = sds_value_for_centile_value(centile=centile)
+                for index, reference_data in enumerate(lms_value_array_list):
+                    # each centile is made of difference references
+                    try:
+                        centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=reference_data["data"], reference=reference)
+                    except:
+                        name = reference_data["reference_name"]
+                        print(f"There is no data for {measurement_method} in {name} reference.")
+                        centile_data = []
+                    if reference == 'uk-who':
+                        if reference_data['reference_name']==UK90_PRETERM:
+                            uk90_preterm = centile_data
+                        elif reference_data['reference_name']==UK_WHO_INFANT:
+                            who_infants = centile_data
+                        elif reference_data['reference_name']==UK_WHO_CHILD:
+                            who_children = centile_data
+                        elif reference_data['reference_name']==UK90_CHILD:
+                            uk90_children = centile_data
+                        nine_centiles.append({"sds": z, "centile": centile, reference_data['reference_name']: centile_data})
+                    else:
+                        ## turner or T21 data
+                        nine_centiles.append({"sds": z, "centile": centile, reference_data["reference_name"]: centile_data})
+            all_measurements.append({measurement_method: nine_centiles})
+        all_sexes.append({sex: all_measurements})
         
-    return_object = {"centile_data": { measurement_method: nine_centiles}}
-    return return_object
+    return all_sexes
 
 def create_all_charts():
-    sexes = ["male", "female"]
-    references = ["trisomy-21", "turners-syndrome", 'uk-who']
-    measurement_methods = ['height', 'weight', 'ofc', 'bmi']
+    ## Creates all charts for all references. 
+    ## Only to be used by python package for interested uses. Not used in production
+    ## Be aware will generate a large amount of data.
+
     all_charts=[]
-    for number, reference in enumerate(references):
-        for index, sex in enumerate(sexes):
-            for place, measurement_method in enumerate(measurement_methods):
+    for number, reference in enumerate(REFERENCES):
+        for index, sex in enumerate(SEXES):
+            for place, measurement_method in enumerate(MEASUREMENT_METHODS):
                 born_preterm = False
                 if reference=="uk-who":
                     born_preterm = True
                 try:
-                    data = create_chart(reference=reference, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
+                    data = create_chart(reference=reference)
                 except:
                     data = []
-                return_object = { f"{reference}-{measurement_method}-{sex}": }
                 all_charts.append(data)
     return all_charts
 
@@ -442,17 +416,76 @@ def create_all_charts():
     structure:
 
     sex: {
-        height: [{l: , x: , y: }, ....],
-        weight: [{l: , x: , y: }, ....],
-        ofc: [{l: , x: , y: }, ....],
-        bmi: [{l: , x: , y: }, ....],
+        height: [
+                sds: -2.6667,
+                centile: 0.4,
+                uk90_preterm: [{l: , x: , y: }, ....]
+                uk_who_infants: [{l: , x: , y: }, ....]
+                uk_who_children: [{l: , x: , y: }, ....]
+                uk90_children: [{l: , x: , y: }, ....]
+            ],
+        weight: [ ....],
+        ofc: [ ....],
+        bmi: [ ....],
     },
     female: {
-        height: [{l: , x: , y: }, ....],
-        weight: [{l: , x: , y: }, ....],
-        ofc: [{l: , x: , y: }, ....],
-        bmi: [{l: , x: , y: }, ....],
+        height: [ ....],
+        weight: [ ....],
+        ofc: [ ....],
+        bmi: [ ....],
     }
+
+    or
+
+    uk90_preterm: {
+        male: {
+            height: [
+                sds: -2.667,
+                centile: 0.4
+                data: [{l: , x: , y: }, ....]
+            ],
+            weight: [...]
+        },
+        female {...}
+    }
+
+    uk_who: {
+        male: {
+            height: [
+                sds: -2.6667,
+                centile: 0.4,
+                uk90_preterm: [{l: , x: , y: }, ....]
+                uk_who_infants: [{l: , x: , y: }, ....]
+                uk_who_children: [{l: , x: , y: }, ....]
+                uk90_children: [{l: , x: , y: }, ....]
+            ],
+            weight: [ ....],
+            ofc: [ ....],
+            bmi: [ ....],
+        },
+        female:{
+
+        }
+    }
+
+    but
+    trisomy-21: {
+        male: {
+            height: [
+                sds: -2.6667,
+                centile: 0.4,
+                trisomy-21: [{l: , x: , y: }, ....]
+            ],
+            weight: [ ....],
+            ofc: [ ....],
+            bmi: [ ....],
+        },
+        female:{
+
+        }
+    }
+
+    """
 
 def rounded_sds_for_centile(centile:float)->float:
     """

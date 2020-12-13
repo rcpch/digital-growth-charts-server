@@ -165,3 +165,50 @@ def uk_who_lms_array_for_measurement_and_sex(
         raise LookupError(data_error)
     else:
         return selected_reference["measurement"][measurement_method][sex]
+
+def select_reference_data_for_uk_who_chart(measurement_method: str, sex: str, born_preterm=True):
+
+    # function called by global_functions
+    # returns reference data to be used to create charts
+
+    try:
+        uk90_preterm_reference = uk_who_lms_array_for_measurement_and_sex(
+            age=-0.01,
+            measurement_method=measurement_method, 
+            sex=sex, 
+            born_preterm=born_preterm)
+    except:
+        uk90_preterm_reference = []
+    try:
+        uk_who_infants_reference = uk_who_lms_array_for_measurement_and_sex(
+            age=0.04, 
+            measurement_method=measurement_method, 
+            sex=sex, 
+            born_preterm=born_preterm)
+    except:
+        uk_who_infants_reference = []
+    try:
+        uk_who_children_reference = uk_who_lms_array_for_measurement_and_sex(
+            age=2.0, 
+            measurement_method=measurement_method, 
+            sex=sex, 
+            born_preterm=born_preterm)
+    except:
+        uk_who_children_reference = []
+    try:
+        uk90_children_reference = uk_who_lms_array_for_measurement_and_sex(
+            age=4.0, 
+            measurement_method=measurement_method, 
+            sex=sex, 
+            born_preterm=born_preterm)
+    except:
+        uk90_children_reference=[]
+    
+    ## Build an array of all the references
+    array_list = [{"reference_name": UK90_PRETERM, "data": uk90_preterm_reference}, {"reference_name":UK_WHO_INFANT, "data": uk_who_infants_reference}, {"reference_name":UK_WHO_CHILD, "data": uk_who_children_reference}, {"reference_name":UK90_CHILD, "data": uk90_children_reference}]
+    # ## Pare the array_list down to include only those references which have been selected. Store this as lms_value_array_list
+    # for element in array_list:
+    #     if len(element["data"]) > 0:
+    #         lms_value_array_list.append(element)
+
+    return array_list
