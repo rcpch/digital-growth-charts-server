@@ -11,7 +11,7 @@ import controllers
 import blueprints
 import schemas
 import apispec_generation
-from rcpchgrowth.rcpchgrowth import create_uk_who_chart
+from rcpchgrowth.rcpchgrowth import create_uk_who_chart, create_trisomy_21_chart, create_turner_chart
 from rcpchgrowth.rcpchgrowth.constants.parameter_constants import *
 
 
@@ -68,9 +68,35 @@ try:
       print("now writing to file...")
       file.write(json.dumps(result, separators=(',', ':')))
       file.close()
-      print(f" * {OKGREEN}New Chart Data has been generated.")
+      print(f" * {OKGREEN}New UK-WHO Chart Data has been generated.")
 except:
-  raise ValueError("Unable to create charts")
+  raise ValueError("Unable to create UK-WHO charts")
+
+# Trisomy 21
+try:  
+  result = create_trisomy_21_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+  filename = "trisomy_21_chart_data.json"
+  file_path = path.join(chart_data_folder, filename)
+  with open(file_path, 'w') as file:
+      print("now writing to file...")
+      file.write(json.dumps(result, separators=(',', ':')))
+      file.close()
+      print(f" * {OKGREEN}New Trisomy 21 Chart Data has been generated.")
+except:
+  raise ValueError("Unable to create Trisomy 21 charts")
+
+# Turner's Syndrome
+try:  
+  result = create_turner_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+  filename = "turners_chart_data.json"
+  file_path = path.join(chart_data_folder, filename)
+  with open(file_path, 'w') as file:
+      print("now writing to file...")
+      file.write(json.dumps(result, separators=(',', ':')))
+      file.close()
+      print(f" * {OKGREEN}New Turner's Syndrome Chart Data has been generated.")
+except:
+  raise ValueError("Unable to create Turner's Syndrome charts")
 
 # TODO #123 the spreadsheet endpoint probably needs to be deprecated
 @app.route("/uk-who/spreadsheet", methods=["POST"])

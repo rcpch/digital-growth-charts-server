@@ -72,3 +72,6 @@ def reference_data_absent(
         return True, f"Turner's syndrome only affects girls and women."
     else:
         return False, "Valid Data"
+
+def select_reference_data_for_turners(measurement_method: str, sex: str):
+    return turner_lms_array_for_measurement_and_sex(measurement_method=measurement_method, sex=sex, age=1.0)

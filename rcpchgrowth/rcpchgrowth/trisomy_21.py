@@ -70,3 +70,6 @@ def trisomy_21_lms_array_for_measurement_and_sex(
         raise LookupError(data_error)
     else:
         return trisomy_21_DATA["measurement"][measurement_method][sex]
+
+def select_reference_data_for_trisomy_21(measurement_method:str, sex:str):
+    return trisomy_21_lms_array_for_measurement_and_sex(measurement_method=measurement_method, sex=sex, age=1.0)

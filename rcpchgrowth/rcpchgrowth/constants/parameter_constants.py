@@ -1,5 +1,8 @@
 # references
-REFERENCES = ["uk-who", "trisomy-21", "turners-syndrome"]
+TRISOMY_21 = "trisomy-21"
+UK_WHO = "uk-who"
+TURNERS = "turners-syndrome"
+REFERENCES = [UK_WHO, TRISOMY_21, TURNERS]
 
 SEXES = ["male", "female"]
 
