@@ -23,7 +23,7 @@ def create_plottable_child_data(child_results_array):
                 "y": child_result["child_observation_value"]["observation_value"],
                 "centile_band": child_result["measurement_calculated_values"]["centile_band"],
                 "centile_value": child_result["measurement_calculated_values"]["centile"],
-                "label": "chronological_age",
+                "age_type": "chronological_age",
                 "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
                 "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
                 "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"]
@@ -33,7 +33,7 @@ def create_plottable_child_data(child_results_array):
                 "y": child_result["child_observation_value"]["observation_value"],
                 "centile_band": child_result["measurement_calculated_values"]["centile_band"],
                 "centile_value": child_result["measurement_calculated_values"]["centile"],
-                "label": "corrected_age",
+                "age_type": "corrected_age",
                 "calendar_age": child_result["measurement_dates"]["corrected_calendar_age"],
                 "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
                 "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"]
@@ -41,7 +41,7 @@ def create_plottable_child_data(child_results_array):
             chronological_sds_data_point = {
                 "x": child_result["measurement_dates"]["chronological_decimal_age"], 
                 "y": child_result["measurement_calculated_values"]["sds"],
-                "label": "chronological_age",
+                "age_type": "chronological_age",
                 "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
                 "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
                 "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"]
@@ -49,7 +49,7 @@ def create_plottable_child_data(child_results_array):
             corrected_sds_data_point = {
                 "x": child_result["measurement_dates"]["corrected_decimal_age"], 
                 "y": child_result["measurement_calculated_values"]["sds"],
-                "label": "corrected_age",
+                "age_type": "corrected_age",
                 "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
                 "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
                 "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"]
@@ -120,7 +120,7 @@ def sds_value_for_centile_value(centile: float):
                 y: 120 `this is the observation value - the units will be added in the client
                 "centile_band": 'You childs height is between the 75th and 91st centiles' `a text advice string for labelling,
                 "centile_value": 86 `centile number value - reported but not used: the project board do not like exact centile numbers,
-                "label": "corrected_age", `this is a flag to differentiate the two ages for the same observation_value
+                "age_type": "corrected_age", `this is a flag to differentiate the two ages for the same observation_value
                 "calendar_age": "9 years and 4 months" `this is the calendar age for labelling
                 "corrected_gestational_weeks": 23 `the corrected gestational age if relevant for labelling
                 "corrected_gestational_days": 1 `the corrected gestational age if relevant for labelling
@@ -129,7 +129,7 @@ def sds_value_for_centile_value(centile: float):
         height_sds: [
                 x: 9.415, `this is the age of the child at date of measurement in decimal years
                 y: 1.3 `this is the SDS value for SDS charts
-                "label": "corrected_age", `this is a flag to differentiate the two ages for the same observation_value
+                "age_type": "corrected_age", `this is a flag to differentiate the two ages for the same observation_value
                 "calendar_age": "9 years and 4 months" `this is the calendar age for labelling
                 "corrected_gestational_weeks": 23 `the corrected gestational age if relevant for labelling
                 "corrected_gestational_days": 1 `the corrected gestational age if relevant for labelling
