@@ -20,9 +20,9 @@ reference: reference data
 
 #load the reference data
 
-trisomy_21_DATA = pkg_resources.resource_filename(__name__, "/data_tables/trisomy_21.json")
-with open(trisomy_21_DATA) as json_file:
-            trisomy_21_DATA = json.load(json_file)
+TRISOMY_21_DATA = pkg_resources.resource_filename(__name__, "/data_tables/trisomy_21.json")
+with open(TRISOMY_21_DATA) as json_file:
+            TRISOMY_21_DATA = json.load(json_file)
             json_file.close()
 
 def reference_data_absent( 
@@ -69,7 +69,7 @@ def trisomy_21_lms_array_for_measurement_and_sex(
     if data_invalid:
         raise LookupError(data_error)
     else:
-        return trisomy_21_DATA["measurement"][measurement_method][sex]
+        return TRISOMY_21_DATA["measurement"][measurement_method][sex]
 
 def select_reference_data_for_trisomy_21(measurement_method:str, sex:str):
     return trisomy_21_lms_array_for_measurement_and_sex(measurement_method=measurement_method, sex=sex, age=1.0)

@@ -466,7 +466,7 @@ def create_trisomy_21_chart(centile_selection: str):
     ## Cole method selection is stored in the cole_method flag.
     ## If no parameter is passed, default is the Cole method
 
-    centile_collection = []
+    centile_collection = [] 
 
     if centile_selection == COLE_TWO_THIRDS_SDS_NINE_CENTILES:
         centile_collection = COLE_TWO_THIRDS_SDS_NINE_CENTILE_COLLECTION
@@ -475,7 +475,7 @@ def create_trisomy_21_chart(centile_selection: str):
         centile_collection = THREE_PERCENT_CENTILE_COLLECTION
         cole_method = False
     
-    reference_data = [] # all data for a the reference are stored here: this is returned to the user 
+    reference_data = {} # all data for a the reference are stored here: this is returned to the user 
     sex_list: dict = {}
 
     for sex_index, sex in enumerate(SEXES):
@@ -501,7 +501,6 @@ def create_trisomy_21_chart(centile_selection: str):
                 
                 ## Collect the LMS values from the correct reference
                 lms_array_for_measurement=select_reference_data_for_trisomy_21(measurement_method=measurement_method, sex=sex)
-                
                 ## Generate a centile. there will be nine of these if Cole method selected.
                 ## Some data does not exist at all ages, so any error reflects missing data.
                 ## If this happens, an empty list is returned.
@@ -524,7 +523,7 @@ def create_trisomy_21_chart(centile_selection: str):
             sex_list.update({sex: measurements})
                 
     ## all data can now be tagged by reference_name and added to reference_data
-    reference_data.append({TRISOMY_21: sex_list})
+    reference_data={TRISOMY_21: sex_list}
     return reference_data
 
 def create_turner_chart(centile_selection: str):
@@ -543,7 +542,7 @@ def create_turner_chart(centile_selection: str):
         centile_collection = THREE_PERCENT_CENTILE_COLLECTION
         cole_method = False
     
-    reference_data = [] # all data for a the reference are stored here: this is returned to the user 
+    reference_data = {} # all data for a the reference are stored here: this is returned to the user 
     sex_list: dict = {}
 
     for sex_index, sex in enumerate(SEXES):
@@ -598,7 +597,7 @@ def create_turner_chart(centile_selection: str):
             sex_list.update({sex: measurements})
                 
     ## all data can now be tagged by reference_name and added to reference_data
-    reference_data.append({TURNERS: sex_list})
+    reference_data={TURNERS: sex_list}
     return reference_data
 
 

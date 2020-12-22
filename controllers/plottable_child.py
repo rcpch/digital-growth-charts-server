@@ -1,12 +1,15 @@
 def create_plottable_child_data(child_results_array):
-    child_height_data = []
-    child_weight_data = []
-    child_bmi_data = []
-    child_ofc_data = []
-    child_height_sds_data = []
-    child_weight_sds_data = []
-    child_bmi_sds_data = []
-    child_ofc_sds_data = []
+    # child_height_data = []
+    # child_weight_data = []
+    # child_bmi_data = []
+    # child_ofc_data = []
+    # child_height_sds_data = []
+    # child_weight_sds_data = []
+    # child_bmi_sds_data = []
+    # child_ofc_sds_data = []
+    centile_data = []
+    sds_data = []
+
     for count, child_result in enumerate(child_results_array):
         if(child_result):
 
@@ -58,28 +61,37 @@ def create_plottable_child_data(child_results_array):
             measurement_data_points=[corrected_data_point, chronological_data_point]
             measurement_sds_data_points=[corrected_sds_data_point, chronological_sds_data_point]
 
-            if(child_result["child_observation_value"]["measurement_method"] == "height"):
-                child_height_data.append(measurement_data_points)
-                child_height_sds_data.append(measurement_sds_data_points)
-            elif(child_result["child_observation_value"]["measurement_method"] == "weight"):
-                child_weight_data.append(measurement_data_points)
-                child_weight_sds_data.append(measurement_sds_data_points)
-            elif(child_result["child_observation_value"]["measurement_method"] == "bmi"):
-                child_bmi_data.append(measurement_data_points)
-                child_bmi_sds_data.append(measurement_sds_data_points)
-            elif(child_result["child_observation_value"]["measurement_method"] == "ofc"):
-                child_ofc_data.append(measurement_data_points)
-                child_ofc_sds_data.append(measurement_sds_data_points)
+            # if(child_result["child_observation_value"]["measurement_method"] == "height"):
+            #     child_height_data.append(measurement_data_points)
+            #     child_height_sds_data.append(measurement_sds_data_points)
+            # elif(child_result["child_observation_value"]["measurement_method"] == "weight"):
+            #     child_weight_data.append(measurement_data_points)
+            #     child_weight_sds_data.append(measurement_sds_data_points)
+            # elif(child_result["child_observation_value"]["measurement_method"] == "bmi"):
+            #     child_bmi_data.append(measurement_data_points)
+            #     child_bmi_sds_data.append(measurement_sds_data_points)
+            # elif(child_result["child_observation_value"]["measurement_method"] == "ofc"):
+            #     child_ofc_data.append(measurement_data_points)
+            #     child_ofc_sds_data.append(measurement_sds_data_points)
+
+            centile_data.append(measurement_data_points)
+            sds_data.append(measurement_sds_data_points)
+
+    # result = {
+    #     "heights": child_height_data,
+    #     "height_sds": child_height_sds_data,
+    #     "weights": child_weight_data,
+    #     "weight_sds": child_weight_sds_data,
+    #     "bmis": child_bmi_data,
+    #     "bmi_sds": child_bmi_sds_data,
+    #     "ofcs": child_ofc_data,
+    #     "ofc_sds": child_ofc_sds_data
+    # }
 
     result = {
-        "heights": child_height_data,
-        "height_sds": child_height_sds_data,
-        "weights": child_weight_data,
-        "weight_sds": child_weight_sds_data,
-        "bmis": child_bmi_data,
-        "bmi_sds": child_bmi_sds_data,
-        "ofcs": child_ofc_data,
-        "ofc_sds": child_ofc_sds_data
+        "measurement_method": child_result["child_observation_value"]["measurement_method"],
+        "centile_data": centile_data,
+        "sds_data": sds_data
     }
 
     return result
