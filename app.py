@@ -59,44 +59,44 @@ from app import app     # position of this import is important. Don't allow it t
 ###########################
 
 
-# create all the charts and store in chart_data
-try:  
-  result = create_uk_who_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
-  filename = "uk_who_chart_data.json"
-  file_path = path.join(chart_data_folder, filename)
-  with open(file_path, 'w') as file:
-      print("now writing to file...")
-      file.write(json.dumps(result, separators=(',', ':')))
-      file.close()
-      print(f" * {OKGREEN}New UK-WHO Chart Data has been generated.")
-except:
-  raise ValueError("Unable to create UK-WHO charts")
+# create all the charts and store in chart_data: commenting out as builds locally but causes failure to deploy to azure.
+# try:  
+#   result = create_uk_who_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+#   filename = "uk_who_chart_data.json"
+#   file_path = path.join(chart_data_folder, filename)
+#   with open(file_path, 'w') as file:
+#       print("now writing to file...")
+#       file.write(json.dumps(result, separators=(',', ':')))
+#       file.close()
+#       print(f" * {OKGREEN}New UK-WHO Chart Data has been generated.")
+# except:
+#   raise ValueError("Unable to create UK-WHO charts")
 
-# Trisomy 21
-try:  
-  result = create_trisomy_21_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
-  filename = "trisomy_21_chart_data.json"
-  file_path = path.join(chart_data_folder, filename)
-  with open(file_path, 'w') as file:
-      print("now writing to file...")
-      file.write(json.dumps(result, separators=(',', ':')))
-      file.close()
-      print(f" * {OKGREEN}New Trisomy 21 Chart Data has been generated.")
-except:
-  raise ValueError("Unable to create Trisomy 21 charts")
+# # Trisomy 21
+# try:  
+#   result = create_trisomy_21_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+#   filename = "trisomy_21_chart_data.json"
+#   file_path = path.join(chart_data_folder, filename)
+#   with open(file_path, 'w') as file:
+#       print("now writing to file...")
+#       file.write(json.dumps(result, separators=(',', ':')))
+#       file.close()
+#       print(f" * {OKGREEN}New Trisomy 21 Chart Data has been generated.")
+# except:
+#   raise ValueError("Unable to create Trisomy 21 charts")
 
-# Turner's Syndrome
-try:  
-  result = create_turner_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
-  filename = "turners_chart_data.json"
-  file_path = path.join(chart_data_folder, filename)
-  with open(file_path, 'w') as file:
-      print("now writing to file...")
-      file.write(json.dumps(result, separators=(',', ':')))
-      file.close()
-      print(f" * {OKGREEN}New Turner's Syndrome Chart Data has been generated.")
-except:
-  raise ValueError("Unable to create Turner's Syndrome charts")
+# # Turner's Syndrome
+# try:  
+#   result = create_turner_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+#   filename = "turners_chart_data.json"
+#   file_path = path.join(chart_data_folder, filename)
+#   with open(file_path, 'w') as file:
+#       print("now writing to file...")
+#       file.write(json.dumps(result, separators=(',', ':')))
+#       file.close()
+#       print(f" * {OKGREEN}New Turner's Syndrome Chart Data has been generated.")
+# except:
+#   raise ValueError("Unable to create Turner's Syndrome charts")
 
 # TODO #123 the spreadsheet endpoint probably needs to be deprecated
 @app.route("/uk-who/spreadsheet", methods=["POST"])
