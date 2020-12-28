@@ -14,6 +14,9 @@
 		},
 		{
 			"path": "../../../GrowthChartRepo"
+		},
+		{
+			"path": "../../../react/component-libraries/digital-growth-charts-react-component-library"
 		}
 	],
 	"settings": {
