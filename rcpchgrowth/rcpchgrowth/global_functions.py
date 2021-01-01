@@ -507,7 +507,7 @@ def create_trisomy_21_chart(centile_selection: str):
                 try:
                     centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference=TRISOMY_21)
                 except:
-                    print(f"There is no data for {measurement_method} at this age.")
+                    print(f"There is no data in {reference} for {measurement_method} at this age.")
                     centile_data = []
 
                 ## Store this centile for a given measurement

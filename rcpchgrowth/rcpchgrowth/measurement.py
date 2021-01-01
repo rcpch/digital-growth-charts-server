@@ -190,7 +190,7 @@ class Measurement:
             # term baby
             self.estimated_date_delivery = None
             self.estimated_date_delivery_string = None
-            self.corrected_calendar_age = None
+            self.corrected_calendar_age = self.chronological_calendar_age
 
         birth_data = {
             "birth_date": birth_date,
