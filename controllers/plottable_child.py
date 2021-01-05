@@ -22,6 +22,7 @@ def create_plottable_child_data(child_results_array):
             ## linked by a line, the chronological value denotes as a dot, the corrected value as a cross.
 
             chronological_data_point = {
+                "measurement_method": child_result["child_observation_value"]["measurement_method"],
                 "x": child_result["measurement_dates"]["chronological_decimal_age"], 
                 "y": child_result["child_observation_value"]["observation_value"],
                 "centile_band": child_result["measurement_calculated_values"]["centile_band"],
@@ -32,6 +33,7 @@ def create_plottable_child_data(child_results_array):
                 "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"]
             }
             corrected_data_point = {
+                "measurement_method": child_result["child_observation_value"]["measurement_method"],
                 "x": child_result["measurement_dates"]["corrected_decimal_age"], 
                 "y": child_result["child_observation_value"]["observation_value"],
                 "centile_band": child_result["measurement_calculated_values"]["centile_band"],
@@ -42,6 +44,7 @@ def create_plottable_child_data(child_results_array):
                 "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"]
             }
             chronological_sds_data_point = {
+                "measurement_method": child_result["child_observation_value"]["measurement_method"],
                 "x": child_result["measurement_dates"]["chronological_decimal_age"], 
                 "y": child_result["measurement_calculated_values"]["sds"],
                 "age_type": "chronological_age",
@@ -50,6 +53,7 @@ def create_plottable_child_data(child_results_array):
                 "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"]
             }
             corrected_sds_data_point = {
+                "measurement_method": child_result["child_observation_value"]["measurement_method"],
                 "x": child_result["measurement_dates"]["corrected_decimal_age"], 
                 "y": child_result["measurement_calculated_values"]["sds"],
                 "age_type": "corrected_age",
