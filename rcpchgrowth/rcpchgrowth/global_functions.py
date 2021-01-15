@@ -86,12 +86,31 @@ def z_score(l: float, m: float, s: float, observation: float):
     Converts the (age-specific) L, M and S parameters into a z-score
     """
     sds = 0.0
+    
     if l != 0.0:
         sds = (((math.pow((observation / m), l)) - 1) / (l * s))
     else:
         sds = (math.log(observation / m) / s)
+        
     return sds
 
+def gamlss_z_score(l: float, m: float, s: float, observation_value: float):
+    """
+    Converts the (age-specific) L, M and S parameters into a z-score, correcting for values of L which are negative
+    """
+    sds = 0.0
+    if l != 0.0:
+        sds = (((math.pow((observation / m), l)) - 1) / (l * s))
+    else:
+        sds = (math.log(observation / m) / s)
+
+    p1 = stats.norm.cdf(1 / (abs(l) * s))
+    p0 = 0.0
+    if l > 0.0:
+        p0 = 1 - p1
+    p = (stats.norm.cdf(sds) - p0) / p1
+    sds = stats.norm.ppf(p)
+    return sds
 
 def centile(z_score: float):
     """
@@ -106,6 +125,23 @@ def measurement_for_z(z: float, l: float, m: float, s: float) -> float:
     """
     Returns a measurement for a z score, L, M and S
     """
+    if l != 0.0:
+        measurement_value = math.pow((1 + l * s * z), 1 / l) * m
+    else:
+        measurement_value = math.exp(s * z) * m
+    return measurement_value
+
+def gamlss_measurement_for_z(z: float, l: float, m: float, s: float)->float:
+    """
+    Returns a measurement for a z score, L, M and S correcting for a negative L using GAMLSS
+    """
+    p = stats.norm.cdf(z)
+    p1 = stats.norm.cdf(1 / (abs(l) * s))
+    z = 0.0
+    if l < 0.0:
+        z = stats.norm.ppf(p * p1)
+    else:
+        z = stats.norm.ppf(p * p1 + 1 - p1)
     if l != 0.0:
         measurement_value = math.pow((1 + l * s * z), 1 / l) * m
     else:
@@ -157,6 +193,7 @@ def fetch_lms(age: float, lms_value_array_for_measurement: list):
         age_one_above = lms_value_array_for_measurement[age_matched_index + 1]["decimal_age"]
         parameter_one_below = lms_value_array_for_measurement[age_matched_index]
         parameter_one_above = lms_value_array_for_measurement[age_matched_index + 1]
+
 
         if age_matched_index >= 1 and age_matched_index < len(lms_value_array_for_measurement) - 2:
             # cubic interpolation is possible
@@ -222,7 +259,7 @@ def sds_for_measurement(
     sex: str,
     born_preterm: bool = False
 ) -> float:
-
+    
     try:
         lms_value_array_for_measurement = lms_value_array_for_measurement_for_reference(
             reference=reference, age=age, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
@@ -507,7 +544,7 @@ def create_trisomy_21_chart(centile_selection: str):
                 try:
                     centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference=TRISOMY_21)
                 except:
-                    print(f"There is no data in {reference} for {measurement_method} at this age.")
+                    print(f"There is no data in Trisomy 21 reference data for {measurement_method} at this age.")
                     centile_data = []
 
                 ## Store this centile for a given measurement

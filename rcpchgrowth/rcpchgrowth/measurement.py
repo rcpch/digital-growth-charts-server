@@ -22,7 +22,7 @@ class Measurement:
         measurement_method: str,
         observation_value: float,
         reference: str,
-        gestation_weeks: int = 0,
+        gestation_weeks: int = 40,
         gestation_days: int = 0
     ):
         """
@@ -66,7 +66,8 @@ class Measurement:
                 reference
             })
         except ValidationError as err:
-            pass  # pprint(err.messages)
+            pprint(err.messages)
+            pass
 
         valid = self.__validate_measurement_method(
             measurement_method=measurement_method, observation_value=observation_value)
@@ -119,6 +120,10 @@ class Measurement:
         # returns sds for given measurement
         # bmi must be supplied precalculated
 
+        # if born at term and < 42 weeks age = 0 for the purposes of centile and SDS calculation
+        if born_preterm==False and age < FORTY_TWO_WEEKS_GESTATION:
+            age=0
+
         # calculate sds based on reference, age, measurement, sex and prematurity
         measurement_sds = sds_for_measurement(reference=reference, age=age, measurement_method=measurement_method,
                                               observation_value=observation_value, sex=sex, born_preterm=born_preterm)
@@ -126,6 +131,11 @@ class Measurement:
         measurement_centile = centile(z_score=measurement_sds)
         centile_band = centile_band_for_centile(
             sds=measurement_sds, measurement_method=measurement_method)
+        
+        # if born at term and < 42 weeks centile and SDS advice should be ignored
+        if born_preterm==False and age < FORTY_TWO_WEEKS_GESTATION:
+            centile_band="Measurements between 37 and 42 weeks gestation are treated as term."
+
         self.return_measurement_object = self.__create_measurement_object(
             measurement_method=measurement_method,
             observation_value=observation_value,

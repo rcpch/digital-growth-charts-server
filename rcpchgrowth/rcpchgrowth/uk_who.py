@@ -98,7 +98,7 @@ def uk_who_reference(
 
     # CONSTANTS RELEVANT ONLY TO UK-WHO REFERENCE-SELECTION LOGIC
     # 23 weeks is the lowest decimal age available on the UK90 charts
-    UK90_REFERENCE_LOWER_THRESHOLD = ((23 * 7) - (40*7)) / 365.25  # 23 weeks as decimal age
+    UK90_PRETERM_REFERENCE_LOWER_THRESHOLD = ((23 * 7) - (40*7)) / 365.25  # 23 weeks as decimal age
     UK90_TERM_REFERENCE_LOWER_THRESHOLD = ((37 * 7) - (40*7)) / 365.25  # 37 weeks as decimal age
     UK90_TERM_REFERENCE_UPPER_THRESHOLD = ((42 * 7) - (40*7)) / 365.25  # 42 weeks as decimal age
     # The WHO references change from measuring infants in the lying position to measuring children in the standing position at 2.0 years.
@@ -110,7 +110,7 @@ def uk_who_reference(
     UK90_UPPER_THRESHOLD = 20
 
     #These conditionals are to select the correct reference
-    if age < UK90_REFERENCE_LOWER_THRESHOLD:
+    if age < UK90_PRETERM_REFERENCE_LOWER_THRESHOLD:
         # Below the range for which we have reference data, we can't provide a calculation.
         return ValueError("There is no reference data below 23 weeks gestation")
     elif age < UK90_TERM_REFERENCE_LOWER_THRESHOLD:
