@@ -60,7 +60,7 @@ def generate(app):
     with app.test_request_context():
         spec.path(view=blueprints.utilities_blueprint.instructions)
 
-    # # TODO Trisomy 21 endpoint
+    # Trisomy 21 endpoint
     spec.components.schema(
         "trisomy_21_calculation",
         schema=schemas.CalculationResponseSchema)
@@ -72,12 +72,12 @@ def generate(app):
         spec.path(view=blueprints.openapi_blueprint.openapi_endpoint)
 
 
-    # # TODO Turner's syndrome endpoint
-    # spec.components.schema(
-    #     "turner_calculation",
-    #     schema=schemas.CalculationResponseSchema)
-    # with app.test_request_context():
-    #     spec.path(view=blueprints.turner_blueprint.turner_calculation)
+    # Turner's syndrome endpoint
+    spec.components.schema(
+        "turner_calculation",
+        schema=schemas.CalculationResponseSchema)
+    with app.test_request_context():
+        spec.path(view=blueprints.turner_blueprint.turner_calculation)
 
     ##### END API SPEC ########
     ###########################

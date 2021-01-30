@@ -192,6 +192,11 @@ components:
         calculation:
           $ref: '#/components/schemas/MeasurementResponse'
       type: object
+    turner_calculation:
+      properties:
+        calculation:
+          $ref: '#/components/schemas/MeasurementResponse'
+      type: object
     uk_who_calculation:
       properties:
         calculation:
@@ -378,6 +383,41 @@ paths:
 
             '
       summary: openAPI3.0 Specification.
+  /turners/calculation:
+    post:
+      description: '* Returns a single centile/SDS calculation for the selected `measurement_method`.
+
+        * Gestational age correction will be applied automatically if appropriate
+        according to the gestational age at birth data supplied.
+
+        * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc`
+        (OFC = occipitofrontal circumference = ''head circumference'').
+
+        * Note that BMI must be precalculated for the `bmi` function.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            example:
+              birth_date: '2020-04-12'
+              gestation_days: 4
+              gestation_weeks: 40
+              measurement_method: height
+              observation_date: '2020-06-12'
+              observation_value: 60
+              sex: male
+            schema:
+              $ref: '#/components/schemas/CalculationRequestParameters'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/turner_calculation'
+          description: Centile calculation (single) according to the supplied data
+            was returned
+      summary: Centile and SDS Calculation route.
 servers:
 - description: RCPCH Production API Gateway (subscription keys required)
   url: https://api.rcpch.ac.uk/
