@@ -11,7 +11,6 @@ import controllers
 import blueprints
 import schemas
 import apispec_generation
-from rcpchgrowth.rcpchgrowth import create_uk_who_chart, create_trisomy_21_chart, create_turner_chart
 from rcpchgrowth.rcpchgrowth.constants.parameter_constants import *
 
 
@@ -38,6 +37,15 @@ app.register_blueprint(
 # Mount all UK-WHO endpoints from the blueprint
 app.register_blueprint(
     blueprints.uk_who_blueprint.uk_who, url_prefix='/uk-who')
+
+# Mount all Trisomy 21 endpoints from the blueprint
+app.register_blueprint(
+    blueprints.trisomy_21_blueprint.trisomy_21, url_prefix='/trisomy-21')
+
+# Mount all Turner's endpoints from the blueprint
+app.register_blueprint(
+    blueprints.turner_blueprint.turners, url_prefix='/turners')
+
 
 # Mount openAPI3 spec endpoint from the blueprint
 app.register_blueprint(
@@ -98,32 +106,6 @@ from app import app     # position of this import is important. Don't allow it t
 # except:
 #   raise ValueError("Unable to create Turner's Syndrome charts")
 
-# TODO #123 the spreadsheet endpoint probably needs to be deprecated
-@app.route("/uk-who/spreadsheet", methods=["POST"])
-def ukwho_spreadsheet():
-    """
-    ***INCOMPLETE***
-    Spreadsheet file uploadte.
-    ---
-    post:
-      summary: Spreadsheet file upload API route.
-      description: |
-        * This endpoint is used for development and testing only and it is not envisaged that it will be in the live API.
-      requestBody:
-        content:
-          text/csv:
-            schema: ChartDataRequestParameters
-      responses:
-        200:
-          description: |
-            * Chart data for plotting a traditional growth chart was returned.
-          content:
-            application/json:
-              schema: ChartDataResponseSchema
-    """
-    csv_file = request.files["csv_file"]
-    calculated_results = controllers.import_csv_file(csv_file)
-    return calculated_results
 
 
 # generate the API spec

@@ -34,46 +34,6 @@ def references():
     return jsonify(references_data)
 
 
-@utilities.route("/create_fictional_child_measurements", methods=["POST"])
-def create_fictional_child_measurements():
-    """
-    Fictional Child Data Generator API route.
-    ---
-    post:
-      summary: Fictional Child Data Generator API route.
-      description: |
-        * Returns a series of generated fictional measurement data for a child.
-        * Used for testing, demonstration and research purposes.
-
-      requestBody:
-        content:
-          application/json:
-            schema: FictionalChildRequestParameters
-
-      responses:
-        200:
-          description: "Fictional child test data was returned"
-          content:
-            application/json:
-              schema: FictionalChildResponseSchema
-    """
-    if request.is_json:
-        req = request.get_json()
-        fictional_child_data = controllers.generate_fictional_data(
-            drift_amount=float(req["drift_amount"]),
-            intervals=int(req["intervals"]),
-            interval_type=req["interval_type"],
-            measurement_method=req["measurement_method"],
-            number_of_measurements=int(req["number_of_measurements"]),
-            sex=req["sex"],
-            starting_age=float(req["starting_age"]),
-            starting_sds=float(req["starting_sds"])
-        )
-        return jsonify(fictional_child_data)
-    else:
-        return "Request body should be application/json", 400
-
-
 @utilities.route("/instructions", methods=["GET"])
 def instructions():
     """
