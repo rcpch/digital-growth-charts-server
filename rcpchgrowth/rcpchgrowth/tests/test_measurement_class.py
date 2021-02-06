@@ -39,7 +39,7 @@ def test_measurement_class_with_valid_data_set(line):
         observation_value=float(line["observation_value"]),
         gestation_weeks=int(line["gestation_weeks"]),
         gestation_days=int(line["gestation_days"]),
-        default_to_youngest_reference=False
+        reference="uk-who"
     )
 
     rcpchgrowth_result = measurement_object.measurement["measurement_calculated_values"]['sds']
@@ -47,3 +47,33 @@ def test_measurement_class_with_valid_data_set(line):
 
     # comparison using absolute tolerance (not relative)
     assert rcpchgrowth_result == pytest.approx(tim_cole_r_result, abs=ACCURACY)
+
+
+# def test_measurement_class_with_invalid_sex_type():
+#     measurement_object = Measurement(
+#         sex="males",
+#         birth_date=datetime.strptime("2020-04-01", "%Y-%m-%d"),
+#         observation_date=datetime.strptime("2020-06-01", "%Y-%m-%d"),
+#         measurement_method="weight",
+#         observation_value=5.0,
+#         gestation_weeks=0,
+#         gestation_days=40,
+#         reference="uk-who"
+#     )
+
+    # Should raise a TypeError (sex must be a string)
+
+
+# def test_measurement_class_with_invalid_sex_string():
+#     measurement_object = Measurement(
+#         sex="male",
+#         birth_date=datetime.strptime("2020-04-01", "%Y-%m-%d"),
+#         observation_date=datetime.strptime("2020-06-01", "%Y-%m-%d"),
+#         measurement_method="weight",
+#         observation_value=5.0,
+#         gestation_weeks=0,
+#         gestation_days=40,
+#         reference="uk-who"
+#     )
+
+    # Should raise a ValueError (sex must be "male" OR "female")

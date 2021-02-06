@@ -40,8 +40,8 @@ def chronological_decimal_age(birth_date: date, observation_date: date) -> float
 def corrected_decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int)->float: 
     """
     Corrects for gestational age. 
-    Corrects for 1 year, if gestation at birth >= 32 weeks and < 37 weeks
-    Corrects for 2 years, if gestation at birth <32 weeks
+    Corrects for 1 year corrected age, if gestation at birth >= 32 weeks and < 37 weeks
+    Corrects for 2 years corrected age, if gestation at birth <32 weeks
     Otherwise returns decimal age without correction
     Any baby 37-42 weeks returns decimal age of 0.0
     Depends on chronological_decimal_age
@@ -54,7 +54,7 @@ def corrected_decimal_age(birth_date: date, observation_date: date, gestation_we
     correction_days = 0
     pregnancy_length_days = TERM_PREGNANCY_LENGTH_DAYS
 
-    if gestation_weeks > 0:
+    if gestation_weeks > 0 and gestation_weeks < 37:
         pregnancy_length_days = (gestation_weeks * 7) + gestation_days
 
     try:
@@ -62,24 +62,18 @@ def corrected_decimal_age(birth_date: date, observation_date: date, gestation_we
     except ValueError as err:
         return err
 
-    prematurity = TERM_PREGNANCY_LENGTH_DAYS - pregnancy_length_days
 
-    if pregnancy_length_days >= TERM_LOWER_THRESHOLD_LENGTH_DAYS:
-        #term baby
-        return uncorrected_age
+    ## age correction
+    correction_days = TERM_PREGNANCY_LENGTH_DAYS - pregnancy_length_days
+    edd = birth_date + timedelta(days=correction_days)
+    corrected_age =  chronological_decimal_age(edd, observation_date)
 
-    elif pregnancy_length_days < EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS and uncorrected_age <= 2:
+    if pregnancy_length_days < EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS and corrected_age <= 2:
         #correct age for 2 years
-        correction_days = prematurity
-        edd = birth_date + timedelta(days=correction_days)
-        return chronological_decimal_age(edd, observation_date)
-
-    elif (pregnancy_length_days >= EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS) and (pregnancy_length_days < TERM_LOWER_THRESHOLD_LENGTH_DAYS) and uncorrected_age <=1:
+        return corrected_age
+    elif (pregnancy_length_days < TERM_LOWER_THRESHOLD_LENGTH_DAYS) and corrected_age <= 1:
         #correct age for 1 year
-        correction_days = prematurity
-        edd = birth_date + timedelta(days=correction_days)
-        return chronological_decimal_age(edd, observation_date)
-    
+        return corrected_age
     else:
         return uncorrected_age
 

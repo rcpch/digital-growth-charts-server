@@ -12,22 +12,24 @@ def perform_calculation(*,
                         sex: str,
                         gestation_weeks: int,
                         gestation_days: int):
-
-
     """
-    This function takes a measurement_method as a string ('height', 'weight', 'bmi' or 'ofc') and returns a Measurement object with the calculated values.
-    Note that BMI must be provided already calculated as a parameter to this function.
-    Note that measurement_method is a string passed by the form and is distinct from Measurement_Type which is a class relating to the same
+    * This function takes a measurement_method as a string ('height', 'weight', 'bmi' or 'ofc') and returns a Measurement object with the calculated values.
+    
+    * Note that BMI must be provided already calculated as a parameter to this function.git 
+    
+    * Note that measurement_method is a string passed by the form and is distinct from Measurement_Type which is a class relating to the same.
+    
+    * Dates supplied as valid JSON Date strings, passing Marshmallow validation in the Flask app will be converted to Python DateTime objects for passing to the Python RCPCHgrowth package
     """
     return Measurement(
-        sex=sex,
-        birth_date=birth_date,
-        observation_date=observation_date,
-        measurement_method=measurement_method,
+        sex=str(sex),
+        birth_date=datetime.strptime(birth_date, "%Y-%m-%d"),
+        observation_date=datetime.strptime(observation_date,"%Y-%m-%d"),
+        measurement_method=str(measurement_method),
         observation_value=float(observation_value),
         gestation_weeks=gestation_weeks,
         gestation_days=gestation_days,
-        default_to_youngest_reference=False
+        reference="uk-who"
     ).measurement
 
 

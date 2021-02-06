@@ -2,14 +2,15 @@ FROM python:3.8-buster
 
 RUN apt-get update -y
 
-COPY ./requirements.txt /app/requirements.txt
+ENV FLASK_ENV=development
+ENV FLASK_APP=app.py
 
 WORKDIR /app
 
-RUN pip install -r requirements.txt
-
 COPY . /app
 
-ENTRYPOINT [ "python" ]
+EXPOSE 5000
 
-CMD [ "app.py" ]
+RUN pip install -r requirements.txt
+
+CMD [ "flask", "run", "--host", "0.0.0.0", "--port", "5000"]

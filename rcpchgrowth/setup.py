@@ -14,7 +14,7 @@ setup(
     long_description="https://github.com/rcpch/digital-growth-charts/blob/master/README.md",
     # long_description_content_type='text/markdown',
     url='https://github.com/rcpch/digital-growth-charts/blob/master/README.md',
-    author='@eatyourpeas, RCPCH',
+    author='@eatyourpeas, @marcusbaw @statist7 RCPCH',
 
     # This should be a valid email address corresponding to the author listed
     # above.
@@ -44,7 +44,7 @@ setup(
     package_dir={'': 'rcpchgrowth'},  # Optional
     packages=find_packages(where='rcpchgrowth'),  # Required
     python_requires='>=3.5, <4',
-    install_requires=['Flask', 'Flask-WTF', 'Numpy', 'SciPy'],  # Optional
+    install_requires=['Flask', 'Numpy', 'SciPy'],  # Optional
     extras_require={  # Optional
         'dev': ['check-manifest'],
         'test': ['coverage'],
@@ -61,8 +61,7 @@ setup(
     # },
     project_urls={  # Optional
         'Bug Reports': 'https://github.com/rcpch/digital-growth-charts/issues',
-        'Funding': 'https://donate.pypi.org',
-        'Say Thanks!': 'http://saythanks.io/to/example',
+        'API management:' 'https://dev.rcpch.ac.uk',
         'Source': 'https://github.com/rcpch/digital-growth-charts',
     },
 )

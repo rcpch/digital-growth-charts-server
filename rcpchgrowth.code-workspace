@@ -10,13 +10,14 @@
 			"path": "../../../react/digital-growth-charts-react"
 		},
 		{
-			"path": "../../../react/component-libraries/digital-growth-charts-react-chart-component"
+			"path": "../../../GrowthChartRepo"
 		},
 		{
-			"path": "../../../GrowthChartRepo"
+			"path": "../../../react/component-libraries/digital-growth-charts-react-component-library"
 		}
 	],
 	"settings": {
-		"python.pythonPath": "/Users/SimonChapman/.pyenv/shims/python3"
+		"python.pythonPath": "/Users/SimonChapman/.pyenv/shims/python3",
+		"jupyter.jupyterServerType": "local"
 	}
 }

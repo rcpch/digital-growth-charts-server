@@ -4,7 +4,8 @@
 
 - [Developer Documentation](#developer-documentation)
   - [Why Python?](#why-python)
-  - [Developing with Python](#developing-with-python)
+  - [Running the dGC Server in Docker](#running-the-dgc-server-in-docker)
+  - [Running the dGC Server locally with Python](#running-the-dgc-server-locally-with-python)
     - [Managing Python versions, and dependencies such as libraries](#managing-python-versions-and-dependencies-such-as-libraries)
     - [Installing `pyenv`](#installing-pyenv)
     - [Setup for this repository](#setup-for-this-repository)
@@ -36,7 +37,17 @@
 - It's accessible to clinicians who want to learn to code, and it's easy enough to learn that it's taught in schools.
 - It has everything we needed for building an API and web layers we needed.
 
-## Developing with Python
+## Running the dGC Server in Docker
+
+- Install Docker. How to do this varies by platform so go to https://www.docker.com/get-started to find out more
+- `git clone` this repository, if you haven't already, to a suitable place on your local machine.
+- run the `s/rebuild-docker` script which will build the Docker image.
+- run the `s/start-docker` script, which will run the image in a Docker container.
+- The dGC server should be running in development mode on https://localhost:5000
+
+TODO: #124 Prebuilt Docker image on Docker Hub
+
+## Running the dGC Server locally with Python
 
 > some of this is obvious to experienced Python developers, but it's documented here so that we all know the _same_ obvious.
 
@@ -73,7 +84,7 @@
 
 ### Extra development packages that may be required on some setups
 
-To prevent weird error messages, you may need the additional development header packages for them. On Ubuntu this required running. This should not be necessary if you're running a binary Python, it only affects setups which are compiling a specific Python version from source, on demand, such as `pyenv`.
+On some platforms, you may need the additional development header packages. On Ubuntu/Linux Mint this was required when using `pyenv` and thus compiling Python from source. This should not be necessary if you're running a binary Python, it only affects setups which are compiling a specific Python version from source, on demand, such as `pyenv`.
 
 `$ sudo apt-get install liblzma-dev libbz2-dev zlib1g-dev`
 

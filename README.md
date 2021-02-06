@@ -83,6 +83,14 @@ This is a growing list of growth references for children. It will continue to be
 
 6. _LMSdata_BP.xls_: systolic & diastolic blood pressure for ages 4 to 24 yr.
 
+### Turner's
+
+The Turner syndrome height chart is based on data from Lyon, Preece and Grant, Arch Dis Child 1985; 60:932-5.
+
+The data are assumed to be normally distributed at all ages, with a constant coefficient of variation of 4.7% as reported in the paper. This constrains L to 1 and S to 0.047.
+
+For the M curve the mean heights from 1 to 20 years (table 1 column 3) are smoothed with a natural cubic spline with six degrees of freedom, where the residual SD is 1.1 cm.
+
 ### Medical Recommendations
 
 A particular stated requirement of RCPCHGrowth was not only to provide accurate and validated calculations against anthropometric data, but also to report alongside these clinical interpretations of the numbers generated.
@@ -124,7 +132,9 @@ All information about the React demo client can be found at the repository
 
 The project team agree that the growth references and the algorithms that generate reliable results should all exist in the public domain. They are published here under GNU Affero GPL3 licence.
 
-#### Functions
+# RCPCHGrowth
+
+The methods and functions performing the calculations are in the python package RCPCHGrowth. This will be published on PyPi but for the moment can be found here.
 
 # Build Status
 
@@ -138,7 +148,7 @@ We have used Postman extensively in the devleopment
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6b1137d60067b8aedfea#?env%5Blocalhost%3A5000-testing%5D=W3sia2V5IjoiYmFzZVVybCIsInZhbHVlIjoibG9jYWxob3N0OjUwMDAiLCJlbmFibGVkIjp0cnVlfV0=)
 
-##### Date and age calculations
+# Date and age calculations
 
 Ages are expressed as years. This is the number of days of life / 365.25. The extra 0.25 is to
 account for the leap year which comes round every 4 years.
@@ -169,7 +179,7 @@ A few other things about correction:
 - term is consider 37-42 weeks. No correction is made for any baby born between these gestations. Their decimal age, therefore is considered to be 0.0. This means a baby born at 42 weeks and
   now 2 weeks of age will calculate identically to a baby born at 37 weeks and now 2 weeks of age. The outcome of discussion amongst the project board members at length regarding babies born after 42 weeks gestation is that these infants should be treated as term and be considered to have an age of 0.0 y. It also follows that babies born premature who are not yet term will have a negative decimal age.
 
-##### Functions
+# Age Calculation Functions
 
 - `chronological_decimal_age(birth_date: date, observation_date: date) -> float` age reported to 1 d.p. calculated as the difference in days between date of birth at 00:00 and date of observation at 00:00 divided by 365.25 (to account for leap years every 4 years)
 - `"chronological_calendar_age": string` human readable representation of age in years, months, weeks, days or hours.
@@ -186,12 +196,16 @@ A few other things about correction:
 - Returns estimated date of delivery (as a python datetime) from gestational age and birthdate for those babies not yet 42 weeks gestation.
 - Will still calculate an estimated date of delivery if already term (>37 weeks)
 
-##### SDS and Centile Calculations
+# SDS and Centile Calculations
 
-##### Functions
+SDS is calculated using the LMS reference table and the equation (see earlier). Once decimal age has been calculated, this is compared with the nearest decimal age in the reference data, and the associated L, M and S are retrieved. If there is not an exact match, interpolation is performed between the nearest values. Cubic interpolation is used, except at the extremes of the reference data, where linear interpolation is used.
+
+The interpolation methods can yield subtly different results and @statist7 and @eatyourpeas spent some months evaluating them. The interpolation method used in RCPCHGrowth is @statist7's own, which runs faster and is more precise for SDS calculation in growth than the functions provided in SciPy and Pandas.
+
+# Functions
 
 ```python
-def sds(age: float, measurement: str, measurement_value: float, sex: str, default_to_youngest_reference: bool = True)->float:
+def sds(age: float, measurement: str, observation_value: float, sex: str, default_to_youngest_reference: bool = True)->float:
 ```
 
 - **This function is specific to the UK-WHO data set as this is actually a blend of UK-90 and WHO 2006 references and necessarily has duplicate values.**
