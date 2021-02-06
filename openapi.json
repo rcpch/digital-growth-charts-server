@@ -334,7 +334,7 @@
                 "summary": "Centile and SDS Calculation route."
             }
         },
-        "/turners/calculation": {
+        "/turner/calculation": {
             "post": {
                 "description": "* Returns a single centile/SDS calculation for the selected `measurement_method`.\n* Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.\n* Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').\n* Note that BMI must be precalculated for the `bmi` function.\n",
                 "requestBody": {

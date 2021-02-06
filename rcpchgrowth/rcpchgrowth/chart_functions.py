@@ -3,6 +3,7 @@ from .uk_who import select_reference_data_for_uk_who_chart
 from .trisomy_21 import select_reference_data_for_trisomy_21
 from .turner import select_reference_data_for_turner
 from .constants.parameter_constants import UK_WHO, TURNERS, TRISOMY_21, COLE_TWO_THIRDS_SDS_NINE_CENTILES, COLE_TWO_THIRDS_SDS_NINE_CENTILE_COLLECTION, THREE_PERCENT_CENTILE_COLLECTION, MEASUREMENT_METHODS, SEXES, UK_WHO_REFERENCES
+import pprint
 
 def create_chart(reference:str, centile_selection:str):
     if reference == UK_WHO:
@@ -33,8 +34,9 @@ def create_plottable_child_data(child_results_array):
                 "measurement_method": child_result["child_observation_value"]["measurement_method"],
                 "x": child_result["measurement_dates"]["chronological_decimal_age"], 
                 "y": child_result["child_observation_value"]["observation_value"],
-                "centile_band": child_result["measurement_calculated_values"]["centile_band"],
-                "centile_value": child_result["measurement_calculated_values"]["centile"],
+                "centile_band": child_result["measurement_calculated_values"]["chronological_centile_band"],
+                "centile_value": child_result["measurement_calculated_values"]["chronological_centile"],
+                "sds": child_result["measurement_calculated_values"]["chronological_sds"],
                 "age_type": "chronological_age",
                 "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
                 "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
@@ -44,8 +46,9 @@ def create_plottable_child_data(child_results_array):
                 "measurement_method": child_result["child_observation_value"]["measurement_method"],
                 "x": child_result["measurement_dates"]["corrected_decimal_age"], 
                 "y": child_result["child_observation_value"]["observation_value"],
-                "centile_band": child_result["measurement_calculated_values"]["centile_band"],
-                "centile_value": child_result["measurement_calculated_values"]["centile"],
+                "centile_band": child_result["measurement_calculated_values"]["corrected_centile_band"],
+                "centile_value": child_result["measurement_calculated_values"]["corrected_centile"],
+                "sds": child_result["measurement_calculated_values"]["corrected_sds"],
                 "age_type": "corrected_age",
                 "calendar_age": child_result["measurement_dates"]["corrected_calendar_age"],
                 "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
@@ -54,7 +57,7 @@ def create_plottable_child_data(child_results_array):
             chronological_sds_data_point = {
                 "measurement_method": child_result["child_observation_value"]["measurement_method"],
                 "x": child_result["measurement_dates"]["chronological_decimal_age"], 
-                "y": child_result["measurement_calculated_values"]["sds"],
+                "y": child_result["measurement_calculated_values"]["chronological_sds"],
                 "age_type": "chronological_age",
                 "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
                 "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
@@ -63,7 +66,7 @@ def create_plottable_child_data(child_results_array):
             corrected_sds_data_point = {
                 "measurement_method": child_result["child_observation_value"]["measurement_method"],
                 "x": child_result["measurement_dates"]["corrected_decimal_age"], 
-                "y": child_result["measurement_calculated_values"]["sds"],
+                "y": child_result["measurement_calculated_values"]["corrected_sds"],
                 "age_type": "corrected_age",
                 "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
                 "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],

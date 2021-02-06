@@ -88,7 +88,8 @@ class Measurement:
         # the calculate_measurements_object receives the child_observation_value and measurement_calculated_values objects
         self.calculate_measurements_object = self.sds_and_centile_for_measurement_method(
             sex=self.sex,
-            age=self.ages_object['measurement_dates']['corrected_decimal_age'],
+            corrected_age=self.ages_object['measurement_dates']['corrected_decimal_age'],
+            chronological_age=self.ages_object['measurement_dates']['chronological_decimal_age'],
             measurement_method=self.measurement_method,
             observation_value=self.observation_value,
             born_preterm=self.born_preterm,
@@ -109,7 +110,8 @@ class Measurement:
     def sds_and_centile_for_measurement_method(
         self,
         sex: str,
-        age: float,
+        corrected_age: float,
+        chronological_age: float,
         measurement_method: str,
         observation_value: float,
         reference: str,
@@ -120,18 +122,28 @@ class Measurement:
         # bmi must be supplied precalculated
 
         # calculate sds based on reference, age, measurement, sex and prematurity
-        measurement_sds = sds_for_measurement(reference=reference, age=age, measurement_method=measurement_method,
+        corrected_measurement_sds = sds_for_measurement(reference=reference, age=corrected_age, measurement_method=measurement_method,
+                                              observation_value=observation_value, sex=sex, born_preterm=born_preterm)
+        chronological_measurement_sds = sds_for_measurement(reference=reference, age=chronological_age, measurement_method=measurement_method,
                                               observation_value=observation_value, sex=sex, born_preterm=born_preterm)
 
-        measurement_centile = centile(z_score=measurement_sds)
-        centile_band = centile_band_for_centile(
-            sds=measurement_sds, measurement_method=measurement_method)
+        corrected_measurement_centile = centile(z_score=corrected_measurement_sds)
+        chronological_measurement_centile = centile(z_score=chronological_measurement_sds)
+
+        corrected_centile_band = centile_band_for_centile(
+            sds=corrected_measurement_sds, measurement_method=measurement_method)
+        chronological_centile_band = centile_band_for_centile(
+            sds=chronological_measurement_sds, measurement_method=measurement_method)
+
         self.return_measurement_object = self.__create_measurement_object(
             measurement_method=measurement_method,
             observation_value=observation_value,
-            sds_value=measurement_sds,
-            centile_value=measurement_centile,
-            centile_band=centile_band
+            corrected_sds_value=corrected_measurement_sds,
+            corrected_centile_value=corrected_measurement_centile,
+            corrected_centile_band=corrected_centile_band,
+            chronological_sds_value=chronological_measurement_sds,
+            chronological_centile_value=chronological_measurement_centile,
+            chronological_centile_band=chronological_centile_band
         )
 
         return self.return_measurement_object
@@ -225,9 +237,12 @@ class Measurement:
         self,
         measurement_method: str,
         observation_value: float,
-        sds_value: float,
-        centile_value: float,
-        centile_band: str,
+        corrected_sds_value: float,
+        corrected_centile_value: float,
+        corrected_centile_band: str,
+        chronological_sds_value: float,
+        chronological_centile_value: float,
+        chronological_centile_band: str,
     ):
         """
         private class method
@@ -242,17 +257,26 @@ class Measurement:
         # Only those calculations relevant to the measurement_method requested populate the final JSON
         # object.
 
-        if centile_value:
-            if centile_value > 99 or centile_value < 1:
-                centile_value = round(centile_value, 1)
+        if corrected_centile_value:
+            if corrected_centile_value > 99 or corrected_centile_value < 1:
+                corrected_centile_value = round(corrected_centile_value, 1)
             else:
-                centile_value = int(centile_value)
+                corrected_centile_value = int(corrected_centile_value)
+        
+        if chronological_centile_value:
+            if chronological_centile_value > 99 or chronological_centile_value < 1:
+                chronological_centile_value = round(chronological_centile_value, 1)
+            else:
+                chronological_centile_value = int(chronological_centile_value)
 
         measurement_calculated_values = {
             "measurement_method": measurement_method,
-            "sds": sds_value,
-            "centile": centile_value,
-            "centile_band": centile_band
+            "corrected_sds": corrected_sds_value,
+            "corrected_centile": corrected_centile_value,
+            "corrected_centile_band": corrected_centile_band,
+            "chronological_sds": chronological_sds_value,
+            "chronological_centile": chronological_centile_value,
+            "chronological_centile_band": chronological_centile_band
         }
 
         child_observation_value = {

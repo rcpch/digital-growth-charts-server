@@ -383,7 +383,7 @@ paths:
 
             '
       summary: openAPI3.0 Specification.
-  /turners/calculation:
+  /turner/calculation:
     post:
       description: '* Returns a single centile/SDS calculation for the selected `measurement_method`.
 

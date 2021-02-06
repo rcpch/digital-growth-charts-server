@@ -44,7 +44,7 @@ app.register_blueprint(
 
 # Mount all Turner's endpoints from the blueprint
 app.register_blueprint(
-    blueprints.turner_blueprint.turners, url_prefix='/turners')
+    blueprints.turner_blueprint.turners, url_prefix='/turner')
 
 
 # Mount openAPI3 spec endpoint from the blueprint
