@@ -42,7 +42,7 @@ def test_measurement_class_with_valid_data_set(line):
         reference="uk-who"
     )
 
-    rcpchgrowth_result = measurement_object.measurement["measurement_calculated_values"]['sds']
+    rcpchgrowth_result = measurement_object.measurement["measurement_calculated_values"]['corrected_sds']
     tim_cole_r_result = line["SDS"]
 
     # comparison using absolute tolerance (not relative)
