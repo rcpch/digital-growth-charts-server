@@ -1,5 +1,5 @@
 """
-This module contains the UK-WHO endpoints as Flask Blueprints
+This module contains the Turner endpoints as Flask Blueprints
 """
 
 import json
@@ -7,19 +7,18 @@ from pprint import pprint
 from flask import Blueprint
 from flask import jsonify, request
 from marshmallow import ValidationError
-from rcpchgrowth.rcpchgrowth.constants.measurement_constants import *
-from rcpchgrowth.rcpchgrowth.constants.parameter_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, UK_WHO
-from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data, create_chart
+from rcpchgrowth.rcpchgrowth.constants.parameter_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, TURNERS
 from rcpchgrowth.rcpchgrowth.measurement import Measurement
+from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data
 from datetime import date, datetime
 from schemas import *
-import controllers
-
-uk_who = Blueprint("uk_who", __name__)
 
 
-@uk_who.route("/calculation", methods=["POST"])
-def uk_who_calculation():
+turners = Blueprint("turners", __name__)
+
+
+@turners.route("/calculation", methods=["POST"])
+def turner_calculation():
     """
     Centile calculation.
     ---
@@ -53,7 +52,7 @@ def uk_who_calculation():
     """
     if request.is_json:
         req = request.get_json()
-        print(req)
+        
 
         values = {
             'birth_date': req["birth_date"],
@@ -80,7 +79,7 @@ def uk_who_calculation():
             observation_value=float(req["observation_value"]),
             gestation_weeks=req["gestation_weeks"],
             gestation_days=req["gestation_days"],
-            reference=UK_WHO
+            reference=TURNERS
         ).measurement
 
         return jsonify(calculation)
@@ -88,64 +87,8 @@ def uk_who_calculation():
         return "Request body mimetype should be application/json", 400
 
 
-@uk_who.route("/chart-coordinates", methods=["POST"])
-def uk_who_chart_coordinates():
-    """
-    Chart data.
-    ---
-    post:
-      summary: UK-WHO Chart coordinates in plottable format
-        * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
-
-      requestBody:
-        content:
-          application/json:
-            schema: ChartDataRequestParameters
-
-      responses:
-        200:
-          description: "Chart data for plotting a traditional growth chart was returned"
-          content:
-            application/json:
-              schema: ChartDataResponseSchema
-    """
-
-    if request.is_json:
-        chart_data = create_chart(UK_WHO, COLE_TWO_THIRDS_SDS_NINE_CENTILES)
-
-        return jsonify({
-            "centile_data": chart_data
-        })
-    else:
-        return "Request body should be application/json", 400
-
-"""
-    Return object structure
-
-    [
-        "height": [
-            {
-                sds: -2.666666,
-                uk90_child_data:[.....],
-                uk90_preterm_data: [...],
-                who_child_data: [...],
-                who_infant_data: [
-                    {
-                        label: 0.4, `this is the centile
-                        x: 4, `this is the decimal age
-                        y: 91.535  `this is the measurement
-                    }
-                ]
-            }
-        ],
-        ... repeat for weight, bmi, ofc, based on which measurements supplied. If only height data supplied, only height centile data returned
-    ]
-
-    """
-
-
-@uk_who.route("/plottable-child-data", methods=["POST"])
-def uk_who_plottable_child_data():
+@turners.route("/plottable-child-data", methods=["POST"])
+def turner_plottable_child_data():
     """
     Child growth data in plottable format.
     ---
@@ -171,9 +114,6 @@ def uk_who_plottable_child_data():
     if request.is_json:
         req = request.get_json()
         results = req["results"]
-        # born preterm flag to pass to charts
-        # born_preterm = (results[0]["birth_data"]["gestation_weeks"]
-        #                 != 0 and results[0]["birth_data"]["gestation_weeks"] < 37)
 
         # data are serial data points for a single child
         # Prepare data from plotting

@@ -7,5 +7,4 @@ class ChartDataRequestParameters(Schema):
 
 class ChartDataResponseSchema(Schema):
     sex = fields.String()
-    child_data = fields.String()
     centile_data = fields.String()

@@ -32,7 +32,7 @@ def generate(app):
     )
 
     spec.components.schema(
-        "calculation",
+        "uk_who_calculation",
         schema=schemas.CalculationResponseSchema)
     with app.test_request_context():
         spec.path(view=blueprints.uk_who_blueprint.uk_who_calculation)
@@ -56,24 +56,28 @@ def generate(app):
     with app.test_request_context():
         spec.path(view=blueprints.utilities_blueprint.references)
 
-    # TODO #122 Fictional child endpoint may be better renamed as a researcher tool?
-    spec.components.schema(
-        "fictionalChild", schema=schemas.FictionalChildResponseSchema)
-    with app.test_request_context():
-        spec.path(
-            view=blueprints.utilities_blueprint.create_fictional_child_measurements)
-
     # Instructions endpoint (TODO: #121 #120 candidate for deprecation)
     with app.test_request_context():
         spec.path(view=blueprints.utilities_blueprint.instructions)
 
+    # Trisomy 21 endpoint
+    spec.components.schema(
+        "trisomy_21_calculation",
+        schema=schemas.CalculationResponseSchema)
+    with app.test_request_context():
+        spec.path(view=blueprints.trisomy_21_blueprint.trisomy_21_calculation)
+        
     # OpenAPI3 specification endpoint
     with app.test_request_context():
         spec.path(view=blueprints.openapi_blueprint.openapi_endpoint)
 
-    # TODO Trisomy 21 endpoint
 
-    # TODO Turner's syndrome endpoint
+    # Turner's syndrome endpoint
+    spec.components.schema(
+        "turner_calculation",
+        schema=schemas.CalculationResponseSchema)
+    with app.test_request_context():
+        spec.path(view=blueprints.turner_blueprint.turner_calculation)
 
     ##### END API SPEC ########
     ###########################
