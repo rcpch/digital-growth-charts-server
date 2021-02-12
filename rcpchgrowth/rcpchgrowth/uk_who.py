@@ -99,31 +99,30 @@ def uk_who_reference(
     # CONSTANTS RELEVANT ONLY TO UK-WHO REFERENCE-SELECTION LOGIC
     # 23 weeks is the lowest decimal age available on the UK90 charts
     UK90_REFERENCE_LOWER_THRESHOLD = ((23 * 7) - (40*7)) / 365.25  # 23 weeks as decimal age
-    UK90_TERM_REFERENCE_LOWER_THRESHOLD = ((37 * 7) - (40*7)) / 365.25  # 37 weeks as decimal age
-    UK90_TERM_REFERENCE_UPPER_THRESHOLD = ((42 * 7) - (40*7)) / 365.25  # 42 weeks as decimal age
+    
     # The WHO references change from measuring infants in the lying position to measuring children in the standing position at 2.0 years.
     WHO_CHILD_LOWER_THRESHOLD = 2.0  # 2 years as decimal age
     # The UK-WHO standard is complicated because it switches from the WHO references to UK90 references
     #  at the age of 4.0 years. This is because it was felt the reference data from breast fed infants
     #  from the WHO cohorts were more accurate than the UK90 cohorts for this age group.
+    #  The Term reference averaged all L, M and S from 37-42 weeks. This is now deprecated and therefore UK90 data is used
+    # for all measurements across this age range
+    # Caution is advised when interpreting serial measurements onver this time periods - babies are often measured inaccurately and 
+    # up to 10% weight loss is expected in the first 2 weeks of life, and birthweight is often not regained until
+    # 3 weeks of life
+    
     WHO_CHILDREN_UPPER_THRESHOLD = 4.0
+    UK_WHO_INFANT_LOWER_THRESHOLD = ((42 * 7) - (40*7)) / 365.25  # 42 weeks as decimal age
     UK90_UPPER_THRESHOLD = 20
+
 
     #These conditionals are to select the correct reference
     if age < UK90_REFERENCE_LOWER_THRESHOLD:
         # Below the range for which we have reference data, we can't provide a calculation.
         return ValueError("There is no reference data below 23 weeks gestation")
-    elif age < UK90_TERM_REFERENCE_LOWER_THRESHOLD:
-        # Below 37 weeks, the UK90 preterm data is always used
+    elif age < UK_WHO_INFANT_LOWER_THRESHOLD:
+        # Below 42 weeks, the UK90 preterm data is always used
         return UK90_PRETERM_DATA
-
-    elif age < UK90_TERM_REFERENCE_UPPER_THRESHOLD:
-        # Below 42 weeks
-        if born_preterm:
-            # Preterm children should continue to be plotted using the preterm references
-            return UK90_PRETERM_DATA
-        else:
-            return UK90_TERM_DATA
     
     elif age < WHO_CHILD_LOWER_THRESHOLD:
         # Children beyond 2 weeks but below 2 years are measured lying down using WHO data

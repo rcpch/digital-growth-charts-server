@@ -188,8 +188,8 @@ class Measurement:
             gestation_weeks=gestation_weeks,
             gestation_days=gestation_days)  # return None if no correction necessary
 
-        if gestation_weeks < 37 and gestation_weeks >= 24:
-            # born preterm - may need correction (not if >32 weeks and >1 y, or <32 weeks and >2 y)
+        if gestation_weeks < TERM_WEEKS and gestation_weeks >= LOWER_THRESHOLD_PRETERM_REFERENCE_WEEKS:
+            # born below 40 weeks - correct across the life course
             # decision to correct is made in the date_calculations module
             # if baby is <42 weeks currently, decimal age reflects the corrected gestational age
             self.estimated_date_delivery = estimated_date_delivery(

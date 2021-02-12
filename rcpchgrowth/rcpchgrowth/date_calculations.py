@@ -39,10 +39,7 @@ def chronological_decimal_age(birth_date: date, observation_date: date) -> float
 
 def corrected_decimal_age(birth_date: date, observation_date: date, gestation_weeks: int, gestation_days: int)->float: 
     """
-    Corrects for gestational age. 
-    Corrects for 1 year corrected age, if gestation at birth >= 32 weeks and < 37 weeks
-    Corrects for 2 years corrected age, if gestation at birth <32 weeks
-    Otherwise returns decimal age without correction
+    Corrects for gestational age across the life course, including term.
     Any baby 37-42 weeks returns decimal age of 0.0
     Depends on chronological_decimal_age
     :param birth_date: date of birth
@@ -68,14 +65,7 @@ def corrected_decimal_age(birth_date: date, observation_date: date, gestation_we
     edd = birth_date + timedelta(days=correction_days)
     corrected_age =  chronological_decimal_age(edd, observation_date)
 
-    if pregnancy_length_days < EXTREME_PREMATURITY_THRESHOLD_LENGTH_DAYS and corrected_age <= 2:
-        #correct age for 2 years
-        return corrected_age
-    elif (pregnancy_length_days < TERM_LOWER_THRESHOLD_LENGTH_DAYS) and corrected_age <= 1:
-        #correct age for 1 year
-        return corrected_age
-    else:
-        return uncorrected_age
+    return corrected_age
 
 
 def chronological_calendar_age(birth_date: date, observation_date: date) -> str:
