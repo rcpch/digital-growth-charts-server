@@ -171,10 +171,6 @@ def uk_who_plottable_child_data():
     if request.is_json:
         req = request.get_json()
         results = req["results"]
-        # born preterm flag to pass to charts
-        # born_preterm = (results[0]["birth_data"]["gestation_weeks"]
-        #                 != 0 and results[0]["birth_data"]["gestation_weeks"] < 37)
-
         # data are serial data points for a single child
         # Prepare data from plotting
         child_data = create_plottable_child_data(results)
