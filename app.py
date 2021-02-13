@@ -105,8 +105,6 @@ from app import app     # position of this import is important. Don't allow it t
 # except:
 #   raise ValueError("Unable to create Turner's Syndrome charts")
 
-
-
 # generate the API spec
 try:
     spec = apispec_generation.generate(app)
