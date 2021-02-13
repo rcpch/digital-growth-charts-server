@@ -9,6 +9,7 @@ from .trisomy_21 import trisomy_21_lms_array_for_measurement_and_sex
 from .constants.parameter_constants import UK_WHO, TURNERS, TRISOMY_21, COLE_TWO_THIRDS_SDS_NINE_CENTILES, COLE_TWO_THIRDS_SDS_NINE_CENTILE_COLLECTION, THREE_PERCENT_CENTILE_COLLECTION, MEASUREMENT_METHODS, SEXES, UK_WHO_REFERENCES
 import logging
 import json
+import pkg_resources
 
 
 def cubic_interpolation(age: float, age_one_below: float, age_two_below: float, age_one_above: float, age_two_above: float, parameter_two_below: float, parameter_one_below: float, parameter_one_above: float, parameter_two_above: float) -> float:
@@ -356,3 +357,4 @@ def lms_value_array_for_measurement_for_reference(
     else:
         raise ValueError("Incorrect reference supplied")
     return lms_value_array_for_measurement
+
