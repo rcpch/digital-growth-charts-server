@@ -51,14 +51,11 @@ def corrected_decimal_age(birth_date: date, observation_date: date, gestation_we
     correction_days = 0
     pregnancy_length_days = TERM_PREGNANCY_LENGTH_DAYS
 
-    if gestation_weeks > 0 and gestation_weeks < 37:
-        pregnancy_length_days = (gestation_weeks * 7) + gestation_days
-
-    try:
-        uncorrected_age = chronological_decimal_age(birth_date, observation_date)
-    except ValueError as err:
-        return err
-
+    if gestation_weeks == 0:
+        gestation_weeks = 40
+        gestation_days = 0
+        
+    pregnancy_length_days = (gestation_weeks * 7) + gestation_days
 
     ## age correction
     correction_days = TERM_PREGNANCY_LENGTH_DAYS - pregnancy_length_days
@@ -77,8 +74,6 @@ def chronological_calendar_age(birth_date: date, observation_date: date) -> str:
     months = difference.months
     weeks = difference.weeks
     days = difference.days
-    # hours = difference.hours
-    # minutes = difference.minutes
 
     date_string = []
 
@@ -145,7 +140,6 @@ def corrected_gestational_age(birth_date: date, observation_date: date, gestatio
         }
     
     pregnancy_length_days = (gestation_weeks * 7) + gestation_days
-    # time_alive = relativedelta.relativedelta(observation_date, birth_date)
     time_alive = observation_date - birth_date
     days_of_life = time_alive.days
     days_since_conception = days_of_life + pregnancy_length_days
@@ -153,7 +147,6 @@ def corrected_gestational_age(birth_date: date, observation_date: date, gestatio
     corrected_weeks = math.floor(days_since_conception / 7)
     corrected_supplementary_days = days_since_conception - (corrected_weeks * 7)
 
-    # return f"{corrected_weeks}+{corrected_supplementary_days} weeks"
     return {
         'corrected_gestation_weeks': corrected_weeks,
         'corrected_gestation_days': corrected_supplementary_days
