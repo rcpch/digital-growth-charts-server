@@ -66,6 +66,7 @@ def corrected_decimal_age(birth_date: date, observation_date: date, gestation_we
 
 
 def chronological_calendar_age(birth_date: date, observation_date: date) -> str:
+    
     """
     returns age in years, months, weeks and days: to return a corrected calendar age use passes EDD instead of birth date
     """
@@ -98,6 +99,8 @@ def chronological_calendar_age(birth_date: date, observation_date: date) -> str:
                 date_string.append(str(remainingdays) + " day")
             if remainingdays > 1:
                 date_string.append(str(remainingdays) + " days")
+        else:
+            date_string.append(str(days) + " days")
     if len(date_string) > 1:
         return (', '.join(date_string[:-1])) + ' and ' + date_string[-1]
     elif len(date_string) == 1:
@@ -151,7 +154,6 @@ def corrected_gestational_age(birth_date: date, observation_date: date, gestatio
         'corrected_gestation_weeks': corrected_weeks,
         'corrected_gestation_days': corrected_supplementary_days
     }
-
 
 # def string_to_date(convert_string):
 #     return datetime.strptime(convert_string, '%d/%m/%Y')

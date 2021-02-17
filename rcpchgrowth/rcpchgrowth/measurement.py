@@ -180,29 +180,26 @@ class Measurement:
             corrected_decimal_age=self.corrected_decimal_age,
             gestation_weeks=gestation_weeks,
             gestation_days=gestation_days)
-        self.lay_decimal_age_comment = self.age_comments['lay_comment']
-        self.clinician_decimal_age_comment = self.age_comments['clinician_comment']
-        self.corrected_gestational_age = corrected_gestational_age(
-            birth_date=birth_date,
-            observation_date=observation_date,
-            gestation_weeks=gestation_weeks,
-            gestation_days=gestation_days)  # return None if no correction necessary
-
-        if gestation_weeks < TERM_WEEKS and gestation_weeks >= LOWER_THRESHOLD_PRETERM_REFERENCE_WEEKS:
-            # born below 40 weeks - correct across the life course
-            # decision to correct is made in the date_calculations module
-            # if baby is <42 weeks currently, decimal age reflects the corrected gestational age
-            self.estimated_date_delivery = estimated_date_delivery(
-                birth_date, gestation_weeks, gestation_days)
-            self.corrected_calendar_age = chronological_calendar_age(
-                self.estimated_date_delivery, observation_date)
-            self.estimated_date_delivery_string = self.estimated_date_delivery.strftime(
-                '%a %d %B, %Y')
+        self.lay_corrected_decimal_age_comment = self.age_comments['lay_corrected_comment']
+        self.clinician_corrected_decimal_age_comment = self.age_comments['clinician_corrected_comment']
+        self.lay_chronological_decimal_age_comment = self.age_comments['lay_chronological_comment']
+        self.clinician_chronological_decimal_age_comment = self.age_comments['clinician_chronological_comment']
+        if self.corrected_decimal_age <= FORTY_TWO_WEEKS_GESTATION: # return corrected gestational age if corrected age <= 42 weeks
+            self.corrected_gestational_age = corrected_gestational_age(
+                birth_date=birth_date,
+                observation_date=observation_date,
+                gestation_weeks=gestation_weeks,
+                gestation_days=gestation_days)  
         else:
-            # term baby
-            self.estimated_date_delivery = None
-            self.estimated_date_delivery_string = None
-            self.corrected_calendar_age = self.chronological_calendar_age
+            self.corrected_gestational_age = None
+
+        self.estimated_date_delivery = estimated_date_delivery(
+            birth_date, gestation_weeks, gestation_days)
+        self.corrected_calendar_age = chronological_calendar_age(
+            self.estimated_date_delivery, observation_date)
+        # print(observation_date)
+        self.estimated_date_delivery_string = self.estimated_date_delivery.strftime(
+            '%a %d %B, %Y')
 
         birth_data = {
             "birth_date": birth_date,
@@ -223,8 +220,12 @@ class Measurement:
                 "corrected_gestation_weeks": self.corrected_gestational_age["corrected_gestation_weeks"],
                 "corrected_gestation_days": self.corrected_gestational_age["corrected_gestation_days"],
             },
-            "clinician_decimal_age_comment": self.clinician_decimal_age_comment,
-            "lay_decimal_age_comment": self.lay_decimal_age_comment
+            "comments":{
+                "clinician_corrected_decimal_age_comment": self.clinician_corrected_decimal_age_comment,
+                "lay_corrected_decimal_age_comment": self.lay_corrected_decimal_age_comment,
+                "clinician_chronological_decimal_age_comment": self.clinician_chronological_decimal_age_comment,
+                "lay_chronological_decimal_age_comment": self.lay_chronological_decimal_age_comment
+            }
         }
 
         child_age_calculations = {
