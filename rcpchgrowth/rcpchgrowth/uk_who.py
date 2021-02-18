@@ -47,7 +47,7 @@ def reference_data_absent(
         age: float,
         measurement_method: str,
         sex: str
-    ) -> (bool, str):
+    ):
     """
     Helper function.
     Returns boolean

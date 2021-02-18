@@ -184,14 +184,12 @@ class Measurement:
         self.clinician_corrected_decimal_age_comment = self.age_comments['clinician_corrected_comment']
         self.lay_chronological_decimal_age_comment = self.age_comments['lay_chronological_comment']
         self.clinician_chronological_decimal_age_comment = self.age_comments['clinician_chronological_comment']
-        if self.corrected_decimal_age <= FORTY_TWO_WEEKS_GESTATION: # return corrected gestational age if corrected age <= 42 weeks
-            self.corrected_gestational_age = corrected_gestational_age(
-                birth_date=birth_date,
-                observation_date=observation_date,
-                gestation_weeks=gestation_weeks,
-                gestation_days=gestation_days)  
-        else:
-            self.corrected_gestational_age = None
+        
+        self.corrected_gestational_age = corrected_gestational_age(
+            birth_date=birth_date,
+            observation_date=observation_date,
+            gestation_weeks=gestation_weeks,
+            gestation_days=gestation_days)  
 
         self.estimated_date_delivery = estimated_date_delivery(
             birth_date, gestation_weeks, gestation_days)

@@ -150,6 +150,11 @@ def corrected_gestational_age(birth_date: date, observation_date: date, gestatio
     corrected_weeks = math.floor(days_since_conception / 7)
     corrected_supplementary_days = days_since_conception - (corrected_weeks * 7)
 
+    if (corrected_weeks == 42 and corrected_supplementary_days > 0) or corrected_weeks > 42:
+        # corrected gestational age will not be returned beyond 42 weeks
+        corrected_weeks = None
+        corrected_supplementary_days = None
+
     return {
         'corrected_gestation_weeks': corrected_weeks,
         'corrected_gestation_days': corrected_supplementary_days
