@@ -31,8 +31,6 @@ def chronological_decimal_age(birth_date: date, observation_date: date) -> float
     :param birth_date: date of birth
     :param observation_date: date observation made
     """
-    if birth_date > observation_date:
-        raise Exception("Birth date cannot be after the date of observation.")
 
     days_between = observation_date - birth_date
     chronological_decimal_age = days_between.days / 365.25

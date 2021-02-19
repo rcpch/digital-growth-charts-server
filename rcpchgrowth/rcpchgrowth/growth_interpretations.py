@@ -6,6 +6,7 @@ def comment_prematurity_correction(
     """
     Returns interpretations on age correction as a string
     """
+
     if chronological_decimal_age == corrected_decimal_age:
         # adjustment is made even for term < 40 weeks. Different advice returned
         if gestation_weeks >= 37 and gestation_weeks <= 42:

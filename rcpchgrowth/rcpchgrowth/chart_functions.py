@@ -21,7 +21,6 @@ def create_plottable_child_data(child_results_array):
 
     for count, child_result in enumerate(child_results_array):
         if(child_result):
-
             ## create 4 plottable return objects for each measurement: one for each corrected and chronological age
             ## per measurement and per SDS score
             ## These measurement pairs and SDS pairs are stored in a 2 2-value arrays, so that each measurement/SDS
@@ -98,7 +97,7 @@ def create_plottable_child_data(child_results_array):
         "centile_data": centile_data,
         # "sds_data": sds_data
     }
-
+    
     return result
 
     """

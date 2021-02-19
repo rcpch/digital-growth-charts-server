@@ -345,11 +345,17 @@ def lms_value_array_for_measurement_for_reference(
     """
 
     if reference == UK_WHO:
-        lms_value_array_for_measurement = uk_who_lms_array_for_measurement_and_sex(
-            age=age, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
+        try:
+            lms_value_array_for_measurement = uk_who_lms_array_for_measurement_and_sex(
+                age=age, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
+        except LookupError as error:
+            raise LookupError(error)
     elif reference == TURNERS:
-        lms_value_array_for_measurement = turner_lms_array_for_measurement_and_sex(
-            measurement_method=measurement_method, sex=sex, age=age)
+        try:
+            lms_value_array_for_measurement = turner_lms_array_for_measurement_and_sex(
+                measurement_method=measurement_method, sex=sex, age=age)
+        except LookupError as error:
+            raise LookupError(error)
     elif reference == TRISOMY_21:
         try:
             lms_value_array_for_measurement = trisomy_21_lms_array_for_measurement_and_sex(

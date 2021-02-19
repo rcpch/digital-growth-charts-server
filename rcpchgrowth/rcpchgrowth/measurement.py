@@ -237,6 +237,14 @@ class Measurement:
         except Exception as err:
             self.corrected_decimal_age=None
             corrected_decimal_age_error=f"{err}"
+
+        try:
+            self.chronological_decimal_age = chronological_decimal_age(
+                birth_date=birth_date,
+                observation_date=observation_date)
+        except Exception as err:
+            self.chronological_decimal_age=None
+            chronological_decimal_age_error=f"{err}"
         
         if self.corrected_decimal_age is None:
             self._age_comments = None
@@ -265,14 +273,6 @@ class Measurement:
             except:
                 self.clinician_corrected_decimal_age_comment = None
                 corrected_decimal_age_error="Error in comment on corrected decimal age."
-
-        try:
-            self.chronological_decimal_age = chronological_decimal_age(
-                birth_date=birth_date,
-                observation_date=observation_date)
-        except Exception as err:
-            self.chronological_decimal_age=None
-            corrected_decimal_age_error=f"{err}"
         
         if chronological_decimal_age is None:
             self.chronological_calendar_age=None
@@ -326,7 +326,11 @@ class Measurement:
                     self.estimated_date_delivery, observation_date)
             except:
                 self.corrected_calendar_age=None
-                chronological_decimal_age_error="Error calculating the corrected calendar age."
+                print("I am here")
+                if self.estimated_date_delivery > observation_date:
+                    chronological_decimal_age_error="The due date is after the observation date - a calendar age cannot be calculated."
+                else:
+                    chronological_decimal_age_error="A calendar age cannot be calculated."
             
             try:
                 self.estimated_date_delivery_string = self.estimated_date_delivery.strftime(
