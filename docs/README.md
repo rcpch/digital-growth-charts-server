@@ -4,28 +4,28 @@
 
 - [Developer Documentation](#developer-documentation)
   - [Why Python?](#why-python)
+  - [Scripts](#scripts)
   - [Running the dGC Server in Docker](#running-the-dgc-server-in-docker)
+    - [Build the Docker image with all required dependencies](#build-the-docker-image-with-all-required-dependencies)
+    - [Start the Docker container](#start-the-docker-container)
   - [Running the dGC Server locally with Python](#running-the-dgc-server-locally-with-python)
     - [Managing Python versions, and dependencies such as libraries](#managing-python-versions-and-dependencies-such-as-libraries)
     - [Installing `pyenv`](#installing-pyenv)
     - [Setup for this repository](#setup-for-this-repository)
     - [Extra development packages that may be required on some setups](#extra-development-packages-that-may-be-required-on-some-setups)
-  - [Running the API server application in development](#running-the-api-server-application-in-development)
+  - [Start the API server natively with default settings](#start-the-api-server-natively-with-default-settings)
   - [Contributing](#contributing)
     - [How to contribute](#how-to-contribute)
     - [Coding style](#coding-style)
   - [Intellectual Property (IP)](#intellectual-property-ip)
+  - [Support](#support)
 
 <!-- /TOC -->
 
-- [Frequently Asked Questions](frequently-asked-questions.md)
+- [Frequently Asked Questions](https://openhealthhub.org/t/frequently-asked-questions/2328)
 - [Centile Advice Strings (legacy)](centile-advice-strings.md)
-- [About Calculation of Growth Parameters in Code](about-calculating-growth-parameters.md)
+- [About Calculation of Growth Parameters in Code](calculating-growth-parameters.md)
 - [Client Specification](client_specification.md)
-- [Technical Acknowledgements](technical-acknowledgements.md)
-- TODO: Alternative growth reference data
-- TODO: Adding new calculations to the API
-- TODO: Testing the API
 
 ---
 
@@ -37,15 +37,29 @@
 - It's accessible to clinicians who want to learn to code, and it's easy enough to learn that it's taught in schools.
 - It has everything we needed for building an API and web layers we needed.
 
+Marcus Baw wrote a blog post on 'Why Python..' which has a little more detail https://marcus-baw.medium.com/why-we-chose-python-for-the-rcpch-digital-growth-charts-project-2d61e2766c3b
+
+## Scripts
+
+This folder contains some simple scripts to help with development.  
+To run them, ensure they are made executable in your filesystem (they may not be by default depending on your OS).  
+You can do that in whatever File > Permissions > Make Executable menu your desktop provides, or for \*nix environments or the WSL you can type
+`chmod +x <filename>` to add executable permissions.
+
 ## Running the dGC Server in Docker
 
-- Install Docker. How to do this varies by platform so go to https://www.docker.com/get-started to find out more
 - `git clone` this repository, if you haven't already, to a suitable place on your local machine.
-- run the `s/rebuild-docker` script which will build the Docker image.
-- run the `s/start-docker` script, which will run the image in a Docker container.
-- The dGC server should be running in development mode on https://localhost:5000
 
-TODO: #124 Prebuilt Docker image on Docker Hub
+### Build the Docker image with all required dependencies
+
+- run the `s/build-docker` script which will build the Docker image with all the required dependencies
+  This is useful for rapidly getting a development environment set up.  
+  Pulls the base Python image, deletes any existing identically-named images, builds the new image.
+
+### Start the Docker container
+
+- run the `s/start-docker` script, which will run the image in a Docker container.
+- The dGC server should be running in development mode in the container, and mapped to the port https://localhost:5000
 
 ## Running the dGC Server locally with Python
 
@@ -54,7 +68,9 @@ TODO: #124 Prebuilt Docker image on Docker Hub
 ### Managing Python versions, and dependencies such as libraries
 
 - We are using Python 3.8.0 currently for these algorithms. There are tools available to help you manage multiple different Python versions on the same machine. We are using `pyenv` here, however there are other ways to solve this problem, and you may already have a preferred method, in which case you should be able to use that.
+
 - Similarly, if you `pip install` all of the dependencies in `requirements.txt` globally on your machine, then you can encounter problems if you develop other Python applications on the same machine, for example if you need different versions of the same library. The solution to this is to use `pyenv-virtualenv` which is an extension to `pyenv` which helps you to manage separate 'environments' for each Python project you work on.
+
 - If you install and set up `pyenv` then the correct Python version will be selected automatically when you navigate to the directory containing this repository, because of the file `.python-version`
 
 ### Installing `pyenv`
@@ -92,10 +108,9 @@ and then recompile the Python that `pyenv` built
 
 `$ pyenv install 3.8.0`
 
-## Running the API server application in development
+## Start the API server natively with default settings
 
-Simply type
-`$ s/start-server` in the application root
+- `$ s/start-server` in the application root
 
 You should then see some messages from the Flask development server, which should look like
 
@@ -108,6 +123,8 @@ You should then see some messages from the Flask development server, which shoul
  * Debugger is active!
  * Debugger PIN: xxx-xxx-xxx
 ```
+
+There may be some other messages at the end of that output for other processes which run on server startup
 
 If you need to vary any of the parameters passed to Flask, you can either modify the startup script or simply pass the commands to the shell manually.
 
@@ -143,3 +160,9 @@ We aim to eventually have an RCPCH forum up and running which you will also be a
 - If you submit a contribution to the repository, you agree to transfer all IP rights over the contribution, both now and in the future, to the Royal College of Paediatrics and Child Health, in perpetuity. This clause is purely to allow RCPCH to continue to exert an unchallenged copyright over the work.
 - For larger contributions we may require a Contributor Covenant to support this agreement over transfer of title, however for small contributions it is probably sufficient that you should have read and understood this document, and that the act of submitting a PR is acceptance of these terms.
 - All contributors will, of course, proudly be acknowledged in the [Acknowledgements](acknowledgements.md) section.
+
+## Support
+
+- Our primary support method is through the forum at https://openhealthhub.org/c/rcpch-digital-growth-charts/
+
+- Commercial support is also available for this API and for integration with your software solution, please contact growth.digital@rcpch.ac.uk
