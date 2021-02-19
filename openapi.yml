@@ -247,7 +247,7 @@ paths:
             was returned
       summary: Centile and SDS Calculation route.
   /uk-who/chart-coordinates:
-    post:
+    get:
       requestBody:
         content:
           application/json:

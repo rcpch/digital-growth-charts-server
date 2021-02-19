@@ -88,12 +88,12 @@ def uk_who_calculation():
         return "Request body mimetype should be application/json", 400
 
 
-@uk_who.route("/chart-coordinates", methods=["POST"])
+@uk_who.route("/chart-coordinates", methods=["GET"])
 def uk_who_chart_coordinates():
     """
     Chart data.
     ---
-    post:
+    get:
       summary: UK-WHO Chart coordinates in plottable format
         * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
 
@@ -110,14 +110,11 @@ def uk_who_chart_coordinates():
               schema: ChartDataResponseSchema
     """
 
-    if request.is_json:
-        chart_data = create_chart(UK_WHO, COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+    chart_data = create_chart(UK_WHO, COLE_TWO_THIRDS_SDS_NINE_CENTILES)
 
-        return jsonify({
-            "centile_data": chart_data
-        })
-    else:
-        return "Request body should be application/json", 400
+    return jsonify({
+        "centile_data": chart_data
+    })
 
 """
     Return object structure

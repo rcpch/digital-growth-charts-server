@@ -407,7 +407,7 @@
             }
         },
         "/uk-who/chart-coordinates": {
-            "post": {
+            "get": {
                 "requestBody": {
                     "content": {
                         "application/json": {

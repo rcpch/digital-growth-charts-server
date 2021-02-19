@@ -9,7 +9,7 @@ from flask import jsonify, request
 from marshmallow import ValidationError
 from rcpchgrowth.rcpchgrowth.constants.parameter_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, TRISOMY_21
 from rcpchgrowth.rcpchgrowth.measurement import Measurement
-from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data
+from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data, create_chart
 from rcpchgrowth.rcpchgrowth.constants.parameter_constants import TRISOMY_21
 from datetime import date, datetime
 from schemas import *
@@ -127,3 +127,55 @@ def trisomy_21_plottable_child_data():
         })
     else:
         return "Request body mimetype should be application/json", 400
+
+@trisomy_21.route("/chart-coordinates", methods=["GET"])
+def trisomy_21_chart_coordinates():
+    """
+    Chart data.
+    ---
+    get:
+      summary: UK-WHO Chart coordinates in plottable format
+        * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
+
+      requestBody:
+        content:
+          application/json:
+            schema: ChartDataRequestParameters
+
+      responses:
+        200:
+          description: "Chart data for plotting a traditional growth chart was returned"
+          content:
+            application/json:
+              schema: ChartDataResponseSchema
+    """
+
+    chart_data = create_chart(TRISOMY_21, COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+
+    return jsonify({
+        "centile_data": chart_data
+    })
+
+"""
+    Return object structure
+
+    [
+        "height": [
+            {
+                sds: -2.666666,
+                uk90_child_data:[.....],
+                uk90_preterm_data: [...],
+                who_child_data: [...],
+                who_infant_data: [
+                    {
+                        label: 0.4, `this is the centile
+                        x: 4, `this is the decimal age
+                        y: 91.535  `this is the measurement
+                    }
+                ]
+            }
+        ],
+        ... repeat for weight, bmi, ofc, based on which measurements supplied. If only height data supplied, only height centile data returned
+    ]
+
+    """
