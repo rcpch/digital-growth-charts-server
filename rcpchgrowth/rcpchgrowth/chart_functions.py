@@ -34,9 +34,12 @@ def create_plottable_child_data(child_results_array):
                 "measurement_method": child_result["child_observation_value"]["measurement_method"],
                 "x": child_result["measurement_dates"]["chronological_decimal_age"], 
                 "y": child_result["child_observation_value"]["observation_value"],
+                "observation_value_error": child_result["child_observation_value"]["observation_value_error"],
                 "centile_band": child_result["measurement_calculated_values"]["chronological_centile_band"],
                 "centile_value": child_result["measurement_calculated_values"]["chronological_centile"],
                 "sds": child_result["measurement_calculated_values"]["chronological_sds"],
+                "measurement_error":child_result["measurement_calculated_values"]["chronological_measurement_error"],
+                "age_error": child_result["measurement_dates"]["chronological_decimal_age_error"],
                 "age_type": "chronological_age",
                 "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
                 "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
@@ -48,9 +51,12 @@ def create_plottable_child_data(child_results_array):
                 "measurement_method": child_result["child_observation_value"]["measurement_method"],
                 "x": child_result["measurement_dates"]["corrected_decimal_age"], 
                 "y": child_result["child_observation_value"]["observation_value"],
+                "observation_value_error": child_result["child_observation_value"]["observation_value_error"],
                 "centile_band": child_result["measurement_calculated_values"]["corrected_centile_band"],
                 "centile_value": child_result["measurement_calculated_values"]["corrected_centile"],
                 "sds": child_result["measurement_calculated_values"]["corrected_sds"],
+                "measurement_error":child_result["measurement_calculated_values"]["corrected_measurement_error"],
+                "age_error": child_result["measurement_dates"]["corrected_decimal_age_error"],
                 "age_type": "corrected_age",
                 "calendar_age": child_result["measurement_dates"]["corrected_calendar_age"],
                 "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
@@ -58,39 +64,39 @@ def create_plottable_child_data(child_results_array):
                 "lay_corrected_decimal_age_comment": child_result["measurement_dates"]["comments"]["lay_corrected_decimal_age_comment"],
                 "clinician_corrected_decimal_age_comment": child_result["measurement_dates"]["comments"]["clinician_corrected_decimal_age_comment"],
             }
-            chronological_sds_data_point = {
-                "measurement_method": child_result["child_observation_value"]["measurement_method"],
-                "x": child_result["measurement_dates"]["chronological_decimal_age"], 
-                "y": child_result["measurement_calculated_values"]["chronological_sds"],
-                "age_type": "chronological_age",
-                "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
-                "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
-                "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"],
-                "lay_chronological_decimal_age_comment": child_result["measurement_dates"]["comments"]["lay_chronological_decimal_age_comment"],
-                "clinician_chronological_decimal_age_comment": child_result["measurement_dates"]["comments"]["clinician_chronological_decimal_age_comment"]
-            }
-            corrected_sds_data_point = {
-                "measurement_method": child_result["child_observation_value"]["measurement_method"],
-                "x": child_result["measurement_dates"]["corrected_decimal_age"], 
-                "y": child_result["measurement_calculated_values"]["corrected_sds"],
-                "age_type": "corrected_age",
-                "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
-                "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
-                "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"],
-                "lay_corrected_decimal_age_comment": child_result["measurement_dates"]["comments"]["lay_corrected_decimal_age_comment"],
-                "clinician_corrected_decimal_age_comment": child_result["measurement_dates"]["comments"]["clinician_corrected_decimal_age_comment"],
-            }
+            # chronological_sds_data_point = {
+            #     "measurement_method": child_result["child_observation_value"]["measurement_method"],
+            #     "x": child_result["measurement_dates"]["chronological_decimal_age"], 
+            #     "y": child_result["measurement_calculated_values"]["chronological_sds"],
+            #     "age_type": "chronological_age",
+            #     "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
+            #     "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
+            #     "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"],
+            #     "lay_chronological_decimal_age_comment": child_result["measurement_dates"]["comments"]["lay_chronological_decimal_age_comment"],
+            #     "clinician_chronological_decimal_age_comment": child_result["measurement_dates"]["comments"]["clinician_chronological_decimal_age_comment"]
+            # }
+            # corrected_sds_data_point = {
+            #     "measurement_method": child_result["child_observation_value"]["measurement_method"],
+            #     "x": child_result["measurement_dates"]["corrected_decimal_age"], 
+            #     "y": child_result["measurement_calculated_values"]["corrected_sds"],
+            #     "age_type": "corrected_age",
+            #     "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
+            #     "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
+            #     "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"],
+            #     "lay_corrected_decimal_age_comment": child_result["measurement_dates"]["comments"]["lay_corrected_decimal_age_comment"],
+            #     "clinician_corrected_decimal_age_comment": child_result["measurement_dates"]["comments"]["clinician_corrected_decimal_age_comment"],
+            # }
 
             measurement_data_points=[corrected_data_point, chronological_data_point]
-            measurement_sds_data_points=[corrected_sds_data_point, chronological_sds_data_point]
+            # measurement_sds_data_points=[corrected_sds_data_point, chronological_sds_data_point]
             
             centile_data.append(measurement_data_points)
-            sds_data.append(measurement_sds_data_points)
+            # sds_data.append(measurement_sds_data_points)
 
     result = {
         "measurement_method": child_result["child_observation_value"]["measurement_method"],
         "centile_data": centile_data,
-        "sds_data": sds_data
+        # "sds_data": sds_data
     }
 
     return result

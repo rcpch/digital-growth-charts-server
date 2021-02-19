@@ -71,9 +71,9 @@ class Measurement:
         try:
             self.__validate_measurement_method(
                 measurement_method=measurement_method, observation_value=observation_value)
-            measurement_error=None
+            observation_value_error=None
         except Exception as err:
-            measurement_error = f"{err}"
+            observation_value_error = f"{err}"
 
         if gestation_weeks < 37 and gestation_weeks >= 23:
             self.born_preterm = True
@@ -95,7 +95,7 @@ class Measurement:
             chronological_age=self.ages_object['measurement_dates']['chronological_decimal_age'],
             measurement_method=self.measurement_method,
             observation_value=self.observation_value,
-            measurement_error=measurement_error,
+            observation_value_error=observation_value_error,
             born_preterm=self.born_preterm,
             reference=self.reference
         )
@@ -117,7 +117,7 @@ class Measurement:
         sex: str,
         corrected_age: float,
         chronological_age: float,
-        measurement_error: str,
+        observation_value_error: str,
         measurement_method: str,
         observation_value: float,
         reference: str,
@@ -134,7 +134,7 @@ class Measurement:
             self.return_measurement_object = self.__create_measurement_object(
                 measurement_method=measurement_method,
                 observation_value=observation_value,
-                measurement_error=measurement_error,
+                observation_value_error=observation_value_error,
                 corrected_sds_value=None,
                 corrected_centile_value=None,
                 corrected_centile_band=None,
@@ -198,7 +198,7 @@ class Measurement:
         self.return_measurement_object = self.__create_measurement_object(
             measurement_method=measurement_method,
             observation_value=observation_value,
-            measurement_error=measurement_error,
+            observation_value_error=observation_value_error,
             corrected_sds_value=corrected_measurement_sds,
             corrected_centile_value=corrected_measurement_centile,
             corrected_centile_band=corrected_centile_band,
@@ -374,7 +374,7 @@ class Measurement:
         self,
         measurement_method: str,
         observation_value: float,
-        measurement_error: str,
+        observation_value_error: str,
         corrected_sds_value: float,
         corrected_centile_value: float,
         corrected_centile_band: str,
@@ -424,7 +424,7 @@ class Measurement:
         child_observation_value = {
             "measurement_method": measurement_method,
             "observation_value": observation_value,
-            "measurement_error": measurement_error
+            "observation_value_error": observation_value_error
         }
 
         return {
