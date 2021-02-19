@@ -98,9 +98,11 @@ def centile(z_score: float):
     """
     Converts a Z Score to a p value (2-tailed) using the SciPy library, which it returns as a percentage
     """
-
-    centile = (stats.norm.cdf(z_score) * 100)
-    return centile
+    try:
+        centile = (stats.norm.cdf(z_score) * 100)
+        return centile
+    except TypeError as err:
+        raise TypeError(err)
 
 
 def measurement_for_z(z: float, l: float, m: float, s: float) -> float:
@@ -201,8 +203,7 @@ def measurement_from_sds(
         lms_value_array_for_measurement = lms_value_array_for_measurement_for_reference(
             reference=reference, age=age, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
     except LookupError as err:
-        print(err)
-        return None
+        raise LookupError(err)
 
     # get LMS values from the reference: check for age match, interpolate if none
     lms = fetch_lms(
@@ -228,8 +229,7 @@ def sds_for_measurement(
         lms_value_array_for_measurement = lms_value_array_for_measurement_for_reference(
             reference=reference, age=age, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
     except LookupError as err:
-        print(err)
-        return None
+        raise LookupError(err)
 
     # get LMS values from the reference: check for age match, interpolate if none
     lms = fetch_lms(
@@ -254,8 +254,7 @@ def percentage_median_bmi(reference: str, age: float, actual_bmi: float, sex: st
         lms_value_array_for_measurement = lms_value_array_for_measurement_for_reference(
             reference=reference, measurement_method="bmi", sex=sex, age=age, born_preterm=born_preterm)
     except LookupError as err:
-        print(err)
-        return None
+        raise LookupError(err)
 
     # get LMS values from the reference: check for age match, interpolate if none
     try:
@@ -352,8 +351,11 @@ def lms_value_array_for_measurement_for_reference(
         lms_value_array_for_measurement = turner_lms_array_for_measurement_and_sex(
             measurement_method=measurement_method, sex=sex, age=age)
     elif reference == TRISOMY_21:
-        lms_value_array_for_measurement = trisomy_21_lms_array_for_measurement_and_sex(
+        try:
+            lms_value_array_for_measurement = trisomy_21_lms_array_for_measurement_and_sex(
             measurement_method=measurement_method, sex=sex, age=age)
+        except LookupError as error:
+            raise LookupError(error)
     else:
         raise ValueError("Incorrect reference supplied")
     return lms_value_array_for_measurement

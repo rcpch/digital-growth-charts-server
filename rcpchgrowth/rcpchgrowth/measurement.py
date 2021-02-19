@@ -85,6 +85,7 @@ class Measurement:
             observation_date=self.observation_date,
             gestation_weeks=self.gestation_weeks,
             gestation_days=self.gestation_days)
+
         # the calculate_measurements_object receives the child_observation_value and measurement_calculated_values objects
         self.calculate_measurements_object = self.sds_and_centile_for_measurement_method(
             sex=self.sex,
@@ -102,6 +103,7 @@ class Measurement:
             'child_observation_value': self.calculate_measurements_object['child_observation_value'],
             'measurement_calculated_values': self.calculate_measurements_object['measurement_calculated_values']
         }
+
 
     """
     These are 2 public class methods
@@ -122,18 +124,54 @@ class Measurement:
         # bmi must be supplied precalculated
 
         # calculate sds based on reference, age, measurement, sex and prematurity
-        corrected_measurement_sds = sds_for_measurement(reference=reference, age=corrected_age, measurement_method=measurement_method,
+        try: 
+            corrected_measurement_sds = sds_for_measurement(reference=reference, age=corrected_age, measurement_method=measurement_method,
                                               observation_value=observation_value, sex=sex, born_preterm=born_preterm)
-        chronological_measurement_sds = sds_for_measurement(reference=reference, age=chronological_age, measurement_method=measurement_method,
+        except Exception as err:
+            corrected_measurement_error=f"{err}"
+            corrected_measurement_sds = None
+
+        try:                         
+            chronological_measurement_sds = sds_for_measurement(reference=reference, age=chronological_age, measurement_method=measurement_method,
                                               observation_value=observation_value, sex=sex, born_preterm=born_preterm)
-
-        corrected_measurement_centile = centile(z_score=corrected_measurement_sds)
-        chronological_measurement_centile = centile(z_score=chronological_measurement_sds)
-
-        corrected_centile_band = centile_band_for_centile(
-            sds=corrected_measurement_sds, measurement_method=measurement_method)
-        chronological_centile_band = centile_band_for_centile(
-            sds=chronological_measurement_sds, measurement_method=measurement_method)
+        except LookupError as err:
+            chronological_measurement_error=f"{err}"
+            chronological_measurement_sds = None
+        
+        if chronological_measurement_sds is None:
+            chronological_measurement_centile = None
+            chronological_centile_band = None
+        else:
+            chronological_measurement_error=None
+            try:      
+                chronological_measurement_centile = centile(z_score=chronological_measurement_sds)
+            except TypeError as err:
+                chronological_measurement_error="Not possible to calculate centile"
+                chronological_measurement_centile = None
+            try:    
+                chronological_centile_band = centile_band_for_centile(
+                sds=chronological_measurement_sds, measurement_method=measurement_method)
+            except TypeError as err:
+                chronological_measurement_error="Not possible to calculate centile"
+                chronological_centile_band = None
+        
+        if corrected_measurement_sds is None:
+            corrected_measurement_centile = None
+            corrected_centile_band = None
+        else:
+            corrected_measurement_error=None
+            try:
+                corrected_measurement_centile = centile(z_score=corrected_measurement_sds)
+            except TypeError as err:
+                corrected_measurement_error="Not possible to calculate centile"
+                corrected_measurement_centile = None
+            
+            try:
+                corrected_centile_band = centile_band_for_centile(
+                sds=corrected_measurement_sds, measurement_method=measurement_method)
+            except TypeError as err:
+                corrected_measurement_error="Not possible to calculate centile"
+                corrected_centile_band = None
 
         self.return_measurement_object = self.__create_measurement_object(
             measurement_method=measurement_method,
@@ -143,7 +181,9 @@ class Measurement:
             corrected_centile_band=corrected_centile_band,
             chronological_sds_value=chronological_measurement_sds,
             chronological_centile_value=chronological_measurement_centile,
-            chronological_centile_band=chronological_centile_band
+            chronological_centile_band=chronological_centile_band,
+            chronological_measurement_error=chronological_measurement_error,
+            corrected_measurement_error=corrected_measurement_error
         )
 
         return self.return_measurement_object
@@ -242,6 +282,8 @@ class Measurement:
         chronological_sds_value: float,
         chronological_centile_value: float,
         chronological_centile_band: str,
+        chronological_measurement_error: str,
+        corrected_measurement_error:str
     ):
         """
         private class method
@@ -275,7 +317,9 @@ class Measurement:
             "corrected_centile_band": corrected_centile_band,
             "chronological_sds": chronological_sds_value,
             "chronological_centile": chronological_centile_value,
-            "chronological_centile_band": chronological_centile_band
+            "chronological_centile_band": chronological_centile_band,
+            "corrected_measurement_error": corrected_measurement_error,
+            "chronological_measurement_error": chronological_measurement_error
         }
 
         child_observation_value = {
