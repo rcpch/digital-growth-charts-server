@@ -182,9 +182,12 @@ If you are reviewing, developing, extending or simply curious about the RCPCH dG
 
 ### RCPCH Staff
 
-- Rachel McKeown, Policy Lead & Project Manager, Royal College of Paediatrics and Child Health (RCPCH)
-- Jonathan Miall, Director of Membership and Development, Royal College of Paediatrics and Child Health (RCPCH)
-- Magdalena Umerska. Digital Platform Commercial Manager, Royal College of Paediatrics and Child Health (RCPCH)
+- Magdalena Umerska. Digital Platform Commercial Manager, RCPCH
+- Jonathan Miall, Director of Membership and Development, RCPCH
+- Alex Brown, Head of Commercial and Corporate Partnerships, RCPCH
+- Jo Ball, Design and Brand Manager, Content and Brand Team, RCPCH
+- Kirsten Olson, Website Content Manager, Content and Brand Team, RCPCH
+- Rachel McKeown, Policy Lead & Project Manager, RCPCH (now left RCPCH) 
 
 ### Development Team
 
