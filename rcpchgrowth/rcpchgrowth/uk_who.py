@@ -119,7 +119,7 @@ def uk_who_reference(
     #These conditionals are to select the correct reference
     if age < UK90_REFERENCE_LOWER_THRESHOLD:
         # Below the range for which we have reference data, we can't provide a calculation.
-        return ValueError("There is no reference data below 23 weeks gestation")
+        return ValueError("There is no UK90 reference data below 23 weeks gestation")
     elif age < UK_WHO_INFANT_LOWER_THRESHOLD:
         # Below 42 weeks, the UK90 preterm data is always used
         return UK90_PRETERM_DATA
@@ -137,7 +137,7 @@ def uk_who_reference(
         return UK90_CHILD_DATA
 
     else:
-        return ValueError("There is no reference data above the age of 20 years.")
+        return ValueError("There is no UK90 reference data above the age of 20 years.")
 
 def uk_who_lms_array_for_measurement_and_sex(
         age: float,
@@ -151,7 +151,7 @@ def uk_who_lms_array_for_measurement_and_sex(
     try:
         selected_reference = uk_who_reference(age=age, born_preterm=born_preterm)
     except: # there is no reference for the age supplied
-        return LookupError("There is no reference for the age supplied.")
+        return LookupError("There is no UK-WHO reference for the age supplied.")
 
     # Check that the measurement requested has reference data at that age
 

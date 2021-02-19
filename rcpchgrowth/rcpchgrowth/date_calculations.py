@@ -31,6 +31,8 @@ def chronological_decimal_age(birth_date: date, observation_date: date) -> float
     :param birth_date: date of birth
     :param observation_date: date observation made
     """
+    if birth_date > observation_date:
+        raise Exception("Birth date cannot be after the date of observation.")
 
     days_between = observation_date - birth_date
     chronological_decimal_age = days_between.days / 365.25
@@ -47,6 +49,9 @@ def corrected_decimal_age(birth_date: date, observation_date: date, gestation_we
     :param gestation_weeks: weeks of gestation up to 40
     :param gestation_days: days in excess of weeks
     """
+
+    if birth_date > observation_date:
+        raise Exception("Birth date cannot be after the date of observation.")
     
     correction_days = 0
     pregnancy_length_days = TERM_PREGNANCY_LENGTH_DAYS
@@ -70,6 +75,10 @@ def chronological_calendar_age(birth_date: date, observation_date: date) -> str:
     """
     returns age in years, months, weeks and days: to return a corrected calendar age use passes EDD instead of birth date
     """
+
+    if birth_date > observation_date:
+        raise Exception("Birth date cannot be after the date of observation.")
+
     difference = relativedelta.relativedelta(observation_date, birth_date)
     years = difference.years
     months = difference.months
@@ -116,6 +125,7 @@ def estimated_date_delivery(birth_date: date, gestation_weeks: int, gestation_da
     Returns estimated date of delivery from gestational age and birthdate
     Will still calculate an estimated date of delivery if already term (>37 weeks)
     """
+
     pregnancy_length_days = TERM_PREGNANCY_LENGTH_DAYS
 
     if gestation_weeks > 0:

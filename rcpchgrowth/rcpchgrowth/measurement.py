@@ -68,10 +68,12 @@ class Measurement:
         except ValidationError as err:
             pass  # pprint(err.messages)
 
-        valid = self.__validate_measurement_method(
-            measurement_method=measurement_method, observation_value=observation_value)
-        if valid == False:
-            return
+        try:
+            self.__validate_measurement_method(
+                measurement_method=measurement_method, observation_value=observation_value)
+            measurement_error=None
+        except Exception as err:
+            measurement_error = f"{err}"
 
         if gestation_weeks < 37 and gestation_weeks >= 23:
             self.born_preterm = True
@@ -93,6 +95,7 @@ class Measurement:
             chronological_age=self.ages_object['measurement_dates']['chronological_decimal_age'],
             measurement_method=self.measurement_method,
             observation_value=self.observation_value,
+            measurement_error=measurement_error,
             born_preterm=self.born_preterm,
             reference=self.reference
         )
@@ -114,6 +117,7 @@ class Measurement:
         sex: str,
         corrected_age: float,
         chronological_age: float,
+        measurement_error: str,
         measurement_method: str,
         observation_value: float,
         reference: str,
@@ -124,6 +128,24 @@ class Measurement:
         # bmi must be supplied precalculated
 
         # calculate sds based on reference, age, measurement, sex and prematurity
+
+        if corrected_age is None or chronological_age is None:
+            # there has been an age calculation error. Further calculation impossible
+            self.return_measurement_object = self.__create_measurement_object(
+                measurement_method=measurement_method,
+                observation_value=observation_value,
+                measurement_error=measurement_error,
+                corrected_sds_value=None,
+                corrected_centile_value=None,
+                corrected_centile_band=None,
+                chronological_sds_value=None,
+                chronological_centile_value=None,
+                chronological_centile_band=None,
+                chronological_measurement_error="Dates error. Calculations impossible.",
+                corrected_measurement_error="Dates error. Calculations impossible."
+            )
+            return self.return_measurement_object
+
         try: 
             corrected_measurement_sds = sds_for_measurement(reference=reference, age=corrected_age, measurement_method=measurement_method,
                                               observation_value=observation_value, sex=sex, born_preterm=born_preterm)
@@ -176,6 +198,7 @@ class Measurement:
         self.return_measurement_object = self.__create_measurement_object(
             measurement_method=measurement_method,
             observation_value=observation_value,
+            measurement_error=measurement_error,
             corrected_sds_value=corrected_measurement_sds,
             corrected_centile_value=corrected_measurement_centile,
             corrected_centile_band=corrected_centile_band,
@@ -204,40 +227,113 @@ class Measurement:
             # if gestation not specified, set to 40 weeks
             gestation_weeks = 40
         # calculate ages from dates and gestational ages at birth
-        self.corrected_decimal_age = corrected_decimal_age(
-            birth_date=birth_date,
-            observation_date=observation_date,
-            gestation_weeks=gestation_weeks,
-            gestation_days=gestation_days)
-        self.chronological_decimal_age = chronological_decimal_age(
-            birth_date=birth_date,
-            observation_date=observation_date)
-        self.chronological_calendar_age = chronological_calendar_age(
-            birth_date=birth_date,
-            observation_date=observation_date)
-        self.age_comments = comment_prematurity_correction(
-            chronological_decimal_age=self.chronological_decimal_age,
-            corrected_decimal_age=self.corrected_decimal_age,
-            gestation_weeks=gestation_weeks,
-            gestation_days=gestation_days)
-        self.lay_corrected_decimal_age_comment = self.age_comments['lay_corrected_comment']
-        self.clinician_corrected_decimal_age_comment = self.age_comments['clinician_corrected_comment']
-        self.lay_chronological_decimal_age_comment = self.age_comments['lay_chronological_comment']
-        self.clinician_chronological_decimal_age_comment = self.age_comments['clinician_chronological_comment']
-        
-        self.corrected_gestational_age = corrected_gestational_age(
-            birth_date=birth_date,
-            observation_date=observation_date,
-            gestation_weeks=gestation_weeks,
-            gestation_days=gestation_days)  
 
-        self.estimated_date_delivery = estimated_date_delivery(
-            birth_date, gestation_weeks, gestation_days)
-        self.corrected_calendar_age = chronological_calendar_age(
-            self.estimated_date_delivery, observation_date)
-        # print(observation_date)
-        self.estimated_date_delivery_string = self.estimated_date_delivery.strftime(
-            '%a %d %B, %Y')
+        try:
+            self.corrected_decimal_age = corrected_decimal_age(
+                birth_date=birth_date,
+                observation_date=observation_date,
+                gestation_weeks=gestation_weeks,
+                gestation_days=gestation_days)
+        except Exception as err:
+            self.corrected_decimal_age=None
+            corrected_decimal_age_error=f"{err}"
+        
+        if self.corrected_decimal_age is None:
+            self._age_comments = None
+            self.lay_corrected_decimal_age_comment = None
+            self.clinician_corrected_decimal_age_comment = None
+        else:
+            corrected_decimal_age_error=None
+            try:
+                self.age_comments = comment_prematurity_correction(
+                    chronological_decimal_age=self.chronological_decimal_age,
+                    corrected_decimal_age=self.corrected_decimal_age,
+                    gestation_weeks=gestation_weeks,
+                    gestation_days=gestation_days)
+            except:
+                self.age_comments=None
+                corrected_decimal_age_error = "Error in comment on prematurity."
+
+            try:
+                self.lay_corrected_decimal_age_comment = self.age_comments['lay_corrected_comment']
+            except:
+                self.lay_corrected_decimal_age_comment=None
+                corrected_decimal_age_error="Error in comment on corrected decimal age."
+            
+            try:
+                self.clinician_corrected_decimal_age_comment = self.age_comments['clinician_corrected_comment']
+            except:
+                self.clinician_corrected_decimal_age_comment = None
+                corrected_decimal_age_error="Error in comment on corrected decimal age."
+
+        try:
+            self.chronological_decimal_age = chronological_decimal_age(
+                birth_date=birth_date,
+                observation_date=observation_date)
+        except Exception as err:
+            self.chronological_decimal_age=None
+            corrected_decimal_age_error=f"{err}"
+        
+        if chronological_decimal_age is None:
+            self.chronological_calendar_age=None
+            self.lay_chronological_decimal_age_comment=None
+            self.clinician_chronological_decimal_age_comment=None
+            self.corrected_gestational_age=None
+            self.estimated_date_delivery=None
+            self.estimated_date_delivery_string=None
+        else:
+            chronological_decimal_age_error=None
+            try:
+                self.chronological_calendar_age = chronological_calendar_age(
+                    birth_date=birth_date,
+                    observation_date=observation_date)
+            except:
+                self.chronological_calendar_age=None
+                chronological_decimal_age_error="Chronological age calculation error."
+            
+            try:
+                self.lay_chronological_decimal_age_comment = self.age_comments['lay_chronological_comment']
+            except:
+                self.lay_chronological_decimal_age_comment = None
+                chronological_decimal_age_error = "Chronological age calculation error."
+
+            try:
+                self.clinician_chronological_decimal_age_comment = self.age_comments['clinician_chronological_comment']
+            except:
+                self.clinician_chronological_decimal_age_comment=None
+                chronological_decimal_age_error = "Chronological age calculation error."
+            
+            try:
+                self.corrected_gestational_age = corrected_gestational_age(
+                    birth_date=birth_date,
+                    observation_date=observation_date,
+                    gestation_weeks=gestation_weeks,
+                    gestation_days=gestation_days)
+            except:
+                self.corrected_gestational_age=None
+                chronological_decimal_age_error = "Corrected gestational age calculation error."
+
+            try:
+                self.estimated_date_delivery = estimated_date_delivery(
+                    birth_date, gestation_weeks, gestation_days)
+            except:
+                self.estimated_date_delivery=None
+                self.estimated_date_delivery_string=None
+                chronological_decimal_age_error="Estimated date of delivery calculation error."
+            
+            try:
+                self.corrected_calendar_age = chronological_calendar_age(
+                    self.estimated_date_delivery, observation_date)
+            except:
+                self.corrected_calendar_age=None
+                chronological_decimal_age_error="Error calculating the corrected calendar age."
+            
+            try:
+                self.estimated_date_delivery_string = self.estimated_date_delivery.strftime(
+                    '%a %d %B, %Y')
+            except:
+                self.estimated_date_delivery_string=None
+                chronological_decimal_age_error="Estimated date of delivery calculation error."
 
         birth_data = {
             "birth_date": birth_date,
@@ -263,7 +359,9 @@ class Measurement:
                 "lay_corrected_decimal_age_comment": self.lay_corrected_decimal_age_comment,
                 "clinician_chronological_decimal_age_comment": self.clinician_chronological_decimal_age_comment,
                 "lay_chronological_decimal_age_comment": self.lay_chronological_decimal_age_comment
-            }
+            },
+            "corrected_decimal_age_error": corrected_decimal_age_error,
+            "chronological_decimal_age_error": chronological_decimal_age_error
         }
 
         child_age_calculations = {
@@ -276,6 +374,7 @@ class Measurement:
         self,
         measurement_method: str,
         observation_value: float,
+        measurement_error: str,
         corrected_sds_value: float,
         corrected_centile_value: float,
         corrected_centile_band: str,
@@ -324,12 +423,13 @@ class Measurement:
 
         child_observation_value = {
             "measurement_method": measurement_method,
-            "observation_value": observation_value
+            "observation_value": observation_value,
+            "measurement_error": measurement_error
         }
 
         return {
             "child_observation_value": child_observation_value,
-            "measurement_calculated_values": measurement_calculated_values
+            "measurement_calculated_values": measurement_calculated_values,
         }
 
     def __validate_measurement_method(
@@ -360,10 +460,10 @@ class Measurement:
             elif observation_value < MINIMUM_LENGTH_CM:
                 # a baby is unlikely to be < 30 cm long - probably a data entry error
                 raise ValueError(
-                    f'The height/length you have entered is very low and likely to be an error. Are you sure you meant a height of{observation_value} centimetres?')
+                    f'The height/length you have entered is very low and likely to be an error. Are you sure you meant a height of {observation_value} centimetres?')
             elif observation_value > MAXIMUM_HEIGHT_CM:
                 raise ValueError(
-                    f'The height/length you have entered is very high and likely to be an error. Are you sure you meant a height of{observation_value} centimetres?')
+                    f'The height/length you have entered is very high and likely to be an error. Are you sure you meant a height of {observation_value} centimetres?')
             else:
                 is_valid = True
 
