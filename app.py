@@ -66,7 +66,6 @@ from app import app     # position of this import is important. Don't allow it t
 ##### END FLASK SETUP #####
 ###########################
 
-
 # create all the charts and store in chart_data: commenting out as builds locally but causes failure to deploy to azure.
 # try:  
 #   result = create_uk_who_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
@@ -105,8 +104,6 @@ from app import app     # position of this import is important. Don't allow it t
 #       print(f" * {OKGREEN}New Turner's Syndrome Chart Data has been generated.")
 # except:
 #   raise ValueError("Unable to create Turner's Syndrome charts")
-
-
 
 # generate the API spec
 try:

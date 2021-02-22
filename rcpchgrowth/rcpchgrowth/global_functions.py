@@ -9,6 +9,7 @@ from .trisomy_21 import trisomy_21_lms_array_for_measurement_and_sex
 from .constants.parameter_constants import UK_WHO, TURNERS, TRISOMY_21, COLE_TWO_THIRDS_SDS_NINE_CENTILES, COLE_TWO_THIRDS_SDS_NINE_CENTILE_COLLECTION, THREE_PERCENT_CENTILE_COLLECTION, MEASUREMENT_METHODS, SEXES, UK_WHO_REFERENCES
 import logging
 import json
+import pkg_resources
 
 
 def cubic_interpolation(age: float, age_one_below: float, age_two_below: float, age_one_above: float, age_two_above: float, parameter_two_below: float, parameter_one_below: float, parameter_one_above: float, parameter_two_above: float) -> float:
@@ -97,9 +98,11 @@ def centile(z_score: float):
     """
     Converts a Z Score to a p value (2-tailed) using the SciPy library, which it returns as a percentage
     """
-
-    centile = (stats.norm.cdf(z_score) * 100)
-    return centile
+    try:
+        centile = (stats.norm.cdf(z_score) * 100)
+        return centile
+    except TypeError as err:
+        raise TypeError(err)
 
 
 def measurement_for_z(z: float, l: float, m: float, s: float) -> float:
@@ -200,8 +203,7 @@ def measurement_from_sds(
         lms_value_array_for_measurement = lms_value_array_for_measurement_for_reference(
             reference=reference, age=age, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
     except LookupError as err:
-        print(err)
-        return None
+        raise LookupError(err)
 
     # get LMS values from the reference: check for age match, interpolate if none
     lms = fetch_lms(
@@ -227,8 +229,7 @@ def sds_for_measurement(
         lms_value_array_for_measurement = lms_value_array_for_measurement_for_reference(
             reference=reference, age=age, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
     except LookupError as err:
-        print(err)
-        return None
+        raise LookupError(err)
 
     # get LMS values from the reference: check for age match, interpolate if none
     lms = fetch_lms(
@@ -253,8 +254,7 @@ def percentage_median_bmi(reference: str, age: float, actual_bmi: float, sex: st
         lms_value_array_for_measurement = lms_value_array_for_measurement_for_reference(
             reference=reference, measurement_method="bmi", sex=sex, age=age, born_preterm=born_preterm)
     except LookupError as err:
-        print(err)
-        return None
+        raise LookupError(err)
 
     # get LMS values from the reference: check for age match, interpolate if none
     try:
@@ -345,14 +345,24 @@ def lms_value_array_for_measurement_for_reference(
     """
 
     if reference == UK_WHO:
-        lms_value_array_for_measurement = uk_who_lms_array_for_measurement_and_sex(
-            age=age, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
+        try:
+            lms_value_array_for_measurement = uk_who_lms_array_for_measurement_and_sex(
+                age=age, measurement_method=measurement_method, sex=sex, born_preterm=born_preterm)
+        except LookupError as error:
+            raise LookupError(error)
     elif reference == TURNERS:
-        lms_value_array_for_measurement = turner_lms_array_for_measurement_and_sex(
-            measurement_method=measurement_method, sex=sex, age=age)
+        try:
+            lms_value_array_for_measurement = turner_lms_array_for_measurement_and_sex(
+                measurement_method=measurement_method, sex=sex, age=age)
+        except LookupError as error:
+            raise LookupError(error)
     elif reference == TRISOMY_21:
-        lms_value_array_for_measurement = trisomy_21_lms_array_for_measurement_and_sex(
+        try:
+            lms_value_array_for_measurement = trisomy_21_lms_array_for_measurement_and_sex(
             measurement_method=measurement_method, sex=sex, age=age)
+        except LookupError as error:
+            raise LookupError(error)
     else:
         raise ValueError("Incorrect reference supplied")
     return lms_value_array_for_measurement
+

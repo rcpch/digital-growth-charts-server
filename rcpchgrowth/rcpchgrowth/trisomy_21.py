@@ -29,7 +29,7 @@ def reference_data_absent(
         age: float,
         measurement_method: str,
         sex: str
-    ) -> (bool, str):
+    ):
     """
     Helper function.
     Returns boolean
@@ -42,10 +42,10 @@ def reference_data_absent(
     """
 
     if age < 0: # lower threshold of trisomy_21 data
-        return True, "Trisomy 21 reference data does not include prematurity."
+        return True, "No reference data exists below 40 weeks gestation"
     
     if age > TWENTY_YEARS: # upper threshold of trisomy_21 data
-        return True
+        return True, "Trisomy 21 reference data does not exist over the age of 20y."
         
     elif measurement_method == "bmi" and age > 18.82:
         return True, "Trisomy BMI reference data does not exist > 18.82 y"
@@ -69,7 +69,10 @@ def trisomy_21_lms_array_for_measurement_and_sex(
     if data_invalid:
         raise LookupError(data_error)
     else:
-        return TRISOMY_21_DATA["measurement"][measurement_method][sex]
+         return TRISOMY_21_DATA["measurement"][measurement_method][sex]
 
 def select_reference_data_for_trisomy_21(measurement_method:str, sex:str):
-    return trisomy_21_lms_array_for_measurement_and_sex(measurement_method=measurement_method, sex=sex, age=1.0)
+    try:
+        return_value = trisomy_21_lms_array_for_measurement_and_sex(measurement_method=measurement_method, sex=sex, age=1.0)
+    except:
+        raise LookupError(return_value) 
