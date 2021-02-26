@@ -52,7 +52,7 @@ It is now common practice to express child growth status in the form of SD score
 
 ### How the LMS method is used
 
-1.  Look up in the LMS table for the relevant measurement (height or weight etc) the age-sex-specific values of L, M and S for the child, using either linear or cubic interpolation to get the exact age.
+1.  Look up in the LMS table for the relevant measurement (height or weight etc) the age-sex-specific values of L, M and S for the child, using cubic interpolation to get the exact age.
 2.  To obtain the z-score, plug the LMS values with the child's measurement into the formula:
     > ![formula](https://latex.codecogs.com/svg.latex?\=z={[(Measurement / M)-1] \over L S})
 3.  The algorithm for the reverse process, from z-score or centile back to measurement, is as follows:
@@ -61,29 +61,19 @@ It is now common practice to express child growth status in the form of SD score
     > ![formula](https://latex.codecogs.com/svg.latex?\=Measurement= M (1+LSz)^{1/L})
 6.  This conversion is useful for example to obtain centiles to plot growth charts, where each centile is defined by its corresponding z-score.
 
-### UK Growth References
+### Growth References
 
 This is a growing list of growth references for children. It will continue to be added to as more data becomes available.
 
-1. _British1990.xls_: length/height & BMI for ages -0.13 to 23 yr;
-   weight -0.33 to 23 yr; head circumference -0.33 to 18 or 17 yr
-   (males/females); sitting height & leg length 0 to 23 yr; waist
-   circumference 3 to 17 yr.
+1. _British1990.xls_: length/height & BMI for ages -0.13 to 23 yr; weight -0.33 to 23 yr; head circumference -0.33 to 18 or 17 yr (males/females); sitting height & leg length 0 to 23 yr; waist circumference 3 to 17 yr.
 
-2. _\_UK_WHO_term.xls_: Average values at birth for weight, length and head circumference (not BMI) for all term births (gestations 37 to 42 weeks) computed from the UK90 reference data base.[1](#references),[2](#references)Acknowledgement statements using these data should specify the data source as: _“British 1990 reference data, reanalysed 2009”_. This is combined with the WHO standard for weight, BMI and head circumference from 2 weeks to 4 years, for length 2 weeks to 2 years and height 2-4 years. It is shown by week to 13 weeks and then bycalendar month. They are exactly the same data as the LMS tables accessed from the [WHO website](http://www.who.int/childgrowth/standards/) except that the data from birth to 2 weeks are omitted. Acknowledgement statements using these data should specify the data source as: _“WHO Child Growth Standards”_[3](#references), [4](#references)The British 1990 section runs from 4 to 20 years by month, and includes height, weight, BMI and head circumference (to 18/17 years in boys/girls). Acknowledgement statements using these data should specify the data source as: _“British 1990 reference”_.
+2. _\_UK_WHO_term.xls_: Average values at birth for weight, length and head circumference (not BMI) for all term births (gestations 37 to 42 weeks) computed from the UK90 reference data base.[1](#references),[2](#references) Acknowledgement statements using these data should specify the data source as: _“British 1990 reference data, reanalysed 2009”_. This is combined with the WHO standard for weight, BMI and head circumference from 2 weeks to 4 years, for length 2 weeks to 2 years and height 2-4 years. It is shown by week to 13 weeks and then by calendar month. They are exactly the same data as the LMS tables accessed from the [WHO website](http://www.who.int/childgrowth/standards/) except that the data from birth to 2 weeks are omitted. Acknowledgement statements using these data should specify the data source as: _“WHO Child Growth Standards”_[3](#references), [4](#references)The British 1990 section runs from 4 to 20 years by month, and includes height, weight, BMI and head circumference (to 18/17 years in boys/girls). Acknowledgement statements using these data should specify the data source as: _“British 1990 reference”_.
 
-3. _USCDC2000.xls_: length/height, weight & head circumference for
-   ages 0 to 19.9 yr; BMI 2 to 19.9 yr.
+3. _USCDC2000.xls_: length/height, weight & head circumference for ages 0 to 19.9 yr; BMI 2 to 19.9 yr.
 
-4. _WHO2006.xls_: length/height, weight, BMI, head circumference for
-   ages 0 to 5 yr; arm circumference, subscapular skinfold, triceps
-   skinfold for 0.25 to 5 yr.
+4. _WHO2006.xls_: length/height, weight, BMI, head circumference for ages 0 to 5 yr; arm circumference, subscapular skinfold, triceps skinfold for 0.25 to 5 yr.
 
-5. _Spiro.xls_: FEV1, FVC, FEV1FVC & FEF2575 for ages 4 to 80 yr.
-
-6. _LMSdata_BP.xls_: systolic & diastolic blood pressure for ages 4 to 24 yr.
-
-### Turner's
+### Turner syndrome
 
 The Turner syndrome height chart is based on data from Lyon, Preece and Grant, Arch Dis Child 1985; 60:932-5.
 
@@ -150,34 +140,30 @@ We have used Postman extensively in the devleopment
 
 # Date and age calculations
 
-Ages are expressed as years. This is the number of days of life / 365.25. The extra 0.25 is to
-account for the leap year which comes round every 4 years.
+Ages are expressed as years. This is the number of days of life / 365.25. The extra 0.25 is to account for the leap year which comes round every 4 years.
 
 A pregnancy lasts 40 weeks (280 days). This is calculated from the date of the baby's
 mother's last menstrual period. In fact, from that date, ovulation will occur midway through
 the following cycle (on average 14 days into a 28 day cycle). This means that from conception,
 a pregnancy actually lasts only 266 days. Babies are considered to have been born 'Term' if
-delivered anywhere from 37 to 42 weeks gestation (3 weeks before to 2 weeks after due date).
-
-The due date is referred to as the Estimated Date of Delivery (EDD).
+delivered anywhere from 37 to 42 weeks gestation (3 weeks before to 2 weeks after their Estimated Date of Delivery (EDD) or due date).
 
 _Gestational age / post-menstrual age_
-This is the gestation at which the infant was born and represents the number of weeks (and extra days) since last menstrual period. After delivery, the gestational age of preterm infants it is often tracked by clinicians in addition to chronological age (sometimes referred to at that point as 'corrected gestational age').
+This is the gestation at which the infant was born and represents the number of weeks (and extra days) since the last menstrual period. After delivery, the gestational age of preterm infants is often tracked by clinicians in addition to chronological age (sometimes referred to at that point as 'corrected gestational age').
 
 _Chronological decimal age_
-This is the time elapsed since birth, in years, irrespective of gestation at birth. A baby born at 24 weeks would be 16 weeks old at 40 weeks gestation (16 x 7)/365.25 y
+This is the time elapsed since birth, in years, irrespective of gestational age at birth. A baby born at 24 weeks gestation would be 16 weeks old at 40 weeks gestation, i.e. 16 x 7 / 365.25 years.
 
 _Corrected decimal age_
-This is the age of a child that was born preterm calculated from their due date, rather than from their birth date. This allows for some comparison between preterm and term babies.
-Convention is that correction occurs for all babies born before 37 weeks (definition of term):
-babies born at or above 32 weeks have the additional weeks (calculated up to 40 weeks)
-subtracted from their chronological decimal age for the first year of life
-babies born below 32 weeks have the additional weeks (calculated up to 40 weeks) subtracted from their chronological decimal age until the age of 2 years
+This is the age of a child calculated from their due date rather than their birth date. It allows for the missed weeks of growth in babies born preterm.
+The convention is that corrected age is used for all babies born before 37 weeks (definition of preterm).
+For babies born at 32 weeks or more, corrected age is used for the first year of life. For babies born before 32 weeks corrected age is used until two years of age. Corrected age
+is equal to chronological age less their number of weeks preterm.
 
 A few other things about correction:
 
-- term is consider 37-42 weeks. No correction is made for any baby born between these gestations. Their decimal age, therefore is considered to be 0.0. This means a baby born at 42 weeks and
-  now 2 weeks of age will calculate identically to a baby born at 37 weeks and now 2 weeks of age. The outcome of discussion amongst the project board members at length regarding babies born after 42 weeks gestation is that these infants should be treated as term and be considered to have an age of 0.0 y. It also follows that babies born premature who are not yet term will have a negative decimal age.
+- term is considered 37-42 weeks. No correction is made for any baby born between these gestations. Their chronological decimal age therefore is considered to be 0.0. This means a baby born at 42 weeks and
+  now 2 weeks old has the same chronological age as a baby born at 37 weeks and now 2 weeks old. The outcome of discussion amongst the project board members at length regarding babies born after 42 weeks gestation is that these infants should be treated as term and be considered to have an age of 0.0 y. It also follows that babies born preterm who have yet to reach their EDD will have a negative decimal age.
 
 # Age Calculation Functions
 
