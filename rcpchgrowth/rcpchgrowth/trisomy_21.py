@@ -48,7 +48,7 @@ def reference_data_absent(
         return True, "Trisomy 21 reference data does not exist over the age of 20y."
         
     elif measurement_method == "bmi" and age > 18.82:
-        return True, "Trisomy BMI reference data does not exist > 18.82 y"
+        return True, f"Trisomy BMI reference data does not exist > 18.82 y."
     
     elif measurement_method == "ofc":
         if age > EIGHTEEN_YEARS:
@@ -73,6 +73,7 @@ def trisomy_21_lms_array_for_measurement_and_sex(
 
 def select_reference_data_for_trisomy_21(measurement_method:str, sex:str):
     try:
-        return_value = trisomy_21_lms_array_for_measurement_and_sex(measurement_method=measurement_method, sex=sex, age=1.0)
+        return_value = trisomy_21_lms_array_for_measurement_and_sex(measurement_method=measurement_method, sex=sex, age=0.0)
     except:
-        raise LookupError(return_value) 
+        raise LookupError(f"No data for {measurement_method} in the {sex} Trisomy 21 dataset.")
+    return return_value

@@ -285,9 +285,10 @@ def generate_centile(z: float, centile: float, measurement_method: str, sex: str
         try:
             measurement = measurement_from_sds(
                 reference=reference, measurement_method=measurement_method, requested_sds=z, sex=sex, age=age, born_preterm=True)
-        except ValueError as err:
+        except Exception as err:
             print(err)
             measurement = None
+
         # creates a data point
         if measurement is not None:
             rounded = round(measurement, 4)
@@ -298,6 +299,7 @@ def generate_centile(z: float, centile: float, measurement_method: str, sex: str
             "x": round(age,4),
             "y": rounded
         }
+            
         centile_measurements.append(value)
 
         ## weekly intervals until 2 y, then monthly 

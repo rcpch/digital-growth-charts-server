@@ -200,11 +200,7 @@ def create_uk_who_chart(centile_selection: str=COLE_TWO_THIRDS_SDS_NINE_CENTILES
                     ## Generate a centile. there will be nine of these if Cole method selected.
                     ## Some data does not exist at all ages, so any error reflects missing data.
                     ## If this happens, an empty list is returned.
-                    try:
-                        centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference="uk-who")
-                    except:
-                        print(f"There is no data for {measurement_method} at this age.")
-                        centile_data = []
+                    centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference="uk-who")
 
                     ## Store this centile for a given measurement
                     centiles.append({"sds": round(z*100)/100, "centile": centile, "data": centile_data})
@@ -265,12 +261,13 @@ def create_turner_chart(centile_selection: str):
         cole_method = False
     
     reference_data = {} # all data for a the reference are stored here: this is returned to the user 
-    sex_list: dict = {}
 
     for sex_index, sex in enumerate(SEXES):
             ##For each sex we have 4 measurement_methods
             ## Turner is female only, but we will generate empty arrays for male
             ## data to keep all objects the same
+        
+        sex_list: dict = {}
 
         measurements: dict = {} # all the data for a given measurement_method are stored here
 
@@ -291,20 +288,13 @@ def create_turner_chart(centile_selection: str):
                     z = sds_for_centile(centile)
                 
                 ## Collect the LMS values from the correct reference
-                try:
-                    lms_array_for_measurement=select_reference_data_for_turner(measurement_method=measurement_method, sex=sex)
-                except LookupError:
-                    # there is no data in the reference
-                    lms_array_for_measurement=[]
-                
+                lms_array_for_measurement=select_reference_data_for_trisomy_21(measurement_method=measurement_method, sex=sex)
                 ## Generate a centile. there will be nine of these if Cole method selected.
                 ## Some data does not exist at all ages, so any error reflects missing data.
                 ## If this happens, an empty list is returned.
-                try:
-                    centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference=TRISOMY_21)
-                except:
-                    print(f"There is no Turner data for {measurement_method} at this age.")
-                    centile_data = []
+                print(len(lms_array_for_measurement))
+                
+                centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference=TURNERS)
 
                 ## Store this centile for a given measurement
                 centiles.append({"sds": round(z*100)/100, "centile": centile, "data": centile_data})
@@ -366,6 +356,7 @@ def create_trisomy_21_chart(centile_selection: str):
         for measurement_index, measurement_method in enumerate(MEASUREMENT_METHODS):
             ## for every measurement method we have as many centiles
             ## as have been requested
+             
 
             centiles=[] # all generated centiles for a selected centile collection are stored here
 
@@ -384,12 +375,9 @@ def create_trisomy_21_chart(centile_selection: str):
                 ## Generate a centile. there will be nine of these if Cole method selected.
                 ## Some data does not exist at all ages, so any error reflects missing data.
                 ## If this happens, an empty list is returned.
-                try:
-                    centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference=TRISOMY_21)
-                except:
-                    print(f"There is no Trisomu 21 data in for {measurement_method} at this age.")
-                    centile_data = []
-
+                
+                centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference=TRISOMY_21)
+                    
                 ## Store this centile for a given measurement
                 centiles.append({"sds": round(z*100)/100, "centile": centile, "data": centile_data})
                 

@@ -12,6 +12,7 @@ import blueprints
 import schemas
 import apispec_generation
 from rcpchgrowth.rcpchgrowth.constants.parameter_constants import *
+from rcpchgrowth.rcpchgrowth.chart_functions import create_chart
 
 
 # Declare shell colour variables for pretty logging output
@@ -80,17 +81,17 @@ from app import app     # position of this import is important. Don't allow it t
 #   raise ValueError("Unable to create UK-WHO charts")
 
 # # Trisomy 21
-# try:  
-#   result = create_trisomy_21_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
-#   filename = "trisomy_21_chart_data.json"
-#   file_path = path.join(chart_data_folder, filename)
-#   with open(file_path, 'w') as file:
-#       print("now writing to file...")
-#       file.write(json.dumps(result, separators=(',', ':')))
-#       file.close()
-#       print(f" * {OKGREEN}New Trisomy 21 Chart Data has been generated.")
-# except:
-#   raise ValueError("Unable to create Trisomy 21 charts")
+try:  
+  result = create_chart(TRISOMY_21, COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+  filename = "trisomy_21_chart_data.json"
+  file_path = path.join(chart_data_folder, filename)
+  with open(file_path, 'w') as file:
+      print("now writing to file...")
+      file.write(json.dumps(result, separators=(',', ':')))
+      file.close()
+      print(f" * {OKGREEN}New Trisomy 21 Chart Data has been generated.")
+except:
+  raise Exception("Unable to create Trisomy 21 charts")
 
 # # Turner's Syndrome
 # try:  
