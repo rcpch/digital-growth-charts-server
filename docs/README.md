@@ -132,10 +132,7 @@ Scripts are located in the `s/` folder in the application root.
 
 ## Contributing
 
-We're a friendly bunch and we're happy to chat. You can get in touch with the primary developers to talk about the project using:
-marcusbaw@gmail.com (Marcus Baw) or eatyourpeasapps@gmail.com (Simon Chapman)
-
-We aim to eventually have an RCPCH forum up and running which you will also be able to use to talk about the project.
+We're a friendly bunch and we're happy to chat. You can get in touch with the primary developers to talk about the project using our forum at https://openhealthhub.org/c/rcpch-digital-growth-charts/ This is the main community hub around the dGC project and you are welcome to chat to us there.
 
 ### How to contribute
 
