@@ -78,8 +78,14 @@ components:
       type: object
     ChartDataRequestParameters:
       properties:
-        results:
+        measurement_method:
           type: string
+        sex:
+          description: Accepts male or female as sex of chart required.
+          type: string
+      required:
+      - measurement_method
+      - sex
       type: object
     ChildObservationValue:
       properties:
@@ -246,22 +252,7 @@ paths:
           description: Centile calculation (single) according to the supplied data
             was returned
       summary: Centile and SDS Calculation route.
-  /uk-who/chart-coordinates:
-    get:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ChartDataRequestParameters'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/chartData'
-          description: Chart data for plotting a traditional growth chart was returned
-      summary: UK-WHO Chart coordinates in plottable format * Returns coordinates
-        for constructing the lines of a traditional growth chart, in JSON format
+  /uk-who/chart-coordinates: {}
   /uk-who/plottable-child-data:
     post:
       description: '* Requires results data parameters from a call to the calculation

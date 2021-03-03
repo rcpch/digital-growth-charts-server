@@ -5,17 +5,26 @@ from .turner import select_reference_data_for_turner
 from .constants.parameter_constants import UK_WHO, TURNERS, TRISOMY_21, COLE_TWO_THIRDS_SDS_NINE_CENTILES, COLE_TWO_THIRDS_SDS_NINE_CENTILE_COLLECTION, THREE_PERCENT_CENTILE_COLLECTION, MEASUREMENT_METHODS, SEXES, UK_WHO_REFERENCES
 import pprint
 
-def create_chart(reference:str, centile_selection:str):
+def create_chart(reference:str, measurement_method: str, sex: str, centile_selection:str):
+    """
+    Global method - return chart for measurement_method, sex and reference
+    """
     if reference == UK_WHO:
-        return create_uk_who_chart(centile_selection=centile_selection)
+        return create_uk_who_chart(measurement_method=measurement_method, sex=sex,centile_selection=centile_selection)
     elif reference == TURNERS:
-        return create_turner_chart(centile_selection=centile_selection)
+        return create_turner_chart(measurement_method=measurement_method, centile_selection=centile_selection)
     elif reference == TRISOMY_21:
-        return create_trisomy_21_chart(centile_selection=centile_selection)
+        return create_trisomy_21_chart(measurement_method=measurement_method, sex=sex,centile_selection=centile_selection)
     else:
         print("No reference data returned. Is there a spelling mistake in your reference?")
 
 def create_plottable_child_data(child_results_array):
+
+    """
+    Global method - receives a measurement object and returns the data in plottable format - the ages as x, the measurements
+    as y and the centile values as l (label)
+    """
+
     centile_data = []
     sds_data = []
 
@@ -63,39 +72,48 @@ def create_plottable_child_data(child_results_array):
                 "lay_corrected_decimal_age_comment": child_result["measurement_dates"]["comments"]["lay_corrected_decimal_age_comment"],
                 "clinician_corrected_decimal_age_comment": child_result["measurement_dates"]["comments"]["clinician_corrected_decimal_age_comment"],
             }
-            # chronological_sds_data_point = {
-            #     "measurement_method": child_result["child_observation_value"]["measurement_method"],
-            #     "x": child_result["measurement_dates"]["chronological_decimal_age"], 
-            #     "y": child_result["measurement_calculated_values"]["chronological_sds"],
-            #     "age_type": "chronological_age",
-            #     "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
-            #     "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
-            #     "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"],
-            #     "lay_chronological_decimal_age_comment": child_result["measurement_dates"]["comments"]["lay_chronological_decimal_age_comment"],
-            #     "clinician_chronological_decimal_age_comment": child_result["measurement_dates"]["comments"]["clinician_chronological_decimal_age_comment"]
-            # }
-            # corrected_sds_data_point = {
-            #     "measurement_method": child_result["child_observation_value"]["measurement_method"],
-            #     "x": child_result["measurement_dates"]["corrected_decimal_age"], 
-            #     "y": child_result["measurement_calculated_values"]["corrected_sds"],
-            #     "age_type": "corrected_age",
-            #     "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
-            #     "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
-            #     "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"],
-            #     "lay_corrected_decimal_age_comment": child_result["measurement_dates"]["comments"]["lay_corrected_decimal_age_comment"],
-            #     "clinician_corrected_decimal_age_comment": child_result["measurement_dates"]["comments"]["clinician_corrected_decimal_age_comment"],
-            # }
+            chronological_sds_data_point = {
+                "measurement_method": child_result["child_observation_value"]["measurement_method"],
+                "x": child_result["measurement_dates"]["chronological_decimal_age"], 
+                "y": child_result["measurement_calculated_values"]["chronological_sds"],
+                "observation_value_error": child_result["child_observation_value"]["observation_value_error"],
+                "sds": child_result["measurement_calculated_values"]["chronological_sds"],
+                "measurement_error":child_result["measurement_calculated_values"]["chronological_measurement_error"],
+                "age_error": child_result["measurement_dates"]["chronological_decimal_age_error"],
+                "age_type": "chronological_age",
+                "calendar_age": child_result["measurement_dates"]["chronological_calendar_age"],
+                "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
+                "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"],
+                "lay_chronological_decimal_age_comment": child_result["measurement_dates"]["comments"]["lay_chronological_decimal_age_comment"],
+                "clinician_chronological_decimal_age_comment": child_result["measurement_dates"]["comments"]["clinician_chronological_decimal_age_comment"]
+            }
+
+            corrected_sds_data_point = {
+                "measurement_method": child_result["child_observation_value"]["measurement_method"],
+                "x": child_result["measurement_dates"]["corrected_decimal_age"], 
+                "y": child_result["measurement_calculated_values"]["corrected_sds"],
+                "observation_value_error": child_result["child_observation_value"]["observation_value_error"],
+                "sds": child_result["measurement_calculated_values"]["corrected_sds"],
+                "measurement_error":child_result["measurement_calculated_values"]["corrected_measurement_error"],
+                "age_error": child_result["measurement_dates"]["corrected_decimal_age_error"],
+                "age_type": "corrected_age",
+                "calendar_age": child_result["measurement_dates"]["corrected_calendar_age"],
+                "corrected_gestation_weeks": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"],
+                "corrected_gestation_days": child_result["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"],
+                "lay_corrected_decimal_age_comment": child_result["measurement_dates"]["comments"]["lay_corrected_decimal_age_comment"],
+                "clinician_corrected_decimal_age_comment": child_result["measurement_dates"]["comments"]["clinician_corrected_decimal_age_comment"],
+            }
 
             measurement_data_points=[corrected_data_point, chronological_data_point]
-            # measurement_sds_data_points=[corrected_sds_data_point, chronological_sds_data_point]
+            measurement_sds_data_points=[corrected_sds_data_point, chronological_sds_data_point]
             
             centile_data.append(measurement_data_points)
-            # sds_data.append(measurement_sds_data_points)
+            sds_data.append(measurement_sds_data_points)
 
     result = {
         "measurement_method": child_result["child_observation_value"]["measurement_method"],
         "centile_data": centile_data,
-        # "sds_data": sds_data
+        "sds_data": sds_data
     }
     
     return result
@@ -146,9 +164,9 @@ def create_plottable_child_data(child_results_array):
 private functions
 """
 
-def create_uk_who_chart(centile_selection: str=COLE_TWO_THIRDS_SDS_NINE_CENTILES):
+def create_uk_who_chart(measurement_method: str, sex: str, centile_selection: str=COLE_TWO_THIRDS_SDS_NINE_CENTILES):
 
-    ## user selects which centile collection they want
+    ## user selects which centile collection they want, for sex and measurement_method
     ## If the Cole method is selected, conversion between centile and SDS
     ## is different as SDS is rounded to the nearest 2/3
     ## Cole method selection is stored in the cole_method flag.
@@ -173,46 +191,46 @@ def create_uk_who_chart(centile_selection: str=COLE_TWO_THIRDS_SDS_NINE_CENTILES
     for reference_index, reference in enumerate(UK_WHO_REFERENCES):
         sex_list: dict = {} # all the data for a given sex are stored here
         ## For each reference we have 2 sexes
-        for sex_index, sex in enumerate(SEXES):
-            ##For each sex we have 4 measurement_methods
+        # for sex_index, sex in enumerate(SEXES):
+        ##For each sex we have 4 measurement_methods
 
-            measurements: dict = {} # all the data for a given measurement_method are stored here
+        measurements: dict = {} # all the data for a given measurement_method are stored here
 
-            for measurement_index, measurement_method in enumerate(MEASUREMENT_METHODS):
-                ## for every measurement method we have as many centiles
-                ## as have been requested
+        # for measurement_index, measurement_method in enumerate(MEASUREMENT_METHODS):
+            ## for every measurement method we have as many centiles
+            ## as have been requested
 
-                centiles=[] # all generated centiles for a selected centile collection are stored here
+        centiles=[] # all generated centiles for a selected centile collection are stored here
 
-                for centile_index, centile in enumerate(centile_collection):
-                    ## we must create a z for each requested centile
-                    ## if the Cole 9 centiles were selected, these are rounded,
-                    ## so conversion to SDS is different
-                    ## Otherwise standard conversation of centile to z is used
-                    if cole_method:
-                        z = rounded_sds_for_centile(centile)
-                    else:
-                        z = sds_for_centile(centile)
-                    
-                    ## Collect the LMS values from the correct reference
-                    lms_array_for_measurement=select_reference_data_for_uk_who_chart(uk_who_reference=reference, measurement_method=measurement_method, sex=sex)
-                    
-                    ## Generate a centile. there will be nine of these if Cole method selected.
-                    ## Some data does not exist at all ages, so any error reflects missing data.
-                    ## If this happens, an empty list is returned.
-                    centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference="uk-who")
-
-                    ## Store this centile for a given measurement
-                    centiles.append({"sds": round(z*100)/100, "centile": centile, "data": centile_data})
-                    
-                ## this is the end of the centile_collection for loop
-                ## All the centiles for this measurement, sex and reference are added to the measurements list
-                measurements.update({measurement_method: centiles})
+        for centile_index, centile in enumerate(centile_collection):
+            ## we must create a z for each requested centile
+            ## if the Cole 9 centiles were selected, these are rounded,
+            ## so conversion to SDS is different
+            ## Otherwise standard conversation of centile to z is used
+            if cole_method:
+                z = rounded_sds_for_centile(centile)
+            else:
+                z = sds_for_centile(centile)
             
-            ## this is the end of the measurement_methods loop
-            ## All data for all measurement_methods for this sex are added to the sex_list list
+            ## Collect the LMS values from the correct reference
+            lms_array_for_measurement=select_reference_data_for_uk_who_chart(uk_who_reference=reference, measurement_method=measurement_method, sex=sex)
+            
+            ## Generate a centile. there will be nine of these if Cole method selected.
+            ## Some data does not exist at all ages, so any error reflects missing data.
+            ## If this happens, an empty list is returned.
+            centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference="uk-who")
 
-            sex_list.update({sex: measurements})
+            ## Store this centile for a given measurement
+            centiles.append({"sds": round(z*100)/100, "centile": centile, "data": centile_data})
+            
+        ## this is the end of the centile_collection for loop
+        ## All the centiles for this measurement, sex and reference are added to the measurements list
+        measurements.update({measurement_method: centiles})
+        
+        ## this is the end of the measurement_methods loop
+        ## All data for all measurement_methods for this sex are added to the sex_list list
+
+        sex_list.update({sex: measurements})
                 
         ## all data can now be tagged by reference_name and added to reference_data
         reference_data.append({reference: sex_list})
@@ -244,7 +262,7 @@ def create_uk_who_chart(centile_selection: str=COLE_TWO_THIRDS_SDS_NINE_CENTILES
 
 
 
-def create_turner_chart(centile_selection: str):
+def create_turner_chart(measurement_method: str, centile_selection: str):
    ## user selects which centile collection they want
     ## If the Cole method is selected, conversion between centile and SDS
     ## is different as SDS is rounded to the nearest 2/3
@@ -262,51 +280,52 @@ def create_turner_chart(centile_selection: str):
     
     reference_data = {} # all data for a the reference are stored here: this is returned to the user 
 
-    for sex_index, sex in enumerate(SEXES):
-            ##For each sex we have 4 measurement_methods
-            ## Turner is female only, but we will generate empty arrays for male
-            ## data to keep all objects the same
+    # for sex_index, sex in enumerate(SEXES):
+    ##For each sex we have 4 measurement_methods
+    ## Turner is female only, but we will generate empty arrays for male
+    ## data to keep all objects the same
+
+    sex_list: dict = {}
+    sex="female"
+
+    measurements: dict = {} # all the data for a given measurement_method are stored here
+
+    # for measurement_index, measurement_method in enumerate(MEASUREMENT_METHODS):
+    ## for every measurement method we have as many centiles
+    ## as have been requested
+
+    centiles=[] # all generated centiles for a selected centile collection are stored here
+
+    for centile_index, centile in enumerate(centile_collection):
+        ## we must create a z for each requested centile
+        ## if the Cole 9 centiles were selected, these are rounded,
+        ## so conversion to SDS is different
+        ## Otherwise standard conversation of centile to z is used
+        if cole_method:
+            z = rounded_sds_for_centile(centile)
+        else:
+            z = sds_for_centile(centile)
         
-        sex_list: dict = {}
+        ## Collect the LMS values from the correct reference
+        lms_array_for_measurement=select_reference_data_for_trisomy_21(measurement_method=measurement_method, sex=sex)
+        ## Generate a centile. there will be nine of these if Cole method selected.
+        ## Some data does not exist at all ages, so any error reflects missing data.
+        ## If this happens, an empty list is returned.
+        print(len(lms_array_for_measurement))
+        
+        centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference=TURNERS)
 
-        measurements: dict = {} # all the data for a given measurement_method are stored here
+        ## Store this centile for a given measurement
+        centiles.append({"sds": round(z*100)/100, "centile": centile, "data": centile_data})
+        
+    ## this is the end of the centile_collection for loop
+    ## All the centiles for this measurement, sex and reference are added to the measurements list
+    measurements.update({measurement_method: centiles})
+    
+    ## this is the end of the measurement_methods loop
+    ## All data for all measurement_methods for this sex are added to the sex_list list
 
-        for measurement_index, measurement_method in enumerate(MEASUREMENT_METHODS):
-            ## for every measurement method we have as many centiles
-            ## as have been requested
-
-            centiles=[] # all generated centiles for a selected centile collection are stored here
-
-            for centile_index, centile in enumerate(centile_collection):
-                ## we must create a z for each requested centile
-                ## if the Cole 9 centiles were selected, these are rounded,
-                ## so conversion to SDS is different
-                ## Otherwise standard conversation of centile to z is used
-                if cole_method:
-                    z = rounded_sds_for_centile(centile)
-                else:
-                    z = sds_for_centile(centile)
-                
-                ## Collect the LMS values from the correct reference
-                lms_array_for_measurement=select_reference_data_for_trisomy_21(measurement_method=measurement_method, sex=sex)
-                ## Generate a centile. there will be nine of these if Cole method selected.
-                ## Some data does not exist at all ages, so any error reflects missing data.
-                ## If this happens, an empty list is returned.
-                print(len(lms_array_for_measurement))
-                
-                centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference=TURNERS)
-
-                ## Store this centile for a given measurement
-                centiles.append({"sds": round(z*100)/100, "centile": centile, "data": centile_data})
-                
-            ## this is the end of the centile_collection for loop
-            ## All the centiles for this measurement, sex and reference are added to the measurements list
-            measurements.update({measurement_method: centiles})
-            
-            ## this is the end of the measurement_methods loop
-            ## All data for all measurement_methods for this sex are added to the sex_list list
-
-            sex_list.update({sex: measurements})
+    sex_list.update({sex: measurements})
                 
     ## all data can now be tagged by reference_name and added to reference_data
     reference_data={TURNERS: sex_list}
@@ -329,7 +348,7 @@ def create_turner_chart(centile_selection: str):
     }
     """
 
-def create_trisomy_21_chart(centile_selection: str):
+def create_trisomy_21_chart(measurement_method: str, sex: str, centile_selection: str):
    ## user selects which centile collection they want
     ## If the Cole method is selected, conversion between centile and SDS
     ## is different as SDS is rounded to the nearest 2/3
@@ -348,47 +367,47 @@ def create_trisomy_21_chart(centile_selection: str):
     reference_data = {} # all data for a the reference are stored here: this is returned to the user 
     sex_list: dict = {}
 
-    for sex_index, sex in enumerate(SEXES):
-            ##For each sex we have 4 measurement_methods
+    # for sex_index, sex in enumerate(SEXES):
+        ##For each sex we have 4 measurement_methods
 
-        measurements: dict = {} # all the data for a given measurement_method are stored here
+    measurements: dict = {} # all the data for a given measurement_method are stored here
 
-        for measurement_index, measurement_method in enumerate(MEASUREMENT_METHODS):
-            ## for every measurement method we have as many centiles
-            ## as have been requested
-             
+    # for measurement_index, measurement_method in enumerate(MEASUREMENT_METHODS):
+    ## for every measurement method we have as many centiles
+    ## as have been requested
+        
 
-            centiles=[] # all generated centiles for a selected centile collection are stored here
+    centiles=[] # all generated centiles for a selected centile collection are stored here
 
-            for centile_index, centile in enumerate(centile_collection):
-                ## we must create a z for each requested centile
-                ## if the Cole 9 centiles were selected, these are rounded,
-                ## so conversion to SDS is different
-                ## Otherwise standard conversation of centile to z is used
-                if cole_method:
-                    z = rounded_sds_for_centile(centile)
-                else:
-                    z = sds_for_centile(centile)
-                
-                ## Collect the LMS values from the correct reference
-                lms_array_for_measurement=select_reference_data_for_trisomy_21(measurement_method=measurement_method, sex=sex)
-                ## Generate a centile. there will be nine of these if Cole method selected.
-                ## Some data does not exist at all ages, so any error reflects missing data.
-                ## If this happens, an empty list is returned.
-                
-                centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference=TRISOMY_21)
-                    
-                ## Store this centile for a given measurement
-                centiles.append({"sds": round(z*100)/100, "centile": centile, "data": centile_data})
-                
-            ## this is the end of the centile_collection for loop
-            ## All the centiles for this measurement, sex and reference are added to the measurements list
-            measurements.update({measurement_method: centiles})
+    for centile_index, centile in enumerate(centile_collection):
+        ## we must create a z for each requested centile
+        ## if the Cole 9 centiles were selected, these are rounded,
+        ## so conversion to SDS is different
+        ## Otherwise standard conversation of centile to z is used
+        if cole_method:
+            z = rounded_sds_for_centile(centile)
+        else:
+            z = sds_for_centile(centile)
+        
+        ## Collect the LMS values from the correct reference
+        lms_array_for_measurement=select_reference_data_for_trisomy_21(measurement_method=measurement_method, sex=sex)
+        ## Generate a centile. there will be nine of these if Cole method selected.
+        ## Some data does not exist at all ages, so any error reflects missing data.
+        ## If this happens, an empty list is returned.
+        
+        centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference=TRISOMY_21)
             
-            ## this is the end of the measurement_methods loop
-            ## All data for all measurement_methods for this sex are added to the sex_list list
+        ## Store this centile for a given measurement
+        centiles.append({"sds": round(z*100)/100, "centile": centile, "data": centile_data})
+        
+    ## this is the end of the centile_collection for loop
+    ## All the centiles for this measurement, sex and reference are added to the measurements list
+    measurements.update({measurement_method: centiles})
+    
+    ## this is the end of the measurement_methods loop
+    ## All data for all measurement_methods for this sex are added to the sex_list list
 
-            sex_list.update({sex: measurements})
+    sex_list.update({sex: measurements})
                 
     ## all data can now be tagged by reference_name and added to reference_data
     reference_data={TRISOMY_21: sex_list}
