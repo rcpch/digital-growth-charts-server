@@ -5,14 +5,14 @@ from .turner import select_reference_data_for_turner
 from .constants.parameter_constants import UK_WHO, TURNERS, TRISOMY_21, COLE_TWO_THIRDS_SDS_NINE_CENTILES, COLE_TWO_THIRDS_SDS_NINE_CENTILE_COLLECTION, THREE_PERCENT_CENTILE_COLLECTION, MEASUREMENT_METHODS, SEXES, UK_WHO_REFERENCES
 import pprint
 
-def create_chart(reference:str, measurement_method: str, sex: str, centile_selection:str):
+def create_chart(reference:str, centile_selection:str, measurement_method: str="height", sex: str="female",):
     """
     Global method - return chart for measurement_method, sex and reference
     """
     if reference == UK_WHO:
         return create_uk_who_chart(measurement_method=measurement_method, sex=sex,centile_selection=centile_selection)
     elif reference == TURNERS:
-        return create_turner_chart(measurement_method=measurement_method, centile_selection=centile_selection)
+        return create_turner_chart(centile_selection=centile_selection)
     elif reference == TRISOMY_21:
         return create_trisomy_21_chart(measurement_method=measurement_method, sex=sex,centile_selection=centile_selection)
     else:
@@ -262,7 +262,7 @@ def create_uk_who_chart(measurement_method: str, sex: str, centile_selection: st
 
 
 
-def create_turner_chart(measurement_method: str, centile_selection: str):
+def create_turner_chart(centile_selection: str):
    ## user selects which centile collection they want
     ## If the Cole method is selected, conversion between centile and SDS
     ## is different as SDS is rounded to the nearest 2/3
@@ -307,20 +307,19 @@ def create_turner_chart(measurement_method: str, centile_selection: str):
             z = sds_for_centile(centile)
         
         ## Collect the LMS values from the correct reference
-        lms_array_for_measurement=select_reference_data_for_trisomy_21(measurement_method=measurement_method, sex=sex)
+        lms_array_for_measurement=select_reference_data_for_trisomy_21(measurement_method="height", sex=sex)
         ## Generate a centile. there will be nine of these if Cole method selected.
         ## Some data does not exist at all ages, so any error reflects missing data.
         ## If this happens, an empty list is returned.
-        print(len(lms_array_for_measurement))
         
-        centile_data = generate_centile(z=z, centile=centile, measurement_method=measurement_method, sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference=TURNERS)
+        centile_data = generate_centile(z=z, centile=centile, measurement_method="height", sex=sex, lms_array_for_measurement=lms_array_for_measurement, reference=TURNERS)
 
         ## Store this centile for a given measurement
         centiles.append({"sds": round(z*100)/100, "centile": centile, "data": centile_data})
         
     ## this is the end of the centile_collection for loop
     ## All the centiles for this measurement, sex and reference are added to the measurements list
-    measurements.update({measurement_method: centiles})
+    measurements.update({"height": centiles})
     
     ## this is the end of the measurement_methods loop
     ## All data for all measurement_methods for this sex are added to the sex_list list

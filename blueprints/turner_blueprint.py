@@ -149,11 +149,17 @@ def turner_chart_coordinates():
               schema: ChartDataResponseSchema
     """
 
-    chart_data = create_chart(TURNERS, COLE_TWO_THIRDS_SDS_NINE_CENTILES)
-
+    
+    try:
+      chart_data = create_chart(TURNERS, centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+    except Exception as err:
+      print(err)
+      return "Server error fetching chart data.", 400
     return jsonify({
         "centile_data": chart_data
     })
+    
+        
 
 """
     Return object structure

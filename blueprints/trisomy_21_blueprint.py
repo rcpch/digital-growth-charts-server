@@ -128,19 +128,23 @@ def trisomy_21_plottable_child_data():
     else:
         return "Request body mimetype should be application/json", 400
 
-@trisomy_21.route("/chart-coordinates", methods=["GET"])
+@trisomy_21.route("/chart-coordinates", methods=["POST"])
 def trisomy_21_chart_coordinates():
     """
     Chart data.
     ---
-    get:
+    post:
       summary: UK-WHO Chart coordinates in plottable format
         * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
+        * Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')
 
       requestBody:
         content:
           application/json:
             schema: ChartDataRequestParameters
+            example:
+                "sex": "female"
+                "measurement_method":"height"
 
       responses:
         200:
@@ -150,11 +154,30 @@ def trisomy_21_chart_coordinates():
               schema: ChartDataResponseSchema
     """
 
-    chart_data = create_chart(TRISOMY_21, COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+    if request.is_json:
+      req = request.get_json()
+      print(req)
+      values = {
+        "sex":req["sex"],
+        'measurement_method':req["measurement_method"]
+      }
+    
+      try:
+        ChartDataRequestParameters().load(values)
+      except ValidationError as err:
+        pprint(err.messages)
+        return json.dumps(err.messages), 422
 
-    return jsonify({
-        "centile_data": chart_data
-    })
+      try:
+        chart_data = create_chart(TRISOMY_21, measurement_method=req["measurement_method"], sex=req["sex"], centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+      except Exception as err:
+        print(err)
+
+      return jsonify({
+          "centile_data": chart_data
+      })
+    else:
+        return "Request body mimetype should be application/json", 400
 
 """
     Return object structure
