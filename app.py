@@ -3,6 +3,7 @@ RCPCH Growth Charts API Server
 """
 
 from os import environ, urandom, path
+import subprocess
 
 from flask import Flask, request, json
 from flask_cors import CORS
@@ -108,8 +109,16 @@ from app import app     # position of this import is important. Don't allow it t
 
 # generate the API spec
 try:
-    spec = apispec_generation.generate(app)
+    try:
+        # if Git is available when the server is running (ie in dev) then update the server version from the Git commit hash
+        # This means we can 'bake' the commit into the openAPI spec
+        api_commit_hash = subprocess.check_output(["git", "rev-parse", "HEAD"]).strip().decode('utf-8')
+    except:
+        api_commit_hash = "Git not available"
+        pass
+    spec = apispec_generation.generate(app, api_commit_hash)
     print(f"{OKGREEN} * openAPI3.0 spec was generated and saved to the repo{ENDC}")
+    print(f"{OKGREEN} * API commit version is {api_commit_hash} {ENDC}")
 
 except Exception as error:
     print(f"{FAIL} * An error occurred while processing the openAPI3.0 spec{ENDC}")
