@@ -11,8 +11,8 @@ import controllers
 import blueprints
 import schemas
 import apispec_generation
-from rcpchgrowth.rcpchgrowth import create_uk_who_chart, create_trisomy_21_chart, create_turner_chart
 from rcpchgrowth.rcpchgrowth.constants.parameter_constants import *
+from rcpchgrowth.rcpchgrowth.chart_functions import create_chart
 
 
 # Declare shell colour variables for pretty logging output
@@ -39,6 +39,15 @@ app.register_blueprint(
 app.register_blueprint(
     blueprints.uk_who_blueprint.uk_who, url_prefix='/uk-who')
 
+# Mount all Trisomy 21 endpoints from the blueprint
+app.register_blueprint(
+    blueprints.trisomy_21_blueprint.trisomy_21, url_prefix='/trisomy-21')
+
+# Mount all Turner's endpoints from the blueprint
+app.register_blueprint(
+    blueprints.turner_blueprint.turners, url_prefix='/turner')
+
+
 # Mount openAPI3 spec endpoint from the blueprint
 app.register_blueprint(
     blueprints.openapi_blueprint.openapi)
@@ -58,11 +67,10 @@ from app import app     # position of this import is important. Don't allow it t
 ##### END FLASK SETUP #####
 ###########################
 
-
 # create all the charts and store in chart_data: commenting out as builds locally but causes failure to deploy to azure.
 # try:  
-#   result = create_uk_who_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
-#   filename = "uk_who_chart_data.json"
+#   result = create_chart(reference="uk-who", measurement_method="height", sex="female", centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILE_COLLECTION)
+#   filename = "uk_who_girls.json"
 #   file_path = path.join(chart_data_folder, filename)
 #   with open(file_path, 'w') as file:
 #       print("now writing to file...")
@@ -74,7 +82,7 @@ from app import app     # position of this import is important. Don't allow it t
 
 # # Trisomy 21
 # try:  
-#   result = create_trisomy_21_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+#   result = create_chart(TRISOMY_21, COLE_TWO_THIRDS_SDS_NINE_CENTILES)
 #   filename = "trisomy_21_chart_data.json"
 #   file_path = path.join(chart_data_folder, filename)
 #   with open(file_path, 'w') as file:
@@ -83,7 +91,7 @@ from app import app     # position of this import is important. Don't allow it t
 #       file.close()
 #       print(f" * {OKGREEN}New Trisomy 21 Chart Data has been generated.")
 # except:
-#   raise ValueError("Unable to create Trisomy 21 charts")
+#   raise Exception("Unable to create Trisomy 21 charts")
 
 # # Turner's Syndrome
 # try:  
@@ -97,34 +105,6 @@ from app import app     # position of this import is important. Don't allow it t
 #       print(f" * {OKGREEN}New Turner's Syndrome Chart Data has been generated.")
 # except:
 #   raise ValueError("Unable to create Turner's Syndrome charts")
-
-# TODO #123 the spreadsheet endpoint probably needs to be deprecated
-@app.route("/uk-who/spreadsheet", methods=["POST"])
-def ukwho_spreadsheet():
-    """
-    ***INCOMPLETE***
-    Spreadsheet file uploadte.
-    ---
-    post:
-      summary: Spreadsheet file upload API route.
-      description: |
-        * This endpoint is used for development and testing only and it is not envisaged that it will be in the live API.
-      requestBody:
-        content:
-          text/csv:
-            schema: ChartDataRequestParameters
-      responses:
-        200:
-          description: |
-            * Chart data for plotting a traditional growth chart was returned.
-          content:
-            application/json:
-              schema: ChartDataResponseSchema
-    """
-    csv_file = request.files["csv_file"]
-    calculated_results = controllers.import_csv_file(csv_file)
-    return calculated_results
-
 
 # generate the API spec
 try:

@@ -46,7 +46,7 @@ def reference_data_absent(
         age: float,
         measurement_method: str,
         sex: str
-    ) -> (bool, str):
+    ):
     """
     Helper function.
     Returns boolean
@@ -73,5 +73,5 @@ def reference_data_absent(
     else:
         return False, "Valid Data"
 
-def select_reference_data_for_turners(measurement_method: str, sex: str):
+def select_reference_data_for_turner(measurement_method: str, sex: str):
     return turner_lms_array_for_measurement_and_sex(measurement_method=measurement_method, sex=sex, age=1.0)

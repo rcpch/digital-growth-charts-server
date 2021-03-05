@@ -1,5 +1,5 @@
 """
-This module contains the UK-WHO endpoints as Flask Blueprints
+This module contains the Turner endpoints as Flask Blueprints
 """
 
 import json
@@ -7,19 +7,19 @@ from pprint import pprint
 from flask import Blueprint
 from flask import jsonify, request
 from marshmallow import ValidationError
-from rcpchgrowth.rcpchgrowth.constants.measurement_constants import *
-from rcpchgrowth.rcpchgrowth.constants.parameter_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, UK_WHO
-from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data, create_chart
+from rcpchgrowth.rcpchgrowth.constants.parameter_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, TRISOMY_21
 from rcpchgrowth.rcpchgrowth.measurement import Measurement
+from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data, create_chart
+from rcpchgrowth.rcpchgrowth.constants.parameter_constants import TRISOMY_21
 from datetime import date, datetime
 from schemas import *
-import controllers
-
-uk_who = Blueprint("uk_who", __name__)
 
 
-@uk_who.route("/calculation", methods=["POST"])
-def uk_who_calculation():
+trisomy_21 = Blueprint(TRISOMY_21, __name__)
+
+
+@trisomy_21.route("/calculation", methods=["POST"])
+def trisomy_21_calculation():
     """
     Centile calculation.
     ---
@@ -53,7 +53,7 @@ def uk_who_calculation():
     """
     if request.is_json:
         req = request.get_json()
-        print(req)
+        
 
         values = {
             'birth_date': req["birth_date"],
@@ -80,7 +80,7 @@ def uk_who_calculation():
             observation_value=float(req["observation_value"]),
             gestation_weeks=req["gestation_weeks"],
             gestation_days=req["gestation_days"],
-            reference=UK_WHO
+            reference=TRISOMY_21
         ).measurement
 
         return jsonify(calculation)
@@ -88,15 +88,16 @@ def uk_who_calculation():
         return "Request body mimetype should be application/json", 400
 
 
-@uk_who.route("/chart-coordinates", methods=["POST"])
-
-def uk_who_chart_coordinates():
+@trisomy_21.route("/plottable-child-data", methods=["POST"])
+def trisomy_21_plottable_child_data():
     """
-    Chart data.
+    Child growth data in plottable format.
     ---
-    POST:
-      summary: UK-WHO Chart coordinates in plottable format
-        * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
+    post:
+      summary: Child growth data in plottable format.
+      description: |
+        * Requires results data parameters from a call to the calculation endpoint.
+        * Returns child measurement data in a plottable format (x and y parameters), with centiles and ages for labels.
 
       requestBody:
         content:
@@ -105,11 +106,54 @@ def uk_who_chart_coordinates():
 
       responses:
         200:
+          description: |
+            * Child growth data in plottable format (x and y parameters, centile and age labels) was returned.
+          content:
+            application/json:
+              schema: ChartDataResponseSchema
+    """
+    if request.is_json:
+        req = request.get_json()
+        results = req["results"]
+
+        # data are serial data points for a single child
+        # Prepare data from plotting
+        child_data = create_plottable_child_data(results)
+        # Retrieve sex of child to select correct centile charts
+        sex = results[0]["birth_data"]["sex"]
+        return jsonify({
+            "sex": sex,
+            "child_data": child_data,
+        })
+    else:
+        return "Request body mimetype should be application/json", 400
+
+@trisomy_21.route("/chart-coordinates", methods=["POST"])
+def trisomy_21_chart_coordinates():
+    """
+    Chart data.
+    ---
+    post:
+      summary: UK-WHO Chart coordinates in plottable format
+        * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
+        * Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')
+
+      requestBody:
+        content:
+          application/json:
+            schema: ChartDataRequestParameters
+            example:
+                "sex": "female"
+                "measurement_method":"height"
+
+      responses:
+        200:
           description: "Chart data for plotting a traditional growth chart was returned"
           content:
             application/json:
               schema: ChartDataResponseSchema
     """
+
     if request.is_json:
       req = request.get_json()
       print(req)
@@ -125,7 +169,7 @@ def uk_who_chart_coordinates():
         return json.dumps(err.messages), 422
 
       try:
-        chart_data = create_chart(UK_WHO, measurement_method=req["measurement_method"], sex=req["sex"], centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+        chart_data = create_chart(TRISOMY_21, measurement_method=req["measurement_method"], sex=req["sex"], centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILES)
       except Exception as err:
         print(err)
 
@@ -158,43 +202,3 @@ def uk_who_chart_coordinates():
     ]
 
     """
-
-
-@uk_who.route("/plottable-child-data", methods=["POST"])
-def uk_who_plottable_child_data():
-    """
-    Child growth data in plottable format.
-    ---
-    post:
-      summary: Child growth data in plottable format.
-      description: |
-        * Requires results data parameters from a call to the calculation endpoint.
-        * Returns child measurement data in a plottable format (x and y parameters), with centiles and ages for labels.
-
-      requestBody:
-        content:
-          application/json:
-            schema: ChartDataRequestParameters
-
-      responses:
-        200:
-          description: |
-            * Child growth data in plottable format (x and y parameters, centile and age labels) was returned.
-          content:
-            application/json:
-              schema: ChartDataResponseSchema
-    """
-    if request.is_json:
-        req = request.get_json()
-        results = req["results"]
-        # data are serial data points for a single child
-        # Prepare data from plotting
-        child_data = create_plottable_child_data(results)
-        # Retrieve sex of child to select correct centile charts
-        sex = results[0]["birth_data"]["sex"]
-        return jsonify({
-            "sex": sex,
-            "child_data": child_data,
-        })
-    else:
-        return "Request body mimetype should be application/json", 400
