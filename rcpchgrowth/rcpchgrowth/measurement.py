@@ -89,7 +89,7 @@ class Measurement:
             gestation_days=self.gestation_days)
 
         # the calculate_measurements_object receives the child_observation_value and measurement_calculated_values objects
-        self.calculate_measurements_object = self.sds_and_centile_for_measurement_method(
+        self.calculated_measurements_object = self.sds_and_centile_for_measurement_method(
             sex=self.sex,
             corrected_age=self.ages_object['measurement_dates']['corrected_decimal_age'],
             chronological_age=self.ages_object['measurement_dates']['chronological_decimal_age'],
@@ -100,11 +100,38 @@ class Measurement:
             reference=self.reference
         )
 
+        self.plottable_centile_data = {
+            "chronological_decimal_age_data":{
+                "x": self.ages_object['measurement_dates']['chronological_decimal_age'],
+                "y": self.observation_value,
+            },
+            "corrected_decimal_age_data":{
+                "x": self.ages_object['measurement_dates']['corrected_decimal_age'],
+                "y": self.observation_value,
+            }
+        }
+
+        self.plottable_sds_data = {
+            "chronological_decimal_age_data":{
+                "x": self.ages_object['measurement_dates']['chronological_decimal_age'],
+                "y": self.calculated_measurements_object['measurement_calculated_values']["chronological_sds"],
+            },
+            "corrected_decimal_age_data":{
+                "x": self.ages_object['measurement_dates']['corrected_decimal_age'],
+                "y": self.calculated_measurements_object['measurement_calculated_values']["corrected_sds"],
+            },
+        }
+
+        # the final object is made up of these five components
         self.measurement = {
             'birth_data': self.ages_object['birth_data'],
             'measurement_dates': self.ages_object['measurement_dates'],
-            'child_observation_value': self.calculate_measurements_object['child_observation_value'],
-            'measurement_calculated_values': self.calculate_measurements_object['measurement_calculated_values']
+            'child_observation_value': self.calculated_measurements_object['child_observation_value'],
+            'measurement_calculated_values': self.calculated_measurements_object['measurement_calculated_values'],
+            'plottable_data': {
+                "centile_data": self.plottable_centile_data,
+                "sds_data": self.plottable_sds_data
+            }
         }
 
 
