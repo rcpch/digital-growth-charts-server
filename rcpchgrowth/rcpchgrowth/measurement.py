@@ -441,7 +441,6 @@ class Measurement:
                 chronological_centile_value = int(chronological_centile_value)
 
         measurement_calculated_values = {
-            "measurement_method": measurement_method,
             "corrected_sds": corrected_sds_value,
             "corrected_centile": corrected_centile_value,
             "corrected_centile_band": corrected_centile_band,
