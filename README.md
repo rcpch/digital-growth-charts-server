@@ -35,13 +35,13 @@ This is the main documentation for the project
   - [Gestational Age / Post-menstrual Age](#gestational-age--post-menstrual-age)
   - [Chronological Decimal Age](#chronological-decimal-age)
   - [Corrected Decimal Age](#corrected-decimal-age)
-  - [Scope](#scope)
-  - [Copyright and License](#copyright-and-license)
-  - [Developer documentation](#developer-documentation)
-  - [The dGC Team Members](#the-dgc-team-members)
-    - [Project Board](#project-board)
-    - [RCPCH Staff](#rcpch-staff)
-    - [Development Team](#development-team)
+- [Scope](#scope)
+- [Copyright and License](#copyright-and-license)
+- [Developer documentation](#developer-documentation)
+- [The dGC Team Members](#the-dgc-team-members)
+  - [Project Board](#project-board)
+  - [RCPCH Staff](#rcpch-staff)
+  - [Development Team](#development-team)
 - [Growth Charting Introduction](#growth-charting-introduction)
   - [The LMS Method](#the-lms-method)
     - [How the LMS method is used](#how-the-lms-method-is-used)
@@ -187,7 +187,7 @@ If you are reviewing, developing, extending or simply curious about the RCPCH dG
 - Alex Brown, Head of Commercial and Corporate Partnerships, RCPCH
 - Jo Ball, Design and Brand Manager, Content and Brand Team, RCPCH
 - Kirsten Olson, Website Content Manager, Content and Brand Team, RCPCH
-- Rachel McKeown, Policy Lead & Project Manager, RCPCH (now left RCPCH) 
+- Rachel McKeown, Policy Lead & Project Manager, RCPCH (now left RCPCH)
 
 ## Development Team
 
