@@ -198,3 +198,76 @@ def uk_who_plottable_child_data():
         })
     else:
         return "Request body mimetype should be application/json", 400
+
+@uk_who.route("/calculations", methods=["POST"])
+def uk_who_calculations():
+    """
+    Centile calculations.
+    ---
+    post:
+      summary: Centile and SDS Calculation route.
+      description: |
+        * Returns multiple centile/SDS calculations for an array of measurements of the same 'measurement_method'.
+        * Gestational age correction will be applied automatically according to the gestational age at birth data supplied.
+        * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
+        * Note that BMI must be precalculated for the `bmi` function.
+
+      requestBody:
+        content:
+          application/json:
+            schema: CalculationRequestParameters
+            example:
+                birth_date: "2020-04-12"
+                observation_date: "2020-06-12"
+                observation_value: 60
+                measurement_method: "height"
+                sex: male
+                gestation_weeks: 40
+                gestation_days: 4
+
+      responses:
+        200:
+          description: "Centile calculation (single) according to the supplied data was returned"
+          content:
+            application/json:
+              schema: CalculationResponseSchema
+    """
+    if request.is_json:
+      req = request.get_json()
+      print(req)
+
+      results = []
+
+      for count,  measurement in enumerate(req):
+        value = {
+            'birth_date': measurement["birth_date"],
+            'observation_date': measurement["observation_date"],
+            'measurement_method': measurement["measurement_method"],
+            'observation_value': measurement["observation_value"],
+            'sex': measurement["sex"],
+            'gestation_weeks': measurement["gestation_weeks"],
+            'gestation_days': measurement["gestation_days"]
+        }
+
+        # Validate the request with Marshmallow
+        try:
+            CalculationRequestParameters().load(value)
+        except ValidationError as err:
+            pprint(err.messages)
+            return json.dumps(err.messages), 422
+
+        calculation = Measurement(
+            sex=measurement["sex"],
+            birth_date=datetime.strptime(measurement["birth_date"], "%Y-%m-%d"),
+            observation_date=datetime.strptime(measurement["observation_date"],"%Y-%m-%d"),
+            measurement_method=str(measurement["measurement_method"]),
+            observation_value=float(measurement["observation_value"]),
+            gestation_weeks=measurement["gestation_weeks"],
+            gestation_days=measurement["gestation_days"],
+            reference=UK_WHO
+        ).measurement
+
+        results.append(calculation)
+      return jsonify(results)
+    else:
+        return "Request body mimetype should be application/json", 400
