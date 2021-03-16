@@ -214,7 +214,7 @@ info:
     name: GNU Affero General Public License
     url: https://www.gnu.org/licenses/agpl-3.0.en.html
   title: RCPCH Digital Growth Charts API
-  version: 4d96e09a15d53a96b67d52f91c6324a91167dc72
+  version: 'v1.0.12 (commit_hash: 48854ba670ea6989b0bdb9adae7a248da1f11520)'
 openapi: 3.0.2
 paths:
   /uk-who/calculation:

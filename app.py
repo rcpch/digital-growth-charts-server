@@ -16,6 +16,9 @@ from rcpchgrowth.rcpchgrowth.constants.parameter_constants import *
 from rcpchgrowth.rcpchgrowth.chart_functions import create_chart
 
 
+### API VERSION ###
+API_SEMANTIC_VERSION = "1.0.12"
+
 # Declare shell colour variables for pretty logging output
 OKBLUE = "\033[94m"
 OKGREEN = "\033[92m"
@@ -53,6 +56,7 @@ app.register_blueprint(
 app.register_blueprint(
     blueprints.openapi_blueprint.openapi)
 
+
 # ENVIRONMENT
 # Load the secret key from the ENV if it has been set
 if "FLASK_SECRET_KEY" in environ:
@@ -69,7 +73,7 @@ from app import app     # position of this import is important. Don't allow it t
 ###########################
 
 # create all the charts and store in chart_data: commenting out as builds locally but causes failure to deploy to azure.
-# try:  
+# try:
 #   result = create_chart(reference="uk-who", measurement_method="height", sex="female", centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILE_COLLECTION)
 #   filename = "uk_who_girls.json"
 #   file_path = path.join(chart_data_folder, filename)
@@ -82,7 +86,7 @@ from app import app     # position of this import is important. Don't allow it t
 #   raise ValueError("Unable to create UK-WHO charts")
 
 # # Trisomy 21
-# try:  
+# try:
 #   result = create_chart(TRISOMY_21, COLE_TWO_THIRDS_SDS_NINE_CENTILES)
 #   filename = "trisomy_21_chart_data.json"
 #   file_path = path.join(chart_data_folder, filename)
@@ -95,7 +99,7 @@ from app import app     # position of this import is important. Don't allow it t
 #   raise Exception("Unable to create Trisomy 21 charts")
 
 # # Turner's Syndrome
-# try:  
+# try:
 #   result = create_turner_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
 #   filename = "turners_chart_data.json"
 #   file_path = path.join(chart_data_folder, filename)
@@ -112,17 +116,27 @@ try:
     try:
         # if Git is available when the server is running (ie in dev) then update the server version from the Git commit hash
         # This means we can 'bake' the commit into the openAPI spec
-        api_commit_hash = subprocess.check_output(["git", "rev-parse", "HEAD"]).strip().decode('utf-8')
+        api_commit_hash = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"]).strip().decode('utf-8')
     except:
         api_commit_hash = "Git not available"
         pass
-    spec = apispec_generation.generate(app, api_commit_hash)
+    spec = apispec_generation.generate(
+        app, api_commit_hash, API_SEMANTIC_VERSION)
     print(f"{OKGREEN} * openAPI3.0 spec was generated and saved to the repo{ENDC}")
-    print(f"{OKGREEN} * API commit version is {api_commit_hash} {ENDC}")
+    print(f"{OKGREEN} * API semantic version is {API_SEMANTIC_VERSION}, commit hash is {api_commit_hash} {ENDC}")
 
 except Exception as error:
     print(f"{FAIL} * An error occurred while processing the openAPI3.0 spec{ENDC}")
     print(f"{FAIL} *  > {error} {ENDC}")
+
+
+# adds API version details to all requests
+@app.after_request
+def add_api_version(response):
+    response.headers.add('Growth-Api-Version', spec.version)
+    return response
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
