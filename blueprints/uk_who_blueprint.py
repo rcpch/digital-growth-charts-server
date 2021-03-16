@@ -2,16 +2,21 @@
 This module contains the UK-WHO endpoints as Flask Blueprints
 """
 
+# python imports
+from datetime import date, datetime
 import json
 from pprint import pprint
+
+# third party imports
 from flask import Blueprint
 from flask import jsonify, request
 from marshmallow import ValidationError
+
+# internal imports
 from rcpchgrowth.rcpchgrowth.constants.measurement_constants import *
 from rcpchgrowth.rcpchgrowth.constants.parameter_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, UK_WHO
 from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data, create_chart
 from rcpchgrowth.rcpchgrowth.measurement import Measurement
-from datetime import date, datetime
 from schemas import *
 import controllers
 
