@@ -86,10 +86,10 @@ def generate(app, api_commit_hash, api_semantic_version):
 
     # Create OpenAPI Spec and serialise it to file
     with open(r'openapi.yml', 'w') as file:
-        openapi_yml = file.write(spec.to_yaml())
+        file.write(spec.to_yaml())
 
     with open(r'openapi.json', 'w') as file:
-        openapi_json = file.write(json.dumps(
+        file.write(json.dumps(
             spec.to_dict(), sort_keys=True, indent=4))
     ### END API SPEC AUTO GENERATION ###
     ####################################

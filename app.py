@@ -2,6 +2,7 @@
 RCPCH Growth Charts API Server
 """
 
+import json
 from os import environ, urandom, path
 import subprocess
 
@@ -16,8 +17,14 @@ from rcpchgrowth.rcpchgrowth.constants.parameter_constants import *
 from rcpchgrowth.rcpchgrowth.chart_functions import create_chart
 
 
-### API VERSION ###
-API_SEMANTIC_VERSION = "1.0.12"
+### API VERSION AND COMMIT HASH ###
+API_SEMANTIC_VERSION = "1.0.12"  # this is manually set
+
+# Read saved version info from **saved** JSON APIspec
+# (Because Git may not exist in Live and may not be able to get current commit hash)
+with open('openapi.json') as json_file:
+    api = json.load(json_file)
+    SAVED_API_VERSION = api['info']['version']
 
 # Declare shell colour variables for pretty logging output
 OKBLUE = "\033[94m"
@@ -118,13 +125,12 @@ try:
         # This means we can 'bake' the commit into the openAPI spec
         api_commit_hash = subprocess.check_output(
             ["git", "rev-parse", "HEAD"]).strip().decode('utf-8')
+        spec = apispec_generation.generate(
+            app, api_commit_hash, API_SEMANTIC_VERSION)
+        print(f"{OKGREEN} * openAPI3.0 spec was generated and saved to the repo{ENDC}")
+        print(f"{OKGREEN} * API semantic version is {API_SEMANTIC_VERSION}, commit hash is {api_commit_hash} {ENDC}")
     except:
         api_commit_hash = "Git not available"
-        pass
-    spec = apispec_generation.generate(
-        app, api_commit_hash, API_SEMANTIC_VERSION)
-    print(f"{OKGREEN} * openAPI3.0 spec was generated and saved to the repo{ENDC}")
-    print(f"{OKGREEN} * API semantic version is {API_SEMANTIC_VERSION}, commit hash is {api_commit_hash} {ENDC}")
 
 except Exception as error:
     print(f"{FAIL} * An error occurred while processing the openAPI3.0 spec{ENDC}")
@@ -134,7 +140,7 @@ except Exception as error:
 # adds API version details to all requests
 @app.after_request
 def add_api_version(response):
-    response.headers.add('Growth-Api-Version', spec.version)
+    response.headers.add('Growth-Api-Version', SAVED_API_VERSION)
     return response
 
 
