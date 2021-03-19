@@ -215,7 +215,7 @@ info:
     name: GNU Affero General Public License
     url: https://www.gnu.org/licenses/agpl-3.0.en.html
   title: RCPCH Digital Growth Charts API
-  version: 'v1.0.12 (commit_hash: 5c4545abc150a7b4f75336a74612b68b0b8c6ec9)'
+  version: 'v1.0.12 (commit_hash: c614c31663c9259f3d743ed523ef10827ac7e9df)'
 openapi: 3.0.2
 paths:
   /uk-who/calculation:
@@ -235,11 +235,11 @@ paths:
         content:
           application/json:
             example:
-              birth_date: '2020-04-12T12:00:00'
+              birth_date: '2020-04-12T0:00:00'
               gestation_days: 4
               gestation_weeks: 40
               measurement_method: height
-              observation_date: '2020-06-12T12:00:00'
+              observation_date: '2020-06-12T00:00:00'
               observation_value: 60
               sex: male
             schema:
