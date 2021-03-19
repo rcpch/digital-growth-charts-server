@@ -6,10 +6,10 @@ class MeasurementClassSchema(Schema):
         required=True,
         enum=['male', 'female'],
         description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted")
-    birth_date = fields.Date(
+    birth_date = fields.DateTime(
         required=True,
         description="Date of birth of the patient, as a Python Date object.")
-    observation_date = fields.Date(
+    observation_date = fields.DateTime(
         required=True,
         description="The date that the measurement was taken, as a Python Date object.")
     measurement_method = fields.String(
