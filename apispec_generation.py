@@ -10,7 +10,7 @@ import schemas
 import blueprints
 
 
-def generate(app):
+def generate(app, api_commit_hash, api_semantic_version):
 
     ###########################
     ##### API SPEC ############
@@ -18,7 +18,7 @@ def generate(app):
     # as well as being served on the root '/' endpoint for consumption by services
     spec = APISpec(
         title="RCPCH Digital Growth Charts API",
-        version="0.0.3",
+        version=f'v{api_semantic_version} (commit_hash: {api_commit_hash})',
         openapi_version="3.0.2",
         info=dict(
             description="Royal College of Paediatrics and Child Health Digital Growth Charts",
@@ -66,11 +66,10 @@ def generate(app):
         schema=schemas.CalculationResponseSchema)
     with app.test_request_context():
         spec.path(view=blueprints.trisomy_21_blueprint.trisomy_21_calculation)
-        
+
     # OpenAPI3 specification endpoint
     with app.test_request_context():
         spec.path(view=blueprints.openapi_blueprint.openapi_endpoint)
-
 
     # Turner's syndrome endpoint
     spec.components.schema(
@@ -87,10 +86,10 @@ def generate(app):
 
     # Create OpenAPI Spec and serialise it to file
     with open(r'openapi.yml', 'w') as file:
-        openapi_yml = file.write(spec.to_yaml())
+        file.write(spec.to_yaml())
 
     with open(r'openapi.json', 'w') as file:
-        openapi_json = file.write(json.dumps(
+        file.write(json.dumps(
             spec.to_dict(), sort_keys=True, indent=4))
     ### END API SPEC AUTO GENERATION ###
     ####################################
