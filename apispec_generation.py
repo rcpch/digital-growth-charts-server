@@ -25,9 +25,9 @@ def generate(app, api_commit_hash, api_semantic_version):
             license={"name": "GNU Affero General Public License",
                      "url": "https://www.gnu.org/licenses/agpl-3.0.en.html"}),
         plugins=[MarshmallowPlugin(), FlaskPlugin()],
-        servers=[{"url": 'https://api.rcpch.ac.uk/',
+        servers=[{"url": 'https://api.rcpch.ac.uk',
                   "description": 'RCPCH Production API Gateway (subscription keys required)'},
-                 {"url": 'https://localhost:5000/',
+                 {"url": 'https://localhost:5000',
                   "description": 'Your local development API'}],
     )
 

@@ -29,8 +29,8 @@
             "CalculationRequestParameters": {
                 "properties": {
                     "birth_date": {
-                        "description": "Date of birth of the patient in YYYY-MM-DD ISO8601 format.",
-                        "format": "date",
+                        "description": "Date of birth of the patient in `YYYY-MM-DDTHH:MM:SS` FHIR format.",
+                        "format": "date-time",
                         "type": "string"
                     },
                     "gestation_days": {
@@ -54,8 +54,8 @@
                         "type": "string"
                     },
                     "observation_date": {
-                        "description": "The date that the measurement was taken, in YYYY-MM-DD ISO8601 format.",
-                        "format": "date",
+                        "description": "The date that the measurement was taken, in `YYYY-MM-DDTHH:MM:SS` FHIR format.",
+                        "format": "date-time",
                         "type": "string"
                     },
                     "observation_value": {
@@ -284,7 +284,7 @@
             "url": "https://www.gnu.org/licenses/agpl-3.0.en.html"
         },
         "title": "RCPCH Digital Growth Charts API",
-        "version": "v1.0.12 (commit_hash: 5c4545abc150a7b4f75336a74612b68b0b8c6ec9)"
+        "version": "v1.0.12 (commit_hash: c614c31663c9259f3d743ed523ef10827ac7e9df)"
     },
     "openapi": "3.0.2",
     "paths": {
@@ -313,11 +313,11 @@
                     "content": {
                         "application/json": {
                             "example": {
-                                "birth_date": "2020-04-12",
+                                "birth_date": "2020-04-12T12:00:00",
                                 "gestation_days": 4,
                                 "gestation_weeks": 40,
                                 "measurement_method": "height",
-                                "observation_date": "2020-06-12",
+                                "observation_date": "2020-06-12T12:00:00",
                                 "observation_value": 60,
                                 "sex": "male"
                             },
@@ -349,11 +349,11 @@
                     "content": {
                         "application/json": {
                             "example": {
-                                "birth_date": "2020-04-12",
+                                "birth_date": "2020-04-12T12:00:00",
                                 "gestation_days": 4,
                                 "gestation_weeks": 40,
                                 "measurement_method": "height",
-                                "observation_date": "2020-06-12",
+                                "observation_date": "2020-06-12T12:00:00",
                                 "observation_value": 60,
                                 "sex": "male"
                             },
@@ -385,11 +385,11 @@
                     "content": {
                         "application/json": {
                             "example": {
-                                "birth_date": "2020-04-12",
+                                "birth_date": "2020-04-12T0:00:00",
                                 "gestation_days": 4,
                                 "gestation_weeks": 40,
                                 "measurement_method": "height",
-                                "observation_date": "2020-06-12",
+                                "observation_date": "2020-06-12T00:00:00",
                                 "observation_value": 60,
                                 "sex": "male"
                             },
@@ -482,11 +482,11 @@
     "servers": [
         {
             "description": "RCPCH Production API Gateway (subscription keys required)",
-            "url": "https://api.rcpch.ac.uk/"
+            "url": "https://api.rcpch.ac.uk"
         },
         {
             "description": "Your local development API",
-            "url": "https://localhost:5000/"
+            "url": "https://localhost:5000"
         }
     ]
 }

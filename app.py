@@ -18,7 +18,7 @@ from rcpchgrowth.rcpchgrowth.chart_functions import create_chart
 
 
 ### API VERSION AND COMMIT HASH ###
-API_SEMANTIC_VERSION = "1.0.12"  # this is manually set
+API_SEMANTIC_VERSION = "2.1.0"  # this is manually set
 
 # Read saved version info from **saved** JSON APIspec
 # (Because Git may not exist in Live and may not be able to get current commit hash)
