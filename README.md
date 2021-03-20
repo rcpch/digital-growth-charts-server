@@ -21,6 +21,7 @@ This is the main documentation for the project
 - [About the UK RCPCH Growth Chart API Project](#about-the-uk-rcpch-growth-chart-api-project)
 - [API](#api)
   - [API Documentation](#api-documentation)
+  - [Swagger / openAPI3 specification](#swagger--openapi3-specification)
   - [Postman tooling](#postman-tooling)
 - [Demo Clients](#demo-clients)
   - [React/Javascript demo client](#reactjavascript-demo-client)
@@ -67,6 +68,15 @@ We use the Microsoft Azure API Management Platform to handle authorization, rate
 ## API Documentation
 
 All API-related documentation is hosted on our developer portal <https://dev.rcpch.ac.uk/>. For consumers of the API service who want to implement it, this is the best starting point.
+
+## Swagger / openAPI3 specification
+
+- Our API code auto-generates a Swagger / openAPI3 specification each time we make changes to the server
+
+<img src="https://validator.swagger.io/validator?url=https://raw.githubusercontent.com/rcpch/digital-growth-charts-server/alpha/openapi.yml">
+
+- The openAPI spec is available as YAML or JSON in the root of this repo
+- You can also get the spec from the `/` (root) of https://api.rcpch.ac.uk where it is served in JSON format
 
 ## Postman tooling
 
