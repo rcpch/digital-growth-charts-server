@@ -24,8 +24,9 @@ def trisomy_21_calculation():
     Centile calculation.
     ---
     post:
-      summary: Centile and SDS Calculation route.
+      summary: Trisomy 21 centile and SDS calculation.
       description: |
+        * This endpoint MUST ONLY be used for children with Trisomy 21 (Down's Syndrome).
         * Returns a single centile/SDS calculation for the selected `measurement_method`.
         * Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.
         * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
@@ -36,8 +37,8 @@ def trisomy_21_calculation():
           application/json:
             schema: CalculationRequestParameters
             example:
-                birth_date: "2020-04-12T12:00:00"
-                observation_date: "2020-06-12T12:00:00"
+                birth_date: "2020-04-12T12:00:00Z"
+                observation_date: "2020-06-12T12:00:00Z"
                 observation_value: 60
                 measurement_method: "height"
                 sex: male
@@ -53,7 +54,6 @@ def trisomy_21_calculation():
     """
     if request.is_json:
         req = request.get_json()
-        
 
         values = {
             'birth_date': req["birth_date"],
@@ -74,8 +74,10 @@ def trisomy_21_calculation():
 
         calculation = Measurement(
             sex=req["sex"],
-            birth_date=datetime.strptime(req["birth_date"], "%Y-%m-%dT%H:%M:%S"),
-            observation_date=datetime.strptime(req["observation_date"],"%Y-%m-%dT%H:%M:%S"),
+            birth_date=datetime.strptime(
+                req["birth_date"], "%Y-%m-%dT%H:%M:%S"),
+            observation_date=datetime.strptime(
+                req["observation_date"], "%Y-%m-%dT%H:%M:%S"),
             measurement_method=str(req["measurement_method"]),
             observation_value=float(req["observation_value"]),
             gestation_weeks=req["gestation_weeks"],
@@ -128,6 +130,7 @@ def trisomy_21_plottable_child_data():
     else:
         return "Request body mimetype should be application/json", 400
 
+
 @trisomy_21.route("/chart-coordinates", methods=["POST"])
 def trisomy_21_chart_coordinates():
     """
@@ -155,29 +158,31 @@ def trisomy_21_chart_coordinates():
     """
 
     if request.is_json:
-      req = request.get_json()
-      print(req)
-      values = {
-        "sex":req["sex"],
-        'measurement_method':req["measurement_method"]
-      }
-    
-      try:
-        ChartDataRequestParameters().load(values)
-      except ValidationError as err:
-        pprint(err.messages)
-        return json.dumps(err.messages), 422
+        req = request.get_json()
+        print(req)
+        values = {
+            "sex": req["sex"],
+            'measurement_method': req["measurement_method"]
+        }
 
-      try:
-        chart_data = create_chart(TRISOMY_21, measurement_method=req["measurement_method"], sex=req["sex"], centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILES)
-      except Exception as err:
-        print(err)
+        try:
+            ChartDataRequestParameters().load(values)
+        except ValidationError as err:
+            pprint(err.messages)
+            return json.dumps(err.messages), 422
 
-      return jsonify({
-          "centile_data": chart_data
-      })
+        try:
+            chart_data = create_chart(
+                TRISOMY_21, measurement_method=req["measurement_method"], sex=req["sex"], centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+        except Exception as err:
+            print(err)
+
+        return jsonify({
+            "centile_data": chart_data
+        })
     else:
         return "Request body mimetype should be application/json", 400
+
 
 """
     Return object structure

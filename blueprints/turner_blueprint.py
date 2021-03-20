@@ -23,8 +23,9 @@ def turner_calculation():
     Centile calculation.
     ---
     post:
-      summary: Centile and SDS Calculation route.
+      summary: Turner's Syndrome centile and SDS calculation.
       description: |
+        * This endpoint MUST ONLY be used for children with the chromosomal disorder Turner's Syndrome (45,XO karyotype).
         * Returns a single centile/SDS calculation for the selected `measurement_method`.
         * Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.
         * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
@@ -35,8 +36,8 @@ def turner_calculation():
           application/json:
             schema: CalculationRequestParameters
             example:
-                birth_date: "2020-04-12T12:00:00"
-                observation_date: "2020-06-12T12:00:00"
+                birth_date: "2020-04-12T12:00:00Z"
+                observation_date: "2020-06-12T12:00:00Z"
                 observation_value: 60
                 measurement_method: "height"
                 sex: male
@@ -52,7 +53,6 @@ def turner_calculation():
     """
     if request.is_json:
         req = request.get_json()
-        
 
         values = {
             'birth_date': req["birth_date"],
@@ -73,8 +73,10 @@ def turner_calculation():
 
         calculation = Measurement(
             sex=req["sex"],
-            birth_date=datetime.strptime(req["birth_date"], "%Y-%m-%dT%H:%M:%S"),
-            observation_date=datetime.strptime(req["observation_date"],"%Y-%m-%dT%H:%M:%S"),
+            birth_date=datetime.strptime(
+                req["birth_date"], "%Y-%m-%dT%H:%M:%S"),
+            observation_date=datetime.strptime(
+                req["observation_date"], "%Y-%m-%dT%H:%M:%S"),
             measurement_method=str(req["measurement_method"]),
             observation_value=float(req["observation_value"]),
             gestation_weeks=req["gestation_weeks"],
@@ -127,6 +129,7 @@ def turner_plottable_child_data():
     else:
         return "Request body mimetype should be application/json", 400
 
+
 @turners.route("/chart-coordinates", methods=["GET"])
 def turner_chart_coordinates():
     """
@@ -149,17 +152,16 @@ def turner_chart_coordinates():
               schema: ChartDataResponseSchema
     """
 
-    
     try:
-      chart_data = create_chart(TURNERS, centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+        chart_data = create_chart(
+            TURNERS, centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILES)
     except Exception as err:
-      print(err)
-      return "Server error fetching chart data.", 400
+        print(err)
+        return "Server error fetching chart data.", 400
     return jsonify({
         "centile_data": chart_data
     })
-    
-        
+
 
 """
     Return object structure

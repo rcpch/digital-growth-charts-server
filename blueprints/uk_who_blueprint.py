@@ -29,8 +29,10 @@ def uk_who_calculation():
     Centile calculation.
     ---
     post:
-      summary: Centile and SDS Calculation route.
+      summary: UK-WHO centile and SDS calculation.
       description: |
+        * These are the 'standard' centiles for children in the UK. It uses a hybrid of the WHO and UK90 datasets.
+        * For non-UK use you may need the WHO-only or CDC charts which we do not yet support, but we may add if demand is there.
         * Returns a single centile/SDS calculation for the selected `measurement_method`.
         * Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.
         * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
@@ -41,8 +43,8 @@ def uk_who_calculation():
           application/json:
             schema: CalculationRequestParameters
             example:
-                birth_date: "2020-04-12T0:00:00"
-                observation_date: "2020-06-12T00:00:00"
+                birth_date: "2020-04-12T00:00:00Z"
+                observation_date: "2020-06-12T00:00:00Z"
                 observation_value: 60
                 measurement_method: "height"
                 sex: male
