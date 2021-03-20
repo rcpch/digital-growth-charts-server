@@ -2,16 +2,21 @@
 This module contains the UK-WHO endpoints as Flask Blueprints
 """
 
+# python imports
+from datetime import date, datetime
 import json
 from pprint import pprint
+
+# third party imports
 from flask import Blueprint
 from flask import jsonify, request
 from marshmallow import ValidationError
+
+# internal imports
 from rcpchgrowth.rcpchgrowth.constants.measurement_constants import *
 from rcpchgrowth.rcpchgrowth.constants.parameter_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, UK_WHO
 from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data, create_chart
 from rcpchgrowth.rcpchgrowth.measurement import Measurement
-from datetime import date, datetime
 from schemas import *
 import controllers
 
@@ -36,8 +41,8 @@ def uk_who_calculation():
           application/json:
             schema: CalculationRequestParameters
             example:
-                birth_date: "2020-04-12"
-                observation_date: "2020-06-12"
+                birth_date: "2020-04-12T0:00:00"
+                observation_date: "2020-06-12T00:00:00"
                 observation_value: 60
                 measurement_method: "height"
                 sex: male
@@ -72,16 +77,23 @@ def uk_who_calculation():
             pprint(err.messages)
             return json.dumps(err.messages), 422
 
-        calculation = Measurement(
-            sex=req["sex"],
-            birth_date=datetime.strptime(req["birth_date"], "%Y-%m-%d"),
-            observation_date=datetime.strptime(req["observation_date"],"%Y-%m-%d"),
-            measurement_method=str(req["measurement_method"]),
-            observation_value=float(req["observation_value"]),
-            gestation_weeks=req["gestation_weeks"],
-            gestation_days=req["gestation_days"],
-            reference=UK_WHO
-        ).measurement
+        # datetimes will reject anything after a '.' because of odd example formatting in Azure APIM dev portal
+        try:
+            calculation = Measurement(
+                sex=req["sex"],
+                birth_date=datetime.strptime(
+                    req["birth_date"].split('.', 1)[0], "%Y-%m-%dT%H:%M:%S"),
+                observation_date=datetime.strptime(
+                    req["observation_date"].split('.', 1)[0], "%Y-%m-%dT%H:%M:%S"),
+                measurement_method=str(req["measurement_method"]),
+                observation_value=float(req["observation_value"]),
+                gestation_weeks=req["gestation_weeks"],
+                gestation_days=req["gestation_days"],
+                reference=UK_WHO
+            ).measurement
+        except ValueError as err:
+            pprint(err.args)
+            return json.dumps(err.args), 422
 
         return jsonify(calculation)
     else:
@@ -89,7 +101,6 @@ def uk_who_calculation():
 
 
 @uk_who.route("/chart-coordinates", methods=["POST"])
-
 def uk_who_chart_coordinates():
     """
     Chart data.
@@ -111,29 +122,31 @@ def uk_who_chart_coordinates():
               schema: ChartDataResponseSchema
     """
     if request.is_json:
-      req = request.get_json()
-      print(req)
-      values = {
-        "sex":req["sex"],
-        'measurement_method':req["measurement_method"]
-      }
-    
-      try:
-        ChartDataRequestParameters().load(values)
-      except ValidationError as err:
-        pprint(err.messages)
-        return json.dumps(err.messages), 422
+        req = request.get_json()
+        print(req)
+        values = {
+            "sex": req["sex"],
+            'measurement_method': req["measurement_method"]
+        }
 
-      try:
-        chart_data = create_chart(UK_WHO, measurement_method=req["measurement_method"], sex=req["sex"], centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILES)
-      except Exception as err:
-        print(err)
+        try:
+            ChartDataRequestParameters().load(values)
+        except ValidationError as err:
+            pprint(err.messages)
+            return json.dumps(err.messages), 422
 
-      return jsonify({
-          "centile_data": chart_data
-      })
+        try:
+            chart_data = create_chart(
+                UK_WHO, measurement_method=req["measurement_method"], sex=req["sex"], centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+        except Exception as err:
+            print(err)
+
+        return jsonify({
+            "centile_data": chart_data
+        })
     else:
         return "Request body mimetype should be application/json", 400
+
 
 """
     Return object structure

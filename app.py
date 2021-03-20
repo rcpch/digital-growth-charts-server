@@ -2,7 +2,9 @@
 RCPCH Growth Charts API Server
 """
 
+import json
 from os import environ, urandom, path
+import subprocess
 
 from flask import Flask, request, json
 from flask_cors import CORS
@@ -14,6 +16,15 @@ import apispec_generation
 from rcpchgrowth.rcpchgrowth.constants.parameter_constants import *
 from rcpchgrowth.rcpchgrowth.chart_functions import create_chart
 
+
+### API VERSION AND COMMIT HASH ###
+API_SEMANTIC_VERSION = "2.1.0"  # this is manually set
+
+# Read saved version info from **saved** JSON APIspec
+# (Because Git may not exist in Live and may not be able to get current commit hash)
+with open('openapi.json') as json_file:
+    api = json.load(json_file)
+    SAVED_API_VERSION = api['info']['version']
 
 # Declare shell colour variables for pretty logging output
 OKBLUE = "\033[94m"
@@ -52,6 +63,7 @@ app.register_blueprint(
 app.register_blueprint(
     blueprints.openapi_blueprint.openapi)
 
+
 # ENVIRONMENT
 # Load the secret key from the ENV if it has been set
 if "FLASK_SECRET_KEY" in environ:
@@ -68,7 +80,7 @@ from app import app     # position of this import is important. Don't allow it t
 ###########################
 
 # create all the charts and store in chart_data: commenting out as builds locally but causes failure to deploy to azure.
-# try:  
+# try:
 #   result = create_chart(reference="uk-who", measurement_method="height", sex="female", centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILE_COLLECTION)
 #   filename = "uk_who_girls.json"
 #   file_path = path.join(chart_data_folder, filename)
@@ -81,7 +93,7 @@ from app import app     # position of this import is important. Don't allow it t
 #   raise ValueError("Unable to create UK-WHO charts")
 
 # # Trisomy 21
-# try:  
+# try:
 #   result = create_chart(TRISOMY_21, COLE_TWO_THIRDS_SDS_NINE_CENTILES)
 #   filename = "trisomy_21_chart_data.json"
 #   file_path = path.join(chart_data_folder, filename)
@@ -94,7 +106,7 @@ from app import app     # position of this import is important. Don't allow it t
 #   raise Exception("Unable to create Trisomy 21 charts")
 
 # # Turner's Syndrome
-# try:  
+# try:
 #   result = create_turner_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
 #   filename = "turners_chart_data.json"
 #   file_path = path.join(chart_data_folder, filename)
@@ -108,12 +120,29 @@ from app import app     # position of this import is important. Don't allow it t
 
 # generate the API spec
 try:
-    spec = apispec_generation.generate(app)
-    print(f"{OKGREEN} * openAPI3.0 spec was generated and saved to the repo{ENDC}")
+    try:
+        # if Git is available when the server is running (ie in dev) then update the server version from the Git commit hash
+        # This means we can 'bake' the commit into the openAPI spec
+        api_commit_hash = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"]).strip().decode('utf-8')
+        spec = apispec_generation.generate(
+            app, api_commit_hash, API_SEMANTIC_VERSION)
+        print(f"{OKGREEN} * openAPI3.0 spec was generated and saved to the repo{ENDC}")
+        print(f"{OKGREEN} * API semantic version is {API_SEMANTIC_VERSION}, commit hash is {api_commit_hash} {ENDC}")
+    except:
+        api_commit_hash = "Git not available"
 
 except Exception as error:
     print(f"{FAIL} * An error occurred while processing the openAPI3.0 spec{ENDC}")
     print(f"{FAIL} *  > {error} {ENDC}")
+
+
+# adds API version details to all requests
+@app.after_request
+def add_api_version(response):
+    response.headers.add('Growth-Api-Version', SAVED_API_VERSION)
+    return response
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
