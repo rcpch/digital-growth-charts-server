@@ -9,7 +9,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='rcpchgrowth',
-    version='2.0.0',  # Required
+    version='2.1.0',  # Required
     description='SDS and Centile calculations for UK Growth Data',
     long_description="https://github.com/rcpch/digital-growth-charts/blob/master/README.md",
     # long_description_content_type='text/markdown',
@@ -61,7 +61,7 @@ setup(
     # },
     project_urls={  # Optional
         'Bug Reports': 'https://github.com/rcpch/digital-growth-charts/issues',
-        'API management:' 'https://dev.rcpch.ac.uk',
+        'API management': 'https://dev.rcpch.ac.uk',
         'Source': 'https://github.com/rcpch/digital-growth-charts',
     },
 )

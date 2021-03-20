@@ -1,10 +1,16 @@
 """
 This module contains the Utilities endpoints as Flask Blueprints
 """
+
+# python imports
 from os import path
+
+# third party imports
 from flask import Blueprint
 from flask import jsonify, request
 import markdown
+
+# internal imports
 import controllers
 
 
