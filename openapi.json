@@ -284,7 +284,7 @@
             "url": "https://www.gnu.org/licenses/agpl-3.0.en.html"
         },
         "title": "RCPCH Digital Growth Charts API",
-        "version": "v2.1.0 (commit_hash: e7160526b60925325c723aa6880adf094b2cbe74)"
+        "version": "v2.1.0 (commit_hash: cebc4fd9bc8831e3708e8904b063f703ebb1920d)"
     },
     "openapi": "3.0.2",
     "paths": {

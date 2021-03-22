@@ -74,9 +74,9 @@ def turner_calculation():
         calculation = Measurement(
             sex=req["sex"],
             birth_date=datetime.strptime(
-                req["birth_date"], "%Y-%m-%dT%H:%M:%S"),
+                req["birth_date"].split('.', 1)[0], "%Y-%m-%dT%H:%M:%S"),
             observation_date=datetime.strptime(
-                req["observation_date"], "%Y-%m-%dT%H:%M:%S"),
+                req["observation_date"].split('.', 1)[0], "%Y-%m-%dT%H:%M:%S"),
             measurement_method=str(req["measurement_method"]),
             observation_value=float(req["observation_value"]),
             gestation_weeks=req["gestation_weeks"],
