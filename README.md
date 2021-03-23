@@ -222,7 +222,7 @@ The LMS method provides a way of obtaining normalized growth centiles from a rel
 - Look up in the LMS table for the relevant measurement (e.g. height) the age and sex-specific values of L, M and S for the child. If the child's age falls between the tabulated ages, use cubic interpolation to obtain values for the child's exact age.
 
 - To obtain the z-score, plug the LMS values with the child's measurement into the formula:
-  ![formula](https://latex.codecogs.com/svg.latex?\=z={[(Measurement / M)-1] \over L S})
+  <img src="https://latex.codecogs.com/svg.image?z={(Measurement&space;/&space;M)-1&space;\over&space;L&space;S}" title="z={(Measurement / M)-1 \over L S}" />
 
 ## Growth References
 
