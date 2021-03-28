@@ -100,14 +100,36 @@ class Measurement:
             reference=self.reference
         )
 
+        corrected_gestational_age=""
+        if (self.ages_object["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"] is not None):
+            corrected_gestational_age =  f'{ self.ages_object["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_weeks"] } + { self.ages_object["measurement_dates"]["corrected_gestational_age"]["corrected_gestation_days"]} weeks'
+
         self.plottable_centile_data = {
             "chronological_decimal_age_data":{
                 "x": self.ages_object['measurement_dates']['chronological_decimal_age'],
                 "y": self.observation_value,
+                "observation_error": self.calculated_measurements_object['child_observation_value']["observation_value_error"],
+                "age_type": "chronological_age",
+                "calendar_age": self.ages_object["measurement_dates"]["chronological_calendar_age"],
+                "lay_comment": self.ages_object["measurement_dates"]["comments"]["lay_chronological_decimal_age_comment"],
+                "clinician_comment": self.ages_object["measurement_dates"]["comments"]["clinician_chronological_decimal_age_comment"],
+                "age_error": self.ages_object["measurement_dates"]["corrected_decimal_age_error"],
+                "centile_band": self.calculated_measurements_object['measurement_calculated_values']["chronological_centile_band"],
+                "observation_value_error": self.calculated_measurements_object["measurement_calculated_values"]["chronological_measurement_error"]
+
             },
             "corrected_decimal_age_data":{
                 "x": self.ages_object['measurement_dates']['corrected_decimal_age'],
                 "y": self.observation_value,
+                "observation_error": self.calculated_measurements_object['child_observation_value']["observation_value_error"],
+                "age_type": "corrected_age",
+                "corrected_gestational_age": corrected_gestational_age, 
+                "calendar_age": self.ages_object["measurement_dates"]["corrected_calendar_age"], 
+                "lay_comment": self.ages_object["measurement_dates"]["comments"]["lay_corrected_decimal_age_comment"],
+                "clinician_comment": self.ages_object["measurement_dates"]["comments"]["clinician_corrected_decimal_age_comment"],
+                "age_error": self.ages_object["measurement_dates"]["corrected_decimal_age_error"],
+                "centile_band": self.calculated_measurements_object['measurement_calculated_values']["corrected_centile_band"],
+                "observation_value_error": self.calculated_measurements_object["measurement_calculated_values"]["corrected_measurement_error"]
             }
         }
 
@@ -115,10 +137,25 @@ class Measurement:
             "chronological_decimal_age_data":{
                 "x": self.ages_object['measurement_dates']['chronological_decimal_age'],
                 "y": self.calculated_measurements_object['measurement_calculated_values']["chronological_sds"],
+                "age_type": "chronological_age",
+                "calendar_age": self.ages_object["measurement_dates"]["chronological_calendar_age"],
+                "lay_comment": self.ages_object["measurement_dates"]["comments"]["lay_chronological_decimal_age_comment"],
+                "clinician_comment": self.ages_object["measurement_dates"]["comments"]["clinician_chronological_decimal_age_comment"],
+                "age_error": self.ages_object["measurement_dates"]["corrected_decimal_age_error"],
+                "centile_band": self.calculated_measurements_object['measurement_calculated_values']["chronological_centile_band"],
+                "observation_value_error": self.calculated_measurements_object["measurement_calculated_values"]["chronological_measurement_error"] 
             },
             "corrected_decimal_age_data":{
                 "x": self.ages_object['measurement_dates']['corrected_decimal_age'],
                 "y": self.calculated_measurements_object['measurement_calculated_values']["corrected_sds"],
+                "age_type": "corrected_age",
+                "corrected_gestational_age": corrected_gestational_age, 
+                "calendar_age": self.ages_object["measurement_dates"]["corrected_calendar_age"], 
+                "lay_comment": self.ages_object["measurement_dates"]["comments"]["lay_corrected_decimal_age_comment"],
+                "clinician_comment": self.ages_object["measurement_dates"]["comments"]["clinician_corrected_decimal_age_comment"],
+                "age_error": self.ages_object["measurement_dates"]["corrected_decimal_age_error"],
+                "centile_band": self.calculated_measurements_object['measurement_calculated_values']["corrected_centile_band"],
+                "observation_value_error": self.calculated_measurements_object["measurement_calculated_values"]["corrected_measurement_error"]
             },
         }
 
@@ -353,7 +390,6 @@ class Measurement:
                     self.estimated_date_delivery, observation_date)
             except:
                 self.corrected_calendar_age=None
-                print("I am here")
                 if self.estimated_date_delivery > observation_date:
                     chronological_decimal_age_error="The due date is after the observation date - a calendar age cannot be calculated."
                 else:
