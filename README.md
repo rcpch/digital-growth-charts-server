@@ -7,12 +7,14 @@
 </p>
 
 # RCPCH Digital Growth Charts API Server
-[![DOI](https://zenodo.org/badge/261587883.svg)](https://zenodo.org/badge/latestdoi/261587883)
+
+[![DOI](https://zenodo.org/badge/261587883.svg)](https://zenodo.org/badge/latestdoi/261587883) ![GitHub issues open](https://img.shields.io/github/issues/rcpch/digital-growth-charts-server) ![Github forks](https://img.shields.io/github/forks/rcpch/digital-growth-charts-server) ![Github stars](https://img.shields.io/github/stars/rcpch/digital-growth-charts-server) 
+![Actions Status](https://github.com/rcpch/digital-growth-charts-server/actions/workflows/alpha_rcpch-dgc-server-alpha.yml/badge.svg?branch=alpha)
 
 An API server and suite of tools which calculates growth centiles and other growth related data for children. This is the basis of the RCPCH Digital Growth Charts API.
 
-API documentation can be found at <dev.rcpch.ac.uk>
-A demo client in React can be seen at <growth.rcpch.ac.uk>
+API documentation can be found at [dev.rcpch.ac.uk](dev.rcpch.ac.uk)
+A demo client in React can be seen at [growth.rcpch.ac.uk](growth.rcpch.ac.uk)
 
 This is the main documentation for the project
 
