@@ -7,6 +7,7 @@
 </p>
 
 # RCPCH Digital Growth Charts API Server
+[![DOI](https://zenodo.org/badge/261587883.svg)](https://zenodo.org/badge/latestdoi/261587883)
 
 An API server and suite of tools which calculates growth centiles and other growth related data for children. This is the basis of the RCPCH Digital Growth Charts API.
 
