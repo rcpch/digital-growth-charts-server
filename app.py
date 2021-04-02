@@ -2,19 +2,20 @@
 RCPCH Growth Charts API Server
 """
 
+# standard imports
 import json
 from os import environ, urandom, path
 import subprocess
 
-from flask import Flask, request, json
+# third-party imports
+from flask import Flask, json
 from flask_cors import CORS
 
-import controllers
-import blueprints
-import schemas
+# rcpch imports
 import apispec_generation
-from rcpchgrowth.rcpchgrowth.constants.parameter_constants import *
+import blueprints
 from rcpchgrowth.rcpchgrowth.chart_functions import create_chart
+from rcpchgrowth.rcpchgrowth.constants.parameter_constants import *
 
 
 ### API VERSION AND COMMIT HASH ###
@@ -41,10 +42,6 @@ CORS(app)
 
 # Declare growth chart folder for growth chart data
 chart_data_folder = path.join(app.root_path, 'chart_data')
-
-# Mount all Utilities endpoints from the blueprint
-app.register_blueprint(
-    blueprints.utilities_blueprint.utilities, url_prefix='/utilities')
 
 # Mount all UK-WHO endpoints from the blueprint
 app.register_blueprint(
@@ -79,44 +76,6 @@ from app import app     # position of this import is important. Don't allow it t
 ##### END FLASK SETUP #####
 ###########################
 
-# create all the charts and store in chart_data: commenting out as builds locally but causes failure to deploy to azure.
-# try:
-#   result = create_chart(reference="uk-who", measurement_method="height", sex="female", centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILE_COLLECTION)
-#   filename = "uk_who_girls.json"
-#   file_path = path.join(chart_data_folder, filename)
-#   with open(file_path, 'w') as file:
-#       print("now writing to file...")
-#       file.write(json.dumps(result, separators=(',', ':')))
-#       file.close()
-#       print(f" * {OKGREEN}New UK-WHO Chart Data has been generated.")
-# except:
-#   raise ValueError("Unable to create UK-WHO charts")
-
-# # Trisomy 21
-# try:
-#   result = create_chart(TRISOMY_21, COLE_TWO_THIRDS_SDS_NINE_CENTILES)
-#   filename = "trisomy_21_chart_data.json"
-#   file_path = path.join(chart_data_folder, filename)
-#   with open(file_path, 'w') as file:
-#       print("now writing to file...")
-#       file.write(json.dumps(result, separators=(',', ':')))
-#       file.close()
-#       print(f" * {OKGREEN}New Trisomy 21 Chart Data has been generated.")
-# except:
-#   raise Exception("Unable to create Trisomy 21 charts")
-
-# # Turner's Syndrome
-# try:
-#   result = create_turner_chart(COLE_TWO_THIRDS_SDS_NINE_CENTILES)
-#   filename = "turners_chart_data.json"
-#   file_path = path.join(chart_data_folder, filename)
-#   with open(file_path, 'w') as file:
-#       print("now writing to file...")
-#       file.write(json.dumps(result, separators=(',', ':')))
-#       file.close()
-#       print(f" * {OKGREEN}New Turner's Syndrome Chart Data has been generated.")
-# except:
-#   raise ValueError("Unable to create Turner's Syndrome charts")
 
 # generate the API spec
 try:

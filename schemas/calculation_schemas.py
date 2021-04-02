@@ -8,12 +8,12 @@ class CalculationRequestParameters(Schema):
     Defines the schema that the API expects to receive. This is compiled into the openAPI spec, and used for data validation
     """
 
-    birth_date = fields.DateTime(
+    birth_date = fields.Date(
         required=True,
-        description="Date of birth of the patient in `YYYY-MM-DDTHH:MM:SS` FHIR format.")
-    observation_date = fields.DateTime(
+        description="Date of birth of the patient in `YYYY-MM-DD` format. Other formats such as the FHIR/ISO YYYY-MM-DDTHH:MM:SS and those that include milliseconds and timezones will be accepted but everything after the T will be discarded in processing. Time of day and time zone are not taken into account by the centile/SDS calculation")
+    observation_date = fields.Date(
         required=True,
-        description="The date that the measurement was taken, in `YYYY-MM-DDTHH:MM:SS` FHIR format.")
+        description="The date that the measurement was taken, in `YYYY-MM-DD` format.  Other formats such as the FHIR/ISO YYYY-MM-DDTHH:MM:SS and those that include milliseconds and timezones will be accepted but everything after the T will be discarded in processing. Time of day and time zone are not taken into account by the centile/SDS calculation")
     measurement_method = fields.String(
         required=True,
         enum=["height", "weight", "bmi", "ofc"],
