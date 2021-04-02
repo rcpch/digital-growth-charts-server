@@ -66,7 +66,7 @@ def turner_calculation():
             'measurement_method': req["measurement_method"],
             'observation_date':
                 req["observation_date"].split('T', 1)[0],
-            'observation_value': req["observation_value"],
+            'observation_value': float(req["observation_value"]),
             'sex': req["sex"]
         }
 
