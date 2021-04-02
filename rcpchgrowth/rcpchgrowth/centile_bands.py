@@ -38,11 +38,9 @@ def centile_band_for_centile(sds: float, measurement_method: str)->str:
     if sds <=-6:
         centile_band = 'This ' + measurement_method + ' measurement is well below the normal range. Please review its accuracy.'
     elif sds <=-2.84:
-        centile_band = "This " + measurement_method + " measurement is on or near the 0.4th centile."
-    elif sds <=-2.5:
         centile_band = "This " + measurement_method + " measurement is below the normal range."
-    elif sds <=-2.17: 
-        centile_band = "This " + measurement_method + " measurement is between the 0.4th and 2nd centiles."
+    elif sds <=-2.5:
+        centile_band = "This " + measurement_method + " measurement is on or near the 0.4th centile."
     elif sds <=-2.17: 
         centile_band = "This " + measurement_method + " measurement is between the 0.4th and 2nd centiles."
     elif sds <=-1.83:
