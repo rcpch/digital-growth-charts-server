@@ -2,16 +2,20 @@
 This module contains the Turner endpoints as Flask Blueprints
 """
 
+# standard imports
+from datetime import datetime
 import json
 from pprint import pprint
-from flask import Blueprint
-from flask import jsonify, request
+
+# third-party imports
+from flask import Blueprint, jsonify, request
 from marshmallow import ValidationError
+
+# rcpch imports
 from rcpchgrowth.rcpchgrowth.constants.parameter_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, TURNERS
 from rcpchgrowth.rcpchgrowth.measurement import Measurement
 from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data, create_chart
-from datetime import date, datetime
-from schemas import *
+from schemas import CalculationRequestParameters
 
 
 turners = Blueprint("turners", __name__)
@@ -22,7 +26,7 @@ def turner_calculation():
     """
     Centile calculation.
     ---
-    post:
+    POST:
       summary: Turner's Syndrome centile and SDS calculation.
       description: |
         * This endpoint MUST ONLY be used for children with the chromosomal disorder Turner's Syndrome (45,XO karyotype).
@@ -36,8 +40,8 @@ def turner_calculation():
           application/json:
             schema: CalculationRequestParameters
             example:
-                birth_date: "2020-04-12T12:00:00Z"
-                observation_date: "2020-06-12T12:00:00Z"
+                birth_date: "2020-04-12"
+                observation_date: "2020-06-12"
                 observation_value: 60
                 measurement_method: "height"
                 sex: male
@@ -54,14 +58,16 @@ def turner_calculation():
     if request.is_json:
         req = request.get_json()
 
+        # Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc
         values = {
-            'birth_date': req["birth_date"],
-            'observation_date': req["observation_date"],
-            'measurement_method': req["measurement_method"],
-            'observation_value': req["observation_value"],
-            'sex': req["sex"],
+            'birth_date': req["birth_date"].split('T', 1)[0],
+            'gestation_days': req["gestation_days"],
             'gestation_weeks': req["gestation_weeks"],
-            'gestation_days': req["gestation_days"]
+            'measurement_method': req["measurement_method"],
+            'observation_date':
+                req["observation_date"].split('T', 1)[0],
+            'observation_value': float(req["observation_value"]),
+            'sex': req["sex"]
         }
 
         # Validate the request with Marshmallow
@@ -71,18 +77,21 @@ def turner_calculation():
             pprint(err.messages)
             return json.dumps(err.messages), 422
 
-        calculation = Measurement(
-            sex=req["sex"],
-            birth_date=datetime.strptime(
-                req["birth_date"].split('.', 1)[0], "%Y-%m-%dT%H:%M:%S"),
-            observation_date=datetime.strptime(
-                req["observation_date"].split('.', 1)[0], "%Y-%m-%dT%H:%M:%S"),
-            measurement_method=str(req["measurement_method"]),
-            observation_value=float(req["observation_value"]),
-            gestation_weeks=req["gestation_weeks"],
-            gestation_days=req["gestation_days"],
-            reference=TURNERS
-        ).measurement
+         # Convert string dates to Python dates for the Measurement class
+        values['birth_date'] = datetime.strptime(
+            values['birth_date'], "%Y-%m-%d")
+        values['observation_date'] = datetime.strptime(
+            values['observation_date'], "%Y-%m-%d")
+
+        # Send to calculation
+        try:
+            calculation = Measurement(
+                reference=TURNERS,
+                **values
+            ).measurement
+        except ValueError as err:
+            pprint(err.args)
+            return json.dumps(err.args), 422
 
         return jsonify(calculation)
     else:
@@ -94,7 +103,7 @@ def turner_plottable_child_data():
     """
     Child growth data in plottable format.
     ---
-    post:
+    POST:
       summary: Child growth data in plottable format.
       description: |
         * Requires results data parameters from a call to the calculation endpoint.
@@ -135,7 +144,7 @@ def turner_chart_coordinates():
     """
     Chart data.
     ---
-    get:
+    GET:
       summary: UK-WHO Chart coordinates in plottable format
         * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
 

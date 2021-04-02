@@ -20,9 +20,12 @@ components:
     CalculationRequestParameters:
       properties:
         birth_date:
-          description: Date of birth of the patient in `YYYY-MM-DDTHH:MM:SS` FHIR
-            format.
-          format: date-time
+          description: Date of birth of the patient in `YYYY-MM-DD` format. Other
+            formats such as the FHIR/ISO YYYY-MM-DDTHH:MM:SS and those that include
+            milliseconds and timezones will be accepted but everything after the T
+            will be discarded in processing. Time of day and time zone are not taken
+            into account by the centile/SDS calculation
+          format: date
           type: string
         gestation_days:
           description: The number of additional days _beyond the completed weeks of
@@ -53,9 +56,12 @@ components:
           - ofc
           type: string
         observation_date:
-          description: The date that the measurement was taken, in `YYYY-MM-DDTHH:MM:SS`
-            FHIR format.
-          format: date-time
+          description: The date that the measurement was taken, in `YYYY-MM-DD` format.  Other
+            formats such as the FHIR/ISO YYYY-MM-DDTHH:MM:SS and those that include
+            milliseconds and timezones will be accepted but everything after the T
+            will be discarded in processing. Time of day and time zone are not taken
+            into account by the centile/SDS calculation
+          format: date
           type: string
         observation_value:
           description: The value of the measurement supplied. Used in conjunction
@@ -215,7 +221,7 @@ info:
     name: GNU Affero General Public License
     url: https://www.gnu.org/licenses/agpl-3.0.en.html
   title: RCPCH Digital Growth Charts API
-  version: 'v2.1.0 (commit_hash: cebc4fd9bc8831e3708e8904b063f703ebb1920d)'
+  version: 'v2.1.0 (commit_hash: 27deff5616f632e70de0d3bc87d304fa7cf9b30c)'
 openapi: 3.0.2
 paths:
   /uk-who/calculation:
@@ -241,11 +247,11 @@ paths:
         content:
           application/json:
             example:
-              birth_date: '2020-04-12T00:00:00Z'
+              birth_date: '2020-04-12'
               gestation_days: 4
               gestation_weeks: 40
               measurement_method: height
-              observation_date: '2020-06-12T00:00:00Z'
+              observation_date: '2020-06-12'
               observation_value: 60
               sex: male
             schema:

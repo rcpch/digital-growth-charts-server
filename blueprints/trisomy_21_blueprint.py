@@ -2,17 +2,21 @@
 This module contains the Turner endpoints as Flask Blueprints
 """
 
+# standard imports
+from datetime import datetime
 import json
 from pprint import pprint
+
+# third-party imports
 from flask import Blueprint
 from flask import jsonify, request
 from marshmallow import ValidationError
+
+# rcpch imports
 from rcpchgrowth.rcpchgrowth.constants.parameter_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, TRISOMY_21
 from rcpchgrowth.rcpchgrowth.measurement import Measurement
 from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data, create_chart
-from rcpchgrowth.rcpchgrowth.constants.parameter_constants import TRISOMY_21
-from datetime import date, datetime
-from schemas import *
+from schemas import CalculationRequestParameters, ChartDataRequestParameters
 
 
 trisomy_21 = Blueprint(TRISOMY_21, __name__)
@@ -37,8 +41,8 @@ def trisomy_21_calculation():
           application/json:
             schema: CalculationRequestParameters
             example:
-                birth_date: "2020-04-12T12:00:00Z"
-                observation_date: "2020-06-12T12:00:00Z"
+                birth_date: "2020-04-12"
+                observation_date: "2020-06-12"
                 observation_value: 60
                 measurement_method: "height"
                 sex: male
@@ -55,14 +59,16 @@ def trisomy_21_calculation():
     if request.is_json:
         req = request.get_json()
 
+        # Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc
         values = {
-            'birth_date': req["birth_date"],
-            'observation_date': req["observation_date"],
-            'measurement_method': req["measurement_method"],
-            'observation_value': req["observation_value"],
-            'sex': req["sex"],
+            'birth_date': req["birth_date"].split('T', 1)[0],
+            'gestation_days': req["gestation_days"],
             'gestation_weeks': req["gestation_weeks"],
-            'gestation_days': req["gestation_days"]
+            'measurement_method': req["measurement_method"],
+            'observation_date':
+                req["observation_date"].split('T', 1)[0],
+            'observation_value': float(req["observation_value"]),
+            'sex': req["sex"]
         }
 
         # Validate the request with Marshmallow
@@ -72,17 +78,15 @@ def trisomy_21_calculation():
             pprint(err.messages)
             return json.dumps(err.messages), 422
 
+        # Convert string dates to Python dates for the Measurement class
+        values['birth_date'] = datetime.strptime(
+            values['birth_date'], "%Y-%m-%d")
+        values['observation_date'] = datetime.strptime(
+            values['observation_date'], "%Y-%m-%d")
+
         calculation = Measurement(
-            sex=req["sex"],
-            birth_date=datetime.strptime(
-                req["birth_date"].split('.', 1)[0], "%Y-%m-%dT%H:%M:%S"),
-            observation_date=datetime.strptime(
-                req["observation_date"].split('.', 1)[0], "%Y-%m-%dT%H:%M:%S"),
-            measurement_method=str(req["measurement_method"]),
-            observation_value=float(req["observation_value"]),
-            gestation_weeks=req["gestation_weeks"],
-            gestation_days=req["gestation_days"],
-            reference=TRISOMY_21
+            reference=TRISOMY_21,
+            **values
         ).measurement
 
         return jsonify(calculation)
@@ -95,7 +99,7 @@ def trisomy_21_plottable_child_data():
     """
     Child growth data in plottable format.
     ---
-    post:
+    POST:
       summary: Child growth data in plottable format.
       description: |
         * Requires results data parameters from a call to the calculation endpoint.
@@ -136,7 +140,7 @@ def trisomy_21_chart_coordinates():
     """
     Chart data.
     ---
-    post:
+    POST:
       summary: UK-WHO Chart coordinates in plottable format
         * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
         * Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')
@@ -205,5 +209,4 @@ def trisomy_21_chart_coordinates():
         ],
         ... repeat for weight, bmi, ofc, based on which measurements supplied. If only height data supplied, only height centile data returned
     ]
-
-    """
+"""

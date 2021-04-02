@@ -2,23 +2,21 @@
 This module contains the UK-WHO endpoints as Flask Blueprints
 """
 
-# python imports
-from datetime import date, datetime
+# standard imports
+from datetime import datetime
 import json
 from pprint import pprint
 
-# third party imports
-from flask import Blueprint
-from flask import jsonify, request
+# third-party imports
+from flask import Blueprint, jsonify, request
 from marshmallow import ValidationError
 
-# internal imports
+# rcpch imports
 from rcpchgrowth.rcpchgrowth.constants.measurement_constants import *
 from rcpchgrowth.rcpchgrowth.constants.parameter_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, UK_WHO
 from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data, create_chart
 from rcpchgrowth.rcpchgrowth.measurement import Measurement
 from schemas import *
-import controllers
 
 uk_who = Blueprint("uk_who", __name__)
 
@@ -28,7 +26,7 @@ def uk_who_calculation():
     """
     Centile calculation.
     ---
-    post:
+    POST:
       summary: UK-WHO centile and SDS calculation.
       description: |
         * These are the 'standard' centiles for children in the UK. It uses a hybrid of the WHO and UK90 datasets.
@@ -43,8 +41,8 @@ def uk_who_calculation():
           application/json:
             schema: CalculationRequestParameters
             example:
-                birth_date: "2020-04-12T00:00:00Z"
-                observation_date: "2020-06-12T00:00:00Z"
+                birth_date: "2020-04-12"
+                observation_date: "2020-06-12"
                 observation_value: 60
                 measurement_method: "height"
                 sex: male
@@ -62,14 +60,16 @@ def uk_who_calculation():
         req = request.get_json()
         print(req)
 
+        # Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc
         values = {
-            'birth_date': req["birth_date"],
-            'observation_date': req["observation_date"],
-            'measurement_method': req["measurement_method"],
-            'observation_value': req["observation_value"],
-            'sex': req["sex"],
+            'birth_date': req["birth_date"].split('T', 1)[0],
+            'gestation_days': req["gestation_days"],
             'gestation_weeks': req["gestation_weeks"],
-            'gestation_days': req["gestation_days"]
+            'measurement_method': req["measurement_method"],
+            'observation_date':
+                req["observation_date"].split('T', 1)[0],
+            'observation_value': float(req["observation_value"]),
+            'sex': req["sex"]
         }
 
         # Validate the request with Marshmallow
@@ -79,19 +79,17 @@ def uk_who_calculation():
             pprint(err.messages)
             return json.dumps(err.messages), 422
 
-        # datetimes will reject anything after a '.' because of odd example formatting in Azure APIM dev portal
+        # convert string dates to Python dates for the Measurement class
+        values['birth_date'] = datetime.strptime(
+            values['birth_date'], "%Y-%m-%d")
+        values['observation_date'] = datetime.strptime(
+            values['observation_date'], "%Y-%m-%d")
+
+        # Send to calculation
         try:
             calculation = Measurement(
-                sex=req["sex"],
-                birth_date=datetime.strptime(
-                    req["birth_date"].split('.', 1)[0], "%Y-%m-%dT%H:%M:%S"),
-                observation_date=datetime.strptime(
-                    req["observation_date"].split('.', 1)[0], "%Y-%m-%dT%H:%M:%S"),
-                measurement_method=str(req["measurement_method"]),
-                observation_value=float(req["observation_value"]),
-                gestation_weeks=req["gestation_weeks"],
-                gestation_days=req["gestation_days"],
-                reference=UK_WHO
+                reference=UK_WHO,
+                **values
             ).measurement
         except ValueError as err:
             pprint(err.args)
@@ -102,7 +100,7 @@ def uk_who_calculation():
         return "Request body mimetype should be application/json", 400
 
 
-@uk_who.route("/chart-coordinates", methods=["POST"])
+@ uk_who.route("/chart-coordinates", methods=["POST"])
 def uk_who_chart_coordinates():
     """
     Chart data.
@@ -175,7 +173,7 @@ def uk_who_chart_coordinates():
     """
 
 
-@uk_who.route("/plottable-child-data", methods=["POST"])
+@ uk_who.route("/plottable-child-data", methods=["POST"])
 def uk_who_plottable_child_data():
     """
     Child growth data in plottable format.
@@ -213,3 +211,81 @@ def uk_who_plottable_child_data():
         })
     else:
         return "Request body mimetype should be application/json", 400
+
+
+"""
+There has been debate about this endpoint - ultimately it will become necessary when we start implementing multiple measurements
+and analysing trends.
+"""
+# @uk_who.route("/calculations", methods=["POST"])
+# def uk_who_calculations():
+#     """
+#     Centile calculations.
+#     ---
+#     post:
+#       summary: Centile and SDS Calculation route.
+#       description: |
+#         * Returns multiple centile/SDS calculations for an array of measurements of the same 'measurement_method'.
+#         * Gestational age correction will be applied automatically according to the gestational age at birth data supplied.
+#         * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
+#         * Note that BMI must be precalculated for the `bmi` function.
+
+#       requestBody:
+#         content:
+#           application/json:
+#             schema: CalculationRequestParameters
+#             example:
+#                 birth_date: "2020-04-12"
+#                 observation_date: "2020-06-12"
+#                 observation_value: 60
+#                 measurement_method: "height"
+#                 sex: male
+#                 gestation_weeks: 40
+#                 gestation_days: 4
+
+#       responses:
+#         200:
+#           description: "Centile calculation (single) according to the supplied data was returned"
+#           content:
+#             application/json:
+#               schema: CalculationResponseSchema
+#     """
+#     if request.is_json:
+#       req = request.get_json()
+#       print(req)
+
+#       results = []
+
+#       for count,  measurement in enumerate(req):
+#         value = {
+#             'birth_date': measurement["birth_date"],
+#             'observation_date': measurement["observation_date"],
+#             'measurement_method': measurement["measurement_method"],
+#             'observation_value': measurement["observation_value"],
+#             'sex': measurement["sex"],
+#             'gestation_weeks': measurement["gestation_weeks"],
+#             'gestation_days': measurement["gestation_days"]
+#         }
+
+#         # Validate the request with Marshmallow
+#         try:
+#             CalculationRequestParameters().load(value)
+#         except ValidationError as err:
+#             pprint(err.messages)
+#             return json.dumps(err.messages), 422
+
+#         calculation = Measurement(
+#             sex=measurement["sex"],
+#             birth_date=datetime.strptime(measurement["birth_date"], "%Y-%m-%d"),
+#             observation_date=datetime.strptime(measurement["observation_date"],"%Y-%m-%d"),
+#             measurement_method=str(measurement["measurement_method"]),
+#             observation_value=float(measurement["observation_value"]),
+#             gestation_weeks=measurement["gestation_weeks"],
+#             gestation_days=measurement["gestation_days"],
+#             reference=UK_WHO
+#         ).measurement
+
+#         results.append(calculation)
+#       return jsonify(results)
+#     else:
+#         return "Request body mimetype should be application/json", 400
