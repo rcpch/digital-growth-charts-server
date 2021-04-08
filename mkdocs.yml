@@ -1,0 +1,52 @@
+site_name: RCPCH Digital Growth Charts Project Documentation
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    #  - navigation.tabs
+    - navigation.tracking
+    - navigation.top
+    #  - toc.integrate
+
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+  font:
+    text: Montserrat
+    code: Roboto Mono
+
+  #favicon: img/cwc-logo-white.svg
+  logo: assets/rcpch-logo.png
+
+plugins:
+  - search
+  - render_swagger
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - pymdownx.keys
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - toc:
+      permalink: true
+
+copyright: Copyright &copy; 2021 Royal College of Paediatrics and Child Health (RCPCH)
+repo_url: https://github.com/rcpch/digital-growth-charts-documentation
+
+extra_css:
+  - stylesheets/extra.css

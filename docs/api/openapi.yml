@@ -1,0 +1,435 @@
+components:
+  schemas:
+    BirthData:
+      properties:
+        birth_date:
+          format: date
+          type: string
+        estimated_date_delivery:
+          format: date
+          type: string
+        estimated_date_delivery_string:
+          type: string
+        gestation_days:
+          type: number
+        gestation_weeks:
+          type: number
+        sex:
+          type: string
+      type: object
+    CalculationRequestParameters:
+      properties:
+        birth_date:
+          description: Date of birth of the patient in `YYYY-MM-DD` format. Other
+            formats such as the FHIR/ISO YYYY-MM-DDTHH:MM:SS and those that include
+            milliseconds and timezones will be accepted but everything after the T
+            will be discarded in processing. Time of day and time zone are not taken
+            into account by the centile/SDS calculation
+          format: date
+          type: string
+        gestation_days:
+          description: The number of additional days _beyond the completed weeks of
+            gestation_ at which the patient was born. This enables Gestational Age
+            correction if the child was not born at term. See also the other parameter
+            `gestation_weeks` - both are usually required.
+          type: number
+        gestation_weeks:
+          description: The number of completed weeks of gestation at which the patient
+            was born. This enables Gestational Age Correction if the child was not
+            born at term. See also the other parameter `gestation_days` - both are
+            usually required. If the child is term then any value between 37 and 42
+            will be handled the same, and a value must be provided. Values outside
+            the validation range will return errors.
+          maximum: 44
+          minimum: 22
+          type: number
+        measurement_method:
+          description: "The type of measurement performed on the infant or child (`height`,\
+            \ `weight`, `bmi` or `ofc`). The value of this measurement is supplied\
+            \ as the `observation_value` parameter. The measurements represent height\
+            \ **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre\xB2\
+            ** and occipitofrontal circumference (head circumference, OFC) **in centimetres**."
+          enum:
+          - height
+          - weight
+          - bmi
+          - ofc
+          type: string
+        observation_date:
+          description: The date that the measurement was taken, in `YYYY-MM-DD` format.  Other
+            formats such as the FHIR/ISO YYYY-MM-DDTHH:MM:SS and those that include
+            milliseconds and timezones will be accepted but everything after the T
+            will be discarded in processing. Time of day and time zone are not taken
+            into account by the centile/SDS calculation
+          format: date
+          type: string
+        observation_value:
+          description: The value of the measurement supplied. Used in conjunction
+            with type of measurement performed(`height`, `weight`, `bmi` or `ofc`)
+            on the infant or child.
+          format: float
+          type: number
+        sex:
+          description: The sex of the patient, as a string value which can either
+            be `male` or `female`. Abbreviations or alternatives are not accepted
+          enum:
+          - male
+          - female
+          type: string
+      required:
+      - birth_date
+      - measurement_method
+      - observation_date
+      - observation_value
+      - sex
+      type: object
+    ChartDataRequestParameters:
+      properties:
+        measurement_method:
+          type: string
+        sex:
+          description: Accepts male or female as sex of chart required.
+          type: string
+      required:
+      - measurement_method
+      - sex
+      type: object
+    ChildObservationValue:
+      properties:
+        measurement_method:
+          type: string
+        observation_value:
+          type: number
+      type: object
+    MeasurementCalculatedValues:
+      properties:
+        centile:
+          format: float
+          type: number
+        centile_band:
+          type: string
+        measurement_method:
+          type: string
+        sds:
+          format: float
+          type: number
+      type: object
+    MeasurementDates:
+      properties:
+        chronological_calendar_age:
+          type: string
+        chronological_decimal_age:
+          format: float
+          type: number
+        clinician_decimal_age_comment:
+          type: string
+        corrected_calendar_age:
+          type: string
+        corrected_decimal_age:
+          format: float
+          type: number
+        lay_decimal_age_comment:
+          type: string
+        observation_date:
+          format: date-time
+          type: string
+      type: object
+    MeasurementResponse:
+      properties:
+        birth_data:
+          $ref: '#/components/schemas/BirthData'
+        child_observation_value:
+          $ref: '#/components/schemas/ChildObservationValue'
+        measurement_calculated_values:
+          $ref: '#/components/schemas/MeasurementCalculatedValues'
+        measurement_dates:
+          $ref: '#/components/schemas/MeasurementDates'
+      type: object
+    OpenApi:
+      properties:
+        results:
+          type: string
+      type: object
+    Reference:
+      properties:
+        acknowledgement_text:
+          description: Acknowledgement text regarding the origin of the reference
+            data (if available)
+          type: string
+        author:
+          description: The published authors of the Reference data (if available)
+          type: string
+        chart_name:
+          description: The common name of the reference data (if available)
+          type: string
+        date:
+          description: Date of publication of the reference data (if available)
+          type: string
+        description:
+          description: 'Description of the reference data: type of data, intended
+            usage, limitations, applicable age ranges (if available)'
+          type: string
+        file_name:
+          description: File name of the reference within our codebase (if available)
+          type: string
+        publication_reference:
+          description: Standard publication citation (if available)
+          type: string
+        publication_url:
+          description: URL for the publication (if available)
+          type: string
+      type: object
+    chartData:
+      properties:
+        centile_data:
+          type: string
+        sex:
+          type: string
+      type: object
+    plottableChildData:
+      properties:
+        child_data:
+          type: string
+        sex:
+          type: string
+      type: object
+    references:
+      properties:
+        references:
+          items:
+            $ref: '#/components/schemas/Reference'
+          type: array
+      type: object
+    trisomy_21_calculation:
+      properties:
+        calculation:
+          $ref: '#/components/schemas/MeasurementResponse'
+      type: object
+    turner_calculation:
+      properties:
+        calculation:
+          $ref: '#/components/schemas/MeasurementResponse'
+      type: object
+    uk_who_calculation:
+      properties:
+        calculation:
+          $ref: '#/components/schemas/MeasurementResponse'
+      type: object
+info:
+  description: Royal College of Paediatrics and Child Health Digital Growth Charts
+  license:
+    name: GNU Affero General Public License
+    url: https://www.gnu.org/licenses/agpl-3.0.en.html
+  title: RCPCH Digital Growth Charts API
+  version: 'v2.1.0 (commit_hash: 27deff5616f632e70de0d3bc87d304fa7cf9b30c)'
+openapi: 3.0.2
+paths:
+  /uk-who/calculation:
+    post:
+      description: '* These are the ''standard'' centiles for children in the UK.
+        It uses a hybrid of the WHO and UK90 datasets.
+
+        * For non-UK use you may need the WHO-only or CDC charts which we do not yet
+        support, but we may add if demand is there.
+
+        * Returns a single centile/SDS calculation for the selected `measurement_method`.
+
+        * Gestational age correction will be applied automatically if appropriate
+        according to the gestational age at birth data supplied.
+
+        * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc`
+        (OFC = occipitofrontal circumference = ''head circumference'').
+
+        * Note that BMI must be precalculated for the `bmi` function.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            example:
+              birth_date: '2020-04-12'
+              gestation_days: 4
+              gestation_weeks: 40
+              measurement_method: height
+              observation_date: '2020-06-12'
+              observation_value: 60
+              sex: male
+            schema:
+              $ref: '#/components/schemas/CalculationRequestParameters'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/uk_who_calculation'
+          description: Centile calculation (single) according to the supplied data
+            was returned
+      summary: UK-WHO centile and SDS calculation.
+  /uk-who/chart-coordinates: {}
+  /uk-who/plottable-child-data:
+    post:
+      description: '* Requires results data parameters from a call to the calculation
+        endpoint.
+
+        * Returns child measurement data in a plottable format (x and y parameters),
+        with centiles and ages for labels.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChartDataRequestParameters'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/chartData'
+          description: '* Child growth data in plottable format (x and y parameters,
+            centile and age labels) was returned.
+
+            '
+      summary: Child growth data in plottable format.
+  /utilities/references:
+    get:
+      description: '* Does not expect any parameters.
+
+        * Returns data on the growth reference data sources that this project is aware
+        of.
+
+        * To add a new reference please submit a pull request, create a GitHub Issue,
+        or otherwise contact the Growth Charts team.
+
+        '
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/references'
+          description: Reference data was returned
+      summary: Centile References Library API route.
+  /utilities/instructions:
+    get:
+      description: '* Does not expect any parameters.
+
+        * Returns HTML content derived from the README.md of the API repository
+
+        * To amend the instructions please submit a pull request to https://github.com/rcpch/digital-growth-charts-server
+
+        '
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: API Instructions and information was returned
+      summary: Instructions API route.
+  /trisomy-21/calculation:
+    post:
+      description: '* This endpoint MUST ONLY be used for children with Trisomy 21
+        (Down''s Syndrome).
+
+        * Returns a single centile/SDS calculation for the selected `measurement_method`.
+
+        * Gestational age correction will be applied automatically if appropriate
+        according to the gestational age at birth data supplied.
+
+        * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc`
+        (OFC = occipitofrontal circumference = ''head circumference'').
+
+        * Note that BMI must be precalculated for the `bmi` function.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            example:
+              birth_date: '2020-04-12T12:00:00Z'
+              gestation_days: 4
+              gestation_weeks: 40
+              measurement_method: height
+              observation_date: '2020-06-12T12:00:00Z'
+              observation_value: 60
+              sex: male
+            schema:
+              $ref: '#/components/schemas/CalculationRequestParameters'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trisomy_21_calculation'
+          description: Centile calculation (single) according to the supplied data
+            was returned
+      summary: Trisomy 21 centile and SDS calculation.
+  /:
+    get:
+      description: '* The root endpoint of the Digital Growth Charts API returns the
+        openAPI3.0 specification in JSON format.
+
+        * This can be used to autogenerate client scaffolding and tests.
+
+        * We use it internally to generate all documentation, Postman collections
+        and tests.
+
+        * The openAPI specification is also available in YAML form, in the root of
+        the Server codebase at https://github.com/rcpch/digital-growth-charts-server
+
+        '
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenApi'
+          description: '* openAPI3.0 Specification in JSON format, conforming to https://swagger.io/specification/,
+            is returned.
+
+            '
+      summary: openAPI3.0 Specification.
+  /turner/calculation:
+    post:
+      description: '* This endpoint MUST ONLY be used for children with the chromosomal
+        disorder Turner''s Syndrome (45,XO karyotype).
+
+        * Returns a single centile/SDS calculation for the selected `measurement_method`.
+
+        * Gestational age correction will be applied automatically if appropriate
+        according to the gestational age at birth data supplied.
+
+        * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc`
+        (OFC = occipitofrontal circumference = ''head circumference'').
+
+        * Note that BMI must be precalculated for the `bmi` function.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            example:
+              birth_date: '2020-04-12T12:00:00Z'
+              gestation_days: 4
+              gestation_weeks: 40
+              measurement_method: height
+              observation_date: '2020-06-12T12:00:00Z'
+              observation_value: 60
+              sex: male
+            schema:
+              $ref: '#/components/schemas/CalculationRequestParameters'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/turner_calculation'
+          description: Centile calculation (single) according to the supplied data
+            was returned
+      summary: Turner's Syndrome centile and SDS calculation.
+servers:
+- description: RCPCH Production API Gateway (subscription keys required)
+  url: https://api.rcpch.ac.uk
+- description: Your local development API
+  url: https://localhost:5000

@@ -1,0 +1,13 @@
+:root {
+  --md-primary-fg-color: #3366cc;
+}
+
+p,
+li {
+  font-family: Roboto;
+}
+
+h1,
+h2 {
+  font-weight: 700;
+}
