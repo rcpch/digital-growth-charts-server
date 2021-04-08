@@ -28,7 +28,7 @@ theme:
     text: Montserrat
     code: Roboto Mono
 
-  #favicon: img/cwc-logo-white.svg
+  favicon: assets/dynamic-child-favicon.png
   logo: assets/rcpch-logo.png
 
 plugins:
