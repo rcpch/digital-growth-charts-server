@@ -1,27 +1,5 @@
 # Developer Documentation
 
-<!-- TOC -->
-
-- [Developer Documentation](#developer-documentation)
-  - [Why Python?](#why-python)
-  - [Scripts](#scripts)
-  - [Running the dGC Server in Docker](#running-the-dgc-server-in-docker)
-    - [Build the Docker image with all required dependencies](#build-the-docker-image-with-all-required-dependencies)
-    - [Start the Docker container](#start-the-docker-container)
-  - [Running the dGC Server locally with Python](#running-the-dgc-server-locally-with-python)
-    - [Managing Python versions, and dependencies such as libraries](#managing-python-versions-and-dependencies-such-as-libraries)
-    - [Installing `pyenv`](#installing-pyenv)
-    - [Setup for this repository](#setup-for-this-repository)
-    - [Extra development packages that may be required on some setups](#extra-development-packages-that-may-be-required-on-some-setups)
-  - [Start the API server natively with default settings](#start-the-api-server-natively-with-default-settings)
-  - [Contributing](#contributing)
-    - [How to contribute](#how-to-contribute)
-    - [Coding style](#coding-style)
-  - [Intellectual Property (IP)](#intellectual-property-ip)
-  - [Support](#support)
-
-<!-- /TOC -->
-
 - [Frequently Asked Questions](https://openhealthhub.org/t/frequently-asked-questions/2328)
 - [Centile Advice Strings (legacy)](centile-advice-strings.md)
 - [About Calculation of Growth Parameters in Code](calculating-growth-parameters.md)
@@ -29,15 +7,6 @@
 
 ---
 
-## Why Python?
-
-- Python has become the de-facto language of the scientifica and bioinformatics communities.
-- Most of the packages we needed were '1st party' ie maintained by the PSF
-- We think it's a nice language to use.
-- It's accessible to clinicians who want to learn to code, and it's easy enough to learn that it's taught in schools.
-- It has everything we needed for building an API and web layers we needed.
-
-Marcus Baw wrote a blog post on 'Why Python..' which has a little more detail https://marcus-baw.medium.com/why-we-chose-python-for-the-rcpch-digital-growth-charts-project-2d61e2766c3b
 
 ## Scripts
 
@@ -130,33 +99,7 @@ If you need to vary any of the parameters passed to Flask, you can either modify
 
 Scripts are located in the `s/` folder in the application root.
 
-## Contributing
 
-We're a friendly bunch and we're happy to chat. You can get in touch with the primary developers to talk about the project using our forum at https://openhealthhub.org/c/rcpch-digital-growth-charts/ This is the main community hub around the dGC project and you are welcome to chat to us there.
-
-### How to contribute
-
-- Fork the repository to your own GitHub account
-- Set up your development environment (ideally using our instructions [here](python-development.md) for maximum compatibility with our own development environments)
-- Ideally, you should have discussed with our team what you are proposing to change, because we can only accept pull requests where there is an accepted need for that new feature or fix.
-- We can discuss with you how we would recommend to implement the new feature, for maximum potential 'mergeability' of your PR.
-- Once the work is ready to show us, create a pull request on our repo, detailing what the change is and details about the fix or feature. PRs that affect the calculations or any other 'mission critical' part of the code will need suitable tests which we can run.
-- We will endeavour to review and merge in a reasonable time frame, but will usually not merge straight into `master`, rather we will merge into an upcoming release branch.
-
-### Coding style
-
-- We are not Python experts but we would encourage use of Python best practices where possible.
-- We are not going to get too pedantic over style though.
-- Some helpful sources of information on Python style are:  
-  <https://www.python.org/dev/peps/pep-0008>  
-  <https://google.github.io/styleguide/pyguide.html>
-
-## Intellectual Property (IP)
-
-- The copyright over the IP in this and other Growth Chart related repositories is owned by the Royal College of Paediatrics and Child Health, which releases it under an open source license. Consult the individual repository for specifics on which license we have used.
-- If you submit a contribution to the repository, you agree to transfer all IP rights over the contribution, both now and in the future, to the Royal College of Paediatrics and Child Health, in perpetuity. This clause is purely to allow RCPCH to continue to exert an unchallenged copyright over the work.
-- For larger contributions we may require a Contributor Covenant to support this agreement over transfer of title, however for small contributions it is probably sufficient that you should have read and understood this document, and that the act of submitting a PR is acceptance of these terms.
-- All contributors will, of course, proudly be acknowledged in the [Acknowledgements](acknowledgements.md) section.
 
 ## Support
 

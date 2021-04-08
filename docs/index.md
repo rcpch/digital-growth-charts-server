@@ -13,10 +13,10 @@
 The RCPCH Digital Growth Charts (dGC) Project consists of:
 
 * API Server which returns Growth Chart Calculations
-* Demonstration Client in React.js which shows the main features of the API and serves as 'living documentation' of the standard chart view [growth.rcpch.ac.uk](growth.rcpch.ac.uk)
+* Demonstration Client in React.js which shows the main features of the API and serves as 'living documentation' of the standard chart view [growth.rcpch.ac.uk](https://growth.rcpch.ac.uk)
 * React.js Chart component, which can be used in
-* Clinical Safety Management File for the deployment of the API at [api.rcpch.ac.uk](api.rcpch.ac.uk)
+* Clinical Safety Management File for the deployment of the API at [api.rcpch.ac.uk](https://api.rcpch.ac.uk)
 
-API documentation can be found at [dev.rcpch.ac.uk](dev.rcpch.ac.uk)
+API documentation can be found at [dev.rcpch.ac.uk](https://dev.rcpch.ac.uk)
 
 This is the main documentation for all parts of the project.

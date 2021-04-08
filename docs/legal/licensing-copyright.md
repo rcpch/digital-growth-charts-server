@@ -1,7 +1,7 @@
 
 # Licensing and Copyright
 
-## Open source
+## Open Source
 
 The Project Board and Project Team all agreed, as responsible clinicians, that the growth references and the algorithms that generate reliable results should all be open source. They are published here under GNU Affero GPL3 licence.
 

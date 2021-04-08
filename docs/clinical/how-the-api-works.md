@@ -1,9 +1,30 @@
-# How the API Works - details for interested clinicians and statisticians
+# How the API Works
 
+Details for interested clinicians and statisticians
 
-- term dates averaging - this was actually removed during the project.
-- age thresholds for different measurements begin and end at different ages.
-- gestational age correction
+## Growth Charting Introduction
+
+The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any child born after that date should be plotted on a UK-WHO growth chart. Children born before May 11th 2009 are plotted on British 1990 (UK90) charts and subsequent measurements must be plotted using those charts. After age 4 the two charts are the same.
+
+## The LMS Method
+
+It is now common practice to express child growth status in the form of SD scores - the number of standard deviations away from the mean (also known as a z-score). The SD score can be converted to a centile.
+
+The LMS method provides a way of obtaining normalized growth centiles from a relatively small original dataset, applying smoothing and extrapolation such that the resulting L, M and S curves contain the information to draw **any** centile curve, and to convert measurements (even extreme values) into exact SD scores. The growth reference is summarised by a table of LMS values at a series of ages.
+
+### How the LMS method is used
+
+- Look up in the LMS table for the relevant measurement (e.g. height) the age and sex-specific values of L, M and S for the child. If the child's age falls between the tabulated ages, use cubic interpolation to obtain values for the child's exact age.
+
+- To obtain the z-score, plug the LMS values with the child's measurement into the formula:
+  ![formula](https://latex.codecogs.com/svg.latex?\=z={[(Measurement / M)-1] \over L S})
+
+## Growth References
+
+This is a growing list of growth references for children. These cover a number of specific medical conditions as well as a range of different physiological parameters. It will continue to be added to as the data become available. As a side-project of this work we are interested in collating an international library of growth references in computable format, which is at https://github.com/rcpch/growth-references and further details are available in that repository.
+
+If you have a reference which you would like us to add, please contact us on growth.digital@rcpch.ac.uk
+
 
 ## Gold Standard
 

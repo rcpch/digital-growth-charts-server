@@ -2,3 +2,4 @@
 
 This site is built with Material for MKDocs an houses all documentation for all parts of the Digital Growth Charts.
 
+https://rcpch.github.io/digital-growth-charts-documentation/

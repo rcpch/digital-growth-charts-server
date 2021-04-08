@@ -7,7 +7,19 @@ li {
   font-family: Roboto;
 }
 
-h1,
-h2 {
-  font-weight: 700;
+.md-typeset h1,
+.md-typeset h2 {
+  font-weight: 600;
+}
+
+/* enlarges the logo image */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: unset;
+  width: unset;
+}
+
+/* widens the page view */
+.md-grid {
+  max-width: 70rem;
 }
