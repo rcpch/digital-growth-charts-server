@@ -44,3 +44,17 @@ Components which we believe other organisations would derive benefit from being 
 ### RCPCHGrowth
 
 The Python package within the `rcpchgrowth` folder in the dGC API Server which calculates the results served by the API, is eventually going to be released as a separate Python package, which may be under a different license to the Server itself (AGPL). It is likely to be released under an MIT license.
+
+## Third-Party Tools, Libraries and Frameworks Licensing
+
+* [Python](https://github.com/python/cpython/blob/master/LICENSE): [PSF License](https://directory.fsf.org/wiki/License:Python-2.0.1)
+
+* [Flask](https://github.com/opentracing-contrib/python-flask/blob/master/LICENSE): [BSD 3-Clause License](https://directory.fsf.org/wiki/License:BSD-3-Clause)
+
+* [React](https://github.com/facebook/react/blob/master/LICENSE): [MIT License](https://directory.fsf.org/wiki/License:Expat)
+
+* [React-Native](https://github.com/facebook/react-native/blob/master/LICENSE): [MIT License](https://directory.fsf.org/wiki/License:Expat)
+
+* [MkDocs](https://github.com/squidfunk/mkdocs-material/blob/master/LICENSE): [MIT License](https://directory.fsf.org/wiki/License:Expat)
+
+(All the above licenses are compatible with the AGPL terms of the dgC API Server part of the project)
