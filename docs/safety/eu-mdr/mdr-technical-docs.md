@@ -24,7 +24,7 @@ WIP
 
 1. ### The EU declaration of conformity
 
-See [Declaration of Confomity](docs/safety/eu-mdr/doc-api.md)
+See [Declaration of Confomity](doc-api.md)
 
 1. ### Label and instructions of use
 

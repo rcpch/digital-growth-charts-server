@@ -6,7 +6,7 @@ In our documentation we have used the term Integrator to refer to a person or te
 
 **A**: Technically yes. However there are several important considerations which we believe would more than negate any saving made.
 
-We have open sourced the API in order to align with our policy on transparency and clinical safety, however we advise that you do not self host it.
+We have open sourced the API in order to align with our policy on transparency and clinical safety, however we advise that you do not self host it. Only the version deployed and managed by the RCPCH team is warranted to be correct.
 
 !!! danger "Clinical Safety Risk"
     **WE STRONGLY RECOMMEND NOT TO SELF HOST THE SERVER FOR PRODUCTION/CLINICAL/LIVE USE.**
@@ -20,7 +20,9 @@ We have open sourced the API in order to align with our policy on transparency a
 4. Clinical Safety Management File
 5. DCB0129 and DCB0160 would apply
 
-## Q: Is entering a gestation age mandatory?
+By using the RCPCH-provided API you avoid all that requirement and use our commodity server.
+
+## Q: Is entering a gestational age mandatory?
 
 **A**: Gestational age is **not** mandatory for the API to return a value. If it is not supplied then the child will be assumed to be born at 40 weeks and therefore for the UK-WHO charts, the standard term references will be used for calculations and charts.
 

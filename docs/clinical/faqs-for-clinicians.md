@@ -26,7 +26,7 @@ The process of integrating the API into an existing EPR product is technically s
 
 ## Can I try out the dGC APIs?
 
-Yes, you can use the demo site at https://growth.rcpch.ac.uk/ to evaluate the service.
+Yes, you can use the demo site at <https://growth.rcpch.ac.uk/> to evaluate the service.
 
 ## Q: If we have a calculated centile or SDS from the API then why do we need the traditional 'curved-lines' growth charts at all?  
 

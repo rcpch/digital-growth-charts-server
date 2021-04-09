@@ -1,19 +1,102 @@
-Privacy Information
-
 # Privacy
 
 ## Privacy Policy
 
+Growth Charts API Privacy Policy 
+Our Contact Details 
+
+Name: Royal College of Paediatrics and Child Health (RCPCH) 
+
+Address: 5-11 Theobalds Road, London, WC1X 8SH  
+
+Phone Number: +44 (0)20 7092 6000 
+
+E-mail: Data Protection Officer: Information.Governance@rcpch.ac.uk
+
+General enquiries can be emailed to growth.digital@rcpch.ac.uk  
+
+### Our EEA Representative
+
+If you are located in the EEA or EU, you can contact DataRep if you wish to make a request under EU GDPR
+
+As we sometimes process personal data of individuals in the EU and EEA area, in either the role of ‘data controller’ or ‘data processor’, we have appointed DataRep as our Data Protection Representative in the European Union for the purposes of EU GDPR so that you can contact them directly in your home country.
+
+If we have processed or are processing your personal data and you are located outside of the UK, you may be entitled to exercise your rights under EU GDPR in respect of that personal data. For more details on your rights in the EU, please refer to the European Commission or the national Data Protection Authority in your country.
+
+If you want to raise a question to RCPCH, or otherwise exercise your rights in respect of your personal data, you may do so by:
+
+Sending an email to DataRep at datarequest@datarep.com quoting, RCPCH in the subject line;
+
+Contacting DataRep on their online webform; or
+
+Mailing your enquiry to DataRep at the most convenient of the addresses in the subsequent pages.
+
+For general enquiries about RCPCH and its data processing, please contact: information.governance@rcpch.ac.uk
+
+Please note, when mailing inquiries, it is essential that you mark your letters for ‘DataRep’ and not ‘RCPCH’, or your inquiry will not reach them. Please refer clearly to RCPCH in your correspondence. On receiving your correspondent, RCPCH is likely to request evidence of your identity, to ensure your personal data and information connected with it is not provided to anyone other than you.
+
+If you have any concerns over how DataRep will handle the personal data they will require to undertake for their services, please refer to their privacy notice.
+
+## What Information do we collect about you?
+
+If you choose to create an account, we collect your name and email address and ask you to create a password for the site. If you upgrade to a paid subscription, we will ask you for more details to process the payment.
+
+We will process your data as part of a contract with you and information collected will be used to create and manage your account and to contact you about Growth API. We do not use your personal data to make automated decisions or undertake profiling about you.
+
+What do we do with your information?
+We put security measures in place to ensure that your information is securely stored. Your information will not be shared outside of the RCPCH.
+
+Information will be stored with third party suppliers who are acting on our behalf as data processors to provide certain products and services for the College. Your personal data will not be transferred outside of the UK.
+
+We will only retain your information for as long as necessary to fulfil our contract with you. If you decide to end your subscription with us, we will retain your account details for two years after the end of your subscription and then delete your data.
+
+The RCPCH Digital Growth Chart API is stateless, meaning it does not persist any data about the measurements sent to it. This is a crucial part of the API’s privacy design, and has enabled us to keep the API development simple and constrained to solving the specific problem of centile/SDS calculations.
+
+It is the responsibility of the consuming application to store the measurements. This is the logical place to store data about the child since this consuming application will already have other stored data about the child within it, such as demographics.
+
+Your Rights
+You have the following rights in relation to your data:
+
+Right of access and right to have a copy of your personal data in a standard format (right to data portability).  You can ask us for a copy of the information that we hold about you. You can also ask us for a copy of your data in a standard format where this is technically possible. But this only applies where we are holding your information with consent or as part of a contract with you.
+
+Change any factual errors or inaccuracies (right of rectification). If you have an RCPCH online account you can change and update your personal data. It is your responsibility to update us of any changes to the personal information you have provided. You can also contact us either via our contact form or contact the relevant team directly.
+
+Delete your personal data (called a right to erasure). We cannot delete all personal data as we may have a legal obligation or because we have a requirement to retain it for a task in the public interest, but we can delete non-essential data. 
+
+Restrict the use of your data (right of restriction). You can request that we deactivate your RCPCH online account or that we only store your data but undertake no further processing. However, this only applies to certain circumstances.
+
+Object to processing (right to objection). You can ask that we stop using data that is not necessary for fulfilling our legal obligations. 
+
+Please contact the RCPCH Data Protection Officer if you wish to make a request (information.governance@rcpch.ac.uk, +44(0)20 7092 6000, 5-11 Theobalds Road, London, WC1X 8SH).
+
+If you make a request, we have one month to respond to you.
+
+How to contact us or complain
+If you are unhappy with how we are using your personal data, you should contact us in the first instance so that we can understand and try to resolve your concern. If we can't resolve the issue you have the right to complain to the Information Commissioners Office (ICO). The ICO is the UK's independent body set up to uphold information rights.
+
+The ICO’s address:
+
+Information Commissioner’s Office
+
+Wycliffe House
+
+Water Lane
+
+Wilmslow
+
+Cheshire
+
+SK9 5AF
+
+Helpline number: 0303 123 1113
+
+ICO website: https://www.ico.org.uk
+
+If you have any questions about our privacy policy, the information we hold about you or you wish to make a complaint, please send an email to: information.governance@rcpch.ac.uk
+
+Changes to this Privacy Policy
+We keep our privacy policy under review, and we will place any updates on this web page. This privacy policy was last updated on 16/02/2021.
 Our RCPCH dGC API Privacy Policy can be viewed on our Developer Portal
 
 [dev.rcpch.ac.uk/privacy](https://dev.rcpch.ac.uk/privacy)
 
-## Stateless API
-
-The server has been designed with privacy and information security in mind.
-
-The API is 'stateless', meaning it does **not** persist information between the web requests that are made of it. Each request from the API-consuming application contains all the information required to calculate a set of centile data. The response we send back contains this data, and it is never saved on the server. Some information about requests is kept for a few days in the logs of our server, to enable us to monitor performance and to debug problems, however this information is anonymous.
-
-Any 'persistence' (data saving) must happen in the application which is consuming the API, which is the natural place to persist data anyway, since this is the DPCHR, the GP system, the hospital EPR - which already likely persists lots of data about the patient.
-
-In view of the stateless nature of the server, we don't handle any Patient Identifiable Data. We have reviewed the privacy implications of our application and believe it does not require a Data Privacy Impact Assessment, according to our review of [current Information Commissioner's Office guidance](https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-protection-regulation-gdpr/accountability-and-governance/data-protection-impact-assessments/#dpia3).
