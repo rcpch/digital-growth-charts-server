@@ -23,3 +23,7 @@ li {
 .md-grid {
   max-width: 70rem;
 }
+
+.md-typeset .admonition {
+  font-size: 0.8rem;
+}

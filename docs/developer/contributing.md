@@ -6,7 +6,7 @@ We're a friendly bunch and we're happy to chat. You can get in touch with the pr
 
 - Fork the repository to your own GitHub account
   
-- Set up your development environment (ideally using our instructions [here](python-development.md) for maximum compatibility with our own development environments).
+- Set up your development environment (ideally using our instructions [here](api-python.md) for maximum compatibility with our own development environments).
   
 - Ideally, you should have discussed with our team what you are proposing to change, because we can only accept pull requests where there is an accepted need for that new feature or fix.
   
@@ -33,4 +33,4 @@ Some helpful sources of information on Python style are:
 
 - For larger contributions we may require a Contributor Covenant to support this agreement over transfer of title, however for small contributions it is probably sufficient that you should have read and understood this document, and that the act of submitting a PR is acceptance of these terms.
 
-- All contributors will, of course, proudly be acknowledged in the [Acknowledgements](acknowledgements.md) section.
+- All contributors will, of course, proudly be acknowledged in the [Acknowledgements](../about/acknowledgements.md) section.

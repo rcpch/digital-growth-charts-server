@@ -38,6 +38,7 @@ plugins:
 
 markdown_extensions:
   - abbr
+  - attr_list
   - admonition
   - pymdownx.highlight
   - pymdownx.inlinehilite
