@@ -11,7 +11,7 @@ Run all scripts from the root of the project, or they won't work.
 ## Running the dGC Server locally with Python
 
 !!! note
-    Some of this is obvious to experienced Python developers, but it's documented here so that we all know the _same_ obvious. :grin:
+Some of this is obvious to experienced Python developers, but it's documented here so that we all know the _same_ obvious. :grin:
 
 ### Managing Python versions, and dependencies such as libraries
 
@@ -45,7 +45,7 @@ git clone https://github.com/rcpch/digital-growth-charts-server.git
 cd digital-growth-charts-flask-client
 ```
 
-Install the correct Python version  
+Install the correct Python version
 
 ```bash
 pyenv install 3.8.0
@@ -58,7 +58,7 @@ pyenv virtualenv 3.8.0 gc-3.8
 ```
 
 !!! tip "Auto-selection of Python and virtualenv"
-    Using the same name 'gc-3.8' will enable it to be automatically selected when navigating to this repo (but you *can* call your own virtualenv whatever you like). This all works using the `.python-version` file in the project root, which can contain either a Python version name which `pyenv` recognises, or it can contain a vitrualenv name, which `pyenv` will select for you, and of course this automatically selects the Python version too. A helpful article about this is here <https://realpython.com/intro-to-pyenv/#activating-your-versions>
+Using the same name 'gc-3.8' will enable it to be automatically selected when navigating to this repo (but you _can_ call your own virtualenv whatever you like). This all works using the `.python-version` file in the project root, which can contain either a Python version name which `pyenv` recognises, or it can contain a vitrualenv name, which `pyenv` will select for you, and of course this automatically selects the Python version too. A helpful article about this is here <https://realpython.com/intro-to-pyenv/#activating-your-versions>
 
 Check virtualenv creation worked.
 
@@ -74,7 +74,7 @@ Activate the virtualenv manually if it's not already selected
 pyenv activate gc-3.8
 ```
 
-Install the dependencies inside this virtualenv  
+Install the dependencies inside this virtualenv
 
 ```bash
 pip install -r requirements.txt
@@ -96,10 +96,30 @@ Refer to the [pyenv command reference](https://github.com/pyenv/pyenv/blob/maste
     pyenv install 3.8.0
     ```
 
+!!! note "If installing on macOS Big Sur, pyenv install of python 3.8.0 and requirements.txt may fail"
+
+    To install 3.8.0 via pyenv, set the following 2 environment variables (requires homebrew installed versions of bzip2, openssl and zlib):
+
+    ```bash
+    export CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix bzip2)/include -I$(brew --prefix readline)/include -I$(xcrun --show-sdk-path)/usr/include"
+    export LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib -L$(brew --prefix bzip2)/lib"
+    ```
+
+    Now, run the pyenv install with a patch for Big Sur:
+
+    ```bash
+    pyenv install --patch 3.8.0 < <(curl -sSL https://github.com/python/cpython/commit/8ea6353.patch\?full_index\=1)
+    ```
+
+    Now, once ready to install requirements.txt with pip, set one more environment variable:
+
+    ```bash
+    export SYSTEM_VERSION_COMPAT=1
+    ```
+
 ## Start the API server natively with default settings
 
 from the application's root directory, type
-
 
 ```bash
 s/start-server
