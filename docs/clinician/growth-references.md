@@ -13,7 +13,7 @@ The codebase we have built is capable of utilising any reference ro dataset, but
 !!! info
     We are working on a 'standard format' of JSON that will contain reference metadata as well as the LMS tables themselves, in a 'key-value' format that makes programmatic lookups consistent across different references. Along with the data file, we request the following: file name, parameters described, acknowledgement text, authors, publication / reference.
 
-## Current contents
+## Reference Library
 
 | identifier | Age Range           | Description                                                                    | Country          | Links                                                                   |
 | ---------- | ------------------- | ------------------------------------------------------------------------------ | ---------------- | ----------------------------------------------------------------------- |
@@ -33,11 +33,11 @@ The codebase we have built is capable of utilising any reference ro dataset, but
 
 3. This is the WHO standard for weight, BMI and head circ from 2 weeks to 4 years, for length 2 weeks to 2 years and height 2-4 years. It is shown by week to 13 weeks and then by calendar month. It is exactly the same data as the LMS data included in the Z score tables accessed from the WHO website [WHO](http://www.who.int/childgrowth/standards) except there is no birthweight.
 
-# To be added
+### To be added
 
 9.  **LMSdata_BP** systolic & diastolic blood pressure for ages 4 to 24 yr.
 
-## Citations
+### Citations
 
 1. Cole TJ, Freeman JV, Preece MA. British 1990 growth reference centiles for weight, height, body mass index and head circumference fitted by maximum penalized likelihood. Stat Med 1998;17:407-29.
 
