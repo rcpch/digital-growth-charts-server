@@ -24,6 +24,16 @@ Pricing depends on the volume of requests that the vendor requires and the amoun
 
 The process of integrating the API into an existing EPR product is technically straightforward and the amount of work is modest. EPR suppliers may of course levy a fee for this additional integration work, however once this has been done once for a product, there should be minimal or zero additional work to roll out to other sites, so you should check whether the vendor has already deployed the dGC elsewhere.
 
-## Can I test the dGC APIs?
+## Can I try out the dGC APIs?
 
 Yes, you can use the demo site at https://growth.rcpch.ac.uk/ to evaluate the service.
+
+## Q: If we have a calculated centile or SDS from the API then why do we need the traditional 'curved-lines' growth charts at all?  
+
+**A**: Good question. Maybe, in time, this style of chart will no longer be needed. Maybe in time they will be replaced by SDS charts, which would allow us to view height, weight, head circumference, and BMI all on one chart too!
+
+The traditional growth charts were actually a form of 'paper calculator' for the centile values. The clinician plotted the age and the height/weight data and then looked for which centile lines it was between, and this was the data that the clinician read off and recorded. We would also keep the charts for future plotting.
+
+The Growth Charts API obviates the need for this step since **we** calculate the centiles for you. However, another important function of the chart was to visualise **trends** in the growth. Our API does not do this, so there will be a need for some form of chart to visualise the trend.
+
+Initially we expect that clinical users will want to see the traditional growth chart, out of simple familiarity. But in time we think that researchers may develop better visualisations of the trend in centiles/SDS that don't have to come on such confusing curvy charts. The future of displaying growth trends is entirely open to new ideas and innovation.
