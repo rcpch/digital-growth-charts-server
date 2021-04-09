@@ -5,10 +5,15 @@ We're a friendly bunch and we're happy to chat. You can get in touch with the pr
 ### How to contribute
 
 - Fork the repository to your own GitHub account
-- Set up your development environment (ideally using our instructions [here](python-development.md) for maximum compatibility with our own development environments)
+  
+- Set up your development environment (ideally using our instructions [here](python-development.md) for maximum compatibility with our own development environments).
+  
 - Ideally, you should have discussed with our team what you are proposing to change, because we can only accept pull requests where there is an accepted need for that new feature or fix.
+  
 - We can discuss with you how we would recommend to implement the new feature, for maximum potential 'mergeability' of your PR.
+  
 - Once the work is ready to show us, create a pull request on our repo, detailing what the change is and details about the fix or feature. PRs that affect the calculations or any other 'mission critical' part of the code will need suitable tests which we can run.
+  
 - We will endeavour to review and merge in a reasonable time frame, but will usually not merge straight into `master`, rather we will merge into an upcoming release branch.
 
 ### Coding style

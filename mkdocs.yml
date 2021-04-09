@@ -2,6 +2,7 @@ site_name: RCPCH Digital Growth Charts Project Documentation
 
 theme:
   name: material
+  custom_dir: overrides
   features:
     - navigation.instant
     #  - navigation.tabs

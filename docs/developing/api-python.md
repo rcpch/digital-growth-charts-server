@@ -11,7 +11,7 @@ Run all scripts from the root of the project, or they won't work.
 ## Running the dGC Server locally with Python
 
 !!! note
-Some of this is obvious to experienced Python developers, but it's documented here so that we all know the _same_ obvious. :grin:
+    Some of this is obvious to experienced Python developers, but it's documented here so that we all know the _same_ obvious. :grin:
 
 ### Managing Python versions, and dependencies such as libraries
 
@@ -58,7 +58,7 @@ pyenv virtualenv 3.8.0 gc-3.8
 ```
 
 !!! tip "Auto-selection of Python and virtualenv"
-Using the same name 'gc-3.8' will enable it to be automatically selected when navigating to this repo (but you _can_ call your own virtualenv whatever you like). This all works using the `.python-version` file in the project root, which can contain either a Python version name which `pyenv` recognises, or it can contain a vitrualenv name, which `pyenv` will select for you, and of course this automatically selects the Python version too. A helpful article about this is here <https://realpython.com/intro-to-pyenv/#activating-your-versions>
+    Using the same name 'gc-3.8' will enable it to be automatically selected when navigating to this repo (but you _can_ call your own virtualenv whatever you like). This all works using the `.python-version` file in the project root, which can contain either a Python version name which `pyenv` recognises, or it can contain a vitrualenv name, which `pyenv` will select for you, and of course this automatically selects the Python version too. A helpful article about this is here <https://realpython.com/intro-to-pyenv/#activating-your-versions>
 
 Check virtualenv creation worked.
 
@@ -83,7 +83,6 @@ pip install -r requirements.txt
 Refer to the [pyenv command reference](https://github.com/pyenv/pyenv/blob/master/COMMANDS.md#pyenv-local) if you need further information on `pyenv`
 
 !!! tip "Extra development packages that may be required on some setups"
-
     On some platforms, you may need the additional development header packages. On Ubuntu/Linux Mint this was required when using `pyenv` and thus compiling Python from source. This should not be necessary if you're running a binary Python, it only affects setups which are compiling a specific Python version from source, on demand, such as `pyenv`.
 
     ```bash
@@ -97,7 +96,6 @@ Refer to the [pyenv command reference](https://github.com/pyenv/pyenv/blob/maste
     ```
 
 !!! note "If installing on macOS Big Sur, pyenv install of python 3.8.0 and requirements.txt may fail"
-
     To install 3.8.0 via pyenv, set the following 2 environment variables (requires homebrew installed versions of bzip2, openssl and zlib):
 
     ```bash
