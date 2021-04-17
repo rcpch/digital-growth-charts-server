@@ -1,8 +1,13 @@
-import os
-import json
+# standard imports
 from datetime import datetime
+import json
+import os
 
+# third-party imports
+from marshmallow import exceptions
 import pytest
+
+# rcpch imports
 from rcpchgrowth import Measurement, global_functions
 
 # the ACCURACY constant defines the accuracy of the test comparisons
@@ -50,36 +55,64 @@ def load_valid_data_set():
 
 @pytest.mark.parametrize("line", load_valid_data_set())
 def test_sds_calculation(line):
-    if line["observation_value"]==None or line["SDS"]==None:
+    if line["observation_value"] == None or line["SDS"] == None:
         return
-    sds = global_functions.sds_for_measurement("uk-who", float(line["corrected_age"]), str(line["measurement_method"]), float(line["observation_value"]), str(line["sex"]), False)    
+    sds = global_functions.sds_for_measurement("uk-who", float(line["corrected_age"]), str(
+        line["measurement_method"]), float(line["observation_value"]), str(line["sex"]), False)
     tim_sds = float(line["SDS"])
     assert sds == pytest.approx(tim_sds, abs=ACCURACY)
-# def test_measurement_class_with_invalid_sex_type():
-#     measurement_object = Measurement(
-#         sex="males",
-#         birth_date=datetime.strptime("2020-04-01", "%Y-%m-%d"),
-#         observation_date=datetime.strptime("2020-06-01", "%Y-%m-%d"),
-#         measurement_method="weight",
-#         observation_value=5.0,
-#         gestation_weeks=0,
-#         gestation_days=40,
-#         reference="uk-who"
-#     )
-
-    # Should raise a TypeError (sex must be a string)
 
 
-# def test_measurement_class_with_invalid_sex_string():
-#     measurement_object = Measurement(
-#         sex="male",
-#         birth_date=datetime.strptime("2020-04-01", "%Y-%m-%d"),
-#         observation_date=datetime.strptime("2020-06-01", "%Y-%m-%d"),
-#         measurement_method="weight",
-#         observation_value=5.0,
-#         gestation_weeks=0,
-#         gestation_days=40,
-#         reference="uk-who"
-#     )
+def test_measurement_class_with_invalid_sex_type():
+    """
+    Should raise a Marshmallow error (sex must be a string)
+    """
+    with pytest.raises(exceptions.ValidationError) as error_info:
+        Measurement(
+            sex=0,
+            birth_date=datetime.strptime("2020-04-01", "%Y-%m-%d"),
+            observation_date=datetime.strptime("2020-06-01", "%Y-%m-%d"),
+            measurement_method="weight",
+            observation_value=5.0,
+            gestation_weeks=0,
+            gestation_days=40,
+            reference="uk-who"
+        )
+    assert "{'sex': ['Not a valid string.']}" in (str(error_info.value))
 
-    # Should raise a ValueError (sex must be "male" OR "female")
+
+def test_measurement_class_with_invalid_sex_string():
+    """
+    Should raise a ValueError (sex must be "male" OR "female")
+    """
+    with pytest.raises(exceptions.ValidationError) as error_info:
+        Measurement(
+            sex="maleS",
+            birth_date=datetime.strptime("2020-04-01", "%Y-%m-%d"),
+            observation_date=datetime.strptime("2020-06-01", "%Y-%m-%d"),
+            measurement_method="weight",
+            observation_value=5.0,
+            gestation_weeks=0,
+            gestation_days=40,
+            reference="uk-who"
+        )
+    assert "{'sex': ['Must be one of: male, female.']}" in (
+        str(error_info.value))
+
+
+def test_measurement_class_with_invalid_date_type():
+    """
+    Should raise a ValueError (sex must be "male" OR "female")
+    """
+    with pytest.raises(AttributeError) as error_info:
+        Measurement(
+            sex="male",
+            birth_date="Date strings are not valid!",
+            observation_date=datetime.strptime("2020-06-01", "%Y-%m-%d"),
+            measurement_method="weight",
+            observation_value=5.0,
+            gestation_weeks=0,
+            gestation_days=40,
+            reference="uk-who"
+        )
+    assert "'str' object has no attribute 'strftime'" in str(error_info.value)
