@@ -51,7 +51,7 @@ The RCPCH's team is not yet of a size that it requires an org chart to explain. 
 
 Dr Marcus Baw
 
-#### Senior CLinical Adviser
+#### Senior Clinical Adviser
 
 Dr Simon Chapman
 
@@ -81,7 +81,7 @@ Governance for patient safety within the Organisation is provided through the fo
 
 ### Clinical Risk Management File (this repository)
 
-the Royal College Digital Growth Charts Team will establish a Clinical Risk Management File (CRMF) for each safety related healthcare IT system. The purpose of the CRMF is toprovide a central repository where all safety related information pertaining to the healthcare IT system is stored and controlled. This GitHub repository contains out Clinical Risk Management File.
+The Royal College Digital Growth Charts Team will establish a Clinical Risk Management File (CRMF) for each safety related healthcare IT system. The purpose of the CRMF is toprovide a central repository where all safety related information pertaining to the healthcare IT system is stored and controlled. This GitHub repository contains out Clinical Risk Management File.
 
 ### Clinical Risk Management Plan (this document)
 
