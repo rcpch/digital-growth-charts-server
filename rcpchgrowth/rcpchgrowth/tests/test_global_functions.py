@@ -1,3 +1,7 @@
+"""
+Tests for the global functions which perform lower-level intermediate calculations
+"""
+
 # standard imports
 from datetime import datetime
 import json
@@ -29,8 +33,8 @@ def load_valid_data_set():
 @pytest.mark.parametrize("line", load_valid_data_set())
 def test_chronological_decimal_age(line):
     """
-    Tests the function which calculates chronological decimal age from birth_date and observation_date
-      against synthetic data from 
+    Tests the function which calculates chronological decimal age
+        from birth_date and observation_date
     """
     if line["birth_date"] is None or line["observation_date"] is None:
         return
@@ -45,7 +49,10 @@ def test_chronological_decimal_age(line):
 
 @pytest.mark.parametrize("line", load_valid_data_set())
 def test_corrected_decimal_age(line):
-    if line["birth_date"] == None or line["observation_date"] == None:
+    """
+    Tests the function which calculates **corrected** decimal age
+    """
+    if line["birth_date"] is None or line["observation_date"] is None:
         return
     birth_date = datetime.strptime(line["birth_date"], "%d/%m/%Y").date()
     observation_date = datetime.strptime(
@@ -59,7 +66,10 @@ def test_corrected_decimal_age(line):
 # SDS calculation tests
 @pytest.mark.parametrize("line", load_valid_data_set())
 def test_sds_for_measurement_corrected(line):
-    if line["observation_value"] == None or line["corrected_sds"] == None:
+    """
+    Tests the function with calculates SDS from gestationally-corrected measurements
+    """
+    if line["observation_value"] is None or line["corrected_sds"] is None:
         return
     sds = global_functions.sds_for_measurement("uk-who", float(line["corrected_age"]), str(
         line["measurement_method"]), float(line["observation_value"]), str(line["sex"]), False)
@@ -68,8 +78,11 @@ def test_sds_for_measurement_corrected(line):
 
 
 @pytest.mark.parametrize("line", load_valid_data_set())
-def test_sds_for_measurement_chronologincal(line):
-    if line["observation_value"] == None or line["chronological_sds"] == None:
+def test_sds_for_measurement_chronological(line):
+    """
+    Tests the function with calculates SDS from uncorrected measurements
+    """
+    if line["observation_value"] is None or line["chronological_sds"] is None:
         return
     sds = global_functions.sds_for_measurement("uk-who", float(line["chronological_age"]), str(
         line["measurement_method"]), float(line["observation_value"]), str(line["sex"]), False)
