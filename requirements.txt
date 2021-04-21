@@ -39,7 +39,7 @@ pbr==5.4.5
 pip-autoremove==0.9.1
 pluggy==0.13.1
 prance==0.19.0
-py==1.9.0
+py==1.10.0
 pycodestyle==2.6.0
 pylint==2.5.0
 pyparsing==2.4.7
