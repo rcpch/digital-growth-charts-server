@@ -13,7 +13,7 @@
 
 ## RCPCH Staff
 
-- Magdalena Umerska. Digital Platform Commercial Manager, RCPCH
+- Magdalena Umerska, Digital Platform Commercial Manager, RCPCH
 - Jonathan Miall, Director of Membership and Development, RCPCH
 - Alex Brown, Head of Commercial and Corporate Partnerships, RCPCH
 - Jo Ball, Design and Brand Manager, Content and Brand Team, RCPCH
@@ -22,9 +22,9 @@
 
 ## Development Team
 
-- Dr Marcus Baw, General Hacktitioner, Developer and Informatician, Yorkshire and The Internet.
+- Dr Marcus Baw, General Hacktitioner, Developer and Informatician, Yorkshire and The Internet
 - Dr Simon Chapman, Consultant in Paediatric Endocrinology, King's College Hospital, London
-- Prof. Tim Cole, Professor of Medical Statistics, Population, Policy & Practice Department, UCL GOS Institute of Child Health, London.
-- Dr Charles van Lennep, Paediatrician in Training, London.
+- Prof Tim Cole, Professor of Medical Statistics, Population, Policy & Practice Department, UCL GOS Institute of Child Health, London
+- Dr Charles van Lennep, Paediatrician in Training, London
 - Joanne Hatton, Enterprise Systems Manager, Royal College of Paediatrics and Child Health, London
 - Andrew Palmer, Head of Information Systems, Royal College of Paediatrics and Child Health, London
