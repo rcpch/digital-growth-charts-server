@@ -393,12 +393,14 @@ class Measurement:
                 self.estimated_date_delivery_string = None
                 chronological_decimal_age_error = "Estimated date of delivery calculation error."
 
+            # ISSUE: #155 observation date COULD be before estimated date delivery in a preterm
             try:
                 self.corrected_calendar_age = chronological_calendar_age(
                     self.estimated_date_delivery, observation_date)
             except:
                 self.corrected_calendar_age = None
                 if self.estimated_date_delivery > observation_date:
+                    # ISSUE: #157 if observation date is BEFORE birth date then an error should be raised
                     chronological_decimal_age_error = "The due date is after the observation date - a calendar age cannot be calculated."
                 else:
                     chronological_decimal_age_error = "A calendar age cannot be calculated."

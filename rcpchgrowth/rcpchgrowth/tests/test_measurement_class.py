@@ -58,7 +58,7 @@ def load_valid_data_set():
 # def test_corrected_sds_calculation(line):
 #     if line["observation_value"]==None or line["corrected_sds"]==None:
 #         return
-#     sds = global_functions.sds_for_measurement("uk-who", float(line["corrected_age"]), str(line["measurement_method"]), float(line["observation_value"]), str(line["sex"]), False)    
+#     sds = global_functions.sds_for_measurement("uk-who", float(line["corrected_age"]), str(line["measurement_method"]), float(line["observation_value"]), str(line["sex"]), False)
 #     tim_sds = float(line["corrected_sds"])
 #     assert sds == pytest.approx(tim_sds, abs=ACCURACY)
 
@@ -66,7 +66,7 @@ def load_valid_data_set():
 # def test_chronological_sds_calculation(line):
 #     if line["observation_value"]==None or line["chronological_sds"]==None:
 #         return
-#     sds = global_functions.sds_for_measurement("uk-who", float(line["chronological_age"]), str(line["measurement_method"]), float(line["observation_value"]), str(line["sex"]), False)    
+#     sds = global_functions.sds_for_measurement("uk-who", float(line["chronological_age"]), str(line["measurement_method"]), float(line["observation_value"]), str(line["sex"]), False)
 #     tim_sds = float(line["chronological_sds"])
 #     assert sds == pytest.approx(tim_sds, abs=ACCURACY)
 
@@ -76,21 +76,21 @@ def load_valid_data_set():
 #         return
 #     birth_date = datetime.strptime(line["birth_date"], "%d/%m/%Y").date()
 #     observation_date = datetime.strptime(line["observation_date"], "%d/%m/%Y").date()
-#     age = date_calculations.corrected_decimal_age(birth_date, observation_date, int(line["gestation_weeks"]), int(line["gestation_days"]))    
+#     age = date_calculations.corrected_decimal_age(birth_date, observation_date, int(line["gestation_weeks"]), int(line["gestation_days"]))
 #     tim_age = float(line["corrected_age"])
 #     assert age == pytest.approx(tim_age, abs=ACCURACY)
 
 @pytest.mark.parametrize("line", load_valid_data_set())
 def test_chronological_age_calculation(line):
-    if line["birth_date"]==None or line["observation_date"]==None:
+    if line["birth_date"] == None or line["observation_date"] == None:
         return
     birth_date = datetime.strptime(line["birth_date"], "%d/%m/%Y").date()
-    observation_date = datetime.strptime(line["observation_date"], "%d/%m/%Y").date()
-    age = date_calculations.chronological_decimal_age(birth_date, observation_date)    
+    observation_date = datetime.strptime(
+        line["observation_date"], "%d/%m/%Y").date()
+    age = date_calculations.chronological_decimal_age(
+        birth_date, observation_date)
     tim_age = float(line["chronological_age"])
     assert age == pytest.approx(tim_age, abs=ACCURACY)
-
-
 
 
 # def test_measurement_class_with_invalid_sex_type():
@@ -108,7 +108,7 @@ def test_chronological_age_calculation(line):
 
 def test_measurement_class_with_invalid_sex_type():
     """
-    Should raise a Marshmallow error (sex must be a string)
+    Should raise a Marshmallow ValidationError (sex must be a string)
     """
     with pytest.raises(exceptions.ValidationError) as error_info:
         Measurement(
@@ -143,9 +143,9 @@ def test_measurement_class_with_invalid_sex_string():
         str(error_info.value))
 
 
-def test_measurement_class_with_invalid_date_type():
+def test_measurement_class_with_invalid_birth_date_type():
     """
-    Should raise a ValueError (sex must be "male" OR "female")
+    Should raise an AttributeError during date -> str conversion (date must be a Python datetime object)
     """
     with pytest.raises(AttributeError) as error_info:
         Measurement(
@@ -159,3 +159,22 @@ def test_measurement_class_with_invalid_date_type():
             reference="uk-who"
         )
     assert "'str' object has no attribute 'strftime'" in str(error_info.value)
+
+
+def test_measurement_class_with_invalid_birth_data():
+    """
+    Should raise an (observation_date must be after birth_date)
+    """
+    m = Measurement(
+        sex="male",
+        birth_date=datetime.strptime("2020-06-01", "%Y-%m-%d"),
+        observation_date=datetime.strptime("2020-05-01", "%Y-%m-%d"),
+        measurement_method="weight",
+        observation_value=5.0,
+        gestation_weeks=0,
+        gestation_days=40,
+        reference="uk-who"
+    ).measurement
+
+    # This assertion may change once issues #155 and #157 are closed
+    assert m["measurement_dates"]["chronological_decimal_age_error"] == "Chronological age calculation error."
