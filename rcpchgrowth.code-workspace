@@ -14,6 +14,9 @@
 		},
 		{
 			"path": "../../../react/component-libraries/digital-growth-charts-react-component-library"
+		},
+		{
+			"path": "../../../react/digital-growth-charts-react-native-client"
 		}
 	],
 	"settings": {
