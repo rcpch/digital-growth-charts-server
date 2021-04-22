@@ -4,12 +4,12 @@
 
 p,
 li {
-  font-family: Roboto;
+  font-family: 'Libre Baskerville';
 }
 
 .md-typeset h1,
 .md-typeset h2 {
-  font-weight: 600;
+  font-weight: 600;font-family:  'Montserrat';
 }
 
 /* enlarges the logo image */
