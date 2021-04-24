@@ -1,4 +1,9 @@
-# DoC (API Server)
+---
+title: Declarations of Conformity
+reviewers: Dr Marcus Baw
+---
+
+# Declaration of Conformity (API Server)
 
 ## EU DECLARATION OF CONFORMITY
 
@@ -16,7 +21,7 @@
 
 1. ### Object of the declaration (identification of product allowing traceability. It may include a colour image of sufficient clarity to enable the identification of the product, where appropriate.)
 
-    Server application located at
+    Server application code located at
     <https://github.com/rcpch/digital-growth-charts-server>
 
 1. ### The object of the declaration described in point 4 is in conformity with the relevant Union harmonisation legislation

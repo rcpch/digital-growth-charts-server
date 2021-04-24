@@ -1,13 +1,15 @@
-site_name: RCPCH Digital Growth Charts Project Documentation
+site_name: RCPCH Digital Growth Charts
+site_description: The Royal College of Paediatrics and Child Health Digital Growth Charts Project
 
 theme:
   name: material
   custom_dir: rcpch-theme
   features:
     - navigation.instant
-    #  - navigation.tabs
+    - navigation.tabs
     - navigation.tracking
     - navigation.top
+    - navigation.expand
     #  - toc.integrate
 
   palette:
@@ -29,8 +31,8 @@ theme:
     text: Montserrat
     code: Roboto Mono
 
-  favicon: assets/dynamic-child-favicon.png
-  logo: assets/logo-desktop.svg
+  favicon: _assets/dynamic-child-favicon.png
+  logo: _assets/logo-desktop.svg
 
 plugins:
   - search
@@ -55,4 +57,4 @@ copyright: Copyright &copy; 2021 Royal College of Paediatrics and Child Health (
 repo_url: https://github.com/rcpch/digital-growth-charts-documentation
 
 extra_css:
-  - stylesheets/extra.css
+  - _stylesheets/extra.css

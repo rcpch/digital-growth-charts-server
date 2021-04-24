@@ -1,4 +1,9 @@
-# React Chart Component Library (stable)
+---
+title: React Chart Component
+reviewers: Dr Marcus Baw
+---
+
+# React Chart Component
 
 Although the process of obtaining a centile/SDS result from the API is very straightforward, rendering this to an actual digital growth chart graphic is quite complex, mainly because of the requirement to render the 9 curved 'centile lines' as well as plot the co-ordinates of the API result.
 
@@ -8,23 +13,17 @@ https://github.com/rcpch/digital-growth-charts-react-component-library
 
 You can use the component as-is in a React app, or include it in plain HTML or any other JavaScript framework.
 
-
-
-
-
 ## Why React?
 
 
 
 ## Getting started
 
-To include in your project, simply:
-
 ```console
 foobar:~foo$ npm i --save @rcph/digital-growth-charts-react-component-library
 ```
 
-Victory Charts are a dependency (see below), themselves built on top of D3.js. On build it is likely you will get an error relating to circular dependencies for some files in the d3-interpolate module. There is an issue logged [here](https://github.com/d3/d3-interpolate/issues/58).
+Victory Charts are a dependency (see below), themselves built on top of D3.js. On build it is likely you will get an error relating to circular dependencies for some files in the d3-interpolate module. The is an issue logged [here](https://github.com/d3/d3-interpolate/issues/58).
 
 If you want to run the package locally alongside the react client, there are some extra steps to go through. Since the chart library and the react client both use react, the charts will throw an error if you import them in the ```package.json``` of your app from a folder on your local machine. For example in your react app:
 
@@ -60,11 +59,12 @@ This library has been written in Typescript. The main component is `RCPCHChart`,
 {
   title: string,
   subtitle: string,
-  measurementMethod: 'height' | 'weight' | 'bmi' | 'ofc', // note ofc is occipitofrontal (head) circumference
+  measurementMethod: 'height' | 'weight' | 'ofc' | 'bmi',
   sex: 'male' | 'female',
   measurementsArray: [Measurement],
   reference: 'uk-who' | 'turner' | 'trisomy-21',
-  enableZoom: boolean,
+  width: number,
+  height: number,
   chartStyle: ChartStyle,
   axisStyle: AxisStyle,
   gridlineStyle: GridlineStyle,
@@ -115,7 +115,7 @@ interface Measurement {
       corrected_measurement_error: string,
       corrected_sds: number
       measurement_method: 'height' | 'weight' | 'bmi' | 'ofc',
-    },
+    }
     plottable_data: {
       centile_data: {
         chronological_decimal_age_data: {
@@ -177,49 +177,24 @@ The styling components allow the user to customise elements of the chart:
 Chart styles control the chart and the tooltips
 
 ```js
-interface ChartStyle {
-  backgroundColour?: string, 
-  width?: number, 
-  height?: number,
-  padding?: {
-      left?: number, 
-      right?: number, 
-      top?: number, 
-      bottom?: number
-    },
-  titleStyle?: {
-      name?: string, 
-      colour?: string, 
-      size?: number, 
-      weight?: 'bold' | 'italic' | 'regular'
-    },
-  subTitleStyle?: {
-      name?: string, 
-      colour?: string, 
-      size?: number, 
-      weight?: 'bold' | 'italic' | 'regular'
-    },
-  tooltipBackgroundColour?: string,
-  tooltipStroke?: string,
-  tooltipTextStyle?: {
-      name?: string, 
-      colour?: string, 
-      size?: number, 
-      weight?: 'bold' | 'italic' | 'regular'
-    },
-  termFill?: string,
-  termStroke?: string,
-  infoBoxFill?: string,
-  infoBoxStroke?: string,
-  infoBoxTextStyle?: {
-      name?: string, 
-      colour?: string, 
-      size?: number, 
-      weight?: 'bold' | 'italic' | 'regular'
-    },
-  toggleButtonInactiveColour: string, // relates to the toggle buttons present if age correction is necessary
-  toggleButtonActiveColour: string,
-  toggleButtonTextColour: string
+interface ChartStyle{
+    backgroundColour?: string, 
+    width?: number, 
+    height?: number,
+    padding?: requires {left?: number, right?: number, top?: number, bottom?: number},
+    titleStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
+    subTitleStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'},,
+    tooltipBackgroundColour?: string,
+    tooltipStroke?: string,
+    tooltipTextStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
+    termFill?: string,
+    termStroke?: string,
+    infoBoxFill?: string,
+    infoBoxStroke?: string
+    infoBoxTextStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
+    toggleButtonInactiveColour: string // relates to the toggle buttons present if age correction is necessary
+    toggleButtonActiveColour: string
+    toggleButtonTextColour: string
 }
 ```
 
@@ -230,18 +205,8 @@ Axis styles control axes and axis labels
 ```js
 interface AxisStyle{
     axisStroke?: string, 
-    axisLabelTextStyle?: {
-      name?: string, 
-      colour?: string, 
-      size?: number, 
-      weight?: 'bold' | 'italic' | 'regular'
-    },
-    tickLabelTextStyle?: {
-      name?: string, 
-      colour?: string, 
-      size?: number, 
-      weight?: 'bold' | 'italic' | 'regular'
-    }
+    axisLabelTextStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
+    tickLabelTextStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
 }
 ```
 
@@ -249,10 +214,10 @@ Gridline styles allow/hide gridlines and control line width, presence of dashes,
 
 ```js
 interface GridlineStyle{
-  gridlines?: boolean, 
-  stroke?: string, 
-  strokeWidth?: number, 
-  dashed?: boolean
+   gridlines?: boolean, 
+    stroke?: string, 
+    strokeWidth?: number, 
+    dashed?: boolean
 }
 ```
 
@@ -260,9 +225,9 @@ Centile styles control the width and colour.
 
 ```js
 interface CentileStyle{
-  centileStroke?: string, 
-  centileStrokeWidth?: number, 
-  delayedPubertyAreaFill?: string 
+    centileStroke?: string, 
+    centileStrokeWidth?: number, 
+    delayedPubertyAreaFill?: string 
 }
 ```
 
@@ -270,8 +235,8 @@ Measurement styles control the plotted data points - colour, size and shape. Cor
 
 ```js
 interface MeasurementStyle{
-  measurementFill?: string, 
-  measurementSize?: number // this is an svg size
+    measurementFill?: string, 
+    measurementSize?: number // this is an svg size
 }
 ```
 
@@ -287,7 +252,7 @@ This Typescript library was built from the starter created by [Harvey Delaney](h
 
 The charts are built using [Victory Charts](https://formidable.com/open-source/victory/docs/victory-chart/) for React. We tried several different chart packages for React, but we chose Victory because of their documentation and their ability to customise components.
 
-**The chart data bundled in is subject to licence. If you wish to use this software, please contact the RCPCH.**
+The chart data bundled in is subject to licence. If you wish to use this software, please contact the RCPCH.
 
 ## Background
 
@@ -302,7 +267,6 @@ Even then, there are certain rules which are key, published by the RCPCH project
 Given the complexity, we decided to create a React component library for developers to use. We designed it to be customisable for those that wanted to use it, but also as a demonstration for developers who wanted to build the charts themselves from the ground up.
 
 If you want to see how the library is implemented, we have built a client for the RCPCHGrowth API in React, which can be found [here](https://github.com/rcpch/digital-growth-charts-react-client).
-
 ### Why use React?
 
 React is a popular UI library for Javascript. It has endured well and seems like a popular choice for developers. Importantly, unlike some other Javascript frameworks which are primarily designed for Single Page Applications, React doesn't expect to have the entire webpage to itself. It can be used as a small component in any other web page, even if the main framework being used is something completely different.

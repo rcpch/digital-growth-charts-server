@@ -1,8 +1,13 @@
+---
+title: Client Specification
+reviewers: Dr Marcus Baw, Dr Simon Chapman
+---
 # Client Specification
 
 ## Background
 
-**A requirement of the licence for the API is that any charts rendered must meet these standards as agreed by the digital growth chart project board. A large amount of documentation has been produced to guide the design and rendering of UK growth charts.**
+!!! warning
+    **A requirement of the licence for the API is that any charts rendered must meet these standards as agreed by the digital growth chart project board. A large amount of documentation has been produced to guide the clinically safe design and rendering of UK growth charts.**
 
 The UK growth charts are made up of 4 datasets taken from 2 growth references (see clinical documentation for more detail).
 
@@ -27,11 +32,18 @@ These datasets all overlap, and therefore when plotting them, they must be passe
 
 Whilst it is not essential to show the whole life course when plotting measurements against centile lines, the rendering of the centile lines and the plots must meet the following design standards.
 
-- Centiles should be clearly labelled
-- Overlap between datasets for each centile should be clearly visibile and no interpolation function should be used to attempt to link them
-- The 0.4th, 9th, 50th, 91st and, 99.6th centiles should all be dashed lines (not dotted, not continuous)
-- The 2nd, 25th, 75th and 98th centiles should be continuous lines (thin)
-- Axes should be clearly labelled (Height/Length in cm, Weight in kg, body mass index in kg/m2, head circumference in cm, age in years)
+- Centiles should be clearly labelled.
+  
+- Overlap between datasets for each centile should be clearly visible and no interpolation function should be used to attempt to link them.
+  
+- The 0.4th, 9th, 50th, 91st and, 99.6th centiles should all be dashed lines (**not** dotted, **not** continuous).
+  
+- The 2nd, 25th, 75th and 98th centiles should be continuous lines (thin).
+
+- Axes should be clearly labelled (Height/Length in cm, Weight in kg, body mass index in kg/m2, head circumference in cm, age in years).
+
 - X axis (age in years) increments should be monthly under the age of 2 y, 3 monthly over the age of 2 years.
+
 - Measurements should be to one decimal place.
+
 - Centiles should be reported as integers, except if >99 or <1. If outside threshold, they should be reported as >99.6 or <0.4.

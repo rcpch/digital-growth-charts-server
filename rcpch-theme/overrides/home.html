@@ -1,4 +1,6 @@
-{% extends "overrides/main.html" %} {% block tabs %} {{ super() }}
+{% extends "overrides/main.html" %} 
+
+{% block tabs %} {{ super() }}
 
 <section class="mdx-container">
     <div class="md-grid md-typeset">
@@ -10,7 +12,11 @@
     </div>
 </section>
 {% endblock %}
+
 {% block content %}
+Landing page content
 {% endblock %}
+
 {% block footer %}
+{{ super ()}}
 {% endblock %}

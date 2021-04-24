@@ -1,10 +1,23 @@
+---
+title: CSMS License
+reviewers: Dr Marcus Baw
+---
+
+# License file for the RCPCH dGC Clinical Safety Management File
+
+This clinical safety management file is unusual in that it is in a public repository. Having completely open clinical safety documention is a good way to increase transparency and to demonstrate genuine attention to clinical safety issues.
+
+We are happy for it to be reused by others implementing open source projects. If you do reuse any part of this work, you **must** attribute the Royal College of Paediatrics and Child Health, and follow the other terms of this license. If you are a commercial organisation wishing to use this documentation then we may consider dual-licensing to allow for this. Please contact us.
+
+-------
+
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">RCPCH dGC Clinical Safety Management File</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/rcpch/clinical-risk-management-file" property="cc:attributionName" rel="cc:attributionURL">Royal College of Paediatrics and Child Health</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
 
-# Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+## Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
 
 Creative Commons Corporation (“Creative Commons”) is not a law firm and does not provide legal services or legal advice. Distribution of Creative Commons public licenses does not create a lawyer-client or other relationship. Creative Commons makes its licenses and related information available on an “as-is” basis. Creative Commons gives no warranties regarding its licenses, any material licensed under their terms and conditions, or any related information. Creative Commons disclaims all liability for damages resulting from their use to the fullest extent possible.
 
-### Using Creative Commons Public Licenses
+## Using Creative Commons Public Licenses
 
 Creative Commons public licenses provide a standard set of terms and conditions that creators and other rights holders may use to share original works of authorship and other material subject to copyright and certain other rights specified in the public license below. The following considerations are for informational purposes only, are not exhaustive, and do not form part of our licenses.
 

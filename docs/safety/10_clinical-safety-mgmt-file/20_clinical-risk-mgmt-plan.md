@@ -1,3 +1,8 @@
+---
+title: Clinical Risk Management Plan
+reviewers: Dr Marcus Baw
+---
+
 # Clinical Risk Management Plan
 
 ## Purpose

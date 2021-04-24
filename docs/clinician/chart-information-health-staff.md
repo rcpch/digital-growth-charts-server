@@ -1,22 +1,35 @@
+---
+title: Chart information for Health staff
+reviewers: Dr Marcus Baw
+---
+
 # Chart information for Health staff
 
-The UK–WHO growth chart combines World Health Organization (WHO) standards with UK 1990 preterm and birth data. 
-The chart from 2 weeks to 4 years of age is based on the WHO growth standard, derived from measurements of healthy, non-deprived, breastfed children of mothers who did not smoke.1 The chart for birth measurements (32 –42 weeks gestation) is based on British children measured around 1990.2 The charts depict a healthy pattern of growth that is desirable for all children, whether breast fed or formula fed, and of whatever ethnic origin. 
+## How the charts work
+
+The UK–WHO growth chart combines World Health Organization (WHO) standards with UK 1990 preterm and birth data.
+
+The chart from 2 weeks to 4 years of age is based on the WHO growth standard, derived from measurements of healthy, non-deprived, breastfed children of mothers who did not smoke.1 The chart for birth measurements (32 –42 weeks gestation) is based on British children measured around 1990.2 The charts depict a healthy pattern of growth that is desirable for all children, whether breast fed or formula fed, and of whatever ethnic origin.
+
 The UK 1990 growth reference for children is used from 4 -18 years
- 
+
+## Measuring children
+
 Anyone who measures a child, plots or interprets charts should be suitably trained, or be supervised by someone
 qualified to do so. For further information and training materials see RCPCH website.
 
-
-When measuring children up to 2 years, remove all clothes and nappy; children older than 2 years should wear minimal clothing only. Always remove shoes.
+!!! tip "Clothing and nappies"
+    * When measuring children **up to 2 years**, remove all clothes and nappy.
+    * Children **older than 2 years** should wear minimal clothing only.
+    * Always remove the child's shoes.
 
 * Weight: use only class III clinical electronic scales in metric setting.
 * Length: (before 2 years of age): proper equipment is essential (length board or mat). Measurers should be trained.
 * Height: (from 2 years): Position head and feet as illustrated with child standing as straight as possible. Measure height recorded to the last millimetre. A correctly installed or stadiometer or approved portable measuring device rigid rule with T piece is the only equipment that can be reliably used (see illustration).
 * Head circumference: use a narrow plastic or paper tape to measure where the head circumference is greatest.
 
-![alt text](../assets/boys-measurement.png 'How to measure boys.')
-![alt text](../assets/girls-measurement.png 'How to measure girls.')
+![How to measure boys](../_assets/boys-measurement.png)
+![How to measure girls](../_assets/girls-measurement.png)
 
 ## When to weigh
 
@@ -33,7 +46,7 @@ Weights measured too close together may be misleading, but if there are concerns
 
 Length or height should be measured whenever there are any worries about a child’s weight gain, growth or general health. Measure length until age 2; measure height after age 2.  A child’s height is usually slightly less than their length.
 
-![alt text](../assets/centile-terminology.png 'What are centiles.')
+![What are centiles](../_assets/centile-terminology.png)
 
 ## Assessing weight loss after birth
 

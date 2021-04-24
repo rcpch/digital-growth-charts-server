@@ -1,6 +1,15 @@
+---
+title: FAQs for Integrators
+reviewers: Dr Marcus Baw
+---
+
 # FAQs for Integrators
 
-In our documentation we have used the term Integrator to refer to a person or team who is integrating the API into a product or service. We also recognise the term 'customer'. (This is to distinguish from 'clients' by which we mean software which consumes the API, and 'developers' who are developing and improving the project by contributing)
+In our documentation we have used the term **Integrator** to refer to a person or team who is integrating the API into a product or service. We also recognise the term 'customer'. This is to distinguish Integrators from 'clients' (by which *we* mean software which consumes the API), and 'developers' (by whom *we* mean those who are developing the Digital Growth Charts project)
+
+> [Information about the dGC client products](../pro)
+
+> [Information for dGC Developers]()
 
 ## Q: Can we self-host the API?
 
@@ -9,16 +18,17 @@ In our documentation we have used the term Integrator to refer to a person or te
 We have open sourced the API in order to align with our policy on transparency and clinical safety, however we advise that you do not self host it. Only the version deployed and managed by the RCPCH team is warranted to be correct.
 
 !!! danger "Clinical Safety Risk"
-    **WE STRONGLY RECOMMEND NOT TO SELF HOST THE SERVER FOR PRODUCTION/CLINICAL/LIVE USE.**
+    **WE STRONGLY RECOMMEND NOT TO SELF HOST THE SERVER FOR PRODUCTION/CLINICAL/LIVE USE.**  
+    1. If self hosting you would not have a warranty from RCPCH and your organisation would therefore be liable for misconfigurations in the server leading to clinical mishap. Growth Charts are complex, and in order to assure your service is safe, you are likely going to need a large amount of statistical, clinical and technical consultancy.  
+    2. If self hosting you would require to obtain registration with the  MHRA as a Medical Device.  
+    3. CSO  
+    4. Clinical Safety Management File  
+    5. DCB0129 and DCB0160 would apply  
 
 !!! tip "RCPCH On-Premise Hosting Service"
     The RCPCH offers an 'on-premise' managed service which may suit some customers requiring the service to be hosted within their own data centre, or on their own cloud infrastructure. **LINK TO PRICING**
 
-1. If self hosting you would not have a warranty from RCPCH and your organisation would be liable for misconfigurations in the server leading to clinical mishap. Growth Charts are complex and in order to assure your service you are likely going to need a large amount of expensive statistical, clinical and technical consultancy.
-2. If self hosting you would require to obtain registration with the  MHRA as a Medical Device.
-3. CSO
-4. Clinical Safety Management File
-5. DCB0129 and DCB0160 would apply
+
 
 By using the RCPCH-provided API you avoid all that requirement and use our commodity server.
 
