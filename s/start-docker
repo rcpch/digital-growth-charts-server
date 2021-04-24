@@ -4,12 +4,18 @@
 app="rcpch-dgc-server"
 
 # usage: `s/start-docker`
-# run the container
-# will error if a container already exists
+# run the container in the foreground
+# will restart existing container if it exists
 # `docker container rm rcpch-dgc-server` to remove container
 # or use the `s/rebuild-docker` script
 
-docker run -it -p 5000:5000 \
-  --name=${app} \
-  --volume $PWD:/app \
-  ${app}
+
+if [ "$(docker ps -a --filter "name=${app}"  --format "{{.ID}}")" == "" ]; then
+  docker run -it -p 5000:5000 \
+    --name=${app} \
+    ${app}
+else
+  docker start ${app}
+  docker attach ${app}
+fi
+
