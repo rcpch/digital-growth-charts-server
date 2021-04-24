@@ -8,7 +8,7 @@ from pprint import pprint
 import pytest
 
 # rcpch imports
-from rcpchgrowth import Measurement, global_functions, date_calculations
+from rcpchgrowth import Measurement
 
 # the ACCURACY constant defines the accuracy of the test comparisons
 # owing to variations in statistical calculations it's impossible to get exact
@@ -35,20 +35,6 @@ def test_measurement_class_ukwho_data(line):
       correct value.
     """
 
-    # xfail the 121 tests which try to calculate an OFC-SDS where there is no UK-WHO data
-    if line["measurement_method"] == "ofc" and line["chronological_age"] > 17.0:
-        if line["sex"] == "female":
-            pytest.xfail(
-                "UK-WHO OFC data is not available for females over the age of 17.0")
-        elif line["chronological_age"] > 18.0:
-            pytest.xfail(
-                "UK-WHO OFC data is not available for males over the age of 18.0")
-
-    # xfail the 2 tests which try to calculate a BMI - SDS where there is no UK - WHO data
-    if line["measurement_method"] == "bmi" and line["corrected_age"] < 0.038329911019849415:
-        pytest.xfail(
-            "UK-WHO BMI data is not available for babies under 2 weeks")
-
     measurement_object = Measurement(
         sex=str(line["sex"]),
         birth_date=datetime.strptime(line["birth_date"], "%d/%m/%Y"),
@@ -64,12 +50,22 @@ def test_measurement_class_ukwho_data(line):
     pprint(vars(measurement_object))
     pprint(line)
 
-    # RCPCH package calculated value for SDS
-    rcpchgrowth_result = measurement_object.measurement[
-        "measurement_calculated_values"]['corrected_sds']
+    # all comparisons using absolute tolerance (not relative)
 
-    # precalculated 'known correct' value from Tim's R package
-    tim_cole_r_result = line["corrected_sds"]
+    # this conditional guards against failure of pytest.approx with NoneTypes
+    if line["corrected_sds"] is None:
+        assert measurement_object.measurement[
+            "measurement_calculated_values"]['corrected_sds'] is None
+    else:
+        assert measurement_object.measurement[
+            "measurement_calculated_values"]['corrected_sds'] == pytest.approx(
+            line["corrected_sds"], abs=ACCURACY)
 
-    # comparison using absolute tolerance (not relative)
-    assert rcpchgrowth_result == pytest.approx(tim_cole_r_result, abs=ACCURACY)
+    # this conditional guards against failure of pytest.approx with NoneTypes
+    if line["chronological_sds"] is None:
+        assert measurement_object.measurement[
+            "measurement_calculated_values"]['chronological_sds'] is None
+    else:
+        assert measurement_object.measurement[
+            "measurement_calculated_values"]['chronological_sds'] == pytest.approx(
+            line["chronological_sds"], abs=ACCURACY)

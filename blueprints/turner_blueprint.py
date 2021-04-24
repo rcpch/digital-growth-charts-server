@@ -12,7 +12,7 @@ from flask import Blueprint, jsonify, request
 from marshmallow import ValidationError
 
 # rcpch imports
-from rcpchgrowth.rcpchgrowth.constants.parameter_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, TURNERS
+from rcpchgrowth.rcpchgrowth.constants.reference_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, TURNERS
 from rcpchgrowth.rcpchgrowth.measurement import Measurement
 from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data, create_chart
 from schemas import CalculationRequestParameters

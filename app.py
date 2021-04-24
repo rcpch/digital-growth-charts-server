@@ -15,7 +15,7 @@ from flask_cors import CORS
 import apispec_generation
 import blueprints
 from rcpchgrowth.rcpchgrowth.chart_functions import create_chart
-from rcpchgrowth.rcpchgrowth.constants.parameter_constants import *
+from rcpchgrowth.rcpchgrowth.constants.reference_constants import *
 
 
 ### API VERSION AND COMMIT HASH ###
