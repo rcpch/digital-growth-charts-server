@@ -14,10 +14,25 @@
 		},
 		{
 			"path": "../../../react/component-libraries/digital-growth-charts-react-component-library"
+		},
+		{
+			"path": "../../../react/digital-growth-charts-react-native-client"
 		}
 	],
 	"settings": {
-		"python.pythonPath": "/Users/SimonChapman/.pyenv/shims/python3",
+		"python.pythonPath": "C:\\Users\\athen\\AppData\\Local\\Microsoft\\WindowsApps\\python3.9.exe",
 		"jupyter.jupyterServerType": "local"
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Python: Current File",
+				"type": "python",
+				"request": "launch",
+				"program": "${file}",
+				"console": "integratedTerminal"
+			}
+		]
 	}
 }

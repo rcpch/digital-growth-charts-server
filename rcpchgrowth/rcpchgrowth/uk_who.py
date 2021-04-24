@@ -1,8 +1,13 @@
+"""
+Handles UK-WHO-specific reference data selection
+"""
+
+# standard imports
 import json
 import pkg_resources
+
+# rcpch imports
 from .constants import *
-# from .global_functions import z_score, cubic_interpolation, linear_interpolation, centile, measurement_for_z, nearest_lowest_index, fetch_lms
-# import timeit #see below, comment back in if timing functions in this module
 
 """
 birth_date: date of birth
@@ -18,36 +23,46 @@ lms: L, M or S
 reference: reference data
 """
 
-#load the reference data
+# load the reference data
 
-UK90_PRETERM_DATA = pkg_resources.resource_filename(__name__, "/data_tables/uk90_preterm.json") ## 23 - 42 weeks gestation
+UK90_PRETERM_DATA = pkg_resources.resource_filename(
+    __name__, "/data_tables/uk90_preterm.json")  # 23 - 42 weeks gestation
 with open(UK90_PRETERM_DATA) as json_file:
-            UK90_PRETERM_DATA = json.load(json_file)
-            json_file.close()
-UK90_TERM_DATA = pkg_resources.resource_filename(__name__, "/data_tables/uk90_term.json") ## 37-42 weeks gestation
+    UK90_PRETERM_DATA = json.load(json_file)
+    json_file.close()
+
+UK90_TERM_DATA = pkg_resources.resource_filename(
+    __name__, "/data_tables/uk90_term.json")  # 37-42 weeks gestation
 with open(UK90_TERM_DATA) as json_file:
-            UK90_TERM_DATA = json.load(json_file)
-            json_file.close()
-WHO_INFANTS_DATA = pkg_resources.resource_filename(__name__, "/data_tables/who_infants.json") ## 2 weeks to 2 years
+    UK90_TERM_DATA = json.load(json_file)
+    json_file.close()
+
+WHO_INFANTS_DATA = pkg_resources.resource_filename(
+    __name__, "/data_tables/who_infants.json")  # 2 weeks to 2 years
 with open(WHO_INFANTS_DATA) as json_file:
-            WHO_INFANTS_DATA = json.load(json_file)
-            json_file.close()
-WHO_CHILD_DATA = pkg_resources.resource_filename(__name__, "/data_tables/who_children.json") ## 2 years to 4 years
+    WHO_INFANTS_DATA = json.load(json_file)
+    json_file.close()
+
+WHO_CHILD_DATA = pkg_resources.resource_filename(
+    __name__, "/data_tables/who_children.json")  # 2 years to 4 years
 with open(WHO_CHILD_DATA) as json_file:
-            WHO_CHILD_DATA = json.load(json_file)
-            json_file.close()
-UK90_CHILD_DATA = pkg_resources.resource_filename(__name__, "/data_tables/uk90_child.json") ## 4 years to 20 years
+    WHO_CHILD_DATA = json.load(json_file)
+    json_file.close()
+
+UK90_CHILD_DATA = pkg_resources.resource_filename(
+    __name__, "/data_tables/uk90_child.json")  # 4 years to 20 years
 with open(UK90_CHILD_DATA) as json_file:
-            UK90_CHILD_DATA = json.load(json_file)
-            json_file.close()
+    UK90_CHILD_DATA = json.load(json_file)
+    json_file.close()
 
-#public functions
+# public functions
 
-def reference_data_absent( 
-        age: float,
-        measurement_method: str,
-        sex: str
-    ):
+
+def reference_data_absent(
+    age: float,
+    measurement_method: str,
+    sex: str
+):
     """
     Helper function.
     Returns boolean
@@ -60,18 +75,18 @@ def reference_data_absent(
      - lowest threshold is 23 weeks, upper threshold is 20y
     """
 
-    if age < TWENTY_THREE_WEEKS_GESTATION: # lower threshold of UK90 data
+    if age < TWENTY_THREE_WEEKS_GESTATION:  # lower threshold of UK90 data
         return True, "UK-WHO data does not exist below 23 weeks gestation."
-    
-    if age > TWENTY_YEARS: # upper threshold of UK90 data
+
+    if age > TWENTY_YEARS:  # upper threshold of UK90 data
         return True, "UK-WHO data does not exist above 20 years."
 
     if measurement_method == "height" and age < TWENTY_FIVE_WEEKS_GESTATION:
         return True, "UK-WHO length data does not exist in infants below 25 weeks gestation."
-        
+
     elif measurement_method == "bmi" and age < FORTY_TWO_WEEKS_GESTATION:
         return True, "UK-WHO BMI data does not exist below 2 weeks of age."
-    
+
     elif measurement_method == "ofc":
         if (sex == "male" and age > EIGHTEEN_YEARS) or (sex == "female" and age > SEVENTEEN_YEARS):
             if sex == "male":
@@ -83,10 +98,11 @@ def reference_data_absent(
     else:
         return False, ""
 
+
 def uk_who_reference(
-        age: float, 
-        born_preterm: bool = False
-    ) -> json:
+    age: float,
+    born_preterm: bool = False
+) -> json:
     """
     The purpose of this function is to choose the correct reference for calculation.
     The UK-WHO standard is an unusual case because it combines two different reference sources.
@@ -96,42 +112,22 @@ def uk_who_reference(
     The function return the appropriate reference file as json
     """
 
-    # CONSTANTS RELEVANT ONLY TO UK-WHO REFERENCE-SELECTION LOGIC
-    # 23 weeks is the lowest decimal age available on the UK90 charts
-    UK90_REFERENCE_LOWER_THRESHOLD = ((23 * 7) - (40*7)) / 365.25  # 23 weeks as decimal age
-    
-    # The WHO references change from measuring infants in the lying position to measuring children in the standing position at 2.0 years.
-    WHO_CHILD_LOWER_THRESHOLD = 2.0  # 2 years as decimal age
-    # The UK-WHO standard is complicated because it switches from the WHO references to UK90 references
-    #  at the age of 4.0 years. This is because it was felt the reference data from breast fed infants
-    #  from the WHO cohorts were more accurate than the UK90 cohorts for this age group.
-    #  The Term reference averaged all L, M and S from 37-42 weeks. This is now deprecated and therefore UK90 data is used
-    # for all measurements across this age range
-    # Caution is advised when interpreting serial measurements onver this time periods - babies are often measured inaccurately and 
-    # up to 10% weight loss is expected in the first 2 weeks of life, and birthweight is often not regained until
-    # 3 weeks of life
-    
-    WHO_CHILDREN_UPPER_THRESHOLD = 4.0
-    UK_WHO_INFANT_LOWER_THRESHOLD = ((42 * 7) - (40*7)) / 365.25  # 42 weeks as decimal age
-    UK90_UPPER_THRESHOLD = 20
-
-
-    #These conditionals are to select the correct reference
+    # These conditionals are to select the correct reference
     if age < UK90_REFERENCE_LOWER_THRESHOLD:
         # Below the range for which we have reference data, we can't provide a calculation.
         return ValueError("There is no UK90 reference data below 23 weeks gestation")
     elif age < UK_WHO_INFANT_LOWER_THRESHOLD:
         # Below 42 weeks, the UK90 preterm data is always used
         return UK90_PRETERM_DATA
-    
+
     elif age < WHO_CHILD_LOWER_THRESHOLD:
         # Children beyond 2 weeks but below 2 years are measured lying down using WHO data
         return WHO_INFANTS_DATA
-        
+
     elif age < WHO_CHILDREN_UPPER_THRESHOLD:
         # Children 2 years and beyond but below 4 years are measured standing up using WHO data
         return WHO_CHILD_DATA
-    
+
     elif age <= UK90_UPPER_THRESHOLD:
         # All children 4 years and above are measured using UK90 child data
         return UK90_CHILD_DATA
@@ -139,25 +135,27 @@ def uk_who_reference(
     else:
         return ValueError("There is no UK90 reference data above the age of 20 years.")
 
-def uk_who_lms_array_for_measurement_and_sex(
-        age: float,
-        measurement_method: str,
-        sex: str,
-        born_preterm
-    )->list:
 
-    ## selects the correct lms data array from the patchwork of references that make up UK-WHO
+def uk_who_lms_array_for_measurement_and_sex(
+    age: float,
+    measurement_method: str,
+    sex: str,
+    born_preterm
+) -> list:
+
+    # selects the correct lms data array from the patchwork of references that make up UK-WHO
 
     try:
-        selected_reference = uk_who_reference(age=age, born_preterm=born_preterm)
-    except: # there is no reference for the age supplied
+        selected_reference = uk_who_reference(
+            age=age, born_preterm=born_preterm)
+    except:  #  there is no reference for the age supplied
         return LookupError("There is no UK-WHO reference for the age supplied.")
 
     # Check that the measurement requested has reference data at that age
 
     invalid_data, data_error = reference_data_absent(
-        age=age, 
-        measurement_method=measurement_method, 
+        age=age,
+        measurement_method=measurement_method,
         sex=sex)
 
     if invalid_data:
@@ -175,8 +173,8 @@ def select_reference_data_for_uk_who_chart(uk_who_reference: str, measurement_me
         try:
             uk90_preterm_reference = uk_who_lms_array_for_measurement_and_sex(
                 age=-0.01,
-                measurement_method=measurement_method, 
-                sex=sex, 
+                measurement_method=measurement_method,
+                sex=sex,
                 born_preterm=True)
         except:
             uk90_preterm_reference = []
@@ -184,9 +182,9 @@ def select_reference_data_for_uk_who_chart(uk_who_reference: str, measurement_me
     elif uk_who_reference == UK_WHO_INFANT:
         try:
             uk_who_infants_reference = uk_who_lms_array_for_measurement_and_sex(
-                age=0.04, 
-                measurement_method=measurement_method, 
-                sex=sex, 
+                age=0.04,
+                measurement_method=measurement_method,
+                sex=sex,
                 born_preterm=True)
         except:
             uk_who_infants_reference = []
@@ -194,9 +192,9 @@ def select_reference_data_for_uk_who_chart(uk_who_reference: str, measurement_me
     elif uk_who_reference == UK_WHO_CHILD:
         try:
             uk_who_children_reference = uk_who_lms_array_for_measurement_and_sex(
-                age=2.0, 
-                measurement_method=measurement_method, 
-                sex=sex, 
+                age=2.0,
+                measurement_method=measurement_method,
+                sex=sex,
                 born_preterm=True)
         except:
             uk_who_children_reference = []
@@ -204,12 +202,13 @@ def select_reference_data_for_uk_who_chart(uk_who_reference: str, measurement_me
     elif uk_who_reference == UK90_CHILD:
         try:
             uk90_children_reference = uk_who_lms_array_for_measurement_and_sex(
-                age=4.0, 
-                measurement_method=measurement_method, 
-                sex=sex, 
+                age=4.0,
+                measurement_method=measurement_method,
+                sex=sex,
                 born_preterm=True)
         except:
-            uk90_children_reference=[]
+            uk90_children_reference = []
         return uk90_children_reference
     else:
-        raise LookupError(f"No data found for {measurement_method} in {sex}s in {uk_who_reference}")
+        raise LookupError(
+            f"No data found for {measurement_method} in {sex}s in {uk_who_reference}")
