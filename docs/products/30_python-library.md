@@ -1,9 +1,9 @@
 ---
-title: RCPCHGrowth Python package
+title: Python package
 reviewers: Dr Marcus Baw, Dr Simon Chapman
 ---
 
-# RCPCHGrowth Python library
+# rcpchgrowth Python package
 
 The calculation functions within the dGC API are powered by a self-contained Python package which has been extracted out into a separate repository and is published on [PyPi](https://pypi.org/project/rcpchgrowth/), the Python Package Index. This enables the centile calculation functions to be used in other programs. 
 
@@ -11,7 +11,7 @@ The calculation functions within the dGC API are powered by a self-contained Pyt
 
 To add to your project:
 
-```bash
+``` bash
 pip install rcpchgrowth
 ```
 
@@ -29,6 +29,6 @@ We'd be interested to hear from people who are using the RCPCHGrowth python pack
 
 If you want to contribute to the project, you will need clone the [repository](https://github.com/rcpch/rcpchgrowth-python) and create a python environment based on 3.8.3:
 
-```bash
+``` bash
 pyenv virtualenv 3.8.3 rcpch-growth-python
 ```

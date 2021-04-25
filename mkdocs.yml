@@ -10,6 +10,8 @@ theme:
     - navigation.tracking
     - navigation.top
     - navigation.expand
+    - navigation.tabs.sticky
+
     #  - toc.integrate
 
   palette:
@@ -17,14 +19,14 @@ theme:
     - media: "(prefers-color-scheme: light)"
       scheme: default
       toggle:
-        icon: material/toggle-switch-off-outline
+        icon: material/lightbulb
         name: Switch to dark mode
 
     # Dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       toggle:
-        icon: material/toggle-switch
+        icon: material/lightbulb-outline
         name: Switch to light mode
 
   font:
