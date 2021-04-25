@@ -6,7 +6,7 @@ from .turner import turner_lms_array_for_measurement_and_sex
 from .trisomy_21 import trisomy_21_lms_array_for_measurement_and_sex
 # from scipy import interpolate  #see below, comment back in if swapping interpolation method
 # from scipy.interpolate import CubicSpline #see below, comment back in if swapping interpolation method
-from .constants.parameter_constants import UK_WHO, TURNERS, TRISOMY_21, COLE_TWO_THIRDS_SDS_NINE_CENTILES, COLE_TWO_THIRDS_SDS_NINE_CENTILE_COLLECTION, THREE_PERCENT_CENTILE_COLLECTION, MEASUREMENT_METHODS, SEXES, UK_WHO_REFERENCES
+from .constants.reference_constants import UK_WHO, TURNERS, TRISOMY_21, COLE_TWO_THIRDS_SDS_NINE_CENTILES, COLE_TWO_THIRDS_SDS_NINE_CENTILE_COLLECTION, THREE_PERCENT_CENTILE_COLLECTION, MEASUREMENT_METHODS, SEXES, UK_WHO_REFERENCES
 import logging
 import json
 import pkg_resources
@@ -167,7 +167,7 @@ def fetch_lms(age: float, lms_value_array_for_measurement: list):
             age_two_above = lms_value_array_for_measurement[age_matched_index + 2]["decimal_age"]
             parameter_two_below = lms_value_array_for_measurement[age_matched_index - 1]
             parameter_two_above = lms_value_array_for_measurement[age_matched_index + 2]
-            
+
             l = cubic_interpolation(age=age, age_one_below=age_one_below, age_two_below=age_two_below, age_one_above=age_one_above, age_two_above=age_two_above,
                                     parameter_two_below=parameter_two_below["L"], parameter_one_below=parameter_one_below["L"], parameter_one_above=parameter_one_above["L"], parameter_two_above=parameter_two_above["L"])
             m = cubic_interpolation(age=age, age_one_below=age_one_below, age_two_below=age_two_below, age_one_above=age_one_above, age_two_above=age_two_above,
@@ -269,6 +269,7 @@ def percentage_median_bmi(reference: str, age: float, actual_bmi: float, sex: st
     percent_median_bmi = (actual_bmi / m) * 100.0
     return percent_median_bmi
 
+
 def generate_centile(z: float, centile: float, measurement_method: str, sex: str, lms_array_for_measurement: list, reference: str) -> list:
     """
     Generates a centile curve for a given reference. 
@@ -296,43 +297,44 @@ def generate_centile(z: float, centile: float, measurement_method: str, sex: str
             rounded = None
         value = {
             "l": centile,
-            "x": round(age,4),
+            "x": round(age, 4),
             "y": rounded
         }
-            
+
         centile_measurements.append(value)
 
-        ## weekly intervals until 2 y, then monthly 
-        if age <=2:
-            age += (7/365.25) # weekly intervals
+        # weekly intervals until 2 y, then monthly
+        if age <= 2:
+            age += (7 / 365.25)  # weekly intervals
         else:
-            age += 1/12 # monthly intervals
+            age += 1 / 12  # monthly intervals
 
         # Although it is preferable to have weekly data points, it generates files of ~2.5 MB
         # even after minifying, which are not practical. Weekly values makes plotting easier.
-        # Here we have used weekly points from preterm to 2 y, monthly values after.    
+        # Here we have used weekly points from preterm to 2 y, monthly values after.
         # age += (7/365.25) # weekly intervals
     return centile_measurements
 
 
-
-def rounded_sds_for_centile(centile:float)->float:
+def rounded_sds_for_centile(centile: float) -> float:
     """
     converts a centile (supplied as a percentage) using the scipy package to the nearest 2/3 SDS.
     """
-    sds = stats.norm.ppf(centile/100)
+    sds = stats.norm.ppf(centile / 100)
     if sds == 0:
         return sds
     else:
-        rounded_to_nearest_two_thirds = round(sds/(2/3))
-        return rounded_to_nearest_two_thirds*(2/3)
+        rounded_to_nearest_two_thirds = round(sds / (2 / 3))
+        return rounded_to_nearest_two_thirds * (2 / 3)
 
-def sds_for_centile(centile: float)->float:
+
+def sds_for_centile(centile: float) -> float:
     """
     converts a centile (supplied as a percentage) using the scipy package to an SDS.
     """
-    sds = stats.norm.ppf(centile/100)
+    sds = stats.norm.ppf(centile / 100)
     return sds
+
 
 def lms_value_array_for_measurement_for_reference(
     reference: str,
@@ -361,10 +363,9 @@ def lms_value_array_for_measurement_for_reference(
     elif reference == TRISOMY_21:
         try:
             lms_value_array_for_measurement = trisomy_21_lms_array_for_measurement_and_sex(
-            measurement_method=measurement_method, sex=sex, age=age)
+                measurement_method=measurement_method, sex=sex, age=age)
         except LookupError as error:
             raise LookupError(error)
     else:
         raise ValueError("Incorrect reference supplied")
     return lms_value_array_for_measurement
-
