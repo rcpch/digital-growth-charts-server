@@ -3,8 +3,7 @@ from marshmallow import Schema, fields, validate
 
 # rcpch imports
 from .measurement_schemas import MeasurementResponseSchema
-from rcpchgrowth.rcpchgrowth.constants.validation_constants import MINIMUM_GESTATION_WEEKS, MAXIMUM_GESTATION_WEEKS
-
+from rcpchgrowth import constants
 
 class CalculationRequestParameters(Schema):
     """
@@ -18,7 +17,7 @@ class CalculationRequestParameters(Schema):
         description="The number of additional days _beyond the completed weeks of gestation_ at which the patient was born. This enables Gestational Age correction if the child was not born at term. See also the other parameter `gestation_weeks` - both are usually required.")
     gestation_weeks = fields.Number(
         validate=validate.Range(
-            min=MINIMUM_GESTATION_WEEKS, max=MAXIMUM_GESTATION_WEEKS),
+            min=constants.validation_constants.MINIMUM_GESTATION_WEEKS, max=constants.validation_constants.MAXIMUM_GESTATION_WEEKS),
         description="The number of completed weeks of gestation at which the patient was born. This enables Gestational Age Correction if the child was not born at term. See also the other parameter `gestation_days` - both are usually required. If the child is term then any value between 37 and 42 will be handled the same, and a value must be provided. Values outside the validation range will return errors.")
     measurement_method = fields.String(
         required=True,

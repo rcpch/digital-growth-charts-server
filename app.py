@@ -14,12 +14,12 @@ from flask_cors import CORS
 # rcpch imports
 import apispec_generation
 import blueprints
-from rcpchgrowth.rcpchgrowth.chart_functions import create_chart
-from rcpchgrowth.rcpchgrowth.constants.reference_constants import *
+from rcpchgrowth.chart_functions import create_chart
+from rcpchgrowth.constants.reference_constants import *
 
 
 ### API VERSION AND COMMIT HASH ###
-API_SEMANTIC_VERSION = "2.1.0"  # this is manually set
+API_SEMANTIC_VERSION = "2.1.1"  # this is manually set
 
 # Read saved version info from **saved** JSON APIspec
 # (Because Git may not exist in Live and may not be able to get current commit hash)
