@@ -1,10 +1,31 @@
+/* these are colours and fonts consistent with RCPCH branding guidelines - see github for info */
+
 :root {
   --md-primary-fg-color: #3366cc;
 }
 
-p,
-li {
-  font-family: Libre Baskerville;
+h1 {
+  font-weight: 700;
+  font-size: 24pt;
+  letter-spacing: -4px;
+  line-height: 0px;
+  color: #11a7f2;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 14pt;
+  letter-spacing: -4px;
+  line-height: 3px;
+  color: #4d4d4d;
+}
+
+h3 {
+  font-weight: 700;
+  font-size: 10pt;
+  letter-spacing: -4px;
+  line-height: 3px;
+  color: #000000;
 }
 
 .md-typeset h1,
