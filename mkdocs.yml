@@ -1,6 +1,68 @@
 site_name: RCPCH Digital Growth Charts
 site_description: The Royal College of Paediatrics and Child Health Digital Growth Charts Project
 
+nav:
+  - Home: 'index.md'
+  - About:
+    - 'about/about.md'
+    - 'about/overview.md'
+    - 'about/support.md'
+    - 'about/team.md'
+    - 'about/acknowledgements.md'
+  - Products:
+    - 'products/command-line-client.md'
+    - 'products/flask(deprecated).md'
+    - 'products/google-sheets-plugin.md'
+    - 'products/products-overview.md'
+    - 'products/python-library.md'
+    - 'products/react-client.md'
+    - 'products/react-component.md'
+    - 'products/react-native.md'
+    - 'products/server.md'
+  - Clinician: 
+    - 'clinician/how-the-api-works.md'
+    - 'clinician/chart-information-families.md'
+    - 'clinician/chart-information-health-staff.md'
+    - 'clinician/date-age-calculations.md'
+    - 'clinician/faqs-for-clinicians.md'
+    - 'clinician/growth-references.md'
+  - Integrator:
+    - 'integrator/getting-started.md'
+    - 'integrator/api-reference.md'
+    - 'integrator/client-specification.md'
+    - 'integrator/faqs-for-integrators.md'
+    - 'integrator/tutorial.md'
+  - Developer:
+    - 'developer/start-here.md'
+    - 'developer/adding-a-new-api-endpoint.md'
+    - 'developer/api-docker.md'
+    - 'developer/api-python.md'
+    - 'developer/contributing.md'
+    - 'developer/developing-faqs.md'
+    - 'developer/why-python.md'
+    - 'developer/writing-documentation.md'
+  - Safety:
+    - 'safety/overview.md'
+    - Clinical Safety Mgmt File:
+      - 'safety/csmf/clinical-risk-mgmt-system.md'
+      - 'safety/csmf/clinical-risk-mgmt-plan.md'
+      - 'safety/csmf/hazard-log.md'
+      - 'safety/csmf/code-security-safety.md'
+      - 'safety/csmf/third-party-tools-safety-assmt.md'
+      - 'safety/csmf/license.md'
+    - 'safety/dtac.md'
+    - EU Dedical Devices:
+      - 'safety/eu-mdr/doc-api.md'
+      - 'safety/eu-mdr/mdr-technical-docs.md'
+    - 'safety/mhra.md'
+  - Legal:
+    - 'legal/disclaimer.md'
+    - 'legal/licensing-copyright.md'
+    - 'legal/data-protection.md'
+    - 'legal/privacy.md'
+
+
+
 theme:
   name: material
   custom_dir: rcpch-theme

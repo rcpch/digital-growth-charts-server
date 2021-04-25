@@ -7,21 +7,18 @@
 .md-typeset h1 {
   font-weight: 700;
   font-size: 24pt;
-  line-height: 0pt;
   color: #11a7f2;
 }
 
 .md-typeset h2 {
   font-weight: 700;
-  font-size: 14pt;
-  line-height: 3px;
+  font-size: 16pt;
   color: #4d4d4d;
 }
 
 .md-typeset h3 {
   font-weight: 700;
-  font-size: 10pt;
-  line-height: 3px;
+  font-size: 13pt;
   color: #000000;
 }
 
