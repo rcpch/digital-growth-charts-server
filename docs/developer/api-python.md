@@ -17,7 +17,7 @@ Run all scripts from the root of the project, or they won't work.
 
 #### Managing Python versions
 
-We are using Python 3.8.0 currently for these algorithms. There are tools available to help you manage multiple different Python versions on the same machine. We are using `pyenv` here, however there are other ways to solve this problem, and you may already have a preferred method, in which case you should be able to use that.
+We are using Python 3.8.3 currently for these algorithms. There are tools available to help you manage multiple different Python versions on the same machine. We are using `pyenv` here, however there are other ways to solve this problem, and you may already have a preferred method, in which case you should be able to use that.
 
 #### Managing library / dependencies versions
 
@@ -54,24 +54,24 @@ pyenv install 3.8.0
 Create a virtualenv for this project 'growth-charts' abbreviated to 'gc-3.8' using Python 3.8.0
 
 ```bash
-pyenv virtualenv 3.8.0 gc-3.8
+pyenv virtualenv 3.8.0 dgc-flask-app
 ```
 
 !!! tip "Auto-selection of Python and virtualenv"
-    Using the same name 'gc-3.8' will enable it to be automatically selected when navigating to this repo (but you _can_ call your own virtualenv whatever you like). This all works using the `.python-version` file in the project root, which can contain either a Python version name which `pyenv` recognises, or it can contain a vitrualenv name, which `pyenv` will select for you, and of course this automatically selects the Python version too. A helpful article about this is here <https://realpython.com/intro-to-pyenv/#activating-your-versions>
+    Using the same name 'dgc-flask-app' will enable it to be automatically selected when navigating to this repo (but you _can_ call your own virtualenv whatever you like). This all works using the `.python-version` file in the project root, which can contain either a Python version name which `pyenv` recognises, or it can contain a vitrualenv name, which `pyenv` will select for you, and of course this automatically selects the Python version too. A helpful article about this is here <https://realpython.com/intro-to-pyenv/#activating-your-versions>
 
 Check virtualenv creation worked.
 
 `pyenv virtualenvs` should return something like:
 
 ```bash
-gc-3.8 (created from /home/my-user/.pyenv/versions/3.8.0)
+dgc-flask-app (created from /home/my-user/.pyenv/versions/3.8.0)
 ```
 
 Activate the virtualenv manually if it's not already selected
 
 ```bash
-pyenv activate gc-3.8
+pyenv activate dgc-flask-app
 ```
 
 Install the dependencies inside this virtualenv
@@ -92,28 +92,28 @@ Refer to the [pyenv command reference](https://github.com/pyenv/pyenv/blob/maste
     and then recompile the Python that `pyenv` built earlier
 
     ```bash
-    pyenv install 3.8.0
+    pyenv install 3.8.3
     ```
 
 !!! note "If installing on macOS Big Sur, pyenv install of python 3.8.0 and requirements.txt may fail"
-    To install 3.8.0 via pyenv, set the following 2 environment variables (requires homebrew installed versions of bzip2, openssl and zlib):
+    To install 3.8.3 via pyenv, set the following 2 environment variables (requires homebrew installed versions of bzip2, openssl and zlib):
 
-    ```bash
-    export CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix bzip2)/include -I$(brew --prefix readline)/include -I$(xcrun --show-sdk-path)/usr/include"
-    export LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib -L$(brew --prefix bzip2)/lib"
-    ```
+```bash
+export CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix bzip2)/include -I$(brew --prefix readline)/include -I$(xcrun --show-sdk-path)/usr/include"
+export LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib -L$(brew --prefix bzip2)/lib"
+```
 
-    Now, run the pyenv install with a patch for Big Sur:
+Now, run the pyenv install with a patch for Big Sur:
 
-    ```bash
-    pyenv install --patch 3.8.0 < <(curl -sSL https://github.com/python/cpython/commit/8ea6353.patch\?full_index\=1)
-    ```
+```bash
+pyenv install --patch 3.8.0 < <(curl -sSL https://github.com/python/cpython/commit/8ea6353.patch\?full_index\=1)
+```
 
-    Now, once ready to install requirements.txt with pip, set one more environment variable:
+Now, once ready to install requirements.txt with pip, set one more environment variable:
 
-    ```bash
-    export SYSTEM_VERSION_COMPAT=1
-    ```
+```bash
+export SYSTEM_VERSION_COMPAT=1
+```
 
 ## Start the API server natively with default settings
 
