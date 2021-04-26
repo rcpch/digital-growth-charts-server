@@ -1,3 +1,8 @@
+---
+title: Python development
+reviewers: Dr Marcus Baw
+---
+
 # Running locally with Python
 
 ## Scripts
@@ -11,7 +16,7 @@ Run all scripts from the root of the project, or they won't work.
 ## Running the dGC Server locally with Python
 
 !!! note
-    Some of this is obvious to experienced Python developers, but it's documented here so that we all know the _same_ obvious. :grin:
+    Some of this setup is obvious to experienced Python developers, but it's documented here so that we all know the _same_ obvious. :grin: This helps us reduce development difficulty and speeds up onboarding of new team members.
 
 ### Managing Python versions, and dependencies such as libraries
 

@@ -1,3 +1,8 @@
+---
+title: Contributing
+reviewers: Dr Marcus Baw
+---
+
 ## Contributing
 
 We're a friendly bunch and we're happy to chat. You can get in touch with the primary developers to talk about the project using our forum at https://openhealthhub.org/c/rcpch-digital-growth-charts/ This is the main community hub around the dGC project and you are welcome to chat to us there.
@@ -25,7 +30,7 @@ Some helpful sources of information on Python style are:
 - <https://www.python.org/dev/peps/pep-0008>  
 - <https://google.github.io/styleguide/pyguide.html>
 
-## Intellectual Property (IP)
+## Intellectual Property (IP) of contributions
 
 - The copyright over the IP in this and other Growth Chart related repositories is owned by the Royal College of Paediatrics and Child Health, which releases it under an open source license. Consult the individual repository for specifics on which license we have used.
 

@@ -1,3 +1,8 @@
+---
+title: Docker development
+reviewers: Dr Marcus Baw, Dr Sean Cusack
+---
+
 # Running locally in Docker
 
 ## Running the API server locally in Docker
@@ -26,4 +31,4 @@ This is useful for rapidly getting a development environment set up. It pulls th
 
 run the `s/start-docker` script, which will run the image in a Docker container.
 
-The dGC server should be running in development mode in the container, and mapped to the port https://localhost:5000
+The dGC server will then be running in development mode in the container, and will be available at <https://localhost:5000>

@@ -1,5 +1,6 @@
 site_name: RCPCH Digital Growth Charts
 site_description: The Royal College of Paediatrics and Child Health Digital Growth Charts Project
+site_author: The Royal College of Paediatrics and Child Health
 
 nav:
   - Home: 'index.md'
@@ -10,40 +11,39 @@ nav:
     - 'about/team.md'
     - 'about/acknowledgements.md'
   - Products:
-    - 'products/command-line-client.md'
-    - 'products/flask(deprecated).md'
-    - 'products/google-sheets-plugin.md'
     - 'products/products-overview.md'
-    - 'products/python-library.md'
+    - 'products/api-server.md'
     - 'products/react-client.md'
     - 'products/react-component.md'
     - 'products/react-native.md'
-    - 'products/server.md'
+    - 'products/command-line-client.md'
+    - 'products/python-library.md'
+    - 'products/google-sheets-plugin.md'
+    - 'products/flask(deprecated).md'
   - Clinician: 
     - 'clinician/how-the-api-works.md'
     - 'clinician/chart-information-families.md'
     - 'clinician/chart-information-health-staff.md'
     - 'clinician/date-age-calculations.md'
-    - 'clinician/faqs-for-clinicians.md'
     - 'clinician/growth-references.md'
+    - 'clinician/faqs-for-clinicians.md'
   - Integrator:
     - 'integrator/getting-started.md'
+    - 'integrator/tutorial.md'
     - 'integrator/api-reference.md'
     - 'integrator/client-specification.md'
     - 'integrator/faqs-for-integrators.md'
-    - 'integrator/tutorial.md'
   - Developer:
     - 'developer/start-here.md'
     - 'developer/adding-a-new-api-endpoint.md'
     - 'developer/api-docker.md'
     - 'developer/api-python.md'
     - 'developer/contributing.md'
-    - 'developer/developing-faqs.md'
-    - 'developer/why-python.md'
     - 'developer/writing-documentation.md'
+    - 'developer/faqs-for-developers.md'
   - Safety:
     - 'safety/overview.md'
-    - Clinical Safety Mgmt File:
+    - Clinical Safety File:
       - 'safety/csmf/clinical-risk-mgmt-system.md'
       - 'safety/csmf/clinical-risk-mgmt-plan.md'
       - 'safety/csmf/hazard-log.md'
@@ -72,9 +72,8 @@ theme:
     - navigation.tracking
     - navigation.top
     - navigation.expand
-    - navigation.tabs.sticky
-
-    #  - toc.integrate
+    # - navigation.tabs.sticky
+    # - toc.integrate
 
   palette:
     # Light mode
@@ -119,6 +118,7 @@ markdown_extensions:
 
 copyright: Copyright &copy; 2021 Royal College of Paediatrics and Child Health (RCPCH)
 repo_url: https://github.com/rcpch/digital-growth-charts-documentation
+edit_uri: blob/live/docs
 
 extra_css:
   - _stylesheets/extra.css
