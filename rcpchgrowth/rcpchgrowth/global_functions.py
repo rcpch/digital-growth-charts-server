@@ -94,13 +94,12 @@ def z_score(l: float, m: float, s: float, observation: float):
     return sds
 
 
-def centile(z_score: float):
+def centile(z: float):
     """
     Converts a Z Score to a p value (2-tailed) using the SciPy library, which it returns as a percentage
     """
     try:
-        centile = (stats.norm.cdf(z_score) * 100)
-        return centile
+        return (stats.norm.cdf(z) * 100)
     except TypeError as err:
         raise TypeError(err)
 
