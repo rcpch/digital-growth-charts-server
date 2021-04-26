@@ -26,16 +26,16 @@
   font-weight: 600;
 }
 
+/* make the header white with blue text */
 .md-header {
   background-color: #ffffff;
   color: #0d0d58;
-  
 }
 
+/* enlarges the font used for titles and navbar */
 .md-header__title {
   font-size: 1.5rem;
 }
-
 
 /* enlarges the logo image */
 .md-header__button.md-logo img,
@@ -49,6 +49,19 @@
   max-width: 70rem;
 }
 
+/* make the text bigger in the admonitions */
 .md-typeset .admonition {
   font-size: 0.75rem;
+}
+
+/* MOBILE */
+/* mobile  - make the header white with blue text */
+.md-nav--primary .md-nav__title[for=__drawer] {
+  background-color: #ffffff;
+  color: #0d0d58; 
+}
+
+/* mobile - enlarges the logo image */
+.md-nav__title .md-nav__button.md-logo img {
+  width: 100px;  
 }

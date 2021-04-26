@@ -7,7 +7,7 @@ reviewers: Dr Marcus Baw
 
 In our documentation we have used the term **Integrator** to refer to a person or team who is integrating the API into a product or service. We also recognise the term 'customer'. This is to distinguish Integrators from 'clients' (by which *we* mean software which consumes the API), and 'developers' (by whom *we* mean those who are developing the Digital Growth Charts project)
 
-> [Information about the dGC client products](../products/00_products-overview.md)
+> [Information about the dGC client products](../products/products-overview.md)
 
 > [Information for dGC Developers](../developer/start-here.md)
 

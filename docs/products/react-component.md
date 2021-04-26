@@ -5,11 +5,13 @@ reviewers: Dr Marcus Baw
 
 # React Chart Component
 
-Although the process of obtaining a centile/SDS result from the API is very straightforward, rendering this to an actual digital growth chart graphic is quite complex, mainly because of the requirement to render the 9 curved 'centile lines' as well as plot the co-ordinates of the API result.
+Although the process of obtaining a centile/SDS result from the API is very straightforward, rendering this to an actual digital growth chart graphic is quite complex. For this reason, we have produced a permissively-licensed open-source React component, which aims to simplify the process of creating a chart from the chart data received from the API. It makes the job of drawing a vector-graphic centile chart much easier.
 
-For this reason, we have produced, as part of the dGC MVP, a permissively-licensed open-source React component, which aims to simplify the process of creating a chart from the chart data received from the API. It makes the job of drawing a vector-graphic centile chart much easier.
+![height-chart-girl-component](../_assets/height-chart-girl-component.png)
 
-https://github.com/rcpch/digital-growth-charts-react-component-library
+:octicons-mark-github-16: [GitHub repository](https://github.com/rcpch/digital-growth-charts-react-component-library)
+
+:material-web: [Demo](https://growth.rcpch.ac.uk/)
 
 You can use the component as-is in a React app, or include it in plain HTML or any other JavaScript framework.
 
