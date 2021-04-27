@@ -23,6 +23,12 @@
 		},
 		{
 			"path": "../../../RCPCHProjects/digital-growth-charts-documentation"
+		},
+		{
+			"path": "../../../RCPCHProjects/meta"
+		},
+		{
+			"path": "../../../RCPCHProjects/rcpchgrowth-python-cli"
 		}
 	],
 	"settings": {
