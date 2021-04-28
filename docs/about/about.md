@@ -11,7 +11,7 @@ Further we have been able to develop several demonstration clients showing ease 
 
 ## Scope
 
-Currently the minimum viable product is to provide reliable calculations for all children in the UK under the age of 1 year for height, weight, body mass index (BMI) and head circumference ('occipitofrontal circumference' - OFC).
+Currently the minimum viable product is to provide reliable calculations for all children in the UK for height, weight, body mass index (BMI) and head circumference ('occipitofrontal circumference' - OFC).
 
 In addition to providing standard deviation scores (SDS) and centiles, it will also provide basic guidance for users on how to interpret the information received.
 
