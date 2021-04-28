@@ -25,11 +25,8 @@ qualified to do so. For further information and training materials see RCPCH web
 
 * Weight: use only class III clinical electronic scales in metric setting.
 * Length: (before 2 years of age): proper equipment is essential (length board or mat). Measurers should be trained.
-* Height: (from 2 years): Position head and feet as illustrated with child standing as straight as possible. Measure height recorded to the last millimetre. A correctly installed or stadiometer or approved portable measuring device rigid rule with T piece is the only equipment that can be reliably used (see illustration).
+* Height: (from 2 years): Position head and feet as illustrated with child standing as straight as possible. Measure height recorded to the last millimetre. A correctly installed stadiometer or approved portable measuring device rigid rule with T piece is the only equipment that can be reliably used.
 * Head circumference: use a narrow plastic or paper tape to measure where the head circumference is greatest.
-
-![How to measure boys](../_assets/boys-measurement.png)
-![How to measure girls](../_assets/girls-measurement.png)
 
 ## When to weigh
 
