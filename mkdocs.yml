@@ -21,6 +21,7 @@ nav:
     - 'products/python-library.md'
     - 'products/google-sheets-plugin.md'
     - 'products/flask(deprecated).md'
+    - 'products/pricing.md'
   - Clinician: 
     - 'clinician/how-the-api-works.md'
     - 'clinician/chart-information-families.md'
@@ -34,7 +35,6 @@ nav:
     - 'integrator/making-api-calls.md'
     - 'integrator/api-reference.md'
     - 'integrator/client-specification.md'
-    - 'integrator/pricing.md'
     - 'integrator/faqs-for-integrators.md'
   - Contribute:
     - 'developer/start-here.md'
