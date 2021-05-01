@@ -2,6 +2,7 @@
 
 :root {
   --md-primary-fg-color: #3366cc;
+  --md-accent-fg-color: #11a7f2;
 }
 
 .md-typeset h1 {
@@ -56,12 +57,23 @@
 
 /* MOBILE */
 /* mobile  - make the header white with blue text */
-.md-nav--primary .md-nav__title[for=__drawer] {
+.md-nav--primary .md-nav__title[for="__drawer"] {
   background-color: #ffffff;
-  color: #0d0d58; 
+  color: #0d0d58;
 }
 
 /* mobile - enlarges the logo image */
 .md-nav__title .md-nav__button.md-logo img {
-  width: 100px;  
+  width: 100px;
+}
+
+/* content images styling */
+.md-content img {
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px #777;
+}
+
+/* buttons styling */
+button {
+  text-align: center;
 }

@@ -9,6 +9,7 @@ nav:
     - 'about/overview.md'
     - 'about/support.md'
     - 'about/team.md'
+    - 'about/contact.md'
     - 'about/acknowledgements.md'
   - Products:
     - 'products/products-overview.md'
@@ -29,11 +30,13 @@ nav:
     - 'clinician/faqs-for-clinicians.md'
   - Integrator:
     - 'integrator/getting-started.md'
-    - 'integrator/tutorial.md'
+    - 'integrator/api-keys.md'
+    - 'integrator/making-api-calls.md'
     - 'integrator/api-reference.md'
     - 'integrator/client-specification.md'
+    - 'integrator/pricing.md'
     - 'integrator/faqs-for-integrators.md'
-  - Developer:
+  - Contribute:
     - 'developer/start-here.md'
     - 'developer/adding-a-new-api-endpoint.md'
     - 'developer/api-docker.md'

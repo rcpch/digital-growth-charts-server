@@ -1,34 +1,47 @@
+---
+title: Getting Started
+reviewers: Dr Marcus Baw
+---
 # Getting Started with the Growth Charts API
 
-sign up for the service
+The RCPCH Digital Growth Charts platform centres around a REST API which provides calculated growth parameters derived from supplied child measurements such as height and weight.
 
-using the Free Tier
+The next few pages will step you through the process of using the API. If you are an experienced user of REST APIs this should all be very straightforward. We have deliberately designed this API to be simple and clear.
 
-create an app
+## Sign up for the API service
 
-## Swagger / openAPI3 specification
+In order to use the dGC API you need to sign up for an account and obtain API keys. These API keys allow us to manage usage of the API and prevent abuse. There is a Free Tier of the API, which gives you instant access to the API, so you can get on with exploring the platform. More information on the pricing of the platform is available [here](../products/pricing.md).
 
-- Our API code auto-generates a Swagger / openAPI3 specification each time we make changes to the server
+> At present this signup step is on an external website because we use the Microsoft Azure API management platform, in the future this may change in favour of a more streamlined on-boarding workflow.
+> 
+> **When you've done signing up, come back to the documentation here to follow the rest of the Getting Started tutorial.**
 
-<img src="https://validator.swagger.io/validator?url=https://raw.githubusercontent.com/rcpch/digital-growth-charts-server/alpha/openapi.yml">
+[Go to dev.rcpch.ac.uk to sign up :octicons-link-external-16:](https://dev.rcpch.ac.uk/signup){ .md-button .md-button--primary}
 
-- The openAPI spec is available as YAML or JSON in the root of the Server repository
+## Choose a Product and Create an App
 
-- You can also get the spec from the `/` (root) of https://api.rcpch.ac.uk where it is served in JSON format (API key required)
+!!! tip "Onboarding support"
+    If you have any issues with getting the Tier you need then please [contact us](../about/contact.md)
 
-## Postman tooling
+1. Navigate to the [Products](https://dev.rcpch.ac.uk/product) menu item, and choose the Tier of the API subscription that you require.
 
-We have used Postman extensively in the development of the dGC API. We have created Postman collections to help with understanding the API in use. You can use these 'example' API transactions to learn about how the API responds to requests.
+    > We recommend you choose the [Free Tier](https://dev.rcpch.ac.uk/product#product=starter) because this will be activated instantly. Other tiers require approval and payment verification, which is not instant.
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6b1137d60067b8aedfea#?env%5Blocalhost%3A5000-testing%5D=W3sia2V5IjoiYmFzZVVybCIsInZhbHVlIjoibG9jYWxob3N0OjUwMDAiLCJlbmFibGVkIjp0cnVlfV0=)
+1. Select a Tier from the 'Tiers' drop-down above to get started.
+    
+    **IMPORTANT: ONLY THE FREE TIER IS INSTANT ACCESS**. Other tiers will need to wait for approval, onboarding, and payment verification, so we recommend the Free Tier for everyone initially. You can create multiple Free Tier apps, and also at different Tiers.
 
-### Send a test request using Postman
+2. Create a unique name for your application. It doesn't matter what you call it as long as it has meaning for you, and it can be changed later in the Account part of the portal.
 
+3. Click 'Subscribe' to create the app.
 
-### send a test request using cURL
+![create-an-app](../_assets/create-an-app.png)
 
+!!! tip "Improving these docs"
+    We're always looking for feedback on our documentation, so that we maintain clear, unambiguous guides for all parts of the platform. If something isn't clear please let us know, by [talking about it on our forums](https://openhealthhub.org/c/rcpch-digital-growth-charts), or creating an [issue on GitHub](https://github.com/rcpch/digital-growth-charts-documentation/issues). Please include enough description of the problem that we can fix it. Screenshots and links are super helpful for this.
+    
+    You can also directly edit the docs and submit changes back to us for inclusion: click on the :material-pencil: button in the top left of any main text pane, which will take you to the source on GitHub. You will need to make your own GitHub fork of the documentation. Make your changes there and submit a pull request back to us! (See [Contributing](../developer/contributing.md) for more info)
 
+-----
 
-Signing up for the paid Tiers
-
-Accessing support
+## Next: [Getting API keys](../integrator/api-keys.md)
