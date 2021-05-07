@@ -21,12 +21,14 @@ The project board is responsible for the clinical, academic, and governance over
 
 RCPCH internal project staff provided invaluable support from project concept, through initiation and planning, and all the way to pilots and full live deployment. Critical project functions provided by the RCPCH team included project management, commercial modelling and planning, financial governance, design and branding review, web publishing and arranging and chairing meetings.
 
-- Magdalena Umerska, Digital Platform Commercial Manager, RCPCH.
-- Jonathan Miall, Director of Membership and Development, RCPCH.
-- Alex Brown, Head of Commercial and Corporate Partnerships, RCPCH.
 - Jo Ball, Design and Brand Manager, Content and Brand Team, RCPCH.
-- Kirsten Olson, Website Content Manager, Content and Brand Team, RCPCH.
+- Alex Brown, Head of Commercial and Corporate Partnerships, RCPCH.
+- Jonathan Miall, Director of Membership and Development, RCPCH.
 - Rachel McKeown, Policy Lead & Project Manager, RCPCH (now left RCPCH).
+- Kirsten Olson, Website Content Manager, Content and Brand Team, RCPCH.
+- Vicki Osmond, Health Policy Assistant, RCPCH.
+- Magdalena Umerska, Digital Platform Commercial Manager, RCPCH.
+
 
 ## Development Team
 
