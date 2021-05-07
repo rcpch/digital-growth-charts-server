@@ -54,10 +54,12 @@ nav:
       - 'safety/csmf/third-party-tools-safety-assmt.md'
       - 'safety/csmf/license.md'
     - 'safety/dtac.md'
-    - EU Dedical Devices:
+    - EU Medical Devices:
       - 'safety/eu-mdr/doc-api.md'
       - 'safety/eu-mdr/mdr-technical-docs.md'
-    - 'safety/mhra.md'
+    - MHRA:
+      - 'safety/mhra.md'
+      - 'safety/essential-req.md'
   - Legal:
     - 'legal/disclaimer.md'
     - 'legal/licensing-copyright.md'
