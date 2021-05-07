@@ -2,10 +2,9 @@
 title: Privacy Policy
 reviewers: Dr Marcus Baw
 ---
-# Organisation-wide RCPCH Privacy Policy
+# RCPCH Digital Growth Charts Privacy Policy
 
 
-Growth Charts API Privacy Policy 
 Our Contact Details 
 
 Name: Royal College of Paediatrics and Child Health (RCPCH) 
