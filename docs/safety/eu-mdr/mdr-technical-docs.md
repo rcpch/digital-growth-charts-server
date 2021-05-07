@@ -27,8 +27,7 @@ The Royal College Of Paediatrics and Child Health (RCPCH), 5-11 Theobalds Road, 
 
 1. ### A statement of the conformity assessment procedure that has been followed
 
-    
-2. ### The EU declaration of conformity
+1. ### The EU declaration of conformity
 
 See [Declaration of Confomity](doc-api.md)
 
@@ -40,11 +39,11 @@ All instructions for use are contained within this documentation website.
 
     Regulation (EU) 2017/745    Medical Devices
 
-2. ### Identification of technical standards with which compliance is claimed
+1. ### Identification of technical standards with which compliance is claimed
 
-3. ### A list of parts
+1. ### A list of parts
 
-4. #### Compliant parts
+1. #### Compliant parts
 
    * Digital Growth Charts Application Programming Interface **Server**, **Version 1**
 
@@ -54,12 +53,12 @@ All instructions for use are contained within this documentation website.
 
    * Digital Growth Charts Application Programming Interface **Demo React Native Client**, **Version 1**
 
-5. #### Supplementary parts (for which compliance is not claimed)
+1. #### Supplementary parts (for which compliance is not claimed)
 
-6. ### Test results
+1. ### Test results
 
-Automated tests on the programs are run on every code change. If the tests fail then the new code cannot be incorporated into the program, and the previous version will remain in place.
+    Automated tests on the programs are run on every code change. If the tests fail then the new code cannot be incorporated into the program, and the previous version will remain in place.
 
-Tests can be viewed in the `test/` directory within each repository.
+    Tests can be viewed in the `test/` directory within each repository.
 
-All repositories are listed at <https://github.com/rcpch>
+    All repositories are listed at <https://github.com/rcpch>
