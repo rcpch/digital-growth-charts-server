@@ -38,6 +38,6 @@ The development team was drawn from RCPCH internal staff, RCPCH members with sof
 - Dr Simon Chapman, Consultant in Paediatric Endocrinology, King's College Hospital, London.
 - Prof Tim Cole, Professor of Medical Statistics, Population, Policy & Practice Department, UCL GOS Institute of Child Health, London.
 - Dr Charles van Lennep, Paediatrician in Training, London.
-- Joanne Hatton, Enterprise Systems Manager, Royal College of Paediatrics and Child Health, London.
-- Andrew Palmer, Head of Information Systems, Royal College of Paediatrics and Child Health, London (now left RCPCH).
-- Olly Rice, Infrastructure and Operations Manager, Royal College of Paediatrics and Child Health, London.
+- Joanne Hatton, Enterprise Systems Manager, RCPCH, London.
+- Andrew Palmer, Head of Information Systems, RCPCH, London (now left RCPCH).
+- Olly Rice, Infrastructure and Operations Manager, RCPCH, London.

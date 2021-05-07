@@ -103,21 +103,22 @@ theme:
   logo: _assets/logo-desktop.svg
 
 plugins:
-  - search
   - render_swagger
+  - search
 
 markdown_extensions:
   - abbr
-  - attr_list
   - admonition
-  - pymdownx.highlight
-  - pymdownx.inlinehilite
-  - pymdownx.keys
-  - pymdownx.snippets
-  - pymdownx.superfences
+  - attr_list
   - pymdownx.emoji:
       emoji_generator: !!python/name:materialx.emoji.to_svg
       emoji_index: !!python/name:materialx.emoji.twemoji
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.superfences
   - toc:
       permalink: true
 

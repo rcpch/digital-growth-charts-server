@@ -17,17 +17,18 @@ The Royal College Of Paediatrics and Child Health (RCPCH), 5-11 Theobalds Road, 
 
 1. ### The name(s) and address(es) of the facilities involved in the design and manufacture of the product
 
-WIP
+    The product was designed and developed entirely remotely and online using collaboration software.
+
+    The 'place of manufacture' of the product could be most accurately said to be the code collaboration platform [GitHub](https://github.com/)
 
 1. ### The name and address of any notified body involved in assessing the conformity of the product
 
-WIP
+    Not Applicable
 
 1. ### A statement of the conformity assessment procedure that has been followed
 
-WIP
-
-1. ### The EU declaration of conformity
+    
+2. ### The EU declaration of conformity
 
 See [Declaration of Confomity](doc-api.md)
 
@@ -37,24 +38,28 @@ All instructions for use are contained within this documentation website.
 
 1. ### A statement of relevant regulations to which the product complies
 
-1. ### Identification of technical standards with which compliance is claimed
+    Regulation (EU) 2017/745    Medical Devices
 
-1. ### A list of parts
+2. ### Identification of technical standards with which compliance is claimed
 
-1. #### Compliant parts
+3. ### A list of parts
 
-* Digital Growth Charts Application Programming Interface **Server**, **Version 1**
+4. #### Compliant parts
 
-* Digital Growth Charts Application Programming Interface **React Charting Component**, **Version 1**
+   * Digital Growth Charts Application Programming Interface **Server**, **Version 1**
 
-1. #### Supplementary parts (for which compliance is not claimed)
+   * Digital Growth Charts Application Programming Interface **React Charting Component**, **Version 1**
 
-* Digital Growth Charts Application Programming Interface **Demo React Client**, **Version 1**
+   * Digital Growth Charts Application Programming Interface **Demo React Client**, **Version 1**
 
-* Digital Growth Charts Application Programming Interface **Demo React Native Client**, **Version 1**
+   * Digital Growth Charts Application Programming Interface **Demo React Native Client**, **Version 1**
 
-1. ### Test results
+5. #### Supplementary parts (for which compliance is not claimed)
+
+6. ### Test results
 
 Automated tests on the programs are run on every code change. If the tests fail then the new code cannot be incorporated into the program, and the previous version will remain in place.
 
-Tests can be viewed in the `test/` directory within each repository. All repositories are listed at <https://github.com/rcpch>
+Tests can be viewed in the `test/` directory within each repository.
+
+All repositories are listed at <https://github.com/rcpch>
