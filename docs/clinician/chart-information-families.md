@@ -13,16 +13,19 @@ Weighing and measuring helps us to check that your baby is growing and developin
 
 ### Why do we use growth charts?
 
-By plotting a baby’s growth on the chart, we can see whether it is following the expected pattern. The lines on a growth chart are called centile lines and are based on measurements from many babies. They show the optimal range of weights, lengths and head circumferences for healthy children, and how one baby compares with others of the same age and sex. For example, if your baby’s weight is on the 25th centile, it means that if you lined up 100 babies of the same age and sex in order of weight, your baby would probably be number 25; 75 babies would be heavier than your baby, and 24 would be lighter. Weights, lengths and head circumferences that are anywhere within the centile lines on the chart are considered normal.
-Every baby is different (they come in all shapes and sizes!), so no two filled-in charts will look the same. Even twins may have different growth patterns.
+The lines on a growth chart are called centile lines and are based on measurements from many infants and children. They show the optimal range of weights, lengths and head circumferences for healthy children, and how one child compares with others of the same age and sex. For example, if your child’s weight is on the 25th centile, it means that if you lined up 100 children of the same age and sex in order of weight, your child would probably be number 25; 75 children would be heavier than your child, and 24 would be lighter. Weights, lengths and head circumferences that are anywhere within the centile lines on the chart are considered normal.
+Every child is different (they come in all shapes and sizes!), so no two filled-in charts will look the same. Even twins may have different growth patterns.
 
-If a baby’s growth pattern looks unusual, your health visitor or doctor may want to have a closer look to see why. This may involve taking more measurements, looking closely at feeding, or performing investigations. Most babies who have such investigations are found to be perfectly normal; however, it is important to check an unusual pattern on the chart to make sure.
+If a child’s growth pattern looks unusual, your health visitor or doctor may want to have a closer look to see why. This may involve taking more measurements or performing investigations. Most children who have such investigations are found to be perfectly normal; however, it is important to check an unusual pattern on the chart to make sure.
 
 ##  The UK-WHO growth charts
 
-The UK-WHO growth charts are based on measurements from healthy term babies (37 or more weeks gestation) collected by the World Health Organization (WHO) in six different countries. Healthy breastfed babies whose mothers did not smoke and who had access to good healthcare and nutrition were measured over time.
+The UK-WHO growth charts are based:
 
-The centile curves drawn using these measurements show how healthy babies are expected to grow, whatever their ethnic origin and whether breastfed or infant formula fed. For babies below 37 weeks of gestation, measurements are plotted on growth charts based on the birthweights of British infants who were born prematurely.
+•	From birth to age 4 years on measurements from healthy term babies (37 or more weeks gestation) collected by the World Health Organization (WHO) in six different countries. Healthy breastfed babies whose mothers did not smoke and who had access to good healthcare and nutrition were measured over time. The centile curves drawn using these measurements show how healthy babies are expected to grow, whatever their ethnic origin and whether breastfed or infant formula fed. For babies below 37 weeks gestation, measurements are plotted on growth charts based on the birthweights of British infants who were born prematurely.
+
+•	From age 4 to 20 years on measurements from a large number of British children collected in the 1980-90s.
+
 
 ##   Weighing and measuring
 
@@ -31,21 +34,29 @@ Be aware that different scales sometimes give different readings, particularly i
 
 Up to the age of 2 years your child is measured for length (i.e. lying down) rather than height. Special equipment is needed to measure length accurately and this will be recommended by a health care professional if needed. Your child should not be wearing a nappy when his/her length is measured.
 
+After 2 years of age your child’s standing height should be measured. Your child’s shoes should be removed during the measurement. It is important to measure height accurately using a rigid rule with T piece or stadiometer.
+
+From age 4 years, your child’s Body Mass Index (BMI) can be calculated from their weight and height measurements (BMI = weight/height2). BMI is a simple measure of fatness or thinness, and high levels suggest that the child may be carrying too much fat. The cut-offs for a high BMI in children are different from those used in adults and depend upon age. Some medical conditions or treatments that your child receives may mean that the BMI centile is not the best way to measure your child. A low BMI can be due to a relatively low amount of lean (muscle) tissue as well as fat. Your GP or other health professional caring for your child will be able to discuss your child’s BMI with you.
+
+
 ## How often to weigh
 
 It is normal for a baby to lose some weight in the first few days after birth. Your baby should be weighed in the first week as part of the assessment of feeding. Most babies get back to their birth weight by 2 weeks of age. This is a sign that feeding is going well and that your baby is healthy.
 
 After that, your baby will usually be weighed only when seen routinely, unless there is concern. Weighing your baby too often can cause unnecessary concern; the list below shows how often, as a maximum, babies should be weighed to monitor their growth. However, most children will not need to be weighed as often as this.
+Many parents like to have their babies weighed more often. However, it is not always helpful and can cause unnecessary worry. For example, if one week your baby was weighed just after a big feed but the next week they were weighed after a long nap and before a feed, it could look as if they had not gained weight. Longer gaps between weights are more likely to show the true weight change. The recommended time between weighing is longer for older babies because they are growing more slowly. 
+Your health visitor or doctor may recommend more frequent weighing for children if there are concerns about their growth or health or if they have certain medical conditions. If there are serious concerns about slow weight gain or even weight loss, a child could be weighed as often as:
 
-| Age                 | Weigh no more often than |
-| ------------------- | ------------------------ |
-| 2 weeks to 6 months | Once a month             |
-| 6 to 12 months      | Once every 2 months      |
-| Over 12 months      | Once every 3 months      |
+•	daily if less than 1 month old
+•	weekly between 1–6 months old
+•	fortnightly between 6–12 months
+•	monthly from 1 year of age
 
-Many parents like to have their babies weighed more often than this. However, it is not always helpful and can cause unnecessary worry. For example, if one week your baby was weighed just after a big feed but the next week they were weighed after a long nap and before a feed, it could look as if they had not gained weight. Longer gaps between weights are more likely to show the true weight change. The time between weighing is longer for older babies because they are growing more slowly.
-Your health visitor or doctor may recommend more frequent weighing for children if there are concerns about their growth, health or if they have certain medical conditions.
- Remember that if you want advice you can always phone your health visitor or visit the clinic, without having your child weighed.
+Remember that if you want advice you can always phone your health visitor or visit the clinic, without having your child weighed.
+
+Beyond the age of two years children need only be weighed if there are worries about their health, growth or weight gain. Once they go to school, in England, they will be measured with their class mates for the National Child Measurement Programme in their reception class and their last year in primary school. 
+
+
 
 ## Frequently asked questions
 
