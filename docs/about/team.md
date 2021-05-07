@@ -15,7 +15,6 @@ The project board is responsible for the clinical, academic, and governance over
 - Prof Mary Fewtrell, Professor of Paediatric Nutrition, Population, Policy & Practice Department, UCL GOS Institute of Child Health, London.
 - Victoria Jackson, Project Coordinator, Institute of Health Visiting.
 - Liz Marder, Consultant Paediatrician in Community Child Health and Neurodisability, Nottingham Children's Hospital.
-- Charlotte Weldon.
 - Prof Charlotte Wright, Professor of Community Child Health (Medicine), University of Glasgow.
 
 ## RCPCH Staff
@@ -38,4 +37,5 @@ The development team was drawn from RCPCH internal staff, RCPCH members with sof
 - Prof Tim Cole, Professor of Medical Statistics, Population, Policy & Practice Department, UCL GOS Institute of Child Health, London.
 - Dr Charles van Lennep, Paediatrician in Training, London.
 - Joanne Hatton, Enterprise Systems Manager, Royal College of Paediatrics and Child Health, London.
-- Andrew Palmer, Head of Information Systems, Royal College of Paediatrics and Child Health, London.
+- Andrew Palmer, Head of Information Systems, Royal College of Paediatrics and Child Health, London (now left RCPCH).
+- Olly Rice, Infrastructure and Operations Manager, Royal College of Paediatrics and Child Health, London.
