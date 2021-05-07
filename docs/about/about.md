@@ -6,7 +6,7 @@ published: true
 
 # About the UK RCPCH Growth Chart API Project
 
-The project team was commissioned by NHS England to produce a 'Minimum Viable Product' API (Application Programming Interface) to generate reliable results for growth data from children 1 year and below. The project team began work in May 2020. In development, the project developers found it was feasible and practical to extend the scope of the MVP to include children of **all** ages.
+The project team was mandated by NHSx to produce a 'Minimum Viable Product' API (Application Programming Interface) to generate reliable results for growth data from children 1 year and below. The project team began work in May 2020. In development, the project developers found it was feasible and practical to extend the scope of the MVP to include children of **all** ages.
 
 Further we have been able to develop several demonstration clients showing ease of integration with the API. The calculation functions of the API have been extracted out as a separate Python package
 
