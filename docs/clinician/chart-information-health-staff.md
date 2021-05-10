@@ -1,17 +1,23 @@
 ---
-title: Chart information for Health staff
+title: Information for health staff
 reviewers: Dr Marcus Baw
 ---
 
 # Chart information for Health staff
 
-## How the charts work
+## How the UK-WHO charts work
 
 The UK–WHO growth chart combines World Health Organization (WHO) standards with UK 1990 preterm and birth data.
 
 The chart from 2 weeks to 4 years of age is based on the WHO growth standard, derived from measurements of healthy, non-deprived, breastfed children of mothers who did not smoke.1 The chart for birth measurements (32 –42 weeks gestation) is based on British children measured around 1990.2 The charts depict a healthy pattern of growth that is desirable for all children, whether breast fed or formula fed, and of whatever ethnic origin.
 
 The UK 1990 growth reference for children is used from 4 -18 years
+
+## Instructions for the Trisomy 21 (Down's Syndrome) charts
+
+The PDF linked below was produced in 2012 to accompany the Trisomy 21 (Down's Syndrome) charts. In due course we will update and reformat the text and adapt the presentation for the API version of the charts.
+
+[PDF Down's Syndrome Chart Information (2012)](../_assets/2012-instructions-for-downs-syndrome-charts.pdf)
 
 ## Measuring children
 
