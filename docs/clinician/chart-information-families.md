@@ -9,7 +9,7 @@ reviewers: Dr Marcus Baw
 
 ##  What do regular measurements tell us?
 
-Weighing and measuring helps us to check that your baby is growing and developing as expected.
+Weighing and measuring helps us to check that your child is growing and developing as expected.
 
 ### Why do we use growth charts?
 
@@ -66,11 +66,7 @@ The charts show how breastfed babies grow if they are healthy and there are no p
 
 ### My baby was born prematurely. Is this taken into account?
 
-If your baby was born early, weight and head circumference will be plotted on preterm charts until they are 2 weeks past your due date. This will help you and the health professionals tell how your baby is doing compared with other preterm babies. After this, weight and other measurements will be plotted on the main chart. Two centile values will be provided – one plotted at your baby’s actual age and the other at his/her ‘corrected’ age (taking into account the number of weeks your baby was early).
-
-### Why are there no centile lines on the charts between birth and 2 weeks?
-
-Most babies lose some weight after birth and regain it in the next 2 weeks, and growth patterns vary widely during this time; the growth chart cannot show this. Your baby’s weight at about 2 weeks of age should be compared with their birth weight.
+If your baby was born early, weight and head circumference will be plotted on preterm charts until they are 2 weeks past your due date. This will help you and the health professionals tell how your baby is doing compared with other preterm babies. After this, weight and other measurements will be plotted on the main chart. Two centile values will be provided – one plotted at your baby’s actual age and the other at his/her ‘corrected’ age (taking into account the number of weeks your baby was born early).
 
 ### How do I know my baby’s weight is OK in the first 2 weeks?
 
