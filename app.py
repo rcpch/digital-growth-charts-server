@@ -18,7 +18,7 @@ from rcpchgrowth.constants.reference_constants import *
 
 
 ### API VERSION AND COMMIT HASH ###
-version='2.2.2'
+version='2.2.3'
 API_SEMANTIC_VERSION =  version # this is set by bump version
 
 # Read saved version info from **saved** JSON APIspec
