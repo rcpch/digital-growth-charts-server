@@ -12,10 +12,12 @@ from flask import Blueprint, jsonify, request
 from marshmallow import ValidationError
 
 # rcpch imports
-from rcpchgrowth.rcpchgrowth.constants.measurement_constants import *
-from rcpchgrowth.rcpchgrowth.constants.reference_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, UK_WHO
-from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data, create_chart
-from rcpchgrowth.rcpchgrowth.measurement import Measurement
+# from rcpchgrowt import co
+# from rcpchgrowth import constants.measurement_constants
+# from rcpchgrowth import constants.reference_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, UK_WHO
+# from rcpchgrowth import chart_functions import create_plottable_child_data, create_chart
+# from rcpchgrowth import measurement import Measurement
+from rcpchgrowth import measurement, chart_functions, constants
 from schemas import *
 
 uk_who = Blueprint("uk_who", __name__)
@@ -87,8 +89,8 @@ def uk_who_calculation():
 
         # Send to calculation
         try:
-            calculation = Measurement(
-                reference=UK_WHO,
+            calculation = measurement.Measurement(
+                reference=constants.UK_WHO,
                 **values
             ).measurement
         except ValueError as err:
@@ -136,8 +138,8 @@ def uk_who_chart_coordinates():
             return json.dumps(err.messages), 422
 
         try:
-            chart_data = create_chart(
-                UK_WHO, measurement_method=req["measurement_method"], sex=req["sex"], centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+            chart_data = chart_functions.create_chart(
+                constants.UK_WHO, measurement_method=req["measurement_method"], sex=req["sex"], centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES)
         except Exception as err:
             print(err)
 
@@ -202,7 +204,7 @@ def uk_who_plottable_child_data():
         results = req["results"]
         # data are serial data points for a single child
         # Prepare data from plotting
-        child_data = create_plottable_child_data(results)
+        child_data = chart_functions.create_plottable_child_data(results)
         # Retrieve sex of child to select correct centile charts
         sex = results[0]["birth_data"]["sex"]
         return jsonify({
