@@ -1,38 +1,38 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
+# Docs for the Azure Web Apps Deploy action: https://go.microsoft.com/fwlink/?linkid=2134798
+# More GitHub Actions for Azure: https://go.microsoft.com/fwlink/?linkid=2135048
 
-name: Build and deploy Python app to Azure Web App - rcpch-dgc-server-live
+name: Azure App Service - rcpch-dgc-server-live(Production), Build and deploy Python app
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - live
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
+    # checkout the repo
+    - name: 'Checkout Github Action'
+      uses: actions/checkout@master
 
-      - name: Set up Python version
-        uses: actions/setup-python@v1
-        with:
-          python-version: "3.8"
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+    - name: Set up Python version
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.8'
 
-      - name: Build using AppService-Build
-        uses: azure/appservice-build@v1
-        with:
-          platform: python
-          platform-version: "3.8"
+    - name: Build using AppService-Build
+      uses: azure/appservice-build@v2
+      with:
+        platform: python
+        platform-version: '3.8'
 
-      - name: "Deploy to Azure Web App"
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: "rcpch-dgc-server-live"
-          slot-name: "production"
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_f917a19747914fc5856a3610fd7aac17 }}
+    - name: Run Azure webapp deploy action using publish profile credentials
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: rcpch-dgc-server-live
+        slot-name: Production
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_740DC881AF104B1BA2CF01ABC35623EB }}
+
