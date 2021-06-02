@@ -18,7 +18,8 @@ from rcpchgrowth.constants.reference_constants import *
 
 
 ### API VERSION AND COMMIT HASH ###
-API_SEMANTIC_VERSION = "2.2.0"  # this is manually set
+version = "2.2.0"
+API_SEMANTIC_VERSION =  version # this is set by bump version
 
 # Read saved version info from **saved** JSON APIspec
 # (Because Git may not exist in Live and may not be able to get current commit hash)
