@@ -12,9 +12,10 @@ from flask import Blueprint, jsonify, request
 from marshmallow import ValidationError
 
 # rcpch imports
-from rcpchgrowth.rcpchgrowth.constants.reference_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, TURNERS
-from rcpchgrowth.rcpchgrowth.measurement import Measurement
-from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data, create_chart
+# from rcpchgrowth.rcpchgrowth.constants.reference_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, TURNERS
+# from rcpchgrowth.rcpchgrowth.measurement import Measurement
+# from rcpchgrowth.rcpchgrowth.chart_functions import create_plottable_child_data, create_chart
+from rcpchgrowth import measurement, chart_functions, constants
 from schemas import CalculationRequestParameters
 
 
@@ -85,8 +86,8 @@ def turner_calculation():
 
         # Send to calculation
         try:
-            calculation = Measurement(
-                reference=TURNERS,
+            calculation = measurement.Measurement(
+                reference=constants.TURNERS,
                 **values
             ).measurement
         except ValueError as err:
@@ -128,7 +129,7 @@ def turner_plottable_child_data():
 
         # data are serial data points for a single child
         # Prepare data from plotting
-        child_data = create_plottable_child_data(results)
+        child_data = chart_functions.create_plottable_child_data(results)
         # Retrieve sex of child to select correct centile charts
         sex = results[0]["birth_data"]["sex"]
         return jsonify({
@@ -162,8 +163,8 @@ def turner_chart_coordinates():
     """
 
     try:
-        chart_data = create_chart(
-            TURNERS, centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+        chart_data = chart_functions.create_chart(
+            constants.TURNERS, centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES)
     except Exception as err:
         print(err)
         return "Server error fetching chart data.", 400
