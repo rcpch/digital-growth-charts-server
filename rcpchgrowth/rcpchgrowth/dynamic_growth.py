@@ -98,7 +98,7 @@ def acceleration(parameter: str, measurements_array):
             return accleration
 
 
-def correlate_weight(measurements_array: list = []):
+def correlate_weight(measurements_array: list = None):
     """
     Weight velocity of the individual child cannot be predicted without comparison against reference data velocity
     since weight velocity is age dependent. This uses a uses a correlation matrix to look up values against which
@@ -119,7 +119,8 @@ def correlate_weight(measurements_array: list = []):
     data_frame = pd.read_csv(file_path)
 
     parameter_list = []
-
+    if measurements_array == None:
+        measurements_array = []
     if len(measurements_array) < 2:
         return 'Not enough data'
     else:

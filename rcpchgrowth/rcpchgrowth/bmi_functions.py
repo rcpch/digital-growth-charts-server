@@ -16,7 +16,7 @@ ofc
 
 # public functions
 
-def bmi_from_height_weight( height: float,  weight: float) -> float:
+def bmi_from_height_weight(height: float,  weight: float) -> float:
     """
     Returns a BMI in kg/m² from a height in cm and a weight in kg
     Does not depend on the age or sex of the child.
@@ -26,7 +26,7 @@ def bmi_from_height_weight( height: float,  weight: float) -> float:
     bmi = weight/math.pow(height/100, 2)
     return bmi
 
-def weight_for_bmi_height( height: float,  bmi: float) -> float:
+def weight_for_bmi_height(height: float,  bmi: float) -> float:
     """
     Returns a weight in kg from a height in cm and a BMI in kg/m²
     Does not depend on the age or sex of the child.
