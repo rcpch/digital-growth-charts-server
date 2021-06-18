@@ -34,8 +34,8 @@ Some helpful sources of information on Python style are:
 
 - The copyright over the IP in this and other Growth Chart related repositories is owned by the Royal College of Paediatrics and Child Health, which releases it under an open source license. Consult the individual repository for specifics on which license we have used.
 
-- If you submit a contribution to the repository, you agree to transfer all IP rights over the contribution, both now and in the future, to the Royal College of Paediatrics and Child Health, in perpetuity. This clause is purely to allow RCPCH to continue to exert an unchallenged copyright over the open source work.
+- If you submit a contribution to the repository, we ask that you agree to transfer all IP rights over the contribution, both now and in the future, to the Royal College of Paediatrics and Child Health, in perpetuity. This clause is purely to allow RCPCH to continue to exert an unchallenged copyright over the open source work. Asserting a copyright is crucial to open source work.
 
 - For larger contributions we may require a Contributor Covenant to support this agreement over transfer of title, however for small contributions it is probably sufficient that you should have read and understood this document, and that the act of submitting a PR is acceptance of these terms.
 
-- All contributors will, of course, proudly be acknowledged in the [Acknowledgements](../about/acknowledgements.md) section.
+- All contributors will, of course, proudly be acknowledged in the [Acknowledgements](../about/acknowledgements.md) section. (If you make a PR, don't forget to add yourself there!)

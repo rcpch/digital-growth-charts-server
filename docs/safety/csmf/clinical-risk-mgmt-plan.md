@@ -59,11 +59,11 @@ The RCPCH's team is not yet of a size that it requires an org chart to explain. 
 
 #### Clinical Safety Officer
 
-Dr Marcus Baw
+Dr Marcus Baw [@pacharanero](https://github.com/pacharanero)
 
 #### Senior Clinical Adviser
 
-Dr Simon Chapman
+Dr Simon Chapman [@eatyourpeas](https://github.com/eatyourpeas)
 
 #### Chief Technology Officer
 
@@ -165,7 +165,15 @@ Code in the 'live' branch is changed relatively infrequently (except for urgent 
 
 ### Incident Management
 
-Clinical Risk Management activities within the Organisation and thehealthcare IT programmes and services offered are completed within the corporate risk management strategy. As such, clinical safety related incidents are dealt with in a similar manner as other incident within the organisational such as financial,reputational, technical and other service impacting categories.
+Clinical Risk Management activities within the Organisation and thehealthcare IT programmes and services offered are completed within the corporate risk management strategy. As such, clinical safety related incidents are dealt with in a similar manner as other incidents within the organisational such as financial,reputational, technical and other service impacting categories.
+
+### Safety Incident Management Process
+
+### Security Incident Management Process
+
+Security issues may be responsibly disclosed to growth.digital@rcpch.ac.uk for immediate action. We recognise and respect the work of security researchers and will treat your contribution with gratitude and appropriate action. We do not engage in vexatious CMA litigation.
+
+Internally we treat security issues with the highest priority. Once the 'acute phase' of any security threat is handled, we will then follow the Safety Incident Management Process, usually converting to a public GitHub Issue.
 
 ## Clinical Safety Competence and Training
 

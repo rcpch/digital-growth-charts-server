@@ -22,5 +22,5 @@ GitHub
 
 ## Individual Acknowledgements
 
-* Dr Dan Leach for advice on MHRA Registration
-* Dr Charles van Lennep for the React Native client
+* Dr Dan Leach for advice on MHRA Medical Device Registration
+* Dr Charles van Lennep for many contributions to React code and building the React Native client
