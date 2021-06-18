@@ -28,12 +28,12 @@ def centile_band_for_centile(sds: float, measurement_method: str)->str:
     ## params: accepts a sds: float
     ## params: accepts a measurement_method as string
 
-    centile_band=""
+    centile_band = ""
 
-    if measurement_method=="bmi":
-        measurement_method="body mass index"
-    if measurement_method=="ofc":
-        measurement_method="head circumference"
+    if measurement_method == "bmi":
+        measurement_method = "body mass index"
+    if measurement_method == "ofc":
+        measurement_method = "head circumference"
 
     if sds <= -6:
         centile_band = "This " + measurement_method + " measurement is well below the normal range. Please review its accuracy."
