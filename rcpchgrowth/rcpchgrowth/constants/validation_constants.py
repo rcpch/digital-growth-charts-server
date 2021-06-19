@@ -37,4 +37,4 @@ MAXIMUM_BMI_KGM2 = 105
 MINIMUM_GESTATION_WEEKS = 22
 MINIMUM_GESTATION_WEEKS_ERROR = f'It is very unlikely that a gestational age of less than {MINIMUM_GESTATION_WEEKS} weeks is correct'
 MAXIMUM_GESTATION_WEEKS = 44
-MINIMUM_GESTATION_WEEKS_ERROR = f'It is very unlikely that a gestational age of more than {MAXIMUM_GESTATION_WEEKS} weeks is correct'
+MAXIMUM_GESTATION_WEEKS_ERROR = f'It is very unlikely that a gestational age of more than {MAXIMUM_GESTATION_WEEKS} weeks is correct'
