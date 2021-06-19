@@ -23,7 +23,7 @@
 # 2.84	6.00	Above 99.6th	Above normal range	Severely obese
 # 	>6.00		Probable error	Probable error
 
-def centile_band_for_centile(sds: float, measurement_method: str)->str:
+def centile_band_for_centile(sds: float, measurement_method: str) -> str:
     ## this function returns a centile band into which the sds falls
     ## params: accepts a sds: float
     ## params: accepts a measurement_method as string
