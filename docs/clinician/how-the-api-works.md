@@ -14,7 +14,7 @@ The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any ch
 
 It is now common practice to express child growth status in the form of SD scores - the number of standard deviations away from the mean (also known as a z-score). The SD score can be converted to a centile.
 
-The LMS method provides a way of obtaining normalized growth centiles from a reference dataset, applying smoothing and extrapolation such that the resulting L, M and S curves contain the information to draw **any** centile curve, and to convert measurements (even extreme values) into exact SD scores. The growth reference is summarised by a table of LMS values at a series of ages.
+The LMS method provides a way of obtaining normalised growth centiles from a reference dataset, applying smoothing and extrapolation such that the resulting L, M and S curves contain the information to draw **any** centile curve, and to convert measurements (even extreme values) into exact SD scores. The growth reference is summarised by a table of LMS values at a series of ages.
 
 ### How the LMS method is used
 
@@ -91,7 +91,7 @@ The entire Term period (from 37-42 weeks gestation) used to be defined as a deci
 
 The growth chart reference data covering this Term period used to be averaged across the period, so that regardless of actual gestational age, all term-born children were considered to be the same gestation, for paper and PDF growth charts.
 
-However, during the development of the Digital Growth Charts, the [dGC Project Board]() determined that since there is now evidence that there *is* a difference between the outcomes of children born as early term and late term, and also since the dGC makes it easy to correct for all gestational ages, that we should abolish the 'averaging' effect of the concept of term, and simply correct all children for gestational age.
+However, during the development of the Digital Growth Charts, the [dGC Project Board](../../about/team#project-board) determined that since there is now evidence that there *is* a difference between the outcomes of children born as early term and late term, and also since the dGC makes it easy to correct for all gestational ages, that we should abolish the 'averaging' effect of the concept of term, and simply correct all children for gestational age.
 
 ### Helpful reference documents for understanding what centiles are, how they are calculated, and how they are used
 

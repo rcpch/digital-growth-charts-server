@@ -5,13 +5,11 @@ reviewers: Dr Marcus Baw
 
 # Clinical Safety of the dGC Project
 
-Clinical Safety of these clinical tools is of paramount importance to us at the RCPCH. We are a standard-setting organisation with an international reputation and as such clinical safety has been at the forefornt of our minds throughout the development of the project.
+Clinical Safety of these clinical tools is of paramount importance to us at the RCPCH. We are a standard-setting organisation with an international reputation and as such clinical safety has been at the forefront of our minds throughout the development of the project.
 
-Our primary focus has been on clinical safety certification and regulatory compliance for the UK market and specifically England, because the initial work on the dGC platform has been commissioned by NHSX, which is an England-only body.
+Our primary focus has been on clinical safety certification and regulatory compliance for the UK market and specifically England, because the initial work on the dGC platform has been commissioned by NHSx, which is an England-only body. We do however recognise the need for the dGC Platform to be recognised as safe for use in other UK nations and this is our next most important priority for regulatory compliance.
 
-We do however recognise the need for the dGC Platform to be recognised as safe for use in other UK nations and this is our next most important priority for regulatory compliance.
-
-Compliance for EU, US and other territories may follow, but will be subject to customer engagement in those countries or global regions. If you are an API consumer and you need the dGC platform to be certified in your region of operation, then please [get in touch with us](../about/contact.md) and we can discuss the requirements. Note that different growth chart references 9eg full WHO, CDC) apply in other countries, and we may need to commission further development of the API functions in order to support these.
+Compliance for EU, US and other territories may follow, but will be subject to customer engagement in those countries or global regions. If you are an API consumer and you need the dGC platform to be certified in your region of operation, then please [get in touch with us](../about/contact.md) and we can discuss the requirements. Note that **different growth chart references** (eg full WHO, CDC) are used in other countries, and we may need to commission further development of the API functions in order to support these. Adding new references is not technically difficult.
 
 ## Clinical Safety
 
@@ -19,9 +17,7 @@ Compliance for EU, US and other territories may follow, but will be subject to c
 
 In addition to the standard NHS clinical safety practices, a key aspect of the augmented clinical safety measures we have taken with the dGC platform is the open source codebase and completely open governance profile of the project.
 
-Our entire codebase is open for inspection by other specialists, in a manner similar to the open peer review of academic publications which ensures high quality by enabling others to replicate our results and verify or challenge the veracity of the calculations independently. (Note that we do not rely on external validation or challenge, we have extensively internally tested the API and underlying calculations)
-
-
+Our entire codebase is open for inspection by other specialists, in a manner similar to the open peer review of academic publications which ensures high quality by enabling others to replicate our results and verify or challenge the veracity of the calculations independently. (Note that we do not in any way **rely** on such external validation or challenge - we have ourselves extensively internally tested the API and underlying calculations)
 
 ### Digital Technology Assessment Criteria (DTAC)
 
@@ -30,11 +26,18 @@ Our entire codebase is open for inspection by other specialists, in a manner sim
 * DTAC incorporates the DCB0129 and DCB0160 standards for clinical safety, which the RCPCH dGC platform is compliant with.
 
 More information on our DTAC compliance is [here](../safety/dtac.md)
+
 ### DCB0129 and DCB0160 Compliance
+
+We comply with the requirements of DCB0129 and DCB0160, and for details you can go [here](../safety/csmf/clinical-risk-mgmt-system.md) to review our entire Clinical Safety Management File.
 
 ### Hazard Logs
 
+Our Hazard Logs are managed on GitHub in the open. Details of how this works are [here](../safety/csmf/hazard-log.md).
+
 ### Project Board
+
+The Project Board, who oversee the development and ongoing maintenance and operation of the dGC Platform, are listed [here](../about/team.md)
 
 ### Clinical Safety Officer and Clinical review
 

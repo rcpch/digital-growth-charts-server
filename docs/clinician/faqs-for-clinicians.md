@@ -42,3 +42,9 @@ The traditional growth charts were actually a form of 'paper calculator' for the
 The Growth Charts API obviates the need for this step since **we** calculate the centiles for you. However, another important function of the chart was to visualise **trends** in the growth. Our API does not do this, so there will be a need for some form of chart to visualise the trend.
 
 Initially we expect that clinical users will want to see the traditional growth chart, out of simple familiarity. But in time we think that researchers may develop better visualisations of the trend in centiles/SDS that don't have to come on such confusing curvy charts. The future of displaying growth trends is entirely open to new ideas and innovation.
+
+## Q: Where can I see your clinical safety documentation?
+
+**A**: Our clinical safety documentation is completely open and public, and is all under the [Safety](../safety/overview.md) tab within this documentation site. Feedback is welcome - contact growth.digital@rcpch.ac.uk including 'Clinical Safety:' in the subject for ease of routing to the Clinical Safety Officer. Alternatively you can [create an Issue in the documentation site source code on GitHub](https://github.com/rcpch/digital-growth-charts-documentation/issues), or talk to us on our [Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts).
+
+
