@@ -5,9 +5,20 @@ reviewers: Dr Marcus Baw
 
 # Contact the RCPCH team
 
-Commercial
+## Commercial Enquiries
+Email [commercial@rcpch.ac.uk](mailto:commercial@rcpch.ac.uk) to ask questions about support and pricing tiers.
 
-Technical
+## Discourse Forum
+For all technical and clinical enquiries, we'd like to encourage the use of our open forum, because this helpd develop a community resource of previously asked and answered questions. These are the basis of an open, searchable knowledge base about the dGC Platform.
 
-Support forums
+:fontawesome-brands-discourse: <https://openhealthhub.org/c/rcpch-digital-growth-charts>
 
+[Go to the forums :fontawesome-brands-discourse:](https://openhealthhub.org/c/rcpch-digital-growth-charts){ .md-button .md-button--primary }
+
+## General Enquiries
+For other enquiries or if you are not sure how best to ask us, email <growth.digital@rcpch.ac.uk>
+
+## NHSx dPCHR Slack Group
+For those who need just one more Slack in their lives, NHSx have set up one here just for implementers of Digital Personal Child Health Records ('electronic Redbooks')
+
+:fontawesome-brands-slack: <https://join.slack.com/t/dpchrworkspace/shared_invite/zt-iz9ifaww-PWZ_3rfnsDaQxsvK9Wf51A>

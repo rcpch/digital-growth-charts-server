@@ -36,6 +36,7 @@ nav:
     - 'integrator/api-reference.md'
     - 'integrator/client-specification.md'
     - 'integrator/faqs-for-integrators.md'
+    - 'integrator/whos-using-dgc.md'
   - Contribute:
     - 'developer/start-here.md'
     - 'developer/adding-a-new-api-endpoint.md'
