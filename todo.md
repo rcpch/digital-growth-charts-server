@@ -38,3 +38,8 @@ Working with the UK's top experts in growth monitoring, growth charts, centile a
 Picture
 Demo clients & tools
 To help you implement the API we've built demo clients and tools to help with charting. These are all open source and permissively licensed to allow code reuse in your application without affecting the Intellectual Property rights of your developed solution.
+
+DOI links zenodo
+Use latest (Python package) link everywhere
+
+
