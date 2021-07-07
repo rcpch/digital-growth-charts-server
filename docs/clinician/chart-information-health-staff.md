@@ -17,7 +17,7 @@ The UK 1990 growth reference for children is used from 4 -18 years
 
 The PDF linked below was produced in 2012 to accompany the Trisomy 21 (Down's Syndrome) charts. In due course we will update and reformat the text and adapt the presentation for the API version of the charts.
 
-[PDF Down's Syndrome Chart Information (2012)](../_assets/2012-instructions-for-downs-syndrome-charts.pdf)
+[PDF Down's Syndrome Chart Information (2012)](../_pdfs/2012-instructions-for-downs-syndrome-charts.pdf)
 
 ## Measuring children
 
