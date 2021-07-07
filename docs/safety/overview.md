@@ -37,9 +37,13 @@ Our Hazard Logs are managed on GitHub in the open. Details of how this works are
 
 ### Project Board
 
-The Project Board, who oversee the development and ongoing maintenance and operation of the dGC Platform, are listed [here](../about/team.md)
+The members of the Project Board, a clinical expert group who oversee and advise on the clinical aspects of the development and ongoing maintenance and operation of the dGC Platform, are listed [here](../about/team.md)
 
-### Clinical Safety Officer and Clinical review
+The Project Board decided on all changes to the **nature** of Growth Charts which came into effect during the dGC project - such as the application of Gestational Age Correction *throughout* the chart (instead of stopping at either 1 or 2 years of age, depending on the degree of prematurity, as was previously the case), and the abolition of the use of the averaged Term reference between 37 and 42 weeks.
+
+
+<!-- ### Clinical Safety Officer
+
 
 ### Testing
 
@@ -54,4 +58,4 @@ The Project Board, who oversee the development and ongoing maintenance and opera
 ### EU - EU MDR & DoC
 
 
-### US FDA and other territories
+### US FDA and other territories -->
