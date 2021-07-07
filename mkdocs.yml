@@ -1,6 +1,7 @@
-site_name: Digital Growth Charts
-site_description: RCPCH Digital Growth Charts Project
+site_name: RCPCH Digital Growth Charts API 
+site_description: RCPCH Digital Growth Charts API Project Documentation Site
 site_author: The Royal College of Paediatrics and Child Health
+site_image: 'docs/_assets/rcpch_logo.png'
 
 nav:
   - Home: 'index.md'
