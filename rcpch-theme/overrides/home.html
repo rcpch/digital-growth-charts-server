@@ -1,21 +1,55 @@
-{% extends "overrides/main.html" %} 
+{% extends "overrides/main.html" %}
 
 {% block tabs %} {{ super() }}
-{% endblock %}
 
-{% block content %}
-    <section class="mdx-container">
-        <div class="md-grid md-typeset">
-            <div class="mdx-hero">
-                <div class="mdx-hero__content">
-                    <h1>Digital Growth Chart Project</h1>
-                </div>
-            </div>
+<style>
+    iframe {
+        border: 0;
+        display: block;
+        margin: 40px auto;
+    }
+
+    .md-typeset .mdx-hero__content h1 {
+        margin-top: 1.25em;
+    }
+</style>
+
+<section class="mdx-container">
+    <div class="md-grid md-typeset">
+        <div class="mdx-hero__content">
+            <h1>A first-of-its-kind 'Best Practice As Code' innovation by the RCPCH. Digital clinical tools provided
+                to developers of clinician and patient facing technology.</h1>
+            <a href="#" title="Go to the clinical documentation" class="md-button md-button--primary">
+                Clinician Information
+            </a>
+            <a href="#" title="Go to the developer documentation" class="md-button">
+                Developer Docs
+            </a>
         </div>
-    </section>
-    Landing page content
-{% endblock %}
+    </div>
+</section>
 
-{% block footer %}
-{{ super ()}}
-{% endblock %}
+<iframe src="https://rcpch.github.io/digital-growth-charts-react-client/" width="1600" height="1000">
+    {% endblock %}
+
+    {% block content %}
+    <blockquote class="twitter-tweet">
+        <p lang="en" dir="ltr"><a href="https://twitter.com/RCPCHtweets?ref_src=twsrc%5Etfw">@RCPCHtweets</a> <a
+                href="https://twitter.com/eatyourpeas?ref_src=twsrc%5Etfw">@eatyourpeas</a> <a
+                href="https://twitter.com/BATStudy?ref_src=twsrc%5Etfw">@BATStudy</a> <a
+                href="https://twitter.com/PERFORM_2020?ref_src=twsrc%5Etfw">@PERFORM_2020</a> <a
+                href="https://twitter.com/DIAMONDS_2020?ref_src=twsrc%5Etfw">@DIAMONDS_2020</a> I forgot to tell you,
+            Simon,
+            that we used the RCPCH growth API from R in our recent publication on MIS-C (<a
+                href="https://t.co/e4SZouzaQC">https://t.co/e4SZouzaQC</a>). It was very useful!</p>&mdash; Andrew
+        McArdle
+        (@andrew_mcardle) <a
+            href="https://twitter.com/andrew_mcardle/status/1410884480504639488?ref_src=twsrc%5Etfw">July
+            2, 2021</a>
+    </blockquote>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    {% endblock %}
+
+    {% block footer %}
+    {{ super ()}}
+    {% endblock %}

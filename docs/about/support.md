@@ -23,6 +23,10 @@ Our primary support method is through the forum at [openhealthhub.org](https://o
 NHS Digital have set up a support Slack for implementers of the Digital Personal Child Health Record programme.
 You can join using this [link](https://join.slack.com/t/dpchrworkspace/shared_invite/zt-iz9ifaww-PWZ_3rfnsDaQxsvK9Wf51A)
 
+### dPCHR Slack
+NHS Digital have set up a support Slack for implementers of the Digital Personal Child Health Record programme.
+You can join using this [link](https://join.slack.com/t/dpchrworkspace/shared_invite/zt-iz9ifaww-PWZ_3rfnsDaQxsvK9Wf51A)
+
 ## Commercial Support
 
 Commercial support is also available for this API and for integration with your software solution, please contact <mailto:commercial@rcpch.ac.uk>.
