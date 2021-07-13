@@ -95,7 +95,12 @@ iframe {
 }
 
 /* suppress the 'no-demo' message on a full size screen */
+/* NB: this works with the inline style block on home.html to suppress demo on small screens */
 div#iframe-mobile-replacement {
   display:none;
   margin: 1em auto
+}
+
+div#twitter div{
+  display:inline;
 }
