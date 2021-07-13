@@ -3,11 +3,11 @@ title: React Native Client
 reviewers: Dr Marcus Baw, Dr Simon Chapman
 ---
 
-# React Native Client
+# React Native Client (experimental, pre-alpha)
 
 ![image](image)
 
-:octicons-mark-github-16: [GitHub repository](https://github.com/rcpch/digital-growth-charts-react-native-client)
+:octicons-mark-github-16: [github.com/rcpch/digital-growth-charts-react-native-client](https://github.com/rcpch/digital-growth-charts-react-native-client)
 
 :material-web: (link to follow)
 

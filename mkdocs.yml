@@ -1,7 +1,6 @@
 site_name: RCPCH Digital Growth Charts API 
 site_description: RCPCH Digital Growth Charts API Project Documentation Site
 site_author: The Royal College of Paediatrics and Child Health
-site_image: 'docs/_assets/rcpch_logo.png'
 
 nav:
   - Home: 'index.md'
@@ -101,8 +100,8 @@ theme:
     text: Montserrat
     code: Roboto Mono
 
-  favicon: _assets/dynamic-child-favicon.png
-  logo: _assets/logo-desktop.svg
+  favicon: _assets/_images/dynamic-child-favicon.png
+  logo: _assets/_images/logo-desktop.svg
 
 plugins:
   - render_swagger
@@ -129,4 +128,17 @@ repo_url: https://github.com/rcpch/digital-growth-charts-documentation
 edit_uri: blob/live/docs
 
 extra_css:
-  - _stylesheets/extra.css
+  - _assets/_stylesheets/extra.css
+
+# footer links and variables
+extra:
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/rcpchtweets
+    - icon: fontawesome/brands/github
+      link: https://github.com/rcpch
+    - icon: fontawesome/brands/discourse
+      link: https://openhealthhub.org/c/rcpch-digital-growth-charts
+    - icon: material/chat
+      link: https://signal.group/#CjQKIAjLf5lS9OZIAI6lsJKWP1LmeJXkUW_fzZH1ryEw3oFEEhBH-4F7WnlyYjKerjfzD6B0
+

@@ -41,6 +41,6 @@ The complete unabridged technical file, all documentation, instructions for use,
 | Date of Issue               | 7th May 2021                                                        |
 | Name                        | Dr Marcus Baw                                                       |
 | Position                    | Lead Developer, Clinical Safety Officer                             |
-| Signature                   | ![doc-signature](../../_assets/marcus-signature-only-used-for-docs.jpg) |
+| Signature                   | ![doc-signature](../../_assets/_images/marcus-signature-only-used-for-docs.jpg) |
 
 

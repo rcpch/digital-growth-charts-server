@@ -17,7 +17,7 @@ The UK 1990 growth reference for children is used from 4 -18 years
 
 The PDF linked below was produced in 2012 to accompany the Trisomy 21 (Down's Syndrome) charts. In due course we will update and reformat the text and adapt the presentation for the API version of the charts.
 
-[PDF Down's Syndrome Chart Information (2012)](../_pdfs/2012-instructions-for-downs-syndrome-charts.pdf)
+[PDF Down's Syndrome Chart Information (2012)](../_assets/_pdfs/2012-instructions-for-downs-syndrome-charts.pdf)
 
 ## Measuring children
 
@@ -49,7 +49,7 @@ Weights measured too close together may be misleading, but if there are concerns
 
 Length or height should be measured whenever there are any worries about a child’s weight gain, growth or general health. Measure length until age 2; measure height after age 2.  A child’s height is usually slightly less than their length.
 
-![What are centiles](../_assets/centile-terminology.png)
+![What are centiles](../_assets/_images/centile-terminology.png)
 
 ## Assessing weight loss after birth
 
@@ -83,10 +83,8 @@ If any of the following:
 
 * Where weight or height or BMI is below the 0.4th centile, unless already fully investigated at an earlier age
 * If the height centile is more than 3 centile spaces below the mid-parental centile.
-* A drop in height centile position of more than 2 centile spaces, as long as measurement error has been
-excluded.
-* Smaller centile falls or discrepancies between child’s and mid-parental centile, if seen in combination, or if
-associated with possible underlying disease.
+* A drop in height centile position of more than 2 centile spaces, as long as measurement error has been excluded.
+* Smaller centile falls or discrepancies between child’s and mid-parental centile, if seen in combination, or if associated with possible underlying disease.
 * If there are any other concerns about the child’s growth.
 
 ## Calculations as yet not implemented in the API
@@ -103,5 +101,9 @@ Here the child or young person's BMI is compared with the median value for age a
 ### Predicting adult height
 
 Parents like to know how tall their child will be as an adult. The child’s most recent height centile (aged 2–4 years) gives a good idea of this for healthy children. Plot this centile on the adult height predictor to the right of the height chart to find the average adult height for children on this centile. Four out of five children will have adult heights that are within 6cm above or below this value.
-Adult Height Predictor
-This allows you to predict the child’s adult height based on their current height, but with a regression adjustment to allow for the tendency of very tall and short children to be less extreme in height as adults. Four girls out of five will have an adult height within ±6 cm of the predicted adult height.
+
+#### Adult Height Predictor
+The paper-based Adult Heigth Predictor allowed you to predict the child’s adult height based on their current height, but with a regression adjustment to allow for the tendency of very tall and short children to be less extreme in height as adults. Four girls out of five will have an adult height within ±6 cm of the predicted adult height.
+
+!!! info
+    Adult Height Prediction is an upcoming feature of the Digital Growth Chart API

@@ -53,4 +53,4 @@ Also within these practices are measures which ensure that the code which is dep
 
 The RCPCH has been certified as compliant with the requirements of the Cyber Essentials scheme
 
-[RCPCH Cyber Essentials certificate](../../_pdfs/rcpch-cyber-essentials-certificate.pdf)
+[RCPCH Cyber Essentials certificate](../../_assets/_pdfs/rcpch-cyber-essentials-certificate.pdf)

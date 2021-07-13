@@ -29,13 +29,13 @@ In order to use the dGC API you need to sign up for an account and obtain API ke
 
 1. Select a Tier from the 'Tiers' drop-down above to get started.
     
-    **IMPORTANT: ONLY THE FREE TIER IS INSTANT ACCESS**. Other tiers will need to wait for approval, onboarding, and payment verification, so we recommend the Free Tier for everyone initially. You can create multiple Free Tier apps, and also at different Tiers.
+    **IMPORTANT: ONLY THE FREE TIER GIVES YOU INSTANT ACCESS**. Other tiers will need to wait for **approval**, onboarding, and payment verification, so we recommend the Free Tier for everyone initially. You can create multiple Free Tier apps, however the usage is shared.
 
 2. Create a unique name for your application. It doesn't matter what you call it as long as it has meaning for you, and it can be changed later in the Account part of the portal.
 
 3. Click 'Subscribe' to create the app.
 
-![create-an-app](../_assets/create-an-app.png)
+![create-an-app](../_assets/_images/create-an-app.png)
 
 !!! tip "Improving these docs"
     We're always looking for feedback on our documentation, so that we maintain clear, unambiguous guides for all parts of the platform. If something isn't clear please let us know, by [talking about it on our forums](https://openhealthhub.org/c/rcpch-digital-growth-charts), or creating an [issue on GitHub](https://github.com/rcpch/digital-growth-charts-documentation/issues). Please include enough description of the problem that we can fix it. Screenshots and links are super helpful for this.

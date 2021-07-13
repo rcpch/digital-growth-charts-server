@@ -28,7 +28,7 @@ We will need an API key in order to authenticate that calls made to the API are 
 
 1. Copy this API key to the clipboard (Select it all with the mouse and then press ++ctrl+c++ )
 
-![getting-api-keys](../_assets/getting-api-keys.png)
+![getting-api-keys](../_assets/_images/getting-api-keys.png)
 
 -----
 

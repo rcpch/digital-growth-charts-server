@@ -6,6 +6,6 @@ reviewers: Dr Marcus Baw
 # DISCLAIMER
 
 --8<--
-docs/_snippets/self-host-warning.md
+docs/_assets/_snippets/self-host-warning.md
 --8<--
 

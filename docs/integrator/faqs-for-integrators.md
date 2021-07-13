@@ -18,7 +18,7 @@ In our documentation we have used the term **Integrator** to refer to a person o
 We have open sourced the API in order to align with our policy on transparency and clinical safety, however we advise that you do not self host it. Only the version deployed and managed by the RCPCH team is warranted to be correct.
 
 --8<--
-docs/_snippets/self-host-warning.md
+docs/_assets/_snippets/self-host-warning.md
 --8<--
 
 

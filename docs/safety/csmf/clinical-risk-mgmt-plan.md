@@ -34,7 +34,7 @@ If clarification is required of whether any system falls within scope of this CR
     IMPORTANT: This Clinical Risk Management File applies ONLY to RCPCH open source software as deployed and managed by the RCPCH dGC Team under our direct control.
     
 --8<--
-docs/_snippets/self-host-warning.md
+docs/_assets/_snippets/self-host-warning.md
 --8<--
 
 ## Definitions

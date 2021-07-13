@@ -5,7 +5,7 @@ reviewers: Dr Marcus Baw
 
 # Information for Parents
 
-![alt text](../_assets/growthchartstitle.png)
+![alt text](../_assets/_images/growthchartstitle.png)
 
 ##  What do regular measurements tell us?
 
@@ -20,12 +20,11 @@ If a child’s growth pattern looks unusual, your health visitor or doctor may w
 
 ##  The UK-WHO growth charts
 
-The UK-WHO growth charts are based:
+The UK-WHO growth charts are based on data:
 
-•	From birth to age 4 years on measurements from healthy term babies (37 or more weeks gestation) collected by the World Health Organization (WHO) in six different countries. Healthy breastfed babies whose mothers did not smoke and who had access to good healthcare and nutrition were measured over time. The centile curves drawn using these measurements show how healthy babies are expected to grow, whatever their ethnic origin and whether breastfed or infant formula fed. For babies below 37 weeks gestation, measurements are plotted on growth charts based on the birthweights of British infants who were born prematurely.
+* From birth to age 4 years on measurements from healthy term babies (37 or more weeks gestation) collected by the World Health Organization (WHO) in six different countries. Healthy breastfed babies whose mothers did not smoke and who had access to good healthcare and nutrition were measured over time. The centile curves drawn using these measurements show how healthy babies are expected to grow, whatever their ethnic origin and whether breastfed or infant formula fed. For babies below 37 weeks gestation, measurements are plotted on growth charts based on the birthweights of British infants who were born prematurely.
 
-•	From age 4 to 20 years on measurements from a large number of British children collected in the 1980-90s.
-
+* From age 4 to 20 years on measurements from a large number of British children collected in the 1980-90s.
 
 ##   Weighing and measuring
 
@@ -38,7 +37,6 @@ After 2 years of age your child’s standing height should be measured. Your chi
 
 From age 4 years, your child’s Body Mass Index (BMI) can be calculated from their weight and height measurements (BMI = weight/height2). BMI is a simple measure of fatness or thinness, and high levels suggest that the child may be carrying too much fat. The cut-offs for a high BMI in children are different from those used in adults and depend upon age. Some medical conditions or treatments that your child receives may mean that the BMI centile is not the best way to measure your child. A low BMI can be due to a relatively low amount of lean (muscle) tissue as well as fat. Your GP or other health professional caring for your child will be able to discuss your child’s BMI with you.
 
-
 ## How often to weigh
 
 It is normal for a baby to lose some weight in the first few days after birth. Your baby should be weighed in the first week as part of the assessment of feeding. Most babies get back to their birth weight by 2 weeks of age. This is a sign that feeding is going well and that your baby is healthy.
@@ -47,16 +45,14 @@ After that, your baby will usually be weighed only when seen routinely, unless t
 Many parents like to have their babies weighed more often. However, it is not always helpful and can cause unnecessary worry. For example, if one week your baby was weighed just after a big feed but the next week they were weighed after a long nap and before a feed, it could look as if they had not gained weight. Longer gaps between weights are more likely to show the true weight change. The recommended time between weighing is longer for older babies because they are growing more slowly. 
 Your health visitor or doctor may recommend more frequent weighing for children if there are concerns about their growth or health or if they have certain medical conditions. If there are serious concerns about slow weight gain or even weight loss, a child could be weighed as often as:
 
-•	daily if less than 1 month old
-•	weekly between 1–6 months old
-•	fortnightly between 6–12 months
-•	monthly from 1 year of age
+* daily if less than 1 month old
+* weekly between 1–6 months old
+* fortnightly between 6–12 months
+* monthly from 1 year of age
 
 Remember that if you want advice you can always phone your health visitor or visit the clinic, without having your child weighed.
 
-Beyond the age of two years children need only be weighed if there are worries about their health, growth or weight gain. Once they go to school, in England, they will be measured with their class mates for the National Child Measurement Programme in their reception class and their last year in primary school. 
-
-
+Beyond the age of two years children need only be weighed if there are worries about their health, growth or weight gain. Once they go to school, in England, they will be measured with their class mates for the National Child Measurement Programme in their reception class and their last year in primary school.
 
 ## Frequently asked questions
 

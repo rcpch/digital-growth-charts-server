@@ -7,7 +7,7 @@ reviewers: Dr Marcus Baw
 
 Although the process of obtaining a centile/SDS result from the API is very straightforward, rendering this to an actual digital growth chart graphic is quite complex. For this reason, we have produced a permissively-licensed open-source React component, which aims to simplify the process of creating a chart from the chart data received from the API. It makes the job of drawing a vector-graphic centile chart much easier.
 
-![height-chart-girl-component](../_assets/height-chart-girl-component.png)
+![height-chart-girl-component](../_assets/_images/height-chart-girl-component.png)
 
 :octicons-mark-github-16: [GitHub repository](https://github.com/rcpch/digital-growth-charts-react-component-library)
 
@@ -289,10 +289,16 @@ see [Contributing](../developer/contributing.md)
 
 ### How to contribute
 
-- Fork the repository to your own GitHub account
+- Fork the repository to your own GitHub account.
+
 - Set up your development environment (ideally using our instructions here for maximum compatibility with our own development environments)
-- Note that running the chart package and react client locally will cause a conflict within react if multiple versions are running. A fix for this can be found in the [react client readme.MD](https://github.com/rcpch/digital-growth-charts-react-client)
+
+- Note that running the chart package and react client locally will cause a conflict within react if multiple versions are running. A fix for this can be found in the [react client README.md](https://github.com/rcpch/digital-growth-charts-react-client)
+
 - Ideally, you should have discussed with our team what you are proposing to change, because we can only accept pull requests where there is an accepted need for that new feature or fix.
+
 - We can discuss with you how we would recommend to implement the new feature, for maximum potential 'mergeability' of your PR.
+
 - Once the work is ready to show us, create a pull request on our repo, detailing what the change is and details about the fix or feature. PRs that affect any 'mission critical' part of the code will need suitable tests which we can run.
+
 - We will endeavour to review and merge in a reasonable time frame, but will usually not merge straight into master, rather we will merge into an upcoming release branch.

@@ -8,7 +8,7 @@
 .md-typeset h1 {
   font-weight: 700;
   font-size: 24pt;
-  color: #11a7f2;
+  color: var(--md-accent-fg-color);
 }
 
 .md-typeset h2 {
@@ -31,6 +31,11 @@
 .md-header {
   background-color: #ffffff;
   color: #0d0d58;
+}
+
+/* Make the footer a nice RCPCH blue */
+.md-footer {
+  background-color: var(--md-primary-fg-color);
 }
 
 /* enlarges the font used for titles and navbar */
