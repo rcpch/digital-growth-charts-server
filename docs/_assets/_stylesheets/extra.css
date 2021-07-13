@@ -86,3 +86,16 @@ img[alt="doc-signature"] {
 button {
   text-align: center;
 }
+
+/* iframes should be centred and without margin */
+iframe {
+  border: 0;
+  display: block;
+  margin: 40px auto;
+}
+
+/* suppress the 'no-demo' message on a full size screen */
+div#iframe-mobile-replacement {
+  display:none;
+  margin: 1em auto
+}
