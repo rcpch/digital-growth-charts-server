@@ -45,6 +45,8 @@ nav:
     - 'developer/contributing.md'
     - 'developer/writing-documentation.md'
     - 'developer/faqs-for-developers.md'
+    - RCPCHGrowth Package:
+      - 'developer/rcpchgrowth.md'
   - Safety:
     - 'safety/overview.md'
     - Clinical Safety File:
