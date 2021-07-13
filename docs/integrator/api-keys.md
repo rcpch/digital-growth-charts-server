@@ -12,7 +12,7 @@ Following on from [Getting Started](../integrator/getting-started.md), in which 
 We will need an API key in order to authenticate that calls made to the API are valid. The API key is what allows us to validate that calls are genuine, and that you have enough **quota** (number of allowed calls per unit time, eg 250 calls per month) and you are not exceeding the **rate limit** (again, number of calls per unit time but over a shorter period, eg a maximum of X calls per hour).
 
 !!! danger "API keys are secrets!"
-    API keys identify you to the API, so they should be considered to be 'secrets' - this means that if someone else can access and use your API keys then they are effective 'you' as far as our servers are concerned. Hence you need to take care not to disclose the API keys, especially later on when you use the keys in a real application.
+    API keys identify you to the API, so they should be considered to be 'secrets' - this means that if someone else can access and use your API keys then they **are** effectively 'you' as far as our servers are concerned. Hence you need to take care not to disclose the API keys, especially later on when you use the keys in a real application.
 
     The commonest cause of accidental API key exposure is inadvertently committing a hard-coded API key to version control such as Git and then pushing it to a public site such as GitHub.
     

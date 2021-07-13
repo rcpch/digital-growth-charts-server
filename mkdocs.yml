@@ -79,26 +79,16 @@ theme:
   features:
     - navigation.instant
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.tracking
     - navigation.top
     - navigation.expand
-    - navigation.tabs.sticky
     # - toc.integrate
 
   palette:
-    # Light mode
-    - media: "(prefers-color-scheme: light)"
+    # Light mode ONLY - it's gets too hard to keep dark mode working with a number of iframes in play
       scheme: default
-      toggle:
-        icon: material/lightbulb
-        name: Switch to dark mode
 
-    # Dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      toggle:
-        icon: material/lightbulb-outline
-        name: Switch to light mode
 
   font:
     text: Montserrat

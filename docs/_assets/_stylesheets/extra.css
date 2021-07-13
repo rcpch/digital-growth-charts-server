@@ -3,7 +3,13 @@
 :root {
   --md-primary-fg-color: #3366cc;
   --md-accent-fg-color: #11a7f2;
+  --rcpch-pink-color: #f18cc9;
 }
+
+
+
+
+/* FONTS & TYPESETTING */
 
 .md-typeset h1 {
   font-weight: 700;
@@ -23,9 +29,15 @@
   color: #000000;
 }
 
-.md-tabs__list {
-  font-weight: 600;
+/* make the text bigger in the admonitions */
+.md-typeset .admonition {
+  font-size: 0.75rem;
 }
+
+
+
+
+/* HEADER & FOOTER */
 
 /* make the header white with blue text */
 .md-header {
@@ -33,14 +45,32 @@
   color: #0d0d58;
 }
 
+/* Switch off header hover behaviour */
+.md-search__input:hover{
+  background-color: var(--rcpch-pink-color);
+}
+
+.md-header__button:hover {
+  opacity: inherit;
+}
+
 /* Make the footer a nice RCPCH blue */
 .md-footer {
   background-color: var(--md-primary-fg-color);
 }
 
+
+
+
+/* NAVIGATION */
+
 /* enlarges the font used for titles and navbar */
 .md-header__title {
   font-size: 1.5rem;
+}
+
+.md-tabs__list {
+  font-weight: 600;
 }
 
 /* enlarges the logo image */
@@ -55,12 +85,11 @@
   max-width: 70rem;
 }
 
-/* make the text bigger in the admonitions */
-.md-typeset .admonition {
-  font-size: 0.75rem;
-}
+
+
 
 /* MOBILE */
+
 /* mobile  - make the header white with blue text */
 .md-nav--primary .md-nav__title[for="__drawer"] {
   background-color: #ffffff;
@@ -72,10 +101,14 @@
   width: 100px;
 }
 
-/* content images styling */
+
+
+
+/* IMAGES */
+
 .md-content img {
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px 0px #777;
+  border-radius: 0.2em;
+  box-shadow: 0 0 0.2em 0 #777;
 }
 
 img[alt="doc-signature"] {
@@ -86,6 +119,13 @@ img[alt="doc-signature"] {
 button {
   text-align: center;
 }
+
+.md-typeset .md-button {
+  margin: 0.2em;
+}
+
+
+/* IFRAMES FOR EMBEDS */
 
 /* iframes should be centred and without margin */
 iframe {
@@ -101,6 +141,24 @@ div#iframe-mobile-replacement {
   margin: 1em auto
 }
 
-div#twitter div{
-  display:inline;
+
+
+
+
+/* HERO SECTION OF HOME PAGE */
+.mdx-hero__content {
+  background-image: url("../_images/dynamic-child-banner-wallpaper.png");
+  padding: 3em;
 }
+
+.mdx-hero__content.md-typeset>h1,
+.mdx-hero__content.md-typeset>h2,
+.mdx-hero__content.md-typeset>p {
+  color: #ffffff;
+}
+
+.mdx-hero__content a.md-button:hover {
+    background-color: var(--rcpch-pink-color);
+    border-color: var(--rcpch-pink-color);
+}
+
