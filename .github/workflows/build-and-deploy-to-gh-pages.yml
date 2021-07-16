@@ -1,4 +1,8 @@
-name: build
+# This Action builds the documentation site in mkdocs, and pushes it to the gh-pages branch
+# GitHub pages is the BACKUP SITE: https://rcpch.github.io/digital-growth-charts-documentation/
+# Azure Statis is the LIVE site https://growth.rcpch.ac.uk/
+
+name: build-and-deploy-to-gh-pages.yml
 on:
   push:
     branches:
