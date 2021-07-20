@@ -1,5 +1,5 @@
 """
-UK-WHO router
+Turner router
 """
 # Standard imports
 # from .measurement_class import MeasurementClass
@@ -14,21 +14,21 @@ from rcpchgrowth import Measurement, constants, chart_functions
 from .request_validation_classes import MeasurementRequest, ChartCoordinateRequest
 
 # set up the API router
-uk_who = APIRouter(
-    prefix="/uk-who",
+turners = APIRouter(
+    prefix="/turners",
+    # tags=["uk90", "uk-who", "WHO", "England"]
 )
 
 
-@uk_who.post("/calculation/")
-def uk_who_calculation(measurementRequest: MeasurementRequest):
+@turners.post("/calculation")
+def turner_calculation(measurementRequest: MeasurementRequest):
     """
     Centile calculation.
     ---
     POST:
-      summary: UK-WHO centile and SDS calculation.
+      summary: Turner's Syndrome centile and SDS calculation.
       description: |
-        * These are the 'standard' centiles for children in the UK. It uses a hybrid of the WHO and UK90 datasets.
-        * For non-UK use you may need the WHO-only or CDC charts which we do not yet support, but we may add if demand is there.
+        * This endpoint MUST ONLY be used for children with the chromosomal disorder Turner's Syndrome (45,XO karyotype).
         * Returns a single centile/SDS calculation for the selected `measurement_method`.
         * Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.
         * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
@@ -54,15 +54,15 @@ def uk_who_calculation(measurementRequest: MeasurementRequest):
             application/json:
               schema: CalculationResponseSchema
     """
-    
-        # Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc
+
+    # Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc
     values = {
-        # 'birth_date': req["birth_date"].split('T', 1)[0],
         'birth_date': measurementRequest.birth_date,
-        'gestation_days': measurementRequest.gestation_weeks,
-        'gestation_weeks': measurementRequest.gestation_days,
+        'gestation_days': measurementRequest.gestation_days,
+        'gestation_weeks': measurementRequest.gestation_weeks,
         'measurement_method': measurementRequest.measurement_method,
-        'observation_date': measurementRequest.observation_date,
+        'observation_date':
+            measurementRequest.observation_date,
         'observation_value': measurementRequest.observation_value,
         'sex': measurementRequest.sex
     }
@@ -70,7 +70,7 @@ def uk_who_calculation(measurementRequest: MeasurementRequest):
     # Send to calculation
     try:
         calculation = Measurement(
-            reference=constants.UK_WHO,
+            reference=constants.TURNERS,
             **values
         ).measurement
     except ValueError as err:
@@ -79,14 +79,16 @@ def uk_who_calculation(measurementRequest: MeasurementRequest):
 
     return calculation
 
-@uk_who.post("/chart-coordinates")
-def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
+
+@turners.post("/chart-coordinates")
+def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
     """
     Chart data.
     ---
     POST:
       summary: UK-WHO Chart coordinates in plottable format
         * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
+        * Note height in girls conly be only returned. It is a post request to maintain consistency with other routes.
 
       requestBody:
         content:
@@ -101,16 +103,19 @@ def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
               schema: ChartDataResponseSchema
     """
 
+    if chartParams.sex == "male" or chartParams.measurement_method != "height":
+        return "Turner data only exists for height in girls."
+
     try:
         chart_data = chart_functions.create_chart(
-            constants.UK_WHO, measurement_method=chartParams.measurement_method, sex=chartParams.sex, centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+            constants.TURNERS, centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES)
     except Exception as err:
-        print(err.messages)
-        return err.messages, 422
-
+        print(err)
+        return "Server error fetching chart data.", 400
     return {
         "centile_data": chart_data
     }
+
 
 """
     Return object structure

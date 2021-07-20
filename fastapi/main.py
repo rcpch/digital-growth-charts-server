@@ -1,13 +1,15 @@
 # standard imports
 from typing import Optional
 
+from rcpchgrowth import trisomy_21
+
 # third party imports
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
 from pydantic import BaseSettings
 
 # local / rcpch imports
-from routers import uk_who
+from routers import uk_who, turners, trisomy_21
 
 ### API VERSION ###
 version = '2.2.5'  # this is set by bump version
@@ -25,6 +27,8 @@ app = FastAPI(openapi_url=settings.openapi_url)
 
 # include routers for each type of endpoint
 app.include_router(uk_who)
+app.include_router(turners)
+app.include_router(trisomy_21)
 
 
 @app.get("/")

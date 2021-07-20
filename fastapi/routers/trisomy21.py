@@ -1,5 +1,5 @@
 """
-UK-WHO router
+Turner router
 """
 # Standard imports
 # from .measurement_class import MeasurementClass
@@ -14,21 +14,19 @@ from rcpchgrowth import Measurement, constants, chart_functions
 from .request_validation_classes import MeasurementRequest, ChartCoordinateRequest
 
 # set up the API router
-uk_who = APIRouter(
-    prefix="/uk-who",
+trisomy_21 = APIRouter(
+    prefix="/trisomy-21",
 )
 
-
-@uk_who.post("/calculation/")
-def uk_who_calculation(measurementRequest: MeasurementRequest):
+@trisomy_21.post("/calculation")
+def trisomy_21_calculation(measurementRequest: MeasurementRequest):
     """
     Centile calculation.
     ---
-    POST:
-      summary: UK-WHO centile and SDS calculation.
+    post:
+      summary: Trisomy 21 centile and SDS calculation.
       description: |
-        * These are the 'standard' centiles for children in the UK. It uses a hybrid of the WHO and UK90 datasets.
-        * For non-UK use you may need the WHO-only or CDC charts which we do not yet support, but we may add if demand is there.
+        * This endpoint MUST ONLY be used for children with Trisomy 21 (Down's Syndrome).
         * Returns a single centile/SDS calculation for the selected `measurement_method`.
         * Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.
         * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
@@ -54,44 +52,49 @@ def uk_who_calculation(measurementRequest: MeasurementRequest):
             application/json:
               schema: CalculationResponseSchema
     """
-    
-        # Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc
+
     values = {
-        # 'birth_date': req["birth_date"].split('T', 1)[0],
         'birth_date': measurementRequest.birth_date,
-        'gestation_days': measurementRequest.gestation_weeks,
-        'gestation_weeks': measurementRequest.gestation_days,
+        'gestation_days': measurementRequest.gestation_days,
+        'gestation_weeks': measurementRequest.gestation_weeks,
         'measurement_method': measurementRequest.measurement_method,
-        'observation_date': measurementRequest.observation_date,
+        'observation_date':
+            measurementRequest.observation_date,
         'observation_value': measurementRequest.observation_value,
         'sex': measurementRequest.sex
     }
 
-    # Send to calculation
     try:
         calculation = Measurement(
-            reference=constants.UK_WHO,
+            reference=constants.TRISOMY_21,
             **values
         ).measurement
-    except ValueError as err:
-        print(err.args)
-        return err.args, 422
 
-    return calculation
+        return calculation
+    except Exception as err:
+        return err, 400
 
-@uk_who.post("/chart-coordinates")
-def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
+
+
+
+
+@trisomy_21.post("/chart-coordinates")
+def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
     """
     Chart data.
     ---
     POST:
       summary: UK-WHO Chart coordinates in plottable format
         * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
+        * Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')
 
       requestBody:
         content:
           application/json:
             schema: ChartDataRequestParameters
+            example:
+                "sex": "female"
+                "measurement_method":"height"
 
       responses:
         200:
@@ -101,12 +104,12 @@ def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
               schema: ChartDataResponseSchema
     """
 
+
     try:
         chart_data = chart_functions.create_chart(
-            constants.UK_WHO, measurement_method=chartParams.measurement_method, sex=chartParams.sex, centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+            constants.TRISOMY_21, measurement_method=chartParams.measurement_method, sex=chartParams.sex, centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILES)
     except Exception as err:
-        print(err.messages)
-        return err.messages, 422
+        print(err)
 
     return {
         "centile_data": chart_data
@@ -133,5 +136,4 @@ def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
         ],
         ... repeat for weight, bmi, ofc, based on which measurements supplied. If only height data supplied, only height centile data returned
     ]
-
-    """
+"""
