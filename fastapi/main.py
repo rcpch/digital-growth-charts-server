@@ -1,11 +1,10 @@
 # standard imports
-from typing import Optional
-
-from rcpchgrowth import trisomy_21
+import json
 
 # third party imports
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseSettings
 
 # local / rcpch imports
@@ -23,7 +22,18 @@ class Settings(BaseSettings):
 settings = Settings()
 
 # declare the FastAPI app
-app = FastAPI(openapi_url=settings.openapi_url)
+app = FastAPI(
+        openapi_url=settings.openapi_url
+    )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 
 # include routers for each type of endpoint
 app.include_router(uk_who)
@@ -44,7 +54,7 @@ def custom_openapi():
     openapi_schema = get_openapi(
         title="RCPCH Growth API",
         version=API_SEMANTIC_VERSION,
-        description="Change this text",
+        description="Returns SDS and centiles for child growth measurements using growth references.",
         routes=app.routes,
     )
     

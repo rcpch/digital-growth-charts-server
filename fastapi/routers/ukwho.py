@@ -2,8 +2,6 @@
 UK-WHO router
 """
 # Standard imports
-# from .measurement_class import MeasurementClass
-
 from rcpchgrowth.constants.reference_constants import UK_WHO
 
 # Third party imports
@@ -136,7 +134,7 @@ def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
 
     """
 
-@uk_who.post('/fictional_child_data')
+@uk_who.post('/fictional-child-data')
 def fictional_child_data(fictional_child_request: FictionalChildRequest):
   try:
     life_course_fictional_child_data = generate_fictional_child_data(

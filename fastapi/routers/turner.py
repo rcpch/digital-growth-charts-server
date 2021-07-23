@@ -3,9 +3,6 @@ Turner router
 """
 # Standard imports
 # from .measurement_class import MeasurementClass
-import json
-from datetime import datetime
-
 from rcpchgrowth.constants.reference_constants import TURNERS
 
 # Third party imports
@@ -17,7 +14,7 @@ from .request_validation_classes import MeasurementRequest, ChartCoordinateReque
 
 # set up the API router
 turners = APIRouter(
-    prefix="/turners-syndrome",
+    prefix="/turner",
     # tags=["uk90", "uk-who", "WHO", "England"]
 )
 
@@ -143,8 +140,9 @@ def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
 
     """
 
-@turners.post('/fictional_child_data')
+@turners.post('/fictional-child-data')
 def fictional_child_data(fictional_child_request: FictionalChildRequest):
+  
   try:
     life_course_fictional_child_data = generate_fictional_child_data(
       measurement_method=fictional_child_request.measurement_method,
@@ -162,6 +160,7 @@ def fictional_child_data(fictional_child_request: FictionalChildRequest):
       noise_range = fictional_child_request.noise_range,
       reference = TURNERS
     )
+    
     return life_course_fictional_child_data
   except ValueError:
     return 422

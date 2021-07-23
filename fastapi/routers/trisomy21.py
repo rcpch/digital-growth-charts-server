@@ -3,9 +3,6 @@ Turner router
 """
 # Standard imports
 # from .measurement_class import MeasurementClass
-import json
-from datetime import datetime
-
 from rcpchgrowth.constants.reference_constants import TRISOMY_21
 
 # Third party imports
@@ -140,7 +137,7 @@ def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
     ]
 """
 
-@trisomy_21.post('/fictional_child_data')
+@trisomy_21.post('/fictional-child-data')
 def fictional_child_data(fictional_child_request: FictionalChildRequest):
   try:
     life_course_fictional_child_data = generate_fictional_child_data(
