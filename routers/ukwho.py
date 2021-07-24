@@ -57,8 +57,8 @@ def uk_who_calculation(measurementRequest: MeasurementRequest):
     values = {
         # 'birth_date': req["birth_date"].split('T', 1)[0],
         'birth_date': measurementRequest.birth_date,
-        'gestation_days': measurementRequest.gestation_weeks,
-        'gestation_weeks': measurementRequest.gestation_days,
+        'gestation_days': measurementRequest.gestation_days,
+        'gestation_weeks': measurementRequest.gestation_weeks,
         'measurement_method': measurementRequest.measurement_method,
         'observation_date': measurementRequest.observation_date,
         'observation_value': measurementRequest.observation_value,
