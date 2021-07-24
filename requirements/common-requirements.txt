@@ -1,0 +1,11 @@
+# standard dependencies
+typing
+
+# third party dependencies
+fastapi
+uvicorn[standard]
+pydantic
+
+# rcpch dependencies
+# python package which does the centile and SDS calculations
+rcpchgrowth

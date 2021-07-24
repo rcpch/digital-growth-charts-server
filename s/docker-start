@@ -9,7 +9,7 @@ app="rcpch-dgc-server"
 # `docker container rm rcpch-dgc-server` to remove container
 # or use the `s/rebuild-docker` script
 
-docker run -it -p 5000:5000 \
+docker run -it -p 8000:8000 \
   --name=${app} \
   --volume $PWD:/app \
   ${app}

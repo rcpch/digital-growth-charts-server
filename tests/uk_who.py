@@ -1,1 +1,3 @@
-# this should test the uk-who/calculation endpoint
+"""
+Tests for the uk-who/ endpoints
+"""
