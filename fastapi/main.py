@@ -43,7 +43,7 @@ app.include_router(trisomy_21)
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"200 OK"}
 
 
 def custom_openapi():
