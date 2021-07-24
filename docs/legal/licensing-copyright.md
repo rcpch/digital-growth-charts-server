@@ -58,11 +58,12 @@ Components which we believe other organisations would derive benefit from being 
 | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | [Python](https://github.com/python/cpython/blob/master/LICENSE)                  | [PSF License](https://directory.fsf.org/wiki/License:Python-2.0.1)          |
 | [Flask](https://github.com/opentracing-contrib/python-flask/blob/master/LICENSE) | [BSD 3-Clause License](https://directory.fsf.org/wiki/License:BSD-3-Clause) |
+| [FastAPI](https://github.com/tiangolo/fastapi#license)                           | [MIT License](https://directory.fsf.org/wiki/License:Expat)                 |
 | [React](https://github.com/facebook/react/blob/master/LICENSE)                   | [MIT License](https://directory.fsf.org/wiki/License:Expat)                 |
 | [React-Native](https://github.com/facebook/react-native/blob/master/LICENSE)     | [MIT License](https://directory.fsf.org/wiki/License:Expat)                 |
 | [MkDocs](https://github.com/squidfunk/mkdocs-material/blob/master/LICENSE)       | [MIT License](https://directory.fsf.org/wiki/License:Expat)                 |
 
-All the above licenses are compatible with the AGPL terms of the dgC API Server and python package part of the project, and the MIT terms of the other parts.
+All the above licenses are compatible with the AGPL terms of the dGC API Server and python package part of the project, and the MIT terms of the other parts.
 
 All the above projects remain the copyright of their respective owners.
 
