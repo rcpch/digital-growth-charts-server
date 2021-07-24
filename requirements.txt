@@ -1,6 +1,1 @@
-"""
-This requirements.txt runs the environment-specific
-requirements files in the requirements directory
-"""
-
 -r requirements/live-requirements.txt
