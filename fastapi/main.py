@@ -67,6 +67,21 @@ def custom_openapi():
 app.openapi = custom_openapi
 
 
+# OpenAPI3 autogeneration and metadata
+"""
+    "RCPCH Digital Growth Charts API",
+    version=f'v{api_semantic_version} (commit_hash: {api_commit_hash})',
+    openapi_version="3.0.2",
+    info=dict(
+        description="Royal College of Paediatrics and Child Health Digital Growth Charts",
+        license={"name": "GNU Affero General Public License",
+                 "url": "https://www.gnu.org/licenses/agpl-3.0.en.html"}),
+    plugins=[MarshmallowPlugin(), FlaskPlugin()],
+    servers=[{"url": 'https://api.rcpch.ac.uk',
+              "description": 'RCPCH Production API Gateway (subscription keys required)'},
+             {"url": 'https://localhost:5000',
+              "description": 'Your local development API'}],
+
 def write_apispec_to_file():
     with open(r'openapi.yml', 'w') as file:
         file.write(spec.to_yaml())
@@ -74,3 +89,4 @@ def write_apispec_to_file():
     with open(r'openapi.json', 'w') as file:
         file.write(json.dumps(
             spec.to_dict(), sort_keys=True, indent=4))
+"""
