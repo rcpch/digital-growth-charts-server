@@ -11,7 +11,7 @@ from pydantic import BaseSettings
 from routers import uk_who, turners, trisomy_21
 
 ### API VERSION ###
-version='2.2.5'  # this is set by bump version
+version='3.0.0'  # this is set by bump version
 API_SEMANTIC_VERSION = version  
 
 
