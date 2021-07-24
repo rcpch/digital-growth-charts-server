@@ -2,7 +2,6 @@
 Turner router
 """
 # Standard imports
-# from .measurement_class import MeasurementClass
 from rcpchgrowth.constants.reference_constants import TURNERS
 
 # Third party imports
@@ -15,7 +14,6 @@ from .request_validation_classes import MeasurementRequest, ChartCoordinateReque
 # set up the API router
 turners = APIRouter(
     prefix="/turner",
-    # tags=["uk90", "uk-who", "WHO", "England"]
 )
 
 

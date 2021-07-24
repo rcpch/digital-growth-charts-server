@@ -1,8 +1,7 @@
 """
-Turner router
+Trisomy 21 router
 """
 # Standard imports
-# from .measurement_class import MeasurementClass
 from rcpchgrowth.constants.reference_constants import TRISOMY_21
 
 # Third party imports
@@ -106,7 +105,11 @@ def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
 
     try:
         chart_data = chart_functions.create_chart(
-            constants.TRISOMY_21, measurement_method=chartParams.measurement_method, sex=chartParams.sex, centile_selection=COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+            constants.TRISOMY_21,
+            measurement_method=chartParams.measurement_method,
+            sex=chartParams.sex,
+            centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES
+        )
     except Exception as err:
         print(err)
 
