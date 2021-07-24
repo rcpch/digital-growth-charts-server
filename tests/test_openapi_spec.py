@@ -1,3 +1,7 @@
+"""
+Tests for the openAPI spec endpoint
+"""
+
 # third-party imports
 import pytest
 
