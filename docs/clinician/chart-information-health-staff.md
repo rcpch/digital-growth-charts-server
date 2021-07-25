@@ -104,6 +104,6 @@ Parents like to know how tall their child will be as an adult. The child’s mos
 
 #### Adult Height Predictor
 The paper-based Adult Heigth Predictor allowed you to predict the child’s adult height based on their current height, but with a regression adjustment to allow for the tendency of very tall and short children to be less extreme in height as adults. Four girls out of five will have an adult height within ±6 cm of the predicted adult height.
-
+.
 !!! info
     Adult Height Prediction is an upcoming feature of the Digital Growth Chart API
