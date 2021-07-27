@@ -132,7 +132,7 @@ foo@bar:~$ rcpchgrowth sds-for-measurement 16.3 ofc female 55
 Reference: UK-WHO
 SDS: -0.27811780457145885
 Centile: 39.0 %
-````
+```
 
 ## measurement-for-centile
 
