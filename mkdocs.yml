@@ -10,7 +10,6 @@ nav:
     - 'about/overview.md'
     - 'about/support.md'
     - 'about/team.md'
-    - 'about/contact.md'
     - 'about/acknowledgements.md'
   - Products:
     - 'products/products-overview.md'
@@ -71,6 +70,8 @@ nav:
     - 'legal/privacy.md'
   - Technical:
     - 'technical/status.md'
+  - Contact Us:
+    - 'contact/contact.md'
 
 
 theme:
