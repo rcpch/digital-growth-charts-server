@@ -11,7 +11,7 @@ Datasets or growth references are, in general, relating to the population of a g
 
 As part of this project we have attempted to catalogue the available datasets or growth references, internationally. The UK references are only usable under MRC licence. The WHO or CDC data are freely available open data.
 
-This is not an exhaustive list but the aim is to be a repository for all LMS references, not only for growth but for all other physiological parameters. This collection is incomplete at present, but we welcome submissions to the repository to build the collection - please send pull requests or contact us on growth.digital@rcpch.ac.uk.
+This is not an exhaustive list but the aim is to be a repository for all LMS references, not only for growth but for all other physiological parameters. This collection is incomplete at present, but we welcome submissions to the repository to build the collection - please send [pull requests](https://github.com/rcpch/growth-references/pulls) or contact us on [growth.digital@rcpch.ac.uk](mailto:growth.digital@rcpch.ac.uk).
 
 The codebase we have built is capable of utilising any reference or dataset, but there might need to be small configurations necessary to allow for the differences between them.
 
@@ -22,7 +22,7 @@ The codebase we have built is capable of utilising any reference or dataset, but
 
 | identifier | Age Range           | Description                                                                    | Country          | Links                                                                   |
 | ---------- | ------------------- | ------------------------------------------------------------------------------ | ---------------- | ----------------------------------------------------------------------- |
-| cdc2000    |                     | length/height, weight & head circumference for ages 0 to 19.9y; BMI 2 to 19.9y | :us:             | [link](https://github.com/rcpch/growth-references/tree/main/cdc2000     |
+| cdc2000    |                     | length/height, weight & head circumference for ages 0 to 19.9y; BMI 2 to 19.9y | :us:             | [link](https://github.com/rcpch/growth-references/tree/main/cdc2000)     |
 | spirometry | 4 - 80 years        | FEV1, FVC, FEV1FVC & FEF2575                                                   | :gb:             | [link](https://github.com/rcpch/growth-references/tree/main/spirometry) |
 | trisomy21  |                     | Trisomy 21 Growth Standards 2002                                               | :gb: :ie:        | [link](https://github.com/rcpch/growth-references/tree/main/trisomy21)  |
 | turner     |                     | Turner Syndrome, Heights 2002                                                  | :gb: :ie:        | [link](https://github.com/rcpch/growth-references/tree/main/turner)     |
