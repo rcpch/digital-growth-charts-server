@@ -11,7 +11,7 @@ from pydantic import BaseSettings
 from routers import uk_who, turners, trisomy_21
 
 ### API VERSION ###
-version='3.0.1'  # this is set by bump version
+version='3.0.3'  # this is set by bump version
 API_SEMANTIC_VERSION = version  
 
 
@@ -33,18 +33,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-
 # include routers for each type of endpoint
 app.include_router(uk_who)
 app.include_router(turners)
 app.include_router(trisomy_21)
 
-
 @app.get("/")
 def read_root():
     return {"200 OK"}
-
 
 def custom_openapi():
     if app.openapi_schema:
