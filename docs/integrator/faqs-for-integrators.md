@@ -23,7 +23,7 @@ docs/_assets/_snippets/self-host-warning.md
 
 
 !!! tip "RCPCH On-Premise Hosting Service"
-    The RCPCH offers an 'on-premise' managed service which may suit some customers requiring the service to be hosted within their own data centre, or on their own cloud infrastructure. **LINK TO PRICING**
+    The RCPCH offers an 'on-premise' managed service which may suit some customers requiring the service to be hosted within their own data centre, or on their own cloud infrastructure. Find out more about [pricing](https://www.rcpch.ac.uk/resources/growth-charts/digital/about#subscriptions-and-pricing).
 
 
 
@@ -62,7 +62,7 @@ This correction is applied up to the corrected age of 1 year for preterm childre
 
 ## Q: Is there a source from where we can get a list of extreme input values to use for our validation?
 
-**A**: Yes, we have included one in our source code: [Validation Constants](https://github.com/rcpch/digital-growth-charts-server/blob/alpha/rcpchgrowth/rcpchgrowth/constants/validation_constants.py). This is what is used internally to validate API inputs and also used by the internal `rcpchgrowth` Python module to validate inputs to the `Measurement` class.
+**A**: Yes, we have included one in our source code: [Validation Constants](https://github.com/rcpch/rcpchgrowth-python/blob/live/rcpchgrowth/constants/validation_constants.py). This is what is used internally to validate API inputs and also used by the internal `rcpchgrowth` Python module to validate inputs to the `Measurement` class.
 
 ## Q: Would it be good enough to plot the returned centile values on a pre-prepared **image** of a growth chart?  
 
