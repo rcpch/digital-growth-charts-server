@@ -13,4 +13,4 @@
     1. Obtain registration with the MHRA as a Medical Device (for UK deployment) and EU MDR, with Declaration of Conformity (for EU deployment).
    
 
-    For this reason, we HIGHLY recommend that you do not self-host any of our platform, but instead use the hosted (and attractively-priced) dGC API platform at https://dev.rcpch.ac.uk/
+    For this reason, we HIGHLY recommend that you do not self-host any of our platform, but instead use the hosted (and attractively-priced) [dGC API platform](https://dev.rcpch.ac.uk/).
