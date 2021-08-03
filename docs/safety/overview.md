@@ -9,7 +9,7 @@ Clinical Safety of these clinical tools is of paramount importance to us at the 
 
 Our primary focus has been on clinical safety certification and regulatory compliance for the UK market and specifically England, because the initial work on the dGC platform has been commissioned by NHSx, which is an England-only body. We do however recognise the need for the dGC Platform to be recognised as safe for use in other UK nations and this is our next most important priority for regulatory compliance.
 
-Compliance for EU, US and other territories may follow, but will be subject to customer engagement in those countries or global regions. If you are an API consumer and you need the dGC platform to be certified in your region of operation, then please [get in touch with us](../about/contact.md) and we can discuss the requirements. Note that **different growth chart references** (eg full WHO, CDC) are used in other countries, and we may need to commission further development of the API functions in order to support these. Adding new references is not technically difficult.
+Compliance for EU, US and other territories may follow, but will be subject to customer engagement in those countries or global regions. If you are an API consumer and you need the dGC platform to be certified in your region of operation, then please [get in touch with us](../contact/contact.md) and we can discuss the requirements. Note that **different growth chart references** (eg full WHO, CDC) are used in other countries, and we may need to commission further development of the API functions in order to support these. Adding new references is not technically difficult.
 
 ## Clinical Safety
 

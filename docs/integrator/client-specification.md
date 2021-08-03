@@ -15,7 +15,7 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman
 
 ### Understanding UK-WHO
 
-The UK growth charts are made up of 4 datasets taken from 2 growth references (see clinical documentation for more detail).
+The UK growth charts are made up of 4 datasets taken from 2 growth references (see [clinical documentation](../clinician/chart-information-health-staff.md) for more detail).
 
 - The UK90 preterm dataset runs from 23 weeks gestation to 42 weeks postmenstrual age as length (from 25 weeks), weight and head circumference.
 
@@ -23,7 +23,7 @@ The UK growth charts are made up of 4 datasets taken from 2 growth references (s
 
 - The WHO 2006 dataset continues as **height** (now measured _standing_) from 2 years to 4 years of age
 
-- The UK90 dataset picks up until 20y (head circumference to 17 in girls and 18 y in boys)
+- The UK90 dataset picks up from 4y until 20y (head circumference to 17y in girls and 18y in boys)
 
 ## Implications for charting digitally
 
@@ -31,7 +31,7 @@ The UK growth charts are made up of 4 datasets taken from 2 growth references (s
 
 - There is a natural step at each of these time points which **must** be respected. If all 4 datasets are presented 0-20y as a continuous dataset, chart packages will interpolate the gaps and the intentional 'step' will be lost.
 
-- The API endpoint returns the chart data in an array of arrays. The first level array represents the 9 centiles [0.4, 2, 9 , 25, 50, 75, 91, 98, 99.6], with each centile in turn having a nested array of 4 arrays of data, one for each dataset (see below). The individual data points are reported as float values for x and y coordinates. X corresponds to decimal age, y to the measurement value of the chart requested.
+- The API endpoint returns the chart data in an array of arrays. The first level array represents the 9 centiles `[0.4, 2, 9 , 25, 50, 75, 91, 98, 99.6]`, with each centile in turn having a nested array of 4 arrays of data, one for each dataset (see below). The individual data points are reported as float values for x and y coordinates. X corresponds to decimal age, y to the measurement value of the chart requested.
 
 - The chart data is only returned for the measurement method requested - if only height is supplied, only height centile data will be returned.
 
@@ -146,8 +146,7 @@ The nine centile lines used in the British 1990 and UK-WHO charts are labelled i
 
 ## Definitions and terminology Centile Bands
 
-Within the normal range
-
+A "centile space" is the distance between two centile lines. <br/>
 A child is defined as being “on” a centile when within 0.17 SD (0.25 centile space) of the underlying exact Z-score, otherwise they are “between”.
 
 | Centile band | SDS Lower limit | SDS Upper limit | Additional Message - Weight/Height/Head | Additional Message - BMI |
