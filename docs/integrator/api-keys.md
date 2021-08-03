@@ -16,7 +16,7 @@ We will need an API key in order to authenticate that calls made to the API are 
 
     The commonest cause of accidental API key exposure is inadvertently committing a hard-coded API key to version control such as Git and then pushing it to a public site such as GitHub.
     
-    Many stategies are available to help you avoid this, one of the most common being to put 'secrets' in Environment Variables and use a `[dotenv](https://medium.com/@thejasonfile/using-dotenv-package-to-create-environment-variables-33da4ac4ea8f)` tool to manage them. (I've linked to a tutorial on the node/javascript version of `dotenv` but it is available in many other languages too)
+    Many stategies are available to help you avoid this, one of the most common being to put 'secrets' in Environment Variables and use a [dotenv](https://medium.com/@thejasonfile/using-dotenv-package-to-create-environment-variables-33da4ac4ea8f) tool to manage them. (I've linked to a tutorial on the node/javascript version of `dotenv` but it is available in many other languages too)
 
 ## Obtaining API keys in the developer platform
 
