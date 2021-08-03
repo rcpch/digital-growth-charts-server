@@ -5,7 +5,7 @@ reviewers: Dr Marcus Baw
 # RCPCH Digital Growth Charts Privacy Policy
 
 
-Our Contact Details 
+**Our Contact Details**  
 
 Name: Royal College of Paediatrics and Child Health (RCPCH) 
 
@@ -13,9 +13,9 @@ Address: 5-11 Theobalds Road, London, WC1X 8SH
 
 Phone Number: +44 (0)20 7092 6000 
 
-E-mail: Data Protection Officer: Information.Governance@rcpch.ac.uk
+E-mail: Data Protection Officer: <mailto:Information.Governance@rcpch.ac.uk>
 
-General enquiries can be emailed to growth.digital@rcpch.ac.uk  
+General enquiries can be emailed to <mailto:growth.digital@rcpch.ac.uk>
 
 !!! info "Our EEA Representative"
     If you are located in the EEA or EU, you can contact DataRep if you wish to make a request under EU GDPR
@@ -90,7 +90,7 @@ If you are unhappy with how we are using your personal data, you should contact 
 
 :fontawesome-solid-address-book: Information Commissioner’s Office, Wycliffe House, Water Lane, Wilmslow, Cheshire, SK9 5AF
 
-:fontawesome-solid-globe: https://www.ico.org.uk
+:fontawesome-solid-globe: <https://www.ico.org.uk>
 
 
 If you have any questions about our privacy policy, the information we hold about you or you wish to make a complaint, please send an email to: <mailto:information.governance@rcpch.ac.uk>
