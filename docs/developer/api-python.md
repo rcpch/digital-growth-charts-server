@@ -47,7 +47,7 @@ git clone https://github.com/rcpch/digital-growth-charts-server.git
 `cd` into the directory
 
 ```bash
-cd digital-growth-charts-flask-client
+cd digital-growth-charts-server
 ```
 
 Install the correct Python version
@@ -59,24 +59,24 @@ pyenv install 3.8.0
 Create a virtualenv for this project 'growth-charts' abbreviated to 'gc-3.8' using Python 3.8.0
 
 ```bash
-pyenv virtualenv 3.8.0 dgc-flask-app
+pyenv virtualenv 3.8.0 fastapi-refactor
 ```
 
 !!! tip "Auto-selection of Python and virtualenv"
-    Using the same name 'dgc-flask-app' will enable it to be automatically selected when navigating to this repo (but you _can_ call your own virtualenv whatever you like). This all works using the `.python-version` file in the project root, which can contain either a Python version name which `pyenv` recognises, or it can contain a virtualenv name, which `pyenv` will select for you, and of course this automatically selects the Python version too. A helpful article about this is here <https://realpython.com/intro-to-pyenv/#activating-your-versions>
+    Using the same name 'fastapi-refactor' will enable it to be automatically selected when navigating to this repo (but you _can_ call your own virtualenv whatever you like). This all works using the `.python-version` file in the project root, which can contain either a Python version name which `pyenv` recognises, or it can contain a virtualenv name, which `pyenv` will select for you, and of course this automatically selects the Python version too. A helpful article about this is here <https://realpython.com/intro-to-pyenv/#activating-your-versions>
 
 Check virtualenv creation worked.
 
 `pyenv virtualenvs` should return something like:
 
 ```bash
-dgc-flask-app (created from /home/my-user/.pyenv/versions/3.8.0)
+fastapi-refactor (created from /home/my-user/.pyenv/versions/3.8.0)
 ```
 
 Activate the virtualenv manually if it's not already selected
 
 ```bash
-pyenv activate dgc-flask-app
+pyenv activate fastapi-refactor
 ```
 
 Install the dependencies inside this virtualenv
@@ -125,21 +125,19 @@ export SYSTEM_VERSION_COMPAT=1
 from the application's root directory, type
 
 ```bash
-s/start-server
+s/uvicorn-start
 ```
 
-You should then see some messages from the Flask development server, which should look like:
+You should then see some messages from the uvicorn development server, which should look like:
 
 ```bash
- * Serving Flask app "app.py" (lazy loading)
- * Environment: development
- * Debug mode: on
- * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: xxx-xxx-xxx
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [61645] using watchgod
+INFO:     Started server process [61647]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
 ```
 
 There may be some other messages at the end of that output for other processes which run on server startup.
 
-If you need to vary any of the parameters passed to Flask, you can either modify the startup script or, using the commands in the startup script as a guide, pass the commands to the shell manually.
+If you need to vary any of the parameters passed, you can either modify the startup script or, using the commands in the startup script as a guide, pass the commands to the shell manually.
