@@ -1,6 +1,7 @@
 # standard imports
 import json
 from pathlib import Path
+import yaml
 
 # third party imports
 from fastapi import FastAPI
@@ -18,9 +19,14 @@ version='3.0.3'  # this is set by bump version
 app = FastAPI(
         openapi_url="/",
         docs_url=None,
-        redoc_url=None
+        redoc_url=None,
+        license_info={
+            "name": "GNU Affero General Public License",
+            "url": "https://www.gnu.org/licenses/agpl-3.0.en.html"
+            },
     )
-    
+
+#  setup CORS middleware    
 app.add_middleware(
     CORSMiddleware,
     allow_origins=['*', 'http://localhost:8000'],
@@ -28,32 +34,27 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# include routers for each type of endpoint
+app.include_router(uk_who)
+app.include_router(turners)
+app.include_router(trisomy_21)
 
 # customise API metadata
 def custom_openapi():
     if app.openapi_schema:
-        print(openapi_schema)
         return app.openapi_schema
-
-    openapi_schema = get_openapi(
+ 
+    app.openapi_schema = get_openapi(
         title="RCPCH Growth API",
         version=version,
         description="Returns SDS and centiles for child growth measurements using growth references.",
         routes=app.routes,
     )
-    
-    # openapi_schema["info"]["x-logo"] = {
-    #     "url": "https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png"
-    # }
-    app.openapi_schema = openapi_schema
+    print(app.openapi_schema)
     return app.openapi_schema
 
-app.openapi = custom_openapi
+app.openapi = custom_openapi()
 
-# include routers for each type of endpoint
-app.include_router(uk_who)
-app.include_router(turners)
-app.include_router(trisomy_21)
 
 # include the root endpoint so it is described in the APIspec
 @app.get("/")
@@ -90,24 +91,30 @@ def root():
 
 # OpenAPI3 autogeneration and metadata
 """
-    "RCPCH Digital Growth Charts API",
-    version=f'v{api_semantic_version} (commit_hash: {api_commit_hash})',
-    openapi_version="3.0.2",
-    info=dict(
-        description="Royal College of Paediatrics and Child Health Digital Growth Charts",
-        license={"name": "GNU Affero General Public License",
-                 "url": "https://www.gnu.org/licenses/agpl-3.0.en.html"}),
-    plugins=[MarshmallowPlugin(), FlaskPlugin()],
+  
     servers=[{"url": 'https://api.rcpch.ac.uk',
               "description": 'RCPCH Production API Gateway (subscription keys required)'},
              {"url": 'https://localhost:5000',
               "description": 'Your local development API'}],
-
-def write_apispec_to_file():
-    with open(r'openapi.yml', 'w') as file:
-        file.write(spec.to_yaml())
-
-    with open(r'openapi.json', 'w') as file:
-        file.write(json.dumps(
-            spec.to_dict(), sort_keys=True, indent=4))
 """
+
+# saves openAPI3 spec to file
+def write_apispec_to_file():
+    if Path('openapi.yml').exists():
+        print(f'openAPI3 YAML file exists')
+    else:
+        print(f'openAPI3 YAML file created')
+        with open(r'openapi.yml', 'w') as file:
+            file.write(yaml.dump(app.openapi_schema))
+            
+    if Path('openapi.json').exists():
+        print(f'openAPI3 JSON file exists')
+    else:
+        print(f'openAPI3 JSON file created')
+        with open(r'openapi.json', 'w') as file:
+            file.write(json.dumps(
+                app.openapi_schema,
+                indent=4)
+                )
+    
+write_apispec_to_file()
