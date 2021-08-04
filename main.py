@@ -1,5 +1,6 @@
 # standard imports
 import json
+from pathlib import Path
 
 # third party imports
 from fastapi import FastAPI
@@ -12,36 +13,23 @@ from routers import uk_who, turners, trisomy_21
 
 ### API VERSION ###
 version='3.0.3'  # this is set by bump version
-API_SEMANTIC_VERSION = version  
-
-
-# change the route at which the openAPIspec is shown
-class Settings(BaseSettings):
-    openapi_url: str = "/openapi.json"
-
-settings = Settings()
 
 # declare the FastAPI app
 app = FastAPI(
-        openapi_url=settings.openapi_url
+        openapi_url="/",
+        docs_url=None,
+        redoc_url=None
     )
+    
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*'],
+    allow_origins=['*', 'http://localhost:8000'],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# include routers for each type of endpoint
-app.include_router(uk_who)
-app.include_router(turners)
-app.include_router(trisomy_21)
-
-@app.get("/")
-def read_root():
-    return {"200 OK"}
-
+# customise API metadata
 def custom_openapi():
     if app.openapi_schema:
         print(openapi_schema)
@@ -49,7 +37,7 @@ def custom_openapi():
 
     openapi_schema = get_openapi(
         title="RCPCH Growth API",
-        version=API_SEMANTIC_VERSION,
+        version=version,
         description="Returns SDS and centiles for child growth measurements using growth references.",
         routes=app.routes,
     )
@@ -62,6 +50,43 @@ def custom_openapi():
 
 app.openapi = custom_openapi
 
+# include routers for each type of endpoint
+app.include_router(uk_who)
+app.include_router(turners)
+app.include_router(trisomy_21)
+
+# include the root endpoint so it is described in the APIspec
+@app.get("/")
+def root():
+    return
+    
+
+# def generate_and_store_chart_data():
+#     reference = "turners-syndrome"
+#     chart_data_file = Path(f'chart-data/{reference}.json')
+#     if chart_data_file.exists():
+#         print(f'chart data file exists for {reference}')
+#     else:
+#         print(f'chart data file does not exist for {reference}')
+#         for sex in constants.SEXES:
+#             for measurement_method in constants.MEASUREMENT_METHODS:
+#                 try:
+#                     chart_data = chart_functions.create_chart(
+#                         reference,
+#                         measurement_method=measurement_method,
+#                         sex=sex,
+#                         centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES
+#                     )
+#                     with open(f'chart-data/{reference}.json', 'w') as file:
+#                         file.write(json.dumps(
+#                             chart_data, sort_keys=True, indent=4))
+#                 except Exception as error:
+#                     print(error)
+
+#         print(f'chart data file created for {reference}')
+
+
+# generate_and_store_chart_data()
 
 # OpenAPI3 autogeneration and metadata
 """
