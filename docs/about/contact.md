@@ -18,7 +18,7 @@ For all technical and clinical enquiries, we'd like to encourage the use of our 
 ## General Enquiries
 For other enquiries or if you are not sure how best to ask us, email <growth.digital@rcpch.ac.uk>
 
-## Signal
+## Signal Chat
 We have created a Signal chat group for instant message support of the RCPCH dGC project. We can't guarantee immediate responses but our main developers see these messages and will endeavour to respond as rapidly as possible. Join by using this link <https://signal.group/#CjQKIAjLf5lS9OZIAI6lsJKWP1LmeJXkUW_fzZH1ryEw3oFEEhBH-4F7WnlyYjKerjfzD6B0>
 
 ## NHSx dPCHR Slack Group
