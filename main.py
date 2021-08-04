@@ -12,8 +12,7 @@ from pydantic import BaseSettings
 # local / rcpch imports
 from routers import uk_who, turners, trisomy_21
 
-### API VERSION ###
-version='3.0.3'  # this is set by bump version
+version='3.0.4'  # this is set by bump version
 
 # declare the FastAPI app
 app = FastAPI(

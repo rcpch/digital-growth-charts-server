@@ -139,24 +139,23 @@ def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
 
 @uk_who.post('/fictional-child-data')
 def fictional_child_data(fictional_child_request: FictionalChildRequest):
-    print(fictional_child_request)
     try:
-        life_course_fictional_child_data = generate_fictional_child_data(
-            measurement_method=fictional_child_request.measurement_method,
-            sex=fictional_child_request.sex,
-            start_chronological_age=fictional_child_request.start_chronological_age,
-            end_age=fictional_child_request.end_age,
-            gestation_weeks=fictional_child_request.gestation_weeks,
-            gestation_days=fictional_child_request.gestation_days,
-            measurement_interval_type=fictional_child_request.measurement_interval_type,
-            measurement_interval_number=fictional_child_request.measurement_interval_number,
-            start_sds=fictional_child_request.start_sds,
-            drift=fictional_child_request.drift,
-            drift_range=fictional_child_request.drift_range,
-            noise=fictional_child_request.noise,
-            noise_range=fictional_child_request.noise_range,
-            reference=UK_WHO
-        )
-        return life_course_fictional_child_data
+      life_course_fictional_child_data = generate_fictional_child_data(
+          measurement_method=fictional_child_request.measurement_method,
+          sex=fictional_child_request.sex,
+          start_chronological_age=fictional_child_request.start_chronological_age,
+          end_age=fictional_child_request.end_age,
+          gestation_weeks=fictional_child_request.gestation_weeks,
+          gestation_days=fictional_child_request.gestation_days,
+          measurement_interval_type=fictional_child_request.measurement_interval_type,
+          measurement_interval_number=fictional_child_request.measurement_interval_number,
+          start_sds=fictional_child_request.start_sds,
+          drift=fictional_child_request.drift,
+          drift_range=fictional_child_request.drift_range,
+          noise=fictional_child_request.noise,
+          noise_range=fictional_child_request.noise_range,
+          reference=UK_WHO
+          )
+      return life_course_fictional_child_data
     except ValueError:
         return 422
