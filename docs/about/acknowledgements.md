@@ -20,7 +20,9 @@ Material for MkDocs
 GitHub
 
 
-## Individual Acknowledgements
+## Additional Contributors
 
-* Dr Dan Leach for advice on MHRA Medical Device Registration
-* Dr Charles van Lennep for many contributions to React code and building the React Native client
+* Dr Dan Leach for advice on MHRA Medical Device Registration.
+* Dr Charles van Lennep for many contributions to React code and building the React Native client.
+* Anchit Chandran for proofreading, corrections and contributions to the documentation.
+* 'William' Nai-Wei Wang for proofreading, corrections and contributions to the documentation.
