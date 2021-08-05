@@ -15,9 +15,6 @@ Although the process of obtaining a centile/SDS result from the API is very stra
 
 You can use the component as-is in a React app, or include it in plain HTML or any other JavaScript framework.
 
-## Why React?
-
-
 
 ## Getting started
 

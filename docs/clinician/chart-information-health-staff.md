@@ -1,5 +1,5 @@
 ---
-title: Information for health staff
+title: Information for Health Staff
 reviewers: Dr Marcus Baw
 ---
 
@@ -7,22 +7,30 @@ reviewers: Dr Marcus Baw
 
 ## How the UK-WHO charts work
 
-The UK–WHO growth chart combines World Health Organization (WHO) standards with UK 1990 preterm and birth data.
+The UK–WHO growth chart combines World Health Organization (WHO) standards with UK 1990 preterm and birth data:
 
-The chart from 2 weeks to 4 years of age is based on the WHO growth standard, derived from measurements of healthy, non-deprived, breastfed children of mothers who did not smoke.1 The chart for birth measurements (32 –42 weeks gestation) is based on British children measured around 1990.2 The charts depict a healthy pattern of growth that is desirable for all children, whether breast fed or formula fed, and of whatever ethnic origin.
-
-The UK 1990 growth reference for children is used from 4 -18 years
+- The chart from 2 weeks to 4 years of age is based on the WHO growth standard, derived from measurements of healthy, non-deprived, breast-fed children of mothers who did not smoke.
+- The chart for birth measurements (32 –42 weeks gestation) is based on British children measured around 1990.
+- The charts depict a healthy pattern of growth that is desirable for all children, whether breast-fed or formula-fed, and of whatever ethnic origin.
+- The UK 1990 growth reference for children is used from 4 -18 years.
 
 ## Instructions for the Trisomy 21 (Down's Syndrome) charts
 
-The PDF linked below was produced in 2012 to accompany the Trisomy 21 (Down's Syndrome) charts. In due course we will update and reformat the text and adapt the presentation for the API version of the charts.
+The PDF linked below was produced in 2012 to accompany the Trisomy 21 (Down's Syndrome) charts. In due course, we will update and reformat the text and adapt the presentation for the API version of the charts.
 
 [PDF Down's Syndrome Chart Information (2012)](../_assets/_pdfs/2012-instructions-for-downs-syndrome-charts.pdf)
 
+## Centile Terminology
+
+![What are centiles](../_assets/_images/centile-terminology.png)
+
+What do the centiles mean? These charts indicate a child’s size compared with children of the same age and maturity who have shown optimum growth. The chart also shows how quickly a child is growing. The centile lines on the chart show the expected range of weights and heights (or lengths); each describes the number of children expected to be below that line (e.g. 50% below 50th, 91% below the 91st). Children come in all shapes and sizes, but 99 out of 100 children who are growing optimally will be between the two outer lines (0.4th and 99.6th centiles); half will lie between the 25th and 75th centile lines.
+
+Being very small or very big can sometimes be associated with underlying illness. There is no single threshold below which a child’s weight or height is definitely abnormal, but only 4 per 1000 children who are growing optimally are below the 0.4th centile, so these children should be assessed at some point to exclude any problems. Those above the 99.6th centile for height are almost always healthy. Also calculate BMI if weight and height centiles appear very different.
+
 ## Measuring children
 
-Anyone who measures a child, plots or interprets charts should be suitably trained, or be supervised by someone
-qualified to do so. For further information and training materials see RCPCH website.
+Anyone who measures a child, plots or interprets charts should be suitably trained, or be supervised by someone qualified to do so. For further information and training materials see [RCPCH website](https://www.rcpch.ac.uk/resources/uk-who-growth-charts-guidance-health-professionals).
 
 !!! tip "Clothing and nappies"
     * When measuring children **up to 2 years**, remove all clothes and nappy.
@@ -40,30 +48,23 @@ Babies should be weighed in the first week as part of the assessment of feeding 
 
 Weights measured too close together may be misleading, but if there are concerns about [faltering growth](https://pathways.nice.org.uk/pathways/faltering-growth#content=view-node%3Anodes-monitoring), weight should be measured more often, but usually no more often than:
 
-* daily if less than 1 month old
-* weekly between 1–6 months old
-* fortnightly between 6–12 months
+* daily if less than 1 month old.
+* weekly between 1–6 months old.
+* fortnightly between 6–12 months.
 * monthly from 1 year of age.
 
 ## When to measure length or height
 
 Length or height should be measured whenever there are any worries about a child’s weight gain, growth or general health. Measure length until age 2; measure height after age 2.  A child’s height is usually slightly less than their length.
 
-![What are centiles](../_assets/_images/centile-terminology.png)
-
 ## Assessing weight loss after birth
 
 Weight gain in the early days varies a lot from baby to baby, however, by 2 weeks of age most babies will be on a centile close to their birth centile. Most babies lose some weight in the first 3-4 days after birth, but most have regained birth weight by 3 weeks of age. Careful clinical assessment and evaluation of feeding technique is indicated when weight loss exceeds 10% or recovery of birth weight is slow.
 
 Calculating the percentage weight loss is a useful way to identify babies who need assessment.
-Percentage weight loss can be calculated as follows:
-Weight loss = current weight–birth weight 
-Percentage weight loss = (Weight loss/  Birth weight) * 100%  
+Percentage weight loss can be calculated as follows: <br/>
+![formula](https://latex.codecogs.com/svg.image?Percent\;weight\;loss&space;=&space;((Birth\;weight\;-\;Current\;weight)/Birth\;weight)\times100%) <br/>
 For example, a child born at 3.500kg who drops to 3.150kg at 5 days has lost 350g or 10%; in a baby born at 3.000kg, a 300g loss is 10%.
-
-What do the centiles mean? These charts indicate a child’s size compared with children of the same age and maturity who have shown optimum growth. The chart also shows how quickly a child is growing. The centile lines on the chart show the expected range of weights and heights (or lengths); each describes the number of children expected to be below that line (e.g. 50% below 50th, 91% below the 91st). Children come in all shapes and sizes, but 99 out of 100 children who are growing optimally will be between the two outer lines (0.4th and 99.6th centiles); half will lie between the 25th and 75th centile lines.
-
-Being very small or very big can sometimes be associated with underlying illness. There is no single threshold below which a child’s weight or height is definitely abnormal, but only 4 per 1000 children who are growing optimally are below the 0.4th centile, so these children should be assessed at some point to exclude any problems. Those above the 99.6th centile for height are almost always healthy. Also calculate BMI if weight and height centiles appear very different.
 
 ## What is a normal rate of weight gain and growth?
 
@@ -91,7 +92,7 @@ If any of the following:
 
 ### Weight–height to BMI conversion chart
 
-BMI = weight in kg /(height in m)2
+![formula](https://latex.codecogs.com/svg.image?BMI&space;=&space;weight\;in\;kg/(height\;in\;m)^2)
 BMI indicates how heavy a child is relative to his or her height and is the simplest measure of thinness and fatness from the age of 2, when height can be measured fairly accurately.  In a child over 2 years of age, the BMI centile is a better indicator of overweight or underweight than the weight centile; a child whose weight is average for their height will have a BMI between the 25th and 75th centiles, whatever their height centile. BMI above the 91st centile suggests that the child is overweight; a child above the 98th centile is very overweight (clinically obese). BMI below the 2nd centile is unusual and may reflect undernutrition.
 
 ### Percentage median BMI

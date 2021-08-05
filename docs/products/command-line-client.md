@@ -5,8 +5,6 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman
 
 # Command-line growth tools
 
-Partly for our own uses, we've wrapped the [Python package](python-library.md) in a command-line tool so that you can use the power of the growth functions in the `rcpchgrowth-python` package conveniently in the terminal.
-
 ![command-line-tool](../_assets/_images/command-line-tool.png)
 
 :octicons-mark-github-16: [GitHub repository](https://github.com/rcpch/rcpchgrowth-python-cli)
@@ -14,6 +12,8 @@ Partly for our own uses, we've wrapped the [Python package](python-library.md) i
 :material-web: link
 
 [![Upload Python Package](https://github.com/rcpch/rcpchgrowth-python-cli/actions/workflows/python-publish.yml/badge.svg)](https://github.com/rcpch/rcpchgrowth-python-cli/actions/workflows/python-publish.yml)
+
+Partly for our own uses, we've wrapped the [Python package](python-library.md) in a command-line tool so that you can use the power of the growth functions in the `rcpchgrowth-python` package conveniently in the terminal.
 
 To use:
 
@@ -23,24 +23,24 @@ foo@bar:~$ python3 -m rcpchgrowth-python-cli
 foo@bar:~$ rcpchgrowth --help
 ```
 
-There are 4 functions:
+## Functions
 
 ## age-calculation
 
-This returns a decimal age from 2 dates. If the gestation is supplied with the adjustment flag, a correction is made.
+This returns a decimal age from 2 dates. If the gestation is supplied with the adjustment flag, a corrected gestation age will be returned.
 
-### required arguments (argument order sensitive):
+### Required arguments (argument order sensitive) 
 
 * birth_date: format YYYY-M-D
-* observation_date: format YYYY-M-D
+* observation_date: format YYYY-M-D <br/>
 Note the command line will usually error if a leading 0 is supplied.
 
-### non-essential arguments:
+### Non-essential arguments 
 
 * gestation_weeks: this is an integer which defaults to 40 if not specified
 * gestation-days: this is an integer which defaults to 0 if not specified
 
-### option
+### Option 
 
 ```console
 -a
@@ -49,7 +49,7 @@ Note the command line will usually error if a leading 0 is supplied.
 
 This flag is added with the gestation if a corrected age is needed.
 
-### example:
+### Example 
 
 ```console
 foo@bar:~$ rcpchgrowth age-calculation 1759-10-10 1759-11-12 28 2 -a
@@ -65,17 +65,18 @@ Adjusted: -0.13415468856947296 y,
 1 month and 2 days
 ```
 
-## measurement-for-sds
+## ```measurement-for-sds```
 
 This function returns a measurement for an SDS.
-### required arguments (argument order sensitive)
+
+### Required arguments (argument order sensitive) 
 
 * decimal_age: a float value
 * measurement_method: one of 'height', 'weight', 'bmi' (body mass index) or 'ofc' (head circumference)
 * sex: one of 'male' or 'female'
 * SDS: a float value
 
-### option
+### Option 
 
 ```console
 -r
@@ -84,7 +85,7 @@ This function returns a measurement for an SDS.
 
 This defaults to uk-who if not provided. If provide, parameters are one of 'uk-who', 'trisomy-21' or 'turners-syndrome'
 
-### example
+### Example 
 
 ```console
 foo@bar:~$ rcpchgrowth measurement-for-sds 8.3 height female 0.72 --reference turners-syndrome
@@ -101,16 +102,16 @@ Centile: 76.424 %
 height: 115.79078818040003 cm
 ```
 
-## sds-for-measurement
+## ```sds-for-measurement```
 
-### required arguments (argument order sensitive)
+### Required arguments (argument order sensitive) 
 
 * decimal_age: a float value
 * measurement_method: one of 'height', 'weight', 'bmi' (body mass index) or 'ofc' (head circumference)
 * sex: one of 'male' or 'female'
 * observation_value: a float value
 
-### option
+### Option 
 
 ```console
 -r
@@ -118,7 +119,8 @@ height: 115.79078818040003 cm
 ```
 
 This defaults to uk-who if not provided. If provide, paramaters are one of 'uk-who', 'trisomy-21' or 'turners-syndrome'
-### example
+
+### Example 
 
 ```console
 foo@bar:~$ rcpchgrowth sds-for-measurement 16.3 ofc female 55
@@ -134,17 +136,18 @@ SDS: -0.27811780457145885
 Centile: 39.0 %
 ```
 
-## measurement-for-centile
+## ```measurement-for-centile```
 
 This function returns a measurement for an centile.
-### required arguments (argument order sensitive)
+
+### Required arguments (argument order sensitive) 
 
 * decimal_age: a float value
 * measurement_method: one of 'height', 'weight', 'bmi' (body mass index) or 'ofc' (head circumference)
 * sex: one of 'male' or 'female'
 * centile: a float value
 
-### option
+### Option 
 
 ```console
 -r
@@ -153,7 +156,7 @@ This function returns a measurement for an centile.
 
 This defaults to uk-who if not provided. If provide, paramaters are one of 'uk-who', 'trisomy-21' or 'turners-syndrome'
 
-### example
+### Example 
 
 ```console
 foo@bar:~$ rcpchgrowth measurement-for-centile 3.4 weight male 25.0 --reference trisomy-21

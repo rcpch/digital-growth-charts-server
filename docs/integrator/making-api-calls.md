@@ -14,16 +14,22 @@ Because we've specified our API documentation in the openAPI3 (formerly known as
 
 ## Using cURL
 
-`cURL` is a very simple and common tool for making web calls from the command line (also known as the 'terminal' or 'command prompt')
+`cURL` is a very simple and common tool for making web calls from the command line (also known as the 'terminal' or 'command prompt'). Official documentation for cURL can be found [here](https://everything.curl.dev).<br/>
 
-Download cURL from here
+Download cURL [here](https://curl.se/download.html).
 
+<!--
 ```bash
 
 ```
 
 What happened here?
-
+-->
 
 
 ## Postman
+
+Postman is a collaboration platform for API development. It simplifies the steps of building an API, allowing developers to create better APIs -faster. Learn more about Postman [here](https://www.postman.com/api-platform/?utm_source=www&utm_medium=home_hero&utm_campaign=button). <br/>
+Official documentation can be found [here](https://learning.postman.com/docs/getting-started/introduction/).<br/>
+
+Download Postman [here](https://learning.postman.com/docs/getting-started/installation-and-updates/).

@@ -5,11 +5,11 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman
 
 # React Native Client (experimental, pre-alpha)
 
-![image](image)
+<!-- ![image](image) -->
 
-:octicons-mark-github-16: [github.com/rcpch/digital-growth-charts-react-native-client](https://github.com/rcpch/digital-growth-charts-react-native-client)
+:octicons-mark-github-16: [Github repository](https://github.com/rcpch/digital-growth-charts-react-native-client)
 
-:material-web: (link to follow)
+<!-- :material-web: (link to follow) -->
 
 This is a modern dGC client for mobile, written in React Native by Dr Charles van Lennep. React Native is a cross platform native app development platform, and can therefore run on Android or iOS.
 

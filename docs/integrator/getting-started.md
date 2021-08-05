@@ -21,7 +21,7 @@ In order to use the dGC API you need to sign up for an account and obtain API ke
 ## Choose a Product and Create an App
 
 !!! tip "Onboarding support"
-    If you have any issues with getting the Tier you need then please [contact us](../about/contact.md)
+    If you have any issues with getting the Tier you need then please [contact us](../contact/contact.md)
 
 1. Navigate to the [Products](https://dev.rcpch.ac.uk/product) menu item, and choose the Tier of the API subscription that you require.
 

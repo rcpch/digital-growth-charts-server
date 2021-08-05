@@ -9,4 +9,4 @@ The RCPCH is a registered charity, and the dGC API's cost model is designed to e
 
 The most up-to-date pricing and support information is on the [RCPCH website](https://www.rcpch.ac.uk/resources/growth-charts/digital/about#subscriptions-and-pricing)
 
-We have a range of options for API usage tiers and developer support, which we've developed to cater for a range of organisation sizes and requirements, however if you don't see what you need then please do [contact our Commercial team](../about/contact.md#commercial).
+We have a range of options for API usage tiers and developer support, which we've developed to cater for a range of organisation sizes and requirements, however if you don't see what you need then please do [contact our Commercial team](../contact/contact.md#commercial).

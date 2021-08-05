@@ -21,14 +21,13 @@ The LMS method provides a way of obtaining normalised growth centiles from a ref
 - Look up in the LMS table for the relevant measurement (e.g. height) the age and sex-specific values of L, M and S for the child. If the child's age falls between the tabulated ages, use cubic interpolation to obtain values for the child's exact age.
 
 - To obtain the z-score, plug the LMS values with the child's measurement into the formula:
-  ![formula](https://latex.codecogs.com/svg.latex?\=z={[(Measurement / M)-1] \over L S})
+  ![formula](https://latex.codecogs.com/svg.image?z=((measure/M)^L)-1/(L/S))
 
 ## Growth References
 
-This is a growing list of growth references for children. These cover a number of specific medical conditions as well as a range of different physiological parameters. It will continue to be added to as the data become available. As a side-project of this work we are interested in collating an international library of growth references in computable format, which is at https://github.com/rcpch/growth-references and further details are available in that repository.
+This is a growing list of growth references for children. These cover a number of specific medical conditions as well as a range of different physiological parameters. It will continue to be added to as the data become available. As a side-project of this work we are interested in collating an international library of growth references in computable format, which is at [Github repository](https://github.com/rcpch/growth-references) and further details are available in that repository.
 
-If you have a reference which you would like us to add, please contact us on growth.digital@rcpch.ac.uk
-
+If you have a reference which you would like us to add, please contact us on [growth.digital@rcpch.ac.uk](mailto:growth.digital@rcpch.ac.uk)
 
 ## Gold Standard
 
@@ -64,7 +63,7 @@ y=a*{0}dt^{3}+a*{1}dt^{2}+a\_{2}dt+a^{3}
 
 **Note: this derived formula is equivalent to the above cubic interpolation only when the age interval is 0.5.**
 
-Alternatively, it is possible to use the CubicSpline function from the SciPy interpolate package, or the interpolate.splev function - details can be found in the comments in the sds_calculations.py module. In testing our findings were that the original Cole method above ran faster than the Scipy interpolate functions with the same level of accuracy.
+Alternatively, it is possible to use the CubicSpline function from the SciPy interpolate package, or the interpolate.splev function - details can be found in the comments in the [global_functions.py](https://github.com/rcpch/rcpchgrowth-python/blob/live/rcpchgrowth/global_functions.py) module. In testing our findings were that the original Cole method above ran faster than the Scipy interpolate functions with the same level of accuracy.
 
 ### Linear Interpolation
 
@@ -95,7 +94,7 @@ However, during the development of the Digital Growth Charts, the [dGC Project B
 
 ### Helpful reference documents for understanding what centiles are, how they are calculated, and how they are used
 
-- https://www.openhealthhub.org/t/centile-part-1-what-are-centiles/463
-- https://www.cdc.gov/growthcharts/percentile_data_files.htm
-- https://www.cdc.gov/nchs/data/nhsr/nhsr063.pdf
+- [OpenHealthHub- What are centiles?](https://www.openhealthhub.org/t/centile-part-1-what-are-centiles/463)
+- [CDC - Percentile Data Files with LMS Values](https://www.cdc.gov/growthcharts/percentile_data_files.htm)
+- [Construction of LMS Parameters for the CDC 2000 Growth Charts](https://www.cdc.gov/nchs/data/nhsr/nhsr063.pdf)
 - [The development of growth references and growth charts - T J Cole](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3920659/)

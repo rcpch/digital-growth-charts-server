@@ -45,6 +45,6 @@ Initially we expect that clinical users will want to see the traditional growth 
 
 ## Q: Where can I see your clinical safety documentation?
 
-**A**: Our clinical safety documentation is completely open and public, and is all under the [Safety](../safety/overview.md) tab within this documentation site. Feedback is welcome - contact growth.digital@rcpch.ac.uk including 'Clinical Safety:' in the subject for ease of routing to the Clinical Safety Officer. Alternatively you can [create an Issue in the documentation site source code on GitHub](https://github.com/rcpch/digital-growth-charts-documentation/issues), or talk to us on our [Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts).
+**A**: Our clinical safety documentation is completely open and public, and is all under the [Safety](../safety/overview.md) tab within this documentation site. Feedback is welcome - contact [growth.digital@rcpch.ac.uk](mailto:growth.digital@rcpch.ac.uk) including 'Clinical Safety:' in the subject for ease of routing to the Clinical Safety Officer. Alternatively you can [create an Issue in the documentation site source code on GitHub](https://github.com/rcpch/digital-growth-charts-documentation/issues), or talk to us on our [Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts).
 
 

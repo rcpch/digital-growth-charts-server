@@ -35,7 +35,7 @@ Up to the age of 2 years your child is measured for length (i.e. lying down) rat
 
 After 2 years of age your child’s standing height should be measured. Your child’s shoes should be removed during the measurement. It is important to measure height accurately using a rigid rule with T piece or stadiometer.
 
-From age 4 years, your child’s Body Mass Index (BMI) can be calculated from their weight and height measurements (BMI = weight/height2). BMI is a simple measure of fatness or thinness, and high levels suggest that the child may be carrying too much fat. The cut-offs for a high BMI in children are different from those used in adults and depend upon age. Some medical conditions or treatments that your child receives may mean that the BMI centile is not the best way to measure your child. A low BMI can be due to a relatively low amount of lean (muscle) tissue as well as fat. Your GP or other health professional caring for your child will be able to discuss your child’s BMI with you.
+From age 4 years, your child’s Body Mass Index (BMI) can be calculated from their weight and height measurements ![formula_BMI](https://latex.codecogs.com/svg.image?BMI&space;=&space;weight/height^2). BMI is a simple measure of fatness or thinness, and high levels suggest that the child may be carrying too much fat. The cut-offs for a high BMI in children are different from those used in adults and depend upon age. Some medical conditions or treatments that your child receives may mean that the BMI centile is not the best way to measure your child. A low BMI can be due to a relatively low amount of lean (muscle) tissue as well as fat. Your GP or other health professional caring for your child will be able to discuss your child’s BMI with you.
 
 ## How often to weigh
 
