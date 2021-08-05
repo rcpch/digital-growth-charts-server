@@ -2,13 +2,12 @@
 Turner router
 """
 # Standard imports
-from rcpchgrowth.constants.reference_constants import TURNERS
 
 # Third party imports
 from fastapi import APIRouter
-from rcpchgrowth import Measurement, constants, chart_functions, generate_fictional_child_data
 
-# local imports
+# RCPCH imports
+from rcpchgrowth import Measurement, constants, chart_functions, generate_fictional_child_data
 from .request_validation_classes import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
 
 # set up the API router
@@ -138,27 +137,29 @@ def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
 
     """
 
+
 @turners.post('/fictional-child-data')
 def fictional_child_data(fictional_child_request: FictionalChildRequest):
-  
-  try:
-    life_course_fictional_child_data = generate_fictional_child_data(
-      measurement_method=fictional_child_request.measurement_method,
-      sex=fictional_child_request.sex,
-      start_chronological_age=fictional_child_request.start_chronological_age,
-      end_age=fictional_child_request.end_age,
-      gestation_weeks=fictional_child_request.gestation_weeks,
-      gestation_days=fictional_child_request.gestation_days,
-      measurement_interval_type = fictional_child_request.measurement_interval_type,
-      measurement_interval_number=fictional_child_request.measurement_interval_number,
-      start_sds = fictional_child_request.start_sds,
-      drift = fictional_child_request.drift,
-      drift_range = fictional_child_request.drift_range,
-      noise = fictional_child_request.noise,
-      noise_range = fictional_child_request.noise_range,
-      reference = TURNERS
-    )
-    
-    return life_course_fictional_child_data
-  except ValueError:
-    return 422
+
+    try:
+        life_course_fictional_child_data = generate_fictional_child_data(
+            measurement_method=fictional_child_request.measurement_method,
+            sex=fictional_child_request.sex,
+            start_chronological_age=fictional_child_request.start_chronological_age,
+            end_age=fictional_child_request.end_age,
+            gestation_weeks=fictional_child_request.gestation_weeks,
+            gestation_days=fictional_child_request.gestation_days,
+            measurement_interval_type=fictional_child_request.measurement_interval_type,
+            measurement_interval_number=fictional_child_request.measurement_interval_number,
+            start_sds=fictional_child_request.start_sds,
+            drift=fictional_child_request.drift,
+            drift_range=fictional_child_request.drift_range,
+            noise=fictional_child_request.noise,
+            noise_range=fictional_child_request.noise_range,
+            reference=TURNERS
+        )
+
+        return life_course_fictional_child_data
+    except ValueError:
+        return 422
+

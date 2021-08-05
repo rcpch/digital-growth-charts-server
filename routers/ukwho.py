@@ -2,13 +2,12 @@
 UK-WHO router
 """
 # Standard imports
-from rcpchgrowth.constants.reference_constants import UK_WHO
 
 # Third party imports
 from fastapi import APIRouter, HTTPException
-from rcpchgrowth import Measurement, constants, chart_functions, generate_fictional_child_data
 
-# local imports
+# RCPCH imports
+from rcpchgrowth import Measurement, constants, chart_functions, generate_fictional_child_data
 from .request_validation_classes import FictionalChildRequest, MeasurementRequest, ChartCoordinateRequest
 
 # set up the API router
@@ -155,7 +154,7 @@ def fictional_child_data(fictional_child_request: FictionalChildRequest):
             drift_range=fictional_child_request.drift_range,
             noise=fictional_child_request.noise,
             noise_range=fictional_child_request.noise_range,
-            reference=UK_WHO
+            reference=constants.UK_WHO
         )
         return life_course_fictional_child_data
     except ValueError:
