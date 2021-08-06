@@ -147,7 +147,7 @@ div#iframe-mobile-replacement {
 
 /* HERO SECTION OF HOME PAGE */
 .mdx-hero__content {
-  background-image: url("../_images/dynamic-child-banner-wallpaper.png");
+  background-color: #11a7f2;
   padding: 3em;
 }
 
