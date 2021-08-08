@@ -4,7 +4,7 @@ UK-WHO router
 # Standard imports
 
 # Third party imports
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Body, HTTPException
 
 # RCPCH imports
 from rcpchgrowth import Measurement, constants, chart_functions, generate_fictional_child_data
@@ -17,44 +17,34 @@ uk_who = APIRouter(
 
 
 @uk_who.post("/calculation")
-def uk_who_calculation(measurementRequest: MeasurementRequest):
+def uk_who_calculation(measurementRequest: MeasurementRequest = Body(
+        ...,
+        example={
+            "birth_date": "2020-04-12",
+            "observation_date": "2020-06-12",
+            "observation_value": 60,
+            "measurement_method": "height",
+            "sex": "male",
+            "gestation_weeks": 40,
+            "gestation_days": 4,
+            }
+        )
+    ):
     """
-    Centile calculation.
-    ---
-    POST:
-      summary: UK-WHO centile and SDS calculation.
-      description: |
-        * These are the 'standard' centiles for children in the UK. It uses a hybrid of the WHO and UK90 datasets.
-        * For non-UK use you may need the WHO-only or CDC charts which we do not yet support, but we may add if demand is there.
-        * Returns a single centile/SDS calculation for the selected `measurement_method`.
-        * Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.
-        * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
-        * Note that BMI must be precalculated for the `bmi` function.
-
-      requestBody:
-        content:
-          application/json:
-            schema: CalculationRequestParameters
-            example:
-                birth_date: "2020-04-12"
-                observation_date: "2020-06-12"
-                observation_value: 60
-                measurement_method: "height"
-                sex: male
-                gestation_weeks: 40
-                gestation_days: 4
-
-      responses:
-        200:
-          description: "Centile calculation (single) according to the supplied data was returned"
-          content:
-            application/json:
-              schema: CalculationResponseSchema
+    ## UK-WHO Calculations.
+    
+    UK-WHO centile and SDS calculations.
+    
+    * These are the 'standard' centiles for children in the UK. It uses a hybrid of the WHO and UK90 datasets.  
+    * For non-UK use you may need the WHO-only or CDC charts which we do not yet support, but we may add if demand is there.  Please contact us.
+    * Returns a single centile/SDS calculation for the selected `measurement_method`.  
+    * Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.  
+    * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').  
+    * Note that BMI must be precalculated for the `bmi` function.  
     """
 
     # Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc
     values = {
-        # 'birth_date': req["birth_date"].split('T', 1)[0],
         'birth_date': measurementRequest.birth_date,
         'gestation_days': measurementRequest.gestation_days,
         'gestation_weeks': measurementRequest.gestation_weeks,

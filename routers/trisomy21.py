@@ -5,7 +5,7 @@ Trisomy 21 router
 from rcpchgrowth.constants.reference_constants import TRISOMY_21
 
 # Third party imports
-from fastapi import APIRouter
+from fastapi import APIRouter, Body
 from rcpchgrowth import Measurement, constants, chart_functions, generate_fictional_child_data
 
 # local imports
@@ -16,39 +16,31 @@ trisomy_21 = APIRouter(
     prefix="/trisomy-21",
 )
 
+
 @trisomy_21.post("/calculation")
-def trisomy_21_calculation(measurementRequest: MeasurementRequest):
+def trisomy_21_calculation(measurementRequest: MeasurementRequest = Body(
+            ...,
+            example={
+                "birth_date": "2020-04-12",
+                "observation_date": "2020-06-12",
+                "observation_value": 60,
+                "measurement_method": "height",
+                "sex": "male",
+                "gestation_weeks": 40,
+                "gestation_days": 4,
+            }
+        )
+    ):
     """
-    Centile calculation.
-    ---
-    post:
-      summary: Trisomy 21 centile and SDS calculation.
-      description: |
-        * This endpoint MUST ONLY be used for children with Trisomy 21 (Down's Syndrome).
-        * Returns a single centile/SDS calculation for the selected `measurement_method`.
-        * Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.
-        * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
-        * Note that BMI must be precalculated for the `bmi` function.
+    # Trisomy-21 Calculations.
 
-      requestBody:
-        content:
-          application/json:
-            schema: CalculationRequestParameters
-            example:
-                birth_date: "2020-04-12"
-                observation_date: "2020-06-12"
-                observation_value: 60
-                measurement_method: "height"
-                sex: male
-                gestation_weeks: 40
-                gestation_days: 4
+    Trisomy-21 centile and SDS calculations.
 
-      responses:
-        200:
-          description: "Centile calculation (single) according to the supplied data was returned"
-          content:
-            application/json:
-              schema: CalculationResponseSchema
+    * This endpoint MUST ONLY be used for children with Trisomy 21 (Down's Syndrome).  
+    * Returns a single centile/SDS calculation for the selected `measurement_method`.  
+    * Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.  
+    * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').  
+    * Note that BMI must be precalculated for the `bmi` function.  
     """
 
     values = {
@@ -71,9 +63,6 @@ def trisomy_21_calculation(measurementRequest: MeasurementRequest):
         return calculation
     except Exception as err:
         return err, 400
-
-
-
 
 
 @trisomy_21.post("/chart-coordinates")
@@ -102,7 +91,6 @@ def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
               schema: ChartDataResponseSchema
     """
 
-
     try:
         chart_data = chart_functions.create_chart(
             constants.TRISOMY_21,
@@ -116,6 +104,7 @@ def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
     return {
         "centile_data": chart_data
     }
+
 
 """
     Return object structure
@@ -140,25 +129,26 @@ def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
     ]
 """
 
+
 @trisomy_21.post('/fictional-child-data')
 def fictional_child_data(fictional_child_request: FictionalChildRequest):
-  try:
-    life_course_fictional_child_data = generate_fictional_child_data(
-      measurement_method=fictional_child_request.measurement_method,
-      sex=fictional_child_request.sex,
-      start_chronological_age=fictional_child_request.start_chronological_age,
-      end_age=fictional_child_request.end_age,
-      gestation_weeks=fictional_child_request.gestation_weeks,
-      gestation_days=fictional_child_request.gestation_days,
-      measurement_interval_type = fictional_child_request.measurement_interval_type,
-      measurement_interval_number=fictional_child_request.measurement_interval_number,
-      start_sds = fictional_child_request.start_sds,
-      drift = fictional_child_request.drift,
-      drift_range = fictional_child_request.drift_range,
-      noise = fictional_child_request.noise,
-      noise_range = fictional_child_request.noise_range,
-      reference = TRISOMY_21
-    )
-    return life_course_fictional_child_data
-  except ValueError:
-    return 422
+    try:
+        life_course_fictional_child_data = generate_fictional_child_data(
+            measurement_method=fictional_child_request.measurement_method,
+            sex=fictional_child_request.sex,
+            start_chronological_age=fictional_child_request.start_chronological_age,
+            end_age=fictional_child_request.end_age,
+            gestation_weeks=fictional_child_request.gestation_weeks,
+            gestation_days=fictional_child_request.gestation_days,
+            measurement_interval_type=fictional_child_request.measurement_interval_type,
+            measurement_interval_number=fictional_child_request.measurement_interval_number,
+            start_sds=fictional_child_request.start_sds,
+            drift=fictional_child_request.drift,
+            drift_range=fictional_child_request.drift_range,
+            noise=fictional_child_request.noise,
+            noise_range=fictional_child_request.noise_range,
+            reference=TRISOMY_21
+        )
+        return life_course_fictional_child_data
+    except ValueError:
+        return 422

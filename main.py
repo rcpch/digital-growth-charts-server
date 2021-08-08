@@ -21,7 +21,6 @@ version = '3.0.3'  # this is set by bump version.
 # Declare the FastAPI app
 app = FastAPI(
         openapi_url="/",
-        docs_url=None,
         redoc_url=None,
         license_info={
             "name": "GNU Affero General Public License",
