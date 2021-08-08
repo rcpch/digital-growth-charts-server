@@ -2,6 +2,8 @@
 -r common-requirements.txt
 
 # standard dependencies
+pytest
 
 # third party dependencies
 bumpversion
+requests # needed for starlette and testing

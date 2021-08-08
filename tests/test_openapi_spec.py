@@ -3,11 +3,12 @@ Tests for the openAPI spec endpoint
 """
 
 # third-party imports
+from main import app
+from fastapi.testclient import TestClient
 import pytest
 
-def test_stub():
-    """
-    This test does nothing except satify pytest temporarily
-    """
-    
-    assert True
+client = TestClient(app)
+
+def test_read_main():
+    response = client.get("/")
+    assert response.status_code == 200
