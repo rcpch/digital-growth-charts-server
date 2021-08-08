@@ -17,7 +17,7 @@ trisomy_21 = APIRouter(
 )
 
 
-@trisomy_21.post("/calculation")
+@trisomy_21.post("/calculation", tags=["trisomy-21"])
 def trisomy_21_calculation(measurementRequest: MeasurementRequest = Body(
             ...,
             example={
@@ -32,9 +32,7 @@ def trisomy_21_calculation(measurementRequest: MeasurementRequest = Body(
         )
     ):
     """
-    # Trisomy-21 Calculations.
-
-    Trisomy-21 centile and SDS calculations.
+    # Trisomy-21 Centile and SDS Calculations.
 
     * This endpoint MUST ONLY be used for children with Trisomy 21 (Down's Syndrome).  
     * Returns a single centile/SDS calculation for the selected `measurement_method`.  
@@ -42,73 +40,31 @@ def trisomy_21_calculation(measurementRequest: MeasurementRequest = Body(
     * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').  
     * Note that BMI must be precalculated for the `bmi` function.  
     """
-
-    values = {
-        'birth_date': measurementRequest.birth_date,
-        'gestation_days': measurementRequest.gestation_days,
-        'gestation_weeks': measurementRequest.gestation_weeks,
-        'measurement_method': measurementRequest.measurement_method,
-        'observation_date':
-            measurementRequest.observation_date,
-        'observation_value': measurementRequest.observation_value,
-        'sex': measurementRequest.sex
-    }
-
     try:
         calculation = Measurement(
             reference=constants.TRISOMY_21,
-            **values
+            birth_date=measurementRequest.birth_date,
+            gestation_days=measurementRequest.gestation_days,
+            gestation_weeks=measurementRequest.gestation_weeks,
+            measurement_method=measurementRequest.measurement_method,
+            observation_date=measurementRequest.observation_date,
+            observation_value=measurementRequest.observation_value,
+            sex=measurementRequest.sex
         ).measurement
-
         return calculation
     except Exception as err:
         return err, 400
 
 
-@trisomy_21.post("/chart-coordinates")
+@trisomy_21.post("/chart-coordinates", tags=["trisomy-21"])
 def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
     """
-    Chart data.
-    ---
-    POST:
-      summary: UK-WHO Chart coordinates in plottable format
-        * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
-        * Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')
-
-      requestBody:
-        content:
-          application/json:
-            schema: ChartDataRequestParameters
-            example:
-                "sex": "female"
-                "measurement_method":"height"
-
-      responses:
-        200:
-          description: "Chart data for plotting a traditional growth chart was returned"
-          content:
-            application/json:
-              schema: ChartDataResponseSchema
-    """
-
-    try:
-        chart_data = chart_functions.create_chart(
-            constants.TRISOMY_21,
-            measurement_method=chartParams.measurement_method,
-            sex=chartParams.sex,
-            centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES
-        )
-    except Exception as err:
-        print(err)
-
-    return {
-        "centile_data": chart_data
-    }
-
-
-"""
-    Return object structure
-
+    ## Trisomy-21 Chart Coordinates Data.
+        
+    * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
+    * Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')
+    \f
+    Return object structure (this needs to be moved into the schema)
     [
         "height": [
             {
@@ -127,11 +83,28 @@ def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
         ],
         ... repeat for weight, bmi, ofc, based on which measurements supplied. If only height data supplied, only height centile data returned
     ]
-"""
+    """
+    try:
+        chart_data = chart_functions.create_chart(
+            constants.TRISOMY_21,
+            measurement_method=chartParams.measurement_method,
+            sex=chartParams.sex,
+            centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES
+        )
+    except Exception as err:
+        print(err)
+    return {
+        "centile_data": chart_data
+    }
 
 
-@trisomy_21.post('/fictional-child-data')
+@trisomy_21.post('/fictional-child-data', tags=["trisomy-21"])
 def fictional_child_data(fictional_child_request: FictionalChildRequest):
+    """
+    ## Trisomy-21 Fictional Child Data Endpoint
+
+    * Generates synthetic data for demonstration or testing purposes
+    """
     try:
         life_course_fictional_child_data = generate_fictional_child_data(
             measurement_method=fictional_child_request.measurement_method,

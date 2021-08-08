@@ -15,8 +15,7 @@ turners = APIRouter(
     prefix="/turner",
 )
 
-
-@turners.post("/calculation")
+@turners.post("/calculation", tags=["turners-syndrome"])
 def turner_calculation(measurementRequest: MeasurementRequest = Body(
         ...,
         example={
@@ -30,81 +29,40 @@ def turner_calculation(measurementRequest: MeasurementRequest = Body(
         }
 )):
     """
-    ## Turner's Syndrome Calculations.
+    ## Turner's Syndrome Centile and SDS Calculations.
         
-    Turner's Syndrome centile and SDS calculations.
-
     * This endpoint MUST ONLY be used for **female** children with the chromosomal disorder Turner's Syndrome (45,XO karyotype).  
     * Returns a single centile/SDS calculation for the selected `measurement_method`.  
     * Gestational age correction will be applied automatically if appropriate, according to the gestational age at birth data supplied.  
     * Available `measurement_method`s are: `height` **only** because this reference data is all that exists.  
+    * Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc
     """
-
-    # Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc
-    values = {
-        'birth_date': measurementRequest.birth_date,
-        'gestation_days': measurementRequest.gestation_days,
-        'gestation_weeks': measurementRequest.gestation_weeks,
-        'measurement_method': measurementRequest.measurement_method,
-        'observation_date':
-            measurementRequest.observation_date,
-        'observation_value': measurementRequest.observation_value,
-        'sex': measurementRequest.sex
-    }
-
-    # Send to calculation
     try:
         calculation = Measurement(
             reference=constants.TURNERS,
-            **values
+            birth_date=measurementRequest.birth_date,
+            gestation_days=measurementRequest.gestation_days,
+            gestation_weeks=measurementRequest.gestation_weeks,
+            measurement_method=measurementRequest.measurement_method,
+            observation_date=measurementRequest.observation_date,
+            observation_value=measurementRequest.observation_value,
+            sex=measurementRequest.sex
         ).measurement
     except ValueError as err:
         print(err.args)
         return err.args, 422
-
     return calculation
+    
 
-
-@turners.post("/chart-coordinates")
+@turners.post("/chart-coordinates", tags=["turners-syndrome"])
 def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
     """
-    Chart data.
-    ---
-    POST:
-      summary: UK-WHO Chart coordinates in plottable format
-        * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
-        * Note height in girls conly be only returned. It is a post request to maintain consistency with other routes.
-
-      requestBody:
-        content:
-          application/json:
-            schema: ChartDataRequestParameters
-
-      responses:
-        200:
-          description: "Chart data for plotting a traditional growth chart was returned"
-          content:
-            application/json:
-              schema: ChartDataResponseSchema
-    """
-
-    if chartParams.sex == "male" or chartParams.measurement_method != "height":
-        return "Turner data only exists for height in girls."
-
-    try:
-        chart_data = chart_functions.create_chart(
-            constants.TURNERS, centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES)
-    except Exception as err:
-        print(err)
-        return "Server error fetching chart data.", 400
-    return {
-        "centile_data": chart_data
-    }
-
-
-"""
-    Return object structure
-
+    ## Turner's Syndrome Chart Coordinates data.
+    
+    * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
+    * Note height in girls conly be only returned. It is a post request to maintain consistency with other routes.
+    \f
+    Return object structure (this needs to be moved into the schema)
     [
         "height": [
             {
@@ -121,15 +79,30 @@ def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
                 ]
             }
         ],
-        ... repeat for weight, bmi, ofc, based on which measurements supplied. If only height data supplied, only height centile data returned
+    ... repeat for weight, bmi, ofc, based on which measurements supplied. If only height data supplied, only height centile data returned
     ]
-
     """
+    if chartParams.sex == "male" or chartParams.measurement_method != "height":
+        return "Turner data only exists for height in girls."
+
+    try:
+        chart_data = chart_functions.create_chart(
+            constants.TURNERS, centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES)
+    except Exception as err:
+        print(err)
+        return "Server error fetching chart data.", 400
+    return {
+        "centile_data": chart_data
+    }
 
 
-@turners.post('/fictional-child-data')
+@turners.post('/fictional-child-data', tags=["turners-syndrome"])
 def fictional_child_data(fictional_child_request: FictionalChildRequest):
-
+    """
+    ## Turner's Fictional Child Data Endpoint
+    
+    * Generates synthetic data for demonstration or testing purposes
+    """
     try:
         life_course_fictional_child_data = generate_fictional_child_data(
             measurement_method=fictional_child_request.measurement_method,
@@ -145,10 +118,8 @@ def fictional_child_data(fictional_child_request: FictionalChildRequest):
             drift_range=fictional_child_request.drift_range,
             noise=fictional_child_request.noise,
             noise_range=fictional_child_request.noise_range,
-            reference=TURNERS
+            reference=constants.TURNERS
         )
-
         return life_course_fictional_child_data
     except ValueError:
         return 422
-

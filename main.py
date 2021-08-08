@@ -51,9 +51,9 @@ def custom_openapi():
         return app.openapi_schema
 
     openapi_schema = get_openapi(
-        title="RCPCH Growth API",
+        title="RCPCH Digital Growth API",
         version=version,
-        description="Returns SDS and centiles for child growth measurements using growth references.",
+        description="Returns SDS and centiles for child growth measurements using growth references. Currently provides calculations based on the UK-WHO, Turner's Syndrome and Trisomy-21 references.",
         routes=app.routes,
     )
     app.openapi_schema = openapi_schema
@@ -64,7 +64,7 @@ app.openapi = custom_openapi
 
 
 # Include the root endpoint (so it is _described_ in the APIspec).
-@app.get("/")
+@app.get("/", tags=["openapi3"])
 def root():
     """
     # API spec endpoint
