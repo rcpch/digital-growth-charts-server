@@ -6,5 +6,5 @@ pytest
 autopep8
 
 # third party dependencies
-bumpversion
+bump2version
 requests # needed for starlette and testing
