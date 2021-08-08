@@ -8,7 +8,7 @@ from fastapi import APIRouter, HTTPException
 
 # RCPCH imports
 from rcpchgrowth import Measurement, constants, chart_functions, generate_fictional_child_data
-from .request_validation_classes import FictionalChildRequest, MeasurementRequest, ChartCoordinateRequest
+from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
 
 # set up the API router
 uk_who = APIRouter(

@@ -8,7 +8,7 @@ from fastapi import APIRouter
 
 # RCPCH imports
 from rcpchgrowth import Measurement, constants, chart_functions, generate_fictional_child_data
-from .request_validation_classes import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
 
 # set up the API router
 turners = APIRouter(

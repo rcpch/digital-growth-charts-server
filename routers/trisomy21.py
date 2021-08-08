@@ -9,7 +9,7 @@ from fastapi import APIRouter
 from rcpchgrowth import Measurement, constants, chart_functions, generate_fictional_child_data
 
 # local imports
-from .request_validation_classes import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
 
 # set up the API router
 trisomy_21 = APIRouter(

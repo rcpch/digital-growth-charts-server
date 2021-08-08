@@ -3,6 +3,7 @@
 
 # standard dependencies
 pytest
+autopep8
 
 # third party dependencies
 bumpversion

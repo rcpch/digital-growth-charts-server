@@ -5,17 +5,20 @@ import yaml
 
 # third party imports
 from fastapi import FastAPI
-from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.openapi.utils import get_openapi
 from pydantic import BaseSettings
 
 # local / rcpch imports
-from routers import uk_who, turners, trisomy_21
+from rcpchgrowth import chart_functions, constants
+from routers import trisomy_21, turners, uk_who
+
 
 ### API VERSION ###
-version='3.0.3'  # this is set by bump version
+version = '3.0.3'  # this is set by bump version.
 
-# declare the FastAPI app
+
+# Declare the FastAPI app
 app = FastAPI(
         openapi_url="/",
         docs_url=None,
@@ -26,7 +29,8 @@ app = FastAPI(
             },
     )
 
-#  setup CORS middleware    
+
+# Set up CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=['*', 'http://localhost:8000'],
@@ -34,71 +38,75 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-# include routers for each type of endpoint
+
+
+# Include routers for each type of endpoint.
 app.include_router(uk_who)
 app.include_router(turners)
 app.include_router(trisomy_21)
 
-# customise API metadata
+
+# Customise API metadata
 def custom_openapi():
     if app.openapi_schema:
         return app.openapi_schema
- 
-    app.openapi_schema = get_openapi(
+
+    openapi_schema = get_openapi(
         title="RCPCH Growth API",
         version=version,
         description="Returns SDS and centiles for child growth measurements using growth references.",
         routes=app.routes,
     )
-    print(app.openapi_schema)
+    app.openapi_schema = openapi_schema
     return app.openapi_schema
 
-app.openapi = custom_openapi()
+
+app.openapi = custom_openapi
 
 
-# include the root endpoint so it is described in the APIspec
+# Include the root endpoint (so it is _described_ in the APIspec).
 @app.get("/")
 def root():
+    """
+    # API spec endpoint
+    * The root `/` API endpoint returns the openAPI3 specification in JSON format
+    * This spec is also available in the root of the server code repository, in JSON and YAML
+    """
     return
-    
-
-# def generate_and_store_chart_data():
-#     reference = "turners-syndrome"
-#     chart_data_file = Path(f'chart-data/{reference}.json')
-#     if chart_data_file.exists():
-#         print(f'chart data file exists for {reference}')
-#     else:
-#         print(f'chart data file does not exist for {reference}')
-#         for sex in constants.SEXES:
-#             for measurement_method in constants.MEASUREMENT_METHODS:
-#                 try:
-#                     chart_data = chart_functions.create_chart(
-#                         reference,
-#                         measurement_method=measurement_method,
-#                         sex=sex,
-#                         centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES
-#                     )
-#                     with open(f'chart-data/{reference}.json', 'w') as file:
-#                         file.write(json.dumps(
-#                             chart_data, sort_keys=True, indent=4))
-#                 except Exception as error:
-#                     print(error)
-
-#         print(f'chart data file created for {reference}')
 
 
-# generate_and_store_chart_data()
+# Generate and store the chart plotting data for the centile background curves.
+# This data is only generated once and then is stored and served from file.
+def generate_and_store_chart_data():
+    for reference in constants.REFERENCES:
+        for sex in constants.SEXES:
+            for measurement_method in constants.MEASUREMENT_METHODS:
+                # Don't generate files for Turner's for references we don't have (males or non-height measurements)
+                if reference == "turners-syndrome" and (sex != "female" or measurement_method != "height"):
+                    continue
+                chart_data_file = Path(
+                    f'chart-data/{reference}-{sex}-{measurement_method}.json')
+                if chart_data_file.exists():
+                    print(f'Chart data file exists for {reference}-{sex}-{measurement_method}.')
+                else:
+                    print(f'Chart data file does not exist for {reference}-{sex}-{measurement_method}')
+                    try:
+                        chart_data = chart_functions.create_chart(
+                            reference,
+                            measurement_method=measurement_method,
+                            sex=sex,
+                            centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES
+                        )
+                        with open(f'chart-data/{reference}-{sex}-{measurement_method}.json', 'w') as file:
+                            file.write(json.dumps(chart_data, indent=4))
+                        print(f'chart data file created for {reference}-{sex}-{measurement_method}')
+                    except Exception as error:
+                        print(error)
 
-# OpenAPI3 autogeneration and metadata
-"""
-  
-    servers=[{"url": 'https://api.rcpch.ac.uk',
-              "description": 'RCPCH Production API Gateway (subscription keys required)'},
-             {"url": 'https://localhost:5000',
-              "description": 'Your local development API'}],
-"""
+generate_and_store_chart_data()
 
-# saves openAPI3 spec to file
+
+# Saves openAPI3 spec to file in the project root.
 def write_apispec_to_file():
     if Path('openapi.yml').exists():
         print(f'openAPI3 YAML file exists')
