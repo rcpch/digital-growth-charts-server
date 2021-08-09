@@ -9,9 +9,9 @@ The core of the calculations is performed in the RCPCHGrowth package, written in
 
 ### Why RCPCHGrowth?
 
-There is a history for different packages. The most influential software in growth was produced by Huiqi Pan and Tim Cole, an add-in for Microsoft Excel, called LMSGrowth. It is still freely [downloadable](https://www.healthforallchildren.com/shop-base/shop/software/lmsgrowth/) and contains the reference tables as .xls. RCPCHGrowth is intended to supercede LMSGrowth and so the name has been chosen.
+There have been several different packages that calculate centiles. The most influential software in growth was produced by Huiqi Pan and Tim Cole, an add-in for Microsoft Excel, called LMSGrowth. It is still freely [downloadable](https://www.healthforallchildren.com/shop-base/shop/software/lmsgrowth/) and contains the reference tables as .xls. RCPCHGrowth is intended to supercede LMSGrowth and so the name has been chosen.
 
-RCPCHGrowth has been primarily built to work with the UK-WHO dataset, but the LMS calculations can in principle with any LMS data table. In practice, each data table has its own idiosyncracies and is hard to standardise but it is hoped in time that most big references can be included.
+RCPCHGrowth has been primarily built to work with the UK-WHO dataset, but the LMS calculations can in principle work with any LMS data table. In practice, each data table has its own idiosyncracies and is hard to standardise but it is hoped in time that most big references can be included.
 
 ### References
 
@@ -175,7 +175,7 @@ Ages can be calculated as decimal ages, or calendar ages which are returned as a
 
 #### LMS Calculations
 
-The primary calculation is to generate a z score (SDS) from two dates, a sex, measurement method and observation value, comparing with a reference. As described elsewhere, UK-WHO are made up of 2 references (formerly 3), the UK90 which spans from 23 weeks gestation to 20 y  of age. Because these data contain children who were bottle fed as well as breast fed, the breast fed cohort from the WHO 2006 cohort were deemed more accurate and replaced the UK90 for the 2 week to 4 year age groups. Because the UK90 data are nolonger used for children in this age bracket, they have been removed to create a continuous data set. This has then been broken into the preterm (up top 42 weeks), infants (under 2s), WHO children (< 4 y), UK90 children (4-20y). Where data sets overlap, there are 2 ages at the junction, one from each reference. There is a step at the junction between the data sets.
+The primary calculation is to generate a z score (SDS) from two dates, a sex, measurement method and observation value, comparing against a reference. As described elsewhere, UK-WHO are made up of 2 references (formerly 3), the UK90 which spans from 23 weeks gestation to 20 y  of age. Because these data contain children who were bottle fed as well as breast fed, the breast fed cohort from the WHO 2006 cohort were deemed more accurate and replaced the UK90 for the 2 week to 4 year age groups. Because the UK90 data are nolonger used for children in this age bracket, they have been removed to create a continuous data set. This has then been broken into the preterm (up top 42 weeks), infants (under 2s), WHO children (< 4 y), UK90 children (4-20y). Where data sets overlap, there are 2 ages at the junction, one from each reference. There is a step at the junction between the data sets.
 
 Each reference comprises an L, M and S value for a decimal age. The decimal ages in the reference data are not separated at uniform intervals - depending on age, they are weeks, months or years apart.
 
