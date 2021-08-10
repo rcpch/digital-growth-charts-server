@@ -1,7 +1,6 @@
 # standard imports
 import json
 from pathlib import Path
-import yaml
 
 # third party imports
 from fastapi import FastAPI
@@ -67,7 +66,7 @@ def root():
     """
     # API spec endpoint
     * The root `/` API endpoint returns the openAPI3 specification in JSON format
-    * This spec is also available in the root of the server code repository, in JSON and YAML
+    * This spec is also available in the root of the server code repository
     """
     return
 
@@ -105,21 +104,7 @@ generate_and_store_chart_data()
 
 # Saves openAPI3 spec to file in the project root.
 def write_apispec_to_file():
-    if Path('openapi.yml').exists():
-        print(f'openAPI3 YAML file exists')
-    else:
-        print(f'openAPI3 YAML file created')
-        with open(r'openapi.yml', 'w') as file:
-            file.write(yaml.dump(app.openapi_schema))
-            
-    if Path('openapi.json').exists():
-        print(f'openAPI3 JSON file exists')
-    else:
-        print(f'openAPI3 JSON file created')
-        with open(r'openapi.json', 'w') as file:
-            file.write(json.dumps(
-                app.openapi_schema,
-                indent=4)
-                )
-    
+    with open(r'openapi.json', 'w') as file:
+        file.write(json.dumps(app.openapi_schema))
+
 write_apispec_to_file()
