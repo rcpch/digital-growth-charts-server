@@ -79,7 +79,7 @@ def test_ukwho_chart_data_with_valid_request():
     assert response.status_code == 200
 
     # load the known-correct response from file and create a hash of it
-    with open(r'chart-data/uk-who-male-height.json', 'r') as file:
+    with open(r'tests/test_data/test_uk_who_male_height_valid.json', 'r') as file:
         chart_data_file = file.read()
         
     # hash both JSON objects which should be identical
@@ -91,7 +91,9 @@ def test_ukwho_chart_data_with_valid_request():
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
     assert response_hash == chart_data_file_hash
 
-    # This is a template which could be used for testing the other chart data responses (female/male and weight/bmi/ofc)
+    # IMPORTANT: ONLY MALE, HEIGHT, UK-WHO is currently tested
+    # This test is a template which could be used for testing the
+    # other chart data responses (female/male and weight/bmi/ofc)
 
 
 def test_ukwho_chart_data_with_invalid_request():
@@ -105,6 +107,8 @@ def test_ukwho_chart_data_with_invalid_request():
     # restructure the response to make it easier to assert tests specifically
     validation_errors = {error['loc'][1]: error for error in response.json(
     )['detail']}
+    
+    assert response.status_code == 422
     
     # check the vaildation errors are the ones we expect
     assert validation_errors['sex']['msg'] == "unexpected value; permitted: 'male', 'female'"
@@ -162,6 +166,8 @@ def test_ukwho_fictional_child_data_with_invalid_request():
     }
 
     response = client.post("/uk-who/fictional-child-data", json=body)
+    
+    assert response.status_code == 422
     
     # restructure the response to make it easier to assert tests specifically
     validation_errors = {error['loc'][1]: error for error in response.json(
