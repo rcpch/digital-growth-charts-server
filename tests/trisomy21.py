@@ -93,10 +93,10 @@ def test_trisomy_21_chart_data_with_valid_request():
 `
 
 def test_trisomy_21_chart_data_with_invalid_request():
-    body={
-            "measurement_method": "invalid_measurement_method",
-            "sex": "invalid_sex"
-            }
+    body = {
+        "measurement_method": "invalid_measurement_method",
+        "sex": "invalid_sex"
+    }
 
     response=client.post("/trisomy_21/chart-coordinates", json=body)
 
