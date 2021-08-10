@@ -1,5 +1,5 @@
 # standard dependencies
-pyyaml
+
 
 # third party dependencies
 fastapi
