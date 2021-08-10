@@ -114,26 +114,26 @@ def test_trisomy_21_chart_data_with_invalid_request():
 def test_trisomy_21_fictional_child_data_with_valid_request():
 
     body = {
-        "measurement_method": "height",
-        "sex": "female",
-        "start_chronological_age": 0,
-        "end_age": 1,
-        "gestation_weeks": 40,
-        "gestation_days": 0,
-        "measurement_interval_type": "days",
-        "measurement_interval_number": 30,
-        "start_sds": 0,
-        "drift": False,
-        "drift_range": -0.05,
-        "noise": False,
-        "noise_range": 0.005,
-        "reference": "trisomy_21"
+      "measurement_method": "height",
+      "sex": "female",
+      "start_chronological_age": 2,
+      "end_age": 20,
+      "gestation_weeks": 40,
+      "gestation_days": 0,
+      "measurement_interval_type": "days",
+      "measurement_interval_number": 20,
+      "start_sds": 0,
+      "drift": false,
+      "drift_range": -0.05,
+      "noise": false,
+      "noise_range": 0.005,
+      "reference": "uk-who"
     }
 
     response = client.post("/trisomy_21/fictional-child-data", json=body)
 
     # load the known-correct response from file
-    with open(r'tests/test_data/test_ukwho_fictional_child_data_valid.json', 'r') as file:
+    with open(r'tests/test_data/test_trisomy_21_fictional_child_data_valid.json', 'r') as file:
         fictional_child_data_file = file.read()
 
     assert response.status_code == 200
