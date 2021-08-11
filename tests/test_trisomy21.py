@@ -26,7 +26,7 @@ def test_trisomy_21_calculation_with_valid_request():
         "measurement_method": "height"
     }
     
-    response = client.post("/trisomy_21/calculation", json=body)
+    response = client.post("/trisomy-21/calculation", json=body)
 
     # load the known-correct response from file
     with open(r'tests/test_data/test_trisomy_21_calculation_valid.json', 'r') as file:
@@ -51,7 +51,7 @@ def test_trisomy_21_calculation_with_invalid_request():
         "measurement_method": "invalid_measurement_method"
     }
 
-    response = client.post("/trisomy_21/calculation", json=body)
+    response = client.post("/trisomy-21/calculation", json=body)
 
     assert response.status_code == 422
     
@@ -74,7 +74,7 @@ def test_trisomy_21_chart_data_with_valid_request():
         "sex": "male"
     }
 
-    response = client.post("/trisomy_21/chart-coordinates", json=body)
+    response = client.post("/trisomy-21/chart-coordinates", json=body)
         
     assert response.status_code == 200
 
@@ -90,7 +90,7 @@ def test_trisomy_21_chart_data_with_valid_request():
     
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
     assert response_hash == chart_data_file_hash
-`
+
 
 def test_trisomy_21_chart_data_with_invalid_request():
     body = {
@@ -98,7 +98,7 @@ def test_trisomy_21_chart_data_with_invalid_request():
         "sex": "invalid_sex"
     }
 
-    response=client.post("/trisomy_21/chart-coordinates", json=body)
+    response=client.post("/trisomy-21/chart-coordinates", json=body)
 
     # restructure the response to make it easier to assert tests specifically
     validation_errors = {error['loc'][1]: error for error in response.json(
@@ -123,14 +123,14 @@ def test_trisomy_21_fictional_child_data_with_valid_request():
       "measurement_interval_type": "days",
       "measurement_interval_number": 20,
       "start_sds": 0,
-      "drift": false,
+      "drift": "false",
       "drift_range": -0.05,
-      "noise": false,
+      "noise": "false",
       "noise_range": 0.005,
       "reference": "uk-who"
     }
 
-    response = client.post("/trisomy_21/fictional-child-data", json=body)
+    response = client.post("/trisomy-21/fictional-child-data", json=body)
 
     # load the known-correct response from file
     with open(r'tests/test_data/test_trisomy_21_fictional_child_data_valid.json', 'r') as file:
@@ -161,7 +161,7 @@ def test_trisomy_21_fictional_child_data_with_invalid_request():
         "reference": "invalid_reference"
     }
 
-    response = client.post("/trisomy_21/fictional-child-data", json=body)
+    response = client.post("/trisomy-21/fictional-child-data", json=body)
     
     assert response.status_code == 422
     
