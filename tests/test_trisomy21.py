@@ -127,7 +127,7 @@ def test_trisomy_21_fictional_child_data_with_valid_request():
       "drift_range": -0.05,
       "noise": "false",
       "noise_range": 0.005,
-      "reference": "uk-who"
+      "reference": "trisomy-21"
     }
 
     response = client.post("/trisomy-21/fictional-child-data", json=body)
