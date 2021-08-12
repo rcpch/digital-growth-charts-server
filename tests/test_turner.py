@@ -19,8 +19,8 @@ def test_turner_calculation_with_valid_request():
     
     body = {
         "birth_date": "2020-04-12",
-        "observation_date": "2020-06-12",
-        "observation_value": 55,
+        "observation_date": "2024-06-12",
+        "observation_value": 105,
         "sex": "female",
         "gestation_weeks": 40,
         "gestation_days": 0,
@@ -82,11 +82,11 @@ def test_turner_chart_data_with_valid_request():
     # load the known-correct response from file and create a hash of it
     with open(r'tests/test_data/test_turner_female_height_valid.json', 'r') as file:
         chart_data_file = file.read()
-        
+
     # hash both JSON objects which should be identical
     # hashing was the only efficient way to compare these two large (~500k) files
     # it will be harder to debug any new difference (consider saving files to disk and compare)
-    response_hash = hashlib.sha256(json.dumps(response.json()['centile_data'], indent=4).encode('utf-8')).hexdigest()
+    response_hash = hashlib.sha256(json.dumps(response.json()['centile_data']).encode('utf-8')).hexdigest()
     chart_data_file_hash = hashlib.sha256(chart_data_file.encode('utf-8')).hexdigest()
     
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
@@ -115,20 +115,20 @@ def test_turner_chart_data_with_invalid_request():
 def test_turner_fictional_child_data_with_valid_request():
 
     body = {
-        "measurement_method": "height",
-        "sex": "female",
-        "start_chronological_age": 0,
-        "end_age": 1,
-        "gestation_weeks": 40,
-        "gestation_days": 0,
-        "measurement_interval_type": "days",
-        "measurement_interval_number": 30,
-        "start_sds": 0,
-        "drift": False,
-        "drift_range": -0.05,
-        "noise": False,
-        "noise_range": 0.005,
-        "reference": "turner"
+      "measurement_method": "height",
+      "sex": "female",
+      "start_chronological_age": 2,
+      "end_age": 20,
+      "gestation_weeks": 40,
+      "gestation_days": 0,
+      "measurement_interval_type": "days",
+      "measurement_interval_number": 20,
+      "start_sds": 0,
+      "drift": False,
+      "drift_range": -0.05,
+      "noise": False,
+      "noise_range": 0.005,
+      "reference": "turners-syndrome"
     }
 
     response = client.post("/turner/fictional-child-data", json=body)
