@@ -2,11 +2,13 @@
 Trisomy 21 router
 """
 # Standard imports
-from rcpchgrowth.constants.reference_constants import TRISOMY_21
+import json
+from pathlib import Path
 
 # Third party imports
-from fastapi import APIRouter, Body
-from rcpchgrowth import Measurement, constants, chart_functions, generate_fictional_child_data
+from fastapi import APIRouter, Body, HTTPException
+from rcpchgrowth import Measurement, constants, generate_fictional_child_data
+from rcpchgrowth.constants.reference_constants import TRISOMY_21
 
 # local imports
 from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
@@ -85,14 +87,15 @@ def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
     ]
     """
     try:
-        chart_data = chart_functions.create_chart(
-            constants.TRISOMY_21,
-            measurement_method=chartParams.measurement_method,
-            sex=chartParams.sex,
-            centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES
-        )
-    except Exception as err:
+        chart_data_file = Path(
+                    f'chart-data/{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json')
+        if chart_data_file.exists():
+            print(f'Chart data file exists for {constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.')
+            with open(f'chart-data/{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json', 'w') as file:
+                chart_data = json.loads(file.read())
+    except HTTPException(status_code=404, detail="Item not found") as err:
         print(err)
+        return err, 422
     return {
         "centile_data": chart_data
     }

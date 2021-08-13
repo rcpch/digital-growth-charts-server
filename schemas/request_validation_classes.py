@@ -4,6 +4,7 @@ from typing import Optional, Literal
 
 # third party imports
 from pydantic import BaseModel, Field, validator
+from rcpchgrowth import constants
 
 # local / rcpch imports
 from rcpchgrowth.constants.reference_constants import TRISOMY_21, TURNERS, UK_WHO
@@ -42,6 +43,7 @@ class MeasurementRequest(BaseModel):
 class ChartCoordinateRequest(BaseModel):
     sex: Literal['male', 'female']
     measurement_method: Literal['height', 'weight', 'ofc', 'bmi']
+    centile_collection: Literal['cole_two_thirds_sds_nine_centiles', 'three_percent_centiles']
 
 class FictionalChildRequest(BaseModel):
     measurement_method: Literal['height', 'weight', 'ofc', 'bmi']

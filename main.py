@@ -110,8 +110,6 @@ def write_apispec_to_file():
         print("Generated internal openAPI3 spec and openapi.json have equal file content")
     else:
         file = open(r'openapi.json', 'w')
-        # print(diff(file.read(),json.dumps(app.openapi(), indent=4)))
-        # print(file.read())
         file.write(json.dumps(app.openapi(), indent=4))
     file.close()
         
