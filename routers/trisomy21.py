@@ -86,16 +86,16 @@ def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
         ... repeat for weight, bmi, ofc, based on which measurements supplied. If only height data supplied, only height centile data returned
     ]
     """
-    try:
-        chart_data_file = Path(
-                    f'chart-data/{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json')
-        if chart_data_file.exists():
-            print(f'Chart data file exists for {constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.')
-            with open(f'chart-data/{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json', 'w') as file:
-                chart_data = json.loads(file.read())
-    except HTTPException(status_code=404, detail="Item not found") as err:
-        print(err)
-        return err, 422
+    chart_data=None
+    chart_data_file = Path(
+                f'chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json')
+    if chart_data_file.exists():
+        print(f'Chart data file exists for {chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.')
+        with open(f'chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json', 'r') as file:
+            chart_data = json.load(file)
+    else:
+        return HTTPException(status_code=422, detail=f"Item not found: chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json")
+        
     return {
         "centile_data": chart_data
     }

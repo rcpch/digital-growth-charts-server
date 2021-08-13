@@ -1,6 +1,7 @@
 # standard imports
 import json
 from pathlib import Path
+import os
 
 # third party imports
 from fastapi import FastAPI
@@ -74,30 +75,33 @@ def root():
 # Generate and store the chart plotting data for the centile background curves.
 # This data is only generated once and then is stored and served from file.
 def generate_and_store_chart_data():
-    for reference in constants.REFERENCES:
-        for sex in constants.SEXES:
-            for measurement_method in constants.MEASUREMENT_METHODS:
-                # Don't generate files for Turner's for references we don't have (males or non-height measurements)
-                if reference == "turners-syndrome" and (sex != "female" or measurement_method != "height"):
-                    continue
-                chart_data_file = Path(
-                    f'chart-data/{reference}-{sex}-{measurement_method}.json')
-                if chart_data_file.exists():
-                    print(f'Chart data file exists for {reference}-{sex}-{measurement_method}.')
-                else:
-                    print(f'Chart data file does not exist for {reference}-{sex}-{measurement_method}')
-                    try:
-                        chart_data = chart_functions.create_chart(
-                            reference,
-                            measurement_method=measurement_method,
-                            sex=sex,
-                            centile_selection=constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES
-                        )
-                        with open(f'chart-data/{reference}-{sex}-{measurement_method}.json', 'w') as file:
-                            file.write(json.dumps(chart_data, indent=4))
-                        print(f'chart data file created for {reference}-{sex}-{measurement_method}')
-                    except Exception as error:
-                        print(error)
+    for centile_format in [constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES, constants.THREE_PERCENT_CENTILES]:
+        for reference in constants.REFERENCES:
+            for sex in constants.SEXES:
+                for measurement_method in constants.MEASUREMENT_METHODS:
+                    # Don't generate files for Turner's for references we don't have (males or non-height measurements)
+                    if reference == "turners-syndrome" and (sex != "female" or measurement_method != "height"):
+                        continue
+                    chart_data_file = Path(
+                        f'chart-data/{centile_format}-{reference}-{sex}-{measurement_method}.json')
+                    if chart_data_file.exists():
+                        print(f'Chart data file exists for {centile_format}-{reference}-{sex}-{measurement_method}.')
+                    else:
+                        print(f'Chart data file does not exist for {centile_format}-{reference}-{sex}-{measurement_method}')
+                        try:
+                            chart_data = chart_functions.create_chart(
+                                reference,
+                                measurement_method=measurement_method,
+                                sex=sex,
+                                centile_selection=centile_format
+                            )
+                            script_dir = os.path.dirname(__file__)
+                            path = os.path.join(script_dir, f'chart-data/{centile_format}-{reference}-{sex}-{measurement_method}.json')
+                            with open(path, 'w') as file:
+                                file.write(json.dumps(chart_data, indent=4))
+                            print(f'chart data file created for {centile_format}-{reference}-{sex}-{measurement_method}')
+                        except Exception as error:
+                            print(f'Chart data not created due to: {error}')
 
 generate_and_store_chart_data()
 

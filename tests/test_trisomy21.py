@@ -71,7 +71,8 @@ def test_trisomy_21_calculation_with_invalid_request():
 def test_trisomy_21_chart_data_with_valid_request():
     body = {
         "measurement_method": "height",
-        "sex": "male"
+        "sex": "male",
+        "centile_format": "nine-centiles"
     }
 
     response = client.post("/trisomy-21/chart-coordinates", json=body)

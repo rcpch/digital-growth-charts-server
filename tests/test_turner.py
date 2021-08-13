@@ -72,7 +72,8 @@ def test_turner_calculation_with_invalid_request():
 def test_turner_chart_data_with_valid_request():
     body = {
         "measurement_method": "height",
-        "sex": "female"
+        "sex": "female",
+        "centile_format": "nine-centiles"
     }
 
     response = client.post("/turner/chart-coordinates", json=body)

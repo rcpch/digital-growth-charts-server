@@ -43,7 +43,7 @@ class MeasurementRequest(BaseModel):
 class ChartCoordinateRequest(BaseModel):
     sex: Literal['male', 'female']
     measurement_method: Literal['height', 'weight', 'ofc', 'bmi']
-    centile_collection: Literal['cole_two_thirds_sds_nine_centiles', 'three_percent_centiles']
+    centile_format: Literal['six-centiles', 'nine-centiles']
 
 class FictionalChildRequest(BaseModel):
     measurement_method: Literal['height', 'weight', 'ofc', 'bmi']

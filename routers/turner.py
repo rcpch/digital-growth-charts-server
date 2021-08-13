@@ -87,16 +87,16 @@ def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
     if chartParams.sex == "male" or chartParams.measurement_method != "height":
         return "Turner data only exists for height in girls."
 
-    try:
-        chart_data_file = Path(
-                    f'chart-data/{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.json')
-        if chart_data_file.exists():
-            print(f'Chart data file exists for {constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.')
-            with open(f'chart-data/{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.json', 'w') as file:
-                chart_data = json.loads(file.read())
-    except HTTPException(status_code=404, detail="Item not found") as err:
-        print(err)
-        return err, 422
+    chart_data=None
+    chart_data_file = Path(
+                f'chart-data/{chartParams.centile_format}-{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.json')
+    if chart_data_file.exists():
+        print(f'Chart data file exists for {chartParams.centile_format}-{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.')
+        with open(f'chart-data/{chartParams.centile_format}-{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.json', 'r') as file:
+            chart_data = json.load(file)
+    else:
+        return HTTPException(status_code=422, detail=f"Item not found: chart-data/{chartParams.centile_format}-{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.json")
+        
     return {
         "centile_data": chart_data
     }
