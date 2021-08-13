@@ -82,11 +82,11 @@ def test_ukwho_chart_data_with_valid_request():
     # load the known-correct response from file and create a hash of it
     with open(r'tests/test_data/test_uk_who_male_height_valid.json', 'r') as file:
         chart_data_file = file.read()
-        
+
     # hash both JSON objects which should be identical
     # hashing was the only efficient way to compare these two large (~500k) files
     # it will be harder to debug any new difference (consider saving files to disk and compare)
-    response_hash = hashlib.sha256(json.dumps(response.json()['centile_data'], indent=4).encode('utf-8')).hexdigest()
+    response_hash = hashlib.sha256(json.dumps(response.json()['centile_data'], separators=(',', ':')).encode('utf-8')).hexdigest()
     chart_data_file_hash = hashlib.sha256(chart_data_file.encode('utf-8')).hexdigest()
     
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
