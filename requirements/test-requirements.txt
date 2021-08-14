@@ -2,9 +2,6 @@
 -r common-requirements.txt
 
 # standard dependencies
-pytest
-autopep8
 
 # third party dependencies
-bump2version
 requests # needed for starlette and testing

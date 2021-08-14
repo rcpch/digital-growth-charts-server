@@ -420,8 +420,7 @@
                 "title": "ChartCoordinateRequest",
                 "required": [
                     "sex",
-                    "measurement_method",
-                    "centile_format"
+                    "measurement_method"
                 ],
                 "type": "object",
                 "properties": {
@@ -440,14 +439,6 @@
                             "weight",
                             "ofc",
                             "bmi"
-                        ],
-                        "type": "string"
-                    },
-                    "centile_format": {
-                        "title": "Centile Format",
-                        "enum": [
-                            "six-centiles",
-                            "nine-centiles"
                         ],
                         "type": "string"
                     }
