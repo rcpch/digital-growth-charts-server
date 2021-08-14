@@ -41,22 +41,28 @@ class MeasurementRequest(BaseModel):
         ).date()
 
 class ChartCoordinateRequest(BaseModel):
-    sex: Literal['male', 'female']
-    measurement_method: Literal['height', 'weight', 'ofc', 'bmi']
-    centile_format: Literal['six-centiles', 'nine-centiles']
+    sex: Literal['male', 'female'] = Field(
+        ..., description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted.")
+    measurement_method: Literal['height', 'weight', 'ofc', 'bmi'] = Field(
+        ..., description="The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre²** and occipitofrontal circumference (head circumference, OFC) **in centimetres**.")
+    centile_format: Optional[Literal['six-centiles', 'nine-centiles']]=Field('nine-centiles', description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or older 6 centile format ['six-centiles']. Defaults to nine-centile")
 
 class FictionalChildRequest(BaseModel):
-    measurement_method: Literal['height', 'weight', 'ofc', 'bmi']
-    sex: Literal['male', 'female']
-    start_chronological_age: Optional[float] = 0.0
-    end_age: Optional[float] = 20.0
-    gestation_weeks: Optional[int] = 40
-    gestation_days: Optional[int] = 0
-    measurement_interval_type: Literal['d', 'day', 'days', 'w', 'week', 'weeks', 'm', 'month', 'months', 'y', 'year', 'years'] = "days"
-    measurement_interval_number: Optional[int] = 20
-    start_sds: Optional[float] = 0
-    drift: bool = False
-    drift_range: Optional[float] = -0.05
-    noise: bool = False
-    noise_range: Optional[float] = 0.005
-    reference: Literal["uk-who", "trisomy-21", "turners-syndrome"]
+    measurement_method: Literal['height', 'weight', 'ofc', 'bmi'] = Field(
+        ..., description="The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre²** and occipitofrontal circumference (head circumference, OFC) **in centimetres**.")
+    sex: Literal['male', 'female'] = Field(
+        ..., description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted.")
+    start_chronological_age: Optional[float] = Field(0.0, description="Decimal age as a float. The age from which fictional data is to be generated.")
+    end_age: Optional[float] = Field(20.0, description="Decimal age as float. Age until which fictional data is returned.")
+    gestation_weeks: Optional[int] = Field(
+        40, ge=limits.MINIMUM_GESTATION_WEEKS, le=limits.MAXIMUM_GESTATION_WEEKS, description="The number of completed weeks of gestation at which the patient was born, passed as an integer. Supplying this data enables Gestational Age correction if the child was not born at term. If no gestational age is passed then 40 weeks (term) is assumed. **IMPORTANT: See also the other parameter `gestation_days` - both are usually required.**")
+    gestation_days: Optional[int] = Field(
+        0, ge=0, le=6, description="The number of additional days _beyond the completed weeks of gestation_ at which the patient was born, passed as an integer. Supplying this data enables Gestational Age correction if the child was not born at term. If no gestational age is passed then term is assumed. IMPORTANT: See also the other parameter `gestation_weeks` - both are usually required.")
+    measurement_interval_type: Optional[Literal['d', 'day', 'days', 'w', 'week', 'weeks', 'm', 'month', 'months', 'y', 'year', 'years']] = Field("months", description="Interval type between fictional measurements as integer. Accepts days as ['d', 'day', 'days'], weeks as ['w', 'weeks', 'weeks'], months as ['m', 'month', 'months'] or years as ['y', 'year', 'years']")
+    measurement_interval_number: Optional[int] = Field(20, description="Interval length as integer between fictional measurements returned.")
+    start_sds: Optional[float] = Field(0, description="Starting SDS as float. SDS value at which fictional data starts.")
+    drift: bool = Field(False, description="Drift as boolean value. Default true. Selected if fictional measurements are intended to drift from starting SDS.")
+    drift_range: Optional[float] = Field(-0.05, description="Drift range as float. Default is -0.05. The SDS drift expected over the requested age period.")
+    noise: bool = Field(False, description="Noise as boolean. Default is false. Simulates measurement error.")
+    noise_range: Optional[float] = Field(0.005, description="Noise range as float. Prescribes the amount of measurement error generated randomly. Default is 0.5%")
+    reference: Optional[Literal["uk-who", "trisomy-21", "turners-syndrome"]] = Field('uk-who', description="Selected reference as string. Case sensitive and accepts only once of ['uk-who', 'trisomy-21', 'turners-syndrome']")
