@@ -6,6 +6,9 @@ name: Build and deploy Python app to Azure Web App - rcpch-dgc-server-live
 on:
   release:
     types: [created]
+  repository_dispatch:
+    types: [publish_to_pypi]
+
 
 jobs:
   build-and-deploy:
