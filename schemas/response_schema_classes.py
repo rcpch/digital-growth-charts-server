@@ -27,6 +27,8 @@ class Comments(BaseModel):
 class ChronologicalDecimalAgeData(BaseModel):
     x: float
     y: float
+    b: Optional[float]=None
+    bone_age_label: Optional[str]=None
     observation_error: Optional[str]
     age_type: Literal["chronological_age", "corrected_age"]
     calendar_age: str
@@ -38,6 +40,8 @@ class ChronologicalDecimalAgeData(BaseModel):
 class CorrectedDecimalAgeData(BaseModel):
     x: float
     y: float
+    b: Optional[float]=None
+    bone_age_label: Optional[str]=None
     observation_error: Optional[str]
     age_type: Literal["chronological_age", "corrected_age"]
     calendar_age: str
@@ -66,7 +70,15 @@ class BirthData(BaseModel):
     estimated_date_delivery_string: str
     sex: Literal['male', 'female']
 
+class BoneAge(BaseModel):
+    bone_age: Optional[float]=None
+    bone_age_type: Optional[str]=None
+    bone_age_sds: Optional[float]=None
+    bone_age_centile: Optional[float]=None
+    bone_age_text: Optional[str]=None
 
+class EventData(BaseModel):
+    event_text: Optional[list]=None
 class MeasurementDates(BaseModel):
     observation_date: date
     chronological_decimal_age: float
