@@ -1,1 +1,118 @@
-{"birth_data":{"birth_date":"2020-04-12","gestation_weeks":40,"gestation_days":0,"estimated_date_delivery":"2020-04-12","estimated_date_delivery_string":"Sun 12 April, 2020","sex":"female"},"measurement_dates":{"observation_date":"2020-06-12","chronological_decimal_age":0.16700889801505817,"corrected_decimal_age":0.16700889801505817,"chronological_calendar_age":"2 months","corrected_calendar_age":"2 months","corrected_gestational_age":{"corrected_gestation_weeks":null,"corrected_gestation_days":null},"comments":{"clinician_corrected_decimal_age_comment":"Born at term. No correction has been made for gestation.","lay_corrected_decimal_age_comment":"Your baby was born on their due date.","clinician_chronological_decimal_age_comment":"Born Term. No correction has been made for gestation.","lay_chronological_decimal_age_comment":"Your baby was born on their due date."},"corrected_decimal_age_error":null,"chronological_decimal_age_error":null},"child_observation_value":{"measurement_method":"height","observation_value":55.0,"observation_value_error":null},"measurement_calculated_values":{"corrected_sds":0.4408613180664825,"corrected_centile":67,"corrected_centile_band":"This height measurement is between the 50th and 75th centiles.","chronological_sds":0.4408613180664825,"chronological_centile":67,"chronological_centile_band":"This height measurement is between the 50th and 75th centiles.","corrected_measurement_error":null,"chronological_measurement_error":null,"corrected_percentage_median_bmi":null,"chronological_percentage_median_bmi":null},"plottable_data":{"centile_data":{"chronological_decimal_age_data":{"x":0.16700889801505817,"y":55.0,"observation_error":null,"age_type":"chronological_age","calendar_age":"2 months","lay_comment":"Your baby was born on their due date.","clinician_comment":"Born Term. No correction has been made for gestation.","age_error":null,"centile_band":"This height measurement is between the 50th and 75th centiles.","observation_value_error":null},"corrected_decimal_age_data":{"x":0.16700889801505817,"y":55.0,"observation_error":null,"age_type":"corrected_age","corrected_gestational_age":"","calendar_age":"2 months","lay_comment":"Your baby was born on their due date.","clinician_comment":"Born at term. No correction has been made for gestation.","age_error":null,"centile_band":"This height measurement is between the 50th and 75th centiles.","observation_value_error":null}},"sds_data":{"chronological_decimal_age_data":{"x":0.16700889801505817,"y":0.4408613180664825,"age_type":"chronological_age","calendar_age":"2 months","lay_comment":"Your baby was born on their due date.","clinician_comment":"Born Term. No correction has been made for gestation.","age_error":null,"centile_band":"This height measurement is between the 50th and 75th centiles.","observation_value_error":null},"corrected_decimal_age_data":{"x":0.16700889801505817,"y":0.4408613180664825,"age_type":"corrected_age","corrected_gestational_age":"","calendar_age":"2 months","lay_comment":"Your baby was born on their due date.","clinician_comment":"Born at term. No correction has been made for gestation.","age_error":null,"centile_band":"This height measurement is between the 50th and 75th centiles.","observation_value_error":null}}}}
+{
+    "birth_data": {
+        "birth_date": "2020-04-12",
+        "gestation_weeks": 40,
+        "gestation_days": 0,
+        "estimated_date_delivery": "2020-04-12",
+        "estimated_date_delivery_string": "Sun 12 April, 2020",
+        "sex": "female"
+    },
+    "measurement_dates": {
+        "observation_date": "2020-06-12",
+        "chronological_decimal_age": 0.16700889801505817,
+        "corrected_decimal_age": 0.16700889801505817,
+        "chronological_calendar_age": "2 months",
+        "corrected_calendar_age": "2 months",
+        "corrected_gestational_age": {
+            "corrected_gestation_weeks": null,
+            "corrected_gestation_days": null
+        },
+        "comments": {
+            "clinician_corrected_decimal_age_comment": "Born at term. No correction has been made for gestation.",
+            "lay_corrected_decimal_age_comment": "Your baby was born on their due date.",
+            "clinician_chronological_decimal_age_comment": "Born Term. No correction has been made for gestation.",
+            "lay_chronological_decimal_age_comment": "Your baby was born on their due date."
+        },
+        "corrected_decimal_age_error": null,
+        "chronological_decimal_age_error": null
+    },
+    "child_observation_value": {
+        "measurement_method": "height",
+        "observation_value": 55.0,
+        "observation_value_error": null
+    },
+    "measurement_calculated_values": {
+        "corrected_sds": 0.4408613180664825,
+        "corrected_centile": 67,
+        "corrected_centile_band": "This height measurement is between the 50th and 75th centiles.",
+        "chronological_sds": 0.4408613180664825,
+        "chronological_centile": 67,
+        "chronological_centile_band": "This height measurement is between the 50th and 75th centiles.",
+        "corrected_measurement_error": null,
+        "chronological_measurement_error": null,
+        "corrected_percentage_median_bmi": null,
+        "chronological_percentage_median_bmi": null
+    },
+    "plottable_data": {
+        "centile_data": {
+            "chronological_decimal_age_data": {
+                "x": 0.16700889801505817,
+                "y": 55.0,
+                "b": null,
+                "bone_age_label": null,
+                "observation_error": null,
+                "age_type": "chronological_age",
+                "calendar_age": "2 months",
+                "lay_comment": "Your baby was born on their due date.",
+                "clinician_comment": "Born Term. No correction has been made for gestation.",
+                "age_error": null,
+                "centile_band": "This height measurement is between the 50th and 75th centiles.",
+                "observation_value_error": null
+            },
+            "corrected_decimal_age_data": {
+                "x": 0.16700889801505817,
+                "y": 55.0,
+                "b": null,
+                "bone_age_label": "SDS: None, Centile: None",
+                "observation_error": null,
+                "age_type": "corrected_age",
+                "corrected_gestational_age": "",
+                "calendar_age": "2 months",
+                "lay_comment": "Your baby was born on their due date.",
+                "clinician_comment": "Born at term. No correction has been made for gestation.",
+                "age_error": null,
+                "centile_band": "This height measurement is between the 50th and 75th centiles.",
+                "observation_value_error": null
+            }
+        },
+        "sds_data": {
+            "chronological_decimal_age_data": {
+                "x": 0.16700889801505817,
+                "y": 0.4408613180664825,
+                "b": null,
+                "bone_age_label": "SDS: None, Centile: None",
+                "age_type": "chronological_age",
+                "calendar_age": "2 months",
+                "lay_comment": "Your baby was born on their due date.",
+                "clinician_comment": "Born Term. No correction has been made for gestation.",
+                "age_error": null,
+                "centile_band": "This height measurement is between the 50th and 75th centiles.",
+                "observation_value_error": null
+            },
+            "corrected_decimal_age_data": {
+                "x": 0.16700889801505817,
+                "y": 0.4408613180664825,
+                "b": null,
+                "bone_age_label": "SDS: None, Centile: None",
+                "age_type": "corrected_age",
+                "corrected_gestational_age": "",
+                "calendar_age": "2 months",
+                "lay_comment": "Your baby was born on their due date.",
+                "clinician_comment": "Born at term. No correction has been made for gestation.",
+                "age_error": null,
+                "centile_band": "This height measurement is between the 50th and 75th centiles.",
+                "observation_value_error": null
+            }
+        }
+    },
+    "bone_age": {
+        "bone_age": null,
+        "bone_age_type": null,
+        "bone_age_sds": null,
+        "bone_age_centile": null,
+        "bone_age_text": null
+    },
+    "event_data": {
+        "event_text": null
+    }
+}

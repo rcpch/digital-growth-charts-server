@@ -32,6 +32,12 @@ class MeasurementRequest(BaseModel):
         ..., description="The value of the measurement supplied. This is supplied as a floating point number. All measurements should be supplied as **centimetres**, with the exception of Body Mass Index which is supplied as kilograms per metre squared (kg/m²).")
     sex: Literal['male', 'female'] = Field(
         ..., description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted.")
+    bone_age: Optional[float] = Field(None, description="Bone age in years. Age is paired with measurement taken at chronological age.")
+    bone_age_type: Optional[Literal['greulich-pyle', 'tanner-whitehouse-ii', 'tanner-whitehouse-iii', 'fels','bonexpert']] = Field(None, description="Method used to calculate bone age. Must be one of `'greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iii`, `fels`,`bonexpert`")
+    bone_age_sds: Optional[float] = Field(None, description="The SDS of the bone age based on reference tables.")
+    bone_age_centile: Optional[float] = Field(None, description="The centile for the bone age based on reference tables.")
+    bone_age_text: Optional[str] = Field(None, description="Any report or contextual information relating to the bone age.")
+
                                 
     @validator("birth_date", pre=True)
     def parse_date(cls, value):

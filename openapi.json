@@ -3,7 +3,7 @@
     "info": {
         "title": "RCPCH Digital Growth API",
         "description": "Returns SDS and centiles for child growth measurements using growth references. Currently provides calculations based on the UK-WHO, Turner's Syndrome and Trisomy-21 references.",
-        "version": "3.1.2"
+        "version": "3.1.5"
     },
     "paths": {
         "/uk-who/calculation": {
@@ -657,6 +657,38 @@
                         ],
                         "type": "string",
                         "description": "The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted."
+                    },
+                    "bone_age": {
+                        "title": "Bone Age",
+                        "type": "number",
+                        "description": "Bone age in years. Age is paired with measurement taken at chronological age."
+                    },
+                    "bone_age_type": {
+                        "title": "Bone Age Type",
+                        "enum": [
+                            "greulich-pyle",
+                            "tanner-whitehouse-ii",
+                            "tanner-whitehouse-iii",
+                            "fels",
+                            "bonexpert"
+                        ],
+                        "type": "string",
+                        "description": "Method used to calculate bone age. Must be one of `'greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iii`, `fels`,`bonexpert`"
+                    },
+                    "bone_age_sds": {
+                        "title": "Bone Age Sds",
+                        "type": "number",
+                        "description": "The SDS of the bone age based on reference tables."
+                    },
+                    "bone_age_centile": {
+                        "title": "Bone Age Centile",
+                        "type": "number",
+                        "description": "The centile for the bone age based on reference tables."
+                    },
+                    "bone_age_text": {
+                        "title": "Bone Age Text",
+                        "type": "string",
+                        "description": "Any report or contextual information relating to the bone age."
                     }
                 },
                 "description": "This class definition creates a Python model which can be converted by FastAPI to openAPI3 schema.\nWe aim to specify all textual information, constraints, and validation here.\nIt all ends up in the openAPI documentation, automagically."
