@@ -29,6 +29,7 @@ class ChronologicalDecimalAgeData(BaseModel):
     y: float
     b: Optional[float]=None
     bone_age_label: Optional[str]=None
+    events_label: Optional[list]=None
     observation_error: Optional[str]
     age_type: Literal["chronological_age", "corrected_age"]
     calendar_age: str
@@ -42,6 +43,7 @@ class CorrectedDecimalAgeData(BaseModel):
     y: float
     b: Optional[float]=None
     bone_age_label: Optional[str]=None
+    events_label: Optional[list]=None
     observation_error: Optional[str]
     age_type: Literal["chronological_age", "corrected_age"]
     calendar_age: str
@@ -77,8 +79,8 @@ class BoneAge(BaseModel):
     bone_age_centile: Optional[float]=None
     bone_age_text: Optional[str]=None
 
-class EventData(BaseModel):
-    event_text: Optional[list]=None
+class EventsData(BaseModel):
+    events_text: Optional[list]=None
 class MeasurementDates(BaseModel):
     observation_date: date
     chronological_decimal_age: float
@@ -113,3 +115,5 @@ class MeasurementObject(BaseModel):
     child_observation_value: ChildObservationValue
     measurement_calculated_values: MeasurementCalculatedValues
     plottable_data: PlottableData
+    bone_age: BoneAge
+    events_data: EventsData

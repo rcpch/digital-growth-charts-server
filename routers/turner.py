@@ -38,6 +38,11 @@ def turner_calculation(measurementRequest: MeasurementRequest = Body(
     * Gestational age correction will be applied automatically if appropriate, according to the gestational age at birth data supplied.  
     * Available `measurement_method`s are: `height` **only** because this reference data is all that exists.  
     * Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc
+    * Optional Bone age data associated with a height can be passed:
+    *   - `bone_age` as a float in years
+    *   - `bone_age_sds` and `bone_age_centile` as floats
+    *   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`
+    * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
     try:
         calculation = Measurement(
@@ -48,7 +53,13 @@ def turner_calculation(measurementRequest: MeasurementRequest = Body(
             measurement_method=measurementRequest.measurement_method,
             observation_date=measurementRequest.observation_date,
             observation_value=measurementRequest.observation_value,
-            sex=measurementRequest.sex
+            sex=measurementRequest.sex,
+            bone_age=measurementRequest.bone_age,
+            bone_age_centile=measurementRequest.bone_age_centile,
+            bone_age_sds=measurementRequest.bone_age_sds,
+            bone_age_text=measurementRequest.bone_age_text,
+            bone_age_type=measurementRequest.bone_age_type,
+            events_text=measurementRequest.events_text
         ).measurement
     except ValueError as err:
         print(err.args)

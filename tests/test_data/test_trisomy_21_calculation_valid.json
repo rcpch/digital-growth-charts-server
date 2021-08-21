@@ -49,6 +49,7 @@
                 "x": 0.16700889801505817,
                 "y": 55.0,
                 "b": null,
+                "events_text": null,
                 "bone_age_label": null,
                 "observation_error": null,
                 "age_type": "chronological_age",
@@ -63,6 +64,7 @@
                 "x": 0.16700889801505817,
                 "y": 55.0,
                 "b": null,
+                "events_text": null,
                 "bone_age_label": "SDS: None, Centile: None",
                 "observation_error": null,
                 "age_type": "corrected_age",
@@ -112,7 +114,7 @@
         "bone_age_centile": null,
         "bone_age_text": null
     },
-    "event_data": {
-        "event_text": null
+    "events_data": {
+        "events_text": null
     }
 }

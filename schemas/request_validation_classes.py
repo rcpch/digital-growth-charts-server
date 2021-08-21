@@ -37,8 +37,8 @@ class MeasurementRequest(BaseModel):
     bone_age_sds: Optional[float] = Field(None, description="The SDS of the bone age based on reference tables.")
     bone_age_centile: Optional[float] = Field(None, description="The centile for the bone age based on reference tables.")
     bone_age_text: Optional[str] = Field(None, description="Any report or contextual information relating to the bone age.")
+    events_text: Optional[list] = Field(None, description="A list of strings. Contextual text which are associated with each measurement.")
 
-                                
     @validator("birth_date", pre=True)
     def parse_date(cls, value):
         return datetime.strptime(

@@ -12,7 +12,7 @@
                     "uk-who"
                 ],
                 "summary": "Uk Who Calculation",
-                "description": "## UK-WHO Centile and SDS Calculations\n    \n* These are the 'standard' centiles for children in the UK. It uses a hybrid of the WHO and UK90 datasets.  \n* For non-UK use you may need the WHO-only or CDC charts which we do not yet support, but we may add if demand is there.  Please contact us.\n* Returns a single centile/SDS calculation for the selected `measurement_method`.  \n* Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.  \n* Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').  \n* Note that BMI must be precalculated for the `bmi` function.  \n* Dates will discard anything after first 'T' in `YYYY-MM-DDTHH:MM:SS.milliseconds+TZ` etc",
+                "description": "## UK-WHO Centile and SDS Calculations\n    \n* These are the 'standard' centiles for children in the UK. It uses a hybrid of the WHO and UK90 datasets.  \n* For non-UK use you may need the WHO-only or CDC charts which we do not yet support, but we may add if demand is there.  Please contact us.\n* Returns a single centile/SDS calculation for the selected `measurement_method`.  \n* Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.  \n* Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').  \n* Note that BMI must be precalculated for the `bmi` function.  \n* Dates will discard anything after first 'T' in `YYYY-MM-DDTHH:MM:SS.milliseconds+TZ` etc\n* Optional Bone age data associated with a height can be passed:\n*   - `bone_age` as a float in years\n*   - `bone_age_sds` and `bone_age_centile` as floats\n*   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`\n* Optional events can be passed in as a list of strings - each list is associated with a measurement",
                 "operationId": "uk_who_calculation_uk_who_calculation_post",
                 "requestBody": {
                     "content": {
@@ -22,12 +22,21 @@
                             },
                             "example": {
                                 "birth_date": "2020-04-12",
-                                "observation_date": "2020-06-12",
-                                "observation_value": 60,
-                                "measurement_method": "height",
-                                "sex": "male",
+                                "observation_date": "2028-06-12",
+                                "observation_value": 115,
+                                "sex": "female",
                                 "gestation_weeks": 40,
-                                "gestation_days": 4
+                                "gestation_days": 0,
+                                "measurement_method": "height",
+                                "bone_age": 10,
+                                "bone_age_centile": 98,
+                                "bone_age_sds": 2.0,
+                                "bone_age_text": "This bone age is advanced",
+                                "bone_age_type": "greulich-pyle",
+                                "events_text": [
+                                    "Growth hormone start",
+                                    "Growth Hormone Deficiency diagnosis"
+                                ]
                             }
                         }
                     },
@@ -141,7 +150,7 @@
                     "turners-syndrome"
                 ],
                 "summary": "Turner Calculation",
-                "description": "## Turner's Syndrome Centile and SDS Calculations.\n    \n* This endpoint MUST ONLY be used for **female** children with the chromosomal disorder Turner's Syndrome (45,XO karyotype).  \n* Returns a single centile/SDS calculation for the selected `measurement_method`.  \n* Gestational age correction will be applied automatically if appropriate, according to the gestational age at birth data supplied.  \n* Available `measurement_method`s are: `height` **only** because this reference data is all that exists.  \n* Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc",
+                "description": "## Turner's Syndrome Centile and SDS Calculations.\n    \n* This endpoint MUST ONLY be used for **female** children with the chromosomal disorder Turner's Syndrome (45,XO karyotype).  \n* Returns a single centile/SDS calculation for the selected `measurement_method`.  \n* Gestational age correction will be applied automatically if appropriate, according to the gestational age at birth data supplied.  \n* Available `measurement_method`s are: `height` **only** because this reference data is all that exists.  \n* Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc\n* Optional Bone age data associated with a height can be passed:\n*   - `bone_age` as a float in years\n*   - `bone_age_sds` and `bone_age_centile` as floats\n*   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`\n* Optional events can be passed in as a list of strings - each list is associated with a measurement",
                 "operationId": "turner_calculation_turner_calculation_post",
                 "requestBody": {
                     "content": {
@@ -270,7 +279,7 @@
                     "trisomy-21"
                 ],
                 "summary": "Trisomy 21 Calculation",
-                "description": "# Trisomy-21 Centile and SDS Calculations.\n\n* This endpoint MUST ONLY be used for children with Trisomy 21 (Down's Syndrome).  \n* Returns a single centile/SDS calculation for the selected `measurement_method`.  \n* Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.  \n* Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').  \n* Note that BMI must be precalculated for the `bmi` function.  ",
+                "description": "# Trisomy-21 Centile and SDS Calculations.\n\n* This endpoint MUST ONLY be used for children with Trisomy 21 (Down's Syndrome).  \n* Returns a single centile/SDS calculation for the selected `measurement_method`.  \n* Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.  \n* Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').  \n* Note that BMI must be precalculated for the `bmi` function.\n* Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc\n* Optional Bone age data associated with a height can be passed:\n*   - `bone_age` as a float in years\n*   - `bone_age_sds` and `bone_age_centile` as floats\n*   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`\n* Optional events can be passed in as a list of strings - each list is associated with a measurement",
                 "operationId": "trisomy_21_calculation_trisomy_21_calculation_post",
                 "requestBody": {
                     "content": {
@@ -689,6 +698,12 @@
                         "title": "Bone Age Text",
                         "type": "string",
                         "description": "Any report or contextual information relating to the bone age."
+                    },
+                    "events_text": {
+                        "title": "Events Text",
+                        "type": "array",
+                        "items": {},
+                        "description": "A list of strings. Contextual text which are associated with each measurement."
                     }
                 },
                 "description": "This class definition creates a Python model which can be converted by FastAPI to openAPI3 schema.\nWe aim to specify all textual information, constraints, and validation here.\nIt all ends up in the openAPI documentation, automagically."

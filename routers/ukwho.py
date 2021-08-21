@@ -22,14 +22,20 @@ uk_who = APIRouter(
 def uk_who_calculation(
     measurementRequest: MeasurementRequest = Body(
         ...,
-        example={
-            "birth_date": "2020-04-12",
-            "observation_date": "2020-06-12",
-            "observation_value": 60,
-            "measurement_method": "height",
-            "sex": "male",
-            "gestation_weeks": 40,
-            "gestation_days": 4,
+            example={
+                "birth_date": "2020-04-12",
+                "observation_date": "2028-06-12",
+                "observation_value": 115,
+                "sex": "female",
+                "gestation_weeks": 40,
+                "gestation_days": 0,
+                "measurement_method": "height",
+                "bone_age": 10,
+                "bone_age_centile": 98,
+                "bone_age_sds": 2.0,
+                "bone_age_text": "This bone age is advanced",
+                "bone_age_type": "greulich-pyle",
+                "events_text": ["Growth hormone start", "Growth Hormone Deficiency diagnosis"]
             }
         )
     ):
@@ -43,6 +49,11 @@ def uk_who_calculation(
     * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').  
     * Note that BMI must be precalculated for the `bmi` function.  
     * Dates will discard anything after first 'T' in `YYYY-MM-DDTHH:MM:SS.milliseconds+TZ` etc
+    * Optional Bone age data associated with a height can be passed:
+    *   - `bone_age` as a float in years
+    *   - `bone_age_sds` and `bone_age_centile` as floats
+    *   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`
+    * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
     try:
         calculation = Measurement(
@@ -53,7 +64,13 @@ def uk_who_calculation(
             measurement_method=measurementRequest.measurement_method,
             observation_date=measurementRequest.observation_date,
             observation_value=measurementRequest.observation_value,
-            sex=measurementRequest.sex
+            sex=measurementRequest.sex,
+            bone_age=measurementRequest.bone_age,
+            bone_age_centile=measurementRequest.bone_age_centile,
+            bone_age_sds=measurementRequest.bone_age_sds,
+            bone_age_text=measurementRequest.bone_age_text,
+            bone_age_type=measurementRequest.bone_age_type,
+            events_text=measurementRequest.events_text
         ).measurement
     except ValueError as err:
         print(err.args)

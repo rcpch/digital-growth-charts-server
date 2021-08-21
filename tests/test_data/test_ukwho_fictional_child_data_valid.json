@@ -50,6 +50,7 @@
                     "x": 0.0,
                     "y": 50.0,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": null,
                     "observation_error": null,
                     "age_type": "chronological_age",
@@ -64,6 +65,7 @@
                     "x": 0.0,
                     "y": 50.0,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": "SDS: None, Centile: None",
                     "observation_error": null,
                     "age_type": "corrected_age",
@@ -113,8 +115,8 @@
             "bone_age_centile": null,
             "bone_age_text": null
         },
-        "event_data": {
-            "event_text": null
+        "events_data": {
+            "events_text": null
         }
     },
     {
@@ -168,6 +170,7 @@
                     "x": 0.08213552361396304,
                     "y": 53.6,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": null,
                     "observation_error": null,
                     "age_type": "chronological_age",
@@ -182,6 +185,7 @@
                     "x": 0.08213552361396304,
                     "y": 53.6,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": "SDS: None, Centile: None",
                     "observation_error": null,
                     "age_type": "corrected_age",
@@ -231,8 +235,8 @@
             "bone_age_centile": null,
             "bone_age_text": null
         },
-        "event_data": {
-            "event_text": null
+        "events_data": {
+            "events_text": null
         }
     },
     {
@@ -286,6 +290,7 @@
                     "x": 0.16427104722792607,
                     "y": 57.0,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": null,
                     "observation_error": null,
                     "age_type": "chronological_age",
@@ -300,6 +305,7 @@
                     "x": 0.16427104722792607,
                     "y": 57.0,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": "SDS: None, Centile: None",
                     "observation_error": null,
                     "age_type": "corrected_age",
@@ -349,8 +355,8 @@
             "bone_age_centile": null,
             "bone_age_text": null
         },
-        "event_data": {
-            "event_text": null
+        "events_data": {
+            "events_text": null
         }
     },
     {
@@ -404,6 +410,7 @@
                     "x": 0.2464065708418891,
                     "y": 59.7,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": null,
                     "observation_error": null,
                     "age_type": "chronological_age",
@@ -418,6 +425,7 @@
                     "x": 0.2464065708418891,
                     "y": 59.7,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": "SDS: None, Centile: None",
                     "observation_error": null,
                     "age_type": "corrected_age",
@@ -467,8 +475,8 @@
             "bone_age_centile": null,
             "bone_age_text": null
         },
-        "event_data": {
-            "event_text": null
+        "events_data": {
+            "events_text": null
         }
     },
     {
@@ -522,6 +530,7 @@
                     "x": 0.32854209445585214,
                     "y": 62.0,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": null,
                     "observation_error": null,
                     "age_type": "chronological_age",
@@ -536,6 +545,7 @@
                     "x": 0.32854209445585214,
                     "y": 62.0,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": "SDS: None, Centile: None",
                     "observation_error": null,
                     "age_type": "corrected_age",
@@ -585,8 +595,8 @@
             "bone_age_centile": null,
             "bone_age_text": null
         },
-        "event_data": {
-            "event_text": null
+        "events_data": {
+            "events_text": null
         }
     },
     {
@@ -640,6 +650,7 @@
                     "x": 0.4106776180698152,
                     "y": 63.9,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": null,
                     "observation_error": null,
                     "age_type": "chronological_age",
@@ -654,6 +665,7 @@
                     "x": 0.4106776180698152,
                     "y": 63.9,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": "SDS: None, Centile: None",
                     "observation_error": null,
                     "age_type": "corrected_age",
@@ -703,8 +715,8 @@
             "bone_age_centile": null,
             "bone_age_text": null
         },
-        "event_data": {
-            "event_text": null
+        "events_data": {
+            "events_text": null
         }
     },
     {
@@ -758,6 +770,7 @@
                     "x": 0.4928131416837782,
                     "y": 65.6,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": null,
                     "observation_error": null,
                     "age_type": "chronological_age",
@@ -772,6 +785,7 @@
                     "x": 0.4928131416837782,
                     "y": 65.6,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": "SDS: None, Centile: None",
                     "observation_error": null,
                     "age_type": "corrected_age",
@@ -821,8 +835,8 @@
             "bone_age_centile": null,
             "bone_age_text": null
         },
-        "event_data": {
-            "event_text": null
+        "events_data": {
+            "events_text": null
         }
     },
     {
@@ -876,6 +890,7 @@
                     "x": 0.5749486652977412,
                     "y": 67.1,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": null,
                     "observation_error": null,
                     "age_type": "chronological_age",
@@ -890,6 +905,7 @@
                     "x": 0.5749486652977412,
                     "y": 67.1,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": "SDS: None, Centile: None",
                     "observation_error": null,
                     "age_type": "corrected_age",
@@ -939,8 +955,8 @@
             "bone_age_centile": null,
             "bone_age_text": null
         },
-        "event_data": {
-            "event_text": null
+        "events_data": {
+            "events_text": null
         }
     },
     {
@@ -994,6 +1010,7 @@
                     "x": 0.6570841889117043,
                     "y": 68.6,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": null,
                     "observation_error": null,
                     "age_type": "chronological_age",
@@ -1008,6 +1025,7 @@
                     "x": 0.6570841889117043,
                     "y": 68.6,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": "SDS: None, Centile: None",
                     "observation_error": null,
                     "age_type": "corrected_age",
@@ -1057,8 +1075,8 @@
             "bone_age_centile": null,
             "bone_age_text": null
         },
-        "event_data": {
-            "event_text": null
+        "events_data": {
+            "events_text": null
         }
     },
     {
@@ -1112,6 +1130,7 @@
                     "x": 0.7392197125256673,
                     "y": 70.0,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": null,
                     "observation_error": null,
                     "age_type": "chronological_age",
@@ -1126,6 +1145,7 @@
                     "x": 0.7392197125256673,
                     "y": 70.0,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": "SDS: None, Centile: None",
                     "observation_error": null,
                     "age_type": "corrected_age",
@@ -1175,8 +1195,8 @@
             "bone_age_centile": null,
             "bone_age_text": null
         },
-        "event_data": {
-            "event_text": null
+        "events_data": {
+            "events_text": null
         }
     },
     {
@@ -1230,6 +1250,7 @@
                     "x": 0.8213552361396304,
                     "y": 71.3,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": null,
                     "observation_error": null,
                     "age_type": "chronological_age",
@@ -1244,6 +1265,7 @@
                     "x": 0.8213552361396304,
                     "y": 71.3,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": "SDS: None, Centile: None",
                     "observation_error": null,
                     "age_type": "corrected_age",
@@ -1293,8 +1315,8 @@
             "bone_age_centile": null,
             "bone_age_text": null
         },
-        "event_data": {
-            "event_text": null
+        "events_data": {
+            "events_text": null
         }
     },
     {
@@ -1348,6 +1370,7 @@
                     "x": 0.9034907597535934,
                     "y": 72.6,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": null,
                     "observation_error": null,
                     "age_type": "chronological_age",
@@ -1362,6 +1385,7 @@
                     "x": 0.9034907597535934,
                     "y": 72.6,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": "SDS: None, Centile: None",
                     "observation_error": null,
                     "age_type": "corrected_age",
@@ -1411,8 +1435,8 @@
             "bone_age_centile": null,
             "bone_age_text": null
         },
-        "event_data": {
-            "event_text": null
+        "events_data": {
+            "events_text": null
         }
     },
     {
@@ -1466,6 +1490,7 @@
                     "x": 0.9856262833675564,
                     "y": 73.8,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": null,
                     "observation_error": null,
                     "age_type": "chronological_age",
@@ -1480,6 +1505,7 @@
                     "x": 0.9856262833675564,
                     "y": 73.8,
                     "b": null,
+                    "events_text": null,
                     "bone_age_label": "SDS: None, Centile: None",
                     "observation_error": null,
                     "age_type": "corrected_age",
@@ -1529,8 +1555,8 @@
             "bone_age_centile": null,
             "bone_age_text": null
         },
-        "event_data": {
-            "event_text": null
+        "events_data": {
+            "events_text": null
         }
     }
 ]

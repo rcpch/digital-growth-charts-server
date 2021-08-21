@@ -18,12 +18,18 @@ def test_ukwho_calculation_with_valid_request():
     
     body = {
         "birth_date": "2020-04-12",
-        "observation_date": "2020-06-12",
-        "observation_value": 55,
+        "observation_date": "2028-06-12",
+        "observation_value": 115,
         "sex": "female",
         "gestation_weeks": 40,
         "gestation_days": 0,
-        "measurement_method": "height"
+        "measurement_method": "height",
+        "bone_age": 10,
+        "bone_age_centile": 98,
+        "bone_age_sds": 2.0,
+        "bone_age_text": "This bone age is advanced",
+        "bone_age_type": "greulich-pyle",
+        "events_text": ["Growth hormone start", "Growth Hormone Deficiency diagnosis"]
     }
     
     response = client.post("/uk-who/calculation", json=body)
