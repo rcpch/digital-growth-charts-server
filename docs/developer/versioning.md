@@ -13,5 +13,4 @@ We are using Semantic Versioning (SemVer) in order to ensure that the server ver
 
 ## Bump2version
 
-We are using the `bump2version` tool to simplify the 
-
+We are using the `bump2version` tool to simplify the versioning in the server and rcpchgrowth-python packages.
