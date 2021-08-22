@@ -29,9 +29,9 @@ The UK growth charts are made up of 4 datasets taken from 2 growth references (s
 
 - These datasets all overlap, and therefore when plotting them, they must be passed to charting packages as 4 individual series. This means they will appear as discontinuous, with breaks in the lines where they meet/overlap.
 
-- There is a natural step at each of these time points which **must** be respected. If all 4 datasets are presented 0-20y as a continuous dataset, chart packages will interpolate the gaps and the intentional 'step' will be lost.
+- There is a natural step at each of these time points which **must** be respected. If all 4 datasets are presented 0-20y as a continuous dataset, chart packages will interpolate the gaps and the intentional 'step' will be lost. This is particularly clinically relevant at aged 2 y, where infant are measured standing, not lying as is standard before this age. This leads to a natural small step in the data which must be respected. There is no change in references at this transition from infancy to childhood, but the reference data have values for both lying and standing, so both should be plotted.
 
-- The API endpoint returns the chart data in an array of arrays. The first level array represents the 9 centiles `[0.4, 2, 9 , 25, 50, 75, 91, 98, 99.6]`, with each centile in turn having a nested array of 4 arrays of data, one for each dataset (see below). The individual data points are reported as float values for x and y coordinates. X corresponds to decimal age, y to the measurement value of the chart requested.
+- The API endpoint returns the chart data in an array of arrays. The first level array represents the 9 centiles `[0.4, 2, 9 , 25, 50, 75, 91, 98, 99.6]`, with each centile in turn having a nested array of 4 arrays of data, one for each dataset (see below). The individual data points are reported as float values for x and y coordinates. X corresponds to decimal age, y to the measurement value of the chart requested. If the `three-percent-centiles` optionally is passed in (instead of the default `cole-nine-centiles`) an older format of 9 centiles `[3, 5, 10, 25, 50, 75, 90, 95, 97]` is returned. The `nine-cole-centiles` is default if no parameter is passed, and this is the international standard.
 
 - The chart data is only returned for the measurement method requested - if only height is supplied, only height centile data will be returned.
 
@@ -52,21 +52,37 @@ The UK growth charts are made up of 4 datasets taken from 2 growth references (s
 
 - Provide option of Z-score (SD) plots for health staff use (see below).
 
+- The 50th Centile should be de-emphasised: this middle line must not be made darker or wider than others, as it might give the impression to families that being on it is desirable or normal. Standard notation is for the 0.4th, 9th, 50th, 91st and 99.6th centiles to be dashed, the 2nd, 25th, 75th and 98th centiles to be solid.
+
+- Chart colours are not prescribed. The lines and data points need to be meet accessibilty guidelines, be clearly visible and avoid colour combinations that reduce useabilty.
+
+- Information for the user must not be crowded, and where possible, contextualised. For example, information on puberty for girls be shown only on girls' charts.
+
+- Highlight the pitfalls of measuring weight in the first weeks after birth of a term infant. It is normal for babies to lose up to 10% of their birth weight - this should be made clear to users.
+
+- Signpost reference transitions. The user should be made aware of why the lines are discontinuous between data sets or when going from being measured from lying to standing.
+
+- Chart labelling: axes must be labelled appropriately with the correct intervals. Below 42 weeks gestation, the x axis should reflect gestation. Beyond 42 weeks to 2 years, weeks and months should be shown. Above 2 years, months and years should be shown. Above 4 y, yearly and 6mthly intervals are shown. On the y axis, measurement units should be used, with scope of the chart showing only the measurements, not the whole chart.
+
 - Provide help / information facility to access instructions drawn from the RCPCH educational materials (see separate documents: information for parents, information for health staff).
 
 ### When plotting centile charts
 
 Certain key presentation principles should be included:
 
-- Use nine-centile format (see below).
+- Use Cole nine-centile format (see below).
 
 - Scale different elements of the chart to best display information in each period.
 
-- Use fortnightly grid points to 6 months, monthly thereafter.
-
 - Either show exact age and centile band (see below) when hovering over a point or show in an embedded table.
 
-- Data points should not be joined by lines.
+- Different data points should not be joined by lines.
+
+- Data points should follow standard notation: a child's growth point plotted at their chronological age is a round dot. If plotted at their age adjusted for gestation, it is plotted as a cross. If plotted together, they are joined by a line, often with an 'arrow back', denoting the relationship.
+
+- Bone ages can additionally be plotted on the chart. These are skeletal ages calculated using standard scores from x-rays of the left hand. They are associated with a height value measured on the same day. They are plotted as a cross, with the bone age on the x-axis, the measurement on the y-axis. The measurement is plotted against age (corrected and chronological) as standard. The two plots are connected by a dotted/dashed line to denote they are linked.
+
+- Events can be plotted on the chart also - these are contextual information, such as starting a treatment or the time a diagnosis is made. They are a vertical arrow above or below the measurement in question, outside the centiles for clarity.
 
 - There should be a toggle button to allow the user to see the chronological and corrected ages separately or together.
 
@@ -88,7 +104,7 @@ On the centile chart it should be made clear that allowance has been made for va
 
 !!! note "Gestation Age Correction through the life course"
     **The standard has recently changed** such that now gestational age is taken into account, even when born at gestational ages regarded as term,  and across the whole lifespan. This change was adopted because digital charting makes gestational age correction much easier to do, in fact it is now a completely automated process because of the the dGC API. (Note that this is different from paper charts, where gestational age correction was manual and therefore was only done up to 1 or 2 years depending on the degree of prematurity).
-    
+
 #### Examples
 
 | Example Gestation | Old policy                                                       | New policy                                                                                                                           |

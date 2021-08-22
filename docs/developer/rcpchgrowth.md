@@ -49,10 +49,32 @@ measurement_method ['height', 'weight', 'bmi', 'ofc']
 
 observation_value
 
-reference ['ukwho', 'trisomy-21' 'turners-syndrome']
+reference ['uk-who', 'trisomy-21' 'turners-syndrome']
 ```
 
 The dates are python dates
+The ```observation_value``` is a float value.
+
+Optional parameters include:
+
+```python
+bone_age
+
+bone_age_centile
+
+bone_age_sds
+
+bone_age_text
+
+bone_age_type ["greulich-pyle", 'tanner-whitehouse-ii', 'tanner-whitehouse-iii', 'fels']
+
+events_text
+```
+
+These default to None if not provided.
+The bone ages are float values. No formatting is performed and are returned in the Measurement class object as provided. The chart plug in is optimised to recognise them.
+```bone_age_text``` is contextual information to describe the bone age. It may be a radiology report or author comment.
+```events_text``` is a list of strings, events to tag the measurement with, for example starting a treatment or receiving a diagnosis.
 
 Calling ```Measurement(...).measurement``` will return a full Measurement object.
 
@@ -65,100 +87,151 @@ This is the return object from the Measurement class. It is made of the followin
 ```json
 {
     "birth_data": {
-        "birth_date": "Thu, 12 Mar 2020 00:00:00 GMT",
-        "estimated_date_delivery": "Thu, 13 Feb 2020 00:00:00 GMT",
-        "estimated_date_delivery_string": "Thu 13 February, 2020",
+        "birth_date": "2020-04-12",
+        "gestation_weeks": 40,
         "gestation_days": 0,
-        "gestation_weeks": 44,
-        "sex": "male"
+        "estimated_date_delivery": "2020-04-12",
+        "estimated_date_delivery_string": "Sun 12 April, 2020",
+        "sex": "female"
+    },
+    "measurement_dates": {
+        "observation_date": "2028-06-12",
+        "chronological_decimal_age": 8.167008898015059,
+        "corrected_decimal_age": 8.167008898015059,
+        "chronological_calendar_age": "8 years and 2 months",
+        "corrected_calendar_age": "8 years and 2 months",
+        "corrected_gestational_age": {
+            "corrected_gestation_weeks": null,
+            "corrected_gestation_days": null
+        },
+        "comments": {
+            "clinician_corrected_decimal_age_comment": "Born at term. No correction has been made for gestation.",
+            "lay_corrected_decimal_age_comment": "Your baby was born on their due date.",
+            "clinician_chronological_decimal_age_comment": "Born Term. No correction has been made for gestation.",
+            "lay_chronological_decimal_age_comment": "Your baby was born on their due date."
+        },
+        "corrected_decimal_age_error": null,
+        "chronological_decimal_age_error": null
     },
     "child_observation_value": {
         "measurement_method": "height",
-        "observation_value": 100.0,
+        "observation_value": 115.0,
         "observation_value_error": null
     },
     "measurement_calculated_values": {
-        "chronological_centile": 1,
-        "chronological_centile_band": "This height measurement is on or near the 2nd centile.",
-        "chronological_measurement_error": null,
-        "chronological_sds": -2.1174061157646373,
-        "corrected_centile": 1,
+        "corrected_sds": -2.406593606646068,
+        "corrected_centile": 0.8,
         "corrected_centile_band": "This height measurement is between the 0.4th and 2nd centiles.",
+        "chronological_sds": -2.406593606646068,
+        "chronological_centile": 0.8,
+        "chronological_centile_band": "This height measurement is between the 0.4th and 2nd centiles.",
         "corrected_measurement_error": null,
-        "corrected_sds": -2.2196627616343876
-    },
-    "measurement_dates": {
-        "chronological_calendar_age": "5 years",
-        "chronological_decimal_age": 4.999315537303217,
-        "chronological_decimal_age_error": null,
-        "comments": {
-            "clinician_chronological_decimal_age_comment": "It has not been possible to calculate age this time.",
-            "clinician_corrected_decimal_age_comment": "It has not been possible to calculate age this time.",
-            "lay_chronological_decimal_age_comment": "It has not been possible to calculate age this time.",
-            "lay_corrected_decimal_age_comment": "It has not been possible to calculate age this time."
-        },
-        "corrected_calendar_age": "5 years, 3 weeks and 6 days",
-        "corrected_decimal_age": 5.075975359342916,
-        "corrected_decimal_age_error": null,
-        "corrected_gestational_age": {
-            "corrected_gestation_days": null,
-            "corrected_gestation_weeks": null
-        },
-        "observation_date": "Wed, 12 Mar 2025 00:00:00 GMT"
+        "chronological_measurement_error": null,
+        "corrected_percentage_median_bmi": null,
+        "chronological_percentage_median_bmi": null
     },
     "plottable_data": {
         "centile_data": {
             "chronological_decimal_age_data": {
-                "age_error": null,
-                "age_type": "chronological_age",
-                "calendar_age": "5 years",
-                "centile_band": "This height measurement is on or near the 2nd centile.",
-                "clinician_comment": "It has not been possible to calculate age this time.",
-                "lay_comment": "It has not been possible to calculate age this time.",
+                "x": 8.167008898015059,
+                "y": 115.0,
+                "b": 10.0,
+                "events_text": [
+                    "Growth hormone start",
+                    "Growth Hormone Deficiency diagnosis"
+                ],
+                "bone_age_label": "This bone age is advanced",
+                "bone_age_type": "greulich-pyle",
+                "bone_age_sds": 2.0,
+                "bone_age_centile": 98.0,
                 "observation_error": null,
-                "observation_value_error": null,
-                "x": 4.999315537303217,
-                "y": 100.0
+                "age_type": "chronological_age",
+                "calendar_age": "8 years and 2 months",
+                "lay_comment": "Your baby was born on their due date.",
+                "clinician_comment": "Born Term. No correction has been made for gestation.",
+                "age_error": null,
+                "centile_band": "This height measurement is between the 0.4th and 2nd centiles.",
+                "observation_value_error": null
             },
             "corrected_decimal_age_data": {
-                "age_error": null,
-                "age_type": "corrected_age",
-                "calendar_age": "5 years, 3 weeks and 6 days",
-                "centile_band": "This height measurement is between the 0.4th and 2nd centiles.",
-                "clinician_comment": "It has not been possible to calculate age this time.",
-                "corrected_gestational_age": "",
-                "lay_comment": "It has not been possible to calculate age this time.",
+                "x": 8.167008898015059,
+                "y": 115.0,
+                "b": 10.0,
+                "events_text": [
+                    "Growth hormone start",
+                    "Growth Hormone Deficiency diagnosis"
+                ],
+                "bone_age_label": "This bone age is advanced",
+                "bone_age_type": "greulich-pyle",
+                "bone_age_sds": 2.0,
+                "bone_age_centile": 98.0,
                 "observation_error": null,
-                "observation_value_error": null,
-                "x": 5.075975359342916,
-                "y": 100.0
+                "age_type": "corrected_age",
+                "corrected_gestational_age": "",
+                "calendar_age": "8 years and 2 months",
+                "lay_comment": "Your baby was born on their due date.",
+                "clinician_comment": "Born at term. No correction has been made for gestation.",
+                "age_error": null,
+                "centile_band": "This height measurement is between the 0.4th and 2nd centiles.",
+                "observation_value_error": null
             }
         },
         "sds_data": {
             "chronological_decimal_age_data": {
-                "age_error": null,
+                "x": 8.167008898015059,
+                "y": -2.406593606646068,
+                "b": 10.0,
+                "events_text": [
+                    "Growth hormone start",
+                    "Growth Hormone Deficiency diagnosis"
+                ],
+                "bone_age_label": "This bone age is advanced",
+                "bone_age_type": "greulich-pyle",
+                "bone_age_sds": 2.0,
+                "bone_age_centile": 98.0,
                 "age_type": "chronological_age",
-                "calendar_age": "5 years",
-                "centile_band": "This height measurement is on or near the 2nd centile.",
-                "clinician_comment": "It has not been possible to calculate age this time.",
-                "lay_comment": "It has not been possible to calculate age this time.",
-                "observation_value_error": null,
-                "x": 4.999315537303217,
-                "y": -2.1174061157646373
+                "calendar_age": "8 years and 2 months",
+                "lay_comment": "Your baby was born on their due date.",
+                "clinician_comment": "Born Term. No correction has been made for gestation.",
+                "age_error": null,
+                "centile_band": "This height measurement is between the 0.4th and 2nd centiles.",
+                "observation_value_error": null
             },
             "corrected_decimal_age_data": {
-                "age_error": null,
+                "x": 8.167008898015059,
+                "y": -2.406593606646068,
+                "b": 10.0,
+                "events_text": [
+                    "Growth hormone start",
+                    "Growth Hormone Deficiency diagnosis"
+                ],
+                "bone_age_label": "This bone age is advanced",
+                "bone_age_type": "greulich-pyle",
+                "bone_age_sds": 2.0,
+                "bone_age_centile": 98.0,
                 "age_type": "corrected_age",
-                "calendar_age": "5 years, 3 weeks and 6 days",
-                "centile_band": "This height measurement is between the 0.4th and 2nd centiles.",
-                "clinician_comment": "It has not been possible to calculate age this time.",
                 "corrected_gestational_age": "",
-                "lay_comment": "It has not been possible to calculate age this time.",
-                "observation_value_error": null,
-                "x": 5.075975359342916,
-                "y": -2.2196627616343876
+                "calendar_age": "8 years and 2 months",
+                "lay_comment": "Your baby was born on their due date.",
+                "clinician_comment": "Born at term. No correction has been made for gestation.",
+                "age_error": null,
+                "centile_band": "This height measurement is between the 0.4th and 2nd centiles.",
+                "observation_value_error": null
             }
         }
+    },
+    "bone_age": {
+        "bone_age": 10.0,
+        "bone_age_type": "greulich-pyle",
+        "bone_age_sds": 2.0,
+        "bone_age_centile": 98.0,
+        "bone_age_text": "This bone age is advanced"
+    },
+    "events_data": {
+        "events_text": [
+            "Growth hormone start",
+            "Growth Hormone Deficiency diagnosis"
+        ]
     }
 }
 ```

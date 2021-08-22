@@ -1,6 +1,6 @@
 ---
 title: React Chart Component
-reviewers: Dr Marcus Baw
+reviewers: Dr Marcus Baw, Dr Simon Chapman
 ---
 
 # React Chart Component
@@ -14,7 +14,6 @@ Although the process of obtaining a centile/SDS result from the API is very stra
 :material-web: [Demo](https://growth.rcpch.ac.uk/)
 
 You can use the component as-is in a React app, or include it in plain HTML or any other JavaScript framework.
-
 
 ## Getting started
 
@@ -45,11 +44,23 @@ In the root folder of your chart library:
 foobar:~foo$ npm link react
 ```
 
-Repeat the same for ```react-dom``` ensuring all the package versions are the same for your app and the library.
-In this way, you can make changes to the chart package and they will appear in your app after ```npm run build``` and refresh your app.
+Repeat the same for ```react-dom``` ensuring all the package versions are the same for your app and the library. The library currently uses version 17.0.2 of react and react-dom.
+In this way, you can make changes to the chart package and they will appear in your app after:
 
-If the invalid hooks error persists inspite of this, a further fix involves deleting the ```node_modules``` folder in the```@rcpch/digital-growth-charts-react-component-library``` folder within ```node_modules``` in the client.
+```console
+foobar:~foo$ npm run build
+```
 
+The refresh your app.
+
+If the invalid hooks error persists inspite of this, an alternative is to add the following line to ```package.json``` in the library. This removes the node_modules from the build folder.
+
+```json
+"scripts": {
+        "postinstall": "rm -rf node_modules",
+        ...
+    },
+```
 ## Structure
 
 This library has been written in Typescript. The main component is `RCPCHChart`, which takes the following `props`:
@@ -77,99 +88,121 @@ The `Measurement` interface is structured to reflect the JSON `Measurement` obje
 The `Measurement` interface structure is:
 
 ```js
-interface Measurement {
+export interface Measurement {
     birth_data: {
-      birth_date: Date,
-      estimated_date_delivery: Date,
-      estimated_date_delivery_string: string,
-      gestation_weeks: number,
-      gestation_days: number,
-      sex: 'male' | 'female'
-    },
+        birth_date: string;
+        estimated_date_delivery: string;
+        estimated_date_delivery_string: string;
+        gestation_weeks: number;
+        gestation_days: number;
+        sex: 'male' | 'female';
+    };
     child_observation_value: {
-      measurement_method: 'height' | 'weight' | 'bmi' | 'bmi',
-      observation_value: number,
-      observation_value_error: string
-    },
+        measurement_method: 'height' | 'weight' | 'bmi' | 'ofc';
+        observation_value: number;
+        observation_value_error?: string;
+    };
     measurement_dates: {
-      chronological_calendar_age: string,
-      chronological_decimal_age: number,
-      clinician_decimal_age_comment: string
-      corrected_calendar_age: string,
-      corrected_decimal_age: number,
-      corrected_gestational_age: {
-        corrected_gestation_weeks: number
-        corrected_gestation_days: number
-      },
-      lay_decimal_age_comment: string,
-      observation_date: Date
-    },
+        chronological_calendar_age: string;
+        chronological_decimal_age: number;
+        clinician_decimal_age_comment: string;
+        corrected_calendar_age: string;
+        corrected_decimal_age: number;
+        corrected_gestational_age?: {
+            corrected_gestation_weeks?: number;
+            corrected_gestation_days?: number;
+        };
+        lay_decimal_age_comment: string;
+        observation_date: Date;
+    };
     measurement_calculated_values: {
-      chronological_centile: number,
-      chronological_centile_band: string,
-      chronological_measurement_error: string,
-      chronological_sds: number,
-      corrected_centile: number,
-      corrected_centile_band: string,
-      corrected_measurement_error: string,
-      corrected_sds: number
-      measurement_method: 'height' | 'weight' | 'bmi' | 'ofc',
-    }
+        chronological_centile: number;
+        chronological_centile_band: string;
+        chronological_measurement_error?: string;
+        chronological_sds: number;
+        corrected_centile: number;
+        corrected_centile_band: string;
+        corrected_measurement_error?: string;
+        corrected_sds: number;
+        measurement_method: 'height' | 'weight' | 'bmi' | 'ofc';
+    };
     plottable_data: {
-      centile_data: {
-        chronological_decimal_age_data: {
-          age_error: null,
-          age_type: "chronological_age" | "corrected_age",
-          calendar_age: string,
-          centile_band: string,
-          clinician_comment: string,
-          lay_comment: string,
-          observation_error: null,
-          observation_value_error: null,
-          x: number
-          y: number
-        },
-        corrected_decimal_age_data: {
-          age_error: null,
-          age_type: "chronological_age" | "corrected_age",
-          calendar_age: string,
-          centile_band: string,
-          clinician_comment: string,
-          lay_comment: string,
-          observation_error: null,
-          observation_value_error: null,
-          x: number
-          y: number
-        }
-      },
-      sds_data: {
-        chronological_decimal_age_data: {
-          age_error: null,
-          age_type: "chronological_age" | "corrected_age",
-          calendar_age: string,
-          centile_band: string,
-          clinician_comment: string,
-          lay_comment: string,
-          observation_error: null,
-          observation_value_error: null,
-          x: number
-          y: number
-        },
-        corrected_decimal_age_data: {
-          age_error: null,
-          age_type: "chronological_age" | "corrected_age",
-          calendar_age: string,
-          centile_band: string,
-          clinician_comment: string,
-          lay_comment: string,
-          observation_error: null,
-          observation_value_error: null,
-          x: number
-          y: number
-        }
-      }
-    }
-  }
+        centile_data: {
+            chronological_decimal_age_data: {
+                age_error?: string;
+                age_type: 'chronological_age' | 'corrected_age';
+                calendar_age: string;
+                centile_band: string;
+                clinician_comment: string;
+                lay_comment: string;
+                observation_error?: string;
+                observation_value_error?: string;
+                x: number;
+                y: number;
+                b: number;
+                bone_age_label?: string;
+                events_text?: string[];
+            };
+            corrected_decimal_age_data: {
+                age_error: null;
+                age_type: 'chronological_age' | 'corrected_age';
+                calendar_age: string;
+                centile_band: string;
+                clinician_comment: string;
+                lay_comment: string;
+                observation_error?: string;
+                observation_value_error?: string;
+                x: number;
+                y: number;
+                b: number;
+                bone_age_label?: string;
+                events_text?: string[];
+            };
+        };
+        sds_data: {
+            chronological_decimal_age_data: {
+                age_error?: string;
+                age_type: 'chronological_age' | 'corrected_age';
+                calendar_age: string;
+                centile_band: string;
+                clinician_comment: string;
+                lay_comment: string;
+                observation_error?: string;
+                observation_value_error?: string;
+                x: number;
+                y: number;
+                b: number;
+                bone_age_label?: string;
+                events_text?: string[];
+            };
+            corrected_decimal_age_data: {
+                age_error?: string;
+                age_type: 'chronological_age' | 'corrected_age';
+                calendar_age: string;
+                centile_band: string;
+                clinician_comment: string;
+                lay_comment: string;
+                observation_error?: string;
+                observation_value_error?: string;
+                x: number;
+                y: number;
+                b: number;
+                bone_age_label?: string;
+                events_text?: string[];
+            };
+        };
+    };
+    bone_age: {
+        bone_age?: number;
+        bone_age_type?: number;
+        bone_age_centile?: number;
+        bone_age_sds?: number;
+        bone_age_text?: string;
+    };
+    events_data: {
+        events_text?: string[];
+    };
+}
   ```
 
 The styling components allow the user to customise elements of the chart:
@@ -266,6 +299,7 @@ Even then, there are certain rules which are key, published by the RCPCH project
 Given the complexity, we decided to create a React component library for developers to use. We designed it to be customisable for those that wanted to use it, but also as a demonstration for developers who wanted to build the charts themselves from the ground up.
 
 If you want to see how the library is implemented, we have built a client for the RCPCHGrowth API in React, which can be found [here](https://github.com/rcpch/digital-growth-charts-react-client).
+
 ### Why use React?
 
 React is a popular UI library for Javascript. It has endured well and seems like a popular choice for developers. Importantly, unlike some other Javascript frameworks which are primarily designed for Single Page Applications, React doesn't expect to have the entire webpage to itself. It can be used as a small component in any other web page, even if the main framework being used is something completely different.
