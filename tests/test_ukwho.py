@@ -78,7 +78,7 @@ def test_ukwho_chart_data_with_valid_request():
     body = {
         "measurement_method": "height",
         "sex": "male",
-        "centile_format": "nine-centiles"
+        "centile_format": "cole-nine-centiles"
     }
 
     response = client.post("/uk-who/chart-coordinates", json=body)

@@ -9,6 +9,7 @@ from rcpchgrowth import constants
 # local / rcpch imports
 from rcpchgrowth.constants.reference_constants import TRISOMY_21, TURNERS, UK_WHO
 import rcpchgrowth.constants.validation_constants as limits
+from rcpchgrowth.constants.reference_constants import COLE_TWO_THIRDS_SDS_NINE_CENTILES, THREE_PERCENT_CENTILES, CENTILE_FORMATS
 
 
 
@@ -46,12 +47,15 @@ class MeasurementRequest(BaseModel):
             "%Y-%m-%d"
         ).date()
 
+
+cole_centiles = COLE_TWO_THIRDS_SDS_NINE_CENTILES
+three_percent_centiles = THREE_PERCENT_CENTILES
 class ChartCoordinateRequest(BaseModel):
     sex: Literal['male', 'female'] = Field(
         ..., description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted.")
     measurement_method: Literal['height', 'weight', 'ofc', 'bmi'] = Field(
         ..., description="The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre²** and occipitofrontal circumference (head circumference, OFC) **in centimetres**.")
-    centile_format: Optional[Literal['six-centiles', 'nine-centiles']]=Field('nine-centiles', description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or older 6 centile format ['six-centiles']. Defaults to nine-centile")
+    centile_format: Optional[Literal["cole-nine-centiles", "three-percent-centiles"]]=Field('cole-nine-centiles', description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles']. Defaults to cole-nine-centiles")
 
 class FictionalChildRequest(BaseModel):
     measurement_method: Literal['height', 'weight', 'ofc', 'bmi'] = Field(

@@ -3,7 +3,7 @@
     "info": {
         "title": "RCPCH Digital Growth API",
         "description": "Returns SDS and centiles for child growth measurements using growth references. Currently provides calculations based on the UK-WHO, Turner's Syndrome and Trisomy-21 references.",
-        "version": "3.2.0"
+        "version": "3.3.0"
     },
     "paths": {
         "/uk-who/calculation": {
@@ -456,12 +456,12 @@
                     "centile_format": {
                         "title": "Centile Format",
                         "enum": [
-                            "six-centiles",
-                            "nine-centiles"
+                            "cole-nine-centiles",
+                            "three-percent-centiles"
                         ],
                         "type": "string",
-                        "description": "Optional selection of centile format using 9 centile standard ['nine-centiles'], or older 6 centile format ['six-centiles']. Defaults to nine-centile",
-                        "default": "nine-centiles"
+                        "description": "Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles']. Defaults to cole-nine-centiles",
+                        "default": "cole-nine-centiles"
                     }
                 }
             },
