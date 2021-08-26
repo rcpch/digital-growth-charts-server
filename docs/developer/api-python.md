@@ -59,24 +59,24 @@ pyenv install 3.8.0
 Create a virtualenv for this project 'growth-charts' abbreviated to 'gc-3.8' using Python 3.8.0
 
 ```bash
-pyenv virtualenv 3.8.0 fastapi-refactor
+pyenv virtualenv 3.8.0 dgc-server
 ```
 
 !!! tip "Auto-selection of Python and virtualenv"
-    Using the same name 'fastapi-refactor' will enable it to be automatically selected when navigating to this repo (but you _can_ call your own virtualenv whatever you like). This all works using the `.python-version` file in the project root, which can contain either a Python version name which `pyenv` recognises, or it can contain a virtualenv name, which `pyenv` will select for you, and of course this automatically selects the Python version too. A helpful article about this is here <https://realpython.com/intro-to-pyenv/#activating-your-versions>
+    Using the same name 'dgc-server' will enable it to be automatically selected when navigating to this repo (but you _can_ call your own virtualenv whatever you like). This all works using the `.python-version` file in the project root, which can contain either a Python version name which `pyenv` recognises, or it can contain a virtualenv name, which `pyenv` will select for you, and of course this automatically selects the Python version too. A helpful article about this is here <https://realpython.com/intro-to-pyenv/#activating-your-versions>
 
 Check virtualenv creation worked.
 
 `pyenv virtualenvs` should return something like:
 
 ```bash
-fastapi-refactor (created from /home/my-user/.pyenv/versions/3.8.0)
+dgc-server (created from /home/my-user/.pyenv/versions/3.8.0)
 ```
 
 Activate the virtualenv manually if it's not already selected
 
 ```bash
-pyenv activate fastapi-refactor
+pyenv activate dgc-server
 ```
 
 Install the dependencies inside this virtualenv

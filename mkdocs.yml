@@ -39,9 +39,9 @@ nav:
     - 'integrator/whos-using-dgc.md'
   - Contribute:
     - 'developer/start-here.md'
+    - 'developer/api-python.md'
     - 'developer/adding-a-new-api-endpoint.md'
     - 'developer/api-docker.md'
-    - 'developer/api-python.md'
     - 'developer/contributing.md'
     - 'developer/writing-documentation.md'
     - 'developer/faqs-for-developers.md'
