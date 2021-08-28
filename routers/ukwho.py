@@ -10,7 +10,7 @@ from fastapi import APIRouter, Body, HTTPException
 
 # RCPCH imports
 from rcpchgrowth import Measurement, constants, generate_fictional_child_data, mid_parental_height
-from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest, MidParentalHeightRequest
 
 # set up the API router
 uk_who = APIRouter(
@@ -150,14 +150,14 @@ def fictional_child_data(fictional_child_request: FictionalChildRequest):
 
 
 @uk_who.post('/mid-parental-height', tags=["uk-who"])
-def mid_parental_height(height_paternal: float, height_maternal: float, sex: str):
+def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightRequest):
     """
     ## UK-WHO Mid-parental-height Endpoint
 
     * Calculates mid-parental-height
     """
-    try:
-        height = mid_parental_height(height_paternal, height_maternal, sex)
-        return height
-    except:
-        return 422
+    height = mid_parental_height(mid_parental_height_request.height_paternal, 
+                                 mid_parental_height_request.height_maternal, 
+                                 mid_parental_height_request.sex)
+    return height
+
