@@ -9,8 +9,8 @@ from pathlib import Path
 from fastapi import APIRouter, Body, HTTPException
 
 # RCPCH imports
-from rcpchgrowth import Measurement, constants, generate_fictional_child_data, mid_parental_height
-from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest, MidParentalHeightRequest
+from rcpchgrowth import Measurement, constants, generate_fictional_child_data
+from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
 
 # set up the API router
 uk_who = APIRouter(
@@ -148,16 +148,4 @@ def fictional_child_data(fictional_child_request: FictionalChildRequest):
     except ValueError:
         return 422
 
-
-@uk_who.post('/mid-parental-height', tags=["uk-who"])
-def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightRequest):
-    """
-    ## UK-WHO Mid-parental-height Endpoint
-
-    * Calculates mid-parental-height
-    """
-    height = mid_parental_height(mid_parental_height_request.height_paternal, 
-                                 mid_parental_height_request.height_maternal, 
-                                 mid_parental_height_request.sex)
-    return height
 
