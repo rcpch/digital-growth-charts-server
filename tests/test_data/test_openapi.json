@@ -404,6 +404,9 @@
         },
         "/utilities/mid-parental-height": {
             "post": {
+                "tags": [
+                    "utilities"
+                ],
                 "summary": "Mid Parental Height Endpoint",
                 "description": "## Mid-parental-height Endpoint\n\n* Calculates mid-parental-height",
                 "operationId": "mid_parental_height_endpoint_utilities_mid_parental_height_post",
