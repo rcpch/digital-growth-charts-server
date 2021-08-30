@@ -126,3 +126,5 @@ class MeasurementObject(BaseModel):
 
 class MidParentalHeight(BaseModel):
     mid_parental_height: float
+    mid_parental_height_sds: float
+    mid_parental_height_centile: float

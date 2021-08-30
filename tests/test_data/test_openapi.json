@@ -402,6 +402,43 @@
                 }
             }
         },
+        "/utilities/mid-parental-height": {
+            "post": {
+                "summary": "Mid Parental Height Endpoint",
+                "description": "## Mid-parental-height Endpoint\n\n* Calculates mid-parental-height",
+                "operationId": "mid_parental_height_endpoint_utilities_mid_parental_height_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MidParentalHeightRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/": {
             "get": {
                 "tags": [
@@ -707,6 +744,38 @@
                     }
                 },
                 "description": "This class definition creates a Python model which can be converted by FastAPI to openAPI3 schema.\nWe aim to specify all textual information, constraints, and validation here.\nIt all ends up in the openAPI documentation, automagically."
+            },
+            "MidParentalHeightRequest": {
+                "title": "MidParentalHeightRequest",
+                "required": [
+                    "height_paternal",
+                    "height_maternal",
+                    "sex"
+                ],
+                "type": "object",
+                "properties": {
+                    "height_paternal": {
+                        "title": "Height Paternal",
+                        "exclusiveMinimum": 0.0,
+                        "type": "number",
+                        "description": "The height of the child's biological father, passed as float, measured in centimeters"
+                    },
+                    "height_maternal": {
+                        "title": "Height Maternal",
+                        "exclusiveMinimum": 0.0,
+                        "type": "number",
+                        "description": "The height of the child's biological mother, passed as float, measured in centimeters"
+                    },
+                    "sex": {
+                        "title": "Sex",
+                        "enum": [
+                            "male",
+                            "female"
+                        ],
+                        "type": "string",
+                        "description": "The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted."
+                    }
+                }
             },
             "ValidationError": {
                 "title": "ValidationError",
