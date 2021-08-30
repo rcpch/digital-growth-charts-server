@@ -3,7 +3,7 @@
     "info": {
         "title": "RCPCH Digital Growth API",
         "description": "Returns SDS and centiles for child growth measurements using growth references. Currently provides calculations based on the UK-WHO, Turner's Syndrome and Trisomy-21 references.",
-        "version": "3.3.1"
+        "version": "3.4.0"
     },
     "paths": {
         "/uk-who/calculation": {
@@ -404,6 +404,17 @@
         },
         "/utilities/mid-parental-height": {
             "post": {
+                "tags": [
+                    "u",
+                    "t",
+                    "i",
+                    "l",
+                    "i",
+                    "t",
+                    "i",
+                    "e",
+                    "s"
+                ],
                 "summary": "Mid Parental Height Endpoint",
                 "description": "## Mid-parental-height Endpoint\n\n* Calculates mid-parental-height",
                 "operationId": "mid_parental_height_endpoint_utilities_mid_parental_height_post",

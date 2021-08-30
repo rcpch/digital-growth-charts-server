@@ -15,7 +15,7 @@ utilities = APIRouter(
 )
 
 
-@utilities.post('/mid-parental-height')
+@utilities.post('/mid-parental-height', tags='utilities')
 def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightRequest):
     """
     ## Mid-parental-height Endpoint
