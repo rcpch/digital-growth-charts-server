@@ -76,3 +76,12 @@ class FictionalChildRequest(BaseModel):
     noise: bool = Field(False, description="Noise as boolean. Default is false. Simulates measurement error.")
     noise_range: Optional[float] = Field(0.005, description="Noise range as float. Prescribes the amount of measurement error generated randomly. Default is 0.5%")
     reference: Optional[Literal["uk-who", "trisomy-21", "turners-syndrome"]] = Field('uk-who', description="Selected reference as string. Case sensitive and accepts only once of ['uk-who', 'trisomy-21', 'turners-syndrome']")
+
+class MidParentalHeightRequest(BaseModel):
+    height_paternal: float = Field(
+        gt=0, description="The height of the child's biological father, passed as float, measured in centimeters")
+    height_maternal: float = Field(
+        gt=0, description="The height of the child's biological mother, passed as float, measured in centimeters")
+    sex: Literal['male', 'female'] = Field(
+        ..., description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted.")
+    

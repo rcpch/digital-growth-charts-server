@@ -123,3 +123,8 @@ class MeasurementObject(BaseModel):
     plottable_data: PlottableData
     bone_age: BoneAge
     events_data: EventsData
+
+class MidParentalHeight(BaseModel):
+    mid_parental_height: float
+    mid_parental_height_sds: float
+    mid_parental_height_centile: float
