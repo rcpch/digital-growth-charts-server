@@ -405,15 +405,7 @@
         "/utilities/mid-parental-height": {
             "post": {
                 "tags": [
-                    "u",
-                    "t",
-                    "i",
-                    "l",
-                    "i",
-                    "t",
-                    "i",
-                    "e",
-                    "s"
+                    "utilities"
                 ],
                 "summary": "Mid Parental Height Endpoint",
                 "description": "## Mid-parental-height Endpoint\n\n* Calculates mid-parental-height",
