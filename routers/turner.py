@@ -9,9 +9,9 @@ from pathlib import Path
 from fastapi import APIRouter, Body, HTTPException
 
 # RCPCH imports
-from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart
+from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart, generate_custom_centile
 from rcpchgrowth.constants.reference_constants import TURNERS
-from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest, CustomCentileRequest
 
 # set up the API router
 turners = APIRouter(
@@ -122,6 +122,27 @@ def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
         
     return {
         "centile_data": chart_data
+    }
+
+@turners.post('/custom-centile-data', tags=["turners-syndrome"])
+def custom_centile_data(custom_centile_request: CustomCentileRequest):
+    """
+    ## Turner's Custom Centile Data Endpoint
+
+    * Generates plottable data for a single custom centile line
+    """
+    custom_centile = []
+    try:
+        custom_centile = generate_custom_centile(
+            reference=TURNERS,
+            measurement_method=custom_centile_request.measurement_method,
+            sex=custom_centile_request.sex,
+            custom_centile=custom_centile_request.custom_centile)
+    except:
+        return HTTPException(status_code=422, detail=f"Not possible to create Turner's syndrome custom centile data for {custom_centile_request.measurement_method} in {custom_centile_request.sex}.")
+    
+    return {
+        "centile_data": custom_centile
     }
 
 

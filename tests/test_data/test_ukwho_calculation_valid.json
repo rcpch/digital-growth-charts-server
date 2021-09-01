@@ -19,9 +19,9 @@
         },
         "comments": {
             "clinician_corrected_decimal_age_comment": "Born at term. No correction has been made for gestation.",
-            "lay_corrected_decimal_age_comment": "Your baby was born on their due date.",
+            "lay_corrected_decimal_age_comment": "Your child was born on their due date.",
             "clinician_chronological_decimal_age_comment": "Born Term. No correction has been made for gestation.",
-            "lay_chronological_decimal_age_comment": "Your baby was born on their due date."
+            "lay_chronological_decimal_age_comment": "Your child was born on their due date."
         },
         "corrected_decimal_age_error": null,
         "chronological_decimal_age_error": null
@@ -60,7 +60,7 @@
                 "observation_error": null,
                 "age_type": "chronological_age",
                 "calendar_age": "8 years and 2 months",
-                "lay_comment": "Your baby was born on their due date.",
+                "lay_comment": "Your child was born on their due date.",
                 "clinician_comment": "Born Term. No correction has been made for gestation.",
                 "age_error": null,
                 "centile_band": "This height measurement is between the 0.4th and 2nd centiles.",
@@ -82,7 +82,7 @@
                 "age_type": "corrected_age",
                 "corrected_gestational_age": "",
                 "calendar_age": "8 years and 2 months",
-                "lay_comment": "Your baby was born on their due date.",
+                "lay_comment": "Your child was born on their due date.",
                 "clinician_comment": "Born at term. No correction has been made for gestation.",
                 "age_error": null,
                 "centile_band": "This height measurement is between the 0.4th and 2nd centiles.",
@@ -104,7 +104,7 @@
                 "bone_age_centile": 98.0,
                 "age_type": "chronological_age",
                 "calendar_age": "8 years and 2 months",
-                "lay_comment": "Your baby was born on their due date.",
+                "lay_comment": "Your child was born on their due date.",
                 "clinician_comment": "Born Term. No correction has been made for gestation.",
                 "age_error": null,
                 "centile_band": "This height measurement is between the 0.4th and 2nd centiles.",
@@ -125,7 +125,7 @@
                 "age_type": "corrected_age",
                 "corrected_gestational_age": "",
                 "calendar_age": "8 years and 2 months",
-                "lay_comment": "Your baby was born on their due date.",
+                "lay_comment": "Your child was born on their due date.",
                 "clinician_comment": "Born at term. No correction has been made for gestation.",
                 "age_error": null,
                 "centile_band": "This height measurement is between the 0.4th and 2nd centiles.",

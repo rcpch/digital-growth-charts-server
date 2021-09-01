@@ -5,6 +5,9 @@ UK-WHO router
 import json
 from pathlib import Path
 
+from rcpchgrowth.chart_functions import generate_custom_centile
+from schemas.request_validation_classes import CustomCentileRequest
+
 # Third party imports
 from fastapi import APIRouter, Body, HTTPException
 from pydantic.class_validators import extract_root_validators
@@ -132,6 +135,26 @@ def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
         "centile_data": chart_data
     }
 
+@uk_who.post('/custom-centile-data', tags=["uk-who"])
+def custom_centile_data(custom_centile_request: CustomCentileRequest):
+    """
+    ## UK-WHO Custom Centile Data Endpoint
+
+    * Generates plottable data for a single custom centile line
+    """
+    custom_centile = []
+    try:
+        custom_centile = generate_custom_centile(
+            reference=UK_WHO,
+            measurement_method=custom_centile_request.measurement_method,
+            sex=custom_centile_request.sex,
+            custom_centile=custom_centile_request.custom_centile)
+    except:
+        return HTTPException(status_code=422, detail=f"Not possible to create UK-WHO custom centile data for {custom_centile_request.measurement_method} in {custom_centile_request.sex}.")
+    
+    return {
+        "centile_data": custom_centile
+    }
 
 @uk_who.post('/fictional-child-data', tags=["uk-who"])
 def fictional_child_data(fictional_child_request: FictionalChildRequest):

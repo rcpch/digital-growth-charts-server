@@ -55,7 +55,7 @@ class ChartCoordinateRequest(BaseModel):
         ..., description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted.")
     measurement_method: Literal['height', 'weight', 'ofc', 'bmi'] = Field(
         ..., description="The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre²** and occipitofrontal circumference (head circumference, OFC) **in centimetres**.")
-    centile_format: Optional[Union[Literal["cole-nine-centiles", "three-percent-centiles"], List[float]]]=Field('cole-nine-centiles', description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles']. Defaults to cole-nine-centiles")
+    centile_format: Optional[Union[Literal["cole-nine-centiles", "three-percent-centiles"], List[float]]]=Field('cole-nine-centiles', description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles'], or accepts a list of floats as a custom centile format e.g. [7/10/20/30/40/50/60/70/80/90/93]. Defaults to cole-nine-centiles")
 
 class FictionalChildRequest(BaseModel):
     measurement_method: Literal['height', 'weight', 'ofc', 'bmi'] = Field(
@@ -77,6 +77,14 @@ class FictionalChildRequest(BaseModel):
     noise_range: Optional[float] = Field(0.005, description="Noise range as float. Prescribes the amount of measurement error generated randomly. Default is 0.5%")
     reference: Optional[Literal["uk-who", "trisomy-21", "turners-syndrome"]] = Field('uk-who', description="Selected reference as string. Case sensitive and accepts only once of ['uk-who', 'trisomy-21', 'turners-syndrome']")
 
+class CustomCentileRequest(BaseModel):
+    measurement_method: Literal['height', 'weight', 'ofc', 'bmi'] = Field(
+        ..., description="The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre²** and occipitofrontal circumference (head circumference, OFC) **in centimetres**.")
+    sex: Literal['male', 'female'] = Field(
+        ..., description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted.")
+    custom_centile: float = Field(
+        gt=0, lt=100, description="The centile data points required.")
+    
 class MidParentalHeightRequest(BaseModel):
     height_paternal: float = Field(
         gt=0, description="The height of the child's biological father, passed as float, measured in centimeters")

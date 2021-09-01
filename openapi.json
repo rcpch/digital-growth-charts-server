@@ -104,6 +104,46 @@
                 }
             }
         },
+        "/uk-who/custom-centile-data": {
+            "post": {
+                "tags": [
+                    "uk-who"
+                ],
+                "summary": "Custom Centile Data",
+                "description": "## UK-WHO Custom Centile Data Endpoint\n\n* Generates plottable data for a single custom centile line",
+                "operationId": "custom_centile_data_uk_who_custom_centile_data_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CustomCentileRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/uk-who/fictional-child-data": {
             "post": {
                 "tags": [
@@ -233,6 +273,46 @@
                 }
             }
         },
+        "/turner/custom-centile-data": {
+            "post": {
+                "tags": [
+                    "turners-syndrome"
+                ],
+                "summary": "Custom Centile Data",
+                "description": "## Turner's Custom Centile Data Endpoint\n\n* Generates plottable data for a single custom centile line",
+                "operationId": "custom_centile_data_turner_custom_centile_data_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CustomCentileRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/turner/fictional-child-data": {
             "post": {
                 "tags": [
@@ -335,6 +415,46 @@
                         "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/ChartCoordinateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/trisomy-21/custom-centile-data": {
+            "post": {
+                "tags": [
+                    "trisomy-21"
+                ],
+                "summary": "Custom Centile Data",
+                "description": "## Trisomy 21's Custom Centile Data Endpoint\n\n* Generates plottable data for a single custom centile line",
+                "operationId": "custom_centile_data_trisomy_21_custom_centile_data_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CustomCentileRequest"
                             }
                         }
                     },
@@ -510,8 +630,46 @@
                                 }
                             }
                         ],
-                        "description": "Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles']. Defaults to cole-nine-centiles",
+                        "description": "Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles'], or accepts a list of floats as a custom centile format e.g. [7/10/20/30/40/50/60/70/80/90/93]. Defaults to cole-nine-centiles",
                         "default": "cole-nine-centiles"
+                    }
+                }
+            },
+            "CustomCentileRequest": {
+                "title": "CustomCentileRequest",
+                "required": [
+                    "measurement_method",
+                    "sex",
+                    "custom_centile"
+                ],
+                "type": "object",
+                "properties": {
+                    "measurement_method": {
+                        "title": "Measurement Method",
+                        "enum": [
+                            "height",
+                            "weight",
+                            "ofc",
+                            "bmi"
+                        ],
+                        "type": "string",
+                        "description": "The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre\u00b2** and occipitofrontal circumference (head circumference, OFC) **in centimetres**."
+                    },
+                    "sex": {
+                        "title": "Sex",
+                        "enum": [
+                            "male",
+                            "female"
+                        ],
+                        "type": "string",
+                        "description": "The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted."
+                    },
+                    "custom_centile": {
+                        "title": "Custom Centile",
+                        "exclusiveMaximum": 100.0,
+                        "exclusiveMinimum": 0.0,
+                        "type": "number",
+                        "description": "The centile data points required."
                     }
                 }
             },

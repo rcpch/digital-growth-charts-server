@@ -7,11 +7,11 @@ from pathlib import Path
 
 # Third party imports
 from fastapi import APIRouter, Body, HTTPException
-from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart
+from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart, generate_custom_centile
 from rcpchgrowth.constants.reference_constants import TRISOMY_21
 
 # local imports
-from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest, CustomCentileRequest
 
 # set up the API router
 trisomy_21 = APIRouter(
@@ -121,6 +121,27 @@ def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
         
     return {
         "centile_data": chart_data
+    }
+
+@trisomy_21.post('/custom-centile-data', tags=["trisomy-21"])
+def custom_centile_data(custom_centile_request: CustomCentileRequest):
+    """
+    ## Trisomy 21's Custom Centile Data Endpoint
+
+    * Generates plottable data for a single custom centile line
+    """
+    custom_centile = []
+    try:
+        custom_centile = generate_custom_centile(
+            reference=TRISOMY_21,
+            measurement_method=custom_centile_request.measurement_method,
+            sex=custom_centile_request.sex,
+            custom_centile=custom_centile_request.custom_centile)
+    except:
+        return HTTPException(status_code=422, detail=f"Not possible to create Trisomy 21 custom centile data for {custom_centile_request.measurement_method} in {custom_centile_request.sex}.")
+    
+    return {
+        "centile_data": custom_centile
     }
 
 
