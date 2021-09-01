@@ -1,6 +1,6 @@
 # standard imports
 from datetime import date, datetime
-from typing import Optional, Literal
+from typing import Optional, Literal, Union, List
 
 # third party imports
 from pydantic import BaseModel, Field, validator
@@ -55,7 +55,7 @@ class ChartCoordinateRequest(BaseModel):
         ..., description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted.")
     measurement_method: Literal['height', 'weight', 'ofc', 'bmi'] = Field(
         ..., description="The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre²** and occipitofrontal circumference (head circumference, OFC) **in centimetres**.")
-    centile_format: Optional[Literal["cole-nine-centiles", "three-percent-centiles"]]=Field('cole-nine-centiles', description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles']. Defaults to cole-nine-centiles")
+    centile_format: Optional[Union[Literal["cole-nine-centiles", "three-percent-centiles"], List[float]]]=Field('cole-nine-centiles', description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles']. Defaults to cole-nine-centiles")
 
 class FictionalChildRequest(BaseModel):
     measurement_method: Literal['height', 'weight', 'ofc', 'bmi'] = Field(
