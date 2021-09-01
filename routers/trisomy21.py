@@ -7,7 +7,7 @@ from pathlib import Path
 
 # Third party imports
 from fastapi import APIRouter, Body, HTTPException
-from rcpchgrowth import Measurement, constants, generate_fictional_child_data
+from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart
 from rcpchgrowth.constants.reference_constants import TRISOMY_21
 
 # local imports
@@ -99,14 +99,25 @@ def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
     ]
     """
     chart_data=None
-    chart_data_file = Path(
-                f'chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json')
-    if chart_data_file.exists():
-        print(f'Chart data file exists for {chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.')
-        with open(f'chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json', 'r') as file:
-            chart_data = json.load(file)
+    if (type(chartParams.centile_format) is list):
+        # custom centiles requested - calculate these and return. Do not persist
+        try:
+            chart_data = create_chart(
+                TRISOMY_21, 
+                chartParams.centile_format, 
+                measurement_method=chartParams.measurement_method, 
+                sex=chartParams.sex)
+        except:
+            return HTTPException(status_code=422, detail=f"Error creating {chartParams.sex} {chartParams.measurement_method} Trisomy 21 chart on the server, using {chartParams.centile_format} centile format.")
     else:
-        return HTTPException(status_code=422, detail=f"Item not found: chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json")
+        chart_data_file = Path(
+                    f'chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json')
+        if chart_data_file.exists():
+            print(f'Chart data file exists for {chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.')
+            with open(f'chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json', 'r') as file:
+                chart_data = json.load(file)
+        else:
+            return HTTPException(status_code=422, detail=f"Item not found: chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json")
         
     return {
         "centile_data": chart_data
