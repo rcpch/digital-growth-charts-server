@@ -3,7 +3,7 @@
     "info": {
         "title": "RCPCH Digital Growth API",
         "description": "Returns SDS and centiles for child growth measurements using growth references. Currently provides calculations based on the UK-WHO, Turner's Syndrome and Trisomy-21 references.",
-        "version": "3.4.1"
+        "version": "3.5.0"
     },
     "paths": {
         "/uk-who/calculation": {
@@ -47,7 +47,9 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/MeasurementObject"
+                                }
                             }
                         }
                     },
@@ -70,7 +72,7 @@
                     "uk-who"
                 ],
                 "summary": "Uk Who Chart Coordinates",
-                "description": "## UK-WHO Chart Coordinates data.\n    \n* Returns coordinates for constructing the lines of a traditional growth chart, in JSON format\n",
+                "description": "## UK-WHO Chart Coordinates data.\n    \n* Returns coordinates for constructing the lines of a traditional growth chart, in JSON format\n* Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')\n* If custom centiles (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter\n* In addition to the custom list, \"cole-nine-centiles\" or \"three-percent-centiles\" can be specified which are standard collections.\n* If no centile_format is supplied, \"cole-nine-centiles\" are returned as a default.\n",
                 "operationId": "uk_who_chart_coordinates_uk_who_chart_coordinates_post",
                 "requestBody": {
                     "content": {
@@ -87,47 +89,9 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/Centile_Data"
                                 }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/uk-who/custom-centile-data": {
-            "post": {
-                "tags": [
-                    "uk-who"
-                ],
-                "summary": "Custom Centile Data",
-                "description": "## UK-WHO Custom Centile Data Endpoint\n\n* Generates plottable data for a single custom centile line",
-                "operationId": "custom_centile_data_uk_who_custom_centile_data_post",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CustomCentileRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
                             }
                         }
                     },
@@ -167,7 +131,13 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "title": "Response Fictional Child Data Uk Who Fictional Child Data Post",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MeasurementObject"
+                                    }
+                                }
                             }
                         }
                     },
@@ -216,7 +186,9 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/MeasurementObject"
+                                }
                             }
                         }
                     },
@@ -239,7 +211,7 @@
                     "turners-syndrome"
                 ],
                 "summary": "Turner Chart Coordinates",
-                "description": "## Turner's Syndrome Chart Coordinates data.\n\n* Returns coordinates for constructing the lines of a traditional growth chart, in JSON format\n* Note height in girls conly be only returned. It is a post request to maintain consistency with other routes.\n",
+                "description": "## Turner's Syndrome Chart Coordinates data.\n\n* Returns coordinates for constructing the lines of a traditional growth chart, in JSON format\n* Note height in girls conly be only returned. It is a post request to maintain consistency with other routes.\n* If custom centiles (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter\n* In addition to the custom list, \"cole-nine-centiles\" or \"three-percent-centiles\" can be specified which are standard collections.\n* If no centile_format is supplied, \"cole-nine-centiles\" are returned as a default.\n",
                 "operationId": "turner_chart_coordinates_turner_chart_coordinates_post",
                 "requestBody": {
                     "content": {
@@ -256,47 +228,9 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/Centile_Data"
                                 }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/turner/custom-centile-data": {
-            "post": {
-                "tags": [
-                    "turners-syndrome"
-                ],
-                "summary": "Custom Centile Data",
-                "description": "## Turner's Custom Centile Data Endpoint\n\n* Generates plottable data for a single custom centile line",
-                "operationId": "custom_centile_data_turner_custom_centile_data_post",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CustomCentileRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
                             }
                         }
                     },
@@ -336,7 +270,13 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "title": "Response Fictional Child Data Turner Fictional Child Data Post",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MeasurementObject"
+                                    }
+                                }
                             }
                         }
                     },
@@ -385,7 +325,9 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/MeasurementObject"
+                                }
                             }
                         }
                     },
@@ -408,7 +350,7 @@
                     "trisomy-21"
                 ],
                 "summary": "Trisomy 21 Chart Coordinates",
-                "description": "## Trisomy-21 Chart Coordinates Data.\n    \n* Returns coordinates for constructing the lines of a traditional growth chart, in JSON format\n* Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')\n",
+                "description": "## Trisomy-21 Chart Coordinates Data.\n    \n* Returns coordinates for constructing the lines of a traditional growth chart, in JSON format\n* Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')\n* If custom centiles (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter\n* In addition to the custom list, \"cole-nine-centiles\" or \"three-percent-centiles\" can be specified which are standard collections.\n* If no centile_format is supplied, \"cole-nine-centiles\" are returned as a default.\n",
                 "operationId": "trisomy_21_chart_coordinates_trisomy_21_chart_coordinates_post",
                 "requestBody": {
                     "content": {
@@ -425,47 +367,9 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/Centile_Data"
                                 }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/trisomy-21/custom-centile-data": {
-            "post": {
-                "tags": [
-                    "trisomy-21"
-                ],
-                "summary": "Custom Centile Data",
-                "description": "## Trisomy 21's Custom Centile Data Endpoint\n\n* Generates plottable data for a single custom centile line",
-                "operationId": "custom_centile_data_trisomy_21_custom_centile_data_post",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CustomCentileRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
                             }
                         }
                     },
@@ -505,7 +409,13 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "title": "Response Fictional Child Data Trisomy 21 Fictional Child Data Post",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MeasurementObject"
+                                    }
+                                }
                             }
                         }
                     },
@@ -585,6 +495,129 @@
     },
     "components": {
         "schemas": {
+            "BirthData": {
+                "title": "BirthData",
+                "required": [
+                    "birth_date",
+                    "sex"
+                ],
+                "type": "object",
+                "properties": {
+                    "birth_date": {
+                        "title": "Birth Date",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "gestation_weeks": {
+                        "title": "Gestation Weeks",
+                        "type": "integer"
+                    },
+                    "gestation_days": {
+                        "title": "Gestation Days",
+                        "type": "integer"
+                    },
+                    "estimated_date_delivery": {
+                        "title": "Estimated Date Delivery",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "estimated_date_delivery_string": {
+                        "title": "Estimated Date Delivery String",
+                        "type": "string"
+                    },
+                    "sex": {
+                        "title": "Sex",
+                        "enum": [
+                            "male",
+                            "female"
+                        ],
+                        "type": "string"
+                    }
+                }
+            },
+            "BoneAge": {
+                "title": "BoneAge",
+                "type": "object",
+                "properties": {
+                    "bone_age": {
+                        "title": "Bone Age",
+                        "type": "number"
+                    },
+                    "bone_age_type": {
+                        "title": "Bone Age Type",
+                        "type": "string"
+                    },
+                    "bone_age_sds": {
+                        "title": "Bone Age Sds",
+                        "type": "number"
+                    },
+                    "bone_age_centile": {
+                        "title": "Bone Age Centile",
+                        "type": "number"
+                    },
+                    "bone_age_text": {
+                        "title": "Bone Age Text",
+                        "type": "string"
+                    }
+                }
+            },
+            "Centile": {
+                "title": "Centile",
+                "required": [
+                    "sds",
+                    "centile"
+                ],
+                "type": "object",
+                "properties": {
+                    "sds": {
+                        "title": "Sds",
+                        "type": "number"
+                    },
+                    "centile": {
+                        "title": "Centile",
+                        "type": "number"
+                    },
+                    "data": {
+                        "title": "Data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Data"
+                        }
+                    }
+                }
+            },
+            "CentileData": {
+                "title": "CentileData",
+                "required": [
+                    "chronological_decimal_age_data",
+                    "corrected_decimal_age_data"
+                ],
+                "type": "object",
+                "properties": {
+                    "chronological_decimal_age_data": {
+                        "$ref": "#/components/schemas/ChronologicalDecimalAgeData"
+                    },
+                    "corrected_decimal_age_data": {
+                        "$ref": "#/components/schemas/CorrectedDecimalAgeData"
+                    }
+                }
+            },
+            "Centile_Data": {
+                "title": "Centile_Data",
+                "required": [
+                    "centile_data"
+                ],
+                "type": "object",
+                "properties": {
+                    "centile_data": {
+                        "title": "Centile Data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ReferenceCreate"
+                        }
+                    }
+                }
+            },
             "ChartCoordinateRequest": {
                 "title": "ChartCoordinateRequest",
                 "required": [
@@ -635,12 +668,11 @@
                     }
                 }
             },
-            "CustomCentileRequest": {
-                "title": "CustomCentileRequest",
+            "ChildObservationValue": {
+                "title": "ChildObservationValue",
                 "required": [
                     "measurement_method",
-                    "sex",
-                    "custom_centile"
+                    "observation_value"
                 ],
                 "type": "object",
                 "properties": {
@@ -652,24 +684,273 @@
                             "ofc",
                             "bmi"
                         ],
-                        "type": "string",
-                        "description": "The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre\u00b2** and occipitofrontal circumference (head circumference, OFC) **in centimetres**."
+                        "type": "string"
                     },
-                    "sex": {
-                        "title": "Sex",
+                    "observation_value": {
+                        "title": "Observation Value",
+                        "type": "number"
+                    },
+                    "observation_value_error": {
+                        "title": "Observation Value Error",
+                        "type": "string"
+                    }
+                }
+            },
+            "ChronologicalDecimalAgeData": {
+                "title": "ChronologicalDecimalAgeData",
+                "required": [
+                    "x",
+                    "y",
+                    "age_type",
+                    "lay_comment",
+                    "clinician_comment",
+                    "centile_band"
+                ],
+                "type": "object",
+                "properties": {
+                    "x": {
+                        "title": "X",
+                        "type": "number"
+                    },
+                    "y": {
+                        "title": "Y",
+                        "type": "number"
+                    },
+                    "b": {
+                        "title": "B",
+                        "type": "number"
+                    },
+                    "bone_age_label": {
+                        "title": "Bone Age Label",
+                        "type": "string"
+                    },
+                    "events_text": {
+                        "title": "Events Text",
+                        "type": "array",
+                        "items": {}
+                    },
+                    "bone_age_type": {
+                        "title": "Bone Age Type",
                         "enum": [
-                            "male",
-                            "female"
+                            "greulich-pyle",
+                            "tanner-whitehouse-ii",
+                            "tanner-whitehouse-iii",
+                            "fels",
+                            "bonexpert"
                         ],
-                        "type": "string",
-                        "description": "The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted."
+                        "type": "string"
                     },
-                    "custom_centile": {
-                        "title": "Custom Centile",
-                        "exclusiveMaximum": 100.0,
-                        "exclusiveMinimum": 0.0,
-                        "type": "number",
-                        "description": "The centile data points required."
+                    "bone_age_sds": {
+                        "title": "Bone Age Sds",
+                        "type": "string"
+                    },
+                    "bone_age_centile": {
+                        "title": "Bone Age Centile",
+                        "type": "string"
+                    },
+                    "observation_error": {
+                        "title": "Observation Error",
+                        "type": "string"
+                    },
+                    "age_type": {
+                        "title": "Age Type",
+                        "enum": [
+                            "chronological_age",
+                            "corrected_age"
+                        ],
+                        "type": "string"
+                    },
+                    "calendar_age": {
+                        "title": "Calendar Age",
+                        "type": "string"
+                    },
+                    "lay_comment": {
+                        "title": "Lay Comment",
+                        "type": "string"
+                    },
+                    "clinician_comment": {
+                        "title": "Clinician Comment",
+                        "type": "string"
+                    },
+                    "age_error": {
+                        "title": "Age Error",
+                        "type": "string"
+                    },
+                    "centile_band": {
+                        "title": "Centile Band",
+                        "type": "string"
+                    },
+                    "observation_value_error": {
+                        "title": "Observation Value Error",
+                        "type": "string"
+                    }
+                }
+            },
+            "Comments": {
+                "title": "Comments",
+                "required": [
+                    "clinician_corrected_decimal_age_comment",
+                    "lay_corrected_decimal_age_comment",
+                    "clinician_chronological_decimal_age_comment",
+                    "lay_chronological_decimal_age_comment"
+                ],
+                "type": "object",
+                "properties": {
+                    "clinician_corrected_decimal_age_comment": {
+                        "title": "Clinician Corrected Decimal Age Comment",
+                        "type": "string"
+                    },
+                    "lay_corrected_decimal_age_comment": {
+                        "title": "Lay Corrected Decimal Age Comment",
+                        "type": "string"
+                    },
+                    "clinician_chronological_decimal_age_comment": {
+                        "title": "Clinician Chronological Decimal Age Comment",
+                        "type": "string"
+                    },
+                    "lay_chronological_decimal_age_comment": {
+                        "title": "Lay Chronological Decimal Age Comment",
+                        "type": "string"
+                    }
+                }
+            },
+            "CorrectedDecimalAgeData": {
+                "title": "CorrectedDecimalAgeData",
+                "required": [
+                    "x",
+                    "y",
+                    "age_type",
+                    "lay_comment",
+                    "clinician_comment",
+                    "centile_band"
+                ],
+                "type": "object",
+                "properties": {
+                    "x": {
+                        "title": "X",
+                        "type": "number"
+                    },
+                    "y": {
+                        "title": "Y",
+                        "type": "number"
+                    },
+                    "b": {
+                        "title": "B",
+                        "type": "number"
+                    },
+                    "bone_age_label": {
+                        "title": "Bone Age Label",
+                        "type": "string"
+                    },
+                    "events_text": {
+                        "title": "Events Text",
+                        "type": "array",
+                        "items": {}
+                    },
+                    "bone_age_type": {
+                        "title": "Bone Age Type",
+                        "enum": [
+                            "greulich-pyle",
+                            "tanner-whitehouse-ii",
+                            "tanner-whitehouse-iii",
+                            "fels",
+                            "bonexpert"
+                        ],
+                        "type": "string"
+                    },
+                    "bone_age_sds": {
+                        "title": "Bone Age Sds",
+                        "type": "string"
+                    },
+                    "bone_age_centile": {
+                        "title": "Bone Age Centile",
+                        "type": "string"
+                    },
+                    "observation_error": {
+                        "title": "Observation Error",
+                        "type": "string"
+                    },
+                    "age_type": {
+                        "title": "Age Type",
+                        "enum": [
+                            "chronological_age",
+                            "corrected_age"
+                        ],
+                        "type": "string"
+                    },
+                    "calendar_age": {
+                        "title": "Calendar Age",
+                        "type": "string"
+                    },
+                    "lay_comment": {
+                        "title": "Lay Comment",
+                        "type": "string"
+                    },
+                    "clinician_comment": {
+                        "title": "Clinician Comment",
+                        "type": "string"
+                    },
+                    "age_error": {
+                        "title": "Age Error",
+                        "type": "string"
+                    },
+                    "centile_band": {
+                        "title": "Centile Band",
+                        "type": "string"
+                    },
+                    "observation_value_error": {
+                        "title": "Observation Value Error",
+                        "type": "string"
+                    }
+                }
+            },
+            "CorrectedGestationalAge": {
+                "title": "CorrectedGestationalAge",
+                "type": "object",
+                "properties": {
+                    "corrected_gestation_weeks": {
+                        "title": "Corrected Gestation Weeks",
+                        "type": "integer",
+                        "default": 40
+                    },
+                    "corrected_gestation_days": {
+                        "title": "Corrected Gestation Days",
+                        "type": "integer",
+                        "default": 0
+                    }
+                }
+            },
+            "Data": {
+                "title": "Data",
+                "required": [
+                    "l",
+                    "x",
+                    "y"
+                ],
+                "type": "object",
+                "properties": {
+                    "l": {
+                        "title": "L",
+                        "type": "string"
+                    },
+                    "x": {
+                        "title": "X",
+                        "type": "number"
+                    },
+                    "y": {
+                        "title": "Y",
+                        "type": "number"
+                    }
+                }
+            },
+            "EventsData": {
+                "title": "EventsData",
+                "type": "object",
+                "properties": {
+                    "events_text": {
+                        "title": "Events Text",
+                        "type": "array",
+                        "items": {}
                     }
                 }
             },
@@ -811,6 +1092,178 @@
                     }
                 }
             },
+            "MeasurementCalculatedValues": {
+                "title": "MeasurementCalculatedValues",
+                "required": [
+                    "corrected_sds",
+                    "corrected_centile",
+                    "corrected_centile_band",
+                    "chronological_sds",
+                    "chronological_centile",
+                    "chronological_centile_band"
+                ],
+                "type": "object",
+                "properties": {
+                    "corrected_sds": {
+                        "title": "Corrected Sds",
+                        "type": "number"
+                    },
+                    "corrected_centile": {
+                        "title": "Corrected Centile",
+                        "type": "number"
+                    },
+                    "corrected_centile_band": {
+                        "title": "Corrected Centile Band",
+                        "type": "string"
+                    },
+                    "chronological_sds": {
+                        "title": "Chronological Sds",
+                        "type": "number"
+                    },
+                    "chronological_centile": {
+                        "title": "Chronological Centile",
+                        "type": "number"
+                    },
+                    "chronological_centile_band": {
+                        "title": "Chronological Centile Band",
+                        "type": "string"
+                    },
+                    "corrected_measurement_error": {
+                        "title": "Corrected Measurement Error",
+                        "type": "string"
+                    },
+                    "chronological_measurement_error": {
+                        "title": "Chronological Measurement Error",
+                        "type": "string"
+                    },
+                    "corrected_percentage_median_bmi": {
+                        "title": "Corrected Percentage Median Bmi",
+                        "type": "number"
+                    },
+                    "chronological_percentage_median_bmi": {
+                        "title": "Chronological Percentage Median Bmi",
+                        "type": "number"
+                    }
+                }
+            },
+            "MeasurementDates": {
+                "title": "MeasurementDates",
+                "required": [
+                    "observation_date",
+                    "chronological_decimal_age",
+                    "corrected_decimal_age",
+                    "corrected_gestational_age",
+                    "comments"
+                ],
+                "type": "object",
+                "properties": {
+                    "observation_date": {
+                        "title": "Observation Date",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "chronological_decimal_age": {
+                        "title": "Chronological Decimal Age",
+                        "type": "number"
+                    },
+                    "corrected_decimal_age": {
+                        "title": "Corrected Decimal Age",
+                        "type": "number"
+                    },
+                    "chronological_calendar_age": {
+                        "title": "Chronological Calendar Age",
+                        "type": "string"
+                    },
+                    "corrected_calendar_age": {
+                        "title": "Corrected Calendar Age",
+                        "type": "string"
+                    },
+                    "corrected_gestational_age": {
+                        "$ref": "#/components/schemas/CorrectedGestationalAge"
+                    },
+                    "comments": {
+                        "$ref": "#/components/schemas/Comments"
+                    },
+                    "corrected_decimal_age_error": {
+                        "title": "Corrected Decimal Age Error",
+                        "type": "string"
+                    },
+                    "chronological_decimal_age_error": {
+                        "title": "Chronological Decimal Age Error",
+                        "type": "string"
+                    }
+                }
+            },
+            "MeasurementMethod": {
+                "title": "MeasurementMethod",
+                "type": "object",
+                "properties": {
+                    "height": {
+                        "title": "Height",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Centile"
+                        }
+                    },
+                    "weight": {
+                        "title": "Weight",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Centile"
+                        }
+                    },
+                    "ofc": {
+                        "title": "Ofc",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Centile"
+                        }
+                    },
+                    "bmi": {
+                        "title": "Bmi",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Centile"
+                        }
+                    }
+                }
+            },
+            "MeasurementObject": {
+                "title": "MeasurementObject",
+                "required": [
+                    "birth_data",
+                    "measurement_dates",
+                    "child_observation_value",
+                    "measurement_calculated_values",
+                    "plottable_data",
+                    "bone_age",
+                    "events_data"
+                ],
+                "type": "object",
+                "properties": {
+                    "birth_data": {
+                        "$ref": "#/components/schemas/BirthData"
+                    },
+                    "measurement_dates": {
+                        "$ref": "#/components/schemas/MeasurementDates"
+                    },
+                    "child_observation_value": {
+                        "$ref": "#/components/schemas/ChildObservationValue"
+                    },
+                    "measurement_calculated_values": {
+                        "$ref": "#/components/schemas/MeasurementCalculatedValues"
+                    },
+                    "plottable_data": {
+                        "$ref": "#/components/schemas/PlottableData"
+                    },
+                    "bone_age": {
+                        "$ref": "#/components/schemas/BoneAge"
+                    },
+                    "events_data": {
+                        "$ref": "#/components/schemas/EventsData"
+                    }
+                }
+            },
             "MeasurementRequest": {
                 "title": "MeasurementRequest",
                 "required": [
@@ -945,6 +1398,57 @@
                         ],
                         "type": "string",
                         "description": "The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted."
+                    }
+                }
+            },
+            "PlottableData": {
+                "title": "PlottableData",
+                "required": [
+                    "centile_data",
+                    "sds_data"
+                ],
+                "type": "object",
+                "properties": {
+                    "centile_data": {
+                        "$ref": "#/components/schemas/CentileData"
+                    },
+                    "sds_data": {
+                        "$ref": "#/components/schemas/SDSData"
+                    }
+                }
+            },
+            "ReferenceCreate": {
+                "title": "ReferenceCreate",
+                "type": "object",
+                "additionalProperties": {
+                    "$ref": "#/components/schemas/Sex"
+                }
+            },
+            "SDSData": {
+                "title": "SDSData",
+                "required": [
+                    "chronological_decimal_age_data",
+                    "corrected_decimal_age_data"
+                ],
+                "type": "object",
+                "properties": {
+                    "chronological_decimal_age_data": {
+                        "$ref": "#/components/schemas/ChronologicalDecimalAgeData"
+                    },
+                    "corrected_decimal_age_data": {
+                        "$ref": "#/components/schemas/CorrectedDecimalAgeData"
+                    }
+                }
+            },
+            "Sex": {
+                "title": "Sex",
+                "type": "object",
+                "properties": {
+                    "male": {
+                        "$ref": "#/components/schemas/MeasurementMethod"
+                    },
+                    "female": {
+                        "$ref": "#/components/schemas/MeasurementMethod"
                     }
                 }
             },

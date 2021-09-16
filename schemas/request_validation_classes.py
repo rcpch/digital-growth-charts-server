@@ -56,6 +56,13 @@ class ChartCoordinateRequest(BaseModel):
     measurement_method: Literal['height', 'weight', 'ofc', 'bmi'] = Field(
         ..., description="The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre²** and occipitofrontal circumference (head circumference, OFC) **in centimetres**.")
     centile_format: Optional[Union[Literal["cole-nine-centiles", "three-percent-centiles"], List[float]]]=Field('cole-nine-centiles', description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles'], or accepts a list of floats as a custom centile format e.g. [7/10/20/30/40/50/60/70/80/90/93]. Defaults to cole-nine-centiles")
+    @validator('centile_format')
+    def custom_centiles_must_not_exceed_fifteen(cls, v):
+        if (type(v) is list and len(v) > 15):
+            raise ValueError("Centile formats cannot exceed 15 items.")
+        if (type(v) is list and len(v) < 1):
+            raise ValueError("Empty list. Please provide at least one value or one of the standard collection flags.")
+        return v
 
 class FictionalChildRequest(BaseModel):
     measurement_method: Literal['height', 'weight', 'ofc', 'bmi'] = Field(

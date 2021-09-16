@@ -2,40 +2,32 @@
 In this file we define or import the response schemas
 """
 # standard imports
-
-# third party imports
-
-# local / rcpch imports
-# from rcpchgrowth.schemas import MeasurementResponseSchema
-
+from typing import Dict, List, Optional, Literal
 from datetime import date
 
-from typing import Optional, Literal
-
-from fastapi import FastAPI
+# third party imports
 from pydantic import BaseModel
-
 class CorrectedGestationalAge(BaseModel):
-    corrected_gestation_weeks: int
-    corrected_gestation_days: int
+    corrected_gestation_weeks: Optional[int]=40
+    corrected_gestation_days: Optional[int]=0
+
 class Comments(BaseModel):
     clinician_corrected_decimal_age_comment: str
     lay_corrected_decimal_age_comment: str
     clinician_chronological_decimal_age_comment: str
     lay_chronological_decimal_age_comment: str
-
 class ChronologicalDecimalAgeData(BaseModel):
     x: float
     y: float
     b: Optional[float]=None
     bone_age_label: Optional[str]=None
-    events_label: Optional[list]=None
+    events_text: Optional[list]=None
     bone_age_type: Optional[Literal['greulich-pyle', 'tanner-whitehouse-ii', 'tanner-whitehouse-iii', 'fels','bonexpert']]
     bone_age_sds: Optional[str]=None
     bone_age_centile: Optional[str]=None
     observation_error: Optional[str]
     age_type: Literal["chronological_age", "corrected_age"]
-    calendar_age: str
+    calendar_age: Optional[str]
     lay_comment: str
     clinician_comment: str
     age_error: Optional[str]
@@ -46,13 +38,13 @@ class CorrectedDecimalAgeData(BaseModel):
     y: float
     b: Optional[float]=None
     bone_age_label: Optional[str]=None
-    events_label: Optional[list]=None
+    events_text: Optional[list]=None
     bone_age_type: Optional[Literal['greulich-pyle', 'tanner-whitehouse-ii', 'tanner-whitehouse-iii', 'fels','bonexpert']]
     bone_age_sds: Optional[str]=None
     bone_age_centile: Optional[str]=None
     observation_error: Optional[str]
     age_type: Literal["chronological_age", "corrected_age"]
-    calendar_age: str
+    calendar_age: Optional[str]
     lay_comment: str
     clinician_comment: str
     age_error: Optional[str]
@@ -72,27 +64,25 @@ class PlottableData(BaseModel):
     sds_data: SDSData
 class BirthData(BaseModel):
     birth_date: date
-    gestation_weeks: int
-    gestation_days: int
-    estimated_date_delivery: str
-    estimated_date_delivery_string: str
+    gestation_weeks: Optional[int]
+    gestation_days: Optional[int]
+    estimated_date_delivery: Optional[date]
+    estimated_date_delivery_string: Optional[str]
     sex: Literal['male', 'female']
-
 class BoneAge(BaseModel):
     bone_age: Optional[float]=None
     bone_age_type: Optional[str]=None
     bone_age_sds: Optional[float]=None
     bone_age_centile: Optional[float]=None
     bone_age_text: Optional[str]=None
-
 class EventsData(BaseModel):
     events_text: Optional[list]=None
 class MeasurementDates(BaseModel):
     observation_date: date
     chronological_decimal_age: float
     corrected_decimal_age: float
-    chronological_calendar_age: str
-    corrected_calendar_age: str
+    chronological_calendar_age: Optional[str]
+    corrected_calendar_age: Optional[str]
     corrected_gestational_age: CorrectedGestationalAge
     comments: Comments
     corrected_decimal_age_error: Optional[str]
@@ -112,8 +102,8 @@ class MeasurementCalculatedValues(BaseModel):
     chronological_centile_band: str
     corrected_measurement_error: Optional[str]
     chronological_measurement_error: Optional[str]
-    corrected_percentage_median_bmi: float
-    chronological_percentage_median_bmi: float
+    corrected_percentage_median_bmi: Optional[float]
+    chronological_percentage_median_bmi: Optional[float]
 
 class MeasurementObject(BaseModel):
     birth_data: BirthData
@@ -128,3 +118,26 @@ class MidParentalHeight(BaseModel):
     mid_parental_height: float
     mid_parental_height_sds: float
     mid_parental_height_centile: float
+
+class Data(BaseModel):
+    l: str
+    x: float
+    y: float
+
+class Centile(BaseModel):
+    sds: float
+    centile: float
+    data: Optional[List[Data]]
+class MeasurementMethod(BaseModel):
+    height: Optional[List[Centile]]
+    weight: Optional[List[Centile]]
+    ofc: Optional[List[Centile]]
+    bmi: Optional[List[Centile]]
+class Sex(BaseModel):
+    male: Optional[MeasurementMethod]
+    female: Optional[MeasurementMethod]
+class ReferenceCreate(BaseModel):
+    __root__: Dict[str, Sex]
+
+class Centile_Data(BaseModel):
+    centile_data: List[ReferenceCreate]

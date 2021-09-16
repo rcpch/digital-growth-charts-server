@@ -4,9 +4,11 @@ Turner router
 # Standard imports
 import json
 from pathlib import Path
+from typing import List
 
 # Third party imports
 from fastapi import APIRouter, Body, HTTPException
+from schemas.response_schema_classes import Centile_Data, MeasurementObject
 
 # RCPCH imports
 from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart, generate_custom_centile
@@ -18,7 +20,7 @@ turners = APIRouter(
     prefix="/turner",
 )
 
-@turners.post("/calculation", tags=["turners-syndrome"])
+@turners.post("/calculation", tags=["turners-syndrome"], response_model=MeasurementObject)
 def turner_calculation(measurementRequest: MeasurementRequest = Body(
         ...,
         example={
@@ -68,15 +70,17 @@ def turner_calculation(measurementRequest: MeasurementRequest = Body(
     return calculation
     
 
-@turners.post("/chart-coordinates", tags=["turners-syndrome"])
+@turners.post("/chart-coordinates", tags=["turners-syndrome"], response_model=Centile_Data)
 def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
     """
     ## Turner's Syndrome Chart Coordinates data.
     
     * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
     * Note height in girls conly be only returned. It is a post request to maintain consistency with other routes.
+    * If custom centiles (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter
+    * In addition to the custom list, "cole-nine-centiles" or "three-percent-centiles" can be specified which are standard collections.
+    * If no centile_format is supplied, "cole-nine-centiles" are returned as a default.
     \f
-    Return object structure (this needs to be moved into the schema)
     [
         "height": [
             {
@@ -124,29 +128,9 @@ def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
         "centile_data": chart_data
     }
 
-@turners.post('/custom-centile-data', tags=["turners-syndrome"])
-def custom_centile_data(custom_centile_request: CustomCentileRequest):
-    """
-    ## Turner's Custom Centile Data Endpoint
-
-    * Generates plottable data for a single custom centile line
-    """
-    custom_centile = []
-    try:
-        custom_centile = generate_custom_centile(
-            reference=TURNERS,
-            measurement_method=custom_centile_request.measurement_method,
-            sex=custom_centile_request.sex,
-            custom_centile=custom_centile_request.custom_centile)
-    except:
-        return HTTPException(status_code=422, detail=f"Not possible to create Turner's syndrome custom centile data for {custom_centile_request.measurement_method} in {custom_centile_request.sex}.")
-    
-    return {
-        "centile_data": custom_centile
-    }
 
 
-@turners.post('/fictional-child-data', tags=["turners-syndrome"])
+@turners.post('/fictional-child-data', tags=["turners-syndrome"], response_model=List[MeasurementObject])
 def fictional_child_data(fictional_child_request: FictionalChildRequest):
     """
     ## Turner's Fictional Child Data Endpoint
@@ -171,5 +155,5 @@ def fictional_child_data(fictional_child_request: FictionalChildRequest):
             reference=constants.TURNERS
         )
         return life_course_fictional_child_data
-    except ValueError:
-        return 422
+    except:
+        return HTTPException(status_code=422, detail=f"Not possible to create Turner fictional child data.")

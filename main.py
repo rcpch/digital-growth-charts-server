@@ -94,7 +94,7 @@ def generate_and_store_chart_data():
                                 reference,
                                 measurement_method=measurement_method,
                                 sex=sex,
-                                centile_selection=centile_format
+                                centile_format=centile_format
                             )
                             script_dir = os.path.dirname(__file__)
                             path = os.path.join(script_dir, f'chart-data/{centile_format}-{reference}-{sex}-{measurement_method}.json')

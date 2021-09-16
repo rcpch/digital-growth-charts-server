@@ -4,15 +4,15 @@ UK-WHO router
 # Standard imports
 import json
 from pathlib import Path
-
-from rcpchgrowth.chart_functions import generate_custom_centile
-from schemas.request_validation_classes import CustomCentileRequest
+from typing import List
 
 # Third party imports
+from schemas.response_schema_classes import Centile_Data, MeasurementObject
 from fastapi import APIRouter, Body, HTTPException
-from pydantic.class_validators import extract_root_validators
+from schemas.request_validation_classes import CustomCentileRequest
 
 # RCPCH imports
+from rcpchgrowth.chart_functions import generate_custom_centile
 from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart
 from rcpchgrowth.constants.reference_constants import UK_WHO
 from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
@@ -23,7 +23,7 @@ uk_who = APIRouter(
 )
 
 
-@uk_who.post("/calculation", tags=["uk-who"])
+@uk_who.post("/calculation", tags=["uk-who"], response_model=MeasurementObject)
 def uk_who_calculation(
     measurementRequest: MeasurementRequest = Body(
         ...,
@@ -83,14 +83,17 @@ def uk_who_calculation(
     return calculation
 
 
-@uk_who.post("/chart-coordinates", tags=["uk-who"])
+@uk_who.post("/chart-coordinates", tags=["uk-who"], response_model=Centile_Data)
 def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
     """
     ## UK-WHO Chart Coordinates data.
         
     * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
+    * Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')
+    * If custom centiles (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter
+    * In addition to the custom list, "cole-nine-centiles" or "three-percent-centiles" can be specified which are standard collections.
+    * If no centile_format is supplied, "cole-nine-centiles" are returned as a default.
     \f
-    Return object structure (this needs to be moved into the schema)
     [
         "height": [
             {
@@ -112,7 +115,7 @@ def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
     """
     chart_data=None
     if (type(chartParams.centile_format) is list):
-        # custom centiles requested - calculate these and return. Do not persist
+        # custom centiles requested - calculate these and return. Do not persist.
         try:
             chart_data = create_chart(
                 UK_WHO, 
@@ -135,28 +138,7 @@ def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
         "centile_data": chart_data
     }
 
-@uk_who.post('/custom-centile-data', tags=["uk-who"])
-def custom_centile_data(custom_centile_request: CustomCentileRequest):
-    """
-    ## UK-WHO Custom Centile Data Endpoint
-
-    * Generates plottable data for a single custom centile line
-    """
-    custom_centile = []
-    try:
-        custom_centile = generate_custom_centile(
-            reference=UK_WHO,
-            measurement_method=custom_centile_request.measurement_method,
-            sex=custom_centile_request.sex,
-            custom_centile=custom_centile_request.custom_centile)
-    except:
-        return HTTPException(status_code=422, detail=f"Not possible to create UK-WHO custom centile data for {custom_centile_request.measurement_method} in {custom_centile_request.sex}.")
-    
-    return {
-        "centile_data": custom_centile
-    }
-
-@uk_who.post('/fictional-child-data', tags=["uk-who"])
+@uk_who.post('/fictional-child-data', tags=["uk-who"], response_model=List[MeasurementObject])
 def fictional_child_data(fictional_child_request: FictionalChildRequest):
     """
     ## UK-WHO Fictional Child Data Endpoint
@@ -181,7 +163,7 @@ def fictional_child_data(fictional_child_request: FictionalChildRequest):
             reference=constants.UK_WHO
         )
         return life_course_fictional_child_data
-    except ValueError:
-        return 422
+    except:
+        return HTTPException(status_code=422, detail=f"Not possible to create UK-WHO fictional child data.")
 
 

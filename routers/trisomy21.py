@@ -4,9 +4,11 @@ Trisomy 21 router
 # Standard imports
 import json
 from pathlib import Path
+from schemas.response_schema_classes import Centile_Data, MeasurementObject
 
 # Third party imports
 from fastapi import APIRouter, Body, HTTPException
+from typing import List
 from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart, generate_custom_centile
 from rcpchgrowth.constants.reference_constants import TRISOMY_21
 
@@ -19,7 +21,7 @@ trisomy_21 = APIRouter(
 )
 
 
-@trisomy_21.post("/calculation", tags=["trisomy-21"])
+@trisomy_21.post("/calculation", tags=["trisomy-21"], response_model=MeasurementObject)
 def trisomy_21_calculation(measurementRequest: MeasurementRequest = Body(
             ...,
             example={
@@ -70,15 +72,17 @@ def trisomy_21_calculation(measurementRequest: MeasurementRequest = Body(
         return err, 400
 
 
-@trisomy_21.post("/chart-coordinates", tags=["trisomy-21"])
+@trisomy_21.post("/chart-coordinates", tags=["trisomy-21"], response_model=Centile_Data)
 def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
     """
     ## Trisomy-21 Chart Coordinates Data.
         
     * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
     * Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')
+    * If custom centiles (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter
+    * In addition to the custom list, "cole-nine-centiles" or "three-percent-centiles" can be specified which are standard collections.
+    * If no centile_format is supplied, "cole-nine-centiles" are returned as a default.
     \f
-    Return object structure (this needs to be moved into the schema)
     [
         "height": [
             {
@@ -123,29 +127,7 @@ def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
         "centile_data": chart_data
     }
 
-@trisomy_21.post('/custom-centile-data', tags=["trisomy-21"])
-def custom_centile_data(custom_centile_request: CustomCentileRequest):
-    """
-    ## Trisomy 21's Custom Centile Data Endpoint
-
-    * Generates plottable data for a single custom centile line
-    """
-    custom_centile = []
-    try:
-        custom_centile = generate_custom_centile(
-            reference=TRISOMY_21,
-            measurement_method=custom_centile_request.measurement_method,
-            sex=custom_centile_request.sex,
-            custom_centile=custom_centile_request.custom_centile)
-    except:
-        return HTTPException(status_code=422, detail=f"Not possible to create Trisomy 21 custom centile data for {custom_centile_request.measurement_method} in {custom_centile_request.sex}.")
-    
-    return {
-        "centile_data": custom_centile
-    }
-
-
-@trisomy_21.post('/fictional-child-data', tags=["trisomy-21"])
+@trisomy_21.post('/fictional-child-data', tags=["trisomy-21"], response_model=List[MeasurementObject])
 def fictional_child_data(fictional_child_request: FictionalChildRequest):
     """
     ## Trisomy-21 Fictional Child Data Endpoint
@@ -170,5 +152,6 @@ def fictional_child_data(fictional_child_request: FictionalChildRequest):
             reference=TRISOMY_21
         )
         return life_course_fictional_child_data
-    except ValueError:
-        return 422
+    except: 
+        return HTTPException(status_code=422, detail=f"Not possible to create Trisomy 21 fictional child data.")
+        
