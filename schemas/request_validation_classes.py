@@ -62,6 +62,10 @@ class ChartCoordinateRequest(BaseModel):
             raise ValueError("Centile formats cannot exceed 15 items.")
         if (type(v) is list and len(v) < 1):
             raise ValueError("Empty list. Please provide at least one value or one of the standard collection flags.")
+        if(type(v) is list):
+            for cent in v:
+                if cent < 0:
+                    raise ValueError("Centile values cannot be negative.")
         return v
 
 class FictionalChildRequest(BaseModel):

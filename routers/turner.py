@@ -11,9 +11,9 @@ from fastapi import APIRouter, Body, HTTPException
 from schemas.response_schema_classes import Centile_Data, MeasurementObject
 
 # RCPCH imports
-from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart, generate_custom_centile
+from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart
 from rcpchgrowth.constants.reference_constants import TURNERS
-from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest, CustomCentileRequest
+from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
 
 # set up the API router
 turners = APIRouter(

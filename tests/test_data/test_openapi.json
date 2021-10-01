@@ -438,7 +438,7 @@
                     "utilities"
                 ],
                 "summary": "Mid Parental Height Endpoint",
-                "description": "## Mid-parental-height Endpoint\n\n* Calculates mid-parental-height",
+                "description": "## Mid-parental-height Endpoint\n\n* Calculates mid-parental-height\n* Returns mid-parental centile and SDS, as well as centile lines for mid-parental height\n* and +2 SD and -SD",
                 "operationId": "mid_parental_height_endpoint_utilities_mid_parental_height_post",
                 "requestBody": {
                     "content": {
@@ -455,7 +455,9 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/MidParentalHeightResponse"
+                                }
                             }
                         }
                     },
@@ -1398,6 +1400,61 @@
                         ],
                         "type": "string",
                         "description": "The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted."
+                    }
+                }
+            },
+            "MidParentalHeightResponse": {
+                "title": "MidParentalHeightResponse",
+                "required": [
+                    "mid_parental_height",
+                    "mid_parental_height_sds",
+                    "mid_parental_height_centile",
+                    "mid_parental_height_centile_data",
+                    "mid_parental_height_lower_centile_data",
+                    "mid_parental_height_upper_centile_data"
+                ],
+                "type": "object",
+                "properties": {
+                    "mid_parental_height": {
+                        "title": "Mid Parental Height",
+                        "type": "number"
+                    },
+                    "mid_parental_height_sds": {
+                        "title": "Mid Parental Height Sds",
+                        "type": "number"
+                    },
+                    "mid_parental_height_centile": {
+                        "title": "Mid Parental Height Centile",
+                        "type": "number"
+                    },
+                    "mid_parental_height_centile_data": {
+                        "title": "Mid Parental Height Centile Data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ReferenceCreate"
+                        }
+                    },
+                    "mid_parental_height_lower_centile_data": {
+                        "title": "Mid Parental Height Lower Centile Data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ReferenceCreate"
+                        }
+                    },
+                    "mid_parental_height_upper_centile_data": {
+                        "title": "Mid Parental Height Upper Centile Data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ReferenceCreate"
+                        }
+                    },
+                    "mid_parental_height_upper_value": {
+                        "title": "Mid Parental Height Upper Value",
+                        "type": "number"
+                    },
+                    "mid_parental_height_lower_value": {
+                        "title": "Mid Parental Height Lower Value",
+                        "type": "number"
                     }
                 }
             },

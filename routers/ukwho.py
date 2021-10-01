@@ -12,7 +12,6 @@ from fastapi import APIRouter, Body, HTTPException
 from schemas.request_validation_classes import CustomCentileRequest
 
 # RCPCH imports
-from rcpchgrowth.chart_functions import generate_custom_centile
 from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart
 from rcpchgrowth.constants.reference_constants import UK_WHO
 from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest

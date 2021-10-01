@@ -113,12 +113,6 @@ class MeasurementObject(BaseModel):
     plottable_data: PlottableData
     bone_age: BoneAge
     events_data: EventsData
-
-class MidParentalHeight(BaseModel):
-    mid_parental_height: float
-    mid_parental_height_sds: float
-    mid_parental_height_centile: float
-
 class Data(BaseModel):
     l: str
     x: float
@@ -141,3 +135,13 @@ class ReferenceCreate(BaseModel):
 
 class Centile_Data(BaseModel):
     centile_data: List[ReferenceCreate]
+
+class MidParentalHeightResponse(BaseModel):
+    mid_parental_height: float
+    mid_parental_height_sds: float
+    mid_parental_height_centile: float
+    mid_parental_height_centile_data: List[ReferenceCreate]
+    mid_parental_height_lower_centile_data: List[ReferenceCreate]
+    mid_parental_height_upper_centile_data: List[ReferenceCreate]
+    mid_parental_height_upper_value: Optional[float]
+    mid_parental_height_lower_value: Optional[float]

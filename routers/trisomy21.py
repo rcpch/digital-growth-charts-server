@@ -9,11 +9,11 @@ from schemas.response_schema_classes import Centile_Data, MeasurementObject
 # Third party imports
 from fastapi import APIRouter, Body, HTTPException
 from typing import List
-from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart, generate_custom_centile
+from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart
 from rcpchgrowth.constants.reference_constants import TRISOMY_21
 
 # local imports
-from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest, CustomCentileRequest
+from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
 
 # set up the API router
 trisomy_21 = APIRouter(
