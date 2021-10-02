@@ -259,7 +259,10 @@ Centile styles control the width and colour.
 interface CentileStyle{
     centileStroke?: string, 
     centileStrokeWidth?: number, 
-    delayedPubertyAreaFill?: string 
+    delayedPubertyAreaFill?: string,
+    midParentalCentileStroke?: number;
+    midParentalCentileStrokeWidth?: number;
+    midParentalAreaFill?: string;
 }
 ```
 
