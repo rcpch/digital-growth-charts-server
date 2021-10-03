@@ -3,7 +3,7 @@
     "info": {
         "title": "RCPCH Digital Growth API",
         "description": "Returns SDS and centiles for child growth measurements using growth references. Currently provides calculations based on the UK-WHO, Turner's Syndrome and Trisomy-21 references.",
-        "version": "4.1.0"
+        "version": "4.1.1"
     },
     "paths": {
         "/uk-who/calculation": {
@@ -1465,6 +1465,28 @@
                 "type": "object",
                 "additionalProperties": {
                     "$ref": "#/components/schemas/Sex"
+                },
+                "uk90_preterm": {
+                    "male": {
+                        "height": [
+                            {
+                                "sds": -2.67,
+                                "centile": 0.4,
+                                "data": [
+                                    {
+                                        "l": "0.4",
+                                        "x": -0.2875,
+                                        "y": 27.7419
+                                    },
+                                    {
+                                        "l": "0.4",
+                                        "x": -0.2683,
+                                        "y": 28.7883
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 }
             },
             "SDSData": {

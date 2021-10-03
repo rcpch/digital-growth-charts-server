@@ -132,6 +132,31 @@ class Sex(BaseModel):
     female: Optional[MeasurementMethod]
 class ReferenceCreate(BaseModel):
     __root__: Dict[str, Sex]
+    class Config:
+        schema_extra = {
+            "uk90_preterm": {
+                "male": {
+                    "height": [
+                        {
+                            "sds": -2.67,
+                            "centile": 0.4,
+                            "data": [
+                                {
+                                    "l": "0.4",
+                                    "x": -0.2875,
+                                    "y": 27.7419
+                                },
+                                {
+                                    "l": "0.4",
+                                    "x": -0.2683,
+                                    "y": 28.7883
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
 
 class Centile_Data(BaseModel):
     centile_data: List[ReferenceCreate]
