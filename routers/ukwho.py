@@ -9,7 +9,6 @@ from typing import List
 # Third party imports
 from schemas.response_schema_classes import Centile_Data, MeasurementObject
 from fastapi import APIRouter, Body, HTTPException
-from schemas.request_validation_classes import CustomCentileRequest
 
 # RCPCH imports
 from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart

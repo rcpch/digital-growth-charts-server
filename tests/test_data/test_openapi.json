@@ -701,12 +701,9 @@
             "ChronologicalDecimalAgeData": {
                 "title": "ChronologicalDecimalAgeData",
                 "required": [
-                    "x",
-                    "y",
                     "age_type",
                     "lay_comment",
-                    "clinician_comment",
-                    "centile_band"
+                    "clinician_comment"
                 ],
                 "type": "object",
                 "properties": {
@@ -819,12 +816,9 @@
             "CorrectedDecimalAgeData": {
                 "title": "CorrectedDecimalAgeData",
                 "required": [
-                    "x",
-                    "y",
                     "age_type",
                     "lay_comment",
-                    "clinician_comment",
-                    "centile_band"
+                    "clinician_comment"
                 ],
                 "type": "object",
                 "properties": {
@@ -1096,14 +1090,6 @@
             },
             "MeasurementCalculatedValues": {
                 "title": "MeasurementCalculatedValues",
-                "required": [
-                    "corrected_sds",
-                    "corrected_centile",
-                    "corrected_centile_band",
-                    "chronological_sds",
-                    "chronological_centile",
-                    "chronological_centile_band"
-                ],
                 "type": "object",
                 "properties": {
                     "corrected_sds": {

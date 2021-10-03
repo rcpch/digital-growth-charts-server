@@ -17,8 +17,8 @@ class Comments(BaseModel):
     clinician_chronological_decimal_age_comment: str
     lay_chronological_decimal_age_comment: str
 class ChronologicalDecimalAgeData(BaseModel):
-    x: float
-    y: float
+    x: Optional[float]
+    y: Optional[float]
     b: Optional[float]=None
     bone_age_label: Optional[str]=None
     events_text: Optional[list]=None
@@ -31,11 +31,11 @@ class ChronologicalDecimalAgeData(BaseModel):
     lay_comment: str
     clinician_comment: str
     age_error: Optional[str]
-    centile_band: str
+    centile_band: Optional[str]
     observation_value_error: Optional[str]
 class CorrectedDecimalAgeData(BaseModel):
-    x: float
-    y: float
+    x: Optional[float]
+    y: Optional[float]
     b: Optional[float]=None
     bone_age_label: Optional[str]=None
     events_text: Optional[list]=None
@@ -48,7 +48,7 @@ class CorrectedDecimalAgeData(BaseModel):
     lay_comment: str
     clinician_comment: str
     age_error: Optional[str]
-    centile_band: str
+    centile_band: Optional[str]
     observation_value_error: Optional[str]
 
 class CentileData(BaseModel):
@@ -94,12 +94,12 @@ class ChildObservationValue(BaseModel):
     observation_value_error: Optional[str]
 
 class MeasurementCalculatedValues(BaseModel):
-    corrected_sds: float
-    corrected_centile: float
-    corrected_centile_band: str
-    chronological_sds: float
-    chronological_centile: float
-    chronological_centile_band: str
+    corrected_sds: Optional[float]
+    corrected_centile: Optional[float]
+    corrected_centile_band: Optional[str]
+    chronological_sds: Optional[float]
+    chronological_centile: Optional[float]
+    chronological_centile_band: Optional[str]
     corrected_measurement_error: Optional[str]
     chronological_measurement_error: Optional[str]
     corrected_percentage_median_bmi: Optional[float]
