@@ -15,6 +15,14 @@ Although the process of obtaining a centile/SDS result from the API is very stra
 
 You can use the component as-is in a React app, or include it in plain HTML or any other JavaScript framework.
 
+## Supported Features
+
+* Corrected/Chronological age with toggle
+* Zoom with zoom reset (optional prop)
+* Event logging - events associated with measurements
+* Bone ages
+* Midparental heights with midparental centile lines (at +2 and -2 SDS)
+
 ## Getting started
 
 ```console
@@ -61,9 +69,10 @@ If the invalid hooks error persists inspite of this, an alternative is to add th
         ...
     },
 ```
+
 ## Structure
 
-This library has been written in Typescript. The main component is `RCPCHChart`, which takes the following `props`:
+This library has been written in Typescript. The main component is `RCPCHChart`, which takes the following `props`. Note each component will only render a single chart.:
 
 ```js
 {
