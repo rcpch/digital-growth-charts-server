@@ -110,7 +110,8 @@ def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
                 TRISOMY_21, 
                 chartParams.centile_format, 
                 measurement_method=chartParams.measurement_method, 
-                sex=chartParams.sex)
+                sex=chartParams.sex,
+                is_sds=chartParams.is_sds)
         except:
             return HTTPException(status_code=422, detail=f"Error creating {chartParams.sex} {chartParams.measurement_method} Trisomy 21 chart on the server, using {chartParams.centile_format} centile format.")
     else:

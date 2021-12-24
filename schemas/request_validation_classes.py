@@ -55,14 +55,18 @@ class ChartCoordinateRequest(BaseModel):
         ..., description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted.")
     measurement_method: Literal['height', 'weight', 'ofc', 'bmi'] = Field(
         ..., description="The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre²** and occipitofrontal circumference (head circumference, OFC) **in centimetres**.")
+    is_sds: bool = Field(
+        False,
+        description="Boolean flag (default False) referring to centile_format. If custom lines requested as SDS, rather than as centiles, set this to True."
+    )
     centile_format: Optional[Union[Literal["cole-nine-centiles", "three-percent-centiles"], List[float]]]=Field('cole-nine-centiles', description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles'], or accepts a list of floats as a custom centile format e.g. [7/10/20/30/40/50/60/70/80/90/93]. Defaults to cole-nine-centiles")
-    @validator('centile_format')
-    def custom_centiles_must_not_exceed_fifteen(cls, v):
+    @validator('centile_format', 'is_sds')
+    def custom_centiles_must_not_exceed_fifteen(cls, v, values):
         if (type(v) is list and len(v) > 15):
-            raise ValueError("Centile formats cannot exceed 15 items.")
+            raise ValueError("Centile/SDS formats cannot exceed 15 items.")
         if (type(v) is list and len(v) < 1):
             raise ValueError("Empty list. Please provide at least one value or one of the standard collection flags.")
-        if(type(v) is list):
+        if(type(v) is list and values['is_sds'] is False):
             for cent in v:
                 if cent < 0:
                     raise ValueError("Centile values cannot be negative.")

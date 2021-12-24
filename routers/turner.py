@@ -111,7 +111,8 @@ def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
                 constants.TURNERS, 
                 chartParams.centile_format, 
                 measurement_method=chartParams.measurement_method, 
-                sex=chartParams.sex)
+                sex=chartParams.sex,
+                is_sds=chartParams.is_sds)
         except:
             return HTTPException(status_code=422, detail=f"Error creating {chartParams.sex} {chartParams.measurement_method} Turner's syndrome chart on the server, using {chartParams.centile_format} centile format.")
     else:

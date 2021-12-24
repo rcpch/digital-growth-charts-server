@@ -119,7 +119,8 @@ def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
                 UK_WHO, 
                 chartParams.centile_format, 
                 measurement_method=chartParams.measurement_method, 
-                sex=chartParams.sex)
+                sex=chartParams.sex,
+                is_sds=chartParams.is_sds)
         except:
             return HTTPException(status_code=422, detail=f"Error creating {chartParams.sex} {chartParams.measurement_method} UK-WHO chart on the server, using {chartParams.centile_format} centile format.")
     else:
