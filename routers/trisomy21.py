@@ -79,7 +79,8 @@ def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
         
     * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
     * Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')
-    * If custom centiles (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter
+    * If custom centiles/sds collections (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter
+    * The is_sds boolean flag (default false) specifies if the custom list is of SDS or centiles.
     * In addition to the custom list, "cole-nine-centiles" or "three-percent-centiles" can be specified which are standard collections.
     * If no centile_format is supplied, "cole-nine-centiles" are returned as a default.
     \f
