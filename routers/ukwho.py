@@ -133,7 +133,6 @@ def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
                 chart_data = json.load(file)
         else:
             return HTTPException(status_code=422, detail=f"Item not found: chart-data/{chartParams.centile_format}-{constants.UK_WHO}-{chartParams.sex}-{chartParams.measurement_method}.json")
-        
     return {
         "centile_data": chart_data
     }

@@ -926,8 +926,7 @@
                 "title": "Data",
                 "required": [
                     "l",
-                    "x",
-                    "y"
+                    "x"
                 ],
                 "type": "object",
                 "properties": {

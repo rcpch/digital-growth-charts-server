@@ -116,7 +116,7 @@ class MeasurementObject(BaseModel):
 class Data(BaseModel):
     l: str
     x: float
-    y: float
+    y: Optional[float]
 
 class Centile(BaseModel):
     sds: float
