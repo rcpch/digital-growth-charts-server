@@ -23,13 +23,13 @@ The dGC API is 'Stateless' by design, meaning it does **not** persist informatio
 
 Any 'persistence' (data saving) must happen in **the application which is consuming the API**, which is the natural place to persist data anyway, since this is the DPCHR, the GP system, the hospital EPR - which already likely persists lots of data about the patient.
 
-### Data Protection Impact Assessment & ICO
+### Data Privacy Impact Assessment & ICO Guidance
 
 In view of the stateless nature of the server, we don't handle any Patient Identifiable Data. We have reviewed the privacy implications of our application and believe it does not require a Data Privacy Impact Assessment, according to our review of [current Information Commissioner's Office guidance](https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-protection-regulation-gdpr/accountability-and-governance/data-protection-impact-assessments/#dpia3).
 
 ## For the dGC API Service provided by the RCPCH
 
-The API 'service wrapper' collects the essential minimum details from Consumers/Integrators/Customers so that we can provide them a safe, reliable API service. Use of the service requires some data to be collected. This data is retained only for the duration of the customer's use of the API service, after which is it deleted.
+The API developer portal at <dev.rcpch.ac.uk> collects the essential minimum details from Consumers/Integrators/Customers so that we can provide them a safe, reliable API service. Use of the service requires some data to be collected. This data is retained only for the duration of the customer's use of the API service, after which is it deleted.
 
 | Data elements                                | Reason for collection                                    |
 | -------------------------------------------- | -------------------------------------------------------- |
