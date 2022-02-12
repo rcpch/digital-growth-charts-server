@@ -28,3 +28,25 @@ All content of this documentation repository is Copyright ⓒ 2020-2021 Royal Co
 
 For licensing of the other parts of the project, see [Licensing and Copyright](https://growth.rcpch.ac.uk/legal/licensing-copyright/) in the documentation site.
 
+## Setting up a development environment for the dGC documentation site
+
+Create a virtualenv for the python modules
+```
+pyenv virtualenv 3.10.2 dgc-docs
+```
+
+Install Material for MKDocs and the Swagger plugin
+```
+pip install mkdocs-material mkdocs-render-swagger-plugin
+```
+
+Now start the server
+```
+mkdocs serve
+```
+
+### Notes
+
+* on some platforms, if you get the error `ModuleNotFoundError: No module named '_ctypes'` then you need to run `sudo apt-get install libffi-dev` or the equivalent on your platform, and then recompile your Python (if using pyenv, simply `pyenv install 3.10.2` will recompile that Python binary)
+
+* Tested Feb 2022 on Linux Mint 20.3
