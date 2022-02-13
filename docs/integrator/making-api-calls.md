@@ -5,12 +5,20 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman
 
 # Making calls to the dGC API
 
-There are as many ways to make an API call as there are software developers, I reckon. But here are some common ways. We'll start with using our actual API documentation, then try a super-simple tool called `cURL` but if you would prefer a graphical toll, then feel free to skip ahead to the section on Postman.
+There are as many ways to make an API call as there are software developers, I reckon. But here are some common ways. We'll start with using our actual API documentation, then try a super-simple tool called `cURL` but if you prefer a graphical tool then feel free to skip ahead to the section on Postman.
+
+
+## API Base URL
+
+For all API calls to the Growth Charts API, you should use the baseUrl **`https://api.rcpch.ac.uk/growth/v1`**.
+
+> We have namespaced the API to allow us to use the same `api.rcpch.ac.uk` subdomain for other APIs in the future, and we have versioned the API `v1` to allow for future development without interfering with existing integrations.
 
 ## Swagger API documentation
 
-Because we've specified our API documentation in the openAPI3 (formerly known as 'Swagger') format, we can auto-generate documentation for our API, but not only that, the documentation is interactive and lets you actually make calls.
+Because we've specified our API documentation in the openAPI3 (formerly known as 'Swagger') format, we can auto-generate documentation for our API, but not only that, the documentation is interactive and lets you actually make calls right there in the documentation site, helping you understand the structure of the API.
 
+The Swagger API reference is [here](/digital-growth-charts-documentation/integrator/api-reference/)
 
 ## Using cURL
 
