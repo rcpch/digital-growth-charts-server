@@ -6,9 +6,6 @@
   --rcpch-pink-color: #f18cc9;
 }
 
-
-
-
 /* FONTS & TYPESETTING */
 
 .md-typeset h1 {
@@ -35,8 +32,6 @@
 }
 
 
-
-
 /* HEADER & FOOTER */
 
 /* make the header white with blue text */
@@ -47,7 +42,7 @@
 
 /* Switch off header hover behaviour */
 .md-search__input:hover{
-  background-color: var(--rcpch-pink-color);
+  background-color: var(--md-accent-fg-color);
 }
 
 .md-header__button:hover {
@@ -58,7 +53,6 @@
 .md-footer {
   background-color: var(--md-primary-fg-color);
 }
-
 
 
 
@@ -76,8 +70,8 @@
 /* enlarges the logo image */
 .md-header__button.md-logo img,
 .md-header__button.md-logo svg {
-  height: unset;
-  width: unset;
+  height: 5rem !important;
+  width: auto;
 }
 
 /* widens the page view */
@@ -109,6 +103,11 @@
 .md-content img {
   border-radius: 0.2em;
   box-shadow: 0 0 0.2em 0 #777;
+}
+
+.md-content img.twemoji {
+  border-radius: 0;
+  box-shadow: 0 0 0 0 #777;
 }
 
 img[alt="doc-signature"] {
