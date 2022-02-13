@@ -95,7 +95,7 @@ theme:
     code: Roboto Mono
 
   favicon: _assets/_images/dynamic-child-favicon.png
-  logo: _assets/_images/logo-desktop.svg
+  logo: _assets/_images/rcpch_logo.png
 
 plugins:
   - render_swagger
@@ -119,6 +119,7 @@ markdown_extensions:
 
 copyright: Copyright &copy; 2021 Royal College of Paediatrics and Child Health (RCPCH)
 repo_url: https://github.com/rcpch/digital-growth-charts-documentation
+repo_name: rcpch/documentation
 edit_uri: blob/live/docs
 
 extra_css:
