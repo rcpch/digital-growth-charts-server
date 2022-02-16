@@ -88,6 +88,10 @@ If any of the following:
 * Smaller centile falls or discrepancies between child’s and mid-parental centile, if seen in combination, or if associated with possible underlying disease.
 * If there are any other concerns about the child’s growth.
 
+## How do SDS charts work?
+
+Centiles are derived mathematically from standard deviation scores (SDS), also known as z scores. These values in turn are related to p values, the probability of finding a child with a given measurement in a sample. An SDS of 0 equates to the 50th centile, with positive values relating to centiles above this, and a negative value relating to centiles below. The benefit of reporting and charting SDS rather than centiles is that values can all be plotted on the same chart. It is important to note that plotting the z score against age must be against the corrected age, not the chronological one, as the chart quickly otherwise becomes very crowded and hard to interpret.
+
 ## Calculations as yet not implemented in the API
 
 ### Weight–height to BMI conversion chart

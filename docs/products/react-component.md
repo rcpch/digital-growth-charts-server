@@ -262,10 +262,12 @@ interface GridlineStyle{
 }
 ```
 
-Centile styles control the width and colour.
+Centile styles control the width and colour of the centile and SDS lines.
 
 ```js
 interface CentileStyle{
+    sdsStroke?: string,
+    sdsStrokeWidth?: string,
     centileStroke?: string, 
     centileStrokeWidth?: number, 
     delayedPubertyAreaFill?: string,
@@ -275,16 +277,14 @@ interface CentileStyle{
 }
 ```
 
-Measurement styles control the plotted data points - colour, size and shape. Corrected ages are always rendered as crosses. Circles for chronological ages are preferred.
+Measurement styles control the plotted data points - colour, size and shape. Corrected ages are always rendered as crosses. Circles for chronological ages are preferred. On the SDS charts, measurement points are grey by default, with the measurement method in focus highlighted by rendering as a line. Points which are not highlighted can be emphasised on mouse hover, the highlighted colour being set by the highlightedMeasurementFill prop.
 
 ```js
 interface MeasurementStyle{
     measurementFill?: string, 
-    measurementSize?: number // this is an svg size
+    highLightedMeasurementFill?: string;
 }
 ```
-
-At the moment, only standard centile measurement plots are supported, but in future it is expected SDS charts will be added for all references.
 
 In time more props can be added if users request them. If you have requests, please post issues on our [github](https://github.com/rcpch/digital-growth-charts-react-component-library/issues) or contribute.
 
