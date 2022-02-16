@@ -7,6 +7,10 @@
     <img align="center" width="100px" src="https://github.com/rcpch/digital-growth-charts-documentation/raw/live/docs/_assets/_images/logo-block-outline-sm.png"/>
     <p align="center">Winner 2020 HTN Health Tech Awards - Best Health Tech Solution</p>
     <p align="center">This project is part of the <a href="https://publicmoneypubliccode.org.uk/">Public Money Public Code</a> community</p>
+    <p align="center">
+    <img width="60px" src="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/image_data/file/111825/ukca-black-fill.png"/>
+    <p align="center">MHRA certified 2022.</p>
+    </p>
 </p>
 
 # RCPCH Digital Growth Charts API Server
