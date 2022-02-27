@@ -900,6 +900,10 @@
                         "title": "Calendar Age",
                         "type": "string"
                     },
+                    "corrected_gestational_age": {
+                        "title": "Corrected Gestational Age",
+                        "type": "string"
+                    },
                     "lay_comment": {
                         "title": "Lay Comment",
                         "type": "string"

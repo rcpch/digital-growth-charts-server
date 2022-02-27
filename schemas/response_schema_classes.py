@@ -49,6 +49,7 @@ class CorrectedDecimalAgeData(BaseModel):
     observation_error: Optional[str]
     age_type: Literal["chronological_age", "corrected_age"]
     calendar_age: Optional[str]
+    corrected_gestational_age: Optional[str]=None
     lay_comment: str
     clinician_comment: str
     age_error: Optional[str]
