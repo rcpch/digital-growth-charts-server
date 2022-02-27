@@ -49,6 +49,8 @@
                 "x": 8.167008898015059,
                 "y": 115.0,
                 "b": 10.0,
+                "centile": 0.8,
+                "sds": -2.406593606646068,
                 "bone_age_label": "This bone age is advanced",
                 "events_text": [
                     "Growth hormone start",
@@ -70,6 +72,8 @@
                 "x": 8.167008898015059,
                 "y": 115.0,
                 "b": 10.0,
+                "centile": 0.8,
+                "sds": -2.406593606646068,
                 "bone_age_label": "This bone age is advanced",
                 "events_text": [
                     "Growth hormone start",
@@ -93,6 +97,8 @@
                 "x": 8.167008898015059,
                 "y": -2.406593606646068,
                 "b": 10.0,
+                "centile": 0.8,
+                "sds": null,
                 "bone_age_label": "This bone age is advanced",
                 "events_text": [
                     "Growth hormone start",
@@ -114,6 +120,8 @@
                 "x": 8.167008898015059,
                 "y": -2.406593606646068,
                 "b": 10.0,
+                "centile": 0.8,
+                "sds": null,
                 "bone_age_label": "This bone age is advanced",
                 "events_text": [
                     "Growth hormone start",

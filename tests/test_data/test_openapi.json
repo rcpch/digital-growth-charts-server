@@ -725,6 +725,14 @@
                         "title": "B",
                         "type": "number"
                     },
+                    "centile": {
+                        "title": "Centile",
+                        "type": "number"
+                    },
+                    "sds": {
+                        "title": "Sds",
+                        "type": "number"
+                    },
                     "bone_age_label": {
                         "title": "Bone Age Label",
                         "type": "string"
@@ -838,6 +846,14 @@
                     },
                     "b": {
                         "title": "B",
+                        "type": "number"
+                    },
+                    "centile": {
+                        "title": "Centile",
+                        "type": "number"
+                    },
+                    "sds": {
+                        "title": "Sds",
                         "type": "number"
                     },
                     "bone_age_label": {

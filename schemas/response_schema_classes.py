@@ -20,6 +20,8 @@ class ChronologicalDecimalAgeData(BaseModel):
     x: Optional[float]
     y: Optional[float]
     b: Optional[float]=None
+    centile: Optional[float]=None
+    sds: Optional[float]=None
     bone_age_label: Optional[str]=None
     events_text: Optional[list]=None
     bone_age_type: Optional[Literal['greulich-pyle', 'tanner-whitehouse-ii', 'tanner-whitehouse-iii', 'fels','bonexpert']]
@@ -37,6 +39,8 @@ class CorrectedDecimalAgeData(BaseModel):
     x: Optional[float]
     y: Optional[float]
     b: Optional[float]=None
+    centile: Optional[float]=None
+    sds: Optional[float]=None
     bone_age_label: Optional[str]=None
     events_text: Optional[list]=None
     bone_age_type: Optional[Literal['greulich-pyle', 'tanner-whitehouse-ii', 'tanner-whitehouse-iii', 'fels','bonexpert']]

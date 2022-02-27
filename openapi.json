@@ -3,7 +3,7 @@
     "info": {
         "title": "RCPCH Digital Growth API",
         "description": "Returns SDS and centiles for child growth measurements using growth references. Currently provides calculations based on the UK-WHO, Turner's Syndrome and Trisomy-21 references.",
-        "version": "4.2.3"
+        "version": "4.2.4"
     },
     "paths": {
         "/uk-who/calculation": {
@@ -725,6 +725,14 @@
                         "title": "B",
                         "type": "number"
                     },
+                    "centile": {
+                        "title": "Centile",
+                        "type": "number"
+                    },
+                    "sds": {
+                        "title": "Sds",
+                        "type": "number"
+                    },
                     "bone_age_label": {
                         "title": "Bone Age Label",
                         "type": "string"
@@ -838,6 +846,14 @@
                     },
                     "b": {
                         "title": "B",
+                        "type": "number"
+                    },
+                    "centile": {
+                        "title": "Centile",
+                        "type": "number"
+                    },
+                    "sds": {
+                        "title": "Sds",
                         "type": "number"
                     },
                     "bone_age_label": {
