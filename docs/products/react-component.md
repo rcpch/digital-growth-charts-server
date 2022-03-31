@@ -29,7 +29,7 @@ You can use the component as-is in a React app, or include it in plain HTML or a
 * Bone ages
 * Midparental heights with midparental centile lines (at +2 and -2 SDS)
 
-### Version 4 new features
+### Version 6 new features
 
 * Rework the data structure to match that from API to prevent persisting data in the component in future
 * BMI SDS lines
@@ -67,7 +67,7 @@ If you need us to develop a charting component in a different language or framew
 ## Getting started
 
 ```console
-foobar:~foo$ npm i --save @rcph/digital-growth-charts-react-component-library
+foobar:~foo$ npm i --save @rcpch/digital-growth-charts-react-component-library
 ```
 
 Victory Charts are a dependency (see below), themselves built on top of D3.js. On build it is likely you will get an error relating to circular dependencies for some files in the d3-interpolate module. The is an issue logged [here](https://github.com/d3/d3-interpolate/issues/58).
