@@ -6,6 +6,8 @@
 
         .md-typeset .mdx-hero__content h1 {
             margin-top: 1.25em;
+            margin-left: 50px;
+            margin-right: 50px;
         }
         
         @media screen and (max-width: 960px) {
@@ -21,48 +23,57 @@
         div#twitter-embeds {
             margin: auto;
         }
-        
-        div#twitter-embeds .twitter-tweet.twitter-tweet-rendered {
-            float: left;
-            margin: 0 20px;
+
+        .container {
+            margin-left: 100px;
+            margin-right: 100px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .twitter-tweet {
+            width: 200px;
+            padding-left: 20px;
+        }
+
+        #demo-iframe {
+            width: 95%;
+            height: 910px;
         }
 
     </style>
 
-    <section class="mdx-container ">
+    <section >
         <div class="mdx-hero__content md-typeset">
-            <br />
+                <br />
 
-            <h1>
-                'Best Practice As Code' by the RCPCH.
-            </h1>
+                <h1>
+                    'Best Practice As Code' by the RCPCH.
+                </h1>
+                    
+                <h2>
+                    Digital clinical tools provided to developers of clinician and patient facing technology.
+                </h2>
                 
-            <h2>
-                Digital clinical tools provided to developers of clinician and patient facing technology.
-            </h2>
-            
-            <p>
-                Working with experts in growth monitoring, growth charts, centile and SDS calculation, we've created an API that handles the heavy lifting of child growth parameters. You get reliable, safe results - instantly. Our Free tier provides instant access to all, our code is fully open source, and the API service sustainably managed as a non-profit enterprise, with uptime guarantees and SLA.
-            </p>
-            
-            <a href="integrator/getting-started/" title="Go to the integrator documentation" class="md-button md-button--primary" id="integrator">
-                Integrator Docs
-            </a>
-            <a href="clinician/how-the-api-works/" title="Go to the clinical documentation" class="md-button md-button--primary" id="clinician">
-                Clinician Information
-            </a>
-            <a href="developer/start-here/" title="Go to the contributor documentation" class="md-button md-button--primary" id="contributor">
-                Contribute
-            </a>
+                <p>
+                    Working with experts in growth monitoring, growth charts, centile and SDS calculation, we've created an API that handles the heavy lifting of child growth parameters. You get reliable, safe results - instantly. Our Free tier provides instant access to all, our code is fully open source, and the API service sustainably managed as a non-profit enterprise, with uptime guarantees and SLA.
+                </p>
+                
+                <a href="integrator/getting-started/" title="Go to the integrator documentation" class="md-button md-button--primary" id="integrator">
+                    Integrator Docs
+                </a>
+                <a href="clinician/how-the-api-works/" title="Go to the clinical documentation" class="md-button md-button--primary" id="clinician">
+                    Clinician Information
+                </a>
+                <a href="developer/start-here/" title="Go to the contributor documentation" class="md-button md-button--primary" id="contributor">
+                    Contribute
+                </a>
             
         </div>
-        <div class="w3-container">
+        
             <div class="md-grid md-typeset">
                 <div>
-                    <br/>
-                    <h1>Demonstration Growth Chart</h1>
-                    <iframe id="demo-iframe" src="https://rcpch.github.io/digital-growth-charts-react-client/" width="100%" height="880" ></iframe>
-                    More information on exactly what the demo growth chart is, how it works, and what it is intended for, is here
+                    <iframe id="demo-iframe" src="https://rcpch.github.io/digital-growth-charts-react-client/"></iframe>
                 </div>
                 
                 <!-- This div only shows for small screens to explain why there is no demo chart-->
@@ -75,11 +86,8 @@
                 </div>
             </div>
         
-            <div id="twitter" class="md-grid md-typeset">
-                <br />
-                <h1>Tweets about the dGC Project</h1>
-                
-                <div id="twitter-embeds">
+            <div class="container">
+                <!-- <div id="twitter-embeds"> -->
                     <blockquote class="twitter-tweet">
                         <p lang="en" dir="ltr"><a href="https://twitter.com/RCPCHtweets?ref_src=twsrc%5Etfw">@RCPCHtweets</a> <a
                                 href="https://twitter.com/eatyourpeas?ref_src=twsrc%5Etfw">@eatyourpeas</a> <a
@@ -115,9 +123,9 @@
                     
                     <!-- only need one of these script calls -->
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                </div>
+                <!-- </div> -->
             </div>
-        </div>
+        
     </section>
 
 {% endblock %}
