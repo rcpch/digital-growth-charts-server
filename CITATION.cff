@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Chapman"
+    given-names: "Simon"
+    orcid: "https://orcid.org/0000-0001-9897-2040"
+  - family-names: "Baw"
+    given-names: "Marcus"
+  - family-names: "Cole"
+    given-names: "Tim"
+    orcid: "https://orcid.org/0000-0001-5711-8200"
+title: "rcpchgrowth"
+version: 4.2.8
+doi: 10.5281/zenodo.6303587
+date-released: 2022-05-14
+url: "https://github.com/rcpch/digital-growth-charts-server"
