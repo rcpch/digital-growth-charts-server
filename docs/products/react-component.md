@@ -9,7 +9,7 @@ Although the process of obtaining a centile/SDS result from the API is very stra
 
 Even then, there are certain rules which are key, published by the RCPCH project board. These relate to usability of the charts. For example, the 50th centile should be de-emphasised. These and other rules are listed on the [RCPCH Github](https://github.com/rcpch)
 
-Given the complexity, we decided to create a React component library for developers to use. We designed it to be customisable for those that wanted to use it, but also as a demonstration for developers who wanted to build the charts themselves from the ground up. 
+Given the complexity, we decided to create a React component library for developers to use. We designed it to be customisable for those that wanted to use it, but also as a demonstration for developers who wanted to build the charts themselves from the ground up.
 
 For this reason, we have produced a permissively-licensed open-source React component, which aims to simplify the process of creating a chart from the chart data received from the API. It makes the job of drawing a vector-graphic centile chart much easier.
 
@@ -35,6 +35,12 @@ You can use the component as-is in a React app, or include it in plain HTML or a
 * BMI SDS lines
 * SDS charts
 * Save to clipboard
+
+### New in 6.1
+
+* Dates included in tooltips
+* clinicianFocus (optional prop) to toggle between advice strings aimed at clinicians or those aimed at families/children & young people
+* toggle button to allow user to constrain viewable chart to measurements or view the whole chart
 
 ## Background
 
@@ -135,7 +141,8 @@ This library has been written in Typescript. The main component is `RCPCHChart`,
   enableZoom?: boolean,
   chartType?: 'centile' | 'sds',
   enableExport: boolean,
-  exportChartCallback: function(svg: any)
+  exportChartCallback: function(svg: any),
+  clinicianFocus?: boolean;
 }
 ```
 
@@ -357,6 +364,63 @@ interface MeasurementStyle{
 }
 ```
 
+### Other Props
+
+1. ```midParentalHeightData```: This is the return value from the RCPCH API and takes the structure:
+
+```js
+export interface MidParentalHeightObject {
+    mid_parental_height?: number;
+    mid_parental_height_sds?: number;
+    mid_parental_height_centile?: number;
+    mid_parental_height_centile_data?: Reference[]
+    mid_parental_height_upper_centile_data?: Reference[]
+    mid_parental_height_lower_centile_data?: Reference[]
+    mid_parental_height_lower_value?: number
+    mid_parental_height_upper_value?: number
+}
+```
+
+This returns a midparental height as well as the midparental SDS and centile, and the centile data should the user which to plot a midparental centile unto the chart. The structure of the Reference and Centile interfaces is:
+
+```js
+export interface Reference {
+    [name: string]: ISexChoice
+}
+
+export interface ICentile {
+    centile: number,
+    data: IPlottedCentileMeasurement[],
+    sds: number
+}
+
+export interface IPlottedCentileMeasurement {
+    "l": string | number,
+    "x": number,
+    "y": number
+}
+
+export interface ISexChoice {
+    male: IMeasurementMethod,
+    female: IMeasurementMethod
+}
+
+export interface IMeasurementMethod{
+    height?: ICentile[],
+    weight?: ICentile[],
+    bmi?: ICentile[],
+    ofc?: ICentile[],
+}
+```
+
+Centile data are returned from the RCPCH API in this same structure, though no API call is made from this component - all the centile data for all the references is included.
+
+1. ```enableZoom```: a boolean optional prop which defaults to false. If true, the user can press and mouse click to zoom in or out once measurements are being displayed. A reset zoom button also appears.
+2. ```chartType```: a string mandatory prop and must be one of ```'centile' | 'sds'```. It toggles between centile and SDS charts.
+3. ```enableExport```: a boolean optional prop. If true, a copy/paste button is rendered below the chart. It defaults to false. If true, ```exportChartCallback``` must also be implemented.
+4. ```exportChartCallback```: callback function implemented if enableExport is true. It receives an SVG element. This can be saved in the client to clipboard by converting to canvas using HTML5. An implementation of this is [here](https://github.com/rcpch/digital-growth-charts-react-client/blob/live/src/functions/canvasFromSVG.js)
+5. ```clinicianFocus```: a boolean optional prop which defaults to false. If true, the advice strings that are reported to users in tooltips are more technical and aimed at clinicians familiar with centile charts.
+
 In time more props can be added if users request them. If you have requests, please post issues on our [github](https://github.com/rcpch/digital-growth-charts-react-component-library/issues) or contribute.
 
 ## Contributing
@@ -377,9 +441,12 @@ You can get in touch with the primary developers to talk about the project using
 ### Acknowledgements
 
 This Typescript library was built from the starter created by [Harvey Delaney](https://blog.harveydelaney.com/creating-your-own-react-component-library/)
-[![Build status](https://badge.buildkite.com/90ff98db996bb137c5be1bdce666c4b1ce68a25b17af0a6a04.svg?branch=master)](https://buildkite.com/harvey/react-component-library)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 The charts are built using [Victory Charts](https://formidable.com/open-source/victory/docs/victory-chart/) for React. We tried several different chart packages for React, but we chose Victory because of their documentation and their ability to customise components.
 
 The chart data bundled in is subject to licence. If you wish to use this software, please contact the RCPCH.
+
+### Licensing
+
+The charts are released under the MIT licence
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
