@@ -26,4 +26,4 @@ jobs:
 
       - name: Run pytest
         run: |
-          pytest -no-header -vv
+          pytest --no-header -vv
