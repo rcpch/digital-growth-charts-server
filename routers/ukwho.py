@@ -25,26 +25,26 @@ uk_who = APIRouter(
 def uk_who_calculation(
     measurementRequest: MeasurementRequest = Body(
         ...,
-            example={
-                "birth_date": "2020-04-12",
-                "observation_date": "2028-06-12",
-                "observation_value": 115,
-                "sex": "female",
-                "gestation_weeks": 40,
-                "gestation_days": 0,
-                "measurement_method": "height",
-                "bone_age": 10,
-                "bone_age_centile": 98,
-                "bone_age_sds": 2.0,
-                "bone_age_text": "This bone age is advanced",
-                "bone_age_type": "greulich-pyle",
-                "events_text": ["Growth hormone start", "Growth Hormone Deficiency diagnosis"]
-            }
-        )
-    ):
+        example={
+            "birth_date": "2020-04-12",
+            "observation_date": "2028-06-12",
+            "observation_value": 115,
+            "sex": "female",
+            "gestation_weeks": 40,
+            "gestation_days": 0,
+            "measurement_method": "height",
+            "bone_age": 10,
+            "bone_age_centile": 98,
+            "bone_age_sds": 2.0,
+            "bone_age_text": "This bone age is advanced",
+            "bone_age_type": "greulich-pyle",
+            "events_text": ["Growth hormone start", "Growth Hormone Deficiency diagnosis"]
+        }
+    )
+):
     """
     ## UK-WHO Centile and SDS Calculations
-        
+
     * These are the 'standard' centiles for children in the UK. It uses a hybrid of the WHO and UK90 datasets.  
     * For non-UK use you may need the WHO-only or CDC charts which we do not yet support, but we may add if demand is there.  Please contact us.
     * Returns a single centile/SDS calculation for the selected `measurement_method`.  
@@ -85,7 +85,7 @@ def uk_who_calculation(
 def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
     """
     ## UK-WHO Chart Coordinates data.
-        
+
     * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
     * Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')
     * If custom centiles/sds collections (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter
@@ -112,23 +112,24 @@ def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
         ... repeat for weight, bmi, ofc, based on which measurements supplied. If only height data supplied, only height centile data returned
     ]
     """
-    chart_data=None
+    chart_data = None
     if (type(chartParams.centile_format) is list):
         # custom centiles requested - calculate these and return. Do not persist.
         try:
             chart_data = create_chart(
-                UK_WHO, 
-                chartParams.centile_format, 
-                measurement_method=chartParams.measurement_method, 
+                UK_WHO,
+                chartParams.centile_format,
+                measurement_method=chartParams.measurement_method,
                 sex=chartParams.sex,
                 is_sds=chartParams.is_sds)
         except:
             return HTTPException(status_code=422, detail=f"Error creating {chartParams.sex} {chartParams.measurement_method} UK-WHO chart on the server, using {chartParams.centile_format} centile format.")
     else:
         chart_data_file = Path(
-                    f'chart-data/{chartParams.centile_format}-{constants.UK_WHO}-{chartParams.sex}-{chartParams.measurement_method}.json')
+            f'chart-data/{chartParams.centile_format}-{constants.UK_WHO}-{chartParams.sex}-{chartParams.measurement_method}.json')
         if chart_data_file.exists():
-            print(f'Chart data file exists for {chartParams.centile_format}-{constants.UK_WHO}-{chartParams.sex}-{chartParams.measurement_method}.')
+            print(
+                f'Chart data file exists for {chartParams.centile_format}-{constants.UK_WHO}-{chartParams.sex}-{chartParams.measurement_method}.')
             with open(f'chart-data/{chartParams.centile_format}-{constants.UK_WHO}-{chartParams.sex}-{chartParams.measurement_method}.json', 'r') as file:
                 chart_data = json.load(file)
         else:
@@ -136,6 +137,7 @@ def uk_who_chart_coordinates(chartParams: ChartCoordinateRequest):
     return {
         "centile_data": chart_data
     }
+
 
 @uk_who.post('/fictional-child-data', tags=["uk-who"], response_model=List[MeasurementObject])
 def fictional_child_data(fictional_child_request: FictionalChildRequest):
@@ -164,5 +166,3 @@ def fictional_child_data(fictional_child_request: FictionalChildRequest):
         return life_course_fictional_child_data
     except:
         return HTTPException(status_code=422, detail=f"Not possible to create UK-WHO fictional child data.")
-
-
