@@ -1,9 +1,9 @@
 ---
-title: Privacy Policy
+title: Privacy Notice
 reviewers: Dr Marcus Baw
 ---
-# RCPCH Digital Growth Charts Privacy Policy
 
+# RCPCH Digital Growth Charts Privacy Notice and Policy
 
 **Our Contact Details**  
 
@@ -92,9 +92,8 @@ If you are unhappy with how we are using your personal data, you should contact 
 
 :fontawesome-solid-globe: <https://www.ico.org.uk>
 
-
 If you have any questions about our privacy policy, the information we hold about you or you wish to make a complaint, please send an email to: <mailto:information.governance@rcpch.ac.uk>
 
 ## Changes to this Privacy Policy
 
-We keep our privacy policy under review, and we will place any updates on this web page. This privacy policy was last updated on 25/04/2021.
+We keep our privacy policy under review, and we will place any updates on this web page. This privacy policy was last updated on 2/07/2022.

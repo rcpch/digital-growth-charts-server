@@ -18,11 +18,11 @@ The Project Board and Project Team all agreed, as responsible clinicians, that t
 
     - **Licensing**. The terms of the licenses we issue *can* be changed for future versions of the software, if this is necessary. However we would only do this for reasons of improving the project. Multiple licensing models can be used simultaneously, this is called a *dual-* (or even *tri*-) licensing arrangement.
 
-    - **Security**. Allowing outsiders to see the source code does not introduce any security vulnerability whatsoever. Security does not come from hiding your code as in the closed-source model, it comes from high standards of security practice using best industry practice, cryptography, and modern tools.
+    - **Security**. Allowing outsiders to see the source code does not introduce any security vulnerability whatsoever. Security does not come from hiding your code as in the closed-source model, it comes from high standards of security practice using best industry practice, robust cryptography, and modern tools and approaches, such as Factor III of the ["12-Factor" application development philosophy](https://12factor.net/)
 
     - Other myths exist which imply some weakness about open source projects; we are happy to discuss them if required in the [dGC Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts)
 
-## Copyright
+## Copyright Notices
 
 ### Software
 
@@ -46,13 +46,13 @@ Primarily we have used two different [Open Source Initiative](https://opensource
 
 ### [GNU Affero General Public License version 3](https://opensource.org/licenses/AGPL-3.0)
 
-The RCPCH dGC API Server and its accompanying Python package library is licensed under the Affero GPL, in order to use the 'copyleft' (also known as 'sharealike') feature within the license. The aim of this is to ensure that any other entities that wish to deploy the the API or python package code as a web service are still required to share all source code modifications they make.
+The RCPCH dGC API Server and its accompanying Python package library is licensed under the Affero GPL, in order to use the 'copyleft' (also known as 'sharealike') feature within the license. The aim of this is to ensure that any other entities that wish to deploy the the API or python package code as a web service are still required to share all source code modifications they make, back to the community.
 
 ### [The MIT License](https://opensource.org/licenses/MIT)
 
 Components which we believe other organisations would derive benefit from being able to directly reuse within their own commercial products have been licensed using the MIT License, which permits reuse of this nature, and does not encumber the commercial product with copyleft or other restrictive conditions. This license is widely used for licensing open source programming languages, libraries, and other reusable software components, and is considered one of the 'industry standard' licenses for this purpose.
 
-## Third-Party Tools, Libraries and Frameworks Licensing
+## Open Source Licenses and Software Bill of Materials
 
 | Tool / Framework / Library                                                       | License                                                                     |
 | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
