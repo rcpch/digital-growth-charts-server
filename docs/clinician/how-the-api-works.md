@@ -21,7 +21,9 @@ The LMS method provides a way of obtaining normalised growth centiles from a ref
 - Look up in the LMS table for the relevant measurement (e.g. height) the age and sex-specific values of L, M and S for the child. If the child's age falls between the tabulated ages, use cubic interpolation to obtain values for the child's exact age.
 
 - To obtain the z-score, plug the LMS values with the child's measurement into the formula:
-  ![formula](https://latex.codecogs.com/svg.image?z=((measure/M)^L)-1/(L/S))
+  <div class="latex">
+  <img src="https://latex.codecogs.com/svg.image?z=((measure/M)^L)-1/(L/S))"></img>
+  </div>
 
 ## Growth References
 
@@ -52,14 +54,27 @@ In most circumstances _cubic_ interpolation is used - this involves identifying 
 
 If _t₀_, _t₁_, _t₂_, _t₃_, _y₀_, _y₁_, _y₂_, _y₃_, are given, and _t₀_<_t₁_<_t₂_<_t₃_, _t_ is in the range of [*t₁*, *t₂*], the cubic interpolation of _y_ for _t_ is:
 
+<div class="latex">
 <img src="https://latex.codecogs.com/svg.latex?\inline&space;\bg_white&space;\large&space;y=\frac{y_{0}(t-t_{1})(t-t_{2})(t-t_{3})}{(t_{0}-t_{1})(t_{0}-t_{2})(t_{0}-t_{3})}&space;&plus;&space;\frac{y_{1}(t-t_{0})(t-t_{2})(t-t_{3})}{(t_{1}-t_{0})(t_{1}-t_{2})(t_{1}-t_{3})}&space;&plus;&space;\frac{y_{2}(t-t_{0})(t-t_{1})(t-t_{3})}{(t_{2}-t_{0})(t_{2}-t_{1})(t_{2}-t_{3})}&plus;\frac{y_{3}(t-t_{0})(t-t_{1})(t-t_{2})}{(t_{3}-t_{0})(t_{3}-t_{1})(t_{3}-t_{2})}" title="\large y=\frac{y_{0}(t-t_{1})(t-t_{2})(t-t_{3})}{(t_{0}-t_{1})(t_{0}-t_{2})(t_{0}-t_{3})} + \frac{y_{1}(t-t_{0})(t-t_{2})(t-t_{3})}{(t_{1}-t_{0})(t_{1}-t_{2})(t_{1}-t_{3})} + \frac{y_{2}(t-t_{0})(t-t_{1})(t-t_{3})}{(t_{2}-t_{0})(t_{2}-t_{1})(t_{2}-t_{3})}+\frac{y_{3}(t-t_{0})(t-t_{1})(t-t_{2})}{(t_{3}-t_{0})(t_{3}-t_{1})(t_{3}-t_{2})}" />
-
-_dt_ = (*t-t*₁)/0.5
-<img src="https://latex.codecogs.com/svg.latex?\inline&space;\large&space;a_{0}=-\frac{y_{0}}{6}&plus;\frac{y_{1}}{2}-\frac{y_{2}}{2}&plus;\frac{y_{3}}{6}" title="\large a_{0}=-\frac{y_{0}}{6}+\frac{y_{1}}{2}-\frac{y_{2}}{2}+\frac{y_{3}}{6}" />
-<img src="https://latex.codecogs.com/svg.latex?\inline&space;\large&space;a_{1}=\frac{y_{0}}{2}-y_{1}&plus;\frac{y_{2}}{2}" title="\large a_{1}=\frac{y_{0}}{2}-y_{1}+\frac{y_{2}}{2}" />
-<img src="https://latex.codecogs.com/svg.latex?\inline&space;\large&space;a_{2}=-\frac{y_{0}}{3}-\frac{y_{1}}{2}&plus;&space;y_{2}-\frac{y_{3}}{6}" title="\large a_{2}=-\frac{y_{0}}{3}-\frac{y_{1}}{2}+ y_{2}-\frac{y_{3}}{6}" />
-_a₃_ = _y₁_
-y=a*{0}dt^{3}+a*{1}dt^{2}+a\_{2}dt+a^{3}
+</div>
+<div class="latex">
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\bg_white&space;\large&space; dt=(t-t_{1})/0.5" title="dt=(t-t_{1})/0.5"/>
+</div>
+<div class="latex">
+  <img src="https://latex.codecogs.com/svg.latex?\inline&space;\large&space;a_{0}=-\frac{y_{0}}{6}&plus;\frac{y_{1}}{2}-\frac{y_{2}}{2}&plus;\frac{y_{3}}{6}" title="\large a_{0}=-\frac{y_{0}}{6}+\frac{y_{1}}{2}-\frac{y_{2}}{2}+\frac{y_{3}}{6}" />
+</div>
+<div class="latex">
+  <img src="https://latex.codecogs.com/svg.latex?\inline&space;\large&space;a_{1}=\frac{y_{0}}{2}-y_{1}&plus;\frac{y_{2}}{2}" title="\large a_{1}=\frac{y_{0}}{2}-y_{1}+\frac{y_{2}}{2}" />
+</div>
+<div class="latex">
+  <img src="https://latex.codecogs.com/svg.latex?\inline&space;\Large&space;a_{2}=-\frac{y_{0}}{3}-\frac{y_{1}}{2}&plus;&space;y_{2}-\frac{y_{3}}{6}" title="\large a_{2}=-\frac{y_{0}}{3}-\frac{y_{1}}{2}+ y_{2}-\frac{y_{3}}{6}" />
+</div>
+<div class="latex">
+  <img src="https://latex.codecogs.com/svg.latex?\inline&space;\large&space;a_{3}=y_{1}" title="\large a_{3}=y_{1}" />
+</div>
+<div class="latex">
+<img src="https://latex.codecogs.com/svg.image?y=a_{0}&space;dt^{3}&plus;a_{1}dt^{2}&plus;a_{2}dt&plus;a_{3}"/>
+</div>
 
 **Note: this derived formula is equivalent to the above cubic interpolation only when the age interval is 0.5.**
 

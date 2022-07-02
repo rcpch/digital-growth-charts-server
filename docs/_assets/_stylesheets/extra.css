@@ -161,3 +161,16 @@ div#iframe-mobile-replacement {
     border-color: var(--rcpch-pink-color);
 }
 
+.latex img {
+  -moz-box-shadow: 0px 0px 0px #ccc;
+  -webkit-box-shadow: 0px 0px 0px #ccc;
+  box-shadow: 0px 0px 0px #ccc;
+  border: none!important;
+}
+
+img {
+  -moz-box-shadow: 0px 0px 0px #ccc;
+  -webkit-box-shadow: 0px 0px 0px #ccc;
+  box-shadow: 0px 0px 0px #ccc;
+  border: none!important;
+}
