@@ -46,7 +46,7 @@ Primarily we have used two different [Open Source Initiative](https://opensource
 
 ### [GNU Affero General Public License version 3](https://opensource.org/licenses/AGPL-3.0)
 
-The RCPCH dGC API Server and its accompanying Python package library is licensed under the Affero GPL, in order to use the 'copyleft' (also known as 'sharealike') feature within the license. The aim of this is to ensure that any other entities that wish to deploy the the API or python package code as a web service are still required to share all source code modifications they make, back to the community.
+The RCPCH Digital Growth Charts API Server and its accompanying Python package library is licensed under the Affero GPL, in order to use the 'copyleft' (also known as 'sharealike') feature within the license. The aim of this is to ensure that any other entities that wish to deploy the the API or python package code as a web service are still required to share all source code modifications they make, back to the community.
 
 ### [The MIT License](https://opensource.org/licenses/MIT)
 
@@ -63,7 +63,7 @@ Components which we believe other organisations would derive benefit from being 
 | [React-Native](https://github.com/facebook/react-native/blob/master/LICENSE)     | [MIT License](https://directory.fsf.org/wiki/License:Expat)                 |
 | [MkDocs](https://github.com/squidfunk/mkdocs-material/blob/master/LICENSE)       | [MIT License](https://directory.fsf.org/wiki/License:Expat)                 |
 
-All the above licenses are compatible with the AGPL terms of the dGC API Server and python package part of the project, and the MIT terms of the other parts.
+All the above licenses are compatible with the AGPL terms of the Digital Growth Charts API Server and python package part of the project, and the MIT terms of the other parts.
 
 All the above projects remain the copyright of their respective owners.
 

@@ -103,7 +103,7 @@ Certain key presentation principles should be included:
 On the centile chart it should be made clear that allowance has been made for varying age of gestation at birth by offering the option of plotting at chronological age with a **circle** as well as gestational age (age – number of weeks premature) with a **cross**. If plotted together, they should be joined by a line. An option should be offered to toggle between the plotted chronological, corrected ages and both.
 
 !!! note "Gestation Age Correction through the life course"
-    **The standard has recently changed** such that now gestational age is taken into account, even when born at gestational ages regarded as term,  and across the whole lifespan. This change was adopted because digital charting makes gestational age correction much easier to do, in fact it is now a completely automated process because of the the dGC API. (Note that this is different from paper charts, where gestational age correction was manual and therefore was only done up to 1 or 2 years depending on the degree of prematurity).
+    **The standard has recently changed** such that now gestational age is taken into account, even when born at gestational ages regarded as term,  and across the whole lifespan. This change was adopted because digital charting makes gestational age correction much easier to do, in fact it is now a completely automated process because of the the Digital Growth Charts API. (Note that this is different from paper charts, where gestational age correction was manual and therefore was only done up to 1 or 2 years depending on the degree of prematurity).
 
 #### Examples
 

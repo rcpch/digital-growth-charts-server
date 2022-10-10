@@ -5,7 +5,7 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman
 
 # rcpchgrowth Python package
 
-The calculation functions within the dGC API are powered by a self-contained Python package which has been extracted out into a separate repository and is published on [PyPi](https://pypi.org/project/rcpchgrowth/), the Python Package Index. This enables the centile calculation functions to be used in other programs. 
+The calculation functions within the Digital Growth Charts API are powered by a self-contained Python package which has been extracted out into a separate repository and is published on [PyPi](https://pypi.org/project/rcpchgrowth/), the Python Package Index. This enables the centile calculation functions to be used in other programs. 
 
 ![python_library](../_assets/_images/python_library_carbon.png)
 

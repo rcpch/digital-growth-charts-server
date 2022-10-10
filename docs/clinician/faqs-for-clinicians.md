@@ -17,9 +17,9 @@ Digital Growth Charts include recommended SNOMED-CT clinical terminology to guid
 
 Hopefully this can lead on to further discussion with the IT team at your place of work, which should hopefully establish lines of communication with the supplier of the Electronic Patient Record (EPR).
 
-Many EPR suppliers will have already started the process of integrating the RCPCH dGC API into their product, and we are happy to assist vendors with integration once they purchase a subscription.
+Many EPR suppliers will have already started the process of integrating the RCPCH Digital Growth Charts API into their product, and we are happy to assist vendors with integration once they purchase a subscription.
 
-## Q: How much do the RCPCH dGC APIs cost?
+## Q: How much do the RCPCH Digital Growth Charts APIs cost?
 
 **A**: The APIs themselves are run on a sustainable non-profit basis by the RCPCH, which is a charitable organisation. The aim is for modest revenues from the API to be fed back into development of future APIs and new features.
 
@@ -29,7 +29,7 @@ Pricing depends on the volume of requests that the vendor requires and the amoun
 
 The process of integrating the API into an existing EPR product is technically straightforward and the amount of work is modest. EPR suppliers may of course levy a fee for this additional integration work, however once this has been done once for a product, there should be minimal or zero additional work to roll out to other sites, so you should check whether the vendor has already deployed the dGC elsewhere.
 
-## Q: Can I try out the dGC APIs?
+## Q: Can I try out the Digital Growth Charts APIs?
 
 **A**: Yes, you can use the demo site at <https://growth.rcpch.ac.uk/> to evaluate the service.
 

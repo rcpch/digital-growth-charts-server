@@ -3,7 +3,7 @@ title: Making API Calls
 reviewers: Dr Marcus Baw, Dr Simon Chapman
 ---
 
-# Making calls to the dGC API
+# Making calls to the Digital Growth Charts API
 
 There are as many ways to make an API call as there are software developers, I reckon. But here are some common ways. We'll start with using our actual API documentation, then try a super-simple tool called `cURL` but if you prefer a graphical tool then feel free to skip ahead to the section on Postman.
 

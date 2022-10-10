@@ -5,7 +5,7 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman
 
 # Pricing and Commercial Information
 
-The RCPCH is a registered charity, and the dGC API's cost model is designed to ensure sustainable future maintenance and development of the dGC APIs. We also have a commitment to always provide a Free Tier to ensure rapid on-boarding and novel and exploratory uses.
+The RCPCH is a registered charity, and the Digital Growth Charts API's cost model is designed to ensure sustainable future maintenance and development of the Digital Growth Charts APIs. We also have a commitment to always provide a Free Tier to ensure rapid on-boarding and novel and exploratory uses.
 
 The most up-to-date pricing and support information is on the [RCPCH website](https://www.rcpch.ac.uk/resources/growth-charts/digital/about#subscriptions-and-pricing)
 

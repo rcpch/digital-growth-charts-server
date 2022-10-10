@@ -49,4 +49,4 @@ mkdocs serve
 
 * on some platforms, if you get the error `ModuleNotFoundError: No module named '_ctypes'` then you need to run `sudo apt-get install libffi-dev` or the equivalent on your platform, and then recompile your Python (if using pyenv, simply `pyenv install 3.10.2` will recompile that Python binary)
 
-* Tested Feb 2022 on Linux Mint 20.3
+* Tested Oct 2022 on Linux Mint 21.0

@@ -3,7 +3,7 @@ title: Getting API keys
 reviewers: Dr Marcus Baw, Dr Simon Chapman
 ---
 
-# Getting your dGC API keys
+# Getting your Digital Growth Charts API keys
 
 Following on from [Getting Started](../integrator/getting-started.md), in which we signed up for the platform and created an application, now let's get an API key and start making queries to the API.
 

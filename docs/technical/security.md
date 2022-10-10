@@ -5,7 +5,7 @@ reviewers: Dr Marcus Baw
 
 ## Gravitee.io API Management Platform
 
-Our Digital Growth Charts API uses the open source Gravitee.io API Management Platform to handle API requests to the dGC API.
+Our Digital Growth Charts API uses the open source Gravitee.io API Management Platform to handle API requests to the Digital Growth Charts API.
 
 ### Spring4Shell (CVE-2022-22965)
 

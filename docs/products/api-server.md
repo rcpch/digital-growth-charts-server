@@ -15,7 +15,7 @@ reviewers: Dr Marcus Baw
 
 ## Getting Started
 
-If you want to integrate the RCPCH dGC API into an application, then start [here](../integrator/getting-started.md)
+If you want to integrate the RCPCH Digital Growth Charts API into an application, then start [here](../integrator/getting-started.md)
 
 ## API details
 

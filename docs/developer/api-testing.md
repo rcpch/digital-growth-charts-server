@@ -7,7 +7,7 @@ reviewers: Dr Marcus Baw
 
 Using the Postman collection runner for tests
 
-Postman, the API creation and testing tool, has a command line version of the tooling called [newman]() which you can run locally from the command line to test a locally-running version of the dGC API against all our standard queries.
+Postman, the API creation and testing tool, has a command line version of the tooling called [newman]() which you can run locally from the command line to test a locally-running version of the Digital Growth Charts API against all our standard queries.
 
 At present this checks only for a 200 (OK) response, not the actual content of the response, but we are going to improve this in the near future.
 

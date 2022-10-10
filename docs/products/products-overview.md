@@ -13,7 +13,7 @@ Some are designed to integrate with each other, whilst others have been created 
 
 The **RCPCH Digital Growth Charts** (**RCPCH dGC**) platform centres around a REST API which provides **calculated growth parameters** derived from **supplied child measurements** such as **height** and **weight**.
 
-Click [here](../integrator/getting-started.md) if you wish to integrate the RCPCH dGC API into an application.
+Click [here](../integrator/getting-started.md) if you wish to integrate the RCPCH Digital Growth Charts API into an application.
 
 ## [React Demo Client](./react-client.md)
 
@@ -21,7 +21,7 @@ A [live demonstration](https://growth.rcpch.ac.uk/) of the API and Chart Library
 
 ## [React Chart Component](./react-component.md)
 
-A permissively-licensed, open-source React component which **simplifies** the process of **creating a digital growth chart graphic** from the data received from the **RCPCH dGC API**.
+A permissively-licensed, open-source React component which **simplifies** the process of **creating a digital growth chart graphic** from the data received from the **RCPCH Digital Growth Charts API**.
 
 ## [React Native Client](./react-native.md)
 
@@ -34,7 +34,7 @@ A command-line tool which allows utilisation of the powerful `rcpchgrowth-python
 
 ## [Python package](./python-library.md)
 
-The Python calculation functions, used to power the RCPCH dGC API, exist in a self-contained library for use in other applications.
+The Python calculation functions, used to power the RCPCH Digital Growth Charts API, exist in a self-contained library for use in other applications.
 
 Install via `pip`:
 

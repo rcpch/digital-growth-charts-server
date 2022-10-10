@@ -10,7 +10,7 @@ The next few pages will step you through the process of using the API. If you ar
 
 ## Sign up for the API service
 
-In order to use the dGC API you need to sign up for an account and obtain API keys. These API keys allow us to manage usage of the API and prevent abuse. There is a Free Tier of the API, which gives you instant access to the API, so you can get on with exploring the platform. More information on the pricing of the platform is available [here](../products/pricing.md).
+In order to use the Digital Growth Charts API you need to sign up for an account and obtain API keys. These API keys allow us to manage usage of the API and prevent abuse. There is a Free Tier of the API, which gives you instant access to the API, so you can get on with exploring the platform. More information on the pricing of the platform is available [here](../products/pricing.md).
 
 > At present this signup step is on an external website because we use the Microsoft Azure API management platform, in the future this may change in favour of a more streamlined on-boarding workflow.
 > 
