@@ -3,62 +3,33 @@ title: Products Overview
 reviewers: Dr Marcus Baw
 ---
 
-# Products Overview
+# Project Overview
 
-These products exist for different use-cases.
+---
 
-Some are designed to integrate with each other, whilst others have been created as stand-alone products.
+<p align="center">
+  <a href="https://www.thehtn.co.uk/health-tech-awards-2020-live/">
+    <img width="150px" src="../../_assets/htn-awards-winner-202-logo.jpg"
+      alt="Best Health Solution 2020 - Health Tech Awards" />
+  </a>
+</p>
+<p align="center">Winner Best Health Tech Solution HTN Health Teach Awards 2020</p>
 
-## [API Server](./api-server.md)
+---
 
-The **RCPCH Digital Growth Charts** (**RCPCH dGC**) platform centres around a REST API which provides **calculated growth parameters** derived from **supplied child measurements** such as **height** and **weight**.
+## The RCPCH Digital Growth Charts (dGC) Platform
 
-Click [here](../integrator/getting-started.md) if you wish to integrate the RCPCH Digital Growth Charts API into an application.
+It's important to understand the architecture of the Digital Growth Charts Platform. It is not built as a single 'app' or product, but for important reasons of interoperability and reusability of the code, it is split into functional units:
 
-## [React Demo Client](./react-client.md)
+- a [Digital Growth Charts API Server](../products/api-server.md). The **RCPCH Digital Growth Charts** (**RCPCH dGC**) platform centres around a 'backend' REST API which provides **calculated growth parameters** derived from **supplied child measurements** such as **height** and **weight**. It accepts growth data in a JSON format and returns Growth Chart Calculations in a JSON format, all over REST. The response from the API contains everything needed to display a graphical Growth Chart as well as many other parameters which are helpful to clinicians caring for children.
+- a [React.js chart component](../products/react-component.md), which can be thought of as the complementary 'frontend' to the 'backend' server previously mentioned. It is designed as a React.js Javascript component library, making it relatively easy to use in third-party applications, significantly reducing the work involved in displaying a standard chart. It can also be used as a 'template' to help implement charting in another programming language or framework. (The RCPCH can provide commercial support to aid in the development of charting in other languages and frameworks)
 
-A [live demonstration](https://growth.rcpch.ac.uk/) of the API and Chart Library Component.
+- a [demonstration client](../products/react-client.md) in React.js which shows the main features of the API and serves as 'living documentation' of the standard chart view. It uses both the backend server and the frontend charting library and serves as a reference implementation which can assist with future implementations. You can see and test out the charts on our live demo site [growth.rcpch.ac.uk](https://growth.rcpch.ac.uk).
 
-## [React Chart Component](./react-component.md)
+- a [Python package](../products/python-library.md) which is the API 'calculation engine' extracted out of the API so that it can be used as a standalone utility in other Python programs, such as in large-scale growth research or academia.
 
-A permissively-licensed, open-source React component which **simplifies** the process of **creating a digital growth chart graphic** from the data received from the **RCPCH Digital Growth Charts API**.
+- a [command line utility](../products/command-line-client.md) which wraps the Python package and makes it easy to use the growth calculation functions of the python packages in the command line.
 
-## [React Native Client](./react-native.md)
+- [Documentation](/) for the project is (as much as possible) all completely in the open and is primarily here on this documentation site. At present a small amount of further documentation remains at the Azure API Managament Developer Portal at [dev.rcpch.ac.uk](https://dev.rcpch.ac.uk), however we are working to bring all documentation into this site.
+- [Clinical Safety documentation](../safety/overview.md) including our complete Clinical Safety Management File for the development/manufacture (DCB0129) of the API and associated clients, libraries and tools, and for implementers to use as an information source for their own clinical safety cases.
 
-A modern dGC client for mobile, developed by Dr Charles van Lennep, which can be run on **Android** and **iOS**.
-
-
-## [Command-line Tools](./command-line-client.md)
-
-A command-line tool which allows utilisation of the powerful `rcpchgrowth-python` package **growth functions** within the terminal.
-
-## [Python package](./python-library.md)
-
-The Python calculation functions, used to power the RCPCH Digital Growth Charts API, exist in a self-contained library for use in other applications.
-
-Install via `pip`:
-
-``` bash
-pip install rcpchgrowth
-```
-
-## [Google Sheets extension](./google-sheets-plugin.md)
-
-A Google Sheets extension developed using [Google Apps Script](https://developers.google.com/apps-script/guides/sheets). 
-
-This allows accessibility for researchers, hobbyists, and enthusiasts. 
-
-## [Flask/Python Client (deprecated)](./flask(deprecated).md)
-
-Early version of the Growth Charts which simply combined the client and API within the same Flask app.
-
-## [Pricing](./pricing.md)
-
-Information about pricing and commercial use.
-=======
-:octicons-mark-github-16: link to code repo
-:material-web: link to demo / pypi (if exists)
-:fontawesome-brands-npm:
-:fontawesome-brands-python:
-
-## API Server
