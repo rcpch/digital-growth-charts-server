@@ -32,7 +32,7 @@ For licensing of the other parts of the project, see [Licensing and Copyright](h
 
 Create a virtualenv for the python modules
 ```
-pyenv virtualenv 3.10.2 dgc-docs
+pyenv virtualenv 3.10.2 mkdocs
 ```
 
 Install Material for MKDocs and the Swagger plugin
