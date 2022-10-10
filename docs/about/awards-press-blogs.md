@@ -17,7 +17,6 @@ In the middle of the 2020 global coronavirus pandemic, we crafted the dGC projec
 Royal Colleges 3.0 - Best Practice As Code
 https://marcus-baw.medium.com/royal-colleges-3-0-best-practice-as-code-7065bce821a7
 
-
 August 2020
 https://www.rcpch.ac.uk/news-events/news/rcpch-announces-forthcoming-digital-growth-charts-parents-families
 

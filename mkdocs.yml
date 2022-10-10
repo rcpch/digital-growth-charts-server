@@ -8,8 +8,8 @@ nav:
   - About:
     - 'about/about.md'
     - 'about/overview.md'
-    - 'about/support.md'
     - 'about/team.md'
+    - 'about/awards-press-blogs.md'
     - 'about/acknowledgements.md'
   - Products:
     - 'products/products-overview.md'
@@ -29,7 +29,8 @@ nav:
     - 'clinician/date-age-calculations.md'
     - 'clinician/growth-references.md'
     - 'clinician/faqs-for-clinicians.md'
-  - Integrator:
+  - Support:
+    - 'integrator/support.md'
     - 'integrator/getting-started.md'
     - 'integrator/api-keys.md'
     - 'integrator/making-api-calls.md'
@@ -105,6 +106,7 @@ markdown_extensions:
   - abbr
   - admonition
   - attr_list
+  - md_in_html #insiders
   - pymdownx.emoji:
       emoji_generator: !!python/name:materialx.emoji.to_svg
       emoji_index: !!python/name:materialx.emoji.twemoji

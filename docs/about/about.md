@@ -8,16 +8,15 @@ published: true
 
 ## Open Source :material-open-source-initiative:
 
-For transparency, accuracy, and maximum reuse, our Growth Charts API and associated libraries are 100% open source. We welcome code reviews, feedback, issues and pull requests. Check us out on GitHub - we're the first Royal College to have clinical code in it's own GitHub organisation!
+For transparency, accuracy, and maximum reuse, our Growth Charts API and associated libraries are 100% open source. We welcome code reviews, feedback, issues and pull requests. [Check us out on GitHub](https://github.com/rcpch) - we're the first Royal College to have clinical code in it's own GitHub organisation!
 
 ## Gold Standard :material-gold:
 
-Working with the UK's top experts in growth monitoring, growth charts, centile and SDS calculation, and child development, we've created an API that takes away the heavy lifting of calculating child growth parameters. You get reliable, safe results instantly.
+Working with the UK's top experts in growth monitoring, growth charts, centile and SDS calculation, and child development, we've created an API that takes away the heavy lifting of calculating child growth parameters. You get reliable, safe results instantly. The API allows the returned structured data to be displayed a number of different ways depending on the clinician's needs, and for the data to be saved, charted, and trended within the EPR.
 
 ## Demo clients & tools :material-toolbox:
 
-To help you implement the API we've built demo clients and tools to help with charting. These are all open source and permissively licensed to allow code reuse in your application without affecting the Intellectual Property rights of your developed solution.
-
+To help you implement the API, our team has built demo clients and tools to help with the tricky business of displaying a standards-compliant Growth Chart. These tools are all **open source** and **permissively licensed** to allow code reuse in your application without affecting the Intellectual Property rights of your developed solution. For more information on licensing see [Licensing and Copyright](../legal/licensing-copyright.md)
 
 ## The dGC Story
 
@@ -31,7 +30,7 @@ In addition to providing standard deviation scores (SDS) and centiles, it will a
 
 ## Future Scope
 
-It is envisaged that once established and validated, other growth references and tools may be added.
+We have plans to incorporate other growth references and tools to the platform in the future.
 
 It is planned that the API will in future be able to handle measurements over multiple occasions for individual children, with a view to interpreting their growth trajectory, as well as _'thrive lines'_[5][6](#references)
 

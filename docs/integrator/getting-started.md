@@ -2,7 +2,7 @@
 title: Getting Started
 reviewers: Dr Marcus Baw
 ---
-# Getting Started with the Growth Charts API
+# Getting Started integrating Digital Growth Charts
 
 The RCPCH Digital Growth Charts platform centres around a REST API which provides calculated growth parameters derived from supplied child measurements such as height and weight.
 

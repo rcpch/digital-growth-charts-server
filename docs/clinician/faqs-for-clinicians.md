@@ -9,21 +9,21 @@ reviewers: Dr Marcus Baw
 
 **A**: Paper or PDF charts required a human to plot the measurement and then read off the Centile. Digital Growth Charts automatically calculate Centiles and SDS (Standard Deviation Score) from the measurements, and plot these on a digital chart for you.
 
-Digital Growth Charts include recommended SNOMED-CT clinical terminology to guide persistence of the returned values
+Digital Growth Charts include recommended SNOMED-CT clinical terminology to guide persistence of the returned values.
 
 ## Q: How do I get the RCPCH Digital Growth Charts in my EPR?
 
-**A**: As a first step, we would suggest to discuss with the CIO (Chief Information Officer) and CCIO (Chief Clinical Information Officer) at your trust, or their equivalents in your place of work.
+**A**: As a first step, we would suggest initial discussions with the CIO (Chief Information Officer) and CCIO (Chief Clinical Information Officer) at your trust, or their equivalents in your place of work.
 
 Hopefully this can lead on to further discussion with the IT team at your place of work, which should hopefully establish lines of communication with the supplier of the Electronic Patient Record (EPR).
 
-Many EPR suppliers will have already started the process of integrating the RCPCH Digital Growth Charts API into their product, and we are happy to assist vendors with integration once they purchase a subscription.
+Many EPR suppliers have already started the process of integrating the RCPCH Digital Growth Charts API into their product, and we are happy to assist vendors with integration once they purchase a subscription. The more clinicians who are asking for Digital Growth Charts, the more likely it is that suppliers will prioritise this essential part of digital transformation.
 
 ## Q: How much do the RCPCH Digital Growth Charts APIs cost?
 
 **A**: The APIs themselves are run on a sustainable non-profit basis by the RCPCH, which is a charitable organisation. The aim is for modest revenues from the API to be fed back into development of future APIs and new features.
 
-Pricing tiers for the API are shortly to be published, and usually the EPR vendor or integration service would pay for this directly, however the costs are likely to be passed on to you, the customer.
+Pricing tiers for the API are [available on the RCPCH website](https://www.rcpch.ac.uk/resources/growth-charts/digital/about#subscriptions-and-pricing), and usually the EPR vendor or integration service would pay for this directly, however the costs are likely to be passed on to you, the customer.
 
 Pricing depends on the volume of requests that the vendor requires and the amount of support they need.
 
