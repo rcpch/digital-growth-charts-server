@@ -5,9 +5,9 @@ reviewers: Dr Marcus Baw
 
 # Awards, Press, Blogs, and other Mentions of the dGC Project
 
-## 2020 Health Tech Awards - **Best Health Tech Solution**
+## 2020 Health Tech Awards - **WINNER: "Best Health Tech Solution" Category**
 
-In the middle of the 2020 global coronavirus pandemic, we crafted the dGC project and went on to win the 202 Health Tech Award category for Best Health Tech Solution against a strong field of established health tech companies and NHS trusts. It was heartening to see infrastructural projects like ours being recognised as the building blocks of incredible future clinical interfaces.
+In the middle of the 2020 global coronavirus pandemic, we crafted the dGC project and went on to win the 2020 Health Tech Award category for Best Health Tech Solution against a strong field of established health tech companies and NHS trusts. It was heartening to see infrastructural projects like ours being recognised as the building blocks of incredible future clinical interfaces.
 
 ![htn-awards-winner-2020-logo.jpg](../_assets/_images/htn-awards-winner-2020-logo.jpg)
 [www.thehtn.co.uk/health-tech-awards-2020-live/](https://www.thehtn.co.uk/health-tech-awards-2020-live/)
@@ -32,8 +32,6 @@ Digital Growth pages on RCPCH website
 https://www.rcpch.ac.uk/resources/growth-charts/digital
 
 Marcus Baw's series of Open Health Hub background articles explaining the problem of Growth Charts and why previous solutions just didn't cut the mustard. https://openhealthhub.org/t/centile-part-1-what-are-centiles/463
-
-
 
 ## Videos
 

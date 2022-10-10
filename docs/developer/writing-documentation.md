@@ -9,15 +9,19 @@ Where possible we have tried to bring together **all** documentation relating to
 
 ## MkDocs
 
-The documentation for the dGC project is created using the MkDocs documentation framework, and uses the theme 'Material for MkDocs', which adds a number of extra features and an more modern appearance than plain MkDocs.
+The documentation for the Digital Growth Charts project is created using the MkDocs documentation framework, and uses the theme 'Material for MkDocs', which adds a number of extra features and an more modern appearance than plain MkDocs. We use the Material for MkDocs Insiders edition which allows us to support the project while getting a few neat early-access features.
 
-There is (as you'd expect) some delightful documentation for it: [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/), and for the underlying [MkDocs](https://www.mkdocs.org/) which it's built on. You may need to refer to both at times, for different features.
+There is (as you'd expect) some delightful documentation for both projects: [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/), and for the underlying [MkDocs](https://www.mkdocs.org/) which it's built on. You may need to refer to both at times, for different features.
 
 ## Adding or editing documentation
 
-Mostly this just requires creating MarkDown files in the `docs/` directory of the [documentation repository](https://github.com/rcpch/digital-growth-charts-documentation).
+Mostly this just requires creating Markdown files in the `docs/` directory of the [documentation repository](https://github.com/rcpch/digital-growth-charts-documentation).
 
-If you are new to this, you can use GitHub's interface itself to edit online, by clicking the 'pencil' edit icon in the top right corner of any source code page. There are also external tools like [Prose.io](http://prose.io/) which give you a nice interface for editing MarkDown online, and will sync the changes ith GitHub for you.
+### Online editing of the Markdown
+
+If you are new to this, you can use GitHub's interface itself to edit online, by clicking the 'pencil' edit icon in the top right corner of any source code page. There are also external tools like [Prose.io](http://prose.io/) and [StackEdit](https://stackedit.io/) which give you a nice interface for editing MarkDown online, and will sync the changes with GitHub for you.
+
+### Using a text editor
 
 More experienced coders can `git clone` the repo and make changes offline on their local machine before pushing to the remote (either the `rcpch` organisation's remote, or their own fork)
 
@@ -25,7 +29,7 @@ Use other pages within this repo to get ideas on the style and the features avai
 
 ### Adding a page
 
-* Create a new Markdown file in a subfolder in the `docs` folder. There is now also a template to get you started, in `docs/utilities/page-template.md`, which you would copy into your new page file.
+* Create a new Markdown file in a subfolder in the `docs` folder. There is now also a template to get you started, in `docs/_utilities/page-template.md`, which you would copy into your new page file.
 
 !!! info
     Because of the way we have set up the left sidebar navigation, new pages are **not** automatically added to the navigation.
