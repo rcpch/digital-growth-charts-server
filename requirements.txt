@@ -1,0 +1,13 @@
+# requirements for the documentation
+
+# this installs Material for MkDocs and all dependencies
+mkdocs-material
+
+# for the APIspec page at {{baseurl}}/integrator/api-reference/
+mkdocs-render-swagger-plugin
+
+# for the feature which displays authors at the bottom of the page
+mkdocs-git-committers-plugin-2
+
+# for the feature which displays last edit date at the bottom of the page
+mkdocs-git-revision-date-localized-plugin 
