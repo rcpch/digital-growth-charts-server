@@ -4,7 +4,7 @@ reviewers: Dr Marcus Baw
 ---
 # How the API Works
 
-Details for interested clinicians and statisticians
+Details for interested clinicians and statisticians.
 
 ## Growth Charting Introduction
 
@@ -12,7 +12,7 @@ The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any ch
 
 ## The LMS Method
 
-It is now common practice to express child growth status in the form of SD scores - the number of standard deviations away from the mean (also known as a z-score). The SD score can be converted to a centile.
+It is now common practice to express child growth status in the form of **SD score (SDS)** - the number of standard deviations away from the mean (also known as a **z-score**). The SD score can be converted to a centile.
 
 The LMS method provides a way of obtaining normalised growth centiles from a reference dataset, applying smoothing and extrapolation such that the resulting L, M and S curves contain the information to draw **any** centile curve, and to convert measurements (even extreme values) into exact SD scores. The growth reference is summarised by a table of LMS values at a series of ages.
 

@@ -18,8 +18,7 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install git+https://${{ secrets.MATERIAL_FOR_MKDOCS_ACCESS_TOKEN }}@github.com/squidfunk/mkdocs-material-insiders.git
-      - run: pip install mkdocs-render-swagger-plugin
-      - run: pip install mkdocs-git-committers-plugin-2
+      - run: pip install -r requirements.txt
       - run: mkdocs gh-deploy --force # Output files are force-pushed to gh-pages branch
       
   deploy-gh-pages-branch-to-azure:

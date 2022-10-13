@@ -1,11 +1,24 @@
 ---
-title: API Server
+title: dGC API Server
 reviewers: Dr Marcus Baw
 ---
 
-# Server and API Technical Information
+# dGC API Server
 
-:octicons-mark-github-16: [GitHub repository](https://github.com/rcpch/digital-growth-charts-server)
+
+{% set repository_name="rcpch/digital-growth-charts-server" -%}
+
+[![Github Issues](https://img.shields.io/github/issues/{{ repository_name }})](https://github.com/{{ repository_name }}/issues)
+[![Github Stars](https://img.shields.io/github/stars/{{ repository_name }})](https://github.com/{{ repository_name }}/stargazers)
+[![Github Forks](https://img.shields.io/github/forks/{{ repository_name }})](https://github.com/{{ repository_name }}/network/members)
+[![Github Licence](https://img.shields.io/github/license/{{ repository_name }})](https://github.com/{{repository_name }}/blob/live/LICENSE)
+
+[![Build and deploy Python app to Azure Web App - rcpch-dgc-server-live](https://github.com/rcpch/digital-growth-charts-server/actions/workflows/live-deploy-to-server-on-release.yml/badge.svg)](https://github.com/rcpch/digital-growth-charts-server/actions/workflows/live-deploy-to-server-on-release.yml)
+
+![Uptime](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/rcpch/upptime-rcpch-web-services/master/api/check-get-api-rcpch-ac-uk-without-auth-returns-401/uptime.json)
+[![DOI](https://zenodo.org/badge/261587883.svg)](https://zenodo.org/badge/latestdoi/261587883)
+
+:octicons-mark-github-16: [GitHub repository](https://github.com/{{ repository_name }})
 
 :octicons-code-review-24: [Developer Portal](https://dev.rcpch.ac.uk) (Sign up and get API keys here)  
 

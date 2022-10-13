@@ -5,6 +5,8 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman
 
 # Client Specification
 
+In this document we have tried to collect together as much detail as could, about the exact specification that the Digital Growth Charts Project Board have mandated for Digital Growth Charts. Much of the specification is also in common with the preceding paper growth charts, since we aimed for clinicians to have automatic familiarity with the Digital version.
+
 ## Background
 
 !!! warning
@@ -13,7 +15,9 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman
 !!! tip "Implementation support service"
     The RCPCH can assist in both the technical implementation and clinical assurance of any new charts implementations, to ensure adherence to the Project Board specification, a clinically safe user interface, and likely clinician user acceptance. Please contact us to discuss your needs on <mailto:commercial@rcpch.ac.uk>
 
-### Understanding UK-WHO
+### Understanding the UK-WHO dataset
+
+A first, critically important, thing to understand is that the dataset is not a simple 'lookup table' of weights vs ages and centiles. As you can imagine, such a table, while possible, would rapidly get rather large because of the number of variables involved. It would also be suboptimal since weight, height, etc are *continuous*, not discrete, variables and so it would a 'lookup table' approach would involve a loss of accuracy.
 
 The UK growth charts are made up of 4 datasets taken from 2 growth references (see [clinical documentation](../clinician/chart-information-health-staff.md) for more detail).
 
@@ -40,7 +44,8 @@ The UK growth charts are made up of 4 datasets taken from 2 growth references (s
 ## Specifications for implementing your own charting
 
 !!! success "React component reference charting implementation"
-    Making growth charts that adhere to the specifcation and are clinical safe and usable is not completely straightforward. That's why we have built a [reference implementation](/products/react-component.md) of the charts, as a permissively licensed React component so that you can use it in your own application.
+    Making growth charts that adhere to the specification and are clinical safe and usable is quite difficult, in terms of technical, statistical, and clinical skillsets needed. That's why we have built a [reference implementation](/products/react-component.md) of the charts, as a permissively licensed React component so that you can use it in your own application.
+    We **strongly** recommend the use of this package if possible. If that is not possible we recommend discussion with the RCPCH Digital Growth Charts team to help you get off on the right foot with your implementation.
 
 ### Chart plotting
 
@@ -54,7 +59,7 @@ The UK growth charts are made up of 4 datasets taken from 2 growth references (s
 
 - The 50th Centile should be de-emphasised: this middle line must not be made darker or wider than others, as it might give the impression to families that being on it is desirable or normal. Standard notation is for the 0.4th, 9th, 50th, 91st and 99.6th centiles to be dashed, the 2nd, 25th, 75th and 98th centiles to be solid.
 
-- Chart colours are not prescribed. The lines and data points need to be meet accessibilty guidelines, be clearly visible and avoid colour combinations that reduce useabilty.
+- Chart colour choices are not mandated by this document. The lines and data points need to be meet accessibilty guidelines, be clearly visible and avoid colour combinations that reduce useabilty. We also tried to avoid gender stereotypical colours (pinkn and pale blue) as these seem quite dated in 2022.
 
 - Information for the user must not be crowded, and where possible, contextualised. For example, information on puberty for girls be shown only on girls' charts.
 

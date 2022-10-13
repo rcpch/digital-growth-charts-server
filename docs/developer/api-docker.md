@@ -3,7 +3,9 @@ title: Docker development
 reviewers: Dr Marcus Baw, Dr Sean Cusack
 ---
 
-# Running locally in Docker
+# Developing locally in a Docker container
+
+Using Docker containers for local development gets rid of many of the problems of conflicting versions of Python and libraries on development machines, which can be the cause of irritating snags when trying to set up your development environment. In the Dockerized environment, all of the code is running in an isolated virtual environment (a little like a virtual machine, but more efficient in terms of resources) and so there are no version conflicts. The Docker container closely resembles our deployment environment, so it also helps to prevent "Well It Works On *My* Machine"-type deployment difficulties.
 
 ## Running the API server locally in Docker
 

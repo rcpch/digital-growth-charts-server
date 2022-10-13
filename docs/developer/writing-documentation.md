@@ -17,17 +17,60 @@ There is (as you'd expect) some delightful documentation for both projects: [Mat
 
 Mostly this just requires creating Markdown files in the `docs/` directory of the [documentation repository](https://github.com/rcpch/digital-growth-charts-documentation).
 
-### Online editing of the Markdown
-
-If you are new to this, you can use GitHub's interface itself to edit online, by clicking the 'pencil' edit icon in the top right corner of any source code page. There are also external tools like [Prose.io](http://prose.io/) and [StackEdit](https://stackedit.io/) which give you a nice interface for editing MarkDown online, and will sync the changes with GitHub for you.
-
-### Using a text editor
-
-More experienced coders can `git clone` the repo and make changes offline on their local machine before pushing to the remote (either the `rcpch` organisation's remote, or their own fork)
-
 Use other pages within this repo to get ideas on the style and the features available such as [emoji](https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/#emoji), [icons](https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/#using-icons), [admonitions](https://squidfunk.github.io/mkdocs-material/reference/admonitions/), etc.
 
-### Adding a page
+### Continuous Integration via GitHub Actions
+
+Any changes to the `live` branch of the documentation repository trigger a [GitHub Action](https://github.com/rcpch/digital-growth-charts-documentation/blob/live/.github/workflows/build-and-deploy-to-gh-pages-and-azure.yml) which runs Material for MkDocs in a temporary application container, builds the site from the Markdown source into a set of static HTML pages, and [publishes the site to Azure](https://growth.rcpch.ac.uk/), (with a [backup in GitHub Pages](https://rcpch.github.io/digital-growth-charts-documentation/)).
+
+This will occur whether the changes are made using an online editing method or a local, offline editing method.
+
+If you don't want changes to go live right away, use another branch such as `prerelease` or any other branch name of your choosing, this will not trigger updates to live.
+
+!!! note GitHub Branch Protection
+    In the near future we will apply GitHub branch protection to `live` so that changes cannot be made directly there but **must** be made through an intermediate branch and then PR'd into `live`.
+
+### Online editing of the Markdown
+
+If you are new to Markdown editing, you can use GitHub's interface itself to edit online, by clicking the 'pencil' edit icon in the top right corner of any source code page. There are also external tools like [Prose.io](http://prose.io/) and [StackEdit](https://stackedit.io/) which give you a nice interface for editing MarkDown online, and will sync the changes with GitHub for you. If you need help getting set up, [contact us in the Signal chat](../contact/contact.md).
+
+### Using a text editor and editing locally
+
+More experienced coders can `git clone` the repo and make changes offline on their local machine before pushing to the remote (either the `rcpch` organisation's remote, or their own fork). This allows you to run Material for MkDocs locally and preview the site as it will appear when pushed to `live`
+
+#### Setting up a development environment for the dGC documentation site
+
+Create a virtualenv for the python modules
+
+* For info on setting up Pyenv see [Python setup elsewhere in the documentation](../developer/api-python.md)
+* Any recent Python version will do, we tend to use >3.8
+* Calling it `mkdocs` will enable Pyenv to automatically select it when you navigate to the directory.
+
+```shell
+pyenv virtualenv 3.10.2 mkdocs
+```
+
+Install Material for MKDocs some of the other dependencies.
+
+```shell
+pip install -r requirements.txt
+```
+
+Now start the MkDocs server
+
+```shell
+mkdocs serve
+```
+
+MkDocs will tell you what URL you can view the site on, this is usually `localhost:8000`. You can vary this in the settings if port 8000 is already in use.
+
+#### Notes
+
+* on some platforms, if you get the error `ModuleNotFoundError: No module named '_ctypes'` then you need to run `sudo apt-get install libffi-dev` or the equivalent on your platform, and then recompile your Python (if using pyenv, simply `pyenv install 3.10.2` will recompile that Python binary)
+
+* Tested Oct 2022 on Linux Mint 21.0
+
+## Adding a new page
 
 * Create a new Markdown file in a subfolder in the `docs` folder. There is now also a template to get you started, in `docs/_utilities/page-template.md`, which you would copy into your new page file.
 
@@ -50,7 +93,7 @@ nav:
     - 'about/overview.md'
 ```
 
-By manually specifying the navigation in this way, we have control over the precise appearance of subfolder names (which otherwise are rendered in Title Case, but this doesn't work for acronyms) and also the order of display of the sidebar headings.
+By manually specifying the navigation in this way, we have control over the precise appearance of subfolder names (which otherwise are rendered in Title Case, but this doesn't work for acronyms) and also we can customise the order of listing of the sidebar headings, which otherwise are simply alphabetically ordered.
 
 ### Page title in the navigation
 

@@ -1,9 +1,17 @@
 ---
-title: Python package
+title: RCPCHGrowth library
 reviewers: Dr Marcus Baw, Dr Simon Chapman
 ---
 
-# rcpchgrowth Python package
+{% set repository_name="rcpch/digital-growth-charts-react-component-library" -%}
+
+[![Github Issues](https://img.shields.io/github/issues/{{ repository_name }})](https://github.com/{{ repository_name }}/issues)
+[![Github Stars](https://img.shields.io/github/stars/{{ repository_name }})](https://github.com/{{ repository_name }}/stargazers)
+[![Github Forks](https://img.shields.io/github/forks/{{ repository_name }})](https://github.com/{{ repository_name }}/network/members)
+[![Github Licence](https://img.shields.io/github/license/{{ repository_name }})](https://github.com/{{repository_name }}/blob/live/LICENSE)
+[![GitHub Action](https://github.com/{{ repository_name }}/actions/workflows/main.yml/badge.svg)](https://github.com/{{ repository_name }}/actions/workflows/main.yml)
+
+[![DOI](https://zenodo.org/badge/361149103.svg)](https://zenodo.org/badge/latestdoi/361149103)
 
 The calculation functions within the Digital Growth Charts API are powered by a self-contained Python package which has been extracted out into a separate repository and is published on [PyPi](https://pypi.org/project/rcpchgrowth/), the Python Package Index. This enables the centile calculation functions to be used in other programs. 
 

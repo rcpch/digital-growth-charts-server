@@ -5,28 +5,33 @@ reviewers: Dr Marcus Baw
 
 # React Demo Client
 
-![Github Issues](https://img.shields.io/github/issues/rcpch/digital-growth-charts-react-client) ![Github Stars](https://img.shields.io/github/stars/rcpch/digital-growth-charts-react-client) ![Github Forks](https://img.shields.io/github/forks/rcpch/digital-growth-charts-react-client) ![Github Licence](https://img.shields.io/github/license/rcpch/digital-growth-charts-react-client)
-<!--![Actions Status](https://github.com/rcpch/digital-growth-charts-server/actions/workflows/alpha_rcpch-dgc-server-alpha.yml/badge.svg?branch=alpha)-->
+{% set repository_name="rcpch/digital-growth-charts-react-client" -%}
 
-:octicons-mark-github-16: [Github repository](https://github.com/rcpch/digital-growth-charts-react-client)
+[![Github Issues](https://img.shields.io/github/issues/{{ repository_name }})](https://github.com/{{ repository_name }}/issues)
+[![Github Stars](https://img.shields.io/github/stars/{{ repository_name }})](https://github.com/{{ repository_name }}/stargazers)
+[![Github Forks](https://img.shields.io/github/forks/{{ repository_name }})](https://github.com/{{ repository_name }}/network/members)
+[![Github Licence](https://img.shields.io/github/license/{{ repository_name }})](https://github.com/{{repository_name }}/blob/live/LICENSE)
 
-:material-web: [Website](https://growth.rcpch.ac.uk/)
+[![GitHub Pages Build & Deploy](https://github.com/rcpch/digital-growth-charts-react-client/actions/workflows/deploy-react-app-gh-pages.yml/badge.svg)](https://github.com/rcpch/digital-growth-charts-react-client/actions/workflows/deploy-react-app-gh-pages.yml)
 
-<!--
-![Logo](../_assets/_images/rcpch-logo.png){ align = center; : style="height:200px;width:200px"}-->
+:octicons-mark-github-16: [GitHub repository](https://github.com/{{ repository_name }})
 
-![HTN Awards](../_assets/_images/htn-awards-winner-2020-logo.jpg){: style="height:200px;width:200px"}
+:material-web: [Online Demo](https://growth.rcpch.ac.uk/)
+
+--8<--
+docs/_assets/_snippets/htn-award.md
+--8<--
  
 
-This client, written in React.js, is for demonstration of the API and the chart library component. This is now the main focus of development for our RCPCH Digital Growth Charts Demo Client. We previously built a [Flask-based client](https://github.com/rcpch/digital-growth-charts-flask-client) (which used Flask only because that client actually split off from the original API development). The Flask client code is still available as an educational tool, however it is considered deprecated and updating it is not a high priority.
+This client, written in React.js, is for demonstration of the API and the chart library component. This is now the main focus of development for our RCPCH Digital Growth Charts Demo Client. We previously built a [Flask-based client](https://github.com/rcpch/digital-growth-charts-flask-client) (which used Flask only because that client actually split off from the original API development). The Flask client code is still available as an educational tool, however it is considered deprecated and will not recieve updates.
 
-We have attempted to build into the React client the best of growth chart theory and practice, including guidance given to us by the RCPCH Digital Growth Charts Project Board.
+We have attempted to build the very best of growth chart theory and practice into the React client, including guidance given to us by the RCPCH Digital Growth Charts Project Board, and accepted best practice from the days of paper growth charts.
 
 ## Clinical notes regarding the React client
 
 ### Pink and Blue no longer used for the charts
 
-- It was felt that representing boys' charts with blue lines and girls' charts with pink lines did not really fit with 21st Century sensibilities of sex and gender. A Project Board decision was made to remove these colours and simply render the charts in monochrome black/grey.
+- It was felt that representing boys' charts with blue lines and girls' charts with pink lines did not really fit with 21st Century sensibilities of sex and gender. A Project Board decision was made to remove these colours and simply render the charts in monochrome black/grey, with some more off-the-wall colour themes available for variety and interest only.
 
 ## Documentation
 
@@ -39,8 +44,6 @@ We have attempted to build into the React client the best of growth chart theory
 Built in React using Semantic UI React.
 
 ### Set Up
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 1. Install React [here](https://reactjs.org/docs/getting-started.html)
 1. Clone the repo

@@ -9,8 +9,8 @@ We are distinguishing between the version of the API itself and that of the code
 
 ## Semantic Versioning
 
-We are using Semantic Versioning (SemVer) in order to ensure that the server versions are systematically applied.
+We are using [Semantic Versioning (SemVer) ](https://semver.org/)in order to ensure that the server versions are systematically applied.
 
 ## Bump2version
 
-We are using the `bump2version` tool to simplify the versioning in the server and rcpchgrowth-python packages.
+We are using the `bump2version` tool to simplify the versioning in the `digital-growth-charts-server` and `rcpchgrowth-python` packages.

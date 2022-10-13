@@ -10,4 +10,7 @@ mkdocs-render-swagger-plugin
 mkdocs-git-committers-plugin-2
 
 # for the feature which displays last edit date at the bottom of the page
-mkdocs-git-revision-date-localized-plugin 
+mkdocs-git-revision-date-localized-plugin
+
+# for the feature which enables 'foldable' admonition text (used for large code blocks)
+mkdocs-macros-plugin

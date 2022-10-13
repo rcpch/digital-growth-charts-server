@@ -7,21 +7,20 @@ nav:
   - Home: 'index.md'
   - About:
     - 'about/about.md'
-    - 'about/overview.md'
     - 'about/team.md'
-    - 'about/awards-press-blogs.md'
     - 'about/acknowledgements.md'
+    - 'about/awards-press-blogs.md'
   - Products:
     - 'products/products-overview.md'
+    - 'products/pricing.md'
     - 'products/api-server.md'
     - 'products/react-client.md'
     - 'products/react-component.md'
-    - 'products/react-native.md'
-    - 'products/command-line-client.md'
     - 'products/python-library.md'
+    - 'products/command-line-client.md'
     - 'products/google-sheets-plugin.md'
+    - 'products/react-native.md'
     - 'products/flask(deprecated).md'
-    - 'products/pricing.md'
   - Clinician: 
     - 'clinician/how-the-api-works.md'
     - 'clinician/chart-information-families.md'
@@ -45,8 +44,9 @@ nav:
     - 'developer/api-docker.md'
     - 'developer/contributing.md'
     - 'developer/writing-documentation.md'
-    - 'developer/faqs-for-developers.md'
     - 'developer/rcpchgrowth.md'
+    - 'developer/rcpchgrowth-cli.md'
+    - 'developer/faqs-for-developers.md'
   - Safety:
     - 'safety/overview.md'
     - Clinical Safety File:
@@ -99,13 +99,14 @@ theme:
   logo: _assets/_images/rcpch_logo.png
 
 plugins:
-  - render_swagger
-  - search
+  - macros
   - git-committers:
       repository: rcpch/digital-growth-charts-documentation
       branch: live
   - git-revision-date-localized:
       enable_creation_date: true
+  - search
+  - render_swagger
 
 
 markdown_extensions:
@@ -113,6 +114,7 @@ markdown_extensions:
   - admonition
   - attr_list
   - md_in_html #insiders
+  - pymdownx.details
   - pymdownx.emoji:
       emoji_generator: !!python/name:materialx.emoji.to_svg
       emoji_index: !!python/name:materialx.emoji.twemoji

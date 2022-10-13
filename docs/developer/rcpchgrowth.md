@@ -1,19 +1,19 @@
 ---
-title: RCPCHGrowth Package
+title: RCPCHGrowth library
 reviewers: Dr Simon Chapman
 ---
 
 ## Overview
 
-The core of the calculations is performed in the RCPCHGrowth package, written in Python 3.8.3.
+The centile and SDS calculations are performed in our separate [RCPCHGrowth Python package](https://pypi.org/project/rcpchgrowth/). As we developed the Digital Growth Charts codebase we felt it was necessary to extract the centile calculation code into a separate package for easier reuse elsewhere.
 
-### Why RCPCHGrowth?
+### Background
 
-There have been several different packages that calculate centiles. The most influential software in growth was produced by Huiqi Pan and Tim Cole, an add-in for Microsoft Excel, called LMSGrowth. It is still freely [downloadable](https://www.healthforallchildren.com/shop-base/shop/software/lmsgrowth/) and contains the reference tables as .xls. RCPCHGrowth is intended to supercede LMSGrowth and so the name has been chosen.
+There have been several different packages that calculate centiles. The most influential software in growth was produced by Huiqi Pan and Tim Cole, an add-in for Microsoft Excel, called LMSGrowth. It is still freely [downloadable](https://www.healthforallchildren.com/shop-base/shop/software/lmsgrowth/) and contains the reference tables as `.xls`. RCPCHGrowth is intended to supersede LMSGrowth and so the name has been chosen.
 
-RCPCHGrowth has been primarily built to work with the UK-WHO dataset, but the LMS calculations can in principle work with any LMS data table. In practice, each data table has its own idiosyncracies and is hard to standardise but it is hoped in time that most big references can be included.
+RCPCHGrowth has been primarily built to work with the UK-WHO dataset, but the LMS calculations can in principle work with any LMS data table. In practice, each data table has its own idiosyncracies and is hard to standardise but it is hoped in time that most mature and stable references can be included.
 
-### References
+### Growth Reference data
 
 The references included are:
 
@@ -72,8 +72,11 @@ events_text
 ```
 
 These default to None if not provided.
-The bone ages are float values. No formatting is performed and are returned in the Measurement class object as provided. The chart plug in is optimised to recognise them.
+
+The bone ages are float values. No formatting is performed and are returned in the Measurement class object as provided. The chart plugin is optimised to recognise them.
+
 ```bone_age_text``` is contextual information to describe the bone age. It may be a radiology report or author comment.
+
 ```events_text``` is a list of strings, events to tag the measurement with, for example starting a treatment or receiving a diagnosis.
 
 Calling ```Measurement(...).measurement``` will return a full Measurement object.
@@ -270,7 +273,7 @@ There are several references, and therefore selection of the correct LMS table i
 
 ##### Centile Advice Strings
 
-There was much discussion about these at project board. Found in ```centile_bands.py``` these strings are returned in the Measurement object to guide users on interpretation of the centile values they receive. The project board were very clear they wished to dissuade users from quoting exact centile values, instead to refer to ranges. Further details about this can be found in the clinician information. Although the Measurement object returns an exact centile value, the advice strings are better suited for reporting to users and are rendered in tooltips in the Typescript RCPCHGrowth Chart Component package.
+There was much discussion about these at project board. Found in ```centile_bands.py``` these strings are returned in the Measurement object to guide users on interpretation of the centile values they receive. The Project Board were very clear they wished to dissuade users from quoting exact centile values, instead to refer to ranges. Further details about this can be found in the clinician information. Although the Measurement object returns an exact centile value, the advice strings are better suited for reporting to users and are rendered in tooltips in the Typescript RCPCHGrowth Chart Component package.
 
 #### Chart Functions
 
