@@ -1,4 +1,4 @@
-# requirements for the documentation
+# requirements for the dGC documentation
 
 # this installs Material for MkDocs and all dependencies
 mkdocs-material
@@ -14,3 +14,6 @@ mkdocs-git-revision-date-localized-plugin
 
 # for the feature which enables 'foldable' admonition text (used for large code blocks)
 mkdocs-macros-plugin
+
+# for the PDF export feature
+mkdocs-with-pdf
