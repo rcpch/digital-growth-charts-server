@@ -1,5 +1,4 @@
 # Uses https://github.com/crazy-max/ghaction-github-labeler
-# You need to create a GITHUB_TOKEN secret with the correct permissions to be able to make changes to labels
 # Manually run the Action in the GitHub UI to add Hazard Log Labels as per the YAML file
 
 name: create-hazard-log-labels
