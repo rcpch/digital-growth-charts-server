@@ -39,19 +39,19 @@
 
 # Severity scoring 
 - name: "severity-catastrophic"
-  description: "Death, multiple. Severe injury or lifechanging incapacity, multiple."
+  description: "Death, 2+. Severe injury or lifechanging incapacity, 2+."
   color: "D8E4BC"
  
 - name: "severity-major"
-  description: "Death, single; Severe injury or life-changing incapacity, single; Psychological trauma, multiple."
+  description: "Death, 1; Severe injury or life-changing incapacity, 1; Psychological trauma, 2+."
   color: "D8E4BC"
   
 - name: "severity-considerable"
-  description: "Severe injury, single, severe incapacity, recovery expected; Significant psych. trauma, multiple."
+  description: "Severe injury, 1, severe incapacity, recovery expected; Significant psych. trauma, 2+."
   color: "D8E4BC"
  
 - name: "severity-significant"
-  description: "Minor injury, long term, single; Significant psych. trauma, single; Minor inj/psych trauma, multiple."
+  description: "Minor injury, long term, 1; Significant psych. trauma, 1; Minor inj/psych trauma, 2+."
   color: "D8E4BC"
   
 - name: "severity-minor"
@@ -65,15 +65,15 @@
   color: "0E8A16"
   
 - name: "risk-level-2-acceptable"
-  description: "Acceptable where cost of further reduction outweighs benefits gained or where further risk reduction is impractical"
+  description: "Acceptable if cost of further reduction > benefits, or further risk reduction is impractical"
   color: "FBCA04"
     
 - name: "risk-level-3-undesirable"
-  description: "Undesirable level of risk. Attempts should be made to eliminate the hazard or implement control measures"
+  description: "Undesirable level of risk. Attempts should be made to eliminate the hazard or implement controls"
   color: "D93F0B"
   
 - name: "risk-level-4-mandatory-risk-elimination"
-  description: "Mandatory elimination of hazard or addition of control measure to reduce risk to an acceptable level"
+  description: "Mandatory elimination of hazard or addition of controls to reduce risk to an acceptable level"
   color: "ED5D40"
   
 - name: "risk-level-5-unacceptable"
