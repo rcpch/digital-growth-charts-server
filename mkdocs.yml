@@ -3,10 +3,14 @@ site_description: Documentation for the RCPCH Digital Growth Charts Platform
 site_author: The Royal College of Paediatrics and Child Health
 site_url: https://rcpch.github.io/digital-growth-charts-documentation/
 
+# `mkdocs serve` serves the docs locally on this port (default 8000)
+dev_addr: "127.0.0.1:8001"
+
 nav:
   - Home: 'index.md'
   - About:
     - 'about/about.md'
+    - 'about/get-digital-growth-charts.md'
     - 'about/team.md'
     - 'about/acknowledgements.md'
     - 'about/awards-press-blogs.md'
@@ -63,6 +67,8 @@ nav:
     - MHRA:
       - 'safety/mhra.md'
       - 'safety/essential-req.md'
+    - Download:
+      - 'safety/download.md'
   - Legal:
     - 'legal/disclaimer.md'
     - 'legal/licensing-copyright.md'
@@ -108,15 +114,8 @@ plugins:
   - search
   - render_swagger
   - with-pdf:
-        #author: WHO
-        #copyright: ANY TEXT
-        #
-        #cover: false
-        #back_cover: true
-        #cover_title: TITLE TEXT
-        #cover_subtitle: SUBTITLE TEXT
-        #custom_template_path: TEMPLATES PATH
-        #
+        cover_title: RCPCH Digital Growth Charts
+        cover_subtitle: SUBTITLE TEXT
         #toc_title: TOC TITLE TEXT
         #heading_shift: false
         #toc_level: 3
@@ -124,7 +123,6 @@ plugins:
         #excludes_children:
         #    - 'release-notes/:upgrading'
         #    - 'release-notes/:changelog'
-        #
         #exclude_pages:
         #    - 'bugs/'
         #    - 'appendix/contribute/'
@@ -134,13 +132,10 @@ plugins:
         #      text: ALTERNATE TEXT
         #    - src: ...
         #two_columns_level: 3
-        #
         #render_js: true
         #headless_chrome_path: headless-chromium
-        #
-        #output_path: any-place/document.pdf
-        #enabled_if_env: ENABLE_PDF_EXPORT
-        #
+        output_path: pdf/digital-growth-charts-documentation.pdf
+        enabled_if_env: ENABLE_PDF_EXPORT
         #debug_html: true
         #show_anchors: true
         #verbose: true
