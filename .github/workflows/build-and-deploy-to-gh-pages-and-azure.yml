@@ -10,6 +10,8 @@ on:
 jobs:
   build-and-deploy-to-gh-pages:
     runs-on: ubuntu-latest
+    env:
+      ENABLE_PDF_EXPORT: True
     steps:
       - uses: actions/checkout@v2
         with:
