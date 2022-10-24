@@ -6,6 +6,10 @@
 
 
 # General Utility labels
+- name: "hazard"
+  description: "A hazard which is logged."
+  color: "892CBB"
+  
 - name: "new-hazard-for-triage"
   description: "A new hazard which needs to be triaged for severity and likelihood, scored and assigned."
   color: "892CBB"

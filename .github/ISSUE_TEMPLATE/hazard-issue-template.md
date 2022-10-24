@@ -1,8 +1,8 @@
 ---
-name: Hazard issue template
-about: This template helps with creation of a new Hazard
-title: REPLACE WITH HAZARD NAME
-labels: new-hazard-for-triage
+name: "New Hazard Issue Template"
+about: "This template helps with creation of a new Hazard"
+title: "HAZARD: <hazard_name>"
+labels: new-hazard-for-triage, hazard
 assignees:
 ---
 This Issue Template is based on the practices described in NHS Digital DCB0129/DCB0160 Clinical Safety Officer training.
@@ -26,6 +26,7 @@ An actual occurrence of a Hazard in the patient or clinical context. This is wha
 An analysis of the Causes of the Hazard
 
 -----
+
 **Assignment**: Assign this Hazard to its Owner. Default owner is the Clinical Safety Officer @pacharanero
 **Labelling**: Add labels according to Severity. Likelihood and Risk Level 
 **Project**: Add to the Project 'Clinical Risk Management'
