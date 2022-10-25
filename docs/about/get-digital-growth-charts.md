@@ -23,4 +23,4 @@ We think more stuff in the NHS should be done this way!
 
 ## Who's using the RCPCH Digital Growth Charts?
 
-Already in use in numerous NHS Trusts across England, the RCPCH Digital Growth Charts are also currently being implemented in UK General Practice clinical systems, at National level in Wales, and within a major neonatal and maternity system.
+Already in use in numerous NHS Trusts across England, the RCPCH Digital Growth Charts are also currently being adopted by UK General Practice clinical systems, at National level in UK Devolved Nations, and within major neonatal and maternity systems.
