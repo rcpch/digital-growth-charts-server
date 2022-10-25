@@ -14,7 +14,7 @@ reviewers: Dr Marcus Baw
 | Reviewers        |                                                                   |
 | ---------------- | ----------------------------------------------------------------- |
 | Dr Marcus Baw    | Lead Developer, General Practitioner, Clinical Safety Officer     |
-| Dr Simon Champan | Lead Developer, Consultant Paediatrician, Clinical Safety Officer |
+| Dr Simon Chapman | Lead Developer, Consultant Paediatrician, Clinical Safety Officer |
 
 | Approvers     |                         |
 | ------------- | ----------------------- |
