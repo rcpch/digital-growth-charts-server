@@ -17,7 +17,7 @@ Produced and warranted by the RCPCH itself, the international authority on child
 
 ## The heavy lifting is done for you.
 
-We know that calculation and display of growth parameters is technically hard, and comes with many clinical caveats. Our SssS (Software As A Service) platform does all the hard work for you, meaning your clinicians get dependable, trustworthy charts, and digital transformation can proceed.
+We know that calculation and display of growth parameters is technically hard, and comes with many clinical caveats. Our SaaS (Software As A Service) platform does all the hard work for you, meaning your clinicians get dependable, trustworthy charts, and digital transformation can proceed.
 
 We think more stuff in the NHS should be done this way!
 
