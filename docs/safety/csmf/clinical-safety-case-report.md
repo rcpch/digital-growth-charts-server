@@ -30,8 +30,9 @@ The RCPCH Digital Growth Charts Platform consists of a suite of software tools w
 
 For the purposes of this Safety Case, the principal components are:
 
-1. a [The Digital Growth Charts API Server](../../products/api-server.md), which recieves measurements and returns the calculations
-2. a [The React.js chart component](../../products/react-component.md), which takes the returned calculation information and shows it as a HTML-based visual growth chart which clinicians would recognise and be able to safely interpret and use for the clinical care of their patient.
+--8<--
+docs/_assets/_snippets/dgc-platform-comprises.md
+--8<--
 
 ## Intended Use
 

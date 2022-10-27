@@ -1,7 +1,7 @@
 site_name: RCPCH Digital Growth Charts Platform 
 site_description: Documentation for the RCPCH Digital Growth Charts Platform
 site_author: The Royal College of Paediatrics and Child Health
-site_url: https://rcpch.github.io/digital-growth-charts-documentation/
+# site_url: https://rcpch.github.io/digital-growth-charts-documentation/
 
 # `mkdocs serve` serves the docs locally on this port (default 8000)
 dev_addr: "127.0.0.1:8001"
@@ -43,15 +43,17 @@ nav:
     - 'integrator/whos-using-dgc.md'
   - Contribute:
     - 'developer/start-here.md'
+    - 'developer/versioning.md'
     - 'developer/api-python.md'
-    - 'developer/adding-a-new-api-endpoint.md'
     - 'developer/api-docker.md'
-    - 'developer/contributing.md'
-    - 'developer/writing-documentation.md'
+    - 'developer/adding-a-new-api-endpoint.md'
+    - 'developer/api-testing.md'
     - 'developer/rcpchgrowth.md'
     - 'developer/rcpchgrowth-cli.md'
+    - 'developer/writing-documentation.md'
     - 'developer/faqs-for-developers.md'
-  - Safety:
+    - 'developer/contributing.md'
+  - Clinical Safety:
     - 'safety/overview.md'
     - Clinical Safety File:
       - 'safety/csmf/clinical-risk-mgmt-system.md'
@@ -62,14 +64,12 @@ nav:
       - 'safety/csmf/third-party-tools-safety-assmt.md'
       - 'safety/csmf/license.md'
     - 'safety/dtac.md'
-    - EU Medical Devices:
-      - 'safety/eu-mdr/doc-api.md'
-      - 'safety/eu-mdr/mdr-technical-docs.md'
-    - MHRA:
-      - 'safety/mhra.md'
-      - 'safety/essential-req.md'
-    - Download:
-      - 'safety/download.md'
+    - Medical Devices Registration:
+      - 'safety/medical-device-reg/doc-api.md'
+      - 'safety/medical-device-reg/mdr-technical-docs.md'
+      - 'safety/medical-device-reg/mhra.md'
+      - 'safety/medical-device-reg/essential-req.md'
+    - Download: 'safety/download.md'
   - Legal:
     - 'legal/disclaimer.md'
     - 'legal/licensing-copyright.md'
@@ -77,6 +77,7 @@ nav:
     - 'legal/privacy-notice.md'
   - Technical:
     - 'technical/status.md'
+    - 'technical/security.md'
   - Contact Us:
     - 'contact/contact.md'
 
