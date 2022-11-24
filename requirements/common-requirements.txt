@@ -1,5 +1,5 @@
 # standard dependencies
-# typing # this may be causing build errors in Azure. Typing is built in after Python 3.5
+
 
 # third party dependencies
 fastapi
