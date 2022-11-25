@@ -1393,13 +1393,13 @@
                 "properties": {
                     "height_paternal": {
                         "title": "Height Paternal",
-                        "exclusiveMinimum": 0.0,
+                        "minimum": 50.0,
                         "type": "number",
                         "description": "The height of the child's biological father, passed as float, measured in centimeters"
                     },
                     "height_maternal": {
                         "title": "Height Maternal",
-                        "exclusiveMinimum": 0.0,
+                        "minimum": 50.0,
                         "type": "number",
                         "description": "The height of the child's biological mother, passed as float, measured in centimeters"
                     },
@@ -1490,28 +1490,6 @@
                 "type": "object",
                 "additionalProperties": {
                     "$ref": "#/components/schemas/Sex"
-                },
-                "uk90_preterm": {
-                    "male": {
-                        "height": [
-                            {
-                                "sds": -2.67,
-                                "centile": 0.4,
-                                "data": [
-                                    {
-                                        "l": "0.4",
-                                        "x": -0.2875,
-                                        "y": 27.7419
-                                    },
-                                    {
-                                        "l": "0.4",
-                                        "x": -0.2683,
-                                        "y": 28.7883
-                                    }
-                                ]
-                            }
-                        ]
-                    }
                 }
             },
             "SDSData": {
