@@ -2,7 +2,7 @@
 
 
 # third party dependencies
-fastapi
+fastapi[all]
 uvicorn[standard]
 pydantic
 

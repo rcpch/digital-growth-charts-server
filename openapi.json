@@ -3,7 +3,7 @@
     "info": {
         "title": "RCPCH Digital Growth API",
         "description": "Returns SDS and centiles for child growth measurements using growth references. Currently provides calculations based on the UK-WHO, Turner's Syndrome and Trisomy-21 references.",
-        "version": "4.2.17"
+        "version": "4.2.18"
     },
     "paths": {
         "/uk-who/calculation": {
@@ -72,7 +72,7 @@
                     "uk-who"
                 ],
                 "summary": "Uk Who Chart Coordinates",
-                "description": "## UK-WHO Chart Coordinates data.\n\n* Returns coordinates for constructing the lines of a traditional growth chart, in JSON format\n* Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')\n* If custom centiles/sds collections (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter\n* The is_sds boolean flag (default false) specifies if the custom list is of SDS or centiles.\n* In addition to the custom list, \"cole-nine-centiles\" or \"three-percent-centiles\" can be specified which are standard collections.\n* If no centile_format is supplied, \"cole-nine-centiles\" are returned as a default.\n",
+                "description": "## UK-WHO Chart Coordinates data.\n\n* Returns coordinates for constructing the lines of a traditional growth chart, in JSON format\n* Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')\n* If custom centiles/sds collections (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter\n* The is_sds boolean flag (default false) specifies if the custom list is of SDS or centiles.\n* In addition to the custom list, \"cole-nine-centiles\" or \"three-percent-centiles\" can be specified which are standard collections.\n* If no centile_format is supplied, \"cole-nine-centiles\" are returned as a default.",
                 "operationId": "uk_who_chart_coordinates_uk_who_chart_coordinates_post",
                 "requestBody": {
                     "content": {
@@ -211,7 +211,7 @@
                     "turners-syndrome"
                 ],
                 "summary": "Turner Chart Coordinates",
-                "description": "## Turner's Syndrome Chart Coordinates data.\n\n* Returns coordinates for constructing the lines of a traditional growth chart, in JSON format\n* Note height in girls conly be only returned. It is a post request to maintain consistency with other routes.\n* If custom centiles/sds collections (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter\n* The is_sds boolean flag (default false) specifies if the custom list is of SDS or centiles.\n* In addition to the custom list, \"cole-nine-centiles\" or \"three-percent-centiles\" can be specified which are standard collections.\n* If no centile_format is supplied, \"cole-nine-centiles\" are returned as a default.\n",
+                "description": "## Turner's Syndrome Chart Coordinates data.\n\n* Returns coordinates for constructing the lines of a traditional growth chart, in JSON format\n* Note height in girls conly be only returned. It is a post request to maintain consistency with other routes.\n* If custom centiles/sds collections (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter\n* The is_sds boolean flag (default false) specifies if the custom list is of SDS or centiles.\n* In addition to the custom list, \"cole-nine-centiles\" or \"three-percent-centiles\" can be specified which are standard collections.\n* If no centile_format is supplied, \"cole-nine-centiles\" are returned as a default.",
                 "operationId": "turner_chart_coordinates_turner_chart_coordinates_post",
                 "requestBody": {
                     "content": {
@@ -350,7 +350,7 @@
                     "trisomy-21"
                 ],
                 "summary": "Trisomy 21 Chart Coordinates",
-                "description": "## Trisomy-21 Chart Coordinates Data.\n    \n* Returns coordinates for constructing the lines of a traditional growth chart, in JSON format\n* Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')\n* If custom centiles/sds collections (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter\n* The is_sds boolean flag (default false) specifies if the custom list is of SDS or centiles.\n* In addition to the custom list, \"cole-nine-centiles\" or \"three-percent-centiles\" can be specified which are standard collections.\n* If no centile_format is supplied, \"cole-nine-centiles\" are returned as a default.\n",
+                "description": "## Trisomy-21 Chart Coordinates Data.\n    \n* Returns coordinates for constructing the lines of a traditional growth chart, in JSON format\n* Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')\n* If custom centiles/sds collections (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter\n* The is_sds boolean flag (default false) specifies if the custom list is of SDS or centiles.\n* In addition to the custom list, \"cole-nine-centiles\" or \"three-percent-centiles\" can be specified which are standard collections.\n* If no centile_format is supplied, \"cole-nine-centiles\" are returned as a default.",
                 "operationId": "trisomy_21_chart_coordinates_trisomy_21_chart_coordinates_post",
                 "requestBody": {
                     "content": {
@@ -1393,13 +1393,13 @@
                 "properties": {
                     "height_paternal": {
                         "title": "Height Paternal",
-                        "exclusiveMinimum": 0.0,
+                        "minimum": 50.0,
                         "type": "number",
                         "description": "The height of the child's biological father, passed as float, measured in centimeters"
                     },
                     "height_maternal": {
                         "title": "Height Maternal",
-                        "exclusiveMinimum": 0.0,
+                        "minimum": 50.0,
                         "type": "number",
                         "description": "The height of the child's biological mother, passed as float, measured in centimeters"
                     },
@@ -1490,28 +1490,6 @@
                 "type": "object",
                 "additionalProperties": {
                     "$ref": "#/components/schemas/Sex"
-                },
-                "uk90_preterm": {
-                    "male": {
-                        "height": [
-                            {
-                                "sds": -2.67,
-                                "centile": 0.4,
-                                "data": [
-                                    {
-                                        "l": "0.4",
-                                        "x": -0.2875,
-                                        "y": 27.7419
-                                    },
-                                    {
-                                        "l": "0.4",
-                                        "x": -0.2683,
-                                        "y": 28.7883
-                                    }
-                                ]
-                            }
-                        ]
-                    }
                 }
             },
             "SDSData": {
