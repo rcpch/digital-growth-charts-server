@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# DEPRECATED script - we have now moved to using Docker in dev
+# This script left in the codebase just in case it is ever needed
+
 # runs the API server in production mode
 # using gunicorn to manage 4 uvicorn workers
 # used by Azure on deploy command

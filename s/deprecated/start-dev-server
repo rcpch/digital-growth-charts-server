@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# DEPRECATED script - we have now moved to using Docker in dev
+# This script left in the codebase just in case it is ever needed
+
 # runs the API server in development mode and auto-reload
 # port: 8000 (FastAPI's default)
 
