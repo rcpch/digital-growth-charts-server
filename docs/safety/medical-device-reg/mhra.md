@@ -1,13 +1,12 @@
 ---
-title: Medical Device Registration
+title: UK Medical Device Registration
 reviewers: Dr Marcus Baw
 ---
 
-# MHRA Medical Device Registration
+The Digital Growth Charts API server and associated user interface libraries (together termed the RCPCH dGC Platform) are a Medical Device as determined under the [Medical Devices Regulations 2002](https://www.legislation.gov.uk/uksi/2002/618/regulation/2/made), *Regulation 2 (1) "medical device" (a) (i)* in that it "is intended by the manufacturer to be used for human beings for the purpose of diagnosis, prevention, monitoring, treatment or alleviation of disease".
 
-The Digital Growth Charts API server and associated user interface libraries (together termed the RCPCH dGC Platform) are a Medical Device as determined under the [Medical Devices Regulations 2002](https://www.legislation.gov.uk/uksi/2002/618/regulation/2/made), Regulation 2 "medical device" (a) (i) in the it "is intended by the manufacturer to be used for human beings for the purpose of diagnosis, prevention, monitoring, treatment or alleviation of disease".
-
-The RCPCH Digital Growth Charts API is registered with the MHRA as a Class I medical device, with the GMDN Identifier of **65712 - Paediatric growth calculation API software**. Further information is available [here](https://www.gmdnagency.org/Terms/Details/2007995?lang=en)
+!!! success "MHRA Medical Device Registration and GMDN Nomenclature"
+    The RCPCH Digital Growth Charts API is registered with the MHRA as a Class I medical device, with the GMDN Identifier of [**65712 - Paediatric growth calculation API software**](https://www.gmdnagency.org/Terms/Details/2007995?lang=en)
 
 ## Determination of Medical Device Class
 
