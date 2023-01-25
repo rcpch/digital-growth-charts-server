@@ -78,11 +78,11 @@ Dr Simon Chapman [@eatyourpeas](https://github.com/eatyourpeas)
 
 #### Chief Technology Officer
 
-Andrew Palmer
+Richard Burley
 
 #### Chief Executive Officer
 
-Overall governance for the RCPCH Digital Growth Charts project is provided not by a single individual, but by the RCPCH Digital Growth Charts Project Board, which is composed of senior leadership within the RCPCH and the most eminent clinicians in the field of Growth charts.
+Overall governance for the RCPCH Digital Growth Charts project is provided not by a single individual, but by the R[CPCH Digital Growth Charts Project Board](../../about/team.md), which is composed of senior leadership within the RCPCH and the most eminent clinicians in the field of Growth charts.
 
 ## Governance
 
@@ -102,7 +102,7 @@ Governance for patient safety within the Organisation is provided through the fo
 
 ### Clinical Risk Management File (this repository)
 
-The RCPCH Digital Growth Charts Team will establish a Clinical Risk Management File (CRMF) for each safety related healthcare IT system. The purpose of the CRMF is toprovide a central repository where all safety related information pertaining to the healthcare IT system is stored and controlled. This GitHub repository contains out Clinical Risk Management File.
+The RCPCH Digital Growth Charts Team will establish a Clinical Risk Management File (CRMF) for each safety related healthcare IT system. The purpose of the CRMF is to provide a central repository where all safety related information pertaining to the healthcare IT system is stored and controlled. This GitHub repository contains out Clinical Risk Management File.
 
 ### Clinical Risk Management Plan (this document)
 
@@ -112,25 +112,23 @@ The CRMP will also identify the resources required to discharge these clinical r
 
 ### Hazard Log
 
-The RCPCH Digital Growth Charts Team will establish and maintain a Hazard Log (HL) for each safety related healthcare IT system. The HL will be controlled and configured in accordance with the Organisation document control /quality management policy \[provide a reference\].
+The RCPCH Digital Growth Charts Team will establish and maintain a Hazard Log (HL) for each safety related healthcare IT system. The HL will be controlled and configured in accordance with the RCPCH Digital Growth Charts Team's document control policy.
 
 ### Clinical Safety Case
 
 The RCPCH Digital Growth Charts Team will establish and develop a Clinical Safety Case (CSC) for each safety related HIT system:
 
 - RCPCH dGC Application Programming Interface
-- RCPCH Demo React Client (not for direct clinical use)
-- RCPCH React Component
 
 ### Clinical Safety Case Report
 
-The RCPCH Digital Growth Charts Team will issue a Clinical Safety Case Report (CSCR) for each safety related healthcare IT system. The CSCR will be issued to support initial deployment and will be updated during the lifecycle of the healthcare IT system should the safety characteristics change. The CSCR will be controlled and configured in accordance with the Organisation’s document control policy \[provide a reference\]. The HL will be made available within the CRMF.
+The RCPCH Digital Growth Charts Team will issue a Clinical Safety Case Report (CSCR) for each safety related healthcare IT system. The CSCR will be issued to support initial deployment and will be updated during the lifecycle of the Healthcare IT system should the safety characteristics change. The CSCR will be controlled and configured in accordance with the RCPCH Digital Growth Charts Team's document control policy. The Hazard Log will be made available within the CRMF.
 
 ## Healthcare IT Clinical Risk Management Activities
 
 ### Hazard Identification
 
-The RCPCH Digital Growth Charts Team will conduct hazard identification workshops to identify potential hazards associated with the deployment and use of our healthcare IT system. The[<span class="underline">CSO</span>](#clinical-safety-officer)will be responsible for facilitating such workshops and ensuring attendance from the RCPCH Digital Growth Charts Team. Typically, representatives from the following domains will be required:
+The RCPCH Digital Growth Charts Team will conduct hazard identification workshops to identify potential hazards associated with the deployment and use of our healthcare IT system. The[CSO](#clinical-safety-officer)will be responsible for facilitating such workshops and ensuring attendance from the RCPCH Digital Growth Charts Team. Typically, representatives from the following domains will be required:
 
 - Technical testing team
 
@@ -142,23 +140,23 @@ The RCPCH Digital Growth Charts Team will conduct hazard identification workshop
 
 - Project Board
 
-The workshops will have minutes taken and a copy stored in the[<span class="underline">CRMF</span>](#clinical-risk-management-file).
+The workshops will have minutes taken and a copy stored in the[CRMF](#clinical-risk-management-file).
 
 If a healthcare IT solution is deemed not to be safety related then this decision will be formally recorded.
 
 The technical team will advise on the best mechanism for addition of new issues to the the RCPCH Digital Growth Charts Team's project management workflow.
 
-Where any third-party components are used to support the healthcare IT system then they will be considered in the scope of the hazard identification activities and subsequent risk assessment. Where none areused a positive declaration to this effect will be recorded in the minutes.
+Where any third-party components are used to support the healthcare IT system then they will be considered in the scope of the hazard identification activities and subsequent risk assessment. Where none are used a positive declaration to this effect will be recorded in the minutes.
 
 All identified hazards will be recorded in the Hazard Log.
 
 ### Risk Assessment
 
-the RCPCH Digital Growth Charts Team's Health will conduct healthcare IT system risk assessment inaccordance with the Risk Management Strategy. The Hazard Log will be updated to capture the risk assessment.
+the RCPCH Digital Growth Charts Team's Health will conduct healthcare IT system risk assessment in accordance with the Risk Management Strategy. The Hazard Log will be updated to capture the risk assessment.
 
 ### Risk Evaluation
 
-The RCPCH Digital Growth Charts Team will conduct healthcare IT system risk evaluation inaccordance with the Risk Management Strategy The Hazard Log will be updated to capture the risk evaluation.
+The RCPCH Digital Growth Charts Team will conduct healthcare IT system risk evaluation in accordance with the Risk Management Strategy The Hazard Log will be updated to capture the risk evaluation.
 
 ### Risk Control
 
@@ -170,13 +168,13 @@ Details of the risk control measure and evidence of effective implementation wil
 
 To support clinical safety activities undertaken during any deployment phases of a project or programme of work the following documentation will be required to form a part of the overall approval process.
 
-Deployment of changes to any of the RCPCH dGC health IT systems follows an industry-standard pattern of 'code promotion' using a Git Branch-based strategy. New features are developed in branches specific to that feature. Following successful testing, user acceptance, and automated tests, a successful feature can be merged into the next branch 'up' which may be an 'alpha' or other nomenclature. The process of merging requires code review by nominated individuals and is a further opportunity for clinical safety review.
+Deployment of changes to any of the RCPCH dGC Health IT systems follows an industry-standard pattern of 'code promotion' using a Git Branch-based strategy. New features are developed in branches specific to that feature. Following successful testing, user acceptance, and automated tests, a successful feature can be merged into the next branch 'up' which may be a `test` branch or other nomenclature. The process of merging requires code review by nominated individuals and is a further opportunity for clinical safety review.
 
-Code in the 'live' branch is changed relatively infrequently (except for urgent security or safety updates) but the code which is promoted into 'live' wuld have by then undergone several rounds of review as it progressed through our branch promotion strategy.
+Code in the `live` branch is changed relatively infrequently (except for urgent security or safety updates) but the code which is promoted into `live` would have by then undergone several rounds of review as it progressed through our branch promotion strategy.
 
 ### Incident Management
 
-Clinical Risk Management activities within the Organisation and thehealthcare IT programmes and services offered are completed within the corporate risk management strategy. As such, clinical safety related incidents are dealt with in a similar manner as other incidents within the organisational such as financial,reputational, technical and other service impacting categories.
+Clinical Risk Management activities within the Organisation and the healthcare IT programmes and services offered are completed within the corporate risk management strategy. As such, clinical safety related incidents are dealt with in a similar manner as other incidents within the organisational such as financial,reputational, technical and other service impacting categories.
 
 ### Safety Incident Management Process
 
@@ -194,7 +192,7 @@ The clinical safety activities described in this Clinical Risk Management System
 
 ### Competency
 
-All of the staff identified in the organisation chart, shall be sufficiently competent for the roles and tasks which they are asked to undertake. Where an individual does not yet have sufficient experience or knowledge, then that person shall be monitored, and his/her work reviewed, by someone who has the necessary competence. Such supervision shall prevail until it is judged that the individual has amassed the necessary experience to undertake such tasks unsupervised.
+All of the staff identified in the clinical safety documentation shall be sufficiently competent for the roles and tasks which they are asked to undertake. Where an individual does not yet have sufficient experience or knowledge, then that person shall be monitored, and his/her work reviewed, by someone who has the necessary competence. Such supervision shall prevail until it is judged that the individual has amassed the necessary experience to undertake such tasks unsupervised.
 
 In assessing competency, the different functional roles required to fully discharge the obligations of the Clinical Risk Management System,and the necessary skills and knowledge needed for each, shall be considered. Primary functional roles may include: - Conducting discrete safety analyses (for example, a HAZOP or FFA) or defining the Hazard Risk Indicators for a particular project.
 
@@ -222,16 +220,14 @@ In assessing competency, the different functional roles required to fully discha
 
 ### Overview
 
-Audits shall be undertaken to ensure that projects are adhering to thedefined safety requirements. Such audits will focus on the **ClinicalSafety Team** and **third-party** suppliers.
+Audits shall be undertaken to ensure that projects are adhering to the defined safety requirements. Such audits will focus on the **Clinical Safety Team** and **third-party** suppliers.
 
 ### Internal Safety Audits
 
 - the RCPCH Digital Growth Charts Team shall undertake regular internal safety audits to ensure that projects undertaken within the organisation are compliant with this Clinical Risk Management System. These audits shall be conducted and recorded in accordance with the internal quality management procedure.
 
-- The scope of an internal safety audit will be the formal Clinical Risk Management System and the Organisation’s documentation supporting this document.
+- The scope of an internal safety audit will be the formal Clinical Risk Management System and the organisation’s documentation supporting this document.
 
 ### Supplier Audits
 
 The RCPCH Digital Growth Charts Team shall undertake regular third-party supplier audits, as a minimum annually, to ensure compliance with their Clinical Risk Management System. The audit shall focus on the Clinical Risk Management System, the evidence which demonstrates its effective operation and any issues arising from the deployment of the healthcare IT products and services. The basis for the audit shall be DCB0129.
-
-Supplier audits shall be conducted in accordance with the External Safety Audit Procedure.
