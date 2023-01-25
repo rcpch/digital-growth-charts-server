@@ -65,9 +65,9 @@ nav:
     - 'safety/dtac.md'
     - Medical Devices Registration:
       - 'safety/medical-device-reg/mhra.md'
+      - 'safety/medical-device-reg/essential-req.md'
       - 'safety/medical-device-reg/doc-api.md'
       - 'safety/medical-device-reg/mdr-technical-docs.md'
-      - 'safety/medical-device-reg/essential-req.md'
     - Download: 'safety/download.md'
   - Legal:
     - 'legal/disclaimer.md'
@@ -90,7 +90,7 @@ theme:
     - navigation.tracking
     - navigation.top
     - navigation.expand
-    # - toc.integrate
+    - toc.integrate
 
   palette:
     # Light mode ONLY - it's gets too hard to keep dark mode working with a number of iframes in play
@@ -105,18 +105,20 @@ theme:
   logo: _assets/_images/rcpch_logo.png
 
 plugins:
-  - macros
   - git-committers:
       repository: rcpch/digital-growth-charts-documentation
       branch: live
   - git-revision-date-localized:
       enable_creation_date: true
+  - macros
+  - privacy:
+      external_links: true
   - search
   - render_swagger
   - with-pdf:
         cover_title: RCPCH Digital Growth Charts
         cover_subtitle: Complete Documentation Manual
-        #toc_title: TOC TITLE TEXT
+        toc_title: Table Of Contents
         #heading_shift: false
         #toc_level: 3
         #ordered_chapter_level: 2
@@ -157,7 +159,7 @@ markdown_extensions:
       check_paths: true
   - pymdownx.superfences
   - toc:
-      permalink: true
+      permalink: false
 
 copyright: Copyright &copy; 2022 Royal College of Paediatrics and Child Health (RCPCH)
 repo_url: https://github.com/rcpch/digital-growth-charts-documentation
