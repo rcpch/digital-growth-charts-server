@@ -36,7 +36,7 @@ The 'LMS' method used to create data tables from raw observational data, and to 
 
 * UK90 Growth References are Copyright ⓒ Royal College Of Paediatrics and Child Health.
 
-* Other references such as those for Turner's syndrome and Trisomy 21 (Down's Syndrome) are the copyright of their respective owners.
+* Other references such as those for Turner syndrome and Down Syndrome) are the copyright of their respective owners.
 
 ## Licensing summary
 

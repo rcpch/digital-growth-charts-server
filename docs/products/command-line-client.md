@@ -104,7 +104,7 @@ foo@bar:~$ rcpchgrowth measurement-for-sds 8.3 height female 0.72 --reference tu
 |_| \_\\____|_|    \____|_| |_|\____|_|  \___/ \_/\_/  \__|_| |_|
                                                                  
 
-Reference: Turner's Syndrome
+Reference: Turner Syndrome
 SDS 0.72
 Centile: 76.424 %
 height: 115.79078818040003 cm

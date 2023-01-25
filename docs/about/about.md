@@ -20,11 +20,11 @@ To help you implement the API, our team has built demo clients and tools to help
 
 ## The dGC Story
 
-The RCPCH project team was commissioned by NHSX to produce a 'Minimum Viable Product' API (Application Programming Interface) to generate reliable results for growth data from children 1 year and below. The project team began work in May 2020. In development, the project developers found it was feasible and practical to extend the scope of the MVP to include children of **all** ages, which is what we did. Since then, we have been able to develop several demonstration clients to assist customers with integration with the API. The calculation functions of the API have been extracted out as a separate Python package, to help researchers and those working in Trusted Data Access Environments.
+The RCPCH project team was commissioned by the NHS to produce a 'Minimum Viable Product' API (Application Programming Interface) to generate reliable results for growth data from children 1 year and below. The project team began work in May 2020. In development, the project developers found it was feasible and practical to extend the scope of the MVP to include children of **all** ages, which is what we did. Since then, we have been able to develop several demonstration clients to assist customers with integration with the API. The calculation functions of the API have been extracted out as a separate Python package, to help researchers and those working in Trusted Data Access Environments.
 
 ## Current Scope
 
-Currently the "minimum viable product" specification is to provide reliable calculations for children in the UK for height centile, weight centile, body mass index (BMI) centile and head circumference ('occipitofrontal circumference' - OFC) centile.
+Currently the specification is to provide reliable growth calculations for children in the UK for height centile, weight centile, body mass index (BMI) centile and head circumference ('occipitofrontal circumference' or OFC) centile. To this base specification we have added bone age, Turner and Down syndrome charts, and 
 
 In addition to providing standard deviation scores (SDS) and centiles, it will also provide basic guidance for users on how to interpret the information received.
 

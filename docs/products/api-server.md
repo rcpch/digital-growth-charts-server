@@ -15,23 +15,17 @@ reviewers: Dr Marcus Baw
 
 [![Build and deploy Python app to Azure Web App - rcpch-dgc-server-live](https://github.com/rcpch/digital-growth-charts-server/actions/workflows/live-deploy-to-server-on-release.yml/badge.svg)](https://github.com/rcpch/digital-growth-charts-server/actions/workflows/live-deploy-to-server-on-release.yml)
 
-![Uptime](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/rcpch/upptime-rcpch-web-services/master/api/check-get-api-rcpch-ac-uk-without-auth-returns-401/uptime.json)
 [![DOI](https://zenodo.org/badge/261587883.svg)](https://zenodo.org/badge/latestdoi/261587883)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/202702-d1daf1c6-3a4c-469d-be2a-e2fcf3d84090?action=collection%2Ffork&collection-url=entityId%3D202702-d1daf1c6-3a4c-469d-be2a-e2fcf3d84090%26entityType%3Dcollection%26workspaceId%3Dd868b72e-0677-4b67-9283-112363b1f5ac#?env%5BLIVE%20api.rcpch.ac.uk%5D=W3sia2V5IjoiYmFzZVVybCIsInZhbHVlIjoiaHR0cHM6Ly9hcGkucmNwY2guYWMudWsvZ3Jvd3RoL3YxIiwiZW5hYmxlZCI6dHJ1ZSwidHlwZSI6ImRlZmF1bHQiLCJzZXNzaW9uVmFsdWUiOiJodHRwczovL2FwaS5yY3BjaC5hYy51ay9ncm93dGgvdjEiLCJzZXNzaW9uSW5kZXgiOjB9LHsia2V5IjoiYXBpS2V5IiwidmFsdWUiOiJJTlNFUlRfWU9VUl9BUElfS0VZX0hFUkUiLCJlbmFibGVkIjp0cnVlLCJ0eXBlIjoic2VjcmV0Iiwic2Vzc2lvblZhbHVlIjoiSU5TRVJUX1lPVVJfQVBJX0tFWV9IRVJFIiwic2Vzc2lvbkluZGV4IjoxfV0=)
 
-:octicons-mark-github-16: [GitHub repository](https://github.com/{{ repository_name }})
-
-:octicons-code-review-24: [Developer Portal](https://dev.rcpch.ac.uk) (Sign up and get API keys here)  
-
-:material-api: [API Gateway BASEURL](https://api.rcpch.ac.uk) (NB: Without API key will always respond with 404)
+| Links |
+| --- |
+| :octicons-mark-github-16: [GitHub repository](https://github.com/{{ repository_name }})|
+| :octicons-code-review-24: [Developer Portal](https://dev.rcpch.ac.uk) (Sign up and get API keys here) |
+| :material-api: [API Gateway BASEURL](https://api.rcpch.ac.uk) (NB: Without API key will always respond with 404) |
 
 ![api_server_postman](../_assets/_images/api_server_postman.png)
 
 ## Getting Started
 
 If you want to integrate the RCPCH Digital Growth Charts API into an application, then start [here](../integrator/getting-started.md)
-
-## API details
-
-The API is written in Python. Mathematical and statistical calculations are made using the [SciPy](https://www.scipy.org/) and [NumPy](https://numpy.org/) libraries. Server middleware used is [Flask](https://flask.palletsprojects.com/en/1.1.x/quickstart/), with autogeneration of the openAPI3 specification documents using the Marshmallow plugin for Flask.
-
-We use the Microsoft Azure API Management Platform to handle authorization, rate limits and quotas.

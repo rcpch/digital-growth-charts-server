@@ -5,7 +5,7 @@ reviewers: Dr Marcus Baw
 
 ## Contributing
 
-We're a friendly bunch and we're happy to chat. You can get in touch with the primary developers to talk about the project using [Signal or Discourse](../contact/contact.md). These are the main community discussion hubs around the dGC project and you are welcome to chat to us there. 
+We're a friendly bunch and we're happy to chat. You can get in touch with the primary developers to talk about the project using [Signal or Discourse](../about/contact.md). These are the main community discussion hubs around the dGC project and you are welcome to chat to us there. 
 
 ### How to contribute
 

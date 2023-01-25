@@ -1,9 +1,7 @@
 ---
-title: Google Sheets extension
+title: dGC Google Sheets Plugin
 reviewers: Dr Marcus Baw
 ---
-
-# Google Sheets Plugin
 
 :octicons-mark-github-16: 
 :material-web:
@@ -20,6 +18,6 @@ Columns must be in the order and labelled in lower case
 
 Dates must be supplied in the format YYYY-MM-DD
 sex is lowercase 'male' or 'female'
-Currently only UK-WHO is supported but in time Trisomy 21 and Turner's will be added.
+Currently only UK-WHO is supported but in time Down and Turner syndromes will be added.
 
 ## Installation

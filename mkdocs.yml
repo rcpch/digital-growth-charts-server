@@ -10,12 +10,12 @@ nav:
   - Home: 'index.md'
   - About:
     - 'about/about.md'
-    - 'about/get-digital-growth-charts.md'
     - 'about/team.md'
     - 'about/acknowledgements.md'
     - 'about/awards-press-blogs.md'
     - 'about/contact.md'
   - Products:
+    - 'products/get-digital-growth-charts.md'
     - 'products/products-overview.md'
     - 'products/pricing.md'
     - 'products/api-server.md'
@@ -26,13 +26,6 @@ nav:
     - 'products/google-sheets-plugin.md'
     - 'products/react-native.md'
     - 'products/flask(deprecated).md'
-  - Clinician: 
-    - 'clinician/how-the-api-works.md'
-    - 'clinician/chart-information-families.md'
-    - 'clinician/chart-information-health-staff.md'
-    - 'clinician/date-age-calculations.md'
-    - 'clinician/growth-references.md'
-    - 'clinician/faqs-for-clinicians.md'
   - Support:
     - 'integrator/support.md'
     - 'integrator/getting-started.md'
@@ -42,6 +35,13 @@ nav:
     - 'integrator/client-specification.md'
     - 'integrator/faqs-for-integrators.md'
     - 'integrator/whos-using-dgc.md'
+  - Clinician: 
+    - 'clinician/how-the-api-works.md'
+    - 'clinician/chart-information-families.md'
+    - 'clinician/chart-information-health-staff.md'
+    - 'clinician/date-age-calculations.md'
+    - 'clinician/growth-references.md'
+    - 'clinician/faqs-for-clinicians.md'
   - Contribute:
     - 'developer/start-here.md'
     - 'developer/versioning.md'
@@ -85,12 +85,13 @@ theme:
   custom_dir: rcpch-theme
   features:
     - navigation.instant
+    - navigation.footer
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.tracking
     - navigation.top
     - navigation.expand
-    - toc.integrate
+    # - toc.integrate
 
   palette:
     # Light mode ONLY - it's gets too hard to keep dark mode working with a number of iframes in play

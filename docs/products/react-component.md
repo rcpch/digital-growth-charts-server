@@ -161,7 +161,7 @@ This library has been written in Typescript. The main component is `RCPCHChart`,
 
 ### Measurement interface
 
-The `Measurement` interface is structured to reflect the JSON `Measurement` object which is returned by the API. The `RCPCHChart` component uses the `reference` prop to determine which chart to render. So far, 3 references are supported: UK-WHO, Turner's Syndrome and Trisomy 21 (Down's Syndrome). The reference data for the centiles are included in the library in plottable format in the `chartdata` folder.
+The `Measurement` interface is structured to reflect the JSON `Measurement` object which is returned by the API. The `RCPCHChart` component uses the `reference` prop to determine which chart to render. So far, 3 references are supported: UK-WHO, Turner Syndrome and Down Syndrome. The reference data for the centiles are included in the library in plottable format in the `chartdata` folder.
 
 !!! tip
     This means in practice that you get the returned JSON from the dGC API and pass it directly in to the component and the component 'knows' how to render this correctly. You don't need to parse, restructure, or even understand the JSON returned from the API, just pass it directly to the component inside an array containing one `Measurement` object.
@@ -473,7 +473,7 @@ Centile data are returned from the RCPCH API in this same structure, though no A
 
 see [Contributing](../developer/contributing.md) for information on how to get involved in the project.
 
-You can get in touch with the primary developers to talk about the project using any of the methods on our [contact page](../contact/contact.md)
+You can get in touch with the primary developers to talk about the project using any of the methods on our [contact page](../about/contact.md)
 
 ## Acknowledgements
 
@@ -484,7 +484,7 @@ The charts are built using [Victory Charts](https://formidable.com/open-source/v
 
 ## Licensing
 
-The chart data bundled in the component is subject to copyright and is owned by the RCPCH. If you wish to use this software commercially, please [contact the RCPCH](../contact/contact.md) so that we can ensure you have the correct license for use.
+The chart data bundled in the component is subject to copyright and is owned by the RCPCH. If you wish to use this software commercially, please [contact the RCPCH](../about/contact.md) so that we can ensure you have the correct license for use.
 
 This chart component software is released under the MIT licence
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)

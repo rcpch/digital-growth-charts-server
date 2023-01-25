@@ -10,7 +10,7 @@ The next few pages will step you through the process of using the API. If you ar
 
 ## Sign up for the API service
 
-In order to use the Digital Growth Charts API you need to sign up for an account and obtain API keys. These API keys allow us to manage usage of the API and prevent abuse. There is a Free Tier of the API, which gives you instant access to the API, so you can get on with exploring the platform. More information on the pricing of the platform is available [here](../products/pricing.md).
+In order to use the Digital Growth Charts API you need to sign up for an account and obtain **API keys**. These API keys allow us to manage usage of the API and prevent abuse. There is a Free Tier of the API, which gives you instant access to the API, so you can get on with exploring the platform. More information on the pricing of the platform is available [here](../products/pricing.md).
 
 > At present this signup step is on an external website because we use the Microsoft Azure API management platform, in the future this may change in favour of a more streamlined on-boarding workflow.
 > 
@@ -21,7 +21,7 @@ In order to use the Digital Growth Charts API you need to sign up for an account
 ## Choose a Product and Create an App
 
 !!! tip "Onboarding support"
-    If you have any issues with getting the Tier you need then please [contact us](../contact/contact.md)
+    If you have any issues with getting the Tier you need then please [contact us](../about/contact.md)
 
 1. Navigate to the [Products](https://dev.rcpch.ac.uk/product) menu item, and choose the Tier of the API subscription that you require.
 
@@ -29,7 +29,8 @@ In order to use the Digital Growth Charts API you need to sign up for an account
 
 1. Select a Tier from the 'Tiers' drop-down above to get started.
     
-    **IMPORTANT: ONLY THE FREE TIER GIVES YOU INSTANT ACCESS**. Other tiers will need to wait for **approval**, onboarding, and payment verification, so we recommend the Free Tier for everyone initially. You can create multiple Free Tier apps, however the usage is shared.
+!!! warning "**IMPORTANT: ONLY THE FREE TIER GIVES YOU INSTANT ACCESS**"
+    Other tiers will need to wait for **approval**, onboarding, and payment verification, so we recommend the Free Tier for everyone initially. You can create multiple Free Tier apps, however the usage is shared.
 
 2. Create a unique name for your application. It doesn't matter what you call it as long as it has meaning for you, and it can be changed later in the Account part of the portal.
 

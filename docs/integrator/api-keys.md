@@ -1,5 +1,5 @@
 ---
-title: Getting API keys
+title: Getting API Keys
 reviewers: Dr Marcus Baw, Dr Simon Chapman
 ---
 

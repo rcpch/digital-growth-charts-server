@@ -3,13 +3,11 @@ title: Client Specification
 reviewers: Dr Marcus Baw, Dr Simon Chapman
 ---
 
-# Client Specification
-
-In this document we have tried to collect together as much detail as could, about the exact specification that the Digital Growth Charts Project Board have mandated for Digital Growth Charts. Much of the specification is also in common with the preceding paper growth charts, since we aimed for clinicians to have automatic familiarity with the Digital version.
+In this document we have collected together the exact specification that the Digital Growth Charts Project Board have mandated for Digital Growth Charts. Much of the specification is also inherited from the preceding paper growth charts, since we aimed for clinicians to have automatic familiarity with the digital version.
 
 ## Background
 
-!!! warning
+!!! warning "A safe and familiar Client User Interface is a requirement of the Licensing Agreement"
     **A requirement of the licence for the API is that any charts rendered must meet these standards as agreed by the Digital Growth Charts Project Board. A large amount of documentation has been produced to guide the clinically safe design and rendering of UK growth charts.**
 
 !!! tip "Implementation support service"
@@ -17,34 +15,37 @@ In this document we have tried to collect together as much detail as could, abou
 
 ### Understanding the UK-WHO dataset
 
-A first, critically important, thing to understand is that the dataset is not a simple 'lookup table' of weights vs ages and centiles. As you can imagine, such a table, while possible, would rapidly get rather large because of the number of variables involved. It would also be suboptimal since weight, height, etc are *continuous*, not discrete, variables and so it would a 'lookup table' approach would involve a loss of accuracy.
+A first, critically important, thing to understand is that the dataset is **not** a simple 'lookup table' of height/weight against ages and centiles. Such a table would rapidly become unusably large because of the number of variables involved. It would also be inaccurate since weight, height, etc are *continuous*, not discrete, variables and so a 'lookup table' approach would involve a loss of accuracy.
 
-The UK growth charts are made up of 4 datasets taken from 2 growth references (see [clinical documentation](../clinician/chart-information-health-staff.md) for more detail).
+The UK growth charts are made up of four datasets taken from two different growth references (see [clinical documentation](../clinician/chart-information-health-staff.md) for more detail).
 
-- The UK90 preterm dataset runs from 23 weeks gestation to 42 weeks postmenstrual age as length (from 25 weeks), weight and head circumference.
+- The UK 1990 preterm dataset runs from 23 weeks gestation to 42 weeks postmenstrual age as length (from 25 weeks), weight and head circumference.
 
 - The WHO 2006 dataset runs from 2 weeks of age to 2 years of age as length, weight, BMI and head circumference.
 
 - The WHO 2006 dataset continues as **height** (now measured _standing_) from 2 years to 4 years of age
 
-- The UK90 dataset picks up from 4y until 20y (head circumference to 17y in girls and 18y in boys)
+- The UK90 dataset picks up from 4 years until 20 years (head circumference to 17 years in girls and 18 years in boys)
+
+There is established clinical guidance for how these different datasets should be amalgamated to produce a correct chart. You can see that this results in slight visual anomalies such as small steps in the chart at 2 and 4 years of age, however these are **intentional** and are clinically valid.
 
 ## Implications for charting digitally
 
-- These datasets all overlap, and therefore when plotting them, they must be passed to charting packages as 4 individual series. This means they will appear as discontinuous, with breaks in the lines where they meet/overlap.
+- These datasets all overlap, and therefore when plotting them, they must be rendered as four individual series. This means they will appear as discontinuous, with breaks in the lines where they meet/overlap.
 
-- There is a natural step at each of these time points which **must** be respected. If all 4 datasets are presented 0-20y as a continuous dataset, chart packages will interpolate the gaps and the intentional 'step' will be lost. This is particularly clinically relevant at aged 2 y, where infant are measured standing, not lying as is standard before this age. This leads to a natural small step in the data which must be respected. There is no change in references at this transition from infancy to childhood, but the reference data have values for both lying and standing, so both should be plotted.
+- There is a natural step at each of these time points which **must** be respected. If all 4 datasets are presented 0-20y as a continuous dataset, chart packages will interpolate the gaps and the intentional 'step' will be lost. This is particularly clinically relevant at aged 2 y, where infants are measured standing up, not laying flat as is standard before this age. This leads to a natural small step in the data which must be respected. There is no change in references at this transition from infancy to childhood, but at exactly 2 years, the reference data have values for both lying and standing, so **both** should be plotted.
 
 - The API endpoint returns the chart data in an array of arrays. The first level array represents the 9 centiles `[0.4, 2, 9 , 25, 50, 75, 91, 98, 99.6]`, with each centile in turn having a nested array of 4 arrays of data, one for each dataset (see below). The individual data points are reported as float values for x and y coordinates. X corresponds to decimal age, y to the measurement value of the chart requested. If the `three-percent-centiles` optionally is passed in (instead of the default `cole-nine-centiles`) an older format of 9 centiles `[3, 5, 10, 25, 50, 75, 90, 95, 97]` is returned. The `nine-cole-centiles` is default if no parameter is passed, and this is the international standard.
 
-- The chart data is only returned for the measurement method requested - if only height is supplied, only height centile data will be returned.
+- The chart data is only returned for the measurement method requested - if only height is supplied, only height centile data will be returned. Multiple API calls are required to obtain a full set of measurement data.
 
-- In addition to the centile data, the growth data presented to the endpoint in the request are returned as an array of x and y values.
+- In addition to the centile data, the growth data presented to the endpoint in the request are returned as an array of x and y coordinate values for plotting on the chart.
 
 ## Specifications for implementing your own charting
 
 !!! success "React component reference charting implementation"
-    Making growth charts that adhere to the specification and are clinical safe and usable is quite difficult, in terms of technical, statistical, and clinical skillsets needed. That's why we have built a [reference implementation](/products/react-component.md) of the charts, as a permissively licensed React component so that you can use it in your own application.
+    Making growth charts that adhere to the specification and are clinically safe and usable is quite difficult, in terms of technical, statistical, and clinical skill-sets needed. That's why we have built a [reference implementation](/products/react-component.md) of the charts, as a permissively licensed React component so that you can use it in your own application.
+
     We **strongly** recommend the use of this package if possible. If that is not possible we recommend discussion with the RCPCH Digital Growth Charts team to help you get off on the right foot with your implementation.
 
 ### Chart plotting

@@ -63,7 +63,7 @@ NHS Digital have set up a support Slack for implementers of the Digital Personal
 [Go to the dPCHR Slack :fontawesome-brands-slack:](https://join.slack.com/t/dpchrworkspace/shared_invite/zt-iz9ifaww-PWZ_3rfnsDaQxsvK9Wf51A){ .md-button .md-button--primary }
 
 !!! warning
-    **Please note that due to our team's time constraints, the RCPCH Digital Growth Charts team can't monitor the NHS Digital dPCHR Slack.** If you need a member of the RCPCH commercial or development team to respond, please [contact us using email](../contact/contact.md), use the [Discourse Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts), .
+    **Please note that due to our team's time constraints, the RCPCH Digital Growth Charts team can't monitor the NHS Digital dPCHR Slack.** If you need a member of the RCPCH commercial or development team to respond, please [contact us using email](../about/contact.md), use the [Discourse Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts), .
 
 -----
 

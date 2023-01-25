@@ -13,7 +13,7 @@ We know from talking to experienced child health clinicians that they absolutely
 
 Produced and warranted by the RCPCH itself, the international authority on child health. Designed to be familiar to clinicians used to paper growth charts. And also richly functional, adding features like automatic gestational age correction, bone age, mid-parental height, event recording, and specialist references for Turner and Down syndromes.
 
-## The heavy lifting is done for you.
+## The heavy lifting is done for you
 
 We know that calculation and display of growth parameters is technically hard, and comes with many clinical caveats. Our SaaS (Software As A Service) platform does all the hard work for you, meaning your clinicians get dependable, trustworthy charts, and digital transformation can proceed.
 
