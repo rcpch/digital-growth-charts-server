@@ -8,7 +8,7 @@ reviewers: Dr Marcus Baw
 
 !!! info inline "Discourse Forum"
 
-    For all technical and clinical enquiries, we'd like to encourage the use of our open forum, because this helpd develop a community resource of previously asked and answered questions. These are the basis of an open, searchable knowledge base about the dGC Platform.
+    For all technical and clinical enquiries, we encourage the use of our open forum, because this helps develop a community resource of previously asked and answered questions. These are the basis of an open, searchable knowledge base about the dGC Platform.
 
     [RCPCH Forum :fontawesome-brands-discourse:](https://openhealthhub.org/c/rcpch-digital-growth-charts){ .md-button .md-button--primary }
 
