@@ -1,13 +1,13 @@
 ---
 title: Docker development
-reviewers: Dr Marcus Baw, Dr Sean Cusack
+reviewers: Dr Marcus Baw, Dr Sean Cusack, Dr Anchit Chandran
 ---
 
 # Developing locally in a Docker container
 
-Docker containers avoid many of the problems and irritating snags related to conflicting versions of Python and libraries when setting up a development environment on your machine. 
+Docker containers avoid many of the problems and irritating snags related to conflicting versions of Python and libraries when setting up a development environment on your machine.
 
-In the Dockerized environment, all the code is running in an isolated virtual environment, so there are no version conflicts. This is similar to a virtual machine, but more efficient in terms of resources. 
+In the Dockerized environment, all the code is running in an isolated virtual environment, so there are no version conflicts. This is similar to a virtual machine, but more efficient in terms of resources.
 
 The Docker container closely resembles our deployment environment, helping to prevent “Well It Works On *My* Machine”-type deployment difficulties.
 
