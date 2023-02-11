@@ -70,15 +70,24 @@ The RCPCH's team is not yet of a size that it requires an org chart to explain. 
 
 #### Clinical Safety Officer
 
-Dr Marcus Baw [@pacharanero](https://github.com/pacharanero)
+**Dr Marcus Baw**
+NHS Digital-trained Clinical Safety Officer  
+Registered General Medical Practitioner, GMC Number 4712729  
+Software Developer  
+Github [@pacharanero](https://github.com/pacharanero)  
 
 #### Senior Clinical Adviser
 
-Dr Simon Chapman [@eatyourpeas](https://github.com/eatyourpeas)
+**Dr Simon Chapman**
+Consultant Paediatrician, King's College Hospital Trust  
+Specialist in Diabetes and Endocrinology  
+Software Developer  
+Github [@eatyourpeas](https://github.com/eatyourpeas)  
 
-#### Chief Technology Officer
+#### Chief Digital Officer
 
 Richard Burley
+Chief Digital Officer, RCPCH
 
 #### Chief Executive Officer
 
@@ -98,13 +107,17 @@ Governance for patient safety within the Organisation is provided through the fo
 
 - Open, public issue tracking ensures the widest possible reporting base, and unparalleled access to report issues compared to the majority of Health IT systems. These Issues, tracked in GitHub, directly form part of the development workflow used by the clinical and technical teams.
 
+### Public forum
+
+RCPCH maintains a presence on the Open Health Hub web forum ([openhealthhub.org](https://openhealthhub.org)), where users, implementers, and clinicians can feed back on the system. This is a transparent and open mechanism for safety feedback and aftermarket surveillance of the platform. Using the same system or using our contact page it is also possible to send a private message or contact via email in the event of a private communication being necessary.
+
 ## Healthcare IT Clinical Risk Management Deliverables
 
-### Clinical Risk Management File (this repository)
+### Clinical Risk Management File CRMF (this repository)
 
 The RCPCH Digital Growth Charts Team will establish a Clinical Risk Management File (CRMF) for each safety related healthcare IT system. The purpose of the CRMF is to provide a central repository where all safety related information pertaining to the healthcare IT system is stored and controlled. This GitHub repository contains out Clinical Risk Management File.
 
-### Clinical Risk Management Plan (this document)
+### Clinical Risk Management Plan CRMP (this document)
 
 The RCPCH Digital Growth Charts Team will establish a Clinical Risk Management Plan (CRMP) for each safety related healthcare IT system. The purpose of the CRMP is to identify the clinical risk management activities that are to be undertaken and the phasing of these activities in the project lifecycle.
 
@@ -114,15 +127,19 @@ The CRMP will also identify the resources required to discharge these clinical r
 
 The RCPCH Digital Growth Charts Team will establish and maintain a Hazard Log (HL) for each safety related healthcare IT system. The HL will be controlled and configured in accordance with the RCPCH Digital Growth Charts Team's document control policy.
 
+The Hazard Log details can be viewed on the [Hazard Log page](hazard-log.md)
+
 ### Clinical Safety Case
 
 The RCPCH Digital Growth Charts Team will establish and develop a Clinical Safety Case (CSC) for each safety related HIT system:
 
-- RCPCH dGC Application Programming Interface
+- [RCPCH dGC Application Programming Interface](clinical-safety-case-report.md)
 
 ### Clinical Safety Case Report
 
 The RCPCH Digital Growth Charts Team will issue a Clinical Safety Case Report (CSCR) for each safety related healthcare IT system. The CSCR will be issued to support initial deployment and will be updated during the lifecycle of the Healthcare IT system should the safety characteristics change. The CSCR will be controlled and configured in accordance with the RCPCH Digital Growth Charts Team's document control policy. The Hazard Log will be made available within the CRMF.
+
+- [RCPCH dGC Application Programming Interface](clinical-safety-case-report.md)
 
 ## Healthcare IT Clinical Risk Management Activities
 
@@ -140,19 +157,17 @@ The RCPCH Digital Growth Charts Team will conduct hazard identification workshop
 
 - Project Board
 
-The workshops will have minutes taken and a copy stored in the[CRMF](#clinical-risk-management-file).
-
 If a healthcare IT solution is deemed not to be safety related then this decision will be formally recorded.
 
 The technical team will advise on the best mechanism for addition of new issues to the the RCPCH Digital Growth Charts Team's project management workflow.
 
 Where any third-party components are used to support the healthcare IT system then they will be considered in the scope of the hazard identification activities and subsequent risk assessment. Where none are used a positive declaration to this effect will be recorded in the minutes.
 
-All identified hazards will be recorded in the Hazard Log.
+All identified hazards will be recorded in the [Hazard Log](hazard-log.md).
 
 ### Risk Assessment
 
-the RCPCH Digital Growth Charts Team's Health will conduct healthcare IT system risk assessment in accordance with the Risk Management Strategy. The Hazard Log will be updated to capture the risk assessment.
+The RCPCH Digital Growth Charts Team will conduct healthcare IT system risk assessment in accordance with the Risk Management Strategy. The Hazard Log will be updated to capture the risk assessment.
 
 ### Risk Evaluation
 
@@ -162,7 +177,7 @@ The RCPCH Digital Growth Charts Team will conduct healthcare IT system risk eval
 
 Where the initial risk evaluation is deemed unacceptable, further risk controls will be required. the RCPCH Digital Growth Charts Team will manage healthcare IT system risk in accordance with the Risk Management Strategy.
 
-Details of the risk control measure and evidence of effective implementation will be captured in the Hazard Log.
+Details of the risk control measures and evidence of effective implementation will be captured in the Hazard Log.
 
 ### Deployment and Ongoing Maintenance
 
@@ -174,13 +189,15 @@ Code in the `live` branch is changed relatively infrequently (except for urgent 
 
 ### Incident Management
 
-Clinical Risk Management activities within the Organisation and the healthcare IT programmes and services offered are completed within the corporate risk management strategy. As such, clinical safety related incidents are dealt with in a similar manner as other incidents within the organisational such as financial,reputational, technical and other service impacting categories.
+Clinical Risk Management activities within the Organisation and the healthcare IT programmes and services offered are completed within the corporate risk management strategy. As such, clinical safety related incidents are dealt with in a similar manner as other incidents within the organisation such as financial, reputational, technical and other service-impacting categories.
 
 ### Safety Incident Management Process
 
+The first step in any possible Safety Incident is to inform the Clinical Safety Officer. The CSO will determine the most appropriate course of action and will record the incident, the hazards identified (if any) and the mitigations and other remediation taken in a GitHub Issue relevant to the software element in question. Senior management of RCPCH will be informed at the earliest opportunity.
+
 ### Security Incident Management Process
 
-Security issues may be responsibly disclosed to growth.digital@rcpch.ac.uk for immediate action. We recognise and respect the work of security researchers and will treat your contribution with gratitude and appropriate action. We do not engage in vexatious CMA litigation.
+Security issues may be responsibly disclosed to <growth.digital@rcpch.ac.uk> for immediate action. We recognise and respect the work of security researchers and will treat your contribution with gratitude and appropriate action. We do not engage in vexatious CMA litigation.
 
 Internally we treat security issues with the highest priority. Once the 'acute phase' of any security threat is handled, we will then follow the Safety Incident Management Process, usually converting to a public GitHub Issue.
 

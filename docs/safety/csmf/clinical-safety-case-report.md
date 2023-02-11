@@ -36,17 +36,24 @@ docs/_assets/_snippets/dgc-platform-comprises.md
 
 ## Intended Use
 
-The RCPCH Digital Growth Charts Platform is intended to be deployed within other systems, principally Electronic Patient Records (EPRs), Electronic Health Records (EHRs), Personal Health Records (PHRs), and other software platforms. The commercial subscription API service provided by the RCPCH is warranted to have undergone the testing and assurance described in this document.
+The RCPCH Digital Growth Charts Platform is intended to be deployed within other systems, principally Electronic Patient Records (EPRs), Electronic Health Records (EHRs), Personal Health Records (PHRs), and other software platforms. **ONLY The commercial subscription API service provided by the RCPCH is warranted to have undergone the testing and assurance described in this document.**
 
-If using the API service in any other 'unofficial' way, such as self-hosting, reverse-engineering, or misusing internal dGC components outwith the RCPCH Platform - this is deemed to be usage **outwith** any provisions of this document. The RCPCH Clinical Safety Officer expressly disclaims any responsibility for usage of the RCPCH dGC Platform outwith of its intended commercial use.
+!!! warning "DISCLAIMER"
+    **If using the API service in any other 'unofficial' way, such as self-hosting, reverse-engineering, or misusing internal dGC components outwith the RCPCH Platform - this is deemed to be usage outwith any provisions of this document. The RCPCH Clinical Safety Officer expressly disclaims any responsibility for usage of the RCPCH dGC Platform outwith of its intended commercial use.**
+
+The intended user of these digital growth charts is a healthcare professional with sufficient training and knowledge to be able to understand the meaning of the values or charts displayed. Although growth charts have been present in the Red Book for parents to see for many years, parents are unlikely to have the understanding of the charts to operate or interpret the charts independently. Parents may freely be given access to charts but the interpretation of a growth trend remains a clinician task.
+
+Growth charts are only **one** of numerous sources of information available to a clinician when assessing a patient. They do not in themselves provide a diagnosis and can only be helpful as **part** of a full assessment of the patient. Clinicians must actively seek other confirmatory evidence for conclusions reached by their use of a growth chart.
+
+Although the utmost care has been taken during the design and delivery of the dGC platform, the RCPCH and its Digital Growth Charts team accept no responsibility for clinical errors made where the chart has been misinterpreted or an operator of insufficient training has used them wrongly.
 
 ## Clinical Risk Management System
 
 A full description of the Clinical Risk Management System in place at the RCPCH is detailed in the section on [Clinical Risk Management System](clinical-risk-mgmt-system.md).
 
-Clinical safety and risk management are well-embedded within the culture of the RCPCH Incubator
+Clinical safety and risk management are well-embedded within the culture of the RCPCH and its Digital Incubator Team.
 
-The Clinical Risk Management File is currently maintained by the Clinical Safety Officer, and contains all the relevant documentation related to the clinical safety of the RCPCH Digital Growth Charts Platform.
+The Clinical Risk Management File is currently maintained by the [Clinical Safety Officer](clinical-risk-mgmt-plan/#clinical-safety-officer), and contains all the relevant documentation related to the clinical safety of the RCPCH Digital Growth Charts Platform.
 
 The Clinical Safety Officer (CSO) is responsible for clinical safety of RCPCH Digital Growth Charts Platform, through the application of clinical risk management procedure. The CSO is a suitably qualified and experienced clinician who holds current registration with their relevant professional body and has had appropriate training for this role. In the RCPCH the CSO role is held by one of the lead developers.
 

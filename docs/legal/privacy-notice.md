@@ -1,42 +1,8 @@
 ---
-title: Privacy Notice
 reviewers: Dr Marcus Baw
 ---
 
-# RCPCH Digital Growth Charts Privacy Notice and Policy
-
-**Our Contact Details**  
-
-Name: Royal College of Paediatrics and Child Health (RCPCH) 
-
-Address: 5-11 Theobalds Road, London, WC1X 8SH  
-
-Phone Number: +44 (0)20 7092 6000 
-
-E-mail: Data Protection Officer: <mailto:Information.Governance@rcpch.ac.uk>
-
-General enquiries can be emailed to <mailto:growth.digital@rcpch.ac.uk>
-
-!!! info "Our EEA Representative"
-    If you are located in the EEA or EU, you can contact DataRep if you wish to make a request under EU GDPR
-
-    As we sometimes process personal data of individuals in the EU and EEA area, in either the role of ‘data controller’ or ‘data processor’, we have appointed DataRep as our Data Protection Representative in the European Union for the purposes of EU GDPR so that you can contact them directly in your home country.
-
-    If we have processed or are processing your personal data and you are located outside of the UK, you may be entitled to exercise your rights under EU GDPR in respect of that personal data. For more details on your rights in the EU, please refer to the European Commission or the national Data Protection Authority in your country.
-
-    If you want to raise a question to RCPCH, or otherwise exercise your rights in respect of your personal data, you may do so by:
-
-    * Sending an email to DataRep at <mailto:datarequest@datarep.com> quoting "RCPCH" in the subject line;
-
-    * Contacting DataRep on their online webform; or
-
-    * Mailing your enquiry to DataRep at the most convenient of the addresses in the subsequent pages.
-
-    Please note, when mailing inquiries, it is essential that you mark your letters for ‘DataRep’ and not ‘RCPCH’, or your inquiry will not reach them. Please refer clearly to RCPCH in your correspondence. On receiving your correspondent, RCPCH is likely to request evidence of your identity, to ensure your personal data and information connected with it is not provided to anyone other than you.
-
-    If you have any concerns over how DataRep will handle the personal data they will require to undertake for their services, please refer to their privacy notice.
-    
-    For general enquiries about RCPCH and its data processing contact: <mailto:information.governance@rcpch.ac.uk>
+# Privacy Notice
 
 ## What Information do we collect about you?
 
@@ -72,28 +38,53 @@ You have the following rights in relation to your data:
 
 ## How to contact us
 
-Please contact the RCPCH Data Protection Officer if you wish to make a request:
+Please contact the RCPCH Data Protection Officer if you wish to make a request or enquiry.
 
-:fontawesome-solid-at: <mailto:information.governance@rcpch.ac.uk>  
-
-:fontawesome-solid-phone: +44(0)20 7092 6000  
-
-:fontawesome-solid-address-book: 5-11 Theobalds Road, London, WC1X 8SH).  
+| Our Contact Details |
+| --- |
+| Royal College of Paediatrics and Child Health (RCPCH) |
+| :fontawesome-solid-address-book: 5-11 Theobalds Road, London, WC1X 8SH |
+| :fontawesome-solid-phone: +44 (0)20 7092 6000 |
+| :fontawesome-solid-at: Data Protection Officer <information.governance@rcpch.ac.uk> |
+| :fontawesome-solid-at:  <growth.digital@rcpch.ac.uk> |
 
 If you make a request, we have one month to respond to you.
+
+## DataRep - Our EU Partner
+
+!!! info "Our EEA Representative"
+    If you are located in the EEA or EU, you can contact DataRep if you wish to make a request under EU GDPR.
+
+    As we sometimes process personal data of individuals in the EU and EEA area, in either the role of ‘data controller’ or ‘data processor’, we have appointed DataRep as our Data Protection Representative in the European Union for the purposes of EU GDPR so that you can contact them directly in your home country.
+
+    If we have processed or are processing your personal data and you are located outside of the UK, you may be entitled to exercise your rights under EU GDPR in respect of that personal data. For more details on your rights in the EU, please refer to the European Commission or the national Data Protection Authority in your country.
+
+    If you want to raise a question to RCPCH, or otherwise exercise your rights in respect of your personal data, you may do so by:
+
+    * Sending an email to DataRep at <datarequest@datarep.com> quoting "RCPCH" in the subject line;
+
+    * Contacting DataRep on their online webform; or
+
+    * Mailing your enquiry to DataRep at the most convenient of the addresses in the subsequent pages.
+
+    Please note, when mailing inquiries, it is essential that you mark your letters for ‘DataRep’ and not ‘RCPCH’, or your inquiry will not reach them. Please refer clearly to RCPCH in your correspondence. On receiving your correspondent, RCPCH is likely to request evidence of your identity, to ensure your personal data and information connected with it is not provided to anyone other than you.
+
+    If you have any concerns over how DataRep will handle the personal data they will require to undertake for their services, please refer to their privacy notice.
+    
+    For general enquiries about RCPCH and its data processing contact: <information.governance@rcpch.ac.uk>
 
 ## How to make a complaint
 
 If you are unhappy with how we are using your personal data, you should contact us in the first instance so that we can understand and try to resolve your concern. If we can't resolve the issue you have the right to complain to the Information Commissioners Office (ICO). The ICO is the UK's independent body set up to uphold information rights.
 
-:fontawesome-solid-phone: Helpline number: 0303 123 1113
+| ICO details |
+| --- |
+| :fontawesome-solid-phone: Helpline number: 0303 123 1113 |
+| :fontawesome-solid-address-book: Information Commissioner’s Office, Wycliffe House, Water Lane, Wilmslow, Cheshire, SK9 5AF |
+| :fontawesome-solid-globe: <https://www.ico.org.uk> |
 
-:fontawesome-solid-address-book: Information Commissioner’s Office, Wycliffe House, Water Lane, Wilmslow, Cheshire, SK9 5AF
-
-:fontawesome-solid-globe: <https://www.ico.org.uk>
-
-If you have any questions about our privacy policy, the information we hold about you or you wish to make a complaint, please send an email to: <mailto:information.governance@rcpch.ac.uk>
+If you have any questions about our privacy policy, the information we hold about you or you wish to make a complaint, please send an email to: <information.governance@rcpch.ac.uk>
 
 ## Changes to this Privacy Policy
 
-We keep our privacy policy under review, and we will place any updates on this web page. This privacy policy was last updated on 2/07/2022.
+We keep our privacy policy under review, and we will place any updates on this web page. The last review of this policy is as per the 'updated at' date below.
