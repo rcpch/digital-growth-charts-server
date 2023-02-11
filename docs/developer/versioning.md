@@ -1,15 +1,22 @@
 ---
 title: Versioning
-reviewers: Dr Marcus Baw
+reviewers: Dr Marcus Baw, Dr Anchit Chandran
 ---
 
 # Versioning the API Server's code 
 
-We are distinguishing between the version of the API itself and that of the code which creates the API responses. All of this documentation relates to Version 1 of the RCPCH Digital Growth Charts API. Server code versions may vary.
+We distinguish between:
+
+1. The API version itself
+2. The server code which creates API responses
+
+All of this documentation relates to **Version 1** of the RCPCH Digital Growth Charts API.
+
+Server code versions may vary.
 
 ## Semantic Versioning
 
-We are using [Semantic Versioning (SemVer) ](https://semver.org/)in order to ensure that the server versions are systematically applied.
+We are using [Semantic Versioning (SemVer)](https://semver.org/)in order to ensure that the server versions are systematically applied.
 
 ## Bump2version
 
