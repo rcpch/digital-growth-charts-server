@@ -1,6 +1,6 @@
 ---
 title: Python development
-reviewers: Dr Marcus Baw
+reviewers: Dr Marcus Baw, Dr Anchit Chandran
 ---
 
 # Running locally with Python
@@ -9,28 +9,32 @@ reviewers: Dr Marcus Baw
 
 The `scripts/` folder contains some simple scripts to help with development. To run them, ensure they are made executable in your filesystem (they may not be by default depending on your OS).
 
-You can do that in whatever File > Permissions > Make Executable menu your desktop provides, or for \*nix environments or the WSL you can type `chmod +x <filename>` to add executable permissions.
+You can do that in whichever File > Permissions > Make Executable menu your desktop provides.
+
+For \*nix environments or the WSL, you can type `chmod +x <filename>` to add executable permissions.
 
 Run all scripts from the root of the project, or they won't work.
 
 ## Running the dGC Server locally with Python
 
 !!! note
-    Some of this setup is obvious to experienced Python developers, but it's documented here so that we all know the _same_ obvious. :grin: This helps us reduce development difficulty and speeds up onboarding of new team members.
+    Some of this setup is obvious to experienced Python developers, but it's documented here so we all know the _same_ obvious :grin:. This helps us reduce development difficulty and speeds up onboarding of new team members.
 
 ### Managing Python versions, and dependencies such as libraries
 
 #### Managing Python versions
 
-We are using Python 3.8.3 currently for these algorithms. There are tools available to help you manage multiple different Python versions on the same machine. We are using `pyenv` here, however there are other ways to solve this problem, and you may already have a preferred method, in which case you should be able to use that.
+Currently, we use Python 3.8.3 for these algorithms.
+
+There are tools available to help you manage multiple different Python versions on the same machine. We use `pyenv` here, however, there are other ways to solve this problem. If you already have a preferred method, you should be able to use that.
 
 #### Managing library / dependencies versions
 
-If you `pip install` all of the dependencies in `requirements.txt` **globally** on your machine, then you can encounter problems if you develop other Python applications on the same machine, for example if ydifferent projects need different versions of the same library.
+If you `pip install` every dependency in `requirements.txt` **globally** on your machine, you can encounter problems if you develop other Python applications on the same machine. For example, different projects may need different versions of the same library.
 
-The solution we have chosen is to use `pyenv-virtualenv` which is an extension to `pyenv` which helps you to manage separate 'environments' for each Python project you work on. (again, other solutions are available)
+Our solution is to use `pyenv-virtualenv` which is an extension to `pyenv` which helps you to manage separate 'environments' for each Python project you work on. Other solutions are available if preferred.
 
-If you install and set up `pyenv` then the correct Python version will be selected automatically when you navigate to the directory containing this repository, because of the file `.python-version`
+After installing and setting up `pyenv`, the correct Python version will be automatically selected when you navigate to the directory containing this repository, because of the  `.python-version` file.
 
 ### Installing `pyenv`
 
@@ -56,18 +60,20 @@ Install the correct Python version
 pyenv install 3.8.0
 ```
 
-Create a virtualenv for this project 'growth-charts' abbreviated to 'gc-3.8' using Python 3.8.0
+Create a virtualenv for this project 'growth-charts', abbreviated to 'gc-3.8' using Python 3.8.0
 
 ```bash
 pyenv virtualenv 3.8.0 dgc-server
 ```
 
 !!! tip "Auto-selection of Python and virtualenv"
-    Using the same name 'dgc-server' will enable it to be automatically selected when navigating to this repo (but you _can_ call your own virtualenv whatever you like). This all works using the `.python-version` file in the project root, which can contain either a Python version name which `pyenv` recognises, or it can contain a virtualenv name, which `pyenv` will select for you, and of course this automatically selects the Python version too. A helpful article about this is here <https://realpython.com/intro-to-pyenv/#activating-your-versions>
+    Using 'dgc-server' as the name will enable it to be automatically selected when navigating to this repo (but you _can_ call your own virtualenv whatever you like). This all works using the `.python-version` file in the project root. This can contain either a Python version name which `pyenv` recognises, or it can contain a virtualenv name, which `pyenv` will select for you (and this automatically selects the Python version too).
 
-Check virtualenv creation worked.
+    A helpful article about this is here: <https://realpython.com/intro-to-pyenv/#activating-your-versions>.
 
-`pyenv virtualenvs` should return something like:
+#### Check virtualenv creation worked
+
+`pyenv virtualenv`s should return something like:
 
 ```bash
 dgc-server (created from /home/my-user/.pyenv/versions/3.8.0)
@@ -122,13 +128,13 @@ export SYSTEM_VERSION_COMPAT=1
 
 ## Start the API server natively with default settings
 
-from the application's root directory, type
+From the application's root directory, type
 
 ```bash
 s/uvicorn-start
 ```
 
-You should then see some messages from the uvicorn development server, which should look like:
+You should see messages from the uvicorn development server like:
 
 ```bash
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
@@ -138,6 +144,9 @@ INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 ```
 
-There may be some other messages at the end of that output for other processes which run on server startup.
+There may be other messages at the end of the output for other processes which run on server start-up.
 
-If you need to vary any of the parameters passed, you can either modify the startup script or, using the commands in the startup script as a guide, pass the commands to the shell manually.
+If you need to vary any of the parameters passed, you can either:
+
+1. Modify the start-up script
+2. Manually pass the commands to the shell, using the commands in the start-up script as a guide 

@@ -112,8 +112,6 @@ plugins:
   - git-revision-date-localized:
       enable_creation_date: true
   - macros
-  - privacy:
-      external_links: true
   - search
   - render_swagger
   - with-pdf:

@@ -34,20 +34,23 @@
 
 .md-typeset h1 {
   font-weight: 700;
-  font-size: 24pt;
+  /* font-size: 24pt; */
   color: var(--md-accent-fg-color);
 }
 
 .md-typeset h2 {
   font-weight: 700;
-  font-size: 16pt;
-  color: #4d4d4d;
+  /* font-size: 16pt; */
 }
 
 .md-typeset h3 {
   font-weight: 700;
-  font-size: 13pt;
+  /* font-size: 13pt; */
   color: #000000;
+}
+
+.md-typeset h4 {
+  color: #4d4d4d;
 }
 
 /* make the text bigger in the admonitions */
