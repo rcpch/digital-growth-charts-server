@@ -14,7 +14,7 @@ reviewers: Dr Marcus Baw
 - Dr Mark Wardle for [Deprivare](<[url](https://github.com/wardle/deprivare)>) (a UK deprivation-index server) and [Hermes](https://github.com/wardle/hermes) (a SNOMED terminology server) and advice on dockerising and deploying both of these.
 - Dr Dan Leach for advice on MHRA Medical Device Registration.
 - Dr Charles van Lennep for many contributions to React code and building the React Native client.
-- Anchit Chandran for proofreading, corrections and contributions to the documentation.
+- Dr Anchit Chandran for proofreading, corrections and contributions to the documentation.
 - 'William' Nai-Wei Wang for proofreading, corrections and contributions to the documentation.
 
 ## Technical Acknowledgements
