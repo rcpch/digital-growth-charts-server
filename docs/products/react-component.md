@@ -47,11 +47,11 @@ You can use the component as-is in a React app, or include it in plain HTML or a
 
 ### Why a Chart library?
 
-In the process of building the API, we realised that it would not be easy for developers unfamiliar with growth charts to produce one that is acceptable to clinicians.
+In the process of building the API, we realised the difficulty for developers unfamiliar with growth charts to produce one acceptable to clinicians.
 
-For example, charts typically have 9 main centile lines (though there are other formats), each of which can be rendered as a series. However the UK-WHO chart is made of several growth references, each from different datasets, and it is a stipulation that they must not overlap - this means that for the four datasets which make up UK-WHO, the developer must render 36 separate 'sections' of centile lines, marrying them up correctly.
+For example, charts typically have 9 main centile lines (though there are other formats), each of which can be rendered as a series. However, the UK-WHO chart is made of several growth references, each from different datasets, and it is a stipulation that they must not overlap. This means that for the four datasets which make up UK-WHO, the developer must render 36 separate 'sections' of centile lines, marrying them up correctly.
 
-Even then, there are certain rules which are key, published by the RCPCH project board. These relate to usability of the charts. For example, the 50th centile should be de-emphasised. These and other rules are listed on the [Client Specification](../integrator/client-specification.md)
+Even then, there are certain rules which are key, published by the RCPCH project board. These relate to usability of the charts. For example, the 50th centile should be de-emphasised. These and other rules are listed on the [Client Specification](../integrator/client-specification.md).
 
 Given the complexity, we decided to create a React component library for developers to use. We designed it to be customisable for direct use, but also as a demonstration for developers wanting to build the charts from the ground up.
 
@@ -61,27 +61,33 @@ If you want to see how the library is implemented, we have built a full client f
 
 ### Why use React?
 
-React is a popular UI library for Javascript. It has endured well and seems like a popular choice for developers. Importantly, unlike some other Javascript frameworks which are primarily designed for Single Page Applications, React doesn't expect to have the entire webpage to itself. It can be used as a small component in any other web page, even if the main framework being used is something completely different.
+React is a popular UI library for Javascript. It has endured well and seems like a popular choice for developers. Importantly, unlike some other Javascript frameworks which are primarily designed for Single Page Applications, React doesn't expect to have the entire webpage to itself. It can be used as a small component in any other web page, even if the main framework being used is completely different.
 
 !!! question "Tell us what you think"
-    Let us know what you think of our design decisions, on this or any other area of the dGC Project, by chatting to us on our [dGC Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts/) :fontawesome-brands-discourse:
+    Let us know what you think of our design decisions, on this or any other area of the dGC Project, by chatting to us on our [dGC Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts/) :fontawesome-brands-discourse:.
 
 ### What about other frameworks/UI libraries?
 
-If you need us to develop a charting component in a different language or framework, we may be able to do this with you or your company, however we would need to discuss the requirements and quote for this service. You should be aware that all such RCPCH-developed artefacts will also be open source. We will of course ensure that the licensing of such open source components is compatible with commercial use.
+If you need us to develop a charting component in a different language or framework, we may be able to do this with you or your company. We would need to discuss the requirements and quote for this service. You should be aware that all such RCPCH-developed artefacts will also be open source. We ensure the licensing of open source components is compatible with commercial use.
 
 !!! note "Contact us"
-    To contact us for this service, email <mailto:commercial@rcpch.ac.uk>
+    To contact us for this service, email <mailto:commercial@rcpch.ac.uk>.
 
 ## Getting started
 
 ```console
-foobar:~foo$ npm i --save @rcpch/digital-growth-charts-react-component-library
+npm i --save @rcpch/digital-growth-charts-react-component-library
 ```
 
-Victory Charts are a dependency (see below), themselves built on top of D3.js. On build, it is likely you will get an error relating to circular dependencies for some files in the d3-interpolate module. The is an issue logged [here](https://github.com/d3/d3-interpolate/issues/58).
+### Circular import errors
 
-If you want to run the package locally alongside the react client, there are some extra steps to go through. Since the chart library and the react client both use react, the charts will throw an error if you import them in the ```package.json``` of your app from a folder on your local machine. For example in your react app:
+Victory Charts are a dependency (see below), built on top of D3.js. On build, it is likely you will get an error relating to circular dependencies for some files in the d3-interpolate module. This issue is logged [here](https://github.com/d3/d3-interpolate/issues/58).
+
+### Running the Charts Package locally
+
+To run the package locally alongside the React client, there are some extra steps. Since the Chart library and the React client both use React, the Charts will throw an error if you import them in the ```package.json``` of your app from a folder on your local machine.
+
+For example, in your React app:
 
 ```json
 "dependencies": {
@@ -89,29 +95,30 @@ If you want to run the package locally alongside the react client, there are som
 } 
 ```
 
-The problem with this is that there are then 2 versions of react running. To overcome this, in your application:
+This causes a problem as it leads to 2 versions of React running. To overcome this, in your application:
 
 ```console
-foobar:~foo$ cd node_modules/react
-foobar:~foo$ npm link
+cd node_modules/react
+npm link
 ```
 
-In the root folder of your chart library:
+In the root folder of your Chart library:
 
 ```console
-foobar:~foo$ npm link react
+npm link react
 ```
 
-Repeat the same for ```react-dom``` ensuring all the package versions are the same for your app and the library. The library currently uses version 17.0.2 of react and react-dom.
-In this way, you can make changes to the chart package and they will appear in your app after:
+Repeat the same for ```react-dom``` ensuring all the package versions are the same for your app and the library. The library currently uses version `17.0.2` of React and React-dom.
+
+Now, you can view your changes made live in your app:
 
 ```console
-foobar:~foo$ npm run build
+npm run build
 ```
 
-The refresh your app.
+Refresh your app.
 
-If the invalid hooks error persists inspite of this, an alternative is to add the following line to ```package.json``` in the library. This removes the node_modules from the build folder.
+If the invalid hooks error persists, an alternative method is to add the following line to ```package.json``` in the library. This removes the node_modules from the build folder:
 
 ```json
 "scripts": {
