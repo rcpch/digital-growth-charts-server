@@ -3,7 +3,9 @@ title: Contact the RCPCH team
 reviewers: Dr Marcus Baw
 ---
 
-!!! info inline "Discourse Forum"
+# Contact
+
+!!! info "Discourse Forum"
 
     For all technical and clinical enquiries, we encourage the use of our open forum, because this helps develop a community resource of previously asked and answered questions.
 
@@ -11,7 +13,7 @@ reviewers: Dr Marcus Baw
 
     [RCPCH Forum :fontawesome-brands-discourse:](https://openhealthhub.org/c/rcpch-digital-growth-charts){ .md-button .md-button--primary }
 
-!!! info inline end "Signal Chat"
+!!! info "Signal Chat"
 
     We have an RCPCH Developers Signal chat group for instant message support of the RCPCH dGC project.
 
@@ -23,7 +25,7 @@ reviewers: Dr Marcus Baw
 
 Email our Commercial Team to ask questions about support and pricing tiers, invoicing, contracts and other commercial matters.
 
-:material-email: [<commercial@rcpch.ac.uk>
+:material-email: <commercial@rcpch.ac.uk>
 
 ## General Enquiries
 

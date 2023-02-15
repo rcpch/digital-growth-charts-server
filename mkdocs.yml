@@ -13,7 +13,9 @@ nav:
     - 'about/team.md'
     - 'about/acknowledgements.md'
     - 'about/awards-press-blogs.md'
-    - 'about/contact.md'
+
+    # already linked to in the 'contact' section
+    # - 'about/contact.md'              
   - Products:
     - 'products/get-digital-growth-charts.md'
     - 'products/products-overview.md'
@@ -106,11 +108,11 @@ theme:
   logo: _assets/_images/rcpch_logo.png
 
 plugins:
-  - git-committers:
-      repository: rcpch/digital-growth-charts-documentation
-      branch: live
-  - git-revision-date-localized:
-      enable_creation_date: true
+  # - git-committers:
+  #     repository: rcpch/digital-growth-charts-documentation
+  #     branch: live
+  # - git-revision-date-localized:
+  #     enable_creation_date: true
   - macros
   - search
   - render_swagger
