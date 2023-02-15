@@ -1,6 +1,6 @@
 ---
 title: React Chart Component
-reviewers: Dr Marcus Baw, Dr Simon Chapman
+reviewers: Dr Marcus Baw, Dr Simon Chapman, Dr Anchit Chandran
 ---
 
 # React Chart Component
@@ -129,7 +129,7 @@ If the invalid hooks error persists, an alternative method is to add the followi
 
 ## Structure
 
-This library has been written in Typescript. The main component is `RCPCHChart`, which takes the following `props`. Note that each component will only render a single chart type, so if you wanted to render a weight *and* a height chart, these would be done as two separate instances of the component.
+This library has been written in Typescript. The main component is `RCPCHChart`, which takes the following `props`. Note that each component will only render a single chart type, so if you wanted to render a weight *and* a height chart, these must be done as two separate instances of the component.
 
 ### RCPCHChart component
 
@@ -165,7 +165,7 @@ This library has been written in Typescript. The main component is `RCPCHChart`,
 The `Measurement` interface is structured to reflect the JSON `Measurement` object which is returned by the API. The `RCPCHChart` component uses the `reference` prop to determine which chart to render. So far, 3 references are supported: UK-WHO, Turner Syndrome and Down Syndrome. The reference data for the centiles are included in the library in plottable format in the `chartdata` folder.
 
 !!! tip
-    This means in practice that you get the returned JSON from the dGC API and pass it directly in to the component and the component 'knows' how to render this correctly. You don't need to parse, restructure, or even understand the JSON returned from the API, just pass it directly to the component inside an array containing one `Measurement` object.
+    In practice, this means you get the returned JSON from the dGC API, passing it directly in to the component. The component 'knows' how to render this correctly. You don't need to parse, restructure, or even understand the JSON returned from the API: just pass it directly to the component inside an array containing one `Measurement` object.
 
 The `Measurement` interface structure is:
 
@@ -300,8 +300,7 @@ The `Measurement` interface structure is:
     }
     ```
 
-The styling components allow the user to customise elements of the chart:
-Chart styles control the chart and the tooltips
+The styling components allow the user to customise elements of the chart. Chart styles control the chart and the tooltips.
 
 ??? note "Styling options available through `ChartStyle`"
     ```js
@@ -369,7 +368,7 @@ Note for the tooltips and infobox text sizes, these are strokeWidths, not point 
 
 ### SDS Styles
 
-SDS styles control the colour and width of the SDS lines. Because all measurement methods are rendered on a single chart, the user is offered the option of different colours for each measurement method [height, weight, head circumference(ofc) and body mass index (bmi)]. If no SDS style is supplied, the centile line colour is used with an opacity applied to each measurement.
+SDS styles control the colour and width of the SDS lines. As all measurement methods are rendered on a single chart, the user is offered the option of different colours for each measurement method (height, weight, head circumference(OFC) and body mass index (BMI)). If no SDS style is supplied, the centile line colour is used with an opacity applied to each measurement.
 
 ??? note "SDS Styles"
     ```js
@@ -384,12 +383,12 @@ SDS styles control the colour and width of the SDS lines. Because all measuremen
 
 ### Measurement Styles
 
-Measurement styles control the plotted data points - colour, size and shape. Corrected ages are always rendered as crosses. Circles for chronological ages are preferred. On the SDS charts, measurement points are grey by default, with the measurement method in focus highlighted by rendering as a line. Points which are not highlighted can be emphasised on mouse hover, the highlighted colour being set by the highlightedMeasurementFill prop.
+Measurement styles control the plotted data points: colour, size and shape. Corrected ages are always rendered as crosses. Circles for chronological ages are preferred. On the SDS charts, measurement points are grey by default, with the measurement method in focus highlighted by rendering as a line. Points which are not highlighted can be emphasised on mouse hover, with the highlighted colour being set by the `highlightedMeasurementFill` prop.
 
 ??? note "Measurement Styles"
     ```js
     interface MeasurementStyle{
-        measurementFill?: string, 
+        measurementFill?: string,
         highLightedMeasurementFill?: string;
     }
     ```
@@ -412,7 +411,7 @@ Measurement styles control the plotted data points - colour, size and shape. Cor
     }
     ```
 
-This returns a midparental height as well as the midparental SDS and centile, and the centile data should the user which to plot a midparental centile unto the chart. The structure of the Reference and Centile interfaces is:
+This returns a mid-parental height, mid-parental SDS and centile, along with the centile data if the user wishes to plot a mid-parental centile. The structure of the Reference and Centile interfaces is:
 
 ??? note "`Reference` and `Centile` interface structures"
     ```js
@@ -457,35 +456,34 @@ Centile data are returned from the RCPCH API in this same structure, though no A
 
 ### `enableExport`
 
-```enableExport```: a boolean optional prop. If true, a copy/paste button is rendered below the chart. It defaults to false. If true, ```exportChartCallback``` must also be implemented.
+```enableExport```: a boolean optional prop, defaults to false. If true, ```exportChartCallback``` must be implemented and a copy-paste button is rendered below the chart.
 
 ### `exportChartCallBack`
 
-```exportChartCallback```: callback function implemented if enableExport is true. It receives an SVG element. This can be saved in the client to clipboard by converting to canvas using HTML5. An example implementation of this is [here](https://github.com/rcpch/digital-growth-charts-react-client/blob/live/src/functions/canvasFromSVG.js) in our demo client.
+```exportChartCallback``` callback function implemented if `enableExport` is true. It receives an SVG element. This can be saved in the client to clipboard by converting to canvas using HTML5. An example implementation of this is [here](https://github.com/rcpch/digital-growth-charts-react-client/blob/live/src/functions/canvasFromSVG.js) in our demo client.
 
 ### `clinicianFocus`
 
-```clinicianFocus```: a boolean optional prop which defaults to false. If true, the advice strings that are reported to users in tooltips are more technical and aimed at clinicians familiar with centile charts. If this prop is false then the advice strings will be less technical and more suitable for parents, guardians, carers or other laypersons.
+```clinicianFocus```: a boolean optional prop which defaults to false. If true, the advice strings that are reported to users in tooltips are more technical and aimed at clinicians familiar with centile charts. If false, the advice strings will be less technical and more suitable for parents, guardians, carers or other laypersons.
 
 !!! example "Requests for additional functionality in props"
-    In time more props can be added if users request them. If you have requests, please post issues on our [GitHub](https://github.com/rcpch/digital-growth-charts-react-component-library/issues) or get involved to contribute as below.
+    In time, more props can be added if users request them. If you have requests, please post issues on our [GitHub](https://github.com/rcpch/digital-growth-charts-react-component-library/issues) or get involved to contribute as below.
 
 ## Contributing
 
-see [Contributing](../developer/contributing.md) for information on how to get involved in the project.
+See [Contributing](../developer/contributing.md) for information on how to get involved in the project.
 
-You can get in touch with the primary developers to talk about the project using any of the methods on our [contact page](../about/contact.md)
+You can get in touch with the primary developers to talk about the project using any of the methods on our [contact page](../about/contact.md).
 
 ## Acknowledgements
 
 This Typescript library was built from the starter created by [Harvey Delaney](https://blog.harveydelaney.com/creating-your-own-react-component-library/)
 
-The charts are built using [Victory Charts](https://formidable.com/open-source/victory/docs/victory-chart/) for React. We tried several different chart packages for React, but we chose Victory because of their documentation and their ability to customise components.
-
+The charts are built using [Victory Charts](https://formidable.com/open-source/victory/docs/victory-chart/) for React. We tried several chart packages for React, but we chose Victory because of their documentation and their ability to customise components.
 
 ## Licensing
 
-The chart data bundled in the component is subject to copyright and is owned by the RCPCH. If you wish to use this software commercially, please [contact the RCPCH](../about/contact.md) so that we can ensure you have the correct license for use.
+The chart data bundled in the component is subject to copyright and is owned by the RCPCH. If you wish to use this software commercially, please [contact the RCPCH](../about/contact.md) so we can ensure you have the correct license for use.
 
-This chart component software is released under the MIT licence
+This chart component software is released under the MIT license.
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
