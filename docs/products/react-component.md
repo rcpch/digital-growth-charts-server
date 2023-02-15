@@ -18,14 +18,6 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman
 
 :material-web: [Demo](https://growth.rcpch.ac.uk/)
 
-Although the process of obtaining a centile/SDS result from the API is very straightforward, rendering this to an actual digital growth chart graphic is quite complex. For example, charts typically have 9 main centile lines (though there are other formats), each of which can be rendered as a series. However the UK-WHO chart is made of several growth references, each from different datasets, and it is a stipulation that they must not overlap - this means for the four datasets which make up UK-WHO, the developer must render 36 separate 'sections' of centile lines correctly.
-
-Even then, there are certain rules which are key, published by the RCPCH project board. These relate to usability of the charts. For example, the 50th centile should be de-emphasised. These and other rules are listed on the [RCPCH Github](https://github.com/rcpch)
-
-Given the complexity, we decided to create a React component library for developers to use. We designed it to be customisable for those that wanted to use it, but also as a demonstration for developers who wanted to build the charts themselves from the ground up.
-
-For this reason, we have produced a permissively-licensed open-source React component, which aims to simplify the process of creating a chart from the chart data received from the API. It makes the job of drawing a vector-graphic centile chart much easier.
-
 ![height-chart-girl-component](../_assets/_images/height-chart-girl-component.png)
 
 You can use the component as-is in a React app, or include it in plain HTML or any other JavaScript framework.
@@ -36,7 +28,7 @@ You can use the component as-is in a React app, or include it in plain HTML or a
 * Zoom with zoom reset (optional prop)
 * Event logging - events associated with measurements
 * Bone ages
-* Midparental heights with midparental centile lines (at +2 and -2 SDS)
+* Mid-parental heights with mid-parental centile lines (at +2 and -2 SDS)
 
 ### Version 6 new features
 
@@ -48,20 +40,22 @@ You can use the component as-is in a React app, or include it in plain HTML or a
 ### New in 6.1
 
 * Dates included in tooltips
-* clinicianFocus (optional prop) to toggle between advice strings aimed at clinicians or those aimed at families/children & young people
-* toggle button to allow user to constrain viewable chart to measurements or view the whole chart
+* `clinicianFocus` (optional prop) to toggle between advice strings aimed at clinicians or those aimed at families / children & young people
+* Toggle button to allow user to constrain viewable chart to measurements or view the whole chart
 
 ## Background
 
 ### Why a Chart library?
 
-In the process of building the API, we realised that it would not be easy for developers not familiar with growth charts to produce a growth chart that is acceptable to clinicians. Even if the API were to send ato a chart remains complicated.
+In the process of building the API, we realised that it would not be easy for developers unfamiliar with growth charts to produce one that is acceptable to clinicians.
 
 For example, charts typically have 9 main centile lines (though there are other formats), each of which can be rendered as a series. However the UK-WHO chart is made of several growth references, each from different datasets, and it is a stipulation that they must not overlap - this means that for the four datasets which make up UK-WHO, the developer must render 36 separate 'sections' of centile lines, marrying them up correctly.
 
 Even then, there are certain rules which are key, published by the RCPCH project board. These relate to usability of the charts. For example, the 50th centile should be de-emphasised. These and other rules are listed on the [Client Specification](../integrator/client-specification.md)
 
-Given the above, we decided to create a React component library for developers to use. We designed it to be customisable for those that wanted to use it, but also as a demonstration for developers who wanted to build the charts themselves from the ground up, using the React component as a reference implementation.
+Given the complexity, we decided to create a React component library for developers to use. We designed it to be customisable for direct use, but also as a demonstration for developers wanting to build the charts from the ground up.
+
+For this reason, we have produced a permissively-licensed, open-source React component, which aims to simplify the process of creating a chart from the chart data received from the API. It makes the job of drawing a vector-graphic centile chart much easier.
 
 If you want to see how the library is implemented, we have built a full client for the RCPCHGrowth API in React, which uses this component library, and can be found [here](https://github.com/rcpch/digital-growth-charts-react-client).
 
