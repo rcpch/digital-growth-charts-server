@@ -38,7 +38,7 @@ In addition to providing Standard Deviation Scores (SDS) and centiles, it will a
 
 We have plans to incorporate other growth references and tools to the platform in the future.
 
-It is planned that the API will in future be able to handle measurements over multiple occasions for individual children, with a view to interpreting their growth trajectory, as well as _'thrive lines'_[5][6](#references)
+In future work, the API will be able to handle measurements over multiple occasions, for individual children. This is with a view to interpreting their [growth trajectory and *'thrive lines'*](../developer/rcpchgrowth.md#other-functions).
 
 !!! info "Get involved in setting our roadmap"
     You can create ['issues' on GitHub](https://github.com/rcpch/digital-growth-charts-server/issues) which can help set the agenda for the features we will develop next in the API.
