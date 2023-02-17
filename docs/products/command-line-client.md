@@ -3,9 +3,9 @@ title: RCPCHGrowth CLI
 reviewers: Dr Marcus Baw, Dr Simon Chapman
 ---
 
-# RCPCHGrowth CLI (Command-line Interface) tool
+# RCPCHGrowth CLI (Command-line Interface) Tool
 
-Partly for our own uses, we've wrapped the [RCPCHGrowth Python package](python-library.md) in a command-line tool so that you can use the power of the growth functions in the `rcpchgrowth-python` package conveniently in the terminal.
+Partly for our own uses, we've wrapped the [RCPCHGrowth Python package](python-library.md) in a command-line tool, so you can conveniently use the powerful growth functions in `rcpchgrowth-python` in the terminal.
 
 {% set repository_name="rcpch/rcpchgrowth-python-cli" -%}
 
@@ -20,9 +20,9 @@ Partly for our own uses, we've wrapped the [RCPCHGrowth Python package](python-l
 
 :octicons-mark-github-16: [GitHub repository](https://github.com/{{ repository_name }})
 
-:material-web: link
-
 ## Installation
+
+Use `pip` to install the CLI tool:
 
 ```console
 pip install rcpchgrowth-python-cli
@@ -30,37 +30,45 @@ pip install rcpchgrowth-python-cli
 
 ## Usage
 
-Check that `rcpchgrowth-python-cli` was correctly installed
+Check `rcpchgrowth-python-cli` was correctly installed. The following command should return help text:
 
 ```console
 rcpchgrowth --help
 ```
 
-Should return some help text.
-
-### Calculating a decimal chronologic age
+### Calculating decimal chronological age
 
 ```shell
 rcpchgrowth age-calculation [birth_date] [observation_date] \
     [gestation_weeks] [gestation-days] [-a --adjustment]
 ```
 
-This returns a decimal age representing the different between two dates.
+This returns a decimal age representing the different between two dates e.g.
 
-If the gestation is supplied with the `-a` adjustment flag, age will be returned, corrected for gestational age.
+```
+>>> rcpchgrowth age-calculation 2005-02-17 2023-02-17 39 4 -a
 
-- `birth_date`: format `YYYY-MM-DD` **(required)**
-- `observation_date`: format `YYYY-MM-DD` **(required)**
-- `gestation_weeks`: this is an integer which defaults to 40 if not specified
-- `gestation_days`: this is an integer which defaults to 0 if not specified
+Calculates decimal age, either chronological or corrected for gestation if the adjustment flag is true. Params: birth_date, observation_date, gestation_weeks, gestation_days
+Adjusted: 17.99041752224504 y,
+17 years, 11 months and 4 weeks
+```
 
-Note the command line will usually error if a leading 0 is supplied.
+#### Parameters
+- `birth_date` **(required)**: format `YYYY-MM-DD` 
+- `observation_date` **(required)**: format `YYYY-MM-DD`
+- `gestation_weeks` *(optional)*: an integer, default `40`
+- `gestation_days` *(optional)*: an integer, default `0`
+- `-a` or `--adjustment` *(optional)*: if passed, the age will be returned, corrected for gestational age
+
+Note: the command line will usually error if a leading 0 is supplied.
 
 #### Gestational Age Correction
 
-If the `-a` or `--adjustment` flags are passed, gestational age correction will be performed to the supplied gestation in weeks and days, if nothing is passed, then gestational age correction will still be applied but it will use the default 40+0 weeks.
+If the `-a` or `--adjustment` flags are passed, gestational age correction will be performed to the supplied gestation in weeks and days.
 
-#### Example
+If nothing is passed, then gestational age correction will still be applied, but it will use the default 40+0 weeks.
+
+#### Examples
 
 The following calculates a decimal age for a child born on 10th October 1759 and measured on 12th November 1759, with gestational age correction for birth at 28 weeks 2 days.
 
