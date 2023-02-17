@@ -23,7 +23,7 @@ The calculation functions within the Digital Growth Charts API are powered by a 
 
 ## Installation
 
-To add the `rcpchgrowth` library to your project, install via `pip`
+To add the `rcpchgrowth` package to your project, install via `pip`
 
 ``` bash
 pip install rcpchgrowth
