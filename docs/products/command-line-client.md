@@ -5,7 +5,7 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman
 
 # RCPCHGrowth CLI (Command-line Interface) tool
 
-Partly for our own uses, we've wrapped the [Python package](python-library.md) in a command-line tool so that you can use the power of the growth functions in the `rcpchgrowth-python` package conveniently in the terminal.
+Partly for our own uses, we've wrapped the [RCPCHGrowth Python package](python-library.md) in a command-line tool so that you can use the power of the growth functions in the `rcpchgrowth-python` package conveniently in the terminal.
 
 {% set repository_name="rcpch/rcpchgrowth-python-cli" -%}
 
