@@ -26,12 +26,12 @@ nav:
     - 'products/google-sheets-plugin.md'
     - 'products/react-native.md'
     - 'products/flask(deprecated).md'
-  - Support:
-    - 'integrator/support.md'
+  - Getting Started:
     - 'integrator/getting-started.md'
     - 'integrator/api-keys.md'
     - 'integrator/making-api-calls.md'
     - 'integrator/api-reference.md'
+    - 'integrator/support.md'
     - 'integrator/client-specification.md'
     - 'integrator/faqs-for-integrators.md'
     - 'integrator/whos-using-dgc.md'
