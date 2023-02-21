@@ -1,11 +1,11 @@
 ---
 title: FAQs for Integrators
-reviewers: Dr Marcus Baw
+reviewers: Dr Marcus Baw, Dr Anchit Chandran
 ---
 
 # FAQs for Integrators
 
-In our documentation we have used the term **Integrator** to refer to a person or team who is integrating the API into a product or service. We also recognise the term 'customer'. This is to distinguish Integrators from 'clients' (by which *we* mean software which consumes the API), and 'developers' (by whom *we* mean those who are developing the Digital Growth Charts project)
+In our documentation, we use the term **Integrator** to refer to a person or team who is integrating the API into a product or service. We also recognise the term 'customer'. This distinguishes 'Integrators' from 'clients' (by which *we* mean software which consumes the API), and 'developers' (by whom *we* mean those who are developing the Digital Growth Charts project)
 
 > [Information about the dGC client products](../products/products-overview.md)
 
@@ -13,19 +13,16 @@ In our documentation we have used the term **Integrator** to refer to a person o
 
 ## Q: Can we self-host the API?
 
-**A**: Technically yes. However there are several important considerations which we believe would more than negate any saving made.
+**A**: Technically yes. However, there are several important considerations downsides which outweigh any benefits.
 
-We have open sourced the API in order to align with our policy on transparency and clinical safety, however we advise that you do not self host it. Only the version deployed and managed by the RCPCH team is warranted to be correct.
+We have open-sourced the API to align with our policy on transparency and clinical safety. However, we advise that you do not self-host it. Only the version deployed and managed by the RCPCH team is warranted to be correct.
 
 --8<--
 docs/_assets/_snippets/self-host-warning.md
 --8<--
 
-
 !!! tip "RCPCH On-Premise Hosting Service"
     The RCPCH offers an 'on-premise' managed service which may suit some customers requiring the service to be hosted within their own data centre, or on their own cloud infrastructure. Find out more about [pricing](https://www.rcpch.ac.uk/resources/growth-charts/digital/about#subscriptions-and-pricing).
-
-
 
 By using the RCPCH-provided API you avoid all that requirement and use our commodity server.
 
