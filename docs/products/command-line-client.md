@@ -38,14 +38,16 @@ rcpchgrowth --help
 
 ### Calculating decimal chronological age
 
-```shell
-rcpchgrowth age-calculation [birth_date] [observation_date] \
-    [gestation_weeks] [gestation-days] [-a --adjustment]
+The `age-calculation` function returns a decimal age representing the difference between 2 dates:
+
+```console
+rcpchgrowth age-calculation [birth_date] [observation_date] [gestation_weeks] [gestation-days] [-a --adjustment]
 ```
 
-This returns a decimal age representing the different between two dates e.g.
+For example:
 
-```
+```console
+
 >>> rcpchgrowth age-calculation 2005-02-17 2023-02-17 39 4 -a
 
 Calculates decimal age, either chronological or corrected for gestation if the adjustment flag is true. Params: birth_date, observation_date, gestation_weeks, gestation_days
@@ -54,7 +56,8 @@ Adjusted: 17.99041752224504 y,
 ```
 
 #### Parameters
-- `birth_date` **(required)**: format `YYYY-MM-DD` 
+
+- `birth_date` **(required)**: format `YYYY-MM-DD`
 - `observation_date` **(required)**: format `YYYY-MM-DD`
 - `gestation_weeks` *(optional)*: an integer, default `40`
 - `gestation_days` *(optional)*: an integer, default `0`
@@ -70,48 +73,40 @@ If nothing is passed, then gestational age correction will still be applied, but
 
 #### Examples
 
-The following calculates a decimal age for a child born on 10th October 1759 and measured on 12th November 1759, with gestational age correction for birth at 28 weeks 2 days.
+The following calculates a decimal age for a child born on 10th October 1759 and measured on 12th November 1759, with gestational age correction for birth at 28 weeks 2 days:
 
 ```console
 rcpchgrowth age-calculation 1759-10-10 1759-11-12 28 2 -a
 ```
 
-Below is the same calculation _without_ gestational age correction
+Below is the same calculation *without* gestational age correction:
 
 ```console
 rcpchgrowth age-calculation 1759-10-10 1759-11-12 28 2
 ```
 
-### Generating measurements that fit a certain SDS
+### Generating measurements fitting a certain SDS
 
-The `measurement-for-sds` function returns a measurement for an SDS.
-
-#### Required arguments (argument order sensitive)
-
-- decimal_age: a float value
-- measurement_method: one of 'height', 'weight', 'bmi' (body mass index) or 'ofc' (head circumference)
-- sex: one of 'male' or 'female'
-- SDS: a float value
-
-#### Option
+The `measurement-for-sds` function returns a measurement for an SDS:
 
 ```console
--r
---reference
+rcpchgrowth measurement-for-sds [decimal_age] [measurement_method] [sex] [observation_value] [-r --reference]
 ```
 
-This defaults to uk-who if not provided. If provide, parameters are one of 'uk-who', 'trisomy-21' or 'turners-syndrome'
+#### Parameters
+
+Note: these are argument-order sensitive.
+
+- `decimal_age` **(required)**: a float
+- `measurement_method` **(required)**: a string, one of `'height'`, '`weight`', `'bmi'` (Body Mass Index) or `'ofc'` (head circumference)
+- `sex` **(required)**: a string, one of `'male'` or `'female'`
+- `observation_value` **(required)**: a float
+- `-r` or `--reference` *(optional)*: a string, default is `'uk-who'`. Other options include `'trisomy-21'` or `'turners-syndrome'`
 
 #### Example
 
 ```console
-foo@bar:~$ rcpchgrowth measurement-for-sds 8.3 height female 0.72 --reference turners-syndrome
- ____   ____ ____   ____ _   _  ____                   _   _
-|  _ \ / ___|  _ \ / ___| | | |/ ___|_ __ _____      _| |_| |__
-| |_) | |   | |_) | |   | |_| | |  _| '__/ _ \ \ /\ / / __| '_ \
-|  _ <| |___|  __/| |___|  _  | |_| | | | (_) \ V  V /| |_| | | |
-|_| \_\\____|_|    \____|_| |_|\____|_|  \___/ \_/\_/  \__|_| |_|
-
+>>> rcpchgrowth measurement-for-sds 8.3 height female 0.72 --reference turners-syndrome
 
 Reference: Turner Syndrome
 SDS 0.72
@@ -119,70 +114,56 @@ Centile: 76.424 %
 height: 115.79078818040003 cm
 ```
 
-### `sds-for-measurement`
+### Generating SDS for a measurement
 
-#### Required arguments (argument order sensitive)
-
-- decimal_age: a float value
-- measurement_method: one of 'height', 'weight', 'bmi' (body mass index) or 'ofc' (head circumference)
-- sex: one of 'male' or 'female'
-- observation_value: a float value
-
-#### Option
+The `sds-for-measurement` function returns an SDS for a measurement:
 
 ```console
--r
---reference
+rcpchgrowth sds-for-measurement [decimal_age] [measurement_method] [sex] [observation_value] [-r --reference]
 ```
 
-This defaults to uk-who if not provided. If provide, paramaters are one of 'uk-who', 'trisomy-21' or 'turners-syndrome'
+#### Parameters
+
+Note: these are argument-order sensitive.
+
+- `decimal_age` **(required)**: a float
+- `measurement_method` **(required)**: a string, one of `'height'`, '`weight`', `'bmi'` (Body Mass Index) or `'ofc'` (head circumference)
+- `sex` **(required)**: a string, one of `'male'` or `'female'`
+- `observation_value` **(required)**: a float
+- `-r` or `--reference` *(optional)*: a string, default is `'uk-who'`. Other options include `'trisomy-21'` or `'turners-syndrome'`
 
 #### Example
 
 ```console
-foo@bar:~$ rcpchgrowth sds-for-measurement 16.3 ofc female 55
- ____   ____ ____   ____ _   _  ____                   _   _
-|  _ \ / ___|  _ \ / ___| | | |/ ___|_ __ _____      _| |_| |__
-| |_) | |   | |_) | |   | |_| | |  _| '__/ _ \ \ /\ / / __| '_ \
-|  _ <| |___|  __/| |___|  _  | |_| | | | (_) \ V  V /| |_| | | |
-|_| \_\\____|_|    \____|_| |_|\____|_|  \___/ \_/\_/  \__|_| |_|
-
+>>> rcpchgrowth sds-for-measurement 16.3 ofc female 55
 
 Reference: UK-WHO
 SDS: -0.27811780457145885
 Centile: 39.0 %
 ```
 
-### `measurement-for-centile`
+### Generating measurements for a centile
 
-This function returns a measurement for an centile.
-
-#### Required arguments (argument order sensitive)
-
-- decimal_age: a float value
-- measurement_method: one of 'height', 'weight', 'bmi' (body mass index) or 'ofc' (head circumference)
-- sex: one of 'male' or 'female'
-- centile: a float value
-
-#### Option
+The `measurement-for-centile` function returns a measurement for a centile:
 
 ```console
--r
---reference
+rcpchgrowth sds-for-measurement [decimal_age] [measurement_method] [sex] [centile] [-r --reference]
 ```
 
-This defaults to uk-who if not provided. If provide, paramaters are one of 'uk-who', 'trisomy-21' or 'turners-syndrome'
+#### Parameters
+
+Note: these are argument-order sensitive.
+
+- `decimal_age` **(required)**: a float
+- `measurement_method` **(required)**: a string, one of `'height'`, '`weight`', `'bmi'` (Body Mass Index) or `'ofc'` (head circumference)
+- `sex` **(required)**: a string, one of `'male'` or `'female'`
+- `centile` **(required)**: a float
+- `-r` or `--reference` *(optional)*: a string, default is `'uk-who'`. Other options include `'trisomy-21'` or `'turners-syndrome'`
 
 #### Example
 
 ```console
-foo@bar:~$ rcpchgrowth measurement-for-centile 3.4 weight male 25.0 --reference trisomy-21
- ____   ____ ____   ____ _   _  ____                   _   _
-|  _ \ / ___|  _ \ / ___| | | |/ ___|_ __ _____      _| |_| |__
-| |_) | |   | |_) | |   | |_| | |  _| '__/ _ \ \ /\ / / __| '_ \
-|  _ <| |___|  __/| |___|  _  | |_| | | | (_) \ V  V /| |_| | | |
-|_| \_\\____|_|    \____|_| |_|\____|_|  \___/ \_/\_/  \__|_| |_|
-
+>>> rcpchgrowth measurement-for-centile 3.4 weight male 25.0 --reference trisomy-21
 
 Reference: Trisomy 21/Down's Syndrome
 SDS -0.674
@@ -192,4 +173,4 @@ weight: 12.367721906931306 kg
 
 ## Development of the CLI tool
 
-see [Development](../deve)
+If you want to contribute to development of the CLI tool, please see [Developing the RCPCH CLI Tool](../developer/rcpchgrowth-cli.md).
