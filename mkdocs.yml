@@ -106,9 +106,9 @@ theme:
   logo: _assets/_images/rcpch_logo.png
 
 plugins:
-  - git-committers:
-      repository: rcpch/digital-growth-charts-documentation
-      branch: live
+  # - git-committers:
+  #     repository: rcpch/digital-growth-charts-documentation
+  #     branch: live
   - git-revision-date-localized:
       enable_creation_date: true
   - macros

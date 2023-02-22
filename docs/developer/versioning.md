@@ -20,4 +20,4 @@ We use [Semantic Versioning (SemVer)](https://semver.org/) to ensure server vers
 
 ## Bump2version
 
-We use  `bump2version` tool to simplify versioning in the `digital-growth-charts-server` and `rcpchgrowth-python` packages.
+We use `bump2version` tool to simplify versioning in the `digital-growth-charts-server` and `rcpchgrowth-python` packages.

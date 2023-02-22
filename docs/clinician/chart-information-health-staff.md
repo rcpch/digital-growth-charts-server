@@ -5,14 +5,29 @@ reviewers: Dr Marcus Baw
 
 # Chart information for Health staff
 
-## How the UK-WHO charts work
+## How the UK-WHO Charts work
+
+### The UK-WHO Charts
 
 The UK–WHO growth chart combines World Health Organization (WHO) standards with UK 1990 preterm and birth data:
 
-- The chart from 2 weeks to 4 years of age is based on the WHO growth standard, derived from measurements of healthy, non-deprived, breast-fed children of mothers who did not smoke.
 - The chart for birth measurements (32 –42 weeks gestation) is based on British children measured around 1990.
+- The chart from 2 weeks to 4 years of age is based on the WHO growth standard, derived from measurements of healthy, non-deprived, breast-fed children of mothers who did not smoke.
+- The UK 1990 growth reference for children is used from 4 years - 18 years.
 - The charts depict a healthy pattern of growth that is desirable for all children, whether breast-fed or formula-fed, and of whatever ethnic origin.
-- The UK 1990 growth reference for children is used from 4 -18 years.
+
+# Reason for combining UK 1990 and WHO 2006
+
+Though the UK 1990 data spans 23 weeks gestation to 20 years old, it also includes children who were bottle-fed and breast-fed. Thus, the breast-fed cohort from the WHO 2006 cohort were deemed more accurate and replaced the UK 1990 for the 2 week to 4 year age groups. As the UK 1990 data are no longer used for children in this age bracket, they have been omitted to create a continuous data set.
+
+The final dataset has 4 parts:
+
+  1. Pre-term (up to 42 weeks)
+  2. Infants (under 2s)
+  3. WHO 2006 children (< 4 years)
+  4. UK 1990 children (4 years - 18 years)
+
+Where data sets overlap, there are 2 ages at the junction, one from each of UK90 and WHO 2006. There is a step at the junction between the data sets.
 
 ## Instructions for the Trisomy 21 (Down's Syndrome) charts
 
