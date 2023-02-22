@@ -1,6 +1,6 @@
 ---
 title: React Chart Component
-reviewers: Dr Marcus Baw, Dr Simon Chapman
+reviewers: Dr Marcus Baw, Dr Simon Chapman, Dr Anchit Chandran
 ---
 
 # React Chart Component
@@ -18,14 +18,6 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman
 
 :material-web: [Demo](https://growth.rcpch.ac.uk/)
 
-Although the process of obtaining a centile/SDS result from the API is very straightforward, rendering this to an actual digital growth chart graphic is quite complex. For example, charts typically have 9 main centile lines (though there are other formats), each of which can be rendered as a series. However the UK-WHO chart is made of several growth references, each from different datasets, and it is a stipulation that they must not overlap - this means for the four datasets which make up UK-WHO, the developer must render 36 separate 'sections' of centile lines correctly.
-
-Even then, there are certain rules which are key, published by the RCPCH project board. These relate to usability of the charts. For example, the 50th centile should be de-emphasised. These and other rules are listed on the [RCPCH Github](https://github.com/rcpch)
-
-Given the complexity, we decided to create a React component library for developers to use. We designed it to be customisable for those that wanted to use it, but also as a demonstration for developers who wanted to build the charts themselves from the ground up.
-
-For this reason, we have produced a permissively-licensed open-source React component, which aims to simplify the process of creating a chart from the chart data received from the API. It makes the job of drawing a vector-graphic centile chart much easier.
-
 ![height-chart-girl-component](../_assets/_images/height-chart-girl-component.png)
 
 You can use the component as-is in a React app, or include it in plain HTML or any other JavaScript framework.
@@ -36,7 +28,7 @@ You can use the component as-is in a React app, or include it in plain HTML or a
 * Zoom with zoom reset (optional prop)
 * Event logging - events associated with measurements
 * Bone ages
-* Midparental heights with midparental centile lines (at +2 and -2 SDS)
+* Mid-parental heights with mid-parental centile lines (at +2 and -2 SDS)
 
 ### Version 6 new features
 
@@ -48,46 +40,54 @@ You can use the component as-is in a React app, or include it in plain HTML or a
 ### New in 6.1
 
 * Dates included in tooltips
-* clinicianFocus (optional prop) to toggle between advice strings aimed at clinicians or those aimed at families/children & young people
-* toggle button to allow user to constrain viewable chart to measurements or view the whole chart
+* `clinicianFocus` (optional prop) to toggle between advice strings aimed at clinicians or those aimed at families / children & young people
+* Toggle button to allow user to constrain viewable chart to measurements or view the whole chart
 
 ## Background
 
 ### Why a Chart library?
 
-In the process of building the API, we realised that it would not be easy for developers not familiar with growth charts to produce a growth chart that is acceptable to clinicians. Even if the API were to send ato a chart remains complicated.
+In the process of building the API, we realised the difficulty for developers unfamiliar with growth charts to produce one acceptable to clinicians.
 
-For example, charts typically have 9 main centile lines (though there are other formats), each of which can be rendered as a series. However the UK-WHO chart is made of several growth references, each from different datasets, and it is a stipulation that they must not overlap - this means that for the four datasets which make up UK-WHO, the developer must render 36 separate 'sections' of centile lines, marrying them up correctly.
+For example, charts typically have 9 main centile lines (though there are other formats), each of which can be rendered as a series. However, the UK-WHO chart is made of several growth references, each from different datasets, and it is a stipulation that they must not overlap. This means that for the four datasets which make up UK-WHO, the developer must render 36 separate 'sections' of centile lines, marrying them up correctly.
 
-Even then, there are certain rules which are key, published by the RCPCH project board. These relate to usability of the charts. For example, the 50th centile should be de-emphasised. These and other rules are listed on the [Client Specification](../integrator/client-specification.md)
+Even then, there are certain rules which are key, published by the RCPCH project board. These relate to usability of the charts. For example, the 50th centile should be de-emphasised. These and other rules are listed on the [Client Specification](../integrator/client-specification.md).
 
-Given the above, we decided to create a React component library for developers to use. We designed it to be customisable for those that wanted to use it, but also as a demonstration for developers who wanted to build the charts themselves from the ground up, using the React component as a reference implementation.
+Given the complexity, we decided to create a React component library for developers to use. We designed it to be customisable for direct use, but also as a demonstration for developers wanting to build the charts from the ground up.
+
+For this reason, we have produced a permissively-licensed, open-source React component, which aims to simplify the process of creating a chart from the chart data received from the API. It makes the job of drawing a vector-graphic centile chart much easier.
 
 If you want to see how the library is implemented, we have built a full client for the RCPCHGrowth API in React, which uses this component library, and can be found [here](https://github.com/rcpch/digital-growth-charts-react-client).
 
 ### Why use React?
 
-React is a popular UI library for Javascript. It has endured well and seems like a popular choice for developers. Importantly, unlike some other Javascript frameworks which are primarily designed for Single Page Applications, React doesn't expect to have the entire webpage to itself. It can be used as a small component in any other web page, even if the main framework being used is something completely different.
+React is a popular UI library for Javascript. It has endured well and seems like a popular choice for developers. Importantly, unlike some other Javascript frameworks which are primarily designed for Single Page Applications, React doesn't expect to have the entire webpage to itself. It can be used as a small component in any other web page, even if the main framework being used is completely different.
 
 !!! question "Tell us what you think"
-    Let us know what you think of our design decisions, on this or any other area of the dGC Project, by chatting to us on our [dGC Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts/) :fontawesome-brands-discourse:
+    Let us know what you think of our design decisions, on this or any other area of the dGC Project, by chatting to us on our [dGC Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts/) :fontawesome-brands-discourse:.
 
 ### What about other frameworks/UI libraries?
 
-If you need us to develop a charting component in a different language or framework, we may be able to do this with you or your company, however we would need to discuss the requirements and quote for this service. You should be aware that all such RCPCH-developed artefacts will also be open source. We will of course ensure that the licensing of such open source components is compatible with commercial use.
+If you need us to develop a charting component in a different language or framework, we may be able to do this with you or your company. We would need to discuss the requirements and quote for this service. You should be aware that all such RCPCH-developed artefacts will also be open source. We ensure the licensing of open source components is compatible with commercial use.
 
 !!! note "Contact us"
-    To contact us for this service, email <mailto:commercial@rcpch.ac.uk>
+    To contact us for this service, email <mailto:commercial@rcpch.ac.uk>.
 
 ## Getting started
 
 ```console
-foobar:~foo$ npm i --save @rcpch/digital-growth-charts-react-component-library
+npm i --save @rcpch/digital-growth-charts-react-component-library
 ```
 
-Victory Charts are a dependency (see below), themselves built on top of D3.js. On build, it is likely you will get an error relating to circular dependencies for some files in the d3-interpolate module. The is an issue logged [here](https://github.com/d3/d3-interpolate/issues/58).
+### Circular import errors
 
-If you want to run the package locally alongside the react client, there are some extra steps to go through. Since the chart library and the react client both use react, the charts will throw an error if you import them in the ```package.json``` of your app from a folder on your local machine. For example in your react app:
+Victory Charts are a dependency (see below), built on top of D3.js. On build, it is likely you will get an error relating to circular dependencies for some files in the d3-interpolate module. This issue is logged [here](https://github.com/d3/d3-interpolate/issues/58).
+
+### Running the Charts Package locally
+
+To run the package locally alongside the React client, there are some extra steps. Since the Chart library and the React client both use React, the Charts will throw an error if you import them in the ```package.json``` of your app from a folder on your local machine.
+
+For example, in your React app:
 
 ```json
 "dependencies": {
@@ -95,29 +95,30 @@ If you want to run the package locally alongside the react client, there are som
 } 
 ```
 
-The problem with this is that there are then 2 versions of react running. To overcome this, in your application:
+This causes a problem as it leads to 2 versions of React running. To overcome this, in your application:
 
 ```console
-foobar:~foo$ cd node_modules/react
-foobar:~foo$ npm link
+cd node_modules/react
+npm link
 ```
 
-In the root folder of your chart library:
+In the root folder of your Chart library:
 
 ```console
-foobar:~foo$ npm link react
+npm link react
 ```
 
-Repeat the same for ```react-dom``` ensuring all the package versions are the same for your app and the library. The library currently uses version 17.0.2 of react and react-dom.
-In this way, you can make changes to the chart package and they will appear in your app after:
+Repeat the same for ```react-dom``` ensuring all the package versions are the same for your app and the library. The library currently uses version `17.0.2` of React and React-dom.
+
+Now, you can view your changes made live in your app:
 
 ```console
-foobar:~foo$ npm run build
+npm run build
 ```
 
-The refresh your app.
+Refresh your app.
 
-If the invalid hooks error persists inspite of this, an alternative is to add the following line to ```package.json``` in the library. This removes the node_modules from the build folder.
+If the invalid hooks error persists, an alternative method is to add the following line to ```package.json``` in the library. This removes the node_modules from the build folder:
 
 ```json
 "scripts": {
@@ -128,7 +129,7 @@ If the invalid hooks error persists inspite of this, an alternative is to add th
 
 ## Structure
 
-This library has been written in Typescript. The main component is `RCPCHChart`, which takes the following `props`. Note that each component will only render a single chart type, so if you wanted to render a weight *and* a height chart, these would be done as two separate instances of the component.
+This library has been written in Typescript. The main component is `RCPCHChart`, which takes the following `props`. Note that each component will only render a single chart type, so if you wanted to render a weight *and* a height chart, these must be done as two separate instances of the component.
 
 ### RCPCHChart component
 
@@ -164,7 +165,7 @@ This library has been written in Typescript. The main component is `RCPCHChart`,
 The `Measurement` interface is structured to reflect the JSON `Measurement` object which is returned by the API. The `RCPCHChart` component uses the `reference` prop to determine which chart to render. So far, 3 references are supported: UK-WHO, Turner Syndrome and Down Syndrome. The reference data for the centiles are included in the library in plottable format in the `chartdata` folder.
 
 !!! tip
-    This means in practice that you get the returned JSON from the dGC API and pass it directly in to the component and the component 'knows' how to render this correctly. You don't need to parse, restructure, or even understand the JSON returned from the API, just pass it directly to the component inside an array containing one `Measurement` object.
+    In practice, this means you get the returned JSON from the dGC API, passing it directly in to the component. The component 'knows' how to render this correctly. You don't need to parse, restructure, or even understand the JSON returned from the API: just pass it directly to the component inside an array containing one `Measurement` object.
 
 The `Measurement` interface structure is:
 
@@ -299,8 +300,7 @@ The `Measurement` interface structure is:
     }
     ```
 
-The styling components allow the user to customise elements of the chart:
-Chart styles control the chart and the tooltips
+The styling components allow the user to customise elements of the chart. Chart styles control the chart and the tooltips.
 
 ??? note "Styling options available through `ChartStyle`"
     ```js
@@ -368,7 +368,7 @@ Note for the tooltips and infobox text sizes, these are strokeWidths, not point 
 
 ### SDS Styles
 
-SDS styles control the colour and width of the SDS lines. Because all measurement methods are rendered on a single chart, the user is offered the option of different colours for each measurement method [height, weight, head circumference(ofc) and body mass index (bmi)]. If no SDS style is supplied, the centile line colour is used with an opacity applied to each measurement.
+SDS styles control the colour and width of the SDS lines. As all measurement methods are rendered on a single chart, the user is offered the option of different colours for each measurement method (height, weight, head circumference(OFC) and body mass index (BMI)). If no SDS style is supplied, the centile line colour is used with an opacity applied to each measurement.
 
 ??? note "SDS Styles"
     ```js
@@ -383,12 +383,12 @@ SDS styles control the colour and width of the SDS lines. Because all measuremen
 
 ### Measurement Styles
 
-Measurement styles control the plotted data points - colour, size and shape. Corrected ages are always rendered as crosses. Circles for chronological ages are preferred. On the SDS charts, measurement points are grey by default, with the measurement method in focus highlighted by rendering as a line. Points which are not highlighted can be emphasised on mouse hover, the highlighted colour being set by the highlightedMeasurementFill prop.
+Measurement styles control the plotted data points: colour, size and shape. Corrected ages are always rendered as crosses. Circles for chronological ages are preferred. On the SDS charts, measurement points are grey by default, with the measurement method in focus highlighted by rendering as a line. Points which are not highlighted can be emphasised on mouse hover, with the highlighted colour being set by the `highlightedMeasurementFill` prop.
 
 ??? note "Measurement Styles"
     ```js
     interface MeasurementStyle{
-        measurementFill?: string, 
+        measurementFill?: string,
         highLightedMeasurementFill?: string;
     }
     ```
@@ -411,7 +411,7 @@ Measurement styles control the plotted data points - colour, size and shape. Cor
     }
     ```
 
-This returns a midparental height as well as the midparental SDS and centile, and the centile data should the user which to plot a midparental centile unto the chart. The structure of the Reference and Centile interfaces is:
+This returns a mid-parental height, mid-parental SDS and centile, along with the centile data if the user wishes to plot a mid-parental centile. The structure of the Reference and Centile interfaces is:
 
 ??? note "`Reference` and `Centile` interface structures"
     ```js
@@ -456,35 +456,34 @@ Centile data are returned from the RCPCH API in this same structure, though no A
 
 ### `enableExport`
 
-```enableExport```: a boolean optional prop. If true, a copy/paste button is rendered below the chart. It defaults to false. If true, ```exportChartCallback``` must also be implemented.
+```enableExport```: a boolean optional prop, defaults to false. If true, ```exportChartCallback``` must be implemented and a copy-paste button is rendered below the chart.
 
 ### `exportChartCallBack`
 
-```exportChartCallback```: callback function implemented if enableExport is true. It receives an SVG element. This can be saved in the client to clipboard by converting to canvas using HTML5. An example implementation of this is [here](https://github.com/rcpch/digital-growth-charts-react-client/blob/live/src/functions/canvasFromSVG.js) in our demo client.
+```exportChartCallback``` callback function implemented if `enableExport` is true. It receives an SVG element. This can be saved in the client to clipboard by converting to canvas using HTML5. An example implementation of this is [here](https://github.com/rcpch/digital-growth-charts-react-client/blob/live/src/functions/canvasFromSVG.js) in our demo client.
 
 ### `clinicianFocus`
 
-```clinicianFocus```: a boolean optional prop which defaults to false. If true, the advice strings that are reported to users in tooltips are more technical and aimed at clinicians familiar with centile charts. If this prop is false then the advice strings will be less technical and more suitable for parents, guardians, carers or other laypersons.
+```clinicianFocus```: a boolean optional prop which defaults to false. If true, the advice strings that are reported to users in tooltips are more technical and aimed at clinicians familiar with centile charts. If false, the advice strings will be less technical and more suitable for parents, guardians, carers or other laypersons.
 
 !!! example "Requests for additional functionality in props"
-    In time more props can be added if users request them. If you have requests, please post issues on our [GitHub](https://github.com/rcpch/digital-growth-charts-react-component-library/issues) or get involved to contribute as below.
+    In time, more props can be added if users request them. If you have requests, please post issues on our [GitHub](https://github.com/rcpch/digital-growth-charts-react-component-library/issues) or get involved to contribute as below.
 
 ## Contributing
 
-see [Contributing](../developer/contributing.md) for information on how to get involved in the project.
+See [Contributing](../developer/contributing.md) for information on how to get involved in the project.
 
-You can get in touch with the primary developers to talk about the project using any of the methods on our [contact page](../about/contact.md)
+You can get in touch with the primary developers to talk about the project using any of the methods on our [contact page](../about/contact.md).
 
 ## Acknowledgements
 
 This Typescript library was built from the starter created by [Harvey Delaney](https://blog.harveydelaney.com/creating-your-own-react-component-library/)
 
-The charts are built using [Victory Charts](https://formidable.com/open-source/victory/docs/victory-chart/) for React. We tried several different chart packages for React, but we chose Victory because of their documentation and their ability to customise components.
-
+The charts are built using [Victory Charts](https://formidable.com/open-source/victory/docs/victory-chart/) for React. We tried several chart packages for React, but we chose Victory because of their documentation and their ability to customise components.
 
 ## Licensing
 
-The chart data bundled in the component is subject to copyright and is owned by the RCPCH. If you wish to use this software commercially, please [contact the RCPCH](../about/contact.md) so that we can ensure you have the correct license for use.
+The chart data bundled in the component is subject to copyright and is owned by the RCPCH. If you wish to use this software commercially, please [contact the RCPCH](../about/contact.md) so we can ensure you have the correct license for use.
 
-This chart component software is released under the MIT licence
+This chart component software is released under the MIT license.
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)

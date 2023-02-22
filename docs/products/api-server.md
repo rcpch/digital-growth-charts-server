@@ -5,7 +5,6 @@ reviewers: Dr Marcus Baw
 
 # dGC API Server
 
-
 {% set repository_name="rcpch/digital-growth-charts-server" -%}
 
 [![Github Issues](https://img.shields.io/github/issues/{{ repository_name }})](https://github.com/{{ repository_name }}/issues)
@@ -28,4 +27,4 @@ reviewers: Dr Marcus Baw
 
 ## Getting Started
 
-If you want to integrate the RCPCH Digital Growth Charts API into an application, then start [here](../integrator/getting-started.md)
+If you want to integrate the RCPCH Digital Growth Charts API into an application, then start [here](../integrator/getting-started.md).
