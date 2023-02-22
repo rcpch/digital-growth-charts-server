@@ -1,13 +1,13 @@
 ---
 title: dGC Team
-reviewers: Dr Marcus Baw, Prof Tim Cole
+reviewers: Dr Marcus Baw, Prof Tim Cole, Dr Anchit Chandran
 ---
 
 # Digital Growth Charts Team Members
 
 ## Project Board
 
-The project board is responsible for the clinical, academic, and governance oversight of the project. During the development of the dGC products, regular Porject Board meetings enabled the Project Board to maintain an overview of progress, to comment on the development work, and to feed back about the clinical usability of the system.
+The project board is responsible for the clinical, academic, and governance oversight of the project. During the development of the dGC products, regular Project Board meetings enabled the Project Board to maintain an overview of progress, to comment on the development work, and to feed back about the clinical usability of the system.
 
 - **Prof Helen Bedford**, Professor of Children's Health, Population, Policy & Practice Department, UCL GOS Institute of Child Health, London.
 - **Dr Simon Chapman**, Consultant in Paediatric Endocrinology, King's College Hospital, London.
@@ -33,13 +33,11 @@ RCPCH internal project staff provided invaluable support from project concept, t
 - **Olly Rice**, Infrastructure and Operations Manager, RCPCH, London.
 - **Magdalena Umerska**, Digital Product Manager, RCPCH.
 
-
 ## Development Team
 
-The development team was drawn from RCPCH internal staff, RCPCH members with software development skills, and external specialists. As a multi-disciplinary development team the various duties of software development, quality assurance, testing, deployment, and maintenance were apportioned amongst the team according to experience and skill-set.
+The development team was drawn from RCPCH internal staff, RCPCH members with software development skills, and external specialists. As a multidisciplinary development team, the various duties of software development, quality assurance, testing, deployment, and maintenance were apportioned amongst the team according to experience and skill-set.
 
 - **Dr Marcus Baw**, General Hacktitioner, Developer and Informatician, Yorkshire and The Internet.
 - **Dr Simon Chapman**, Consultant in Paediatric Endocrinology, King's College Hospital, London.
 - **Prof Tim Cole**, Professor of Medical Statistics, Population, Policy & Practice Department, UCL GOS Institute of Child Health, London.
 - **Dr Charles van Lennep**, Paediatrician in Training, London.
-

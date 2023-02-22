@@ -1,6 +1,6 @@
 ---
 title: Acknowledgements
-reviewers: Dr Marcus Baw
+reviewers: Dr Marcus Baw, Dr Anchit Chandran
 ---
 
 # Acknowledgements
@@ -11,11 +11,11 @@ reviewers: Dr Marcus Baw
 
 ## Additional Contributors
 
-- Dr Mark Wardle for [Deprivare](<[url](https://github.com/wardle/deprivare)>) (a UK deprivation-index server) and [Hermes](https://github.com/wardle/hermes) (a SNOMED terminology server) and advice on dockerising and deploying both of these.
+- Dr Mark Wardle for [Deprivare](https://github.com/wardle/deprivare)) (a UK deprivation-index server) and [Hermes](https://github.com/wardle/hermes) (a SNOMED terminology server) and advice on *Dockerising* and deploying both of these.
 - Dr Dan Leach for advice on MHRA Medical Device Registration.
 - Dr Charles van Lennep for many contributions to React code and building the React Native client.
-- Dr Anchit Chandran for proofreading, corrections and contributions to the documentation.
-- 'William' Nai-Wei Wang for proofreading, corrections and contributions to the documentation.
+- Dr Anchit Chandran for proofreading, corrections, and contributions to the documentation.
+- 'William' Nai-Wei Wang for proofreading, corrections, and contributions to the documentation.
 
 ## Technical Acknowledgements
 
@@ -33,4 +33,4 @@ reviewers: Dr Marcus Baw
 - [ReactJS](https://reactjs.org/) (frontend JavaScript framework for Chart component and demo app)
 
 !!! success "Additions"
-    Have we missed someone? Let us know by [editing this page in your own fork and making a PR](https://docs.github.com/en/repositories/working-with-files/managing-files/editing-files#editing-files-in-another-users-repository)
+    Have we missed someone? Let us know by [editing this page in your own fork and making a PR](https://docs.github.com/en/repositories/working-with-files/managing-files/editing-files#editing-files-in-another-users-repository)!

@@ -7,9 +7,9 @@ reviewers: Dr Marcus Baw
 
 ## 2020 Health Tech Awards
 
-**WINNER: "Best Health Tech Solution" Category**
+**WINNER: “Best Health Tech Solution” Category**
 
-Beginning the project right at the pinnacle of the 2020 global coronavirus pandemic, we remotely collaborated to build the Digital Growth Charts project, and went on to win the 2020 Health Tech Award category for Best Health Tech Solution - against a strong field of established health tech companies and NHS trusts. It was heartening to see infrastructural projects like ours being recognised as the building blocks of incredible future clinical interfaces.
+Beginning the project at the pinnacle of the 2020 global coronavirus pandemic, we remotely collaborated to build the Digital Growth Charts project. We went on to win the 2020 Health Tech Award category for Best Health Tech Solution – against a strong field of established health tech companies and NHS trusts. It was heartening to see infrastructural projects like ours being recognised as the building blocks of incredible future clinical interfaces.
 
 --8<--
 docs/_assets/_snippets/htn-award.md
@@ -18,7 +18,7 @@ docs/_assets/_snippets/htn-award.md
 ## Blogs
 
 ["Royal Colleges 3.0" - Best Practice As Code](https://marcus-baw.medium.com/royal-colleges-3-0-best-practice-as-code-7065bce821a7)  
-Marcus Baw's discussion of what it means for Royal Colleges to be developing in-house open-source software, and how this might be future of how Royal Colleges interact with the wider clinical world - distributing "Best Practice As Code".
+Marcus Baw's discussion of what it means for Royal Colleges to be developing in-house open-source software, and how this might be the future of how Royal Colleges interact with the wider clinical world – distributing “Best Practice As Code”.
 
 [August 2020 - RCPCH announces forthcoming digital growth charts for parents and families](https://www.rcpch.ac.uk/news-events/news/rcpch-announces-forthcoming-digital-growth-charts-parents-families)
 
