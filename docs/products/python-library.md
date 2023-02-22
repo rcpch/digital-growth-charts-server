@@ -34,7 +34,7 @@ pip install rcpchgrowth
 We have taken the slightly unusual step of licensing the python package under the [GNU Affero General Public License version 3](https://opensource.org/licenses/AGPL-3.0), which may restrict commercial reuse models. This is because all the 'heavy lifting' of the API server depends on this package. We wanted to protect from 'unofficial' commercial competing APIs, at least until the model of Royal College-delivered APIs is established and secure.
 
 !!! tip "Helpful licensing"
-    If this licensing issue restricts your valid, patient-benefitting, non-profit use-case, then please do reach out to us. We will consider dual-license options or some other arrangement that helps you.
+    If this licensing issue restricts your valid, patient-benefiting, non-profit use-case, then please do reach out to us. We will consider dual-license options or some other arrangement that helps you.
 
 ## Feedback
 
