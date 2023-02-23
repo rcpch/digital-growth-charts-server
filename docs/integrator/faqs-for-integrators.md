@@ -24,11 +24,11 @@ docs/_assets/_snippets/self-host-warning.md
 !!! tip "RCPCH On-Premise Hosting Service"
     The RCPCH offers an 'on-premise' managed service which may suit some customers requiring the service to be hosted within their own data centre, or on their own cloud infrastructure. Find out more about [pricing](https://www.rcpch.ac.uk/resources/growth-charts/digital/about#subscriptions-and-pricing).
 
-By using the RCPCH-provided API you avoid all that requirement and use our commodity server.
+By using the RCPCH-provided API, you avoid all that requirement and use our commodity server.
 
 ## Q: Is entering a gestational age mandatory?
 
-**A**: Gestational age is **not** mandatory for the API to return a value. If it is not supplied then the child will be assumed to be born at 40 weeks and therefore for the UK-WHO charts, the standard term references will be used for calculations and charts.
+**A**: Gestational age is **not** mandatory for the API to return a value. If not supplied, the child will be assumed to be born at 40 weeks. For the UK-WHO charts, the standard term references will be used for calculations and charts.
 
 From a DPCHR implementer perspective, if a birth notification has not flowed into the DPCHR, suppliers will need to require parents to enter it.
 
@@ -40,31 +40,30 @@ From a DPCHR implementer perspective, if a birth notification has not flowed int
 
 **A**: Minimal development is required. The tricky stuff (calculating centiles from complex statistical tables, selecting the correct UK90 or WHO references for age, and gestational age correction) is all done for you. The data returned will be the correct centiles, which can be displayed to the user.
 
-Producing a visual ‘growth chart’ with this data on is a little more involved, however we have tried to make the process as easy as possible by building API endpoints which return the coordinate data from which to build the chart lines, and also we’ve made an open source library which takes that source data and makes a chart for you. It’s built in React and is MIT licensed, but if you are using another technology then you can inspect the source and use that to build your own client.
+Producing a visual ‘growth chart’ with this data is a little more involved, however, we have simplified the process by building API endpoints which return coordinate data from which to build the chart lines. We’ve also made an open-source library which takes that source data and makes a chart for you. This is built in React and is MIT licensed, but if you are using another technology, you can inspect the source to build your own client.
 
-We are keen to build a ‘catalogue’ of chart clients so other open source clients are very welcome and we will help you build and test them!
+We are keen to build a ‘catalogue’ of chart clients, so other open-source clients are very welcome. We will also help you build and test them!
 
 ## Q: Is corrected gestational age passed back by the API, or do implementers have to calculate it?  
 
 **A**: Yes, corrected age is passed back by the API, if a gestational age is included in the request.
 
-!!! warning
-    The API can only correct for gestational age if a gestational age has been supplied!
+**NOTE: The API can only correct for gestational age if a gestational age has been supplied!**
 
 This correction is applied up to the corrected age of 1 year for preterm children born above 32 weeks, and to the corrected age of 2 years for preterm children born below 32 weeks, which is accepted standard practice among paediatricians.
 
 ## Q: Does my application need to validate inputs?
 
-**A**: The API has validation and error handling for out-of-range requests, but it is good practice for the front-end software to also reject input values that are out of range since this feedback can be shown to the user, by the application.
+**A**: The API has validation and error handling for out-of-range requests, but it is good practice for the front-end software to also reject input values outside the valid range since the user will receive immediate feedback from your application.
 
 ## Q: Is there a source from where we can get a list of extreme input values to use for our validation?
 
-**A**: Yes, we have included one in our source code: [Validation Constants](https://github.com/rcpch/rcpchgrowth-python/blob/live/rcpchgrowth/constants/validation_constants.py). This is what is used internally to validate API inputs and also used by the internal `rcpchgrowth` Python module to validate inputs to the `Measurement` class.
+**A**: Yes, we have included one in our source code: [Validation Constants](https://github.com/rcpch/rcpchgrowth-python/blob/live/rcpchgrowth/constants/validation_constants.py). This is used internally to validate API inputs, as well as by the internal `rcpchgrowth` Python module to validate inputs to the `Measurement` class.
 
 ## Q: Would it be good enough to plot the returned centile values on a pre-prepared **image** of a growth chart?  
 
 **A**: Maybe. It would depend on the implementation.
 
-Images of charts are definitely **not** good enough for calculating a centile from, although many GP software packages do it this way, it's poor practice and it's why the API needed to exist in the first place. BUT, since we are  calculating the centiles for you, then the chart is only for displaying the trend. An image **could** be used, but we would advise against it generally.
+Images of charts are definitely **not** good enough for calculating a centile from, although many GP software packages do it this way. It is poor practice, and it's why the API needed to exist in the first place. However, since we are calculating the centiles for you, the chart is only for displaying the trend. An image **could** be used, but we generally advise against it.
 
-The problem with images is that it is very easy to accidentally have an offset or scaling error that means that *some* plotted points are in the right place, and some are not. Best practice is always to use the **same** vector graphic tooling to both construct the lines *and* plot the points, to avoid offsets/scaling inaccuracy. If you are using an image (please don't) then you must ensure you're selecting the correct one for the data you're presenting, and that the scaling and offset is not just programmed to be correct, but clinically tested to be correct!
+It is very easy to accidentally offset or incorrectly scale images, leading to *some* correctly plotted points, but others not. The best practice is to always use the *same* vector graphic tooling to both construct lines **and** plot the points, avoiding offsets/scaling inaccuracy. If you use an image (against our advice), you must ensure the correct one is selected for the presented data. More, you must ensure scaling and offset are not just programmed to be correct, but also clinically tested to be correct!
