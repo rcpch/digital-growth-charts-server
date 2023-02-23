@@ -1,10 +1,11 @@
-name: on-issue-event
+name: on-issue-labelled-hazard-reply-with-hazard-instructions
 on:
   issues:
-    types: [opened, edited]
+    types: [labeled]
 
 jobs:
   add-comment:
+    if: github.event.label.name == 'hazard'
     runs-on: ubuntu-latest
     permissions:
       issues: write
