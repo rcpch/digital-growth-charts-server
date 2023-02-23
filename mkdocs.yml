@@ -48,7 +48,6 @@ nav:
     - 'developer/start-here.md'
     - 'developer/api-python.md'
     - 'developer/api-docker.md'
-    - 'developer/adding-a-new-api-endpoint.md'
     - 'developer/api-testing.md'
     - 'developer/rcpchgrowth.md'
     - 'developer/rcpchgrowth-cli.md'
@@ -87,13 +86,15 @@ theme:
   name: material
   custom_dir: rcpch-theme
   features:
-    - navigation.instant
+    - content.code.copy
+    - content.code.select
+    - navigation.expand
     - navigation.footer
+    - navigation.instant
     - navigation.tabs
     - navigation.tabs.sticky
-    - navigation.tracking
     - navigation.top
-    - navigation.expand
+    - navigation.tracking
     # - toc.integrate
 
   palette:
@@ -109,12 +110,11 @@ theme:
   logo: _assets/_images/rcpch_logo.png
 
 plugins:
-  # - git-committers:
-  #     repository: rcpch/digital-growth-charts-documentation
-  #     branch: live
-  # - git-revision-date-localized:
-  #     enable_creation_date: true
-
+  - git-committers:
+      repository: rcpch/digital-growth-charts-documentation
+      branch: live
+  - git-revision-date-localized:
+      enable_creation_date: true
   - macros
   - search
   - render_swagger
