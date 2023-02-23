@@ -36,11 +36,12 @@ nav:
     - 'integrator/whos-using-dgc.md'
   - Clinicians: 
     - 'clinician/how-the-api-works.md'
-    - 'clinician/chart-information-families.md'
     - 'clinician/chart-information-health-staff.md'
     - 'clinician/date-age-calculations.md'
     - 'clinician/growth-references.md'
     - 'clinician/faqs-for-clinicians.md'
+  - Parents:
+    - 'parents/chart-information-families.md'
   - Contributers:
     - 'developer/start-here.md'
     - 'developer/api-python.md'
