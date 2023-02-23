@@ -18,4 +18,3 @@
     1. Registered with the MHRA as a Medical Device (for UK deployment) and EU MDR, with Declaration of Conformity (for EU deployment).
    
     **For this reason, we STRONGLY recommend you DO NOT SELF-HOST any of our platform, but instead use the hosted (and attractively-priced) [Digital Growth Charts API platform](https://dev.rcpch.ac.uk/). Self-hosting means your organisation is fully liable for any errors in calculation, deployment, or functioning. We will not provide any free support for self-hosting organisations.**
-    
