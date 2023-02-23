@@ -56,7 +56,6 @@ Along with the centile data, the growth data (presented to the endpoint in the r
 ### Chart plotting
 
 - Provide the facility to toggle between height chart and weight chart or display together.
-
 - Offer option of BMI and head circumference charts for health staff use.
 
 - Allow the chart to be scalable, i.e. zooming in or out, whilst maintaining variable, visible axes, or offer a variety of age ranges displayed to optimise data view.
@@ -128,10 +127,9 @@ On the centile chart, it should be clear that allowance has been made for varyin
 
 #### Definitions
 
-- **Gestation at birth**: 
-- **Weeks premature**: 
-- **Gestational age**: 
-- **Chronological age**: 
+- **Gestational age**: time period for foetal development inside the uterus, beginning with conception and ending at birth
+- **Weeks premature**: number of weeks prior to 37 weeks of gestation, for a live birth
+- **Chronological age**: time period starting from birth until a given date
 
 Gestational adjustment option provided for all birth gestations and continues indefinitely.
 
