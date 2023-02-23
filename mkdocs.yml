@@ -13,9 +13,7 @@ nav:
     - 'about/team.md'
     - 'about/acknowledgements.md'
     - 'about/awards-press-blogs.md'
-
-    # already linked to in the 'contact' section
-    # - 'about/contact.md'              
+    - 'about/contact.md'
   - Products:
     - 'products/get-digital-growth-charts.md'
     - 'products/products-overview.md'
@@ -28,23 +26,23 @@ nav:
     - 'products/google-sheets-plugin.md'
     - 'products/react-native.md'
     - 'products/flask(deprecated).md'
-  - Support:
-    - 'integrator/support.md'
+  - Integrators:
     - 'integrator/getting-started.md'
     - 'integrator/api-keys.md'
     - 'integrator/making-api-calls.md'
     - 'integrator/api-reference.md'
+    - 'integrator/support.md'
     - 'integrator/client-specification.md'
     - 'integrator/faqs-for-integrators.md'
     - 'integrator/whos-using-dgc.md'
-  - Clinician: 
+  - Clinicians: 
     - 'clinician/how-the-api-works.md'
     - 'clinician/chart-information-families.md'
     - 'clinician/chart-information-health-staff.md'
     - 'clinician/date-age-calculations.md'
     - 'clinician/growth-references.md'
     - 'clinician/faqs-for-clinicians.md'
-  - Contribute:
+  - Contributers:
     - 'developer/start-here.md'
     - 'developer/api-python.md'
     - 'developer/api-docker.md'
@@ -79,7 +77,6 @@ nav:
     - 'legal/privacy-notice.md'
   - Technical:
     - 'technical/security.md'
-    - 'technical/data-security-protection-toolkit.md'
   - Contact: 'about/contact.md'
 
 
@@ -114,7 +111,6 @@ plugins:
   #     branch: live
   # - git-revision-date-localized:
   #     enable_creation_date: true
-
   - macros
   - search
   - render_swagger
