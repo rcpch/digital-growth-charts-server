@@ -80,6 +80,7 @@ nav:
   - Technical:
     - 'technical/security.md'
     - 'technical/data-security-protection-toolkit.md'
+    - 'technical/status.md'
   - Contact: 'about/contact.md'
 
 
@@ -87,8 +88,11 @@ theme:
   name: material
   custom_dir: rcpch-theme
   features:
-    - navigation.instant
+    - content.code.select
+    - content.code.copy
+    - navigation.expand
     - navigation.footer
+    - navigation.instant
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.tracking
