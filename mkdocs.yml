@@ -27,11 +27,11 @@ nav:
     - 'products/react-native.md'
     - 'products/flask(deprecated).md'
   - Integrators:
+    - 'integrator/support.md'
     - 'integrator/getting-started.md'
     - 'integrator/api-keys.md'
     - 'integrator/making-api-calls.md'
     - 'integrator/api-reference.md'
-    - 'integrator/support.md'
     - 'integrator/client-specification.md'
     - 'integrator/faqs-for-integrators.md'
     - 'integrator/whos-using-dgc.md'
@@ -42,7 +42,7 @@ nav:
     - 'clinician/date-age-calculations.md'
     - 'clinician/growth-references.md'
     - 'clinician/faqs-for-clinicians.md'
-  - Contributers:
+  - Contributors:
     - 'developer/start-here.md'
     - 'developer/api-python.md'
     - 'developer/api-docker.md'
