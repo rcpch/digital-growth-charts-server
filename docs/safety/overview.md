@@ -19,7 +19,7 @@ Clinical Safety of these clinical tools is of paramount importance to us at the 
 
 In addition to the standard NHS clinical safety practices, a key aspect of the augmented clinical safety measures we have taken with the dGC platform is the open source codebase and completely open governance profile of the project.
 
-Our entire codebase is open for inspection by other specialists, in a manner similar to the open peer review of academic publications which ensures high quality by enabling others to replicate our results and verify or challenge the veracity of the calculations independently. (Note that we do not in any way **rely** on such external validation or challenge - we have ourselves extensively internally tested the API and underlying calculations)
+Our entire codebase is open for inspection by other specialists, in a manner similar to the open peer review of academic publications, which ensures high quality by enabling others to replicate our results and verify or challenge the veracity of the calculations and testing independently. (Note the Digital Growth Charts do not **rely** on external validation - they are extensively internally tested)
 
 ### DCB0129 and DCB0160 Compliance
 
