@@ -1,12 +1,12 @@
 ---
 title: Who's using the dGC Platform?
-reviewers: Dr Marcus Baw, Dr Simon Chapman
+reviewers: Dr Marcus Baw, Dr Simon Chapman, Dr Anchit Chandran
 ---
 
 # Who's using the dGC Platform?
 
 ## GP System and Hospital Electronic Health Record Suppliers using the RCPCH dGC Platform
-We're working with several big NHS systems suppliers to integrate the Digital Growth Charts API and charting tools into their electronic patient record systems. As we get to a 'live' state with each supplier we will list them here
+We're working with several big NHS systems suppliers to integrate the Digital Growth Charts API and charting tools into their electronic patient record systems. As we get to a 'live' state with each supplier, we will list them here.
 
 <!--
 ## Research and Publications done with the API/python

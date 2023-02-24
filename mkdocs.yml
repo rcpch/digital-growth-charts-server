@@ -28,7 +28,7 @@ nav:
     - 'products/google-sheets-plugin.md'
     - 'products/react-native.md'
     - 'products/flask(deprecated).md'
-  - Support:
+  - Integrators:
     - 'integrator/support.md'
     - 'integrator/getting-started.md'
     - 'integrator/api-keys.md'
@@ -37,14 +37,14 @@ nav:
     - 'integrator/client-specification.md'
     - 'integrator/faqs-for-integrators.md'
     - 'integrator/whos-using-dgc.md'
-  - Clinician: 
+  - Clinicians: 
     - 'clinician/how-the-api-works.md'
     - 'clinician/chart-information-families.md'
     - 'clinician/chart-information-health-staff.md'
     - 'clinician/date-age-calculations.md'
     - 'clinician/growth-references.md'
     - 'clinician/faqs-for-clinicians.md'
-  - Contribute:
+  - Contributors:
     - 'developer/start-here.md'
     - 'developer/api-python.md'
     - 'developer/api-docker.md'
