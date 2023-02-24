@@ -64,7 +64,8 @@ nav:
       - 'safety/csmf/hazard-log.md'
       - 'safety/csmf/third-party-tools-safety-assmt.md'
       - 'safety/csmf/license.md'
-    - 'safety/dtac.md'
+    - DTAC:
+      - 'safety/dtac-docx.md'
     - Medical Devices Registration:
       - 'safety/medical-device-reg/mhra.md'
       - 'safety/medical-device-reg/essential-req.md'
