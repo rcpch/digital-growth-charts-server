@@ -1,6 +1,6 @@
 ---
 title: DISCLAIMER
-reviewers: Dr Marcus Baw
+reviewers: Dr Marcus Baw, Dr Anchit Chandran
 ---
 
 # DISCLAIMER
@@ -8,4 +8,3 @@ reviewers: Dr Marcus Baw
 --8<--
 docs/_assets/_snippets/self-host-warning.md
 --8<--
-
