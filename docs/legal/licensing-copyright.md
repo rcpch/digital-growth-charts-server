@@ -1,6 +1,6 @@
 ---
 title: Licensing and Copyright
-reviewers: Dr Marcus Baw
+reviewers: Dr Marcus Baw, Dr Anchit Chandran
 ---
 
 # Licensing and Copyright
