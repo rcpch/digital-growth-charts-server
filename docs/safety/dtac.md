@@ -1,6 +1,6 @@
 ---
 title: DTAC
-reviewers: Dr Marcus Baw
+reviewers: Dr Marcus Baw, Magda Umerska, Adele Picken
 ---
 
 # Digital Technology Assessment Criteria (DTAC)
