@@ -109,7 +109,9 @@ The growth chart reference data covering this Term period used to be averaged ac
 
 However, during the development of the Digital Growth Charts, the [dGC Project Board](../../about/team#project-board) determined we should abolish the 'averaging' effect of the concept of term, and simply correct all children for gestational age. This is because of evidence there *is* a difference between the outcomes of children born as early term and late term. More, the dGC makes it easy to correct for all gestational ages.
 
-### Helpful reference documents for understanding what centiles are, how they are calculated, and how they are used
+## Helpful reference documents
+
+These are some helpful references for understanding what centiles are, how they are calculated, and how they are used:
 
 - [OpenHealthHub- What are centiles?](https://www.openhealthhub.org/t/centile-part-1-what-are-centiles/463)
 - [CDC - Percentile Data Files with LMS Values](https://www.cdc.gov/growthcharts/percentile_data_files.htm)
