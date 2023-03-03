@@ -13,9 +13,6 @@ nav:
     - 'about/team.md'
     - 'about/acknowledgements.md'
     - 'about/awards-press-blogs.md'
-
-    # already linked to in the 'contact' section
-    # - 'about/contact.md'              
   - Products:
     - 'products/get-digital-growth-charts.md'
     - 'products/products-overview.md'
@@ -34,6 +31,7 @@ nav:
     - 'integrator/api-keys.md'
     - 'integrator/making-api-calls.md'
     - 'integrator/api-reference.md'
+    - 'integrator/support.md'
     - 'integrator/client-specification.md'
     - 'integrator/faqs-for-integrators.md'
     - 'integrator/whos-using-dgc.md'
