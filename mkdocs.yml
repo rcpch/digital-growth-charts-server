@@ -88,10 +88,12 @@ theme:
   name: material
   custom_dir: rcpch-theme
   features:
+    - content.action.edit # explicitly adds edit button (Material4MkDocs9.0) 
+    - content.action.view # explicitly adds view button (Material4MkDocs9.0) 
     - content.code.copy
     - content.code.select
     - navigation.expand
-    - navigation.footer
+    - navigation.footer # explicitly adds footer prev/next (Material4MkDocs9.0) 
     - navigation.instant
     - navigation.tabs
     - navigation.tabs.sticky
@@ -112,11 +114,12 @@ theme:
   logo: _assets/_images/rcpch_logo.png
 
 plugins:
-  # - git-committers:
-  #     repository: rcpch/digital-growth-charts-documentation
-  #     branch: live
-  # - git-revision-date-localized:
-  #     enable_creation_date: true
+  - git-committers:
+      repository: rcpch/digital-growth-charts-documentation
+      branch: live
+      enabled: !ENV [ENABLE_GIT_COMMITTERS, false] # makes Git Committers optional
+  - git-revision-date-localized:
+      enable_creation_date: true
   - macros
   - search
   - render_swagger
