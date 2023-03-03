@@ -200,5 +200,3 @@ A child is defined as being “on” a centile when within 0.17 SD (0.25 centile
 | 99.6th       | 2.50            | 2.84            |                                         | Overweight (obese)       |
 | >99.6th      | 2.84            | 6               | Above normal range                      | Severely obese           |
 |              |                 | > 6             | Probable error                          | Probable error           |
-
-*[BMI]: Body Mass Index

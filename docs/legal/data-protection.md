@@ -57,7 +57,3 @@ Most of our products do not collect or store **any** data whatsoever. These incl
 - the React Native client
 - the dGC command line tools
 - the Google Sheets plugin (note: it's possible that Google or other services collect data about you during your use of this plugin)
-
-*[DPCHR]: Digital Paediatric Child Health Record
-*[EPR]: Electronic Patient Record
-*[API]: Application Programming Interface
