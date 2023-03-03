@@ -13,7 +13,8 @@ jobs:
   build-and-deploy-to-gh-pages:
     runs-on: ubuntu-latest
     env:
-      ENABLE_PDF_EXPORT: True
+      ENABLE_PDF_EXPORT: True # Makes PDF export an option, default disabled, when building locally
+      ENABLE_GIT_COMMITTERS: True # Makes git-committers an option, default disabled, when building locally
     steps:
       - uses: actions/checkout@v2
         with:
