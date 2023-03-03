@@ -2,7 +2,7 @@
 
 <!-- Please list abbreviations in alphabetical order, this aids detection of duplicates -->
 
-*[AGPL] Affero GNU Public License
+*[AGPL]: Affero GNU Public License
 *[API]: Application Programming Interface
 *[BMI]: Body Mass Index, a measure of weight taking into account height
 *[CLI]: Command Line Interface
@@ -40,8 +40,8 @@
 *[REST]: REpresentational State Transfer
 *[SDS]: Standard Deviation Score
 *[SLA]: Service Level Agreement
-*[SNOMED-CT] Systematic NOmenclature of MEDicine - Clinical Terms
-*[SSH] Secure SHell
+*[SNOMED-CT]: Systematic NOmenclature of MEDicine - Clinical Terms
+*[SSH]: Secure SHell
 *[SVG]: Scalable Vector Graphics
 *[UAT]: User Acceptance Testing
 *[UKCA]: United Kingdom Conformity Assessed
