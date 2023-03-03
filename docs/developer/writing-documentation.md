@@ -7,7 +7,7 @@ reviewers: Dr Marcus Baw, Dr Anchit Chandran
 
 Where possible, we have tried to bring together **all** documentation relating to any aspect of the project into this one MkDocs site, published at [growth.rcpch.ac.uk](https://growth.rcpch.ac.uk)
 
-## MkDocs
+## Material for MkDocs
 
 The documentation for the Digital Growth Charts project is created using the MkDocs documentation framework. It uses the '*Material for MkDocs*' theme, which adds a number of extra features and a more modern appearance. We use the *Material for MkDocs Insiders* edition, allowing us to support the project, whilst getting a few neat early-access features.
 
@@ -55,6 +55,7 @@ pyenv virtualenv 3.10.2 mkdocs
 Install Material for MKDocs and other dependencies:
 
 ```console
+pip install git+https://<INSERT_GH_TOKEN_HERE>@github.com/squidfunk/mkdocs-material-insiders.git
 pip install -r requirements.txt
 ```
 
@@ -65,6 +66,17 @@ mkdocs serve
 ```
 
 MkDocs will tell you what URL you can view the site on, which is usually `localhost:8000`. You can vary this in the settings, if port `8000` is already in use.
+
+#### `git-committers` and `mkdocs-with-pdf` plugins
+
+These plugins can add 10-15 seconds of build time to the site, so when developing locally, they are disabled by default. They are enabled by using environment variables, if you want to test that they work locally before pushing to the remote:
+
+```console
+export ENABLE_GIT_COMMITTERS=true; mkdocs serve
+export ENABLE_PDF_EXPORT=true; mkdocs serve
+```
+
+You should always build the site at least once with both PDF export and Git Committers enabled, to ensure there are no issues, before pushing to the remote.
 
 #### Notes
 
