@@ -82,7 +82,6 @@ nav:
     - 'technical/status.md'
   - Contact: 'about/contact.md'
 
-
 theme:
   name: material
   custom_dir: rcpch-theme
@@ -103,7 +102,6 @@ theme:
   palette:
     # Light mode ONLY - it's gets too hard to keep dark mode working with a number of iframes in play
       scheme: default
-
 
   font:
     text: Montserrat
@@ -164,6 +162,8 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.snippets:
       check_paths: true
+      auto_append:
+        - includes/_abbreviations.md
   - pymdownx.superfences
   - toc:
       permalink: false

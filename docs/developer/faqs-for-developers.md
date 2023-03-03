@@ -19,5 +19,3 @@ reviewers: Dr Marcus Baw, Dr Anchit Chandran
 
 !!!quote
     Marcus Baw wrote a blog post on ['Why Python...'](https://marcus-baw.medium.com/why-we-chose-python-for-the-rcpch-digital-growth-charts-project-2d61e2766c3b) which has a little more detail.
-
-*[PSF]: Python Software Foundation
