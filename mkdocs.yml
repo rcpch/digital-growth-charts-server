@@ -42,6 +42,7 @@ nav:
     - 'clinician/faqs-for-clinicians.md'
   - Parents:
     - 'parents/chart-information-families.md'
+    - 'parents/faqs-parents.md'
   - Contributors:
     - 'developer/start-here.md'
     - 'developer/api-python.md'
