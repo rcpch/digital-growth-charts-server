@@ -1,6 +1,6 @@
 ---
 title: How the API Works
-reviewers: Dr Marcus Baw
+reviewers: Dr Marcus Baw, Dr Anchit Chandran
 ---
 # How the API Works
 
@@ -8,17 +8,17 @@ Details for interested clinicians and statisticians.
 
 ## Growth Charting Introduction
 
-The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any child born after that date should be plotted on a UK-WHO growth chart. Children born before May 11th 2009 are plotted on British 1990 (UK90) charts and subsequent measurements must be plotted using those charts. After age 4 the two charts are the same.
+The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any child born after that date should be plotted on a UK-WHO growth chart. Children born before May 11th 2009 are plotted on British 1990 (UK90) charts and subsequent measurements must be plotted using those charts. After age 4, the two charts are the same.
 
 ## The LMS Method
 
 It is now common practice to express child growth status in the form of **SD score (SDS)** - the number of standard deviations away from the mean (also known as a **z-score**). The SD score can be converted to a centile.
 
-The LMS method provides a way of obtaining normalised growth centiles from a reference dataset, applying smoothing and extrapolation such that the resulting L, M and S curves contain the information to draw **any** centile curve, and to convert measurements (even extreme values) into exact SD scores. The growth reference is summarised by a table of LMS values at a series of ages.
+The LMS method provides a way of obtaining normalised growth centiles from a reference dataset, applying smoothing and extrapolation so the resulting L, M and S curves contain the information to draw **any** centile curve, and to convert measurements (even extreme values) into exact SD scores. The growth reference is summarised by a table of LMS values at a series of ages.
 
 ### How the LMS method is used
 
-- Look up in the LMS table for the relevant measurement (e.g. height) the age and sex-specific values of L, M and S for the child. If the child's age falls between the tabulated ages, use cubic interpolation to obtain values for the child's exact age.
+- Using the LMS table, look up the age and sex-specific values of L, M and S for the relevant measurement (e.g. height). If the child's age falls between the tabulated ages, use cubic interpolation to obtain values for the child's exact age.
 
 - To obtain the z-score, plug the LMS values with the child's measurement into the formula:
   <div class="latex">
@@ -27,15 +27,15 @@ The LMS method provides a way of obtaining normalised growth centiles from a ref
 
 ## Growth References
 
-This is a growing list of growth references for children. These cover a number of specific medical conditions as well as a range of different physiological parameters. It will continue to be added to as the data become available. As a side-project of this work we are interested in collating an international library of growth references in computable format, which is at [Github repository](https://github.com/rcpch/growth-references) and further details are available in that repository.
+This is a growing list of growth references for children. These cover a number of specific medical conditions and a range of different physiological parameters. It will continue to grow as more data become available. As a side-project of this work, we are interested in collating an international library of growth references in computable format, found at the [Growth References repository](https://github.com/rcpch/growth-references). Further details are available there.
 
-If you have a reference which you would like us to add, please contact us on [growth.digital@rcpch.ac.uk](mailto:growth.digital@rcpch.ac.uk)
+If you have a reference which you would like us to add, please contact us on [growth.digital@rcpch.ac.uk](mailto:growth.digital@rcpch.ac.uk).
 
 ## Gold Standard
 
 The preceding 'gold standard' for LMS calculation was [LMSgrowth](https://www.healthforallchildren.com/shop-base/shop/software/lmsgrowth/), an Excel add-in written in Visual Basic by Huiqi Pan and Tim Cole (copyright Medical Research Council 2002–10).
 
-Results from RCPCHGrowth agree with LMSgrowth to 3 decimal places, though beyond this there are discrepancies. Part of the reason for this relates to the decimal age calculation - in LMS Growth months and weeks are handled differently to RCPCHGrowth which uses the python date-utils library to calculate differences between dates.
+Results from RCPCHGrowth agree with LMSgrowth to 3 decimal places, though beyond this, there are discrepancies. This is partly because of the decimal age calculation. In LMS Growth, months and weeks are handled differently to RCPCHGrowth, which uses the Python `date-utils` library to calculate differences between dates.
 
 ## Interpolation
 
@@ -46,11 +46,11 @@ The process involves the following steps:
 3. If necessary use interpolation to obtain L, M and S values for the required age
 4. Substitute L, M and S in the final equation to generate an SDS.
 
-In most situations, the decimal age of the child falls *between* the available decimal ages in the reference data. If that is the case, an *interpolation* needs to be performed on the ages either side of the child's age, and the same applied in turn to the L, M and S values associated with each of the ages below and above.
+In most situations, the decimal age of the child falls *between* the available decimal ages in the reference data. In this case, an *interpolation* needs to be performed on the ages either side of the child's age, and the same applied in turn to the L, M and S values associated with each of the ages below and above.
 
 ### Cubic Interpolation
 
-In most circumstances _cubic_ interpolation is used - this involves identifying 2 ages below and 2 ages above the child's age and substitution the following equation:
+In most circumstances, *cubic* interpolation is used - this involves identifying 2 ages below and 2 ages above the child's age and substituting into the following equation:
 
 If _t₀_, _t₁_, _t₂_, _t₃_, _y₀_, _y₁_, _y₂_, _y₃_, are given, and _t₀_<_t₁_<_t₂_<_t₃_, _t_ is in the range of [*t₁*, *t₂*], the cubic interpolation of _y_ for _t_ is:
 
@@ -78,11 +78,13 @@ If _t₀_, _t₁_, _t₂_, _t₃_, _y₀_, _y₁_, _y₂_, _y₃_, are given, an
 
 **Note: this derived formula is equivalent to the above cubic interpolation only when the age interval is 0.5.**
 
-Alternatively, it is possible to use the CubicSpline function from the SciPy interpolate package, or the interpolate.splev function - details can be found in the comments in the [global_functions.py](https://github.com/rcpch/rcpchgrowth-python/blob/live/rcpchgrowth/global_functions.py) module. In testing our findings were that the original Cole method above ran faster than the Scipy interpolate functions with the same level of accuracy.
+Alternatively, it is possible to use the `CubicSpline` function from the SciPy interpolate package, or the `interpolate.splev` function - details can be found in the comments in the [global_functions.py](https://github.com/rcpch/rcpchgrowth-python/blob/live/rcpchgrowth/global_functions.py) module.
+
+During our testing, the original Cole method above ran faster than the Scipy interpolate functions, with the same level of accuracy.
 
 ### Linear Interpolation
 
-Where a child's measurement falls close to a reference threshold and there is only one age below or above them, linear rather than cubic interpolation is used. Here, the interp1d function from the [Scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html) has been used to keep code less verbose.
+Where a child's measurement falls close to a reference threshold, and there is only one age below or above them, linear rather than cubic interpolation is used. Here, the `interp1d` [Scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html) function has been used to keep code less verbose.
 
 ## Reference Thresholds
 
@@ -90,22 +92,22 @@ It is documented in several places how there are age thresholds for different me
 
 This is either due to a lack of measurements, or an overlap in references. Because the different datasets overlap, there is a certain amount of logic throughout the functions to ensure that the correct reference is selected. The thresholds are:
 
-- length runs from 25 weeks to 2 years. There is overlap here where children are measured standing (height) rather than lying (length), and therefore 2 LMS values for the same age.  This means that a measurement at exactly 2 years is treated as height. From 2 years, the data continues as height to 4 years where again there are 2 values. This is the join between the WHO 2006 and UK90 data. Length/Height appears as such on charts, and can be found simply as `'height'` as a parameter for simplicity.
-- weight appears as `'weight'` as a parameter and is continuous from 23 weeks gestation through to 20 y for both sexes. There are overlaps as with height, between UK90 preterm, UK-WHO infant and child and again UK90 child datasets.
-- BMI appears as `'bmi'` as a parameter and is a calculated value requiring height in metres and weight in kilograms, expressed as kg/m². Reference data for BMI are available from 2 weeks of age in the UK-WHO dataset, up to 20 years. Overlaps, as with height and weight, exist at 2 and 4 years.
+- Length runs from 25 weeks to 2 years. There is overlap here where children are measured standing (height) rather than lying (length), and therefore have 2 LMS values for the same age.  This means a measurement at exactly 2 years is treated as height. From 2 years, the data continues as height to 4 years, where again there are 2 values. This is the join between the WHO 2006 and UK90 data. Length/Height appears as such on charts, and can be found simply as a parameter `'height'` for simplicity.
+- Weight appears as a `'weight'` parameter and is continuous from 23 weeks gestation through to 20 y for both sexes. There are overlaps as with height, between UK90 preterm, UK-WHO infant and child, and UK90 child datasets.
+- BMI appears as a `'bmi'` parameter and is a calculated value requiring height in metres and weight in kilograms, expressed as kg/m². Reference data for BMI are available from 2 weeks of age in the UK-WHO dataset, up to 20 years. Overlaps, as with height and weight, exist at 2 and 4 years.
 - Head circumference is referred to as occipitofrontal circumference and appears as an `'ofc'` parameter. Reference data exist for both sexes from 23 weeks gestation to 17 years in girls, and 18 years in boys. There are overlaps as above where datasets meet.
 
 ## Prematurity and Term
 
-An infant is considered premature (preterm) if born below 37 weeks gestation. The limits of viability may stretch occasionally below 23 weeks, the reference data stops here. It is important to note that reference data on length do not exist until 25 weeks gestation, or 42 weeks gestation in the case of BMI. For babies born premature, a gestation is provided in weeks and supplemental days, which together with the birth and measurement dates, can be used to calculate a corrected decimal age. The reference data for these are found in the `uk_who_0_20_preterm.json` file.
+An infant is considered premature (preterm) if born below 37 weeks gestation. The reference data stops at 23 weeks, but the limits of viability may stretch occasionally below this. It is important to note that reference data on length do not exist until 25 weeks gestation, or 42 weeks gestation in the case of BMI. For babies born premature, a gestation is provided in weeks and supplemental days, which together with the birth and measurement dates, can be used to calculate a corrected decimal age. The reference data for these are found in the `uk_who_0_20_preterm.json` file.
 
 ### Removal of Term Dates Averaging
 
-The entire Term period (from 37-42 weeks gestation) used to be defined as a decimal age of exactly 0 years, and the Growth Chart Reference Group at the inception of the UK-WHO paper charts had previously stipulated that no growth data should be reported over the 2 week period after delivery in term infants.
+The entire Term period (from 37-42 weeks gestation) used to be defined as a decimal age of exactly 0 years, and the Growth Chart Reference Group at the inception of the UK-WHO paper charts had previously stipulated that no growth data should be reported over the 2-week period after delivery in term infants.
 
-The growth chart reference data covering this Term period used to be averaged across the period, so that regardless of actual gestational age, all term-born children were considered to be the same gestation, for paper and PDF growth charts.
+The growth chart reference data covering this Term period used to be averaged across the period, so regardless of actual gestational age, all term-born children were considered to be the same gestation, for paper and PDF growth charts.
 
-However, during the development of the Digital Growth Charts, the [dGC Project Board](../../about/team#project-board) determined that since there is now evidence that there *is* a difference between the outcomes of children born as early term and late term, and also since the dGC makes it easy to correct for all gestational ages, that we should abolish the 'averaging' effect of the concept of term, and simply correct all children for gestational age.
+However, during the development of the Digital Growth Charts, the [dGC Project Board](../../about/team#project-board) determined we should abolish the 'averaging' effect of the concept of term, and simply correct all children for gestational age. This is because of evidence there *is* a difference between the outcomes of children born as early term and late term. More, the dGC makes it easy to correct for all gestational ages.
 
 ### Helpful reference documents for understanding what centiles are, how they are calculated, and how they are used
 
