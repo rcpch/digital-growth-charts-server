@@ -1,6 +1,6 @@
 ---
 title: Security
-reviewers: Dr Marcus Baw
+reviewers: Dr Marcus Baw, Dr Anchit Chandran
 ---
 
 # Security
@@ -9,15 +9,15 @@ Security is taken extremely seriously by this project and we are compliant with 
 
 ## Deployment Security 'Code Chain'
 
-In order to maintain security and safety, while still enabling 'agile' software development practices, we have carefully built a DevOps (Developer Operations) strategy which is consistent with industry best practice yet is low-friction in practice and therefore easy to comply with.
+To maintain security and safety, while still enabling 'agile' software development practices, we have carefully built a DevOps (Developer Operations) strategy which is consistent with industry best practice, yet is low-friction in practice, therefore easy to comply with.
 
 These practices ensure tight security of the code, restricting deployment to the live environment. These security practices are in operation in every part of the 'code chain' from writing the code on individual development machines, through to deployment on the live server, and each of the many steps in between.
 
-Also within these practices are measures which ensure that the code which is deployed is tested, safe, and does not contain regressions (changes which break a feature or introduce risk).
+Within these practices are also measures which ensure the deployed code is tested, safe, and does not contain regressions (changes which break a feature or introduce risk).
 
 ### Development machines
 
-* Development machines are password-protected and have full-disk encryption requiring strong passwords in order to decrypt the disk and access the contents.
+* Development machines are password-protected and have full-disk encryption requiring strong passwords to decrypt the disk and access the contents.
 
 * Development machines are maintained with latest operating system patches and security updates.
 
