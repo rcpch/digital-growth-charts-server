@@ -13,9 +13,6 @@ nav:
     - 'about/team.md'
     - 'about/acknowledgements.md'
     - 'about/awards-press-blogs.md'
-
-    # already linked to in the 'contact' section
-    # - 'about/contact.md'              
   - Products:
     - 'products/get-digital-growth-charts.md'
     - 'products/products-overview.md'
@@ -29,21 +26,23 @@ nav:
     - 'products/react-native.md'
     - 'products/flask(deprecated).md'
   - Integrators:
-    - 'integrator/support.md'
     - 'integrator/getting-started.md'
     - 'integrator/api-keys.md'
     - 'integrator/making-api-calls.md'
     - 'integrator/api-reference.md'
+    - 'integrator/support.md'
     - 'integrator/client-specification.md'
     - 'integrator/faqs-for-integrators.md'
     - 'integrator/whos-using-dgc.md'
   - Clinicians: 
     - 'clinician/how-the-api-works.md'
-    - 'clinician/chart-information-families.md'
     - 'clinician/chart-information-health-staff.md'
     - 'clinician/date-age-calculations.md'
     - 'clinician/growth-references.md'
     - 'clinician/faqs-for-clinicians.md'
+  - Parents:
+    - 'parents/chart-information-families.md'
+    - 'parents/faqs-parents.md'
   - Contributors:
     - 'developer/start-here.md'
     - 'developer/api-python.md'

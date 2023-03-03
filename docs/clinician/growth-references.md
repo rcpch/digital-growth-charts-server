@@ -1,22 +1,22 @@
 ---
 title: Reference Data
-reviewers: Dr Marcus Baw, Dr Simon Chapman
+reviewers: Dr Marcus Baw, Dr Simon Chapman, Dr Anchit Chandran
 ---
 
 # Growth Chart References
 
-Growth Charts are built from reference data. A number of different datasets are available, and in the UK we currently use a hybrid of two of these - the British 1990 or UK 1990 dataset and the World Health Organization (WHO) dataset. The current UK charts are referred to as UK-WHO.
+Growth Charts are built from reference data. A number of different datasets are available, and in the UK, we currently use a hybrid of two: the British 1990 or **UK 1990** dataset and the **World Health Organization (WHO)** dataset. The current UK charts are referred to as **UK-WHO**.
 
-Datasets or growth references are, in general, relating to the population of a geographical area (UK90, US Centers for Disease Control or CDC 2000) or are specific to a particular condition or disease state.
+In general, datasets or growth references relate to the population of a geographical area (UK90, US Centers for Disease Control or CDC 2000), or are specific to a particular condition or disease state.
 
-As part of this project we have attempted to catalogue the available datasets or growth references, internationally. The UK references are only usable under MRC licence. The WHO or CDC data are freely available open data.
+As part of this project, we have internationally catalogued the available datasets or growth references. The UK references are only usable under MRC licence. The WHO or CDC data are freely available open data.
 
-This is not an exhaustive list but the aim is to be a repository for all LMS references, not only for growth but for all other physiological parameters. This collection is incomplete at present, but we welcome submissions to the repository to build the collection - please send [pull requests](https://github.com/rcpch/growth-references/pulls) or contact us on [growth.digital@rcpch.ac.uk](mailto:growth.digital@rcpch.ac.uk).
+Though not an exhaustive list, the aim is a repository for all LMS references - not only for growth, but for all other physiological parameters. This collection is incomplete at present. We welcome submissions to the repository to build the collection - please send [pull requests](https://github.com/rcpch/growth-references/pulls) or contact us on [growth.digital@rcpch.ac.uk](mailto:growth.digital@rcpch.ac.uk).
 
 The codebase we have built is capable of utilising any reference or dataset, but there might need to be small configurations necessary to allow for the differences between them.
 
 !!! info
-    We are working on a 'standard format' of JSON that will contain reference metadata as well as the LMS tables themselves, in a 'key-value' format that makes programmatic lookups consistent across different references. Along with the data file, we request the following: file name, parameters described, acknowledgement text, authors, publication / reference.
+    We are working on a 'standard format' of JSON, which contains reference metadata alongside the LMS tables themselves, in a 'key-value' format that makes programmatic lookups consistent across different references. Along with the data file, we request the following: file name, parameters described, acknowledgement text, authors, publication / reference.
 
 ## Reference Library
 
@@ -32,15 +32,15 @@ The codebase we have built is capable of utilising any reference or dataset, but
 
 ---
 
-1. Average values at birth for weight, length and head circ for all term births (gestations 37+0 to 42+6 weeks) computed from UK 1990 reference database.
+1. Average values at birth for weight, length and head circumference for all term births (gestations 37+0 to 42+6 weeks) computed from UK 1990 reference database.
 
-2. Weight, and head circ at birth, by gestation from 23 to 43 weeks and length at birth from 26 to 43 weeks, computed from UK 1990 reference data base and shown by week.
+2. Weight, and head circumference at birth (gestations 23 to 43 weeks) and length at birth (gestations 26 to 43 weeks), computed from UK 1990 reference database and shown by week.
 
-3. This is the WHO standard for weight, BMI and head circ from 2 weeks to 4 years, for length 2 weeks to 2 years and height 2-4 years. It is shown by week to 13 weeks and then by calendar month. It is exactly the same data as the LMS data included in the Z score tables accessed from the WHO website [WHO](http://www.who.int/childgrowth/standards) except there is no birthweight.
+3. This is the WHO standard for weight, BMI and head circumference from 2 weeks to 4 years, for length 2 weeks to 2 years and height 2-4 years. It is shown by week to 13 weeks and then by calendar month. It is exactly the same data as the LMS data included in the Z-score tables accessed from the WHO website [WHO](http://www.who.int/childgrowth/standards), except there is no birthweight.
 
 ### To be added
 
-9.  **LMSdata_BP** systolic & diastolic blood pressure for ages 4 to 24 yr.
+1. **LMSdata_BP** systolic & diastolic blood pressure for ages 4 to 24 yr.
 
 ### Citations
 
