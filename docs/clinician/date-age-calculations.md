@@ -25,9 +25,11 @@ This is the time elapsed since birth, in years, irrespective of the gestational 
 
 ## Corrected Decimal Age
 
-This is the age of a child born preterm calculated from their _due date_ rather than their _birth date_, which will be earlier than their due date. This adjusts for the immaturity of preterm babies being born early. The process is referred to as gestational age correction, and prior to digital growth charts, it was a _manual_ process.
+Used for preterm children, the *corrected decimal age* is calculated from their *due date*, rather than their birth date (which will be earlier than their due date, owing to prematurity).
 
-The previous convention was to apply gestational age correction to all babies born before 37 weeks gestation. For those born at 32-36 weeks the correction was applied until the baby was 1 year old, and below 32 weeks until they were 2 years old (based on corrected rather than chronological age).
+This correction adjusts for the immaturity of preterm babies born early. The process is referred to as *gestational age correction*. Prior to digital growth charts, it was a manual process.
+
+The previous convention was to apply gestational age correction to all babies born before 37 weeks gestation. For those born at 32-36 weeks, the correction was applied until the baby was 1 year old, and below 32 weeks until they were 2 years old (based on *corrected* rather than chronological age).
 
 Now the correction is applied automatically by the API, the Project Board decided it made no sense to stop the correction at arbitrary ages, and it should be applied throughout childhood. Of course, the difference between corrected and uncorrected age becomes less apparent as the child gets older.
 
