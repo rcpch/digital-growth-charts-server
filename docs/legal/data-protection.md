@@ -60,3 +60,4 @@ Most of our products do not collect or store **any** data whatsoever. These incl
 
 *[DPCHR]: Digital Paediatric Child Health Record
 *[EPR]: Electronic Patient Record
+*[API]: Application Programming Interface
