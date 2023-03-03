@@ -24,11 +24,11 @@ It is the responsibility of the consuming application to store the measurements.
 
 ## Your Rights
 
-You have the following rights with your data:
+You have the following rights in relation to your data:
 
 * Right of access and right to have a copy of your personal data in a standard format (right to data portability).  You can ask us for a copy of the information that we hold about you. You can also ask us for a copy of your data in a standard format where this is technically possible. But this only applies where we are holding your information with consent or as part of a contract with you.
 
-* Change any factual errors or inaccuracies (right of rectification). If you have an RCPCH online account you can change and update your personal data. It is your responsibility to update us on any changes to the personal information you have provided. You can also contact us either via our contact form or contact the relevant team directly.
+* Change any factual errors or inaccuracies (right of rectification). If you have an RCPCH online account you can change and update your personal data. It is your responsibility to update us with any changes to the personal information you have provided. You can also contact us either via our contact form or contact the relevant team directly.
 
 * Delete your personal data (called a right to erasure). We cannot delete all personal data as we may have a legal obligation or because we have a requirement to retain it for a task in the public interest, but we can delete non-essential data.
 
