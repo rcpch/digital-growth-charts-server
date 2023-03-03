@@ -80,7 +80,7 @@ If _t₀_, _t₁_, _t₂_, _t₃_, _y₀_, _y₁_, _y₂_, _y₃_, are given, an
 
 Alternatively, it is possible to use the `CubicSpline` function from the SciPy interpolate package, or the `interpolate.splev` function - details can be found in the comments in the [global_functions.py](https://github.com/rcpch/rcpchgrowth-python/blob/live/rcpchgrowth/global_functions.py) module.
 
-During our testing, the original Cole method above ran faster than the Scipy interpolate functions, with the same level of accuracy.
+During our testing, the original Cole method above ran faster than the SciPy interpolate functions, with the same level of accuracy.
 
 ### Linear Interpolation
 
