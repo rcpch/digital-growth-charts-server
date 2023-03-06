@@ -13,6 +13,8 @@ Currently only UK-WHO is supported but Down and Turner syndromes will be added i
 
 ## Installation
 
+
+
 ## Usage
 
 There are 2 available functions: `UK_WHO_SDS_CENTILE` and `UK_WHO_CORRECTED_DECIMAL_AGE`.
@@ -54,6 +56,18 @@ UK_WHO_SDS_CENTILE (
 - `data_to_return` *(string)* *OPTIONAL*:  specifies the desired calculations to return; default `both` (used if no value specified) returns in the following order: chronological SDS -> corrected SDS -> chronological centile -> corrected centile; must be one of `both`, `centiles`, `sds`
 - **`primary_api_key` *(string)*:  your `primary_api_key`. Please see [Getting Started integrating Digital Growth Charts](../integrator/getting-started.md) for details on acquiring your API key**
 
+#### Output
+
+If `both` specified, returns:
+
+```shell
+Corrected SDS, Chronological SDS, Corrected centile, Chronological centile
+```
+
+#### Example
+
+![Screenshot of SDS/Centile example usage](../_assets/_images/gsheets_example_sds_centile.png)
+
 ### `UK_WHO_CORRECTED_DECIMAL_AGE`
 
 This function returns the chronological age as a decimal and/or decimal age corrected for gestational age if premature (< 37 weeks gestation), depending on inputted variables, using the UK-WHO reference.
@@ -88,3 +102,15 @@ UK_WHO_CORRECTED_DECIMAL_AGE (
 - **`observation_value` *(number)*:  the measured value of the chosen observation**
 - `data_to_return` *(string)* *OPTIONAL*:  specifies the desired calculations to return; default `both` (used if no value specified) returns in the following order: chronological SDS -> corrected SDS -> chronological centile -> corrected centile; must be one of `both`, `centiles`, `sds`
 - **`primary_api_key` *(string)*:  your `primary_api_key`. Please see [Getting Started integrating Digital Growth Charts](../integrator/getting-started.md) for details on acquiring your API key**
+
+#### Output
+
+If `both` specified, returns:
+
+```shell
+Chronological age, corrected age
+```
+
+#### Example
+
+![Screenshot of decimal age example usage](../_assets/_images/gsheets_example_decimal_age.png)
