@@ -13,13 +13,39 @@ Currently only UK-WHO is supported but Down and Turner syndromes will be added i
 
 ## Installation
 
+Currently, the best way to get started with the plugin is to copy-paste the entire [JavaScript code](https://github.com/rcpch/digital-growth-charts-google-sheets-plugin/blob/main/rcpchgrowth.js) into the Google Apps Script IDE, which will enable the functions inside your Google Sheet.
 
+The following are step-by-step instructions of how to do this.
+
+### Open Apps Script within your Google Sheets
+
+Open the Google Sheet which contains your measurement data. In the navigation tabs at the top, go to `Extensions > Apps Script`.
+
+![Screenshot of navigation to Apps Script](../_assets/_images/gsheets_screenshot_navigation_apps_script.png)
+
+This should open a new blank Apps Script project, similar to the screenshot below, and automatically open a file called `Code.gs` with the following starter code:
+
+![Screenshot of new blank Apps Script code](../_assets/_images/gsheets_screenshot_gapps_blank.png)
+
+### Inserting the dGC Sheets Plugin Code
+
+First, remove the starter code so you are left with a blank file:
+
+![Screenshot of new blank Apps Script with no code](../_assets/_images/gsheets_screenshot_gapps_blank_no_code.png)
+
+Copy and paste all of the [JavaScript code](https://github.com/rcpch/digital-growth-charts-google-sheets-plugin/blob/main/rcpchgrowth.js) into your Apps Script `Code.gs` file and **save the file**:
+
+![Screenshot of Apps Script with code](../_assets/_images/gsheets_screenshot_gapps_filled_code.png)
+
+Now, when you go back to your Google Sheet, you will be able to access both functions like normal:
+
+![Screenshot of GSheets with working GAppsScript code](../_assets/_images/gsheets_screenshot_gapps_working.png)
 
 ## Usage
 
 There are 2 available functions: `UK_WHO_SDS_CENTILE` and `UK_WHO_CORRECTED_DECIMAL_AGE`.
 
-Once installed, as a native function Google Sheets function.
+Once installed, you will be able to use both as native Google Sheets functions.
 
 ### `UK_WHO_SDS_CENTILE`
 
