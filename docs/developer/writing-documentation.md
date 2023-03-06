@@ -41,7 +41,7 @@ If you need help getting set up, [contact us in the Signal chat](../about/contac
 
 More experienced coders can `git clone` the repo and make changes offline on their local machine before pushing to the remote to either the `rcpch` organisation's remote, or their own fork. This allows you to run Material for MkDocs locally and preview the site as it will appear when pushed to `live`.
 
-#### Setting up a development environment for the dGC documentation site
+#### (Mac / Linux) Setting up a development environment for the dGC documentation site
 
 Create a virtualenv for the Python modules:
 
@@ -67,6 +67,46 @@ mkdocs serve
 ```
 
 MkDocs will tell you what URL you can view the site on, which is usually `localhost:8000`. You can vary this in the settings, if port `8000` is already in use.
+
+#### (Windows) Setting up a development environment for the dGC documentation site
+
+Create a virtual environment with `virtualenv`. See [Windows - install virtualenv](api-python.md#windows---installing-virtualenv) if you need help setting up.
+
+Then, with [GitHub Desktop](https://desktop.github.com/), clone the repo using the following url
+
+```console
+https://github.com/rcpch/digital-growth-charts-documentation.git
+```
+
+`cd` into the directory (ensuring you are using your virtual environment)
+
+```console
+cd digital-growth-charts-documentation
+```
+
+Install the dependencies.
+
+This project uses Material for MkDocs **Insiders** Edition. To install this you will need a GitHub token which is available (for RCPCH team only)
+from Marcus Baw (pacharanero). If you have the token, you can manually run this command to install Insiders:
+
+```console
+pip install git+https://<INSERT_GH_TOKEN_HERE>@github.com/squidfunk/mkdocs-material-insiders.git
+pip install -r requirements.txt
+```
+
+If you can't get access to the token, please see the comments in the `requirements.txt` file and run:
+
+```console
+pip install -r requirements.txt
+```
+
+Finally, start the MkDocs server
+
+```console
+mkdocs serve
+```
+
+MkDocs will tell you what URL you can view the site on, which is usually localhost:8000. You can vary this in the settings, if port 8000 is already in use.
 
 #### `git-committers` and `mkdocs-with-pdf` plugins
 
