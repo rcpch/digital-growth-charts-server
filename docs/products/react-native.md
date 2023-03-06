@@ -12,7 +12,7 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman, Dr Anchit Chandran
 [![Github Forks](https://img.shields.io/github/forks/{{ repository_name }})](https://github.com/{{ repository_name }}/network/members)
 [![Github Licence](https://img.shields.io/github/license/{{ repository_name }})](https://github.com/{{repository_name }}/blob/live/LICENSE)
 
-:octicons-mark-github-16: [Github repository](https://github.com/{{ repository_name }})
+[:octicons-mark-github-16: Github repository](https://github.com/{{ repository_name }})
 
 <!-- :material-web: (link to follow) -->
 

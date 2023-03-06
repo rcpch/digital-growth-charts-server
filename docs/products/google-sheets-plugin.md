@@ -1,11 +1,11 @@
 ---
-title: dGC Google Sheets Plugin
+title: Google Sheets Plugin
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
 ---
 
-:octicons-mark-github-16: [GitHub Repository](https://github.com/rcpch/digital-growth-charts-google-sheets-plugin)
-<!-- ADD BACK IN WHEN LINK AVAILABLE / PUBLISHED -->
-<!-- :material-web: -->
+[:octicons-mark-github-16: GitHub Repository](https://github.com/rcpch/digital-growth-charts-google-sheets-plugin)
+
+[:material-web: Link to copy our example spreadsheet](https://docs.google.com/spreadsheets/d/10hp3i6Ac948yiv2ibci2ncccllcXctuOaZMHTR9elII/copy)
 
 To make accurate centile calculation accessible to researchers, hobbyists and enthusiasts, a Google Sheets extension has been developed using [Google Apps Script](https://developers.google.com/apps-script/guides/sheets), which makes API calls for up to 1000 data points.
 
@@ -13,7 +13,15 @@ For now, only UK-WHO is supported but Down and Turner syndromes will be added in
 
 ## Installation
 
-Currently, the best way to get started with the plugin is to copy-paste the entire [JavaScript code](https://github.com/rcpch/digital-growth-charts-google-sheets-plugin/blob/main/rcpchgrowth.js) into the Google Apps Script IDE, which will enable the functions inside your Google Sheet.
+### Copy from our example spreadsheet
+
+The easiest way to get started with the plugin is to use our Google Sheets link to make a copy of our example spreadsheet in your own Google Apps account.
+
+[:material-web: Link to copy our example spreadsheet](https://docs.google.com/spreadsheets/d/10hp3i6Ac948yiv2ibci2ncccllcXctuOaZMHTR9elII/copy)
+
+### Copy and paste the code from our GitHub repository
+
+Alternatively, you can copy-paste the [JavaScript code in this file](https://github.com/rcpch/digital-growth-charts-google-sheets-plugin/blob/main/rcpchgrowth.js) into the Google Apps Script IDE, which will enable the functions inside your Google Sheet.
 
 The following are step-by-step instructions of how to do this.
 
@@ -70,17 +78,19 @@ UK_WHO_SDS_CENTILE (
 ```
 
 !!! info "Note on data types"
-    The *(datatypes)* for the arguments relate to Google Sheets data types. In practice, this just means entering the values into cells, and Google Sheets should automatically convert to the appropriate type. An error message will display if incorrect data types are used.
+    The data types for the arguments relate to Google Sheets data types. In practice, this just means entering the values into cells, and Google Sheets should automatically convert to the appropriate type. An error message will display if incorrect data types are used.
 
-- **`birth_date` *(datetime)*:  the child's birth date (DD-MM-YYYY format)**
-- **`observation_date` *(datetime)*:  the date when the observation was taken (DD-MM-YYYY format)**
-- **`gestation_weeks` *(integer)*:  the child's number of gestational weeks**
-- **`gestation_days` *(integer)*:  the child's number of gestational days**
-- **`sex` *(string)*:  the child's sex; must be one of `male`, `female`**
-- **`measurement_method` *(string)*:  the measurement method used; must be one of `height`,`weight`,`ofc`, `bmi`**
-- **`observation_value` *(number)*:  the measured value of the chosen observation**
-- `data_to_return` *(string)* *OPTIONAL*:  specifies the desired calculations to return; default `both` (used if no value specified) returns in the following order: chronological SDS -> corrected SDS -> chronological centile -> corrected centile; must be one of `both`, `centiles`, `sds`
-- **`primary_api_key` *(string)*:  your `primary_api_key`. Please see [Getting Started integrating Digital Growth Charts](../integrator/getting-started.md) for details on acquiring your API key**
+| <div style="width: 200px"> Parameter name </div> | Details                                                                                                                                                                                                                                                                     |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `birth_date`                                     | _(datetime)_: the child's birth date (DD-MM-YYYY format)                                                                                                                                                                                                                    |
+| `observation_date`                               | _(datetime)_: the date when the observation was taken (DD-MM-YYYY format)                                                                                                                                                                                                   |
+| `gestation_weeks`                                | _(integer)_: the child's number of gestational weeks                                                                                                                                                                                                                        |
+| `gestation_days`                                 | _(integer)_: the child's number of gestational days                                                                                                                                                                                                                         |
+| `sex`                                            | _(string)_: the child's sex; must be one of `male`, `female`                                                                                                                                                                                                                |
+| `measurement_method`                             | _(string)_: the measurement method used; must be one of `height`,`weight`,`ofc`, `bmi`                                                                                                                                                                                      |
+| `observation_value`                              | _(number)_: the measured value of the chosen observation                                                                                                                                                                                                                    |
+| `data_to_return`                                 | _(string)_ _OPTIONAL_: specifies the desired calculations to return; default `both` (used if no value specified) returns in the following order: chronological SDS -> corrected SDS -> chronological centile -> corrected centile; must be one of `both`, `centiles`, `sds` |
+| `primary_api_key`                                | _(string)_: your `primary_api_key`. Please see [Getting Started integrating Digital Growth Charts](../integrator/getting-started.md) for details on acquiring your API key                                                                                                  |
 
 #### Output
 
@@ -117,25 +127,25 @@ UK_WHO_CORRECTED_DECIMAL_AGE (
 ```
 
 !!! info "Note on data types"
-    The *(datatypes)* for the arguments relate to Google Sheets data types. In practice, this just means entering the values into cells, and Google Sheets should automatically convert to the appropriate type. An error message will display if incorrect data types are used.
+    The data types for the arguments relate to Google Sheets data types. In practice, this just means entering the values into cells, and Google Sheets should automatically convert to the appropriate type. An error message will display if incorrect data types are used.
 
-- **`birth_date` *(datetime)*:  the child's birth date (DD-MM-YYYY format)**
-- **`observation_date` *(datetime)*:  the date when the observation was taken (DD-MM-YYYY format)**
-- **`gestation_weeks` *(integer)*:  the child's number of gestational weeks**
-- **`gestation_days` *(integer)*:  the child's number of gestational days**
-- **`sex` *(string)*:  the child's sex; must be one of `male`, `female`**
-- **`measurement_method` *(string)*:  the measurement method used; must be one of `height`,`weight`,`ofc`, `bmi`**
-- **`observation_value` *(number)*:  the measured value of the chosen observation**
-- `data_to_return` *(string)* *OPTIONAL*:  specifies the desired calculations to return; default `both` (used if no value specified) returns in the following order: chronological SDS -> corrected SDS -> chronological centile -> corrected centile; must be one of `both`, `centiles`, `sds`
-- **`primary_api_key` *(string)*:  your `primary_api_key`. Please see [Getting Started integrating Digital Growth Charts](../integrator/getting-started.md) for details on acquiring your API key**
+#### Input parameters
+
+| <div style="width: 200px"> Parameter name </div> | Details                                                                                                                                                                                                                                                                     |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `birth_date` | _(datetime)_: the child's birth date (DD-MM-YYYY format) |
+| `observation_date` | _(datetime)_: the date when the observation was taken (DD-MM-YYYY format) |
+| `gestation_weeks` | _(integer)_: the child's number of gestational weeks |
+| `gestation_days` | _(integer)_: the child's number of gestational days |
+| `sex` | _(string)_: the child's sex; must be one of `male`, `female` |
+| `measurement_method` | _(string)_: the measurement method used; must be one of `height`,`weight`,`ofc`, `bmi` |
+| `observation_value` | _(number)_: the measured value of the chosen observation |
+| `data_to_return` | _(string)_ _OPTIONAL_: specifies the desired calculations to return; default `both` (used if no value specified) returns in the following order: chronological SDS -> corrected SDS -> chronological centile -> corrected centile; must be one of `both`, `centiles`, `sds` |
+| `primary_api_key` | _(string)_: your `primary_api_key`. Please see [Getting Started integrating Digital Growth Charts](../integrator/getting-started.md) for details on acquiring your API key |
 
 #### Output
 
-If `both` specified, returns:
-
-```shell
-Chronological age, corrected age
-```
+If `both` specified, returns `chronological age` and `corrected age`.
 
 #### Example
 
