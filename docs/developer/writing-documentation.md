@@ -25,10 +25,11 @@ Any changes to the `live` branch of the documentation repository trigger a [GitH
 
 This occurs whether changes are made using online or local, offline editing methods.
 
-If you don't want changes to go live right away, use another branch such as `prerelease`, or any other branch name of your choosing. This will *not* trigger updates to `live`.
+!!! note "GitHub Branch Protection"
 
-!!! note GitHub Branch Protection
-    In the near future, we will apply GitHub branch protection to `live` so that changes cannot be made directly there but **must** be made through an intermediate branch, and then Pull Requested into `live`.
+    Ensure you make Pull Requests to `prerelease`, or any other branch name of your choosing, but not `live`.
+
+    We have enabled GitHub branch protection to `live` so changes cannot be made directly there but **must** be made through an intermediate branch, and then Pull Requested into `live`.
 
 ### Online editing of the Markdown
 
