@@ -53,7 +53,9 @@ Create a virtualenv for the Python modules:
 pyenv virtualenv 3.10.2 mkdocs
 ```
 
-Install Material for MKDocs and other dependencies:
+!!! info "MkDocs **Insiders** Edition"
+
+    This project uses Material for MkDocs **Insiders** Edition. To install this, you will need a GitHub token which is available (for RCPCH team only) from Marcus Baw (pacharanero). If you have the token, you can manually run the following command to install Insiders. If you can't access the token, see the comments in the `requirements.txt` file.
 
 ```console
 pip install git+https://<INSERT_GH_TOKEN_HERE>@github.com/squidfunk/mkdocs-material-insiders.git
@@ -86,8 +88,9 @@ cd digital-growth-charts-documentation
 
 Install the dependencies.
 
-This project uses Material for MkDocs **Insiders** Edition. To install this you will need a GitHub token which is available (for RCPCH team only)
-from Marcus Baw (pacharanero). If you have the token, you can manually run this command to install Insiders:
+!!! info "MkDocs **Insiders** Edition"
+
+    This project uses Material for MkDocs **Insiders** Edition. To install this, you will need a GitHub token which is available (for RCPCH team only) from Marcus Baw (pacharanero). If you have the token, you can manually run this command to install Insiders:
 
 ```console
 pip install git+https://<INSERT_GH_TOKEN_HERE>@github.com/squidfunk/mkdocs-material-insiders.git
