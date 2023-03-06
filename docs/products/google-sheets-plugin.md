@@ -1,6 +1,6 @@
 ---
 title: dGC Google Sheets Plugin
-reviewers: Dr Marcus Baw
+reviewers: Dr Marcus Baw, Dr Anchit Chandran
 ---
 
 :octicons-mark-github-16: [GitHub Repository](https://github.com/rcpch/digital-growth-charts-google-sheets-plugin)
