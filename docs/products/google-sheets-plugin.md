@@ -9,7 +9,7 @@ reviewers: Dr Marcus Baw
 
 To make accurate centile calculation accessible to researchers, hobbyists and enthusiasts, a Google Sheets extension has been developed using [Google Apps Script](https://developers.google.com/apps-script/guides/sheets), which makes API calls for up to 1000 data points.
 
-Currently only UK-WHO is supported but Down and Turner syndromes will be added in the future.
+For now, only UK-WHO is supported but Down and Turner syndromes will be added in the future.
 
 ## Installation
 
