@@ -9,6 +9,6 @@ Early in development of the growth charts, our client was simply part of the sam
 
 All information about the deprecated Flask/Python demo client can be found at the repository link below:
 
-:octicons-mark-github-16: [github.com/rcpch/digital-growth-charts-flask-client](https://github.com/rcpch/digital-growth-charts-flask-client)
+[:octicons-mark-github-16: Deprecated Flask Client](https://github.com/rcpch/digital-growth-charts-flask-client)
 
 ![flask-client](../_assets/_images/flask-client.png)

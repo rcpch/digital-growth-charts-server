@@ -11,12 +11,11 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman, Dr Anchit Chandran
 [![Github Stars](https://img.shields.io/github/stars/{{ repository_name }})](https://github.com/{{ repository_name }}/stargazers)
 [![Github Forks](https://img.shields.io/github/forks/{{ repository_name }})](https://github.com/{{ repository_name }}/network/members)
 [![Github Licence](https://img.shields.io/github/license/{{ repository_name }})](https://github.com/{{repository_name }}/blob/live/LICENSE)
-
 [![NPM Publish](https://github.com/rcpch/digital-growth-charts-react-component-library/actions/workflows/main.yml/badge.svg)](https://github.com/rcpch/digital-growth-charts-react-component-library/actions/workflows/main.yml)
 
-:octicons-mark-github-16: [GitHub repository](https://github.com/{{ repository_name }})
+[:octicons-mark-github-16: GitHub repository](https://github.com/{{ repository_name }})
 
-:material-web: [Demo](https://growth.rcpch.ac.uk/)
+[:material-web: Online Demo](https://growth.rcpch.ac.uk/)
 
 ![height-chart-girl-component](../_assets/_images/height-chart-girl-component.png)
 

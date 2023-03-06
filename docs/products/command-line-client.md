@@ -1,11 +1,7 @@
 ---
-title: RCPCHGrowth CLI
+title: RCPCHGrowth CLI Tool
 reviewers: Dr Marcus Baw, Dr Simon Chapman, Dr Anchit Chandran
 ---
-
-# RCPCHGrowth CLI (Command-line Interface) Tool
-
-Partly for our own uses, we've wrapped the [RCPCHGrowth Python package](python-library.md) in a command-line tool, so you can conveniently use the powerful growth functions in `rcpchgrowth-python` in the terminal.
 
 {% set repository_name="rcpch/rcpchgrowth-python-cli" -%}
 
@@ -13,12 +9,13 @@ Partly for our own uses, we've wrapped the [RCPCHGrowth Python package](python-l
 [![Github Stars](https://img.shields.io/github/stars/{{ repository_name }})](https://github.com/{{ repository_name }}/stargazers)
 [![Github Forks](https://img.shields.io/github/forks/{{ repository_name }})](https://github.com/{{ repository_name }}/network/members)
 [![Github Licence](https://img.shields.io/github/license/{{ repository_name }})](https://github.com/{{repository_name }}/blob/live/LICENSE)
-
 [![Upload Python Package](https://github.com/rcpch/rcpchgrowth-python-cli/actions/workflows/python-publish.yml/badge.svg)](https://github.com/rcpch/rcpchgrowth-python-cli/actions/workflows/python-publish.yml)
 
-![command-line-tool](../_assets/_images/command-line-tool.png)
+[:octicons-mark-github-16: GitHub repository](https://github.com/{{ repository_name }})
 
-:octicons-mark-github-16: [GitHub repository](https://github.com/{{ repository_name }})
+Partly for our own uses, we've wrapped the [RCPCHGrowth Python package](python-library.md) in a command-line tool, so you can conveniently use the powerful growth functions in `rcpchgrowth-python` in the terminal.
+
+![command-line-tool](../_assets/_images/command-line-tool.png)
 
 ## Installation
 
