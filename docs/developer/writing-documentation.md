@@ -46,11 +46,11 @@ More experienced coders can `git clone` the repo and make changes offline on the
 Create a virtualenv for the Python modules:
 
 * For info on setting up Pyenv see [Python setup](../developer/api-python.md)
-* Any recent Python version works, we tend to use >3.8
-* Calling it `mkdocs` will enable Pyenv to automatically select it when you navigate to the directory.
+* Any recent Python version works, we tend to use 3.11
+* Calling it `mkdocs-3.11` will enable Pyenv to automatically select it when you navigate to the directory, because this will match the contents of the `.python-version` file in the root of the project.
 
 ```console
-pyenv virtualenv 3.10.2 mkdocs
+pyenv virtualenv 3.11 mkdocs-3.11
 ```
 
 !!! info "MkDocs **Insiders** Edition"
