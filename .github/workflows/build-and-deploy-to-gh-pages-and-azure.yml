@@ -1,6 +1,8 @@
-# This Action builds the documentation site in mkdocs, and pushes it to the gh-pages branch, from where it is deployed
-# GitHub pages is the BACKUP SITE: https://rcpch.github.io/digital-growth-charts-documentation/
-# Azure Static Web Sites is the LIVE site https://growth.rcpch.ac.uk/
+# This Action builds the documentation site in mkdocs
+# and pushes it to Azure from where it is deployed
+# to the LIVE site https://growth.rcpch.ac.uk/
+# 
+# Azure will also build a preview site for any PRs against LIVE or branches
 
 
 name: Azure Static Web Apps CI/CD
@@ -8,11 +10,11 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - main
+      - live
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - main
+      - live
 permissions:
   contents: write
 jobs:
