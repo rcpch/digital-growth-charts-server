@@ -185,7 +185,9 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman, Other Reviewer ...
 
 ## Publishing is automated
 
-When you push new docs up to the `live` branch on the GitHub remote, a [GitHub Action](https://docs.github.com/en/actions/learn-github-actions) will run automatically which build the static site (takes about 30 seconds) and pushes it to the `gh-pages` branch. Therefore, you don't need to do `mkdocs build` or `mkdocs gh-deploy --force` commands manually - it’s done for you.
+When you push new changes to ANY branch of this repo, or it you open a Pull Request, Azure will automatically build a version of the site for review. You need to visit the Azure portal to see the URL of the deployment, as it depends on the branch name.
+
+Therefore, you don't need to do `mkdocs build` or `mkdocs gh-deploy --force` commands manually or locally - it’s done for you if you push to branches or PRs on GitHub.
 
 ## Plugins
 
