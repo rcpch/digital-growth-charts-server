@@ -5,7 +5,7 @@
 # Azure will also build a preview site for any PRs against LIVE or branches
 
 
-name: Azure Static Web Apps CI/CD
+name: ALL-BRANCHES-ALL-PRs-build-and-deploy-to-azure.yml
 
 on:
   push:
