@@ -4,7 +4,6 @@
 # 
 # Azure will also build a preview site for any PRs against LIVE or branches
 
-
 name: ALL-BRANCHES-ALL-PRs-build-and-deploy-to-azure.yml
 
 on:
