@@ -16,12 +16,12 @@ jobs:
       ENABLE_PDF_EXPORT: True # Makes PDF export an option, default disabled, when building locally
       ENABLE_GIT_COMMITTERS: True # Makes git-committers an option, default disabled, when building locally
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: 'live'
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
-          python-version: 3.x
+          python-version: '3.11'
       - run: pip install git+https://${{ secrets.MATERIAL_FOR_MKDOCS_ACCESS_TOKEN }}@github.com/squidfunk/mkdocs-material-insiders.git
       - run: pip install -r requirements.txt
       - run: mkdocs gh-deploy --force # Output files are force-pushed to gh-pages branch

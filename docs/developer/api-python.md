@@ -26,21 +26,29 @@ Run all scripts from the root of the project, or they won't work.
 
 Currently, we use Python 3.8.3 for these algorithms.
 
-There are tools available to help you manage multiple different Python versions on the same machine. We use `pyenv` here, however, there are other ways to solve this problem. If you already have a preferred method, you should be able to use that.
+There are different tools available to help you manage multiple different Python versions on the same machine. We use `pyenv` here, however, there are other ways to solve this problem. If you already have a preferred method, you should be able to use that.
 
 #### Managing library / dependencies versions
 
 If you `pip install` every dependency in `requirements.txt` **globally** on your machine, you can encounter problems if you develop other Python applications on the same machine. For example, different projects may need different versions of the same library.
 
-Our solution is to use `pyenv-virtualenv` which is an extension to `pyenv` which helps you to manage separate 'environments' for each Python project you work on. Other solutions are available if preferred.
+Our solutions are:
 
-After installing and setting up `pyenv`, the correct Python version will be automatically selected when you navigate to the directory containing this repository, because of the  `.python-version` file.
+1. If using Mac / Linux, use `pyenv-virtualenv` which is an extension to `pyenv` which helps you to manage separate 'environments' for each Python project you work on.
+2. If using Windows, use `virtualenv`, which is a popular too to create isolated Python environments for Python libraries.
 
-### Installing `pyenv`
+Please see this [StackOverflow post](https://stackoverflow.com/questions/41573587/what-is-the-difference-between-venv-pyvenv-pyenv-virtualenv-virtualenvwrappe) to find out more about the differences.
+
+!!! info "Reason for not using `pyenv` on Windows"
+    `pyenv` does not directly support Windows. There _is_ a [Windows port](https://github.com/pyenv-win/pyenv-win) in development, however, it is simpler to just use `virtualenv` (and also leads to fewer headaches setting up the development environment!).
+
+### Mac/Linux - installing `pyenv`
 
 [pyenv installer](https://github.com/pyenv/pyenv-installer)
 
-### Example setup commands for this repository
+After installing and setting up `pyenv`, the correct Python version will be automatically selected when you navigate to the directory containing this repository, because of the  `.python-version` file.
+
+#### Example setup commands for this repository
 
 `git clone` this repository into a suitable location on your development machine
 
@@ -126,12 +134,77 @@ Now, once ready to install requirements.txt with pip, set one more environment v
 export SYSTEM_VERSION_COMPAT=1
 ```
 
-## Start the API server natively with default settings
+Skip the following Windows section, to [Start the API server natively with default settings](./api-python.md#start-the-api-server-natively-with-default-settings) once complete.
+
+### Windows - installing `virtualenv`
+
+`git clone` this repository into a suitable location on your development machine
+
+```console
+git clone https://github.com/rcpch/digital-growth-charts-server.git
+```
+
+`cd` into the directory
+
+```console
+cd digital-growth-charts-server
+```
+
+First, ensure you update `pip`, then use it to install `virtualenv`
+
+```console
+python.exe -m pip install --upgrade pip
+
+pip install virtualenv
+```
+
+Create a virtual environment called `env` (or any name you want - but make sure to reference the correct name going forwards)
+
+```console
+py -m venv env
+```
+
+Navigate to the `/Scripts` folder
+
+```console
+cd env/Scripts
+```
+
+Run `activate.bat`
+
+```console
+activate.bat
+```
+
+You should then see the name of your virtual environment prepend your prompts e.g.
+
+```console
+(env) C:\Users\...\digital-growth-charts-server\env\Scripts> 
+```
+
+Now, go back to the root directory
+
+```console
+(env) C:\Users\...\digital-growth-charts-server\env\Scripts> cd ..
+(env) C:\Users\...\digital-growth-charts-server\env\> cd ..
+```
+
+And install the dependences e.g.
+
+```console
+(env) C:\Users\...\digital-growth-charts-server> pip install -r requirements/common-requirements.txt
+```
+
+### Start the API server natively with default settings
 
 From the application's root directory, type
 
-```bash
+```bash title="Mac/Linux"
 s/uvicorn-start
+```
+
+```console title="Windows"
+uvicorn main:app --reload
 ```
 
 You should see messages from the uvicorn development server like:
@@ -149,4 +222,4 @@ There may be other messages at the end of the output for other processes which r
 If you need to vary any of the parameters passed, you can either:
 
 1. Modify the start-up script
-2. Manually pass the commands to the shell, using the commands in the start-up script as a guide 
+2. Manually pass the commands to the shell, using the commands in the start-up script as a guide

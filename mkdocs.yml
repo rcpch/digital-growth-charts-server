@@ -97,7 +97,7 @@ theme:
     - navigation.tabs.sticky
     - navigation.top
     - navigation.tracking
-    # - toc.integrate
+    - toc.follow
 
   palette:
     # Light mode ONLY - it's gets too hard to keep dark mode working with a number of iframes in play

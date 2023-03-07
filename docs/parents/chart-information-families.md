@@ -5,7 +5,7 @@ reviewers: Dr Marcus Baw, Dr Anchit Chandran
 
 # Information for Parents
 
-![alt text](../_assets/_images/growthchartstitle.png)
+![RCPCH Growth Chart Logo Text](../_assets/_images/growthchartstitle.png)
 
 ##  What do regular measurements tell us?
 
