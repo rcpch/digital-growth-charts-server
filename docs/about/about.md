@@ -34,6 +34,29 @@ To this base specification, we added bone age, along with Turner and Down syndro
 
 In addition to providing Standard Deviation Scores (SDS) and centiles, it will also provide basic guidance for users on how to interpret the information received.
 
+### API Features
+
+In addition to calculating SDS, centiles and corrected decimal ages against a child's birth date, sex and gestation, the API also offers the following features to users:
+
+- fictional growth data on an individual child: this can be used to test and demonstrate the API
+- the raw data required for constructing the centile lines in a growth chart. This is offered either in the standard 9 centile format, or can generate custom centiles if requested
+- mid-parental height calculation
+
+These features are offered for all 3 growth references - UK-WHO, Down's and Turner's.
+
+### Chart Features
+
+Alongside the API, RCPCH offer a charting component built to receive the results from the API. It has been built to meet the exact standards of the RCPCH Growth Chart committee and includes:
+
+- corrected and chronological age plotting
+- mid-parental height
+- bone age
+- event tracking
+- tool tips for contextual information customisable based on user type
+- zoom in/out
+- life-course view
+- cut/paste
+
 ## Future Scope
 
 We have plans to incorporate other growth references and tools to the platform in the future.
