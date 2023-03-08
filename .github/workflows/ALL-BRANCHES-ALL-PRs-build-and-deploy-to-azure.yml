@@ -4,7 +4,6 @@
 # 
 # Azure will also build a preview site for any PRs against LIVE or branches
 
-
 name: ALL-BRANCHES-ALL-PRs-build-and-deploy-to-azure.yml
 
 on:
@@ -17,6 +16,7 @@ on:
       - live
 permissions:
   contents: write
+  pull-requests: write
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
