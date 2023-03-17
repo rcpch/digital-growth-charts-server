@@ -500,8 +500,9 @@ This section applies to the majority of digital health technology products howev
             href="https://ico.org.uk/media/for-organisations/documents/2553993/dpia-template.docx"><span
               class="underline">sample DPIA template</span></a>.</p>
       </td>
-      <td><strong>The RCPCH used the ICO DPIA Decision Tool to determine if a DPIA was required and the outcome was
-          that a DPIA was NOT required on the basis that personally identifiable data is not handled.</strong></td>
+      <td><strong>The RCPCH used the <a href="https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-protection-regulation-gdpr/accountability-and-governance/data-protection-impact-assessments/">ICO DPIA Checklist</a> to determine if a DPIA was required and the outcome was that a DPIA was NOT required on the basis that personally identifiable data is not handled.<br/>
+      The information submitted does not identify the individual on its own. RCPCH also does not have access to the information nor stores. RCPCH does not use the information to learn, record or decide anything about the data subject. RCPCH is not data controller of this information. The healthcare organization using the tool, as data controller of the data being provided, may be required to undertake a DPIA but this will depend on their own assessment. We have consulted with our Data Protection Officer on all matters of data protection and have their agreement.
+      </strong></td>
     </tr>
     <tr class="odd">
       <td>C2.4</td>
