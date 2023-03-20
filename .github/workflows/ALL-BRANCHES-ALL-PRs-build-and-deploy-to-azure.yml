@@ -27,8 +27,8 @@ jobs:
     name: Build and Deploy to Azure
     steps:
       - uses: actions/checkout@v3
-        fetch-depth: 0
         with:
+          fetch-depth: 0
           submodules: true
       - uses: actions/setup-python@v4
         with:
