@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ENABLE_PDF_EXPORT: 1 # Makes PDF export an option, default disabled, when building locally
-      ENABLE_GIT_COMMITTERS: 1 # Makes git-committers an option, default disabled, when building locally
+      ENABLE_GIT_COMMITTERS: True # Makes git-committers an option, default disabled, when building locally
     name: Build and Deploy to Azure
     steps:
       - uses: actions/checkout@v3
