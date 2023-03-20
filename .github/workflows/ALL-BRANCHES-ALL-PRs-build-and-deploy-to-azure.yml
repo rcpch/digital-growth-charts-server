@@ -22,11 +22,12 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     env:
-      ENABLE_PDF_EXPORT: True # Makes PDF export an option, default disabled, when building locally
-      ENABLE_GIT_COMMITTERS: True # Makes git-committers an option, default disabled, when building locally
+      ENABLE_PDF_EXPORT: 1 # Makes PDF export an option, default disabled, when building locally
+      ENABLE_GIT_COMMITTERS: 1 # Makes git-committers an option, default disabled, when building locally
     name: Build and Deploy to Azure
     steps:
       - uses: actions/checkout@v3
+        fetch-depth: 0
         with:
           submodules: true
       - uses: actions/setup-python@v4
