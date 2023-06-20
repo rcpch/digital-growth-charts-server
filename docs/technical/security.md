@@ -53,7 +53,7 @@ Within these practices are also measures which ensure the deployed code is teste
 
 The RCPCH has been certified as compliant with the requirements of the Cyber Essentials scheme
 
-<object data="../../_assets/_pdfs/rcpch-cyber-essentials-certificate-exp-2023.pdf?#zoom=80&scrollbar=0&toolbar=0&navpanes=0" width="100%" height="650" type="application/pdf">
-  <p>If the PDF cannot be displayed inline here, it is available as a download from <a href="../../_assets/_pdfs/rcpch-cyber-essentials-certificate-exp-2023.pdf">this link</a>
+<object data="../../_assets/_pdfs/rcpch-cyber-essentials-certificate-exp-2024.pdf?#zoom=80&scrollbar=0&toolbar=0&navpanes=0" width="100%" height="650" type="application/pdf">
+  <p>If the PDF cannot be displayed inline here, it is available as a download from <a href="../../_assets/_pdfs/rcpch-cyber-essentials-certificate-exp-2024.pdf">this link</a>
   </p>
 </object>
