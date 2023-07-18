@@ -1,4 +1,4 @@
-site_name: RCPCH Digital Growth Charts Platform 
+site_name: RCPCH Digital Growth Charts
 site_description: Documentation for the RCPCH Digital Growth Charts Platform
 site_author: The Royal College of Paediatrics and Child Health
 # site_url: https://rcpch.github.io/digital-growth-charts-documentation/
@@ -34,7 +34,7 @@ nav:
     - 'integrator/client-specification.md'
     - 'integrator/faqs-for-integrators.md'
     - 'integrator/whos-using-dgc.md'
-  - Clinicians: 
+  - Clinicians:
     - 'clinician/how-the-api-works.md'
     - 'clinician/chart-information-health-staff.md'
     - 'clinician/date-age-calculations.md'
@@ -86,12 +86,12 @@ theme:
   name: material
   custom_dir: rcpch-theme
   features:
-    - content.action.edit # explicitly adds edit button (Material4MkDocs9.0) 
-    - content.action.view # explicitly adds view button (Material4MkDocs9.0) 
+    - content.action.edit # explicitly adds edit button (Material4MkDocs9.0)
+    - content.action.view # explicitly adds view button (Material4MkDocs9.0)
     - content.code.copy
     - content.code.select
     - navigation.expand
-    - navigation.footer # explicitly adds footer prev/next (Material4MkDocs9.0) 
+    - navigation.footer # explicitly adds footer prev/next (Material4MkDocs9.0)
     - navigation.instant
     - navigation.tabs
     - navigation.tabs.sticky
