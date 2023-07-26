@@ -10,11 +10,11 @@ The demonstration React client for the dGC API is built in React and styled with
 
 It's important to understand the three parts of the dGC platform that are in play here:
 
-1. **React client application** - this comprises the left sidebar with the input boxes and UI tools for inputting data such as heights, weights, age, sex, and gestation at birth. When data are entered, the React client sends a HTTP request to the
+1. **React client application** - this comprises the left sidebar with the input boxes and UI tools for inputting data such as heights, weights, age, sex, and gestation at birth. The React client imports the React chart component from NPM, so the chart component is a dependency of the client. When data are entered into the forms and submitted, the React client sends a HTTP request to the:
 
-1. **dGC API server** - which proccesses the data and returns a JSON response containing calculated centile data, corrected gestational ages, etc. This response is received by the React client which passes it direct into the React chart component without any transformation being required
+1. **dGC API server** - which processes the data and returns a JSON response containing calculated centile data, corrected gestational ages, etc. This response is received by the React client which passes it direct into the React chart component without any JSON transformation being required.
 
-1. **React chart component** - this is the right hand side section of the screen in the demo client. The component can be embedded in any web page and it natively 'understands' the JSON response from the API call. Passing an array of JSON API responses to the React chart component will result in all those measurements being plotted for you.
+1. **React chart component** - this is the right hand side two thirds section of the screen in the demo client, containing the chart vector image. The component can be embedded in any web page and it natively 'understands' the JSON response from the API call. Passing an array of JSON API responses to the React chart component will result in all those measurements being plotted for you.
 
 ### Set Up for local development using Docker
 
