@@ -1,7 +1,7 @@
 # This Action builds the documentation site in mkdocs
 # and pushes it to Azure from where it is deployed
 # to the LIVE site https://growth.rcpch.ac.uk/
-# 
+#
 # Azure will also build a preview site for any PRs against LIVE or branches
 
 name: ALL-BRANCHES-ALL-PRs-build-and-deploy-to-azure.yml
@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # required for git-revision and git-committers plugins to work properly in CI
           submodules: true
       - uses: actions/setup-python@v4
         with:
@@ -63,5 +63,5 @@ jobs:
           action: "close"
 
 
-      
+
 
