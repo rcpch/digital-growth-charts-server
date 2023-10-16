@@ -18,6 +18,11 @@ It's important to understand the three parts of the dGC platform that are in pla
 
 ### Set Up for local development using Docker
 
+1. Enter into your Code Projects directory
+```console
+cd YourCodeProjects
+```
+
 1. Clone the React Client repo
 ```console
 git clone https://github.com/rcpch/digital-growth-charts-react-client.git
