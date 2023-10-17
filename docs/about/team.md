@@ -1,6 +1,7 @@
 ---
 title: dGC Team
 reviewers: Dr Marcus Baw, Prof Tim Cole, Dr Anchit Chandran
+audience: clinicians, health-staff
 ---
 
 # Digital Growth Charts Team Members
@@ -45,4 +46,5 @@ The development team was drawn from RCPCH internal staff, RCPCH members with sof
 - **Dr Anchit Chandran**, Doctor and Software Developer, London.
 - **Dr Simon Chapman**, Consultant in Paediatric Endocrinology, King's College Hospital, London.
 - **Prof Tim Cole**, Professor of Medical Statistics, Population, Policy & Practice Department, UCL GOS Institute of Child Health, London.
+- **Danny Cowen**, Medical Student, Imperial College London.
 - **Dr Charles van Lennep**, Paediatrician in Training, London.
