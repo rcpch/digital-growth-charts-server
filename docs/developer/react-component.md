@@ -141,6 +141,8 @@ The `Measurement` interface is structured to reflect the JSON `Measurement` obje
 !!! tip
     **You simply need to pass JSON from the dGC API directly in to the component asan array of `Measurement` JSON objects. The component 'knows' how to render this correctly. You don't need to parse, restructure, or even understand the JSON returned from the API: just pass it directly to the component inside an array containing one or more `Measurement` objects.**
 
+## Styling
+
 The styling components allow the user to customise elements of the chart. Chart styles control the chart and the tooltips.
 
 !!! note "Styling options available through `ChartStyle`"
@@ -165,8 +167,6 @@ The styling components allow the user to customise elements of the chart. Chart 
         toggleButtonTextColour: string
     }
     ```
-
-## Styling
 
 Note for the tooltips and infobox text sizes, these are strokeWidths, not point sizes as the text here is SVG.
 
