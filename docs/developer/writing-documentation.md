@@ -1,6 +1,7 @@
 ---
 title: Writing Documentation
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
+audience: developers
 ---
 
 # Writing dGC Documentation
@@ -136,12 +137,12 @@ You should always build the site at least once with both PDF export and Git Comm
     Because of the way we have set up the left sidebar navigation, new pages are **not** automatically added to the navigation.
 
     (This allows us to have pages which are work-in-progress, available on the live site for review, but not in the navigation, hence only those who have the link would easily find it)
-    
+
     See the next section for how to add pages to the navigation.
 
 ### Adding navigation for the page
 
-Add navigation by editing the `nav:` tree element in `mkdocs.yml`. Below is an excerpt from the `nav:` in this project. You can see how the top level Navbar headings `Home` and About `are` defined, and how the sidebar headings work. You can nest several levels deep, if needed. 
+Add navigation by editing the `nav:` tree element in `mkdocs.yml`. Below is an excerpt from the `nav:` in this project. You can see how the top level Navbar headings `Home` and About `are` defined, and how the sidebar headings work. You can nest several levels deep, if needed.
 
 ``` yaml
 nav:

@@ -48,6 +48,7 @@ nav:
     - 'developer/api-python.md'
     - 'developer/api-docker.md'
     - 'developer/api-testing.md'
+    - 'developer/react-component.md'
     - 'developer/react-client.md'
     - 'developer/rcpchgrowth.md'
     - 'developer/rcpchgrowth-cli.md'

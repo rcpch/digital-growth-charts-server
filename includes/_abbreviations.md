@@ -5,6 +5,7 @@
 *[AGPL]: Affero GNU Public License
 *[API]: Application Programming Interface
 *[BMI]: Body Mass Index, a measure of weight taking into account height
+*[CE]: Conformité Européenne
 *[CLI]: Command Line Interface
 *[CRMF]: Clinical Risk Management File
 *[CRMP]: Clinical Risk Management Plan

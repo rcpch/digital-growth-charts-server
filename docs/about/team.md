@@ -1,6 +1,7 @@
 ---
 title: dGC Team
 reviewers: Dr Marcus Baw, Prof Tim Cole, Dr Anchit Chandran
+audience: clinicians, health-staff
 ---
 
 # Digital Growth Charts Team Members
@@ -26,15 +27,16 @@ RCPCH internal project staff provided invaluable support from project concept, t
 - **Jo Ball**, Design and Brand Manager, Content and Brand Team, RCPCH.
 - **Richard Burley**, Chief Digital Officer, RCPCH.
 - **Alex Brown**, Head of Commercial and Corporate Partnerships, RCPCH.
-- **Joanne Hatton**, Enterprise Systems Manager, RCPCH, London.
+- **Susan Hansford**, , Digital Product Manager, RCPCH.
+- **Joanne Hatton**, Enterprise Systems Manager, RCPCH.
 - **Jonathan Miall**, Director of Membership and Development, (now ret'd from RCPCH).
 - **Rachel McKeown**, Policy Lead & Project Manager, RCPCH (now left RCPCH).
 - **Kirsten Olson**, Website Content Manager, Content and Brand Team, RCPCH.
 - **Vicki Osmond**, Health Policy Assistant, RCPCH.
-- **Andrew Palmer**, Head of Information Systems, RCPCH, London (now left RCPCH).
+- **Andrew Palmer**, Head of Information Systems, RCPCH (now left RCPCH).
 - **Adele Picken**, Data Protection Officer, RCPCH
-- **Olly Rice**, Infrastructure and Operations Manager, RCPCH, London.
-- **Magdalena Umerska**, Digital Product Manager, RCPCH.
+- **Olly Rice**, Infrastructure and Operations Manager, RCPCH.
+- **Magdalena Umerska**, Digital Product Manager, RCPCH (now left RCPCH).
 
 ## Development Team
 
@@ -45,4 +47,5 @@ The development team was drawn from RCPCH internal staff, RCPCH members with sof
 - **Dr Anchit Chandran**, Doctor and Software Developer, London.
 - **Dr Simon Chapman**, Consultant in Paediatric Endocrinology, King's College Hospital, London.
 - **Prof Tim Cole**, Professor of Medical Statistics, Population, Policy & Practice Department, UCL GOS Institute of Child Health, London.
+- **Danny Cowen**, Medical Student, Imperial College London.
 - **Dr Charles van Lennep**, Paediatrician in Training, London.

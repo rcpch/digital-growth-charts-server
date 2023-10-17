@@ -1,6 +1,7 @@
 ---
 title: How the API Works
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
+audience: clinicians, health-staff, statisticians
 ---
 # How the API Works
 

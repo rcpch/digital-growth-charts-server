@@ -1,6 +1,7 @@
 ---
 title: Getting Started
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
+audience: integrators, implementers, technical-architects
 ---
 # Getting Started integrating Digital Growth Charts
 

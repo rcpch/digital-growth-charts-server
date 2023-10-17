@@ -1,6 +1,7 @@
 ---
 title: Contributing
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
+audience: developers
 ---
 
 ## Contributing
@@ -10,15 +11,15 @@ We're a friendly bunch, and happy to chat. You can get in touch with the primary
 ### How to contribute
 
 - Fork the repository to your own GitHub account.
-  
+
 - Set up your development environment (ideally using our instructions [here](api-python.md) for maximum compatibility with our own development environments).
-  
+
 - Ideally, you should discuss the proposed change with our team, because we can only accept pull requests with an accepted need for a new feature or fix.
-  
+
 - We can discuss with you our recommendations for implementation of the new feature, for maximum potential 'mergeability' of your PR.
-  
+
 - Once you are ready to show us your work, create a pull request on our repo, detailing what the change is and details about the fix or feature. PRs that affect the calculations or any other 'mission critical' part of the code will need suitable tests which we can run.
-  
+
 - We will endeavour to review and merge in a reasonable time frame, but will usually not merge straight into `master`, rather we will merge into an upcoming release branch.
 
 ### Coding style
@@ -27,7 +28,7 @@ We are not Python experts, but encourage use of Python best practices where poss
 
 Some helpful sources of information on Python style are:
 
-- <https://www.python.org/dev/peps/pep-0008>  
+- <https://www.python.org/dev/peps/pep-0008>
 - <https://google.github.io/styleguide/pyguide.html>
 
 ## Intellectual Property (IP) of contributions

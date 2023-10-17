@@ -1,6 +1,7 @@
 ---
 title: Google Sheets Plugin
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
+audience: developers, implementers, integrators, researchers, academics
 ---
 
 [:octicons-mark-github-16: GitHub Repository](https://github.com/rcpch/digital-growth-charts-google-sheets-plugin)

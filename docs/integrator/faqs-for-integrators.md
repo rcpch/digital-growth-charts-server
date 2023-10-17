@@ -1,6 +1,7 @@
 ---
 title: FAQs for Integrators
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
+audience: integrators, implementers, technical-architects
 ---
 
 # FAQs for Integrators
@@ -44,7 +45,7 @@ Producing a visual ‘growth chart’ with this data is a little more involved, 
 
 We are keen to build a ‘catalogue’ of chart clients, so other open-source clients are very welcome. We will also help you build and test them!
 
-## Q: Is corrected gestational age passed back by the API, or do implementers have to calculate it?  
+## Q: Is corrected gestational age passed back by the API, or do implementers have to calculate it?
 
 **A**: Yes, corrected age is passed back by the API, if a gestational age is included in the request.
 
@@ -60,7 +61,7 @@ This correction is applied up to the corrected age of 1 year for preterm childre
 
 **A**: Yes, we have included one in our source code: [Validation Constants](https://github.com/rcpch/rcpchgrowth-python/blob/live/rcpchgrowth/constants/validation_constants.py). This is used internally to validate API inputs, as well as by the internal `rcpchgrowth` Python module to validate inputs to the `Measurement` class.
 
-## Q: Would it be good enough to plot the returned centile values on a pre-prepared **image** of a growth chart?  
+## Q: Would it be good enough to plot the returned centile values on a pre-prepared **image** of a growth chart?
 
 **A**: Maybe. It would depend on the implementation.
 

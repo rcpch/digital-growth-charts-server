@@ -1,6 +1,7 @@
 ---
 title: Python development
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
+audience: developers
 ---
 
 # Running locally with Python
@@ -179,7 +180,7 @@ activate.bat
 You should then see the name of your virtual environment prepend your prompts e.g.
 
 ```console
-(env) C:\Users\...\digital-growth-charts-server\env\Scripts> 
+(env) C:\Users\...\digital-growth-charts-server\env\Scripts>
 ```
 
 Now, go back to the root directory

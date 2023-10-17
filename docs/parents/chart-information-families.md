@@ -1,6 +1,7 @@
 ---
 title: Information for Parents
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
+audience: parents, carers, families
 ---
 
 # Information for Parents
@@ -49,3 +50,5 @@ After 2 years of age, height is measured, standing up with shoes removed. It is 
 From age 4 years, your child’s Body Mass Index (BMI) can be calculated from a measure of both weight and height. This measures how much weight your child is carrying, allowing for their height. It is calculated by dividing their weight (in kilograms) by their height (in metres), squared. The cut-off for a high BMI varies with age, but if a child’s BMI is above the cut-off, this generally suggests that they are overweight. A child with a low BMI is more likely to have a lean build rather than too little fat. Your GP or other health professional caring for your child will be able to discuss your child’s BMI with you.
 
 The NHS has a website which can calculate Body Mass Index <https://www.nhs.uk/live-well/healthy-weight/bmi-calculator/> for children over 2 years of age.
+
+<!-- # TODO: #92 Update NHS.UK cBMI Calculator link -->
