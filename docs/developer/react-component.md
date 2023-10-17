@@ -8,63 +8,31 @@ audience: developers
 
 {% set repository_name="rcpch/digital-growth-charts-react-component-library" -%}
 
-[![Github Issues](https://img.shields.io/github/issues/{{ repository_name }})](<https://github.com/{{> repository_name }}/issues)
-[![Github Stars](https://img.shields.io/github/stars/{{ repository_name }})](<https://github.com/{{> repository_name }}/stargazers)
-[![Github Forks](https://img.shields.io/github/forks/{{ repository_name }})](<https://github.com/{{> repository_name }}/network/members)
-[![Github Licence](https://img.shields.io/github/license/{{ repository_name }})](<https://github.com/{{repository_name> }}/blob/live/LICENSE)
-[![NPM Publish](https://github.com/rcpch/digital-growth-charts-react-component-library/actions/workflows/main.yml/badge.svg)](https://github.com/rcpch/digital-growth-charts-react-component-library/actions/workflows/main.yml)
+[![Github Issues](https://img.shields.io/github/issues/{{ repository_name }})](https://github.com/{{ repository_name }}/issues)
+[![Github Stars](https://img.shields.io/github/stars/{{ repository_name }})](https://github.com/{{ repository_name }}/stargazers)
+[![Github Forks](https://img.shields.io/github/forks/{{ repository_name }})](https://github.com/{{ repository_name }}/network/members)
+[![Github Licence](https://img.shields.io/github/license/{{ repository_name }})](https://github.com/{{ repository_name }}/blob/live/LICENSE)
+[![NPM Publish](https://github.com/{{ repository_name }}/actions/workflows/main.yml/badge.svg)](https://github.com/{{ repository_name }}/actions/workflows/main.yml)
 
-[:octicons-mark-github-16: GitHub repository](<https://github.com/{{ repository_name }})>
+[:octicons-mark-github-16: GitHub repository](https://github.com/{{ repository_name }})
 
 [:material-web: Online Demo](https://growth.rcpch.ac.uk/)
 
 ![height-chart-girl-component](../_assets/_images/height-chart-girl-component.png)
 
-You can use the component as-is in a React app, or include it in plain HTML or any other JavaScript framework.
+!!! success "Use our Growth Chart React Component"
+    The dGC React Component is the recommended way to display Digital Growth Charts to end users. We have built the component to be easy to integrate into existing web-based views, even if your stack does not currently use React. You can use the component as-is in a React app, or include it in plain HTML or any other JavaScript framework.
 
-## Supported Features
-
-* Corrected/Chronological age with toggle
-* Zoom with zoom reset (optional prop)
-* Event logging - events associated with measurements
-* Bone ages
-* Mid-parental heights with mid-parental centile lines (at +2 and -2 SDS)
-
-### Version 6 new features
-
-* Rework the data structure to match that from API to prevent persisting data in the component in future
-* BMI SDS lines
-* SDS charts
-* Save to clipboard
-
-### New in 6.1
-
-* Dates included in tooltips
-* `clinicianFocus` (optional prop) to toggle between advice strings aimed at clinicians or those aimed at families / children & young people
-* Toggle button to allow user to constrain viewable chart to measurements or view the whole chart
+    Displaying growth charts is a complex task, and we have built the component to make it as easy as possible for developers to display charts correctly. The component is designed to be customisable, so you can change the look and feel to match your app.
 
 ## Background
 
-### Why a Chart library?
+### React.js
 
-In the process of building the API, we realised the difficulty for developers unfamiliar with growth charts to produce one acceptable to clinicians.
-
-For example, charts typically have 9 main centile lines (though there are other formats), each of which can be rendered as a series. However, the UK-WHO chart is made of several growth references, each from different datasets, and it is a stipulation that they must not overlap. This means that for the four datasets which make up UK-WHO, the developer must render 36 separate 'sections' of centile lines, marrying them up correctly.
-
-Even then, there are certain rules which are key, published by the RCPCH project board. These relate to usability of the charts. For example, the 50th centile should be de-emphasised. These and other rules are listed on the [Client Specification](../integrator/client-specification.md).
-
-Given the complexity, we decided to create a React component library for developers to use. We designed it to be customisable for direct use, but also as a demonstration for developers wanting to build the charts from the ground up.
-
-For this reason, we have produced a permissively-licensed, open-source React component, which aims to simplify the process of creating a chart from the chart data received from the API. It makes the job of drawing a vector-graphic centile chart much easier.
-
-If you want to see how the library is implemented, we have built a full client for the RCPCHGrowth API in React, which uses this component library, and can be found [here](https://github.com/rcpch/digital-growth-charts-react-client).
-
-### Why use React?
-
-React is a popular UI library for Javascript. It has endured well and seems like a popular choice for developers. Importantly, unlike some other Javascript frameworks which are primarily designed for Single Page Applications, React doesn't expect to have the entire webpage to itself. It can be used as a small component in any other web page, even if the main framework being used is completely different.
+React is a popular UI library for Javascript. It has endured well and remains a popular choice for developers. Importantly, unlike some other Javascript frameworks which are primarily designed for Single Page Applications, React doesn't expect to have the entire webpage to itself. It can be used as a small component in any other web page, even if the main framework being used is completely different.
 
 !!! question "Tell us what you think"
-    Let us know what you think of our design decisions, on this or any other area of the dGC Project, by chatting to us on our [dGC Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts/) :fontawesome-brands-discourse:.
+    Let us know what you think of our design decisions, on this or any other area of the dGC Project, by chatting to us on our [dGC Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts/) :fontawesome-brands-discourse:, or our RCPCH Community [Signal chat channel :fontawesome-brands-signal:](https://signal.group/#CjQKIAjLf5lS9OZIAI6lsJKWP1LmeJXkUW_fzZH1ryEw3oFEEhBH-4F7WnlyYjKerjfzD6B0)
 
 ### What about other frameworks/UI libraries?
 
@@ -75,13 +43,20 @@ If you need us to develop a charting component in a different language or framew
 
 ## Getting started
 
+`git clone` the repo
 ```console
-npm i --save @rcpch/digital-growth-charts-react-component-library
+git clone https://github.com.rcpch/{{ repository_name }}
 ```
 
-### Circular import errors
+Install dependencies
+```console
+npm install
+```
 
-Victory Charts are a dependency (see below), built on top of D3.js. On build, it is likely you will get an error relating to circular dependencies for some files in the d3-interpolate module. This issue is logged [here](https://github.com/d3/d3-interpolate/issues/58).
+Run Storybook to view the component in isolation
+```console
+npm run storybook
+```
 
 ### Running the Charts Package locally
 
@@ -129,7 +104,7 @@ If the invalid hooks error persists, an alternative method is to add the followi
 
 ## Structure
 
-This library has been written in Typescript. The main component is `RCPCHChart`, which takes the following `props`. Note that each component will only render a single chart type, so if you wanted to render a weight *and* a height chart, these must be done as two separate instances of the component.
+This library has been written in Typescript. The main component is `RCPCHChart`, which takes the following `props`. Note that each component will only render a single chart type, so if you wanted to render a weight *and* a height chart, these must be done as two separate instances of the component. We find that on modern screens you can render two charts side-by-side, but on smaller screens, you may wish to render one chart at a time, perhaps in tabs for height, weight, BMI, head circumference etc, as in our [demo client](https://growth.rcpch.ac.uk/).
 
 ### RCPCHChart component
 
@@ -157,151 +132,18 @@ This library has been written in Typescript. The main component is `RCPCHChart`,
     exportChartCallback: function(svg: any),
     clinicianFocus?: boolean;
     }
-```
+    ```
 
 ### Measurement interface
 
-The `Measurement` interface is structured to reflect the JSON `Measurement` object which is returned by the API. The `RCPCHChart` component uses the `reference` prop to determine which chart to render. So far, 3 references are supported: UK-WHO, Turner Syndrome and Down Syndrome. The reference data for the centiles are included in the library in plottable format in the `chartdata` folder.
+The `Measurement` interface is structured to reflect the JSON `Measurement` object which is returned by the API. The `RCPCHChart` component uses the `reference` prop to determine which chart to render. So far, 3 references are supported: UK-WHO (`uk-who`), Turner Syndrome (`turner`) and Down Syndrome (`trisomy-21`). The reference data for the centiles are included in the library in plottable format in the `chartdata` folder.
 
 !!! tip
-    In practice, this means you get the returned JSON from the dGC API, passing it directly in to the component. The component 'knows' how to render this correctly. You don't need to parse, restructure, or even understand the JSON returned from the API: just pass it directly to the component inside an array containing one `Measurement` object.
-
-The `Measurement` interface structure is:
-
-??? note "`Measurement` object structure"
-    ```js
-    export interface Measurement {
-        birth_data: {
-            birth_date: string;
-            estimated_date_delivery: string;
-            estimated_date_delivery_string: string;
-            gestation_weeks: number;
-            gestation_days: number;
-            sex: 'male' | 'female';
-        };
-        child_observation_value: {
-            measurement_method: 'height' | 'weight' | 'bmi' | 'ofc';
-            observation_value: number;
-            observation_value_error?: string;
-        };
-        measurement_dates: {
-            chronological_calendar_age: string;
-            chronological_decimal_age: number;
-            clinician_decimal_age_comment: string;
-            corrected_calendar_age: string;
-            corrected_decimal_age: number;
-            corrected_gestational_age?: {
-                corrected_gestation_weeks?: number;
-                corrected_gestation_days?: number;
-            };
-            lay_decimal_age_comment: string;
-            observation_date: Date;
-        };
-        measurement_calculated_values: {
-            chronological_centile: number;
-            chronological_centile_band: string;
-            chronological_measurement_error?: string;
-            chronological_sds: number;
-            corrected_centile: number;
-            corrected_centile_band: string;
-            corrected_measurement_error?: string;
-            corrected_sds: number;
-            measurement_method: 'height' | 'weight' | 'bmi' | 'ofc';
-        };
-        plottable_data: {
-            centile_data: {
-                chronological_decimal_age_data: {
-                    age_error?: string;
-                    age_type: 'chronological_age' | 'corrected_age';
-                    calendar_age: string;
-                    centile_band: string;
-                    clinician_comment: string;
-                    lay_comment: string;
-                    observation_error?: string;
-                    observation_value_error?: string;
-                    x: number;
-                    y: number;
-                    b: number;
-                    bone_age_type?: 'greulich-pyle' | 'tanner-whitehouse-ii' | 'tanner-whitehouse-iii' | 'fels' | 'bonexpert';
-                    bone_age_label?: string;
-                    bone_age_centile: number;
-                    bone_age_sds?: number;
-                    events_text?: string[];
-                };
-                corrected_decimal_age_data: {
-                    age_error: null;
-                    age_type: 'chronological_age' | 'corrected_age';
-                    calendar_age: string;
-                    centile_band: string;
-                    clinician_comment: string;
-                    lay_comment: string;
-                    observation_error?: string;
-                    observation_value_error?: string;
-                    x: number;
-                    y: number;
-                    b: number;
-                    bone_age_type?: 'greulich-pyle' | 'tanner-whitehouse-ii' | 'tanner-whitehouse-iii' | 'fels' | 'bonexpert';
-                    bone_age_label?: string;
-                    bone_age_centile: number;
-                    bone_age_sds?: number;
-                    events_text?: string[];
-                };
-            };
-            sds_data: {
-                chronological_decimal_age_data: {
-                    age_error?: string;
-                    age_type: 'chronological_age' | 'corrected_age';
-                    calendar_age: string;
-                    centile_band: string;
-                    clinician_comment: string;
-                    lay_comment: string;
-                    observation_error?: string;
-                    observation_value_error?: string;
-                    x: number;
-                    y: number;
-                    b: number;
-                    bone_age_type?: 'greulich-pyle' | 'tanner-whitehouse-ii' | 'tanner-whitehouse-iii' | 'fels' | 'bonexpert';
-                    bone_age_label?: string;
-                    bone_age_centile: number;
-                    bone_age_sds?: number;
-                    events_text?: string[];
-                };
-                corrected_decimal_age_data: {
-                    age_error?: string;
-                    age_type: 'chronological_age' | 'corrected_age';
-                    calendar_age: string;
-                    centile_band: string;
-                    clinician_comment: string;
-                    lay_comment: string;
-                    observation_error?: string;
-                    observation_value_error?: string;
-                    x: number;
-                    y: number;
-                    b: number;
-                    bone_age_type?: 'greulich-pyle' | 'tanner-whitehouse-ii' | 'tanner-whitehouse-iii' | 'fels' | 'bonexpert';
-                    bone_age_label?: string;
-                    bone_age_centile: number;
-                    bone_age_sds?: number;
-                    events_text?: string[];
-                };
-            };
-        };
-        bone_age: {
-            bone_age?: number;
-            bone_age_type?: 'greulich-pyle' | 'tanner-whitehouse-ii' | 'tanner-whitehouse-iii' | 'fels' | 'bonexpert';
-            bone_age_centile?: number;
-            bone_age_sds?: number;
-            bone_age_text?: string;
-        };
-        events_data: {
-            events_text?: string[];
-        };
-    }
-```
+    **You simply need to pass JSON from the dGC API directly in to the component asan array of `Measurement` JSON objects. The component 'knows' how to render this correctly. You don't need to parse, restructure, or even understand the JSON returned from the API: just pass it directly to the component inside an array containing one or more `Measurement` objects.**
 
 The styling components allow the user to customise elements of the chart. Chart styles control the chart and the tooltips.
 
-??? note "Styling options available through `ChartStyle`"
+!!! note "Styling options available through `ChartStyle`"
     ```js
     interface ChartStyle{
         backgroundColour?: string,
@@ -322,7 +164,9 @@ The styling components allow the user to customise elements of the chart. Chart 
         toggleButtonActiveColour: string
         toggleButtonTextColour: string
     }
-```
+    ```
+
+## Styling
 
 Note for the tooltips and infobox text sizes, these are strokeWidths, not point sizes as the text here is SVG.
 
@@ -335,19 +179,19 @@ Note for the tooltips and infobox text sizes, these are strokeWidths, not point 
         axisLabelTextStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
         tickLabelTextStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
     }
-```
+    ```
 
 ### Gridline Styles
 
 ??? note "Gridline styles allow/hide gridlines and control line width, presence of dashes, colour"
     ```js
     interface GridlineStyle{
-    gridlines?: boolean,
+        gridlines?: boolean,
         stroke?: string,
         strokeWidth?: number,
         dashed?: boolean
     }
-```
+    ```
 
 ### Centile Styles
 
@@ -363,7 +207,7 @@ Note for the tooltips and infobox text sizes, these are strokeWidths, not point 
         midParentalCentileStrokeWidth?: number;
         midParentalAreaFill?: string;
     }
-```
+    ```
 
 ### SDS Styles
 
@@ -378,7 +222,7 @@ SDS styles control the colour and width of the SDS lines. As all measurement met
         ofcStroke?: string;
         bmiStroke?: string;
     }
-```
+    ```
 
 ### Measurement Styles
 
@@ -390,7 +234,7 @@ Measurement styles control the plotted data points: colour, size and shape. Corr
         measurementFill?: string,
         highLightedMeasurementFill?: string;
     }
-```
+    ```
 
 ### Mid-Parental Height
 
@@ -408,7 +252,7 @@ Measurement styles control the plotted data points: colour, size and shape. Corr
         mid_parental_height_lower_value?: number
         mid_parental_height_upper_value?: number
     }
-```
+    ```
 
 This returns a mid-parental height, mid-parental SDS and centile, along with the centile data if the user wishes to plot a mid-parental centile. The structure of the Reference and Centile interfaces is:
 
@@ -468,6 +312,12 @@ Centile data are returned from the RCPCH API in this same structure, though no A
 !!! example "Requests for additional functionality in props"
     In time, more props can be added if users request them. If you have requests, please post issues on our [GitHub](https://github.com/rcpch/digital-growth-charts-react-component-library/issues) or get involved to contribute as below.
 
+## Troubleshooting
+
+### Circular import errors
+
+Victory Charts are a dependency (see below), built on top of D3.js. On build, it is likely you will get an error relating to circular dependencies for some files in the d3-interpolate module. This issue is logged [here](https://github.com/d3/d3-interpolate/issues/58).
+
 ## Contributing
 
 See [Contributing](../developer/contributing.md) for information on how to get involved in the project.
@@ -482,7 +332,7 @@ The charts are built using [Victory Charts](https://formidable.com/open-source/v
 
 ## Licensing
 
-The chart data bundled in the component is subject to copyright and is owned by the RCPCH. If you wish to use this software commercially, please [contact the RCPCH](../about/contact.md) so we can ensure you have the correct license for use.
-
-This chart component software is released under the MIT license.
+This chart component software is is subject to copyright and is owned by the RCPCH, but is released under the MIT license.
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
+There is important chart line rendering data bundled in the component, which subject to copyright and is owned by the RCPCH. It is specifically excluded from the MIT license mentioned above. If you wish to use this software, please [contact the RCPCH](../about/contact.md) so we can ensure you have the correct license for use. Subscribers to the Digital Growth Charts API will automatically be assigned licenses for the chart plotting data.

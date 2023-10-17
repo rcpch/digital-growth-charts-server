@@ -1,7 +1,7 @@
 ---
 title: Date and Age Calculations
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
-audience: clinicians, health-staff
+audience: clinicians, health-staff, statisticians
 ---
 
 # Date and Age Calculations

@@ -21,5 +21,17 @@ this bit is hidden from the published site (but is visible in GH source)
 to add:
 NHSE/X as commissioners
 NHSD - using python package in DAE for Maternity project
-Trusts - Northumberland
+
+## Suppliers
+CleverMed/BadgerNet
+TPP/SystmOne
+
+## Regions
+NHS Wales
+
+## Trusts
+Northumberland
+Cornwall
+Kent
+Forth Valley
 -->

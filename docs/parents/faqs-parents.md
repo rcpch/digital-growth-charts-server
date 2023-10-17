@@ -27,3 +27,7 @@ It is normal for your child’s weight centile drop by up to one centile space (
 ### My baby's head size has risen to the top of the centile chart – should I be worried?
 
 British children have relatively large heads compared to the WHO standard, particularly after the age of 6 months. It's fairly common for the head centile to be at the very top of the chart or even above it. This should only cause concern if the head centile goes on rising after the first few weeks, or if there are other concerning signs or symptoms.
+
+### Why are there only two kinds of chart - 'boys' and 'girls'?
+
+Although some children may identify as a sex which is not the same as the sex they were identified at birth, their growth will still in most cases follow the chart ('boys' or 'girls') which most closely represents their sex assigned at birth. If your child is under the care of a specialist in growth, gender, or hormones, they will be able to advise you on which chart to use.

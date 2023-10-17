@@ -3,15 +3,17 @@ title: Support
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
 audience: integrators, implementers, technical-architects
 ---
+
 # Support
 
 ## Commercial Support
 
 !!! tip "Commercial support"
-    For integration of the API with your software solution, please contact <mailto:commercial@rcpch.ac.uk>.
+    For our integration service, which can provide bespoke support to help you integrate the API with your healthcare software solution, please contact <mailto:commercial@rcpch.ac.uk>.
+
     Please also see our [Pricing](../products/pricing.md) section for more details on the support included with each pricing tier.
 
-We have a number of different user types to support. Depending on your needs and role, please navigate to the appropriate section through the following options:
+To obtain the information you need for the best use of the RCPCH dGC platform depending on your role, please navigate to the appropriate section through the following options:
 
 <div class="grid cards" markdown>
 
