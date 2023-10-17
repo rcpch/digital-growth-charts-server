@@ -1,6 +1,7 @@
 ---
 title: Getting Started
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
+audience: developers
 ---
 
 # Getting Started Developing the Digital Growth Charts project

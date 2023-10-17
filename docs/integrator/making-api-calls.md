@@ -1,6 +1,7 @@
 ---
 title: Making API Calls
 reviewers: Dr Marcus Baw, Dr Simon Chapman
+audience: integrators, implementers, technical-architects
 ---
 
 # Making calls to the Digital Growth Charts API

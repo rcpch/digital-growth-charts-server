@@ -1,6 +1,7 @@
 ---
 title: Who's using the dGC Platform?
 reviewers: Dr Marcus Baw, Dr Simon Chapman, Dr Anchit Chandran
+audience: integrators, implementers, technical-architects
 ---
 
 # Who's using the dGC Platform?

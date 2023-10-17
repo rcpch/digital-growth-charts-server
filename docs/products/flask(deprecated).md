@@ -3,7 +3,7 @@ title: Flask/Python Client (deprecated)
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
 ---
 
-# Flask/Python (deprecated)
+# Flask/Python ( :warning: deprecated)
 
 Early in development of the growth charts, our client was simply part of the same Flask app, which later became the API. At that point, it was necessary to separate the two apps functionally for the client to use the API over REST.
 

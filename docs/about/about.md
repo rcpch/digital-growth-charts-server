@@ -1,7 +1,7 @@
 ---
 title: About the dGC
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
-published: true
+audience: all
 ---
 
 # About the UK RCPCH Growth Chart API Project

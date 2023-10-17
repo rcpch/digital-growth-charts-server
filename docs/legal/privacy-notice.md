@@ -1,5 +1,7 @@
 ---
+title: Privacy Notice
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
+audience: caldicott-guardians, implementers, developers
 ---
 
 # Privacy Notice
@@ -18,7 +20,7 @@ Information will be stored with third-party suppliers who are acting on our beha
 
 We will only retain your information for as long as necessary to fulfil our contract with you. If you decide to end your subscription with us, we will retain your account details for two years after the end of your subscription and then delete your data.
 
-The RCPCH Digital Growth Chart API is stateless, meaning it does not persist any data about the measurements sent to it. This is a crucial part of the API’s privacy design and has enabled us to keep the API development simple and constrained to solving the specific problem of centile/SDS calculations.
+The RCPCH Digital Growth Chart API is stateless, meaning it does not persist **any** data about the measurements sent to it. This is a crucial part of the API’s privacy design and has enabled us to keep the API development simple and constrained to solving the specific problem of providing centile/SDS calculations as a service.
 
 It is the responsibility of the consuming application to store the measurements. This is the logical place to store data about the child since this consuming application will already have other stored data about the child within it, such as demographics.
 
@@ -70,7 +72,7 @@ If you make a request, we have one month to respond to you.
     Please note, when mailing inquiries, you must mark your letters for ‘DataRep’ and not ‘RCPCH’, or your inquiry will not reach them. Please refer clearly to RCPCH in your correspondence. On receiving your correspondence, RCPCH is likely to request evidence of your identity, to ensure your personal data and information connected with it is not provided to anyone other than you.
 
     If you have any concerns over how DataRep will handle the personal data they will require to undertake for their services, please refer to their privacy notice.
-    
+
     For general enquiries about RCPCH and its data processing contact: <information.governance@rcpch.ac.uk>
 
 ## How to make a complaint

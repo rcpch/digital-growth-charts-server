@@ -1,6 +1,7 @@
 ---
 title: Client Specification
 reviewers: Dr Marcus Baw, Dr Simon Chapman, Dr Anchit Chandran
+audience: integrators, implementers, technical-architects
 ---
 
 In this document, we have collated the exact specification mandated by the Digital Growth Charts Project Board for Digital Growth Charts. Much of the specification is inherited from the preceding paper growth charts, so clinicians have immediate familiarity using the digital version.
@@ -74,7 +75,7 @@ Along with the centile data, the growth data (presented to the endpoint in the r
 
 - Chart labelling: axes must be labelled appropriately with the correct intervals. Below 42 weeks gestation, the x-axis should reflect gestation. Beyond 42 weeks to 2 years, weeks and months should be shown. Above 2 years, months and years should be shown. Above 4 years, yearly and 6-monthly intervals are shown. On the y-axis, measurement units should be used, with scope of the chart showing only the measurements, not the whole chart.
 
-- Provide help and information facility to access instructions drawn from the RCPCH educational materials (see separate documents: [information for parents](../clinician/chart-information-families.md), [information for health staff](../clinician/chart-information-health-staff.md)).
+- Provide help and information facility to access instructions drawn from the RCPCH educational materials (see separate documents: [information for parents](../parents/chart-information-families.md), [information for health staff](../clinician/chart-information-health-staff.md)).
 
 ### When plotting centile charts
 
