@@ -32,7 +32,7 @@ audience: developers
 React is a popular UI library for Javascript. It has endured well and remains a popular choice for developers. Importantly, unlike some other Javascript frameworks which are primarily designed for Single Page Applications, React doesn't expect to have the entire webpage to itself. It can be used as a small component in any other web page, even if the main framework being used is completely different.
 
 !!! question "Tell us what you think"
-    Let us know what you think of our design decisions, on this or any other area of the dGC Project, by chatting to us on our [dGC Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts/) :fontawesome-brands-discourse:, or our RCPCH Community [Signal chat channel :fontawesome-brands-signal:](https://signal.group/#CjQKIAjLf5lS9OZIAI6lsJKWP1LmeJXkUW_fzZH1ryEw3oFEEhBH-4F7WnlyYjKerjfzD6B0)
+    Let us know what you think of our design decisions, on this or any other area of the dGC Project, by chatting to us on our [dGC Forum :fontawesome-brands-discourse:](https://openhealthhub.org/c/rcpch-digital-growth-charts/), or our RCPCH Community [Signal chat channel :simple-signal:](https://signal.group/#CjQKIAjLf5lS9OZIAI6lsJKWP1LmeJXkUW_fzZH1ryEw3oFEEhBH-4F7WnlyYjKerjfzD6B0)
 
 ### What about other frameworks/UI libraries?
 
