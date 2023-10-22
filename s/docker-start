@@ -3,7 +3,7 @@
 # names the container as below
 app="rcpch-dgc-server"
 
-# usage: `s/start-docker`
+# usage: `s/docker-start`
 # run the container
 # will error if a container already exists
 # `docker container rm rcpch-dgc-server` to remove container
