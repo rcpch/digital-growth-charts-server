@@ -165,7 +165,7 @@ markdown_extensions:
   - pymdownx.snippets:
       check_paths: true
       auto_append:
-        - includes/_abbreviations.md
+        - includes/_abbreviations.md # adds abbreviations snippets to ALL pages
   - pymdownx.superfences
   - toc:
       permalink: false
