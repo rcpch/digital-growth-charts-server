@@ -7,12 +7,17 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # local / rcpch imports
 from rcpchgrowth import chart_functions, constants
 from routers import trisomy_21, turners, uk_who, utilities
 
+class Settings(BaseSettings):
+    """this is a class for use of env files"""
+    model_config = SettingsConfigDict(
+        # `.env.prod` takes priority over `.env.local`. extra~ is for futur use
+        env_file=('.env.local', '.env.prod'), extra='ignore')
 
 version='4.2.18'  # this is set by bump version
 
@@ -117,5 +122,5 @@ def write_apispec_to_file():
         file = open(r'openapi.json', 'w')
         file.write(json.dumps(app.openapi(), indent=4))
     file.close()
-        
+
 write_apispec_to_file()
