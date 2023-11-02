@@ -168,8 +168,8 @@ class Sex(BaseModel):
 
 
 class ReferenceCreate(BaseModel):
-    __root__: Dict[str, Sex]
-
+    #__root__: Dict[str, Sex]
+    root: Dict[str, Sex]
     # class Config:
     #     schema_extra = {
     #         "uk90_preterm": {
