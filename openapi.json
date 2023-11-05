@@ -1,5 +1,5 @@
 {
-    "openapi": "3.0.2",
+    "openapi": "3.1.0",
     "info": {
         "title": "RCPCH Digital Growth API",
         "description": "Returns SDS and centiles for child growth measurements using growth references. Currently provides calculations based on the UK-WHO, Turner's Syndrome and Trisomy-21 references.",
@@ -132,11 +132,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "Response Fictional Child Data Uk Who Fictional Child Data Post",
-                                    "type": "array",
                                     "items": {
                                         "$ref": "#/components/schemas/MeasurementObject"
-                                    }
+                                    },
+                                    "type": "array",
+                                    "title": "Response Fictional Child Data Uk Who Fictional Child Data Post"
                                 }
                             }
                         }
@@ -271,11 +271,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "Response Fictional Child Data Turner Fictional Child Data Post",
-                                    "type": "array",
                                     "items": {
                                         "$ref": "#/components/schemas/MeasurementObject"
-                                    }
+                                    },
+                                    "type": "array",
+                                    "title": "Response Fictional Child Data Turner Fictional Child Data Post"
                                 }
                             }
                         }
@@ -410,11 +410,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "Response Fictional Child Data Trisomy 21 Fictional Child Data Post",
-                                    "type": "array",
                                     "items": {
                                         "$ref": "#/components/schemas/MeasurementObject"
-                                    }
+                                    },
+                                    "type": "array",
+                                    "title": "Response Fictional Child Data Trisomy 21 Fictional Child Data Post"
                                 }
                             }
                         }
@@ -498,103 +498,172 @@
     "components": {
         "schemas": {
             "BirthData": {
-                "title": "BirthData",
-                "required": [
-                    "birth_date",
-                    "sex"
-                ],
-                "type": "object",
                 "properties": {
                     "birth_date": {
-                        "title": "Birth Date",
                         "type": "string",
-                        "format": "date"
+                        "format": "date",
+                        "title": "Birth Date"
                     },
                     "gestation_weeks": {
-                        "title": "Gestation Weeks",
-                        "type": "integer"
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Gestation Weeks"
                     },
                     "gestation_days": {
-                        "title": "Gestation Days",
-                        "type": "integer"
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Gestation Days"
                     },
                     "estimated_date_delivery": {
-                        "title": "Estimated Date Delivery",
-                        "type": "string",
-                        "format": "date"
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Estimated Date Delivery"
                     },
                     "estimated_date_delivery_string": {
-                        "title": "Estimated Date Delivery String",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Estimated Date Delivery String"
                     },
                     "sex": {
-                        "title": "Sex",
+                        "type": "string",
                         "enum": [
                             "male",
                             "female"
                         ],
-                        "type": "string"
+                        "title": "Sex"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "birth_date",
+                    "gestation_weeks",
+                    "gestation_days",
+                    "estimated_date_delivery",
+                    "estimated_date_delivery_string",
+                    "sex"
+                ],
+                "title": "BirthData"
             },
             "BoneAge": {
-                "title": "BoneAge",
-                "type": "object",
                 "properties": {
                     "bone_age": {
-                        "title": "Bone Age",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age"
                     },
                     "bone_age_type": {
-                        "title": "Bone Age Type",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age Type"
                     },
                     "bone_age_sds": {
-                        "title": "Bone Age Sds",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age Sds"
                     },
                     "bone_age_centile": {
-                        "title": "Bone Age Centile",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age Centile"
                     },
                     "bone_age_text": {
-                        "title": "Bone Age Text",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age Text"
                     }
-                }
+                },
+                "type": "object",
+                "title": "BoneAge"
             },
             "Centile": {
-                "title": "Centile",
-                "required": [
-                    "sds",
-                    "centile"
-                ],
-                "type": "object",
                 "properties": {
                     "sds": {
-                        "title": "Sds",
-                        "type": "number"
+                        "type": "number",
+                        "title": "Sds"
                     },
                     "centile": {
-                        "title": "Centile",
-                        "type": "number"
+                        "type": "number",
+                        "title": "Centile"
                     },
                     "data": {
-                        "title": "Data",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Data"
-                        }
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/Data"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Data"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "sds",
+                    "centile",
+                    "data"
+                ],
+                "title": "Centile"
             },
             "CentileData": {
-                "title": "CentileData",
-                "required": [
-                    "chronological_decimal_age_data",
-                    "corrected_decimal_age_data"
-                ],
-                "type": "object",
                 "properties": {
                     "chronological_decimal_age_data": {
                         "$ref": "#/components/schemas/ChronologicalDecimalAgeData"
@@ -602,594 +671,1034 @@
                     "corrected_decimal_age_data": {
                         "$ref": "#/components/schemas/CorrectedDecimalAgeData"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "chronological_decimal_age_data",
+                    "corrected_decimal_age_data"
+                ],
+                "title": "CentileData"
             },
             "Centile_Data": {
-                "title": "Centile_Data",
+                "properties": {
+                    "centile_data": {
+                        "items": {
+                            "$ref": "#/components/schemas/ReferenceCreate"
+                        },
+                        "type": "array",
+                        "title": "Centile Data"
+                    }
+                },
+                "type": "object",
                 "required": [
                     "centile_data"
                 ],
-                "type": "object",
-                "properties": {
-                    "centile_data": {
-                        "title": "Centile Data",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/ReferenceCreate"
-                        }
-                    }
-                }
+                "title": "Centile_Data"
             },
             "ChartCoordinateRequest": {
-                "title": "ChartCoordinateRequest",
-                "required": [
-                    "sex",
-                    "measurement_method"
-                ],
-                "type": "object",
                 "properties": {
                     "sex": {
-                        "title": "Sex",
+                        "type": "string",
                         "enum": [
                             "male",
                             "female"
                         ],
-                        "type": "string",
+                        "title": "Sex",
                         "description": "The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted."
                     },
                     "measurement_method": {
-                        "title": "Measurement Method",
+                        "type": "string",
                         "enum": [
                             "height",
                             "weight",
                             "ofc",
                             "bmi"
                         ],
-                        "type": "string",
+                        "title": "Measurement Method",
                         "description": "The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre\u00b2** and occipitofrontal circumference (head circumference, OFC) **in centimetres**."
                     },
                     "is_sds": {
-                        "title": "Is Sds",
                         "type": "boolean",
+                        "title": "Is Sds",
                         "description": "Boolean flag (default False) referring to centile_format. If custom lines requested as SDS, rather than as centiles, set this to True.",
                         "default": false
                     },
                     "centile_format": {
-                        "title": "Centile Format",
                         "anyOf": [
                             {
+                                "type": "string",
                                 "enum": [
                                     "cole-nine-centiles",
                                     "three-percent-centiles"
-                                ],
-                                "type": "string"
+                                ]
                             },
                             {
-                                "type": "array",
                                 "items": {
                                     "type": "number"
-                                }
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
                             }
                         ],
+                        "title": "Centile Format",
                         "description": "Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles'], or accepts a list of floats as a custom centile format e.g. [7/10/20/30/40/50/60/70/80/90/93]. Defaults to cole-nine-centiles",
                         "default": "cole-nine-centiles"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "sex",
+                    "measurement_method"
+                ],
+                "title": "ChartCoordinateRequest"
             },
             "ChildObservationValue": {
-                "title": "ChildObservationValue",
-                "required": [
-                    "measurement_method",
-                    "observation_value"
-                ],
-                "type": "object",
                 "properties": {
                     "measurement_method": {
-                        "title": "Measurement Method",
+                        "type": "string",
                         "enum": [
                             "height",
                             "weight",
                             "ofc",
                             "bmi"
                         ],
-                        "type": "string"
+                        "title": "Measurement Method"
                     },
                     "observation_value": {
-                        "title": "Observation Value",
-                        "type": "number"
+                        "type": "number",
+                        "title": "Observation Value"
                     },
                     "observation_value_error": {
-                        "title": "Observation Value Error",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Observation Value Error"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "measurement_method",
+                    "observation_value",
+                    "observation_value_error"
+                ],
+                "title": "ChildObservationValue"
             },
             "ChronologicalDecimalAgeData": {
-                "title": "ChronologicalDecimalAgeData",
-                "required": [
-                    "age_type",
-                    "lay_comment",
-                    "clinician_comment"
-                ],
-                "type": "object",
                 "properties": {
                     "x": {
-                        "title": "X",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "X"
                     },
                     "y": {
-                        "title": "Y",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Y"
                     },
                     "b": {
-                        "title": "B",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "B"
                     },
                     "centile": {
-                        "title": "Centile",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Centile"
                     },
                     "sds": {
-                        "title": "Sds",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sds"
                     },
                     "bone_age_label": {
-                        "title": "Bone Age Label",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age Label"
                     },
                     "events_text": {
-                        "title": "Events Text",
-                        "type": "array",
-                        "items": {}
+                        "anyOf": [
+                            {
+                                "items": {},
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Events Text"
                     },
                     "bone_age_type": {
-                        "title": "Bone Age Type",
-                        "enum": [
-                            "greulich-pyle",
-                            "tanner-whitehouse-ii",
-                            "tanner-whitehouse-iii",
-                            "fels",
-                            "bonexpert"
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "greulich-pyle",
+                                    "tanner-whitehouse-ii",
+                                    "tanner-whitehouse-iii",
+                                    "fels",
+                                    "bonexpert"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
                         ],
-                        "type": "string"
+                        "title": "Bone Age Type"
                     },
                     "bone_age_sds": {
-                        "title": "Bone Age Sds",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age Sds"
                     },
                     "bone_age_centile": {
-                        "title": "Bone Age Centile",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age Centile"
                     },
                     "observation_error": {
-                        "title": "Observation Error",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Observation Error"
                     },
                     "age_type": {
-                        "title": "Age Type",
+                        "type": "string",
                         "enum": [
                             "chronological_age",
                             "corrected_age"
                         ],
-                        "type": "string"
+                        "title": "Age Type"
                     },
                     "calendar_age": {
-                        "title": "Calendar Age",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Calendar Age"
                     },
                     "lay_comment": {
-                        "title": "Lay Comment",
-                        "type": "string"
+                        "type": "string",
+                        "title": "Lay Comment"
                     },
                     "clinician_comment": {
-                        "title": "Clinician Comment",
-                        "type": "string"
+                        "type": "string",
+                        "title": "Clinician Comment"
                     },
                     "age_error": {
-                        "title": "Age Error",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Age Error"
                     },
                     "centile_band": {
-                        "title": "Centile Band",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Centile Band"
                     },
                     "observation_value_error": {
-                        "title": "Observation Value Error",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Observation Value Error"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "x",
+                    "y",
+                    "centile",
+                    "sds",
+                    "bone_age_type",
+                    "observation_error",
+                    "age_type",
+                    "calendar_age",
+                    "lay_comment",
+                    "clinician_comment",
+                    "age_error",
+                    "centile_band",
+                    "observation_value_error"
+                ],
+                "title": "ChronologicalDecimalAgeData"
             },
             "Comments": {
-                "title": "Comments",
+                "properties": {
+                    "clinician_corrected_decimal_age_comment": {
+                        "type": "string",
+                        "title": "Clinician Corrected Decimal Age Comment"
+                    },
+                    "lay_corrected_decimal_age_comment": {
+                        "type": "string",
+                        "title": "Lay Corrected Decimal Age Comment"
+                    },
+                    "clinician_chronological_decimal_age_comment": {
+                        "type": "string",
+                        "title": "Clinician Chronological Decimal Age Comment"
+                    },
+                    "lay_chronological_decimal_age_comment": {
+                        "type": "string",
+                        "title": "Lay Chronological Decimal Age Comment"
+                    }
+                },
+                "type": "object",
                 "required": [
                     "clinician_corrected_decimal_age_comment",
                     "lay_corrected_decimal_age_comment",
                     "clinician_chronological_decimal_age_comment",
                     "lay_chronological_decimal_age_comment"
                 ],
-                "type": "object",
-                "properties": {
-                    "clinician_corrected_decimal_age_comment": {
-                        "title": "Clinician Corrected Decimal Age Comment",
-                        "type": "string"
-                    },
-                    "lay_corrected_decimal_age_comment": {
-                        "title": "Lay Corrected Decimal Age Comment",
-                        "type": "string"
-                    },
-                    "clinician_chronological_decimal_age_comment": {
-                        "title": "Clinician Chronological Decimal Age Comment",
-                        "type": "string"
-                    },
-                    "lay_chronological_decimal_age_comment": {
-                        "title": "Lay Chronological Decimal Age Comment",
-                        "type": "string"
-                    }
-                }
+                "title": "Comments"
             },
             "CorrectedDecimalAgeData": {
-                "title": "CorrectedDecimalAgeData",
-                "required": [
-                    "age_type",
-                    "lay_comment",
-                    "clinician_comment"
-                ],
-                "type": "object",
                 "properties": {
                     "x": {
-                        "title": "X",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "X"
                     },
                     "y": {
-                        "title": "Y",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Y"
                     },
                     "b": {
-                        "title": "B",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "B"
                     },
                     "centile": {
-                        "title": "Centile",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Centile"
                     },
                     "sds": {
-                        "title": "Sds",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sds"
                     },
                     "bone_age_label": {
-                        "title": "Bone Age Label",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age Label"
                     },
                     "events_text": {
-                        "title": "Events Text",
-                        "type": "array",
-                        "items": {}
+                        "anyOf": [
+                            {
+                                "items": {},
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Events Text"
                     },
                     "bone_age_type": {
-                        "title": "Bone Age Type",
-                        "enum": [
-                            "greulich-pyle",
-                            "tanner-whitehouse-ii",
-                            "tanner-whitehouse-iii",
-                            "fels",
-                            "bonexpert"
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "greulich-pyle",
+                                    "tanner-whitehouse-ii",
+                                    "tanner-whitehouse-iii",
+                                    "fels",
+                                    "bonexpert"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
                         ],
-                        "type": "string"
+                        "title": "Bone Age Type"
                     },
                     "bone_age_sds": {
-                        "title": "Bone Age Sds",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age Sds"
                     },
                     "bone_age_centile": {
-                        "title": "Bone Age Centile",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age Centile"
                     },
                     "observation_error": {
-                        "title": "Observation Error",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Observation Error"
                     },
                     "age_type": {
-                        "title": "Age Type",
+                        "type": "string",
                         "enum": [
                             "chronological_age",
                             "corrected_age"
                         ],
-                        "type": "string"
+                        "title": "Age Type"
                     },
                     "calendar_age": {
-                        "title": "Calendar Age",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Calendar Age"
                     },
                     "corrected_gestational_age": {
-                        "title": "Corrected Gestational Age",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Corrected Gestational Age"
                     },
                     "lay_comment": {
-                        "title": "Lay Comment",
-                        "type": "string"
+                        "type": "string",
+                        "title": "Lay Comment"
                     },
                     "clinician_comment": {
-                        "title": "Clinician Comment",
-                        "type": "string"
+                        "type": "string",
+                        "title": "Clinician Comment"
                     },
                     "age_error": {
-                        "title": "Age Error",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Age Error"
                     },
                     "centile_band": {
-                        "title": "Centile Band",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Centile Band"
                     },
                     "observation_value_error": {
-                        "title": "Observation Value Error",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Observation Value Error"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "x",
+                    "y",
+                    "centile",
+                    "sds",
+                    "bone_age_type",
+                    "observation_error",
+                    "age_type",
+                    "calendar_age",
+                    "lay_comment",
+                    "clinician_comment",
+                    "age_error",
+                    "centile_band",
+                    "observation_value_error"
+                ],
+                "title": "CorrectedDecimalAgeData"
             },
             "CorrectedGestationalAge": {
-                "title": "CorrectedGestationalAge",
-                "type": "object",
                 "properties": {
                     "corrected_gestation_weeks": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Corrected Gestation Weeks",
-                        "type": "integer",
                         "default": 40
                     },
                     "corrected_gestation_days": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Corrected Gestation Days",
-                        "type": "integer",
                         "default": 0
                     }
-                }
+                },
+                "type": "object",
+                "title": "CorrectedGestationalAge"
             },
             "Data": {
-                "title": "Data",
-                "required": [
-                    "l",
-                    "x"
-                ],
-                "type": "object",
                 "properties": {
                     "l": {
-                        "title": "L",
-                        "type": "string"
+                        "type": "string",
+                        "title": "L"
                     },
                     "x": {
-                        "title": "X",
-                        "type": "number"
+                        "type": "number",
+                        "title": "X"
                     },
                     "y": {
-                        "title": "Y",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Y"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "l",
+                    "x",
+                    "y"
+                ],
+                "title": "Data"
             },
             "EventsData": {
-                "title": "EventsData",
-                "type": "object",
                 "properties": {
                     "events_text": {
-                        "title": "Events Text",
-                        "type": "array",
-                        "items": {}
+                        "anyOf": [
+                            {
+                                "items": {},
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Events Text"
                     }
-                }
+                },
+                "type": "object",
+                "title": "EventsData"
             },
             "FictionalChildRequest": {
-                "title": "FictionalChildRequest",
-                "required": [
-                    "measurement_method",
-                    "sex"
-                ],
-                "type": "object",
                 "properties": {
                     "measurement_method": {
-                        "title": "Measurement Method",
+                        "type": "string",
                         "enum": [
                             "height",
                             "weight",
                             "ofc",
                             "bmi"
                         ],
-                        "type": "string",
+                        "title": "Measurement Method",
                         "description": "The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre\u00b2** and occipitofrontal circumference (head circumference, OFC) **in centimetres**."
                     },
                     "sex": {
-                        "title": "Sex",
+                        "type": "string",
                         "enum": [
                             "male",
                             "female"
                         ],
-                        "type": "string",
+                        "title": "Sex",
                         "description": "The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted."
                     },
                     "start_chronological_age": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Start Chronological Age",
-                        "type": "number",
                         "description": "Decimal age as a float. The age from which fictional data is to be generated.",
                         "default": 0.0
                     },
                     "end_age": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "End Age",
-                        "type": "number",
                         "description": "Decimal age as float. Age until which fictional data is returned.",
                         "default": 20.0
                     },
                     "gestation_weeks": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "maximum": 44.0,
+                                "minimum": 22.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Gestation Weeks",
-                        "maximum": 44.0,
-                        "minimum": 22.0,
-                        "type": "integer",
                         "description": "The number of completed weeks of gestation at which the patient was born, passed as an integer. Supplying this data enables Gestational Age correction if the child was not born at term. If no gestational age is passed then 40 weeks (term) is assumed. **IMPORTANT: See also the other parameter `gestation_days` - both are usually required.**",
                         "default": 40
                     },
                     "gestation_days": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "maximum": 6.0,
+                                "minimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Gestation Days",
-                        "maximum": 6.0,
-                        "minimum": 0.0,
-                        "type": "integer",
                         "description": "The number of additional days _beyond the completed weeks of gestation_ at which the patient was born, passed as an integer. Supplying this data enables Gestational Age correction if the child was not born at term. If no gestational age is passed then term is assumed. IMPORTANT: See also the other parameter `gestation_weeks` - both are usually required.",
                         "default": 0
                     },
                     "measurement_interval_type": {
-                        "title": "Measurement Interval Type",
-                        "enum": [
-                            "d",
-                            "day",
-                            "days",
-                            "w",
-                            "week",
-                            "weeks",
-                            "m",
-                            "month",
-                            "months",
-                            "y",
-                            "year",
-                            "years"
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "d",
+                                    "day",
+                                    "days",
+                                    "w",
+                                    "week",
+                                    "weeks",
+                                    "m",
+                                    "month",
+                                    "months",
+                                    "y",
+                                    "year",
+                                    "years"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
                         ],
-                        "type": "string",
+                        "title": "Measurement Interval Type",
                         "description": "Interval type between fictional measurements as integer. Accepts days as ['d', 'day', 'days'], weeks as ['w', 'weeks', 'weeks'], months as ['m', 'month', 'months'] or years as ['y', 'year', 'years']",
                         "default": "months"
                     },
                     "measurement_interval_number": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Measurement Interval Number",
-                        "type": "integer",
                         "description": "Interval length as integer between fictional measurements returned.",
                         "default": 20
                     },
                     "start_sds": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Start Sds",
-                        "type": "number",
                         "description": "Starting SDS as float. SDS value at which fictional data starts.",
                         "default": 0
                     },
                     "drift": {
-                        "title": "Drift",
                         "type": "boolean",
+                        "title": "Drift",
                         "description": "Drift as boolean value. Default true. Selected if fictional measurements are intended to drift from starting SDS.",
                         "default": false
                     },
                     "drift_range": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Drift Range",
-                        "type": "number",
                         "description": "Drift range as float. Default is -0.05. The SDS drift expected over the requested age period.",
                         "default": -0.05
                     },
                     "noise": {
-                        "title": "Noise",
                         "type": "boolean",
+                        "title": "Noise",
                         "description": "Noise as boolean. Default is false. Simulates measurement error.",
                         "default": false
                     },
                     "noise_range": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Noise Range",
-                        "type": "number",
                         "description": "Noise range as float. Prescribes the amount of measurement error generated randomly. Default is 0.5%",
                         "default": 0.005
                     },
                     "reference": {
-                        "title": "Reference",
-                        "enum": [
-                            "uk-who",
-                            "trisomy-21",
-                            "turners-syndrome"
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "uk-who",
+                                    "trisomy-21",
+                                    "turners-syndrome"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
                         ],
-                        "type": "string",
+                        "title": "Reference",
                         "description": "Selected reference as string. Case sensitive and accepts only once of ['uk-who', 'trisomy-21', 'turners-syndrome']",
                         "default": "uk-who"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "measurement_method",
+                    "sex"
+                ],
+                "title": "FictionalChildRequest"
             },
             "HTTPValidationError": {
-                "title": "HTTPValidationError",
-                "type": "object",
                 "properties": {
                     "detail": {
-                        "title": "Detail",
-                        "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/ValidationError"
-                        }
+                        },
+                        "type": "array",
+                        "title": "Detail"
                     }
-                }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
             },
             "MeasurementCalculatedValues": {
-                "title": "MeasurementCalculatedValues",
-                "type": "object",
                 "properties": {
                     "corrected_sds": {
-                        "title": "Corrected Sds",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Corrected Sds"
                     },
                     "corrected_centile": {
-                        "title": "Corrected Centile",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Corrected Centile"
                     },
                     "corrected_centile_band": {
-                        "title": "Corrected Centile Band",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Corrected Centile Band"
                     },
                     "chronological_sds": {
-                        "title": "Chronological Sds",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Chronological Sds"
                     },
                     "chronological_centile": {
-                        "title": "Chronological Centile",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Chronological Centile"
                     },
                     "chronological_centile_band": {
-                        "title": "Chronological Centile Band",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Chronological Centile Band"
                     },
                     "corrected_measurement_error": {
-                        "title": "Corrected Measurement Error",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Corrected Measurement Error"
                     },
                     "chronological_measurement_error": {
-                        "title": "Chronological Measurement Error",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Chronological Measurement Error"
                     },
                     "corrected_percentage_median_bmi": {
-                        "title": "Corrected Percentage Median Bmi",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Corrected Percentage Median Bmi"
                     },
                     "chronological_percentage_median_bmi": {
-                        "title": "Chronological Percentage Median Bmi",
-                        "type": "number"
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Chronological Percentage Median Bmi"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "corrected_sds",
+                    "corrected_centile",
+                    "corrected_centile_band",
+                    "chronological_sds",
+                    "chronological_centile",
+                    "chronological_centile_band",
+                    "corrected_measurement_error",
+                    "chronological_measurement_error",
+                    "corrected_percentage_median_bmi",
+                    "chronological_percentage_median_bmi"
+                ],
+                "title": "MeasurementCalculatedValues"
             },
             "MeasurementDates": {
-                "title": "MeasurementDates",
-                "required": [
-                    "observation_date",
-                    "chronological_decimal_age",
-                    "corrected_decimal_age",
-                    "corrected_gestational_age",
-                    "comments"
-                ],
-                "type": "object",
                 "properties": {
                     "observation_date": {
-                        "title": "Observation Date",
                         "type": "string",
-                        "format": "date"
+                        "format": "date",
+                        "title": "Observation Date"
                     },
                     "chronological_decimal_age": {
-                        "title": "Chronological Decimal Age",
-                        "type": "number"
+                        "type": "number",
+                        "title": "Chronological Decimal Age"
                     },
                     "corrected_decimal_age": {
-                        "title": "Corrected Decimal Age",
-                        "type": "number"
+                        "type": "number",
+                        "title": "Corrected Decimal Age"
                     },
                     "chronological_calendar_age": {
-                        "title": "Chronological Calendar Age",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Chronological Calendar Age"
                     },
                     "corrected_calendar_age": {
-                        "title": "Corrected Calendar Age",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Corrected Calendar Age"
                     },
                     "corrected_gestational_age": {
                         "$ref": "#/components/schemas/CorrectedGestationalAge"
@@ -1198,61 +1707,111 @@
                         "$ref": "#/components/schemas/Comments"
                     },
                     "corrected_decimal_age_error": {
-                        "title": "Corrected Decimal Age Error",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Corrected Decimal Age Error"
                     },
                     "chronological_decimal_age_error": {
-                        "title": "Chronological Decimal Age Error",
-                        "type": "string"
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Chronological Decimal Age Error"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "observation_date",
+                    "chronological_decimal_age",
+                    "corrected_decimal_age",
+                    "chronological_calendar_age",
+                    "corrected_calendar_age",
+                    "corrected_gestational_age",
+                    "comments",
+                    "corrected_decimal_age_error",
+                    "chronological_decimal_age_error"
+                ],
+                "title": "MeasurementDates"
             },
             "MeasurementMethod": {
-                "title": "MeasurementMethod",
-                "type": "object",
                 "properties": {
                     "height": {
-                        "title": "Height",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Centile"
-                        }
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/Centile"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Height"
                     },
                     "weight": {
-                        "title": "Weight",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Centile"
-                        }
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/Centile"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Weight"
                     },
                     "ofc": {
-                        "title": "Ofc",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Centile"
-                        }
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/Centile"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Ofc"
                     },
                     "bmi": {
-                        "title": "Bmi",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Centile"
-                        }
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/Centile"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bmi"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "height",
+                    "weight",
+                    "ofc",
+                    "bmi"
+                ],
+                "title": "MeasurementMethod"
             },
             "MeasurementObject": {
-                "title": "MeasurementObject",
-                "required": [
-                    "birth_data",
-                    "measurement_dates",
-                    "child_observation_value",
-                    "measurement_calculated_values",
-                    "plottable_data",
-                    "bone_age",
-                    "events_data"
-                ],
-                "type": "object",
                 "properties": {
                     "birth_data": {
                         "$ref": "#/components/schemas/BirthData"
@@ -1275,10 +1834,170 @@
                     "events_data": {
                         "$ref": "#/components/schemas/EventsData"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "birth_data",
+                    "measurement_dates",
+                    "child_observation_value",
+                    "measurement_calculated_values",
+                    "plottable_data",
+                    "bone_age",
+                    "events_data"
+                ],
+                "title": "MeasurementObject"
             },
             "MeasurementRequest": {
-                "title": "MeasurementRequest",
+                "properties": {
+                    "birth_date": {
+                        "type": "string",
+                        "format": "date",
+                        "title": "Birth Date",
+                        "description": "Date of birth of the patient, in the format YYYY-MM-DD"
+                    },
+                    "gestation_days": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "maximum": 6.0,
+                                "minimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Gestation Days",
+                        "description": "The number of additional days _beyond the completed weeks of gestation_ at which the patient was born, passed as an integer. Supplying this data enables Gestational Age correction if the child was not born at term. If no gestational age is passed then term is assumed. IMPORTANT: See also the other parameter `gestation_weeks` - both are usually required.",
+                        "default": 0
+                    },
+                    "gestation_weeks": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "maximum": 44.0,
+                                "minimum": 22.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Gestation Weeks",
+                        "description": "The number of completed weeks of gestation at which the patient was born, passed as an integer. Supplying this data enables Gestational Age correction if the child was not born at term. If no gestational age is passed then 40 weeks (term) is assumed. **IMPORTANT: See also the other parameter `gestation_days` - both are usually required.**",
+                        "default": 40
+                    },
+                    "measurement_method": {
+                        "type": "string",
+                        "enum": [
+                            "height",
+                            "weight",
+                            "ofc",
+                            "bmi"
+                        ],
+                        "title": "Measurement Method",
+                        "description": "The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre\u00b2** and occipitofrontal circumference (head circumference, OFC) **in centimetres**."
+                    },
+                    "observation_date": {
+                        "type": "string",
+                        "format": "date",
+                        "title": "Observation Date",
+                        "description": "Date of the observation, in the format YYYY-MM-DD."
+                    },
+                    "observation_value": {
+                        "type": "number",
+                        "title": "Observation Value",
+                        "description": "The value of the measurement supplied. This is supplied as a floating point number. All measurements should be supplied as **centimetres**, with the exception of Body Mass Index which is supplied as kilograms per metre squared (kg/m\u00b2)."
+                    },
+                    "sex": {
+                        "type": "string",
+                        "enum": [
+                            "male",
+                            "female"
+                        ],
+                        "title": "Sex",
+                        "description": "The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted."
+                    },
+                    "bone_age": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age",
+                        "description": "Bone age in years. Age is paired with measurement taken at chronological age."
+                    },
+                    "bone_age_type": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "greulich-pyle",
+                                    "tanner-whitehouse-ii",
+                                    "tanner-whitehouse-iii",
+                                    "fels",
+                                    "bonexpert"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age Type",
+                        "description": "Method used to calculate bone age. Must be one of `'greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iii`, `fels`,`bonexpert`"
+                    },
+                    "bone_age_sds": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age Sds",
+                        "description": "The SDS of the bone age based on reference tables."
+                    },
+                    "bone_age_centile": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age Centile",
+                        "description": "The centile for the bone age based on reference tables."
+                    },
+                    "bone_age_text": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bone Age Text",
+                        "description": "Any report or contextual information relating to the bone age."
+                    },
+                    "events_text": {
+                        "anyOf": [
+                            {
+                                "items": {},
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Events Text",
+                        "description": "A list of strings. Contextual text which are associated with each measurement."
+                    }
+                },
+                "type": "object",
                 "required": [
                     "birth_date",
                     "measurement_method",
@@ -1286,196 +2005,113 @@
                     "observation_value",
                     "sex"
                 ],
-                "type": "object",
+                "title": "MeasurementRequest",
+                "description": "This class definition creates a Python model which can be converted by FastAPI to openAPI3 schema.\nWe aim to specify all textual information, constraints, and validation here.\nIt all ends up in the openAPI documentation, automagically."
+            },
+            "MidParentalHeightRequest": {
                 "properties": {
-                    "birth_date": {
-                        "title": "Birth Date",
-                        "type": "string",
-                        "description": "Date of birth of the patient, in the format YYYY-MM-DD",
-                        "format": "date"
-                    },
-                    "gestation_days": {
-                        "title": "Gestation Days",
-                        "maximum": 6.0,
-                        "minimum": 0.0,
-                        "type": "integer",
-                        "description": "The number of additional days _beyond the completed weeks of gestation_ at which the patient was born, passed as an integer. Supplying this data enables Gestational Age correction if the child was not born at term. If no gestational age is passed then term is assumed. IMPORTANT: See also the other parameter `gestation_weeks` - both are usually required.",
-                        "default": 0
-                    },
-                    "gestation_weeks": {
-                        "title": "Gestation Weeks",
-                        "maximum": 44.0,
-                        "minimum": 22.0,
-                        "type": "integer",
-                        "description": "The number of completed weeks of gestation at which the patient was born, passed as an integer. Supplying this data enables Gestational Age correction if the child was not born at term. If no gestational age is passed then 40 weeks (term) is assumed. **IMPORTANT: See also the other parameter `gestation_days` - both are usually required.**",
-                        "default": 40
-                    },
-                    "measurement_method": {
-                        "title": "Measurement Method",
-                        "enum": [
-                            "height",
-                            "weight",
-                            "ofc",
-                            "bmi"
-                        ],
-                        "type": "string",
-                        "description": "The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre\u00b2** and occipitofrontal circumference (head circumference, OFC) **in centimetres**."
-                    },
-                    "observation_date": {
-                        "title": "Observation Date",
-                        "type": "string",
-                        "description": "Date of the observation, in the format YYYY-MM-DD.",
-                        "format": "date"
-                    },
-                    "observation_value": {
-                        "title": "Observation Value",
+                    "height_paternal": {
                         "type": "number",
-                        "description": "The value of the measurement supplied. This is supplied as a floating point number. All measurements should be supplied as **centimetres**, with the exception of Body Mass Index which is supplied as kilograms per metre squared (kg/m\u00b2)."
+                        "minimum": 50.0,
+                        "title": "Height Paternal",
+                        "description": "The height of the child's biological father, passed as float, measured in centimeters"
+                    },
+                    "height_maternal": {
+                        "type": "number",
+                        "minimum": 50.0,
+                        "title": "Height Maternal",
+                        "description": "The height of the child's biological mother, passed as float, measured in centimeters"
                     },
                     "sex": {
-                        "title": "Sex",
+                        "type": "string",
                         "enum": [
                             "male",
                             "female"
                         ],
-                        "type": "string",
+                        "title": "Sex",
                         "description": "The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted."
-                    },
-                    "bone_age": {
-                        "title": "Bone Age",
-                        "type": "number",
-                        "description": "Bone age in years. Age is paired with measurement taken at chronological age."
-                    },
-                    "bone_age_type": {
-                        "title": "Bone Age Type",
-                        "enum": [
-                            "greulich-pyle",
-                            "tanner-whitehouse-ii",
-                            "tanner-whitehouse-iii",
-                            "fels",
-                            "bonexpert"
-                        ],
-                        "type": "string",
-                        "description": "Method used to calculate bone age. Must be one of `'greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iii`, `fels`,`bonexpert`"
-                    },
-                    "bone_age_sds": {
-                        "title": "Bone Age Sds",
-                        "type": "number",
-                        "description": "The SDS of the bone age based on reference tables."
-                    },
-                    "bone_age_centile": {
-                        "title": "Bone Age Centile",
-                        "type": "number",
-                        "description": "The centile for the bone age based on reference tables."
-                    },
-                    "bone_age_text": {
-                        "title": "Bone Age Text",
-                        "type": "string",
-                        "description": "Any report or contextual information relating to the bone age."
-                    },
-                    "events_text": {
-                        "title": "Events Text",
-                        "type": "array",
-                        "items": {},
-                        "description": "A list of strings. Contextual text which are associated with each measurement."
                     }
                 },
-                "description": "This class definition creates a Python model which can be converted by FastAPI to openAPI3 schema.\nWe aim to specify all textual information, constraints, and validation here.\nIt all ends up in the openAPI documentation, automagically."
-            },
-            "MidParentalHeightRequest": {
-                "title": "MidParentalHeightRequest",
+                "type": "object",
                 "required": [
                     "height_paternal",
                     "height_maternal",
                     "sex"
                 ],
-                "type": "object",
-                "properties": {
-                    "height_paternal": {
-                        "title": "Height Paternal",
-                        "minimum": 50.0,
-                        "type": "number",
-                        "description": "The height of the child's biological father, passed as float, measured in centimeters"
-                    },
-                    "height_maternal": {
-                        "title": "Height Maternal",
-                        "minimum": 50.0,
-                        "type": "number",
-                        "description": "The height of the child's biological mother, passed as float, measured in centimeters"
-                    },
-                    "sex": {
-                        "title": "Sex",
-                        "enum": [
-                            "male",
-                            "female"
-                        ],
-                        "type": "string",
-                        "description": "The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted."
-                    }
-                }
+                "title": "MidParentalHeightRequest"
             },
             "MidParentalHeightResponse": {
-                "title": "MidParentalHeightResponse",
+                "properties": {
+                    "mid_parental_height": {
+                        "type": "number",
+                        "title": "Mid Parental Height"
+                    },
+                    "mid_parental_height_sds": {
+                        "type": "number",
+                        "title": "Mid Parental Height Sds"
+                    },
+                    "mid_parental_height_centile": {
+                        "type": "number",
+                        "title": "Mid Parental Height Centile"
+                    },
+                    "mid_parental_height_centile_data": {
+                        "items": {
+                            "$ref": "#/components/schemas/ReferenceCreate"
+                        },
+                        "type": "array",
+                        "title": "Mid Parental Height Centile Data"
+                    },
+                    "mid_parental_height_lower_centile_data": {
+                        "items": {
+                            "$ref": "#/components/schemas/ReferenceCreate"
+                        },
+                        "type": "array",
+                        "title": "Mid Parental Height Lower Centile Data"
+                    },
+                    "mid_parental_height_upper_centile_data": {
+                        "items": {
+                            "$ref": "#/components/schemas/ReferenceCreate"
+                        },
+                        "type": "array",
+                        "title": "Mid Parental Height Upper Centile Data"
+                    },
+                    "mid_parental_height_upper_value": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Mid Parental Height Upper Value"
+                    },
+                    "mid_parental_height_lower_value": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Mid Parental Height Lower Value"
+                    }
+                },
+                "type": "object",
                 "required": [
                     "mid_parental_height",
                     "mid_parental_height_sds",
                     "mid_parental_height_centile",
                     "mid_parental_height_centile_data",
                     "mid_parental_height_lower_centile_data",
-                    "mid_parental_height_upper_centile_data"
+                    "mid_parental_height_upper_centile_data",
+                    "mid_parental_height_upper_value",
+                    "mid_parental_height_lower_value"
                 ],
-                "type": "object",
-                "properties": {
-                    "mid_parental_height": {
-                        "title": "Mid Parental Height",
-                        "type": "number"
-                    },
-                    "mid_parental_height_sds": {
-                        "title": "Mid Parental Height Sds",
-                        "type": "number"
-                    },
-                    "mid_parental_height_centile": {
-                        "title": "Mid Parental Height Centile",
-                        "type": "number"
-                    },
-                    "mid_parental_height_centile_data": {
-                        "title": "Mid Parental Height Centile Data",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/ReferenceCreate"
-                        }
-                    },
-                    "mid_parental_height_lower_centile_data": {
-                        "title": "Mid Parental Height Lower Centile Data",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/ReferenceCreate"
-                        }
-                    },
-                    "mid_parental_height_upper_centile_data": {
-                        "title": "Mid Parental Height Upper Centile Data",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/ReferenceCreate"
-                        }
-                    },
-                    "mid_parental_height_upper_value": {
-                        "title": "Mid Parental Height Upper Value",
-                        "type": "number"
-                    },
-                    "mid_parental_height_lower_value": {
-                        "title": "Mid Parental Height Lower Value",
-                        "type": "number"
-                    }
-                }
+                "title": "MidParentalHeightResponse"
             },
             "PlottableData": {
-                "title": "PlottableData",
-                "required": [
-                    "centile_data",
-                    "sds_data"
-                ],
-                "type": "object",
                 "properties": {
                     "centile_data": {
                         "$ref": "#/components/schemas/CentileData"
@@ -1483,22 +2119,31 @@
                     "sds_data": {
                         "$ref": "#/components/schemas/SDSData"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "centile_data",
+                    "sds_data"
+                ],
+                "title": "PlottableData"
             },
             "ReferenceCreate": {
-                "title": "ReferenceCreate",
+                "properties": {
+                    "root": {
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/Sex"
+                        },
+                        "type": "object",
+                        "title": "Root"
+                    }
+                },
                 "type": "object",
-                "additionalProperties": {
-                    "$ref": "#/components/schemas/Sex"
-                }
+                "required": [
+                    "root"
+                ],
+                "title": "ReferenceCreate"
             },
             "SDSData": {
-                "title": "SDSData",
-                "required": [
-                    "chronological_decimal_age_data",
-                    "corrected_decimal_age_data"
-                ],
-                "type": "object",
                 "properties": {
                     "chronological_decimal_age_data": {
                         "$ref": "#/components/schemas/ChronologicalDecimalAgeData"
@@ -1506,32 +2151,47 @@
                     "corrected_decimal_age_data": {
                         "$ref": "#/components/schemas/CorrectedDecimalAgeData"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "chronological_decimal_age_data",
+                    "corrected_decimal_age_data"
+                ],
+                "title": "SDSData"
             },
             "Sex": {
-                "title": "Sex",
-                "type": "object",
                 "properties": {
                     "male": {
-                        "$ref": "#/components/schemas/MeasurementMethod"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/MeasurementMethod"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "female": {
-                        "$ref": "#/components/schemas/MeasurementMethod"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/MeasurementMethod"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "male",
+                    "female"
+                ],
+                "title": "Sex"
             },
             "ValidationError": {
-                "title": "ValidationError",
-                "required": [
-                    "loc",
-                    "msg",
-                    "type"
-                ],
-                "type": "object",
                 "properties": {
                     "loc": {
-                        "title": "Location",
-                        "type": "array",
                         "items": {
                             "anyOf": [
                                 {
@@ -1541,17 +2201,26 @@
                                     "type": "integer"
                                 }
                             ]
-                        }
+                        },
+                        "type": "array",
+                        "title": "Location"
                     },
                     "msg": {
-                        "title": "Message",
-                        "type": "string"
+                        "type": "string",
+                        "title": "Message"
                     },
                     "type": {
-                        "title": "Error Type",
-                        "type": "string"
+                        "type": "string",
+                        "title": "Error Type"
                     }
-                }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
             }
         }
     }

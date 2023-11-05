@@ -5,6 +5,8 @@ import os
 
 # third party imports
 from fastapi import FastAPI
+from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -23,6 +25,7 @@ version='4.2.18'  # this is set by bump version
 
 # Declare the FastAPI app
 app = FastAPI(
+        title="RCPCH Digital Growth API",
         openapi_url="/",
         redoc_url=None,
         license_info={
@@ -31,7 +34,8 @@ app = FastAPI(
             },
     )
 
-
+# static assets
+app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 # Set up CORS middleware
 app.add_middleware(
     CORSMiddleware,
@@ -77,6 +81,10 @@ def root():
     """
     return
 
+@app.get("/redoc", include_in_schema=False)
+def overridden_redoc():
+    """spec fo redoc"""
+    return get_redoc_html(openapi_url="/", title="RCPCH Digital Growth API", redoc_favicon_url="/assets/favicon.ico")
 
 # Generate and store the chart plotting data for the centile background curves.
 # This data is only generated once and then is stored and served from file.

@@ -4,3 +4,4 @@
 # standard dependencies
 
 # third party dependencies
+gunicorn
