@@ -85,13 +85,13 @@ nav:
   - Contact: 'about/contact.md'
 
 # `not_in_nav` will prevent 'The following pages exist in the docs directory, but are not included in the "nav" configuration:' warnings
-not_in_nav:
-  - _assets/_snippets/dgc-platform-comprises.md
-  - _assets/_snippets/docs-contributions.md
-  - _assets/_snippets/htn-award.md
-  - _assets/_snippets/self-host-warning.md
-  - _utilities/page-template.md
-  - internal/azure-apim.md
+not_in_nav: |
+  _assets/_snippets/dgc-platform-comprises.md
+  _assets/_snippets/docs-contributions.md
+  _assets/_snippets/htn-award.md
+  _assets/_snippets/self-host-warning.md
+  _utilities/page-template.md
+  internal/azure-apim.md
 
 theme:
   name: material
