@@ -33,10 +33,6 @@ By using the RCPCH-provided API, you avoid all that requirement and use our comm
 
 From a DPCHR implementer perspective, if a birth notification has not flowed into the DPCHR, suppliers will need to require parents to enter it.
 
-* [DPCHR]: Digital Paediatric Child Health Record
-* [DCB0129]: (Data Coordination Board) Standard 0129
-* [DCB0160]: (Data Coordination Board) Standard 0160
-
 ## Q: What development effort is required to integrate this API into an app or Electronic Patient Record?
 
 **A**: Minimal development is required. The tricky stuff (calculating centiles from complex statistical tables, selecting the correct UK90 or WHO references for age, and gestational age correction) is all done for you. The data returned will be the correct centiles, which can be displayed to the user.
@@ -45,13 +41,13 @@ Producing a visual ‘growth chart’ with this data is a little more involved, 
 
 We are keen to build a ‘catalogue’ of chart clients, so other open-source clients are very welcome. We will also help you build and test them!
 
-## Q: Is corrected gestational age passed back by the API, or do implementers have to calculate it?
+## Q: Is corrected gestational age passed back by the API?
 
 **A**: Yes, corrected age is passed back by the API, if a gestational age is included in the request.
 
 **NOTE: The API can only correct for gestational age if a gestational age has been supplied!**
 
-This correction is applied up to the corrected age of 1 year for preterm children born above 32 weeks, and to the corrected age of 2 years for preterm children born below 32 weeks, which is accepted standard practice among paediatricians.
+This correction is applied throughout the life course. (In the past the correction was only applied to 1 or 2 years depending on the degree of prematurity. This is no longer the case, following an RCPCH dGC Project Board decision. It is trivial to have the computer correct throughout the life course, so we made this the default. Uncorrected age is still available in the API response, if required.)
 
 ## Q: Does my application need to validate inputs?
 
@@ -65,6 +61,8 @@ This correction is applied up to the corrected age of 1 year for preterm childre
 
 **A**: Maybe. It would depend on the implementation.
 
-Images of charts are definitely **not** good enough for calculating a centile from, although many GP software packages do it this way. It is poor practice, and it's why the API needed to exist in the first place. However, since we are calculating the centiles for you, the chart is only for displaying the trend. An image **could** be used, but we generally advise against it.
+Images of charts are definitely **not** good enough for calculating a centile from, although many General Practice software packages currently do it this way. Plotting on an image is a hack, and it's why we had to create the API in the first place. However, since we are calculating the centiles for you, the chart is only for displaying the trend. An image **could** be used, but we generally advise against it.
 
 It is very easy to accidentally offset or incorrectly scale images, leading to *some* correctly plotted points, but others not. The best practice is to always use the *same* vector graphic tooling to both construct lines **and** plot the points, avoiding offsets/scaling inaccuracy. If you use an image (against our advice), you must ensure the correct one is selected for the presented data. More, you must ensure scaling and offset are not just programmed to be correct, but also clinically tested to be correct!
+
+We would in every situation recommend using the [React Chart Component](../products/react-component.md) to render the chart. It is open-source, and can be used as a reference implementation if you wish to build your own.
