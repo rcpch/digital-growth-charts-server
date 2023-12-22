@@ -80,7 +80,7 @@ def test_midparental_height_parental_heights_ge_fifty_expected_fail():
     )
 
 
-def test_midparental_height_paternal_height_lt_twofifty_expected_fail():
+def test_midparental_height_paternal_height_lt_twofortyfive_expected_fail():
     body = {
         "height_paternal": "251",
         "height_maternal": "168",
@@ -95,15 +95,11 @@ def test_midparental_height_paternal_height_lt_twofifty_expected_fail():
 
     assert (
         paternal_validation_errors["msg"]
-        == "ensure this value is less than or equal to 250"
-    )
-    assert (
-        paternal_validation_errors["msg"]
-        == "ensure this value is less than or equal to 250"
+        == "ensure this value is less than or equal to 245"
     )
 
 
-def test_midparental_height_maternal_height_lt_twofifty_expected_fail():
+def test_midparental_height_maternal_height_lt_twofortyfive_expected_fail():
     body = {
         "height_paternal": "171",
         "height_maternal": "267",
@@ -118,9 +114,5 @@ def test_midparental_height_maternal_height_lt_twofifty_expected_fail():
 
     assert (
         maternal_validation_errors["msg"]
-        == "ensure this value is less than or equal to 250"
-    )
-    assert (
-        maternal_validation_errors["msg"]
-        == "ensure this value is less than or equal to 250"
+        == "ensure this value is less than or equal to 245"
     )
