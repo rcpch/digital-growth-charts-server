@@ -438,7 +438,7 @@
                     "utilities"
                 ],
                 "summary": "Mid Parental Height Endpoint",
-                "description": "## Mid-parental-height Endpoint\n\n* Calculates mid-parental-height\n* Returns mid-parental centile and SDS, as well as centile lines for mid-parental height\n* and +2 SD and -SD",
+                "description": "## Mid-parental-height Endpoint\n\n* Calculates mid-parental-height\n* Returns mid-parental centile and SDS, as well as centile lines for mid-parental height\n* and +2 SD and -SD\n\nNote any paternal height above 253cm or maternal height above 250cm in a boy or\nany maternal height above 237 cm or any paternal height above 249 cm in a girl will return\na midparental height whose centile is 100 which generates an error when calculating a plottable centile\n(since 100% is not technically plottable)\nGiven that the tallest woman ever to live is Rumeysa Gelgi (born 1979) is 215.16 cm\nand the tallest man was 272 cm it seems reasonable to cap the upper limit for validation purposes\nto 245 cm in either parent (which is over 8 foot).\n\nif this function is called outside of the API and heights above those detailed above are higher,\nan empty array for that centile is returned. This is likely not compatible with the charting component\nas it will not be possible to render the area between the centiles if one is empty.",
                 "operationId": "mid_parental_height_endpoint_utilities_mid_parental_height_post",
                 "requestBody": {
                     "content": {
@@ -1393,12 +1393,14 @@
                 "properties": {
                     "height_paternal": {
                         "title": "Height Paternal",
+                        "maximum": 245.0,
                         "minimum": 50.0,
                         "type": "number",
                         "description": "The height of the child's biological father, passed as float, measured in centimeters"
                     },
                     "height_maternal": {
                         "title": "Height Maternal",
+                        "maximum": 245.0,
                         "minimum": 50.0,
                         "type": "number",
                         "description": "The height of the child's biological mother, passed as float, measured in centimeters"
