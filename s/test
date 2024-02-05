@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# UNIX based systems may require special permissions to run this file
+# run chmod +x s/<filename> to allow this
+
+# Executes Pytest suite within Docker container
+# Can only be run once container is running
+
+docker exec digital-growth-charts-server-growth-api-1 pytest
