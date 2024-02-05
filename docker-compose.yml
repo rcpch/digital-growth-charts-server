@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  growth-api:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8020:8000"

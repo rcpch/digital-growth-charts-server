@@ -6,7 +6,7 @@ from typing import Dict, List, Optional, Literal
 from datetime import date
 
 # third party imports
-from pydantic import BaseModel
+from pydantic import BaseModel, RootModel
 
 
 class CorrectedGestationalAge(BaseModel):
@@ -168,7 +168,7 @@ class Sex(BaseModel):
 
 
 class ReferenceCreate(BaseModel):
-    __root__: Dict[str, Sex]
+    RootModel: Dict[str, Sex]
 
     # class Config:
     #     schema_extra = {
