@@ -34,6 +34,8 @@ def test_trisomy_21_calculation_with_valid_request():
 
     assert response.status_code == 200
 
+    print(response)
+
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
     assert response.json() == json.loads(calculation_file)
 
