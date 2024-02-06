@@ -26,7 +26,7 @@ def test_trisomy_21_calculation_with_valid_request():
         "measurement_method": "height"
     }
     
-    response = client.post("/trisomy-21/calculation", json=body)
+    response = client.post("/trisomy-21/calculation/", json=body)
 
     # load the known-correct response from file
     with open(r'tests/test_data/test_trisomy_21_calculation_valid.json', 'r') as file:
