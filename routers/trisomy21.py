@@ -21,7 +21,7 @@ trisomy_21 = APIRouter(
 )
 
 
-@trisomy_21.post("/calculation", tags=["trisomy-21"], response_model=MeasurementObject)
+@trisomy_21.post("/calculation", tags=["trisomy-21"])
 def trisomy_21_calculation(measurementRequest: MeasurementRequest = Body(
             ...,
             example={
