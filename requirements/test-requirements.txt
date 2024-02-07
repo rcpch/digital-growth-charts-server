@@ -1,7 +1,0 @@
-# load common requirements
--r common-requirements.txt
-
-# standard dependencies
-
-# third party dependencies
-requests # needed for starlette and testing
