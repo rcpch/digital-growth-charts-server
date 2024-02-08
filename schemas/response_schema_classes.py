@@ -22,48 +22,48 @@ class Comments(BaseModel):
 
 
 class ChronologicalDecimalAgeData(BaseModel):
-    x: Optional[float]
-    y: Optional[float]
+    x: Optional[float] = None
+    y: Optional[float] = None
     b: Optional[float] = None
-    centile: Optional[float]
-    sds: Optional[float]
+    centile: Optional[float] = None
+    sds: Optional[float] = None
     bone_age_label: Optional[str] = None
     events_text: Optional[list] = None
     bone_age_type: Optional[Literal['greulich-pyle',
                                     'tanner-whitehouse-ii', 'tanner-whitehouse-iii', 'fels', 'bonexpert']]
-    bone_age_sds: Optional[str] = None
-    bone_age_centile: Optional[str] = None
-    observation_error: Optional[str]
+    bone_age_sds: Optional[float] = None
+    bone_age_centile: Optional[float] = None
+    observation_error: Optional[str] = None
     age_type: Literal["chronological_age", "corrected_age"]
-    calendar_age: Optional[str]
-    lay_comment: str
+    calendar_age: Optional[str] = None
+    lay_comment: str = None
     clinician_comment: str
-    age_error: Optional[str]
-    centile_band: Optional[str]
-    observation_value_error: Optional[str]
+    age_error: Optional[str] = None
+    centile_band: Optional[str] = None
+    observation_value_error: Optional[str] = None
 
 
 class CorrectedDecimalAgeData(BaseModel):
-    x: Optional[float]
-    y: Optional[float]
+    x: Optional[float] = None
+    y: Optional[float] = None
     b: Optional[float] = None
-    centile: Optional[float]
-    sds: Optional[float]
+    centile: Optional[float] = None
+    sds: Optional[float] = None
     bone_age_label: Optional[str] = None
     events_text: Optional[list] = None
     bone_age_type: Optional[Literal['greulich-pyle',
                                     'tanner-whitehouse-ii', 'tanner-whitehouse-iii', 'fels', 'bonexpert']]
-    bone_age_sds: Optional[str] = None
-    bone_age_centile: Optional[str] = None
-    observation_error: Optional[str]
+    bone_age_sds: Optional[float] = None
+    bone_age_centile: Optional[float] = None
+    observation_error: Optional[str] = None
     age_type: Literal["chronological_age", "corrected_age"]
-    calendar_age: Optional[str]
+    calendar_age: Optional[str] = None
     corrected_gestational_age: Optional[str] = None
     lay_comment: str
     clinician_comment: str
-    age_error: Optional[str]
-    centile_band: Optional[str]
-    observation_value_error: Optional[str]
+    age_error: Optional[str] = None
+    centile_band: Optional[str] = None
+    observation_value_error: Optional[str] = None
 
 
 class CentileData(BaseModel):

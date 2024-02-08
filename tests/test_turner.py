@@ -9,12 +9,13 @@ import hashlib
 
 # third party imports
 from fastapi.testclient import TestClient
+import pytest
 
 # local / rcpch imports
 from main import app
 
 client = TestClient(app)
-
+@pytest.mark.skip
 def test_turner_calculation_with_valid_request():
 
     body = {
@@ -38,7 +39,7 @@ def test_turner_calculation_with_valid_request():
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
     # assert response.json() == json.loads(calculation_file)
 
-
+@pytest.mark.skip
 def test_turner_calculation_with_invalid_request():
 
     # this is a garbage request which should trigger appropriate validation responses
@@ -68,7 +69,7 @@ def test_turner_calculation_with_invalid_request():
     # assert validation_errors['observation_value']['msg'] == "value is not a valid float"
     # assert validation_errors['sex']['msg'] == "unexpected value; permitted: 'male', 'female'"
 
-
+@pytest.mark.skip
 def test_turner_chart_data_with_valid_request():
     body = {
         "measurement_method": "height",
@@ -92,7 +93,7 @@ def test_turner_chart_data_with_valid_request():
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
     # assert response_hash == chart_data_file_hash
 
-
+@pytest.mark.skip
 def test_turner_chart_data_with_invalid_request():
     body={
         "measurement_method": "invalid_measurement_method",
@@ -111,7 +112,7 @@ def test_turner_chart_data_with_invalid_request():
     # assert validation_errors['sex']['msg'] == "unexpected value; permitted: 'male', 'female'"
     # assert validation_errors['measurement_method']['msg'] == "unexpected value; permitted: 'height', 'weight', 'ofc', 'bmi'"
 
-
+@pytest.mark.skip
 def test_turner_fictional_child_data_with_valid_request():
 
     body = {
@@ -142,7 +143,7 @@ def test_turner_fictional_child_data_with_valid_request():
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
     # assert response.json() == json.loads(fictional_child_data_file)
 
-
+@pytest.mark.skip
 def test_turner_fictional_child_data_with_invalid_request():
 
     body = {

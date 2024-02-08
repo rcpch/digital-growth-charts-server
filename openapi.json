@@ -891,7 +891,7 @@
                     "bone_age_sds": {
                         "anyOf": [
                             {
-                                "type": "string"
+                                "type": "number"
                             },
                             {
                                 "type": "null"
@@ -902,7 +902,7 @@
                     "bone_age_centile": {
                         "anyOf": [
                             {
-                                "type": "string"
+                                "type": "number"
                             },
                             {
                                 "type": "null"
@@ -984,19 +984,9 @@
                 },
                 "type": "object",
                 "required": [
-                    "x",
-                    "y",
-                    "centile",
-                    "sds",
                     "bone_age_type",
-                    "observation_error",
                     "age_type",
-                    "calendar_age",
-                    "lay_comment",
-                    "clinician_comment",
-                    "age_error",
-                    "centile_band",
-                    "observation_value_error"
+                    "clinician_comment"
                 ],
                 "title": "ChronologicalDecimalAgeData"
             },
@@ -1129,7 +1119,7 @@
                     "bone_age_sds": {
                         "anyOf": [
                             {
-                                "type": "string"
+                                "type": "number"
                             },
                             {
                                 "type": "null"
@@ -1140,7 +1130,7 @@
                     "bone_age_centile": {
                         "anyOf": [
                             {
-                                "type": "string"
+                                "type": "number"
                             },
                             {
                                 "type": "null"
@@ -1233,19 +1223,10 @@
                 },
                 "type": "object",
                 "required": [
-                    "x",
-                    "y",
-                    "centile",
-                    "sds",
                     "bone_age_type",
-                    "observation_error",
                     "age_type",
-                    "calendar_age",
                     "lay_comment",
-                    "clinician_comment",
-                    "age_error",
-                    "centile_band",
-                    "observation_value_error"
+                    "clinician_comment"
                 ],
                 "title": "CorrectedDecimalAgeData"
             },

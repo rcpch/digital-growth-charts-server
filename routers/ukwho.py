@@ -5,6 +5,7 @@ UK-WHO router
 import json
 from pathlib import Path
 from typing import List
+from pprint import pprint
 
 # Third party imports
 from schemas.response_schema_classes import Centile_Data, MeasurementObject
@@ -78,6 +79,8 @@ def uk_who_calculation(
     except ValueError as err:
         print(err.args)
         return err.args, 422
+    # print(calculation["plottable_data"]["chronological_decimal_age_data"]["sds"])
+    pprint(calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"])
     return calculation
 
 
