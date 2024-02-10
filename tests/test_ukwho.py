@@ -74,7 +74,6 @@ def test_ukwho_calculation_with_invalid_request():
     # assert validation_errors['observation_value']['msg'] == "value is not a valid float"
     # assert validation_errors['sex']['msg'] == "unexpected value; permitted: 'male', 'female'"
 
-@pytest.mark.skip
 def test_ukwho_chart_data_with_valid_request():
     body = {
         "measurement_method": "height",

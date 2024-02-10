@@ -561,8 +561,6 @@
                 "type": "object",
                 "required": [
                     "birth_date",
-                    "gestation_weeks",
-                    "gestation_days",
                     "estimated_date_delivery",
                     "estimated_date_delivery_string",
                     "sex"
@@ -641,17 +639,10 @@
                         "title": "Centile"
                     },
                     "data": {
-                        "anyOf": [
-                            {
-                                "items": {
-                                    "$ref": "#/components/schemas/Data"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "items": {
+                            "$ref": "#/components/schemas/Data"
+                        },
+                        "type": "array",
                         "title": "Data"
                     }
                 },
@@ -785,8 +776,7 @@
                 "type": "object",
                 "required": [
                     "measurement_method",
-                    "observation_value",
-                    "observation_value_error"
+                    "observation_value"
                 ],
                 "title": "ChildObservationValue"
             },
@@ -1263,7 +1253,7 @@
             "Data": {
                 "properties": {
                     "l": {
-                        "type": "string",
+                        "type": "number",
                         "title": "L"
                     },
                     "x": {
@@ -1271,14 +1261,7 @@
                         "title": "X"
                     },
                     "y": {
-                        "anyOf": [
-                            {
-                                "type": "number"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "type": "number",
                         "title": "Y"
                     }
                 },
@@ -1630,18 +1613,6 @@
                     }
                 },
                 "type": "object",
-                "required": [
-                    "corrected_sds",
-                    "corrected_centile",
-                    "corrected_centile_band",
-                    "chronological_sds",
-                    "chronological_centile",
-                    "chronological_centile_band",
-                    "corrected_measurement_error",
-                    "chronological_measurement_error",
-                    "corrected_percentage_median_bmi",
-                    "chronological_percentage_median_bmi"
-                ],
                 "title": "MeasurementCalculatedValues"
             },
             "MeasurementDates": {
@@ -1715,29 +1686,18 @@
                     "observation_date",
                     "chronological_decimal_age",
                     "corrected_decimal_age",
-                    "chronological_calendar_age",
-                    "corrected_calendar_age",
                     "corrected_gestational_age",
-                    "comments",
-                    "corrected_decimal_age_error",
-                    "chronological_decimal_age_error"
+                    "comments"
                 ],
                 "title": "MeasurementDates"
             },
             "MeasurementMethod": {
                 "properties": {
                     "height": {
-                        "anyOf": [
-                            {
-                                "items": {
-                                    "$ref": "#/components/schemas/Centile"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "items": {
+                            "$ref": "#/components/schemas/Centile"
+                        },
+                        "type": "array",
                         "title": "Height"
                     },
                     "weight": {
@@ -1785,10 +1745,7 @@
                 },
                 "type": "object",
                 "required": [
-                    "height",
-                    "weight",
-                    "ofc",
-                    "bmi"
+                    "height"
                 ],
                 "title": "MeasurementMethod"
             },
@@ -2086,42 +2043,41 @@
                     "mid_parental_height_centile",
                     "mid_parental_height_centile_data",
                     "mid_parental_height_lower_centile_data",
-                    "mid_parental_height_upper_centile_data",
-                    "mid_parental_height_upper_value",
-                    "mid_parental_height_lower_value"
+                    "mid_parental_height_upper_centile_data"
                 ],
                 "title": "MidParentalHeightResponse"
             },
             "PlottableData": {
                 "properties": {
                     "centile_data": {
-                        "$ref": "#/components/schemas/CentileData"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/CentileData"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "sds_data": {
-                        "$ref": "#/components/schemas/SDSData"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/SDSData"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     }
                 },
                 "type": "object",
-                "required": [
-                    "centile_data",
-                    "sds_data"
-                ],
                 "title": "PlottableData"
             },
             "ReferenceCreate": {
-                "properties": {
-                    "RootModel": {
-                        "additionalProperties": {
-                            "$ref": "#/components/schemas/Sex"
-                        },
-                        "type": "object",
-                        "title": "Rootmodel"
-                    }
+                "additionalProperties": {
+                    "$ref": "#/components/schemas/Sex"
                 },
                 "type": "object",
-                "required": [
-                    "RootModel"
-                ],
                 "title": "ReferenceCreate"
             },
             "SDSData": {
@@ -2143,31 +2099,21 @@
             "Sex": {
                 "properties": {
                     "male": {
-                        "anyOf": [
+                        "allOf": [
                             {
                                 "$ref": "#/components/schemas/MeasurementMethod"
-                            },
-                            {
-                                "type": "null"
                             }
                         ]
                     },
                     "female": {
-                        "anyOf": [
+                        "allOf": [
                             {
                                 "$ref": "#/components/schemas/MeasurementMethod"
-                            },
-                            {
-                                "type": "null"
                             }
                         ]
                     }
                 },
                 "type": "object",
-                "required": [
-                    "male",
-                    "female"
-                ],
                 "title": "Sex"
             },
             "ValidationError": {

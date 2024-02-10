@@ -77,14 +77,14 @@ class SDSData(BaseModel):
 
 
 class PlottableData(BaseModel):
-    centile_data: CentileData
-    sds_data: SDSData
+    centile_data: Optional[CentileData]=None
+    sds_data: Optional[SDSData]=None
 
 
 class BirthData(BaseModel):
     birth_date: date
-    gestation_weeks: Optional[int]
-    gestation_days: Optional[int]
+    gestation_weeks: Optional[int]=None
+    gestation_days: Optional[int]=None
     estimated_date_delivery: Optional[date]
     estimated_date_delivery_string: Optional[str]
     sex: Literal['male', 'female']
@@ -106,31 +106,31 @@ class MeasurementDates(BaseModel):
     observation_date: date
     chronological_decimal_age: float
     corrected_decimal_age: float
-    chronological_calendar_age: Optional[str]
-    corrected_calendar_age: Optional[str]
+    chronological_calendar_age: Optional[str]=None
+    corrected_calendar_age: Optional[str]=None
     corrected_gestational_age: CorrectedGestationalAge
     comments: Comments
-    corrected_decimal_age_error: Optional[str]
-    chronological_decimal_age_error: Optional[str]
+    corrected_decimal_age_error: Optional[str]=None
+    chronological_decimal_age_error: Optional[str]=None
 
 
 class ChildObservationValue(BaseModel):
     measurement_method: Literal['height', 'weight', 'ofc', 'bmi']
     observation_value: float
-    observation_value_error: Optional[str]
+    observation_value_error: Optional[str]=None
 
 
 class MeasurementCalculatedValues(BaseModel):
-    corrected_sds: Optional[float]
-    corrected_centile: Optional[float]
-    corrected_centile_band: Optional[str]
-    chronological_sds: Optional[float]
-    chronological_centile: Optional[float]
-    chronological_centile_band: Optional[str]
-    corrected_measurement_error: Optional[str]
-    chronological_measurement_error: Optional[str]
-    corrected_percentage_median_bmi: Optional[float]
-    chronological_percentage_median_bmi: Optional[float]
+    corrected_sds: Optional[float]=None
+    corrected_centile: Optional[float]=None
+    corrected_centile_band: Optional[str]=None
+    chronological_sds: Optional[float]=None
+    chronological_centile: Optional[float]=None
+    chronological_centile_band: Optional[str]=None
+    corrected_measurement_error: Optional[str]=None
+    chronological_measurement_error: Optional[str]=None
+    corrected_percentage_median_bmi: Optional[float]=None
+    chronological_percentage_median_bmi: Optional[float]=None
 
 
 class MeasurementObject(BaseModel):
@@ -144,31 +144,31 @@ class MeasurementObject(BaseModel):
 
 
 class Data(BaseModel):
-    l: str
+    l: float
     x: float
-    y: Optional[float]
+    y: float
 
 
 class Centile(BaseModel):
     sds: float
     centile: float
-    data: Optional[List[Data]]
+    data: List[Data]
 
 
 class MeasurementMethod(BaseModel):
-    height: Optional[List[Centile]]
-    weight: Optional[List[Centile]]
-    ofc: Optional[List[Centile]]
-    bmi: Optional[List[Centile]]
+    height: List[Centile]
+    weight: Optional[List[Centile]]=None
+    ofc: Optional[List[Centile]]=None
+    bmi: Optional[List[Centile]]=None
 
 
 class Sex(BaseModel):
-    male: Optional[MeasurementMethod]
-    female: Optional[MeasurementMethod]
+    male: MeasurementMethod=None
+    female: MeasurementMethod=None
 
 
-class ReferenceCreate(BaseModel):
-    RootModel: Dict[str, Sex]
+class ReferenceCreate(RootModel[Dict[str, Dict]]):
+    root: Dict[str, Sex]
 
     # class Config:
     #     schema_extra = {
@@ -208,5 +208,5 @@ class MidParentalHeightResponse(BaseModel):
     mid_parental_height_centile_data: List[ReferenceCreate]
     mid_parental_height_lower_centile_data: List[ReferenceCreate]
     mid_parental_height_upper_centile_data: List[ReferenceCreate]
-    mid_parental_height_upper_value: Optional[float]
-    mid_parental_height_lower_value: Optional[float]
+    mid_parental_height_upper_value: Optional[float]=None
+    mid_parental_height_lower_value: Optional[float]=None
