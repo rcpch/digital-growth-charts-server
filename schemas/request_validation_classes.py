@@ -3,8 +3,7 @@ from datetime import date, datetime
 from typing import Optional, Literal, Union, List
 
 # third party imports
-from pydantic import BaseModel, Field, validator
-from rcpchgrowth import constants
+from pydantic import BaseModel, Field, field_validator
 
 # local / rcpch imports
 from rcpchgrowth.constants.reference_constants import TRISOMY_21, TURNERS, UK_WHO
@@ -84,7 +83,7 @@ class MeasurementRequest(BaseModel):
         description="A list of strings. Contextual text which are associated with each measurement.",
     )
 
-    @validator("birth_date", pre=True)
+    @field_validator("birth_date", mode="before")
     def parse_date(cls, value):
         return datetime.strptime(value, "%Y-%m-%d").date()
 
@@ -113,7 +112,7 @@ class ChartCoordinateRequest(BaseModel):
         description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles'], or accepts a list of floats as a custom centile format e.g. [7/10/20/30/40/50/60/70/80/90/93]. Defaults to cole-nine-centiles",
     )
 
-    @validator("centile_format", "is_sds")
+    @field_validator("centile_format", "is_sds")
     def custom_centiles_must_not_exceed_fifteen(cls, v, values):
         if type(v) is list and len(v) > 15:
             raise ValueError("Centile/SDS formats cannot exceed 15 items.")
