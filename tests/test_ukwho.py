@@ -120,7 +120,6 @@ def test_ukwho_chart_data_with_invalid_request():
     # assert validation_errors['sex']['msg'] == "unexpected value; permitted: 'male', 'female'"
     # assert validation_errors['measurement_method']['msg'] == "unexpected value; permitted: 'height', 'weight', 'ofc', 'bmi'"
 
-@pytest.mark.skip
 def test_ukwho_fictional_child_data_with_valid_request():
 
     body = {
@@ -151,7 +150,6 @@ def test_ukwho_fictional_child_data_with_valid_request():
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
     # assert response.json() == json.loads(fictional_child_data_file)
 
-@pytest.mark.skip
 def test_ukwho_fictional_child_data_with_invalid_request():
 
     body = {
