@@ -4,7 +4,7 @@
 # third party dependencies
 fastapi[all]
 uvicorn[standard]
-pydantic
+pydantic == 1.*
 
 # rcpch dependencies
 # python package which does the centile and SDS calculations
