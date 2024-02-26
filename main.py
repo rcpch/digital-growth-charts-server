@@ -14,7 +14,7 @@ from rcpchgrowth import chart_functions, constants
 from routers import trisomy_21, turners, uk_who, utilities
 
 
-version='4.2.18'  # this is set by bump version
+version='4.2.19'  # this is set by bump version
 
 # Declare the FastAPI app
 app = FastAPI(
