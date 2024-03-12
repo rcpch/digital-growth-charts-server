@@ -14,6 +14,7 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - live
+  workflow_dispatch:
 permissions:
   contents: write
   pull-requests: write # this permission is required in order to allow PR comment with staging URL
