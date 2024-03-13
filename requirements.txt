@@ -14,7 +14,7 @@
 # get access to the GitHub token, you can uncomment the line below to access the normal version.
 # Most things will work fine, but some features will be disabled:
 
-# mkdocs-material
+mkdocs-material
 
 # for the APIspec page at {{baseurl}}/integrator/api-reference/
 mkdocs-render-swagger-plugin

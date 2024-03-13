@@ -164,18 +164,18 @@ markdown_extensions:
   - admonition
   - attr_list
   - md_in_html #insiders
-  #- pymdownx.details
-  # - pymdownx.emoji:
-  #     emoji_generator: !!python/name:materialx.emoji.to_svg
-  #     emoji_index: !!python/name:materialx.emoji.twemoji
-  #- pymdownx.highlight
-  #- pymdownx.inlinehilite
-  #- pymdownx.keys
-  # - pymdownx.snippets:
-  #     check_paths: true
-  #     auto_append:
-  #       - includes/_abbreviations.md # adds abbreviations snippets to ALL pages
-  #- pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:materialx.emoji.twemoji
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.snippets:
+      check_paths: true
+      auto_append:
+        - includes/_abbreviations.md # adds abbreviations snippets to ALL pages
+  - pymdownx.superfences
   - toc:
       permalink: false
 
