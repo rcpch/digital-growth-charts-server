@@ -4,6 +4,8 @@ from typing import Optional, Literal, Union, List
 
 # third party imports
 from pydantic import BaseModel, Field, field_validator
+from pydantic_core.core_schema import FieldValidationInfo
+
 
 # local / rcpch imports
 from rcpchgrowth.constants.reference_constants import TRISOMY_21, TURNERS, UK_WHO
@@ -22,9 +24,6 @@ class MeasurementRequest(BaseModel):
     It all ends up in the openAPI documentation, automagically.
     """
 
-    birth_date: date = Field(
-        ..., description="Date of birth of the patient, in the format YYYY-MM-DD"
-    )
     gestation_days: Optional[int] = Field(
         0,
         ge=0,
@@ -47,6 +46,9 @@ class MeasurementRequest(BaseModel):
     observation_value: float = Field(
         ...,
         description="The value of the measurement supplied. This is supplied as a floating point number. All measurements should be supplied as **centimetres**, with the exception of Body Mass Index which is supplied as kilograms per metre squared (kg/m²).",
+    )
+    birth_date: date = Field(
+        ..., description="Date of birth of the patient, in the format YYYY-MM-DD"
     )
     sex: Literal["male", "female"] = Field(
         ...,
@@ -86,6 +88,12 @@ class MeasurementRequest(BaseModel):
     @field_validator("birth_date", mode="before")
     def parse_date(cls, value):
         return datetime.strptime(value, "%Y-%m-%d").date()
+    
+    @field_validator("birth_date", mode="after")
+    def birth_date_not_after_clinic_date(cls, v, info: FieldValidationInfo):
+        if 'observation_date' in info.data and v > info.data['observation_date']:
+            raise ValueError("Birth date cannot be after observation date.")
+        return v
 
 
 cole_centiles = COLE_TWO_THIRDS_SDS_NINE_CENTILES

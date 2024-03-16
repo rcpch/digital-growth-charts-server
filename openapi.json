@@ -1808,12 +1808,6 @@
             },
             "MeasurementRequest": {
                 "properties": {
-                    "birth_date": {
-                        "type": "string",
-                        "format": "date",
-                        "title": "Birth Date",
-                        "description": "Date of birth of the patient, in the format YYYY-MM-DD"
-                    },
                     "gestation_days": {
                         "anyOf": [
                             {
@@ -1865,6 +1859,12 @@
                         "type": "number",
                         "title": "Observation Value",
                         "description": "The value of the measurement supplied. This is supplied as a floating point number. All measurements should be supplied as **centimetres**, with the exception of Body Mass Index which is supplied as kilograms per metre squared (kg/m\u00b2)."
+                    },
+                    "birth_date": {
+                        "type": "string",
+                        "format": "date",
+                        "title": "Birth Date",
+                        "description": "Date of birth of the patient, in the format YYYY-MM-DD"
                     },
                     "sex": {
                         "type": "string",
@@ -1958,10 +1958,10 @@
                 },
                 "type": "object",
                 "required": [
-                    "birth_date",
                     "measurement_method",
                     "observation_date",
                     "observation_value",
+                    "birth_date",
                     "sex"
                 ],
                 "title": "MeasurementRequest",
