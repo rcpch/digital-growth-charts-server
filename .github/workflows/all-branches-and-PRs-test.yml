@@ -1,4 +1,3 @@
-
 name: Run Pytest on pushes to main branches or PRs to any branch
 
 on:
@@ -16,13 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
-      - uses: actions/checkout@v4 # latest as at Feb 2024
+      - uses: actions/checkout@v5 # latest as at March 2024, uses node 20
 
       - name: Set up Python version ${{ matrix.python-version }}
-        uses: actions/setup-python@v4 # latest as at Feb 2024
+        uses: actions/setup-python@v5 # latest as at March 2024, uses node 20
         with:
           python-version: ${{ matrix.python-version }}
 
