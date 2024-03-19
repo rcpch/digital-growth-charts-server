@@ -6,4 +6,4 @@
 # Executes Pytest suite within Docker container
 # Can only be run once container is running
 
-docker exec digital-growth-charts-server-growth-api-1 pytest
+docker exec digital-growth-charts-server-growth-api-1 pytest -vv
