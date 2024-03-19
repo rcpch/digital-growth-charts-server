@@ -65,15 +65,32 @@ def test_ukwho_calculation_with_invalid_request():
 
     # COMMENTED OUT FOR BRANCH 'dockerise' PENDING DECISION ON #166 (API Test Suite) (pacharanero, 2024-02-07 )
     # restructure the response to make it easier to assert tests specifically
-    # validation_errors = {error['loc'][1]: error for error in response.json(
-    # )['detail']}
-    # assert validation_errors['birth_date']['msg'] == "time data 'invalid_birth_date' does not match format '%Y-%m-%d'"
-    # assert validation_errors['gestation_days']['msg'] == "value is not a valid integer"
-    # assert validation_errors['gestation_weeks']['msg'] == "value is not a valid integer"
-    # assert validation_errors['measurement_method']['msg'] == "unexpected value; permitted: 'height', 'weight', 'ofc', 'bmi'"
-    # assert validation_errors['observation_date']['msg'] == "invalid date format"
-    # assert validation_errors['observation_value']['msg'] == "value is not a valid float"
-    # assert validation_errors['sex']['msg'] == "unexpected value; permitted: 'male', 'female'"
+    validation_errors = {error["loc"][1]: error for error in response.json()["detail"]}
+    assert (
+        validation_errors["birth_date"]["msg"]
+        == "Value error, time data 'invalid_birth_date' does not match format '%Y-%m-%d'"
+    )
+    assert (
+        validation_errors["gestation_days"]["msg"]
+        == "Input should be a valid integer, unable to parse string as an integer"
+    )
+    assert (
+        validation_errors["gestation_weeks"]["msg"]
+        == "Input should be a valid integer, unable to parse string as an integer"
+    )
+    assert (
+        validation_errors["measurement_method"]["msg"]
+        == "Input should be 'height', 'weight', 'ofc' or 'bmi'"
+    )
+    assert (
+        validation_errors["observation_date"]["msg"]
+        == "Input should be a valid date or datetime, invalid character in year"
+    )
+    assert (
+        validation_errors["observation_value"]["msg"]
+        == "Input should be a valid number, unable to parse string as a number"
+    )
+    assert validation_errors["sex"]["msg"] == "Input should be 'male' or 'female'"
 
 
 """
