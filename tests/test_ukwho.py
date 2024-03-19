@@ -38,12 +38,11 @@ def test_ukwho_calculation_with_valid_request():
 
     assert response.status_code == 200
 
-    # COMMENTED OUT FOR BRANCH 'dockerise' PENDING DECISION ON #166 (API Test Suite) (pacharanero, 2024-02-07 )
     # load the known-correct response from file
     with open(r"tests/test_data/test_ukwho_calculation_valid.json", "r") as file:
         calculation_file = file.read()
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
-    # assert response.json() == json.loads(calculation_file)
+    assert response.json() == json.loads(calculation_file)
 
 
 def test_ukwho_calculation_with_invalid_request():
@@ -63,7 +62,6 @@ def test_ukwho_calculation_with_invalid_request():
 
     assert response.status_code == 422
 
-    # COMMENTED OUT FOR BRANCH 'dockerise' PENDING DECISION ON #166 (API Test Suite) (pacharanero, 2024-02-07 )
     # restructure the response to make it easier to assert tests specifically
     validation_errors = {error["loc"][1]: error for error in response.json()["detail"]}
     assert (
@@ -93,11 +91,6 @@ def test_ukwho_calculation_with_invalid_request():
     assert validation_errors["sex"]["msg"] == "Input should be 'male' or 'female'"
 
 
-"""
-Fails for the same reason as chart coordinates - missing input from response, centile_data, 0, RootModel
-"""
-
-
 @pytest.mark.skip(
     reason="Complicated response to debug - needs further work. Note l key has changed from str to float."
 )
@@ -113,7 +106,6 @@ def test_ukwho_chart_data_with_valid_request():
 
     assert response.status_code == 200
 
-    # COMMENTED OUT FOR BRANCH 'dockerise' PENDING DECISION ON #166 (API Test Suite) (pacharanero, 2024-02-07 )
     # load the known-correct response from file and create a hash of it
     # with open(r'tests/test_data/test_uk_who_male_height_valid.json', 'r') as file:
     #     chart_data_file = file.read()
@@ -145,7 +137,6 @@ def test_ukwho_chart_data_with_invalid_request():
     # assert validation_errors['measurement_method']['msg'] == "unexpected value; permitted: 'height', 'weight', 'ofc', 'bmi'"
 
 
-@pytest.mark.skip
 def test_ukwho_fictional_child_data_with_valid_request():
 
     body = {
@@ -169,12 +160,13 @@ def test_ukwho_fictional_child_data_with_valid_request():
 
     assert response.status_code == 200
 
-    # COMMENTED OUT FOR BRANCH 'dockerise' PENDING DECISION ON #166 (API Test Suite) (pacharanero, 2024-02-07 )
     # load the known-correct response from file
-    # with open(r'tests/test_data/test_ukwho_fictional_child_data_valid.json', 'r') as file:
-    #     fictional_child_data_file = file.read()
+    with open(
+        r"tests/test_data/test_ukwho_fictional_child_data_valid.json", "r"
+    ) as file:
+        fictional_child_data_file = file.read()
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
-    # assert response.json() == json.loads(fictional_child_data_file)
+    assert response.json() == json.loads(fictional_child_data_file)
 
 
 def test_ukwho_fictional_child_data_with_invalid_request():
