@@ -15,6 +15,7 @@
                 "description": "## UK-WHO Centile and SDS Calculations\n\n* These are the 'standard' centiles for children in the UK. It uses a hybrid of the WHO and UK90 datasets.\n* For non-UK use you may need the WHO-only or CDC charts which we do not yet support, but we may add if demand is there.  Please contact us.\n* Returns a single centile/SDS calculation for the selected `measurement_method`.\n* Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.\n* Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').\n* Note that BMI must be precalculated for the `bmi` function.\n* Dates will discard anything after first 'T' in `YYYY-MM-DDTHH:MM:SS.milliseconds+TZ` etc\n* Optional Bone age data associated with a height can be passed:\n*   - `bone_age` as a float in years\n*   - `bone_age_sds` and `bone_age_centile` as floats\n*   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`\n* Optional events can be passed in as a list of strings - each list is associated with a measurement",
                 "operationId": "uk_who_calculation_uk_who_calculation_post",
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
@@ -170,26 +171,20 @@
                 "description": "## Turner's Syndrome Centile and SDS Calculations.\n\n* This endpoint MUST ONLY be used for **female** children with the chromosomal disorder Turner's Syndrome (45,XO karyotype).\n* Returns a single centile/SDS calculation for the selected `measurement_method`.\n* Gestational age correction will be applied automatically if appropriate, according to the gestational age at birth data supplied.\n* Available `measurement_method`s are: `height` **only** because this reference data is all that exists.\n* Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc\n* Optional Bone age data associated with a height can be passed:\n*   - `bone_age` as a float in years\n*   - `bone_age_sds` and `bone_age_centile` as floats\n*   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`\n* Optional events can be passed in as a list of strings - each list is associated with a measurement",
                 "operationId": "turner_calculation_turner_calculation_post",
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/MeasurementRequest"
-                                    }
-                                ],
-                                "title": "Measurementrequest",
-                                "examples": [
-                                    {
-                                        "birth_date": "2020-04-12",
-                                        "observation_date": "2024-06-12",
-                                        "observation_value": 78,
-                                        "measurement_method": "height",
-                                        "sex": "female",
-                                        "gestation_weeks": 39,
-                                        "gestation_days": 2
-                                    }
-                                ]
+                                "$ref": "#/components/schemas/MeasurementRequest"
+                            },
+                            "example": {
+                                "birth_date": "2020-04-12",
+                                "observation_date": "2024-06-12",
+                                "observation_value": 78,
+                                "measurement_method": "height",
+                                "sex": "female",
+                                "gestation_weeks": 39,
+                                "gestation_days": 2
                             }
                         }
                     },
@@ -316,26 +311,20 @@
                 "description": "# Trisomy-21 Centile and SDS Calculations.\n\n* This endpoint MUST ONLY be used for children with Trisomy 21 (Down's Syndrome).\n* Returns a single centile/SDS calculation for the selected `measurement_method`.\n* Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.\n* Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').\n* Note that BMI must be precalculated for the `bmi` function.\n* Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc\n* Optional Bone age data associated with a height can be passed:\n*   - `bone_age` as a float in years\n*   - `bone_age_sds` and `bone_age_centile` as floats\n*   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`\n* Optional events can be passed in as a list of strings - each list is associated with a measurement",
                 "operationId": "trisomy_21_calculation_trisomy_21_calculation_post",
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/MeasurementRequest"
-                                    }
-                                ],
-                                "title": "Measurementrequest",
-                                "examples": [
-                                    {
-                                        "birth_date": "2020-04-12",
-                                        "observation_date": "2020-06-12",
-                                        "observation_value": 60,
-                                        "measurement_method": "height",
-                                        "sex": "male",
-                                        "gestation_weeks": 40,
-                                        "gestation_days": 4
-                                    }
-                                ]
+                                "$ref": "#/components/schemas/MeasurementRequest"
+                            },
+                            "example": {
+                                "birth_date": "2020-04-12",
+                                "observation_date": "2020-06-12",
+                                "observation_value": 60,
+                                "measurement_method": "height",
+                                "sex": "male",
+                                "gestation_weeks": 40,
+                                "gestation_days": 4
                             }
                         }
                     },
