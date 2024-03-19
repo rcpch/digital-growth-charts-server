@@ -48,12 +48,15 @@ def test_midparental_height_with_invalid_request():
     # restructure the response to make it easier to assert tests specifically
     validation_errors = {error["loc"][1]: error for error in response.json()["detail"]}
 
-    assert validation_errors["height_paternal"]["msg"] == "value is not a valid float"
-    assert validation_errors["height_maternal"]["msg"] == "value is not a valid float"
     assert (
-        validation_errors["sex"]["msg"]
-        == "unexpected value; permitted: 'male', 'female'"
+        validation_errors["height_paternal"]["msg"]
+        == "Input should be a valid number, unable to parse string as a number"
     )
+    assert (
+        validation_errors["height_maternal"]["msg"]
+        == "Input should be a valid number, unable to parse string as a number"
+    )
+    assert validation_errors["sex"]["msg"] == "Input should be 'male' or 'female'"
 
 
 def test_midparental_height_parental_heights_ge_fifty_expected_fail():
@@ -72,11 +75,11 @@ def test_midparental_height_parental_heights_ge_fifty_expected_fail():
 
     assert (
         validation_errors["height_paternal"]["msg"]
-        == "ensure this value is greater than or equal to 50"
+        == "Input should be greater than or equal to 50"
     )
     assert (
         validation_errors["height_maternal"]["msg"]
-        == "ensure this value is greater than or equal to 50"
+        == "Input should be greater than or equal to 50"
     )
 
 
@@ -94,8 +97,7 @@ def test_midparental_height_paternal_height_lt_twofortyfive_expected_fail():
     paternal_validation_errors = response.json()["detail"][0]
 
     assert (
-        paternal_validation_errors["msg"]
-        == "ensure this value is less than or equal to 245"
+        paternal_validation_errors["msg"] == "Input should be less than or equal to 245"
     )
 
 
@@ -113,6 +115,5 @@ def test_midparental_height_maternal_height_lt_twofortyfive_expected_fail():
     maternal_validation_errors = response.json()["detail"][0]
 
     assert (
-        maternal_validation_errors["msg"]
-        == "ensure this value is less than or equal to 245"
+        maternal_validation_errors["msg"] == "Input should be less than or equal to 245"
     )

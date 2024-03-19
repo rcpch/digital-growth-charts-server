@@ -1971,18 +1971,17 @@
             "MidParentalHeightRequest": {
                 "properties": {
                     "height_paternal": {
-                        "title": "Height Paternal",
+                        "type": "number",
                         "maximum": 245.0,
                         "minimum": 50.0,
-                        "type": "number",
                         "title": "Height Paternal",
                         "description": "The height of the child's biological father, passed as float, measured in centimeters"
                     },
                     "height_maternal": {
-                        "title": "Height Maternal",
+                        "type": "number",
                         "maximum": 245.0,
                         "minimum": 50.0,
-                        "type": "number",
+                        "title": "Height Maternal",
                         "description": "The height of the child's biological mother, passed as float, measured in centimeters"
                     },
                     "sex": {
