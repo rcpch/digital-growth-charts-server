@@ -997,6 +997,7 @@
                 "required": [
                     "bone_age_type",
                     "age_type",
+                    "lay_comment",
                     "clinician_comment"
                 ],
                 "title": "ChronologicalDecimalAgeData"
