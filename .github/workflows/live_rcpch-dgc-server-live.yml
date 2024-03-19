@@ -15,10 +15,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4 # latest as at March 2024
 
       - name: Set up Python version
         uses: actions/setup-python@v5 # latest as at March 2024
+        with:
           python-version: '3.12'
 
       - name: Create and start virtual environment
