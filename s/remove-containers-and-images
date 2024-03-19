@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -v  # Enable verbose mode
+set -e  # Exit on error
+
+# scripts may need to be made executable on some platforms before they can be run
+# chmod +x <filename> is the command to do this on unixy systems
+
+# shuts down the Docker Compose setup AND deletes containers and images (but not volumes)
+docker compose down --rmi local # removes the container and local images

@@ -3,8 +3,9 @@ from datetime import date, datetime
 from typing import Optional, Literal, Union, List
 
 # third party imports
-from pydantic import BaseModel, Field, validator
-from rcpchgrowth import constants
+from pydantic import BaseModel, Field, field_validator
+from pydantic_core.core_schema import FieldValidationInfo
+
 
 # local / rcpch imports
 from rcpchgrowth.constants.reference_constants import TRISOMY_21, TURNERS, UK_WHO
@@ -22,10 +23,6 @@ class MeasurementRequest(BaseModel):
     We aim to specify all textual information, constraints, and validation here.
     It all ends up in the openAPI documentation, automagically.
     """
-
-    birth_date: date = Field(
-        ..., description="Date of birth of the patient, in the format YYYY-MM-DD"
-    )
     gestation_days: Optional[int] = Field(
         0,
         ge=0,
@@ -48,6 +45,9 @@ class MeasurementRequest(BaseModel):
     observation_value: float = Field(
         ...,
         description="The value of the measurement supplied. This is supplied as a floating point number. All measurements should be supplied as **centimetres**, with the exception of Body Mass Index which is supplied as kilograms per metre squared (kg/m²).",
+    )
+    birth_date: date = Field(
+        ..., description="Date of birth of the patient, in the format YYYY-MM-DD"
     )
     sex: Literal["male", "female"] = Field(
         ...,
@@ -84,10 +84,15 @@ class MeasurementRequest(BaseModel):
         description="A list of strings. Contextual text which are associated with each measurement.",
     )
 
-    @validator("birth_date", pre=True)
+    @field_validator("birth_date", mode="before")
     def parse_date(cls, value):
         return datetime.strptime(value, "%Y-%m-%d").date()
-
+    
+    @field_validator("birth_date", mode="after")
+    def birth_date_not_after_clinic_date(cls, v, info: FieldValidationInfo):
+        if 'observation_date' in info.data and v > info.data['observation_date']:
+            raise ValueError("Birth date cannot be after observation date.")
+        return v
 
 cole_centiles = COLE_TWO_THIRDS_SDS_NINE_CENTILES
 three_percent_centiles = THREE_PERCENT_CENTILES
@@ -113,7 +118,7 @@ class ChartCoordinateRequest(BaseModel):
         description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles'], or accepts a list of floats as a custom centile format e.g. [7/10/20/30/40/50/60/70/80/90/93]. Defaults to cole-nine-centiles",
     )
 
-    @validator("centile_format", "is_sds")
+    @field_validator("centile_format", "is_sds")
     def custom_centiles_must_not_exceed_fifteen(cls, v, values):
         if type(v) is list and len(v) > 15:
             raise ValueError("Centile/SDS formats cannot exceed 15 items.")

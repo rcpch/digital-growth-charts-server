@@ -1,6 +1,0 @@
-#!/bin/bash
-
-# runs the API server in development mode and auto-reload
-# port: 8000 (FastAPI's default)
-
-uvicorn main:app --reload

@@ -57,8 +57,8 @@
                     "Growth Hormone Deficiency diagnosis"
                 ],
                 "bone_age_type": "greulich-pyle",
-                "bone_age_sds": "2.0",
-                "bone_age_centile": "98.0",
+                "bone_age_sds": 2.0,
+                "bone_age_centile": 98.0,
                 "observation_error": null,
                 "age_type": "chronological_age",
                 "calendar_age": "8 years and 2 months",
@@ -80,8 +80,8 @@
                     "Growth Hormone Deficiency diagnosis"
                 ],
                 "bone_age_type": "greulich-pyle",
-                "bone_age_sds": "2.0",
-                "bone_age_centile": "98.0",
+                "bone_age_sds": 2.0,
+                "bone_age_centile": 98.0,
                 "observation_error": null,
                 "age_type": "corrected_age",
                 "calendar_age": "8 years and 2 months",
@@ -106,8 +106,8 @@
                     "Growth Hormone Deficiency diagnosis"
                 ],
                 "bone_age_type": "greulich-pyle",
-                "bone_age_sds": "2.0",
-                "bone_age_centile": "98.0",
+                "bone_age_sds": 2.0,
+                "bone_age_centile": 98.0,
                 "observation_error": null,
                 "age_type": "chronological_age",
                 "calendar_age": "8 years and 2 months",
@@ -129,8 +129,8 @@
                     "Growth Hormone Deficiency diagnosis"
                 ],
                 "bone_age_type": "greulich-pyle",
-                "bone_age_sds": "2.0",
-                "bone_age_centile": "98.0",
+                "bone_age_sds": 2.0,
+                "bone_age_centile": 98.0,
                 "observation_error": null,
                 "age_type": "corrected_age",
                 "calendar_age": "8 years and 2 months",
