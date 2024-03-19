@@ -1,6 +1,7 @@
 """
 Trisomy 21 router
 """
+
 # Standard imports
 import json
 from pathlib import Path
@@ -9,7 +10,12 @@ from schemas.response_schema_classes import Centile_Data, MeasurementObject
 # Third party imports
 from fastapi import APIRouter, Body, HTTPException
 from typing import List
-from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart
+from rcpchgrowth import (
+    Measurement,
+    constants,
+    generate_fictional_child_data,
+    create_chart,
+)
 from rcpchgrowth.constants.reference_constants import TRISOMY_21
 
 # local imports
@@ -22,9 +28,11 @@ trisomy_21 = APIRouter(
 
 
 @trisomy_21.post("/calculation", tags=["trisomy-21"], response_model=MeasurementObject)
-def trisomy_21_calculation(measurementRequest: MeasurementRequest = Body(
-            ...,
-            example={
+def trisomy_21_calculation(
+    measurementRequest: MeasurementRequest = Body(
+        ...,
+        examples=[
+            {
                 "birth_date": "2020-04-12",
                 "observation_date": "2020-06-12",
                 "observation_value": 60,
@@ -33,15 +41,16 @@ def trisomy_21_calculation(measurementRequest: MeasurementRequest = Body(
                 "gestation_weeks": 40,
                 "gestation_days": 4,
             }
-        )
-    ):
+        ],
+    )
+):
     """
     # Trisomy-21 Centile and SDS Calculations.
 
-    * This endpoint MUST ONLY be used for children with Trisomy 21 (Down's Syndrome).  
-    * Returns a single centile/SDS calculation for the selected `measurement_method`.  
-    * Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.  
-    * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').  
+    * This endpoint MUST ONLY be used for children with Trisomy 21 (Down's Syndrome).
+    * Returns a single centile/SDS calculation for the selected `measurement_method`.
+    * Gestational age correction will be applied automatically if appropriate according to the gestational age at birth data supplied.
+    * Available `measurement_method`s are: `height`, `weight`, `bmi`, or `ofc` (OFC = occipitofrontal circumference = 'head circumference').
     * Note that BMI must be precalculated for the `bmi` function.
     * Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc
     * Optional Bone age data associated with a height can be passed:
@@ -65,7 +74,7 @@ def trisomy_21_calculation(measurementRequest: MeasurementRequest = Body(
             bone_age_sds=measurementRequest.bone_age_sds,
             bone_age_text=measurementRequest.bone_age_text,
             bone_age_type=measurementRequest.bone_age_type,
-            events_text=measurementRequest.events_text
+            events_text=measurementRequest.events_text,
         ).measurement
         return calculation
     except Exception as err:
@@ -76,7 +85,7 @@ def trisomy_21_calculation(measurementRequest: MeasurementRequest = Body(
 def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
     """
     ## Trisomy-21 Chart Coordinates Data.
-        
+
     * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
     * Requires a sex ('male' or 'female' lowercase) and a measurement_method ('height', 'weight' ,'bmi', 'ofc')
     * If custom centiles/sds collections (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter
@@ -103,33 +112,47 @@ def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):
         ... repeat for weight, bmi, ofc, based on which measurements supplied. If only height data supplied, only height centile data returned
     ]
     """
-    chart_data=None
-    if (type(chartParams.centile_format) is list):
+    chart_data = None
+    if type(chartParams.centile_format) is list:
         # custom centiles requested - calculate these and return. Do not persist
         try:
             chart_data = create_chart(
-                TRISOMY_21, 
-                chartParams.centile_format, 
-                measurement_method=chartParams.measurement_method, 
+                TRISOMY_21,
+                chartParams.centile_format,
+                measurement_method=chartParams.measurement_method,
                 sex=chartParams.sex,
-                is_sds=chartParams.is_sds)
+                is_sds=chartParams.is_sds,
+            )
         except:
-            return HTTPException(status_code=422, detail=f"Error creating {chartParams.sex} {chartParams.measurement_method} Trisomy 21 chart on the server, using {chartParams.centile_format} centile format.")
+            return HTTPException(
+                status_code=422,
+                detail=f"Error creating {chartParams.sex} {chartParams.measurement_method} Trisomy 21 chart on the server, using {chartParams.centile_format} centile format.",
+            )
     else:
         chart_data_file = Path(
-                    f'chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json')
+            f"chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json"
+        )
         if chart_data_file.exists():
-            print(f'Chart data file exists for {chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.')
-            with open(f'chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json', 'r') as file:
+            print(
+                f"Chart data file exists for {chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}."
+            )
+            with open(
+                f"chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json",
+                "r",
+            ) as file:
                 chart_data = json.load(file)
         else:
-            return HTTPException(status_code=422, detail=f"Item not found: chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json")
-        
-    return {
-        "centile_data": chart_data
-    }
+            return HTTPException(
+                status_code=422,
+                detail=f"Item not found: chart-data/{chartParams.centile_format}-{constants.TRISOMY_21}-{chartParams.sex}-{chartParams.measurement_method}.json",
+            )
 
-@trisomy_21.post('/fictional-child-data', tags=["trisomy-21"], response_model=List[MeasurementObject])
+    return {"centile_data": chart_data}
+
+
+@trisomy_21.post(
+    "/fictional-child-data", tags=["trisomy-21"], response_model=List[MeasurementObject]
+)
 def fictional_child_data(fictional_child_request: FictionalChildRequest):
     """
     ## Trisomy-21 Fictional Child Data Endpoint
@@ -151,9 +174,11 @@ def fictional_child_data(fictional_child_request: FictionalChildRequest):
             drift_range=fictional_child_request.drift_range,
             noise=fictional_child_request.noise,
             noise_range=fictional_child_request.noise_range,
-            reference=TRISOMY_21
+            reference=TRISOMY_21,
         )
         return life_course_fictional_child_data
-    except: 
-        return HTTPException(status_code=422, detail=f"Not possible to create Trisomy 21 fictional child data.")
-        
+    except:
+        return HTTPException(
+            status_code=422,
+            detail=f"Not possible to create Trisomy 21 fictional child data.",
+        )

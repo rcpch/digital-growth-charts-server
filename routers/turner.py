@@ -1,6 +1,7 @@
 """
 Turner router
 """
+
 # Standard imports
 import json
 from pathlib import Path
@@ -11,7 +12,12 @@ from fastapi import APIRouter, Body, HTTPException
 from schemas.response_schema_classes import Centile_Data, MeasurementObject
 
 # RCPCH imports
-from rcpchgrowth import Measurement, constants, generate_fictional_child_data, create_chart
+from rcpchgrowth import (
+    Measurement,
+    constants,
+    generate_fictional_child_data,
+    create_chart,
+)
 from rcpchgrowth.constants.reference_constants import TURNERS
 from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
 
@@ -20,26 +26,33 @@ turners = APIRouter(
     prefix="/turner",
 )
 
-@turners.post("/calculation", tags=["turners-syndrome"], response_model=MeasurementObject)
-def turner_calculation(measurementRequest: MeasurementRequest = Body(
+
+@turners.post(
+    "/calculation", tags=["turners-syndrome"], response_model=MeasurementObject
+)
+def turner_calculation(
+    measurementRequest: MeasurementRequest = Body(
         ...,
-        example={
-            "birth_date": "2020-04-12",
-            "observation_date": "2024-06-12",
-            "observation_value": 78,
-            "measurement_method": "height",
-            "sex": "female",
-            "gestation_weeks": 39,
-            "gestation_days": 2,
-        }
-)):
+        examples=[
+            {
+                "birth_date": "2020-04-12",
+                "observation_date": "2024-06-12",
+                "observation_value": 78,
+                "measurement_method": "height",
+                "sex": "female",
+                "gestation_weeks": 39,
+                "gestation_days": 2,
+            }
+        ],
+    )
+):
     """
     ## Turner's Syndrome Centile and SDS Calculations.
-        
-    * This endpoint MUST ONLY be used for **female** children with the chromosomal disorder Turner's Syndrome (45,XO karyotype).  
-    * Returns a single centile/SDS calculation for the selected `measurement_method`.  
-    * Gestational age correction will be applied automatically if appropriate, according to the gestational age at birth data supplied.  
-    * Available `measurement_method`s are: `height` **only** because this reference data is all that exists.  
+
+    * This endpoint MUST ONLY be used for **female** children with the chromosomal disorder Turner's Syndrome (45,XO karyotype).
+    * Returns a single centile/SDS calculation for the selected `measurement_method`.
+    * Gestational age correction will be applied automatically if appropriate, according to the gestational age at birth data supplied.
+    * Available `measurement_method`s are: `height` **only** because this reference data is all that exists.
     * Dates will discard anything after first 'T' in YYYY-MM-DDTHH:MM:SS.milliseconds+TZ etc
     * Optional Bone age data associated with a height can be passed:
     *   - `bone_age` as a float in years
@@ -62,19 +75,21 @@ def turner_calculation(measurementRequest: MeasurementRequest = Body(
             bone_age_sds=measurementRequest.bone_age_sds,
             bone_age_text=measurementRequest.bone_age_text,
             bone_age_type=measurementRequest.bone_age_type,
-            events_text=measurementRequest.events_text
+            events_text=measurementRequest.events_text,
         ).measurement
     except ValueError as err:
         print(err.args)
         return err.args, 422
     return calculation
-    
 
-@turners.post("/chart-coordinates", tags=["turners-syndrome"], response_model=Centile_Data)
+
+@turners.post(
+    "/chart-coordinates", tags=["turners-syndrome"], response_model=Centile_Data
+)
 def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
     """
     ## Turner's Syndrome Chart Coordinates data.
-    
+
     * Returns coordinates for constructing the lines of a traditional growth chart, in JSON format
     * Note height in girls conly be only returned. It is a post request to maintain consistency with other routes.
     * If custom centiles/sds collections (individually or as a collection) are required, accepts a list of float values (up to 15) as centile_format parameter
@@ -104,39 +119,53 @@ def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
     if chartParams.sex == "male" or chartParams.measurement_method != "height":
         return "Turner data only exists for height in girls."
 
-    chart_data=None
-    if (type(chartParams.centile_format) is list):
+    chart_data = None
+    if type(chartParams.centile_format) is list:
         # custom centiles requested - calculate these and return. Do not persist
         try:
             chart_data = create_chart(
-                constants.TURNERS, 
-                chartParams.centile_format, 
-                measurement_method=chartParams.measurement_method, 
+                constants.TURNERS,
+                chartParams.centile_format,
+                measurement_method=chartParams.measurement_method,
                 sex=chartParams.sex,
-                is_sds=chartParams.is_sds)
+                is_sds=chartParams.is_sds,
+            )
         except:
-            return HTTPException(status_code=422, detail=f"Error creating {chartParams.sex} {chartParams.measurement_method} Turner's syndrome chart on the server, using {chartParams.centile_format} centile format.")
+            return HTTPException(
+                status_code=422,
+                detail=f"Error creating {chartParams.sex} {chartParams.measurement_method} Turner's syndrome chart on the server, using {chartParams.centile_format} centile format.",
+            )
     else:
         chart_data_file = Path(
-                    f'chart-data/{chartParams.centile_format}-{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.json')
+            f"chart-data/{chartParams.centile_format}-{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.json"
+        )
         if chart_data_file.exists():
-            print(f'Chart data file exists for {chartParams.centile_format}-{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.')
-            with open(f'chart-data/{chartParams.centile_format}-{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.json', 'r') as file:
+            print(
+                f"Chart data file exists for {chartParams.centile_format}-{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}."
+            )
+            with open(
+                f"chart-data/{chartParams.centile_format}-{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.json",
+                "r",
+            ) as file:
                 chart_data = json.load(file)
         else:
-            return HTTPException(status_code=422, detail=f"Item not found: chart-data/{chartParams.centile_format}-{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.json")
-        
-    return {
-        "centile_data": chart_data
-    }
+            return HTTPException(
+                status_code=422,
+                detail=f"Item not found: chart-data/{chartParams.centile_format}-{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.json",
+            )
+
+    return {"centile_data": chart_data}
 
 
-
-@turners.post('/fictional-child-data', tags=["turners-syndrome"], response_model=List[MeasurementObject])
+@turners.post(
+    "/fictional-child-data",
+    tags=["turners-syndrome"],
+    response_model=List[MeasurementObject],
+)
 def fictional_child_data(fictional_child_request: FictionalChildRequest):
     """
     ## Turner's Fictional Child Data Endpoint
-    
+
     * Generates synthetic data for demonstration or testing purposes
     """
     try:
@@ -154,8 +183,11 @@ def fictional_child_data(fictional_child_request: FictionalChildRequest):
             drift_range=fictional_child_request.drift_range,
             noise=fictional_child_request.noise,
             noise_range=fictional_child_request.noise_range,
-            reference=constants.TURNERS
+            reference=constants.TURNERS,
         )
         return life_course_fictional_child_data
     except:
-        return HTTPException(status_code=422, detail=f"Not possible to create Turner fictional child data.")
+        return HTTPException(
+            status_code=422,
+            detail=f"Not possible to create Turner fictional child data.",
+        )

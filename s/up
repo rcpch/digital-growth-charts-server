@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# UNIX based systems may require special permissions to run this file
+# run chmod +x s/<filename> to allow this
+
+docker compose up

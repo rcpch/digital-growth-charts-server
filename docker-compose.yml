@@ -1,0 +1,10 @@
+# NOTE The below is the Docker Compose specification version NOT the Python version:
+version: "3.8"
+
+services:
+  growth-api:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
