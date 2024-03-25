@@ -58,8 +58,6 @@ def test_trisomy_21_calculation_with_invalid_request():
 
     assert response.status_code == 422
 
-    # COMMENTED OUT FOR BRANCH 'dockerise' PENDING DECISION ON #166 (API Test Suite) (pacharanero, 2024-02-07 )
-    # restructure the response to make it easier to assert tests specifically
     validation_errors = {error["loc"][1]: error for error in response.json()["detail"]}
     assert (
         validation_errors["birth_date"]["msg"]
@@ -126,8 +124,6 @@ def test_trisomy_21_chart_data_with_invalid_request():
 
     assert response.status_code == 422
 
-    # COMMENTED OUT FOR BRANCH 'dockerise' PENDING DECISION ON #166 (API Test Suite) (pacharanero, 2024-02-07 )
-    # restructure the response to make it easier to assert tests specifically
     validation_errors = {error["loc"][1]: error for error in response.json()["detail"]}
     # check the validation errors are the ones we expect
     assert validation_errors["sex"]["msg"] == "Input should be 'male' or 'female'"
@@ -137,13 +133,6 @@ def test_trisomy_21_chart_data_with_invalid_request():
     )
 
 
-"""
-Fictional child data generation seems to be failing this test - Pydantic does not allow any metrics of Hours or Minutes to be passed to dates - and somewhere
-is setting datetime.datetime to have a time of 12:00
-"""
-
-
-@pytest.mark.skip
 def test_trisomy_21_fictional_child_data_with_valid_request():
 
     body = {
@@ -167,8 +156,6 @@ def test_trisomy_21_fictional_child_data_with_valid_request():
 
     assert response.status_code == 200
 
-    # COMMENTED OUT FOR BRANCH 'dockerise' PENDING DECISION ON #166 (API Test Suite) (pacharanero, 2024-02-07 )
-    # load the known-correct response from file
     with open(
         r"tests/test_data/test_trisomy_21_fictional_child_data_valid.json", "r"
     ) as file:
@@ -200,8 +187,6 @@ def test_trisomy_21_fictional_child_data_with_invalid_request():
 
     assert response.status_code == 422
 
-    # COMMENTED OUT FOR BRANCH 'dockerise' PENDING DECISION ON #166 (API Test Suite) (pacharanero, 2024-02-07 )
-    # restructure the response to make it easier to assert tests specifically
     validation_errors = {error["loc"][1]: error for error in response.json()["detail"]}
     assert (
         validation_errors["measurement_method"]["msg"]
