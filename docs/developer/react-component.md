@@ -125,183 +125,182 @@ This library has been written in Typescript. The main component is `RCPCHChart`,
 ### RCPCHChart component
 
 ??? note "`RCPCHChart` component props"
-`js
-    {
-    title: string,
-    subtitle: string,
-    measurementMethod: 'height' | 'weight' | 'ofc' | 'bmi',
-    sex: 'male' | 'female',
-    measurementsArray: [Measurement],
-    reference: 'uk-who' | 'turner' | 'trisomy-21',
-    width: number,
-    height: number,
-    chartStyle: ChartStyle,
-    axisStyle: AxisStyle,
-    gridlineStyle: GridlineStyle,
-    centileStyle: CentileStyle,
-    sdsStyle?: SDSStyle;
-    measurementStyle: MeasurementStyle
-    midParentalHeightData?: MidParentalHeightObject,
-    enableZoom?: boolean,
-    chartType?: 'centile' | 'sds',
-    enableExport: boolean,
-    exportChartCallback: function(svg: any),
-    clinicianFocus?: boolean;
-    }
-    `
+    ```js
+        {
+        title: string,
+        subtitle: string,
+        measurementMethod: 'height' | 'weight' | 'ofc' | 'bmi',
+        sex: 'male' | 'female',
+        measurementsArray: [Measurement],
+        reference: 'uk-who' | 'turner' | 'trisomy-21',
+        width: number,
+        height: number,
+        chartStyle: ChartStyle,
+        axisStyle: AxisStyle,
+        gridlineStyle: GridlineStyle,
+        centileStyle: CentileStyle,
+        sdsStyle?: SDSStyle;
+        measurementStyle: MeasurementStyle
+        midParentalHeightData?: MidParentalHeightObject,
+        enableZoom?: boolean,
+        chartType?: 'centile' | 'sds',
+        enableExport: boolean,
+        exportChartCallback: function(svg: any),
+        clinicianFocus?: boolean;
+        }
+    ```
 
 ### Measurement interface
 
 The `Measurement` interface is structured to reflect the JSON `Measurement` object which is returned by the API. The `RCPCHChart` component uses the `reference` prop to determine which chart to render. So far, 3 references are supported: UK-WHO (`uk-who`), Turner Syndrome (`turner`) and Down Syndrome (`trisomy-21`). The reference data for the centiles are included in the library in plottable format in the `chartdata` folder.
 
 !!! tip
-**You simply need to pass JSON from the dGC API directly in to the component as an array of `Measurement` JSON objects. The component 'knows' how to render this correctly. You don't need to parse, restructure, or even understand the JSON returned from the API: just pass it directly to the component inside an array containing one or more `Measurement` objects.**
+    **You simply need to pass JSON from the dGC API directly in to the component as an array of `Measurement` JSON objects. The component 'knows' how to render this correctly. You don't need to parse, restructure, or even understand the JSON returned from the API: just pass it directly to the component inside an array containing one or more `Measurement` objects.**
 
 ## Styling
 
 The styling components allow the user to customise elements of the chart. Chart styles control the chart and the tooltips.
 
 !!! note "Styling options available through `ChartStyle`"
-`js
-    interface ChartStyle{
-        backgroundColour?: string,
-        width?: number,
-        height?: number,
-        padding?: requires {left?: number, right?: number, top?: number, bottom?: number},
-        titleStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
-        subTitleStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'},,
-        tooltipBackgroundColour?: string,
-        tooltipStroke?: string,
-        tooltipTextStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
-        termFill?: string,
-        termStroke?: string,
-        infoBoxFill?: string,
-        infoBoxStroke?: string
-        infoBoxTextStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
-        toggleButtonInactiveColour: string // relates to the toggle buttons present if age correction is necessary
-        toggleButtonActiveColour: string
-        toggleButtonTextColour: string
-    }
-    `
+    ```js
+        interface ChartStyle{
+            backgroundColour?: string,
+            width?: number,
+            height?: number,
+            padding?: requires {left?: number, right?: number, top?: number, bottom?: number},
+            titleStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
+            subTitleStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'},,
+            tooltipBackgroundColour?: string,
+            tooltipStroke?: string,
+            tooltipTextStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
+            termFill?: string,
+            termStroke?: string,
+            infoBoxFill?: string,
+            infoBoxStroke?: string
+            infoBoxTextStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
+            toggleButtonInactiveColour: string // relates to the toggle buttons present if age correction is necessary
+            toggleButtonActiveColour: string
+            toggleButtonTextColour: string
+        }
+    ```
 
 Note for the tooltips and infobox text sizes, these are strokeWidths, not point sizes as the text here is SVG.
 
 ### Axis Styles
 
 ??? note "Axis styles control axes and axis labels"
-`js
-    interface AxisStyle{
-        axisStroke?: string,
-        axisLabelTextStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
-        tickLabelTextStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
-    }
-    `
+    ```js
+        interface AxisStyle{
+            axisStroke?: string,
+            axisLabelTextStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
+            tickLabelTextStyle?: requires {name?: string, colour?: string, size?: number, weight?: 'bold' | 'italic' | 'regular'}
+        }
+    ```
 
 ### Gridline Styles
 
 ??? note "Gridline styles allow/hide gridlines and control line width, presence of dashes, colour"
-`js
-    interface GridlineStyle{
-        gridlines?: boolean,
-        stroke?: string,
-        strokeWidth?: number,
-        dashed?: boolean
-    }
-    `
+    ```js
+        interface GridlineStyle{
+            gridlines?: boolean,
+            stroke?: string,
+            strokeWidth?: number,
+            dashed?: boolean
+        }
+    ```
 
 ### Centile Styles
 
 ??? note "Centile styles control the width and colour of the centile and SDS lines"
-`js
-    interface CentileStyle{
-        sdsStroke?: string,
-        sdsStrokeWidth?: string,
-        centileStroke?: string,
-        centileStrokeWidth?: number,
-        delayedPubertyAreaFill?: string,
-        midParentalCentileStroke?: number;
-        midParentalCentileStrokeWidth?: number;
-        midParentalAreaFill?: string;
-    }
-    `
+    ```js
+        interface CentileStyle{
+            sdsStroke?: string,
+            sdsStrokeWidth?: string,
+            centileStroke?: string,
+            centileStrokeWidth?: number,
+            delayedPubertyAreaFill?: string,
+            midParentalCentileStroke?: number;
+            midParentalCentileStrokeWidth?: number;
+            midParentalAreaFill?: string;
+        }
+    ```
 
 ### SDS Styles
 
 SDS styles control the colour and width of the SDS lines. As all measurement methods are rendered on a single chart, the user is offered the option of different colours for each measurement method (height, weight, head circumference(OFC) and body mass index (BMI)). If no SDS style is supplied, the centile line colour is used with an opacity applied to each measurement.
 
 ??? note "SDS Styles"
-`js
-    interface SDSStyle {
-        lineStrokeWidth?: number;
-        heightStroke?: string;
-        weightStroke?: string;
-        ofcStroke?: string;
-        bmiStroke?: string;
-    }
-    `
+    ```js
+        interface SDSStyle {
+            lineStrokeWidth?: number;
+            heightStroke?: string;
+            weightStroke?: string;
+            ofcStroke?: string;
+            bmiStroke?: string;
+        }
+    ```
 
 ### Measurement Styles
 
 Measurement styles control the plotted data points: colour, size and shape. Corrected ages are always rendered as crosses. Circles for chronological ages are preferred. On the SDS charts, measurement points are grey by default, with the measurement method in focus highlighted by rendering as a line. Points which are not highlighted can be emphasised on mouse hover, with the highlighted colour being set by the `highlightedMeasurementFill` prop.
 
 ??? note "Measurement Styles"
-`js
-    interface MeasurementStyle{
-        measurementFill?: string,
-        highLightedMeasurementFill?: string;
-    }
-    `
+    ```js
+        interface MeasurementStyle{
+            measurementFill?: string,
+            highLightedMeasurementFill?: string;
+        }
+    ```
 
 ### Mid-Parental Height
 
 `midParentalHeightData`: This is the return value from the RCPCH API and takes the structure:
 
 ??? note "`midParentalHeightData`"
-`js
-    export interface MidParentalHeightObject {
-        mid_parental_height?: number;
-        mid_parental_height_sds?: number;
-        mid_parental_height_centile?: number;
-        mid_parental_height_centile_data?: Reference[]
-        mid_parental_height_upper_centile_data?: Reference[]
-        mid_parental_height_lower_centile_data?: Reference[]
-        mid_parental_height_lower_value?: number
-        mid_parental_height_upper_value?: number
-    }
-    `
+    ```js
+        export interface MidParentalHeightObject {
+            mid_parental_height?: number;
+            mid_parental_height_sds?: number;
+            mid_parental_height_centile?: number;
+            mid_parental_height_centile_data?: Reference[]
+            mid_parental_height_upper_centile_data?: Reference[]
+            mid_parental_height_lower_centile_data?: Reference[]
+            mid_parental_height_lower_value?: number
+            mid_parental_height_upper_value?: number
+        }
+    ```
 
 This returns a mid-parental height, mid-parental SDS and centile, along with the centile data if the user wishes to plot a mid-parental centile. The structure of the Reference and Centile interfaces is:
 
 ??? note "`Reference` and `Centile` interface structures"
-
-````js
-export interface Reference {
-[name: string]: ISexChoice
-}
-
-    export interface ICentile {
-        centile: number,
-        data: IPlottedCentileMeasurement[],
-        sds: number
+    ```js
+    export interface Reference {
+    [name: string]: ISexChoice
     }
 
-    export interface IPlottedCentileMeasurement {
-        "l": string | number,
-        "x": number,
-        "y": number
-    }
+        export interface ICentile {
+            centile: number,
+            data: IPlottedCentileMeasurement[],
+            sds: number
+        }
 
-    export interface ISexChoice {
-        male: IMeasurementMethod,
-        female: IMeasurementMethod
-    }
+        export interface IPlottedCentileMeasurement {
+            "l": string | number,
+            "x": number,
+            "y": number
+        }
 
-    export interface IMeasurementMethod{
-        height?: ICentile[],
-        weight?: ICentile[],
-        bmi?: ICentile[],
-        ofc?: ICentile[],
-    }
+        export interface ISexChoice {
+            male: IMeasurementMethod,
+            female: IMeasurementMethod
+        }
+
+        export interface IMeasurementMethod{
+            height?: ICentile[],
+            weight?: ICentile[],
+            bmi?: ICentile[],
+            ofc?: ICentile[],
+        }
     ```
 
 Centile data are returned from the RCPCH API in this same structure, though no API call is made from this component - all the centile data for all the references is included.
@@ -327,7 +326,7 @@ Centile data are returned from the RCPCH API in this same structure, though no A
 `clinicianFocus`: a boolean optional prop which defaults to false. If true, the advice strings that are reported to users in tooltips are more technical and aimed at clinicians familiar with centile charts. If false, the advice strings will be less technical and more suitable for parents, guardians, carers or other laypersons.
 
 !!! example "Requests for additional functionality in props"
-In time, more props can be added if users request them. If you have requests, please post issues on our [GitHub](https://github.com/rcpch/digital-growth-charts-react-component-library/issues) or get involved to contribute as below.
+    In time, more props can be added if users request them. If you have requests, please post issues on our [GitHub](https://github.com/rcpch/digital-growth-charts-react-component-library/issues) or get involved to contribute as below.
 
 ## Troubleshooting
 
@@ -353,4 +352,4 @@ This chart component software is is subject to copyright and is owned by the RCP
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 There is important chart line rendering data bundled in the component, which subject to copyright and is owned by the RCPCH. It is specifically excluded from the MIT license mentioned above. If you wish to use this software, please [contact the RCPCH](../about/contact.md) so we can ensure you have the correct license for use. Subscribers to the Digital Growth Charts API will automatically be assigned licenses for the chart plotting data.
-````
+
