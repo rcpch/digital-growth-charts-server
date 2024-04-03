@@ -7,7 +7,7 @@ ENV PYTHONUNBUFFERED 1
 
 # Extra packages required for Material for MkDocs plugins (dependency for git and pdf plugins)
 RUN apt-get update \
-    apt install -y git python3-cffi python3-brotli libpango-1.0-0 libpangoft2-1.0-0
+    && apt install -y git python3-cffi python3-brotli libpango-1.0-0 libpangoft2-1.0-0
 
 # Add requirements
 COPY requirements.txt /app/requirements.txt
