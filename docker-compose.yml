@@ -1,6 +1,10 @@
 # NOTE The below is the Docker Compose specification version NOT the Python version:
 version: "3.8"
 
+x-global-environment: &global
+  env_file:
+    - envs/.env # env file - NOT committed to Git
+
 services:
   growth-api:
     build: .
@@ -8,3 +12,17 @@ services:
       - .:/app
     ports:
       - "8000:8000"
+
+  mkdocs:
+    <<: *global # this will inherit config from x-global-environment
+    build:
+      context: .  # Set the context to the project root to include the .git directory
+      dockerfile: documentation/Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 8001:8001
+    command: >
+      sh -c "cd documentation && mkdocs build --config-file mkdocs.yml &&
+             mkdocs serve --dev-addr=0.0.0.0:8001 --config-file mkdocs.yml"
+    restart: always
