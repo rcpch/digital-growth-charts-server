@@ -1,0 +1,32 @@
+# requirements for the dGC documentation
+
+# **** MATERIAL FOR MKDOCS INSIDERS ****
+# IMPORTANT: This project uses Material for MkDocs **Insiders** Edition.
+# To install this you will need a GitHub token which is available (for RCPCH team only)
+# from Marcus Baw (pacharanero).
+# If you have the token, you can manually run this command to install Insiders:
+# pip install git+https://<INSERT_GH_TOKEN_HERE>@github.com/squidfunk/mkdocs-material-insiders.git
+# Further information is at https://squidfunk.github.io/mkdocs-material/insiders/getting-started/
+# In production/deployment, the relevant GitHub workflow has access to the token.
+
+# **** MATERIAL FOR MKDOCS ****
+# In a situation where you need to run the documentation site locally but can't
+# get access to the GitHub token, you can uncomment the line below to access the normal version.
+# Most things will work fine, but some features will be disabled:
+
+mkdocs-material
+
+# for the APIspec page at {{baseurl}}/integrator/api-reference/
+mkdocs-render-swagger-plugin
+
+# for the feature which displays authors at the bottom of the page
+mkdocs-git-committers-plugin-2
+
+# for the feature which displays last edit date at the bottom of the page
+mkdocs-git-revision-date-localized-plugin
+
+# for the feature which enables 'foldable' admonition text (used for large code blocks)
+mkdocs-macros-plugin
+
+# for the PDF export feature
+mkdocs-with-pdf

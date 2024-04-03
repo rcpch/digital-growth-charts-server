@@ -1,0 +1,201 @@
+site_name: RCPCH Digital Growth Charts
+site_description: Documentation for the RCPCH Digital Growth Charts Platform
+site_author: The Royal College of Paediatrics and Child Health
+# site_url: https://rcpch.github.io/digital-growth-charts-documentation/
+
+# `mkdocs serve` serves the docs locally on this port (default 8000)
+dev_addr: "127.0.0.1:8001"
+
+nav:
+  - Home: 'index.md'
+  - About:
+    - 'about/about.md'
+    - 'about/team.md'
+    - 'about/acknowledgements.md'
+    - 'about/awards-press-blogs.md'
+  - Products:
+    - 'products/get-digital-growth-charts.md'
+    - 'products/products-overview.md'
+    - 'products/pricing.md'
+    - 'products/api-server.md'
+    - 'products/react-client.md'
+    - 'products/react-component.md'
+    - 'products/python-library.md'
+    - 'products/command-line-client.md'
+    - 'products/google-sheets-plugin.md'
+    - 'products/react-native.md'
+    - 'products/flask(deprecated).md'
+  - Integrators:
+    - 'integrator/getting-started.md'
+    - 'integrator/api-keys.md'
+    - 'integrator/making-api-calls.md'
+    - 'integrator/api-reference.md'
+    - 'integrator/support.md'
+    - 'integrator/client-specification.md'
+    - 'integrator/faqs-for-integrators.md'
+    - 'integrator/whos-using-dgc.md'
+  - Clinicians:
+    - 'clinician/how-the-api-works.md'
+    - 'clinician/chart-information-health-staff.md'
+    - 'clinician/date-age-calculations.md'
+    - 'clinician/growth-references.md'
+    - 'clinician/faqs-for-clinicians.md'
+  - Parents:
+    - 'parents/chart-information-families.md'
+    - 'parents/faqs-parents.md'
+  - Contributors:
+    - 'developer/start-here.md'
+    - 'developer/api-python.md'
+    - 'developer/api-docker.md'
+    - 'developer/api-testing.md'
+    - 'developer/react-component.md'
+    - 'developer/react-client.md'
+    - 'developer/rcpchgrowth.md'
+    - 'developer/rcpchgrowth-cli.md'
+    - 'developer/versioning.md'
+    - 'developer/writing-documentation.md'
+    - 'developer/faqs-for-developers.md'
+    - 'developer/contributing.md'
+  - Clinical Safety:
+    - 'safety/overview.md'
+    - Clinical Safety File:
+      - 'safety/csmf/clinical-risk-mgmt-system.md'
+      - 'safety/csmf/clinical-risk-mgmt-plan.md'
+      - 'safety/csmf/clinical-safety-case-report.md'
+      - 'safety/csmf/hazard-log.md'
+      - 'safety/csmf/third-party-tools-safety-assmt.md'
+      - 'safety/csmf/license.md'
+    - DTAC:
+      - 'safety/dtac.md'
+    - Medical Devices Registration:
+      - 'safety/medical-device-reg/mhra.md'
+      - 'safety/medical-device-reg/essential-req.md'
+      - 'safety/medical-device-reg/doc-api.md'
+      - 'safety/medical-device-reg/mdr-technical-docs.md'
+    - Download: 'safety/download.md'
+  - Legal:
+    - 'legal/disclaimer.md'
+    - 'legal/licensing-copyright.md'
+    - 'legal/data-protection.md'
+    - 'legal/privacy-notice.md'
+  - Technical:
+    - 'technical/security.md'
+    - 'technical/data-security-protection-toolkit.md'
+    - 'technical/status.md'
+  - Contact: 'about/contact.md'
+
+# `not_in_nav` will prevent 'The following pages exist in the docs directory, but are not included in the "nav" configuration:' warnings
+not_in_nav: |
+  _assets/_snippets/dgc-platform-comprises.md
+  _assets/_snippets/docs-contributions.md
+  _assets/_snippets/htn-award.md
+  _assets/_snippets/self-host-warning.md
+  _utilities/page-template.md
+  internal/azure-apim.md
+
+theme:
+  name: material
+  custom_dir: rcpch-theme
+  features:
+    - content.action.edit # explicitly adds edit button (Material4MkDocs9.0)
+    - content.action.view # explicitly adds view button (Material4MkDocs9.0)
+    - content.code.copy
+    - content.code.select
+    - navigation.expand
+    - navigation.footer # explicitly adds footer prev/next (Material4MkDocs9.0)
+    - navigation.instant
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - toc.follow
+
+  palette:
+    # Light mode ONLY - it's gets too hard to keep dark mode working with a number of iframes in play
+      scheme: default
+
+  font:
+    text: Montserrat
+    code: Roboto Mono
+
+  favicon: _assets/_images/dynamic-child-favicon.png
+  logo: _assets/_images/rcpch_logo.png
+
+plugins:
+  - git-committers:
+      repository: rcpch/digital-growth-charts-documentation
+      branch: live
+      enabled: !ENV [ENABLE_GIT_COMMITTERS, false] # makes Git Committers optional
+  - git-revision-date-localized:
+      enable_creation_date: true
+  - macros
+  - search
+  - render_swagger
+  - with-pdf:
+        cover_title: RCPCH Digital Growth Charts
+        cover_subtitle: Complete Documentation Manual
+        toc_title: Table Of Contents
+        #heading_shift: false
+        #toc_level: 3
+        #ordered_chapter_level: 2
+        #excludes_children:
+        #    - 'release-notes/:upgrading'
+        #    - 'release-notes/:changelog'
+        #exclude_pages:
+        #    - 'bugs/'
+        #    - 'appendix/contribute/'
+        #convert_iframe:
+        #    - src: IFRAME SRC
+        #      img: POSTER IMAGE URL
+        #      text: ALTERNATE TEXT
+        #    - src: ...
+        #two_columns_level: 3
+        #render_js: true
+        #headless_chrome_path: headless-chromium
+        output_path: pdf/digital-growth-charts-documentation.pdf
+        enabled_if_env: ENABLE_PDF_EXPORT
+        #debug_html: true
+        #show_anchors: true
+        #verbose: true
+
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - md_in_html #insiders
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:materialx.emoji.twemoji
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.snippets:
+      check_paths: true
+      auto_append:
+        - includes/_abbreviations.md # adds abbreviations snippets to ALL pages
+  - pymdownx.superfences
+  - toc:
+      permalink: false
+
+copyright: Copyright &copy; 2022 Royal College of Paediatrics and Child Health (RCPCH)
+repo_url: https://github.com/rcpch/digital-growth-charts-documentation
+repo_name: rcpch/documentation
+edit_uri: blob/live/docs
+
+extra_css:
+  - _assets/_stylesheets/extra.css
+
+# footer links and variables
+extra:
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/rcpchtweets
+    - icon: fontawesome/brands/github
+      link: https://github.com/rcpch
+    - icon: fontawesome/brands/discourse
+      link: https://openhealthhub.org/c/rcpch-digital-growth-charts
+    - icon: material/chat
+      link: https://signal.group/#CjQKIAjLf5lS9OZIAI6lsJKWP1LmeJXkUW_fzZH1ryEw3oFEEhBH-4F7WnlyYjKerjfzD6B0
+
