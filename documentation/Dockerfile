@@ -15,6 +15,9 @@ COPY requirements.txt /app/requirements.txt
 # Set working directory for requirements installation
 WORKDIR /app/
 
+# Set safe working directory for git
+RUN git config --global --add safe.directory /app
+
 # Run installation of requirements
 RUN pip install --upgrade pip
 RUN pip install -r /app/requirements.txt
