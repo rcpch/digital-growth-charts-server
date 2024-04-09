@@ -4,7 +4,7 @@ site_author: The Royal College of Paediatrics and Child Health
 # site_url: https://rcpch.github.io/digital-growth-charts-documentation/
 
 # `mkdocs serve` serves the docs locally on this port (default 8000)
-dev_addr: "127.0.0.1:8001"
+dev_addr: "127.0.0.1:8000"
 
 nav:
   - Home: 'index.md'
@@ -131,7 +131,6 @@ plugins:
       fallback_to_build_date: true
   - macros
   - search
-  - render_swagger
   - with-pdf:
         cover_title: RCPCH Digital Growth Charts
         cover_subtitle: Complete Documentation Manual
