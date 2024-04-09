@@ -193,7 +193,7 @@ Now, go back to the root directory
 And install the dependences e.g.
 
 ```console
-(env) C:\Users\...\digital-growth-charts-server> pip install -r requirements/common-requirements.txt
+(env) C:\Users\...\digital-growth-charts-server> pip install -r requirements.txt
 ```
 
 ### Start the API server natively with default settings
@@ -211,7 +211,7 @@ uvicorn main:app --reload
 You should see messages from the uvicorn development server like:
 
 ```bash
-INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
 INFO:     Started reloader process [61645] using watchgod
 INFO:     Started server process [61647]
 INFO:     Waiting for application startup.
