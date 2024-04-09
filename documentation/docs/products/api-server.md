@@ -8,7 +8,7 @@ reviewers: Dr Marcus Baw
 [![Github Issues](https://img.shields.io/github/issues/{{ repository_name }})](https://github.com/{{ repository_name }}/issues)
 [![Github Stars](https://img.shields.io/github/stars/{{ repository_name }})](https://github.com/{{ repository_name }}/stargazers)
 [![Github Licence](https://img.shields.io/github/license/{{ repository_name }})](https://github.com/{{repository_name }}/blob/live/LICENSE)
-[![Build and deploy to Azure Web App](https://github.com/rcpch/digital-growth-charts-server/actions/workflows/live-deploy-to-server-on-release.yml/badge.svg)](https://github.com/rcpch/digital-growth-charts-server/actions/workflows/live-deploy-to-server-on-release.yml)
+[![Build and deploy to Azure Web App](https://github.com/rcpch/digital-growth-charts-server/actions/workflows/rcpch-dgc-server-live-deploy-to-azure.yml/badge.svg)](https://github.com/rcpch/digital-growth-charts-server/actions/workflows/rcpch-dgc-server-live-deploy-to-azure.yml)
 
 <!-- Zenodo citation link -->
 [![DOI](https://zenodo.org/badge/261587883.svg)](https://zenodo.org/badge/latestdoi/261587883)
