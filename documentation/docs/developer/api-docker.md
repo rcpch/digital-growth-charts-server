@@ -30,12 +30,6 @@ Run all scripts from the root of the project, or they won't work.
 
 ## Build the Docker image with all required dependencies
 
-Run the `s/build-docker` script, which builds the Docker image with all the required dependencies/
+Run the `s/up` script which runs `docker compose up`.
 
-This is useful for rapid development environment set-up. It pulls the `python` Docker base image, deletes any existing identically-named images, and builds the new image with the server code linked into it.
-
-## Start the Docker container
-
-Run the `s/start-docker` script, which will run the image in a Docker container.
-
-The dGC server will then be running in development mode in the container. It will be available at <https://localhost:5000>.
+This will build both the dGC FastAPI server container and the MkDocs container, and run both on ports 8000 and 8001 respectively.
