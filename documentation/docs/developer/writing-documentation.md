@@ -16,118 +16,31 @@ As you’d expect, there is delightful documentation for both projects: [Materia
 
 ## Adding or editing documentation
 
-Mostly this just requires creating Markdown files in the `docs/` directory of the [documentation repository](https://github.com/rcpch/digital-growth-charts-documentation).
+Mostly this just requires creating Markdown files in the `/documentation/docs/` directory.
 
 Use other pages within this repo to get ideas on the style and the features available such as [emoji](https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/#emoji), [icons](https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/#using-icons), [admonitions](https://squidfunk.github.io/mkdocs-material/reference/admonitions/).
 
 ### Continuous Integration via GitHub Actions
 
-Any changes to the `live` branch of the documentation repository trigger a [GitHub Action](https://github.com/rcpch/digital-growth-charts-documentation/blob/live/.github/workflows/build-and-deploy-to-gh-pages-and-azure.yml). This runs Material for MkDocs in a temporary application container, builds the site from the Markdown source into a set of static HTML pages, and [publishes the site to Azure](https://growth.rcpch.ac.uk/), with a [backup in GitHub Pages](https://rcpch.github.io/digital-growth-charts-documentation/).
+Any changes to the `live` branch of the documentation repository trigger a [GitHub Action](https://github.com/rcpch/digital-growth-charts-documentation/blob/live/.github/workflows/build-and-deploy-to-gh-pages-and-azure.yml). This runs Material for MkDocs in a temporary application container, builds the site from the Markdown source into a set of static HTML pages, and [publishes the site to Azure](https://growth.rcpch.ac.uk/).
 
 This occurs whether changes are made using online or local, offline editing methods.
-
-!!! note "GitHub Branch Protection"
-
-    Ensure you make Pull Requests to `prerelease`, or any other branch name of your choosing, but not `live`.
-
-    We have enabled GitHub branch protection to `live` so changes cannot be made directly there but **must** be made through an intermediate branch, and then Pull Requested into `live`.
 
 ### Online editing of the Markdown
 
 If you are new to Markdown editing, you can use GitHub's interface itself to edit online, by clicking the 'pencil' edit icon in the top right corner of any source code page. There are also external tools like [Prose.io](http://prose.io/) and [StackEdit](https://stackedit.io/) which give you a nice interface for editing MarkDown online, and will sync the changes with GitHub for you.
 
-If you need help getting set up, [contact us in the Signal chat](../about/contact.md).
+If you need help getting set up, [contact us on the RCPCH Discourse](https://forum.rcpch.tech/).
 
 ### Using a text editor and editing locally
 
 More experienced coders can `git clone` the repo and make changes offline on their local machine before pushing to the remote to either the `rcpch` organisation's remote, or their own fork. This allows you to run Material for MkDocs locally and preview the site as it will appear when pushed to `live`.
 
-#### (Mac / Linux) Setting up a development environment for the dGC documentation site
+#### Setting up a development environment for the dGC documentation site
 
-Create a virtualenv for the Python modules:
+We support streamlined and easy setup through Docker.
 
-* For info on setting up Pyenv see [Python setup](../developer/api-python.md)
-* Any recent Python version works, we tend to use 3.11
-* Calling it `mkdocs-3.11` will enable Pyenv to automatically select it when you navigate to the directory, because this will match the contents of the `.python-version` file in the root of the project.
-
-```console
-pyenv virtualenv 3.11 mkdocs-3.11
-```
-
-!!! info "MkDocs **Insiders** Edition"
-
-    This project uses Material for MkDocs **Insiders** Edition. To install this, you will need a GitHub token which is available (for RCPCH team only) from Marcus Baw (pacharanero). If you have the token, you can manually run the following command to install Insiders. If you can't access the token, see the comments in the `requirements.txt` file.
-
-```console
-pip install git+https://<INSERT_GH_TOKEN_HERE>@github.com/squidfunk/mkdocs-material-insiders.git
-pip install -r requirements.txt
-```
-
-Start the MkDocs server:
-
-```console
-mkdocs serve
-```
-
-MkDocs will tell you what URL you can view the site on, which is usually `localhost:8000`. You can vary this in the settings, if port `8000` is already in use.
-
-#### (Windows) Setting up a development environment for the dGC documentation site
-
-Create a virtual environment with `virtualenv`. See [Windows - install virtualenv](api-python.md#windows---installing-virtualenv) if you need help setting up.
-
-Then, with [GitHub Desktop](https://desktop.github.com/), clone the repo using the following url
-
-```console
-https://github.com/rcpch/digital-growth-charts-documentation.git
-```
-
-`cd` into the directory (ensuring you are using your virtual environment)
-
-```console
-cd digital-growth-charts-documentation
-```
-
-Install the dependencies.
-
-!!! info "MkDocs **Insiders** Edition"
-
-    This project uses Material for MkDocs **Insiders** Edition. To install this, you will need a GitHub token which is available (for RCPCH team only) from Marcus Baw (pacharanero). If you have the token, you can manually run this command to install Insiders:
-
-```console
-pip install git+https://<INSERT_GH_TOKEN_HERE>@github.com/squidfunk/mkdocs-material-insiders.git
-pip install -r requirements.txt
-```
-
-If you can't get access to the token, please see the comments in the `requirements.txt` file and run:
-
-```console
-pip install -r requirements.txt
-```
-
-Finally, start the MkDocs server
-
-```console
-mkdocs serve
-```
-
-MkDocs will tell you what URL you can view the site on, which is usually localhost:8000. You can vary this in the settings, if port 8000 is already in use.
-
-#### `git-committers` and `mkdocs-with-pdf` plugins
-
-These plugins can add 10-15 seconds of build time to the site, so when developing locally, they are disabled by default. They are enabled by using environment variables, if you want to test that they work locally before pushing to the remote:
-
-```console
-export ENABLE_GIT_COMMITTERS=true; mkdocs serve
-export ENABLE_PDF_EXPORT=true; mkdocs serve
-```
-
-You should always build the site at least once with both PDF export and Git Committers enabled, to ensure there are no issues, before pushing to the remote.
-
-#### Notes
-
-* On some platforms, if you get the error `ModuleNotFoundError: No module named '_ctypes'`, then you need to run `sudo apt-get install libffi-dev`, or the equivalent on your platform. Then, recompile your Python (if using pyenv, simply `pyenv install 3.10.2` will recompile that Python binary).
-
-* Tested Oct 2022 on Linux Mint 21.0
+Simply run the `s/up` script which sets up and starts the documentation server on port `8001`.
 
 ## Adding a new page
 
@@ -186,7 +99,7 @@ reviewers: Dr Marcus Baw, Dr Simon Chapman, Other Reviewer ...
 
 ## Publishing is automated
 
-When you push new changes to ANY branch of this repo, or it you open a Pull Request, Azure will automatically build a version of the site for review. You need to visit [this Static Web App deployment resource on the Azure portal](https://portal.azure.com/#@rcpch.ac.uk/resource/subscriptions/99e313f5-79fe-4480-b867-8daf2800cf22/resourceGroups/RCPCH-Dev-API-Growth/providers/Microsoft.Web/staticSites/documentation-demo-static-site/environments) to see the URL of the deployment, as it depends on the branch name. To obtain Azure access contact Marcus Baw of the RCPCH developer team.
+When you push new changes to ANY branch of this repo, or it you open a Pull Request, Azure will automatically build a version of the site for review. The URL of the deployment will be inserted as a comment automatically in the PR, once it builds sucessfully.
 
 Therefore, you don't need to do `mkdocs build` or `mkdocs gh-deploy --force` commands manually or locally - it’s done for you if you push to branches or PRs on GitHub.
 
