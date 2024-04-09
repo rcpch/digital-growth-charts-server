@@ -1,28 +1,21 @@
-# NOTE The below is the Docker Compose specification version NOT the Python version:
-version: "3.8"
-
-x-global-environment: &global
-  env_file:
-    - envs/.env # env file - NOT committed to Git
+# This is a Docker Compose file for local development of the Digital Growth Charts Server and documentation.
 
 services:
-  growth-api:
+  fastapi: # Digital Growth Charts Server
     build: .
     volumes:
       - .:/app
     ports:
       - "8000:8000"
+    restart: always
 
-  mkdocs:
-    <<: *global # this will inherit config from x-global-environment
-    build:
-      context: .  # Set the context to the project root to include the .git directory
-      dockerfile: documentation/Dockerfile
+  mkdocs: # Digital Growth Charts Documentation
+    build: .
     volumes:
       - .:/app # Copying entire directory contents (instead of just documentation/) because of issues related to .git directory.
     ports:
-      - 8001:8001
+      - 8001:8000
     command: >
       sh -c "cd documentation && mkdocs build --config-file mkdocs.yml &&
-             mkdocs serve --dev-addr=0.0.0.0:8001 --config-file mkdocs.yml"
+             mkdocs serve --dev-addr=0.0.0.0:8000 --config-file mkdocs.yml"
     restart: always
