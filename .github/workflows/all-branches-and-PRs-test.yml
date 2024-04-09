@@ -18,10 +18,10 @@ jobs:
         python-version: ["3.9", "3.10", "3.11", "3.12"]
 
     steps:
-      - uses: actions/checkout@v4 # latest as at February 2024
+      - uses: actions/checkout@v4 # latest as at Apr 2024
 
       - name: Set up Python version ${{ matrix.python-version }}
-        uses: actions/setup-python@v5 # latest as at March 2024
+        uses: actions/setup-python@v5 # latest as at Apr 2024
         with:
           python-version: ${{ matrix.python-version }}
 
