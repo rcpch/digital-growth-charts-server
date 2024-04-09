@@ -34,9 +34,8 @@ jobs:
       - uses: actions/setup-python@v5 # latest as at Apr 2024
         with:
           python-version: '3.12'
-      - run: pip install -r documentation/docs-requirements.txt
-      - run: cd documentation
-      - run: mkdocs build --config-file mkdocs.yml 
+      - run: pip install -r documentation/docs-requirements.txt 
+      - run: cd documentation && mkdocs build --config-file mkdocs.yml 
       - name: Upload to Azure
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1 # latest as at Apr 2024
