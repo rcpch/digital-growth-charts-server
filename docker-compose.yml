@@ -19,7 +19,7 @@ services:
       context: .  # Set the context to the project root to include the .git directory
       dockerfile: documentation/Dockerfile
     volumes:
-      - .:/app
+      - .:/app # Copying entire directory contents (instead of just documentation/) because of issues related to .git directory.
     ports:
       - 8001:8001
     command: >
