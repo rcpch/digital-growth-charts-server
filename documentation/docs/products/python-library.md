@@ -37,7 +37,7 @@ We have taken the slightly unusual step of licensing the python package under th
 
 ## Feedback
 
-We'd be interested to hear from people who are using the RCPCHGrowth Python package, so we can learn more about the use-cases and how we might continue to improve the package. Please do [create issues on our GitHub repo](https://github.com/rcpch/rcpchgrowth-python/issues), or discuss the package in the [dGC Forums](https://openhealthhub.org/c/rcpch-digital-growth-charts)
+We'd be interested to hear from people who are using the RCPCHGrowth Python package, so we can learn more about the use-cases and how we might continue to improve the package. Please do [create issues on our GitHub repo](https://github.com/rcpch/rcpchgrowth-python/issues), or discuss the package in the [dGC Forums](https://forum.rcpch.tech/)
 
 ## Contributing
 

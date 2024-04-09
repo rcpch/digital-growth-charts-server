@@ -21,7 +21,7 @@ As responsible clinicians, the Project Board and Project Team all agreed the gro
 
     **Security**: allowing outsiders to see the source code does not introduce any security vulnerability. Security does not come from obscurity - hiding your code, as in the closed-source model. It comes from high standards of security practice, using the best industry practices, robust cryptography, and modern tools and approaches, described in Factor III of the ["12-Factor" application development philosophy](https://12factor.net/).
 
-    Other myths exist which imply some weakness about open-source projects. We are happy to discuss them if required in the [dGC Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts).
+    Other myths exist which imply some weakness about open-source projects. We are happy to discuss them if required in the [dGC Forum](https://forum.rcpch.tech/).
 
 ## Copyright Notices
 

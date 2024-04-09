@@ -109,7 +109,7 @@ Governance for patient safety within the Organisation is provided through the fo
 
 ### Public forum
 
-RCPCH maintains a presence on the Open Health Hub web forum ([openhealthhub.org](https://openhealthhub.org)), where users, implementers, and clinicians can feed back on the system. This is a transparent and open mechanism for safety feedback and aftermarket surveillance of the platform. Using the same system or using our contact page it is also possible to send a private message or contact via email in the event of a private communication being necessary.
+RCPCH maintains a presence on our [Discourse forum](https://forum.rcpch.tech/), where users, implementers, and clinicians can feed back on the system. This is a transparent and open mechanism for safety feedback and aftermarket surveillance of the platform. Using the same system or using our contact page it is also possible to send a private message or contact via email in the event of a private communication being necessary.
 
 ## Healthcare IT Clinical Risk Management Deliverables
 

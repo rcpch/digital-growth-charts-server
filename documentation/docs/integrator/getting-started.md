@@ -39,7 +39,7 @@ These API keys allow us to manage usage of the API and prevent abuse. For explor
 ![create-an-app](../_assets/_images/create-an-app.png)
 
 !!! tip "Improving these docs"
-    We're always looking for feedback on our documentation, so that we maintain clear, unambiguous guides for all parts of the platform. If something isn't clear please let us know, by [talking about it on our forums](https://openhealthhub.org/c/rcpch-digital-growth-charts), or creating an [issue on GitHub](https://github.com/rcpch/digital-growth-charts-documentation/issues). Please include enough description of the problem so we can fix it. Screenshots and links are super helpful for this.
+    We're always looking for feedback on our documentation, so that we maintain clear, unambiguous guides for all parts of the platform. If something isn't clear please let us know, by [talking about it on our forums](https://forum.rcpch.tech/), or creating an [issue on GitHub](https://github.com/rcpch/digital-growth-charts-server/issues). Please include enough description of the problem so we can fix it. Screenshots and links are super helpful for this.
 
     You can also directly edit the docs and submit changes back to us for inclusion: click on the :material-pencil: button in the top left of any main text pane, which will take you to the source on GitHub. You will need to make your own GitHub fork of the documentation. Make your changes there and submit a pull request back to us. See [Contributing](../developer/contributing.md) for more info.
 

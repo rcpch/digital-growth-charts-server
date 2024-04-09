@@ -6,7 +6,7 @@ audience: developers
 
 ## Contributing
 
-We're a friendly bunch, and happy to chat. You can get in touch with the primary developers to talk about the project using [Signal or Discourse](../about/contact.md). These are the main community discussion hubs around the dGC project.
+We're a friendly bunch, and happy to chat. You can get in touch with the primary developers to talk about the project using [Discourse](../about/contact.md). These is the main community discussion hub around the dGC project.
 
 ### How to contribute
 

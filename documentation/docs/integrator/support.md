@@ -48,16 +48,10 @@ To obtain the information you need for the best use of the RCPCH dGC platform de
 
 ### Discourse Forum
 
-Our primary support method is through the forum at [openhealthhub.org](https://openhealthhub.org/c/rcpch-digital-growth-charts). You can search for previous answers to your question, connect with the developers and team behind the API, and find a community of other integrators, with whom you can share tips and ideas.
+Our primary support method is through the forum on the [RCPCH Discourse](https://forum.rcpch.tech/). You can search for previous answers to your question, connect with the developers and team behind the API, and find a community of other integrators, with whom you can share tips and ideas.
 
-[Go to the forums :fontawesome-brands-discourse:](https://openhealthhub.org/c/rcpch-digital-growth-charts){ .md-button .md-button--primary }
+[Go to the forums :fontawesome-brands-discourse:](https://forum.rcpch.tech/){ .md-button .md-button--primary }
 
-[![open-health-hub-screenshot](../_assets/_images/ohh-screenshot.png)](https://openhealthhub.org/c/rcpch-digital-growth-charts)
-
-### Signal Chat
-
-RCPCH have set up a Signal group chat for the Digital Growth Charts. This is a useful way to get quick answers and signposting to the right documentation, whether you're stuck, found an issue or have any other reason to speak with the developer team directly.
-
-[Go to the Signal group :simple-signal:](https://signal.group/#CjQKIAjLf5lS9OZIAI6lsJKWP1LmeJXkUW_fzZH1ryEw3oFEEhBH-4F7WnlyYjKerjfzD6B0){ .md-button .md-button--primary }
+[![Discourse Screenshot](../_assets/_images/dsc-sc.png)](https://forum.rcpch.tech/)
 
 -----

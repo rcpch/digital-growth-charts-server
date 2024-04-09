@@ -21,7 +21,7 @@ audience: all
 ## Technical Acknowledgements
 
 - [DigitalOcean](https://www.digitalocean.com/) (ancillary cloud services)
-- [Discourse](https://www.discourse.org/) (forum platform for openhealthhub.org)
+- [Discourse](https://www.discourse.org/) (forum platform for RCPCH Tech)
 - [FastAPI](https://fastapi.tiangolo.com/) (used for the current version of the API server)
 - [Flask](https://flask.palletsprojects.com/) (used for the first draft of the API server)
 - [GitHub](https://github.com/) (code hosting, issues, actions, projects)
@@ -29,7 +29,6 @@ audience: all
 - [Heroku](https://www.heroku.com/) (used in early alpha stages for quick hosting)
 - [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) and [MkDocs](https://www.mkdocs.org/) itself (documentation sites)
 - [Microsoft Azure](https://azure.microsoft.com/) (main cloud platform)
-- [openhealthhub.org](https://openhealthhub.org/) (free forum hosting)
 - [Python](https://www.python.org/) and the Python Software Foundation (main language used for the RCPCH dGC project)
 - [ReactJS](https://reactjs.org/) (frontend JavaScript framework for Chart component and demo app)
 

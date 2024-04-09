@@ -14,15 +14,7 @@ audience: all
 
     These are the basis of an open, searchable knowledge base about the dGC Platform.
 
-    [RCPCH Forum :fontawesome-brands-discourse:](https://openhealthhub.org/c/rcpch-digital-growth-charts){ .md-button .md-button--primary }
-
-!!! info "Signal Chat"
-
-    We have an RCPCH Developers Signal chat group for instant message support of the RCPCH dGC project.
-
-    We can't guarantee immediate response but our main developers see these messages and endeavour to respond as rapidly as possible. Join by using this button:
-
-    [Signal group](https://signal.group/#CjQKIAjLf5lS9OZIAI6lsJKWP1LmeJXkUW_fzZH1ryEw3oFEEhBH-4F7WnlyYjKerjfzD6B0){ .md-button .md-button--primary }
+    [RCPCH Forum :fontawesome-brands-discourse:](https://forum.rcpch.tech/){ .md-button .md-button--primary }
 
 ## Commercial Enquiries
 
