@@ -35,7 +35,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r documentation/docs-requirements.txt 
-      - run: cd documentation && mkdocs build --config-file mkdocs.yml 
+      - run: cd documentation && mkdocs build
       - name: Upload to Azure
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1 # latest as at Apr 2024
@@ -47,7 +47,7 @@ jobs:
           ###### Repository/Build Configurations ######
           app_location: "" # App source code path relative to repository root
           api_location: "" # Api source code path relative to repository root - optional
-          output_location: "site" # Built app content directory, relative to app_location - optional
+          output_location: "documentation/site" # Built app content directory, relative to app_location - optional
           ###### End of Repository/Build Configurations ######
   
   # Deletes temporary deployment on Azure when PR is closed, therefore no longer needed.
