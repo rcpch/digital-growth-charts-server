@@ -48,4 +48,4 @@ Initially, we expect that clinical users will want to see the traditional growth
 
 **A**: Our clinical safety documentation is completely open and public, and is all in the [Clinical Safety](../safety/overview.md) section.
 
-Feedback is welcome: contact [growth.digital@rcpch.ac.uk](mailto:growth.digital@rcpch.ac.uk), including "*Clinical Safety:*" in the subject for ease of routing to the Clinical Safety Officer. Alternatively, you can [create an Issue in the documentation site source code on GitHub](https://github.com/rcpch/digital-growth-charts-documentation/issues), or talk to us on our [Forum](https://openhealthhub.org/c/rcpch-digital-growth-charts).
+Feedback is welcome: contact [growth.digital@rcpch.ac.uk](mailto:growth.digital@rcpch.ac.uk), including "*Clinical Safety:*" in the subject for ease of routing to the Clinical Safety Officer. Alternatively, you can [create an Issue in the documentation site source code on GitHub](https://github.com/rcpch/digital-growth-charts-documentation/issues), or talk to us on our [Forum](https://forum.rcpch.tech/).
