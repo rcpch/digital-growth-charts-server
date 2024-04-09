@@ -31,7 +31,7 @@ jobs:
         with:
           fetch-depth: 0 # required for git-revision and git-committers plugins to work properly in CI
           submodules: true
-      - uses: actions/setup-python@5 # latest as at Apr 2024
+      - uses: actions/setup-python@v5 # latest as at Apr 2024
         with:
           python-version: '3.12'
       - run: pip install -r documentation/docs-requirements.txt
