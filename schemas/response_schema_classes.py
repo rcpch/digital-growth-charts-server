@@ -162,7 +162,7 @@ class MeasurementObject(BaseModel):
 class Data(BaseModel):
     l: float
     x: float
-    y: float
+    y: Optional[float] = None
 
 
 class Centile(BaseModel):
