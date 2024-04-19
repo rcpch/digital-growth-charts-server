@@ -3,11 +3,12 @@ In this file we define or import the response schemas
 """
 
 # standard imports
+from typing import Any
 from typing import Dict, List, Optional, Literal
 from datetime import date
 
 # third party imports
-from pydantic import BaseModel, RootModel
+from pydantic import BaseModel, RootModel, model_validator
 
 
 class CorrectedGestationalAge(BaseModel):
@@ -171,10 +172,22 @@ class Centile(BaseModel):
 
 
 class MeasurementMethod(BaseModel):
-    height: List[Centile]
+    height: Optional[List[Centile]] = None
     weight: Optional[List[Centile]] = None
     ofc: Optional[List[Centile]] = None
     bmi: Optional[List[Centile]] = None
+    
+    # Custom validator to ensure at least one field is provided
+    @model_validator(mode='before')
+    @classmethod
+    def at_least_one_field_required(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            at_least_one_field_present = False
+            for field in ['height','weight','ofc','bmi']:
+                if field in data:
+                    at_least_one_field_present = True
+            assert at_least_one_field_present, 'At least one of height | weight | ofc | bmi must be present in response object.'
+        return data
 
 
 class Sex(BaseModel):
