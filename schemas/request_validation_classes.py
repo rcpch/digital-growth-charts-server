@@ -1,9 +1,10 @@
 # standard imports
 from datetime import date, datetime
 from typing import Optional, Literal, Union, List
+from typing_extensions import Self
 
 # third party imports
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator,model_validator
 from pydantic_core.core_schema import FieldValidationInfo
 
 
@@ -117,20 +118,22 @@ class ChartCoordinateRequest(BaseModel):
         "cole-nine-centiles",
         description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles'], or accepts a list of floats as a custom centile format e.g. [7/10/20/30/40/50/60/70/80/90/93]. Defaults to cole-nine-centiles",
     )
-
-    @field_validator("centile_format", "is_sds")
-    def custom_centiles_must_not_exceed_fifteen(cls, v, values):
-        if type(v) is list and len(v) > 15:
+    
+    # Require access to both centile_format and is_sds fields so use model_validator
+    @model_validator(mode='after')
+    def custom_centiles_must_not_exceed_fifteen(self) -> Self:
+        if type(self.centile_format) == list and not (1 <= len(self.centile_format) <= 15):
             raise ValueError("Centile/SDS formats cannot exceed 15 items.")
-        if type(v) is list and len(v) < 1:
+        if type(self.centile_format) == list and len(self.centile_format) == 0:
             raise ValueError(
                 "Empty list. Please provide at least one value or one of the standard collection flags."
             )
-        if type(v) is list and values["is_sds"] is False:
-            for cent in v:
+        if type(self.centile_format) == list and self.is_sds is False:
+            for cent in self.centile_format:
                 if cent < 0:
                     raise ValueError("Centile values cannot be negative.")
-        return v
+        return self
+
 
 
 class FictionalChildRequest(BaseModel):
