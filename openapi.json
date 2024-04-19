@@ -660,18 +660,24 @@
                         "title": "Centile"
                     },
                     "data": {
-                        "items": {
-                            "$ref": "#/components/schemas/Data"
-                        },
-                        "type": "array",
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/Data"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Data"
                     }
                 },
                 "type": "object",
                 "required": [
                     "sds",
-                    "centile",
-                    "data"
+                    "centile"
                 ],
                 "title": "Centile"
             },
@@ -1283,15 +1289,21 @@
                         "title": "X"
                     },
                     "y": {
-                        "type": "number",
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Y"
                     }
                 },
                 "type": "object",
                 "required": [
                     "l",
-                    "x",
-                    "y"
+                    "x"
                 ],
                 "title": "Data"
             },
