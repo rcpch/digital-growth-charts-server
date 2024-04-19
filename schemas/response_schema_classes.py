@@ -168,7 +168,7 @@ class Data(BaseModel):
 class Centile(BaseModel):
     sds: float
     centile: float
-    data: List[Data]
+    data: Optional[List[Data]] = None
 
 
 class MeasurementMethod(BaseModel):
