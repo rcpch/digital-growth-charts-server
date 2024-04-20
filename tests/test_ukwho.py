@@ -4,11 +4,9 @@ Tests for the UK-WHO endpoints
 
 # standard imports
 import json
-import hashlib
 
 # third party imports
 from fastapi.testclient import TestClient
-import pytest
 
 # local / rcpch imports
 from main import app
@@ -91,9 +89,6 @@ def test_ukwho_calculation_with_invalid_request():
     assert validation_errors["sex"]["msg"] == "Input should be 'male' or 'female'"
 
 
-@pytest.mark.skip(
-    reason="Complicated response to debug - needs further work. Note l key has changed from str to float."
-)
 def test_ukwho_chart_data_with_valid_request():
     body = {
         "measurement_method": "height",
@@ -106,20 +101,6 @@ def test_ukwho_chart_data_with_valid_request():
 
     assert response.status_code == 200
 
-    # load the known-correct response from file and create a hash of it
-    # with open(r'tests/test_data/test_uk_who_male_height_valid.json', 'r') as file:
-    #     chart_data_file = file.read()
-    # hash both JSON objects which should be identical
-    # hashing was the only efficient way to compare these two large (~500k) files
-    # it will be harder to debug any new difference (consider saving files to disk and compare)
-    # response_hash = hashlib.sha256(json.dumps(response.json()['centile_data'], separators=(',', ':')).encode('utf-8')).hexdigest()
-    # chart_data_file_hash = hashlib.sha256(chart_data_file.encode('utf-8')).hexdigest()
-    # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
-    # assert response_hash == chart_data_file_hash
-    # IMPORTANT: ONLY MALE, HEIGHT, UK-WHO is currently tested
-    # This test is a template which could be used for testing the
-    # other chart data responses (female/male and weight/bmi/ofc)
-
 
 def test_ukwho_chart_data_with_invalid_request():
     body = {"measurement_method": "invalid_measurement_method", "sex": "invalid_sex"}
@@ -128,13 +109,14 @@ def test_ukwho_chart_data_with_invalid_request():
 
     assert response.status_code == 422
 
-    # COMMENTED OUT FOR BRANCH 'dockerise' PENDING DECISION ON #166 (API Test Suite) (pacharanero, 2024-02-07 )
     # restructure the response to make it easier to assert tests specifically
-    # validation_errors = {error['loc'][1]: error for error in response.json(
-    # )['detail']}
+    validation_errors = {error["loc"][1]: error for error in response.json()["detail"]}
     # check the validation errors are the ones we expect
-    # assert validation_errors['sex']['msg'] == "unexpected value; permitted: 'male', 'female'"
-    # assert validation_errors['measurement_method']['msg'] == "unexpected value; permitted: 'height', 'weight', 'ofc', 'bmi'"
+    assert validation_errors["sex"]["msg"] == "Input should be 'male' or 'female'"
+    assert (
+        validation_errors["measurement_method"]["msg"]
+        == "Input should be 'height', 'weight', 'ofc' or 'bmi'"
+    )
 
 
 def test_ukwho_fictional_child_data_with_valid_request():
@@ -192,7 +174,6 @@ def test_ukwho_fictional_child_data_with_invalid_request():
 
     assert response.status_code == 422
 
-    # COMMENTED OUT FOR BRANCH 'dockerise' PENDING DECISION ON #166 (API Test Suite) (pacharanero, 2024-02-07 )
     # restructure the response to make it easier to assert tests specifically
     validation_errors = {error["loc"][1]: error for error in response.json()["detail"]}
     assert (
