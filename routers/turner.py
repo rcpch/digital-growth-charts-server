@@ -117,7 +117,9 @@ def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
     ]
     """
     if chartParams.sex == "male" or chartParams.measurement_method != "height":
-        return "Turner data only exists for height in girls."
+        raise HTTPException(
+            status_code=422, detail="Turner data only exists for height in girls."
+        )
 
     chart_data = None
     if type(chartParams.centile_format) is list:
@@ -131,7 +133,7 @@ def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
                 is_sds=chartParams.is_sds,
             )
         except:
-            return HTTPException(
+            raise HTTPException(
                 status_code=422,
                 detail=f"Error creating {chartParams.sex} {chartParams.measurement_method} Turner's syndrome chart on the server, using {chartParams.centile_format} centile format.",
             )
@@ -149,7 +151,7 @@ def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
             ) as file:
                 chart_data = json.load(file)
         else:
-            return HTTPException(
+            raise HTTPException(
                 status_code=422,
                 detail=f"Item not found: chart-data/{chartParams.centile_format}-{constants.TURNERS}-{chartParams.sex}-{chartParams.measurement_method}.json",
             )

@@ -84,10 +84,7 @@ def test_turner_calculation_with_invalid_request():
     assert validation_errors["sex"]["msg"] == "Input should be 'male' or 'female'"
 
 
-@pytest.mark.skip(
-    reason="chart coordinates are hashed - need a better way to test this. Unhashing takes too long."
-)
-def test_turner_chart_data_with_valid_request():
+def test_turner_chart_data_with_cole_nine_centiles_valid_request():
     body = {
         "measurement_method": "height",
         "sex": "female",
@@ -98,36 +95,31 @@ def test_turner_chart_data_with_valid_request():
 
     assert response.status_code == 200
 
-    # COMMENTED OUT PENDING FIX NOT REQUIRING HASHING
-    # load the known-correct response from file and create a hash of it
-    # with open(r'tests/test_data/test_turner_female_height_valid.json', 'r') as file:
-    #    chart_data_file = file.read()
-    # hash both JSON objects which should be identical
-    # hashing was the only efficient way to compare these two large (~500k) files
-    # it will be harder to debug any new difference (consider saving files to disk and compare)
-    # response_hash = hashlib.sha256(json.dumps(response.json()['centile_data'], separators=(',', ':')).encode('utf-8')).hexdigest()
-    # chart_data_file_hash = hashlib.sha256(chart_data_file.encode('utf-8')).hexdigest()
-    # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
-    # assert response_hash == chart_data_file_hash
+
+def test_turner_chart_data_with_three_percent_centiles_valid_request():
+    body = {
+        "measurement_method": "height",
+        "sex": "female",
+        "centile_format": "three-percent-centiles",
+    }
+
+    response = client.post("/turner/chart-coordinates", json=body)
+
+    assert response.status_code == 200
 
 
-@pytest.mark.skip(
-    reason="Complicated response to debug - needs further work. Note l key has changed from str to float."
-)
 def test_turner_chart_data_with_invalid_request():
     body = {"measurement_method": "invalid_measurement_method", "sex": "invalid_sex"}
 
     response = client.post("/turner/chart-coordinates", json=body)
 
     assert response.status_code == 422
-
-    # COMMENTED OUT PENDING FIX NOT REQUIRING HASHING
-    # restructure the response to make it easier to assert tests specifically
-    # validation_errors = {error['loc'][1]: error for error in response.json(
-    # )['detail']}
-    # check the vaildation errors are the ones we expect
-    # assert validation_errors['sex']['msg'] == "unexpected value; permitted: 'male', 'female'"
-    # assert validation_errors['measurement_method']['msg'] == "unexpected value; permitted: 'height', 'weight', 'ofc', 'bmi'"
+    validation_errors = {error["loc"][1]: error for error in response.json()["detail"]}
+    assert (
+        validation_errors["measurement_method"]["msg"]
+        == "Input should be 'height', 'weight', 'ofc' or 'bmi'"
+    )
+    assert validation_errors["sex"]["msg"] == "Input should be 'male' or 'female'"
 
 
 def test_turner_fictional_child_data_with_valid_request():
