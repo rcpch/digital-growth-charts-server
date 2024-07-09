@@ -1,6 +1,6 @@
 ---
 title: Getting Started
-reviewers: Dr Marcus Baw, Dr Anchit Chandran
+reviewers: Dr Marcus Baw, Dr Anchit Chandran, Michael Barton
 audience: integrators, implementers, technical-architects
 ---
 # Getting Started integrating Digital Growth Charts
@@ -9,40 +9,37 @@ The RCPCH Digital Growth Charts platform centres around a REST API which provide
 
 The next few pages will take you through the process of using the API. If you are an experienced user of REST APIs, this should be straightforward. We have deliberately designed this API to be simple and clear.
 
-## Sign up for the API service
+## Sign up for a free tier API key
 
 To use the Digital Growth Charts API, you need to sign up for an account and obtain **API keys**.
 
-These API keys allow us to manage usage of the API and prevent abuse. For exploring the platform, the Free Tier gives instant access. More information on pricing is available [here](../products/pricing.md).
+These API keys allow us to manage usage of the API and prevent abuse. We have a perpetually free tier of access for testing and exploring the platform.
+It has full access to the API but the number of requests are limited.
 
-> At present this sign-up step is on an external website because we use the Microsoft Azure API management platform. In the future, this may become a more streamlined on-boarding workflow.
+1. Sign up to our support forum at [https://forum.rcpch.tech/](https://forum.rcpch.tech/)
 
-[Go to dev.rcpch.ac.uk to sign up :octicons-link-external-16:](https://dev.rcpch.ac.uk/signup){ .md-button .md-button--primary}
+!!! tip Approval required
+    Sign up to the forum is subject to our approval process, please [contact us](../about/contact.md) if you are not approved automatically
 
-**Once signed up, come back here to follow the rest of the Getting Started tutorial.**
-## Choose a Product and Create an App
+1. Navigate to your user summary page using the drop down in the top right hand menu
 
-!!! tip "Onboarding support"
-    If you have any issues with getting the Tier you need, please [contact us](../about/contact.md).
+![forum-user-summary-link](../_assets/_images/forum-user-summary-link.png)
 
-1. Navigate to the [Products](https://dev.rcpch.ac.uk/product) menu item, and choose the Tier of the API subscription that you require.
+1. Click on the API keys tab
 
-    !!! warning "**IMPORTANT: ONLY THE FREE TIER GIVES YOU INSTANT ACCESS**"
-        Other tiers require waiting for **approval**, onboarding, and payment verification. Initially, we recommend the **Free Tier** for everyone. You can create multiple Free Tier apps, however, the usage is shared.
+1. Click Generate API key
 
-2. Select a Tier from the 'Tiers' drop-down to get started.
+![forum-user-api-keys](../_assets/_images/forum-user-api-keys.png)
 
-3. Create a unique name for your application. It doesn't matter what you call it as long as it has meaning for you, and it can be changed later in the Account part of the portal.
+!!! danger "API keys are secrets!"
+    API keys identify you to the API, so they should be considered *'secrets'*. If someone else can access and use your API keys, then they **are** effectively 'you' as far as our servers are concerned. Therefore, you must keep your API keys private, especially when using keys in a real application.
 
-4. Click 'Subscribe' to create the app.
+    The most common cause of accidental API key exposure is inadvertently committing a hard-coded API key to version control, such as Git, and then pushing it to a public site such as GitHub.
 
-![create-an-app](../_assets/_images/create-an-app.png)
-
-!!! tip "Improving these docs"
-    We're always looking for feedback on our documentation, so that we maintain clear, unambiguous guides for all parts of the platform. If something isn't clear please let us know, by [talking about it on our forums](https://forum.rcpch.tech/), or creating an [issue on GitHub](https://github.com/rcpch/digital-growth-charts-server/issues). Please include enough description of the problem so we can fix it. Screenshots and links are super helpful for this.
-
-    You can also directly edit the docs and submit changes back to us for inclusion: click on the :material-pencil: button in the top left of any main text pane, which will take you to the source on GitHub. You will need to make your own GitHub fork of the documentation. Make your changes there and submit a pull request back to us. See [Contributing](../developer/contributing.md) for more info.
+!!! tip Production tiers
+    To launch your integration we offer a wide range of paid access tiers that do not have the restrictions of the free tier.
+    See our [pricing](https://www.rcpch.ac.uk/resources/growth-charts/digital/about#subscriptions-and-pricing).
 
 -----
 
-## Next: [Getting API keys](../integrator/api-keys.md)
+## Next: [Making API calls](../integrator/making-api-calls.md)
