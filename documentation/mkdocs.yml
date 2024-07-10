@@ -35,11 +35,13 @@ nav:
     - 'integrator/faqs-for-integrators.md'
     - 'integrator/whos-using-dgc.md'
   - Clinicians:
-    - 'clinician/how-the-api-works.md'
     - 'clinician/chart-information-health-staff.md'
+    - 'clinician/down-and-turner.md'
+    - 'clinician/clinical-faq.md'
+    - 'clinician/implementation-faq.md'
     - 'clinician/date-age-calculations.md'
     - 'clinician/growth-references.md'
-    - 'clinician/faqs-for-clinicians.md'
+    - 'clinician/how-the-calculations-work.md'
   - Parents:
     - 'parents/chart-information-families.md'
     - 'parents/faqs-parents.md'

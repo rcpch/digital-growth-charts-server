@@ -3,13 +3,10 @@ title: How the API Works
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
 audience: clinicians, health-staff, statisticians
 ---
-# How the API Works
+# How the calculations work
 
 Details for interested clinicians and statisticians. It is not necessary to understand this detail in order to use growth charts clinically, this is just for those interested in the technical details.
 
-## Growth Charting Introduction
-
-The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any child born after that date should be plotted on a UK-WHO growth chart. Children born before May 11th 2009 are plotted on British 1990 (UK90) charts and subsequent measurements must be plotted using those charts. After age 4, the two charts are the same.
 
 ## The LMS Method
 
