@@ -1,1 +1,16 @@
--r requirements/live-requirements.txt
+# Third-party dependencies
+fastapi[all]
+uvicorn[standard]
+pydantic == 2.*
+
+# RCPCH dependencies
+# Python package which does the centile and SDS calculations
+rcpchgrowth
+
+# Standard development dependencies
+pytest
+autopep8
+
+# Third-party development dependencies
+bump2version
+httpx # needed for starlette and testing

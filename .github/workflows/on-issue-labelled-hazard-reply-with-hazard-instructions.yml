@@ -1,0 +1,21 @@
+name: on-issue-labelled-hazard-reply-with-hazard-instructions
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  add-comment:
+    if: github.event.label.name == 'hazard'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Add comment
+        uses: peter-evans/create-or-update-comment@v4 # Latest as at April 2024
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Thank you for opening or editing a Hazard in the Hazard Log.
+            ### Next steps:
+            * Please use the Labels feature in the right sidebar area to stratify this Hazard in terms of **Likelihood** and **Severity**
+            * Assign the Issue to the Clinical Safety Officer for triage

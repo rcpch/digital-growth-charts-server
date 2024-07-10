@@ -1,0 +1,68 @@
+# This Action builds the documentation site in mkdocs
+# and pushes it to Azure from where it is deployed
+# to the LIVE site https://growth.rcpch.ac.uk/
+#
+# Azure will also build a preview site for any branches and any PRs against `live`.
+
+name: ALL-BRANCHES-ALL-PRs-build-and-deploy-to-azure.yml
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - live
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write # this permission is required in order to allow PR comment with staging URL
+jobs:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    env:
+      ENABLE_PDF_EXPORT: 1 # Makes PDF export an option, default disabled, when building locally
+      ENABLE_GIT_COMMITTERS: True # Makes git-committers an option, default disabled, when building locally
+    name: Build and Deploy to Azure
+    steps:
+      - uses: actions/checkout@v4 # latest as at Apr 2024
+        with:
+          fetch-depth: 0 # required for git-revision and git-committers plugins to work properly in CI
+          submodules: true
+      - uses: actions/setup-python@v5 # latest as at Apr 2024
+        with:
+          python-version: '3.12'
+      - run: pip install -r documentation/docs-requirements.txt 
+      - run: cd documentation && mkdocs build
+      - name: Upload to Azure
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1 # latest as at Apr 2024
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GENTLE_GLACIER_063C32703 }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for GitHub integrations (i.e. PR comments)
+          action: "upload"
+          production_branch: "live"
+          ###### Repository/Build Configurations ######
+          app_location: "" # App source code path relative to repository root
+          api_location: "" # Api source code path relative to repository root - optional
+          output_location: "documentation/site" # Built app content directory, relative to app_location - optional
+          ###### End of Repository/Build Configurations ######
+  
+  # Deletes temporary deployment on Azure when PR is closed, therefore no longer needed.
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1 # latest as at Apr 2024
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GENTLE_GLACIER_063C32703 }}
+          action: "close"
+
+
+
+

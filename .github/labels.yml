@@ -1,0 +1,85 @@
+# This file contains definitions for the Hazard Log labels
+# Reference: DCB0129: Clinical Risk Management: its Application in the Manufacture of Health IT Systems
+# https://digital.nhs.uk/data-and-information/information-standards/information-standards-and-data-collections-including-extractions/publications-and-notifications/standards-and-collections/dcb0129-clinical-risk-management-its-application-in-the-manufacture-of-health-it-systems
+# Implementation Guidance https://digital.nhs.uk/binaries/content/assets/legacy/pdf/0129242018impguid.pdf
+# They are applied by the '.github/workflows/create-hazard-log-labels.yml' Action which is manually run
+
+
+# General Utility labels
+- name: "hazard"
+  description: "A hazard which is logged."
+  color: "892CBB"
+  
+- name: "new-hazard-for-triage"
+  description: "A new hazard which needs to be triaged for severity and likelihood, scored and assigned."
+  color: "892CBB"
+  
+- name: "deprecated-hazard"
+  description: "A hazard which is no longer considered relevant."
+  color: "892CBB"
+
+
+# Likelihood scoring
+- name: "likelihood-very-high"
+  description: "Certain or almost certain; highly likely to occur."
+  color: "C5D9F1"
+  
+- name: "likelihood-high"
+  description: "Not certain but very possible; reasonably expected to occur in the majority of cases."
+  color: "C5D9F1"
+ 
+- name: "likelihood-medium"
+  description: "Possible."
+  color: "C5D9F1"
+ 
+- name: "likelihood-low"
+  description: "Could occur but in the great majority of occasions will not."
+  color: "C5D9F1"
+ 
+- name: "likelihood-very-low"
+  description: "Negligible or nearly negligible possibility of occurring."
+  color: "C5D9F1"
+
+
+# Severity scoring 
+- name: "severity-catastrophic"
+  description: "Death, 2+. Severe injury or lifechanging incapacity, 2+."
+  color: "D8E4BC"
+ 
+- name: "severity-major"
+  description: "Death, 1; Severe injury or life-changing incapacity, 1; Psychological trauma, 2+."
+  color: "D8E4BC"
+  
+- name: "severity-considerable"
+  description: "Severe injury, 1, severe incapacity, recovery expected; Significant psych. trauma, 2+."
+  color: "D8E4BC"
+ 
+- name: "severity-significant"
+  description: "Minor injury, long term, 1; Significant psych. trauma, 1; Minor inj/psych trauma, 2+."
+  color: "D8E4BC"
+  
+- name: "severity-minor"
+  description: "Minor injury, short term recovery; minor psychological upset; inconvenience; negligible consequence."
+  color: "D8E4BC"
+
+
+# Risk scoring
+- name: "risk-level-1-acceptable"
+  description: "Acceptable, no further action required"
+  color: "0E8A16"
+  
+- name: "risk-level-2-acceptable"
+  description: "Acceptable if cost of further reduction > benefits, or further risk reduction is impractical"
+  color: "FBCA04"
+    
+- name: "risk-level-3-undesirable"
+  description: "Undesirable level of risk. Attempts should be made to eliminate the hazard or implement controls"
+  color: "D93F0B"
+  
+- name: "risk-level-4-mandatory-risk-elimination"
+  description: "Mandatory elimination of hazard or addition of controls to reduce risk to an acceptable level"
+  color: "ED5D40"
+  
+- name: "risk-level-5-unacceptable"
+  description: "Unacceptable level of risk"
+  color: "B60205"

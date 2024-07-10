@@ -1,0 +1,23 @@
+# Uses https://github.com/crazy-max/ghaction-github-labeler
+# Manually run the Action in the GitHub UI to add Hazard Log Labels as per the YAML file
+
+name: create-hazard-log-labels
+
+on:
+  workflow_dispatch
+
+jobs:
+  labeler:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4 # Latest as at April 2024
+      - name: Run Labeller
+        if: success()
+        uses: crazy-max/ghaction-github-labeler@v5 # Latest as at April 2024
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          yaml-file: .github/labels.yml
+          skip-delete: true # won't delete your existing labels
+          dry-run: false
+          exclude: 

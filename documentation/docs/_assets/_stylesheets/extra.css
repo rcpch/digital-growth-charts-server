@@ -1,0 +1,199 @@
+/* these are colours and fonts consistent with RCPCH branding guidelines - see github for info */
+
+:root {
+  /* COLOUR VARIABLES */
+  --md-primary-fg-color: #3366cc;
+  --md-accent-fg-color: #11a7f2;
+  --rcpch-pink-color: rgb(241, 140, 201);
+  --rcpch-pink-bg-color: rgba(241, 140, 201, 0.1);
+
+  /* CUSTOM ICONS */
+  --md-admonition-icon--pink-globe: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">< !-- ! Font Awesome Free 6.2.0 by @fontawesome - https: //fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M352 256c0 22.2-1.2 43.6-3.3 64H163.3c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64h185.4c2.2 20.4 3.3 41.8 3.3 64zm28.8-64h123.1c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64H380.8c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32H376.7c-10-63.9-29.8-117.4-55.3-151.6 78.3 20.7 142 77.5 171.9 151.6zm-149.1 0H167.7c6.1-36.4 15.5-68.6 27-94.7 10.5-23.6 22.2-40.7 33.5-51.5C239.4 3.2 248.7 0 256 0s16.6 3.2 27.8 13.8c11.3 10.8 23 27.9 33.5 51.5 11.6 26 21 58.2 27 94.7zm-209 0H18.6c30-74.1 93.6-130.9 172-151.6-25.5 34.2-45.3 87.7-55.3 151.6zM8.1 192h123.1c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64H8.1C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zm186.6 254.6c-11.6-26-20.9-58.2-27-94.6h176.6c-6.1 36.4-15.5 68.6-27 94.6-10.5 23.6-22.2 40.7-33.5 51.5-11.2 10.7-20.5 13.9-27.8 13.9s-16.6-3.2-27.8-13.8c-11.3-10.8-23-27.9-33.5-51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6-78.4-20.7-142-77.5-172-151.6h116.7zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6 25.5-34.2 45.2-87.7 55.3-151.6h116.6z"/></svg>');
+}
+
+/* CUSTOM RCPCH ADMONITION STYLE  */
+
+.md-typeset .admonition.pink-globe,
+.md-typeset details.pink-globe {
+  border-color: var(--rcpch-pink-color);
+}
+
+.md-typeset .pink-globe > .admonition-title,
+.md-typeset .pink-globe > summary {
+  background-color: var(--rcpch-pink-bg-color);
+}
+
+.md-typeset .pink-globe > .admonition-title::before,
+.md-typeset .pink-globe > summary::before {
+  background-color: var(--rcpch-pink-color);
+  -webkit-mask-image: var(--md-admonition-icon--pink-globe);
+  mask-image: var(--md-admonition-icon--pink-globe);
+}
+
+/* FONTS & TYPESETTING */
+
+.md-typeset {
+  font-weight: 400;
+}
+
+/* Makes links a little bolder */
+.md-typeset a {
+  font-weight: 600;
+
+}
+
+.md-typeset h1 {
+  font-weight: 700;
+  /* font-size: 24pt; */
+  color: var(--md-accent-fg-color);
+}
+
+.md-typeset h2 {
+  font-weight: 700;
+  /* font-size: 16pt; */
+}
+
+.md-typeset h3 {
+  font-weight: 700;
+  /* font-size: 13pt; */
+  color: #000000;
+}
+
+.md-typeset h4 {
+  color: #4d4d4d;
+}
+
+/* make the text bigger in the admonitions */
+.md-typeset .admonition {
+  font-size: 0.8rem;
+}
+
+/* HEADER & FOOTER */
+
+/* make the header white with blue text */
+.md-header {
+  background-color: #ffffff;
+  color: #0d0d58;
+}
+
+/* Switch off header hover behaviour */
+.md-search__input:hover {
+  background-color: var(--md-accent-fg-color);
+}
+
+.md-header__button:hover {
+  opacity: inherit;
+}
+
+/* Make the footer a nice RCPCH blue */
+.md-footer {
+  background-color: var(--md-primary-fg-color);
+}
+
+/* NAVIGATION */
+
+/* enlarges the font used for titles and navbar */
+.md-header__title {
+  font-size: 1.5rem;
+}
+
+.md-tabs__list {
+  font-weight: 600;
+}
+
+/* enlarges the logo image */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 5rem !important;
+  width: auto;
+}
+
+/* widens the page view */
+.md-grid {
+  max-width: 70rem;
+}
+
+/* MOBILE */
+
+/* mobile  - make the header white with blue text */
+.md-nav--primary .md-nav__title[for="__drawer"] {
+  background-color: #ffffff;
+  color: #0d0d58;
+}
+
+/* mobile - enlarges the logo image */
+.md-nav__title .md-nav__button.md-logo img {
+  width: 100px;
+}
+
+/* IMAGES */
+
+.md-content img {
+  border-radius: 0.2em;
+  box-shadow: 0 0 0.2em 0 #777;
+}
+
+.md-content img.twemoji {
+  border-radius: 0;
+  box-shadow: 0 0 0 0 #777;
+}
+
+img[alt="doc-signature"] {
+  width: 200px;
+}
+
+/* buttons styling */
+button {
+  text-align: center;
+}
+
+.md-typeset .md-button {
+  margin: 0.2em;
+}
+
+/* IFRAMES FOR EMBEDS */
+
+/* iframes should be centred and without margin */
+iframe {
+  border: 0;
+  display: block;
+  margin: 40px auto;
+}
+
+/* suppress the 'no-demo' message on a full size screen */
+/* NB: this works with the inline style block on home.html to suppress demo on small screens */
+div#iframe-mobile-replacement {
+  display: none;
+  margin: 1em auto;
+}
+
+/* HERO SECTION OF HOME PAGE */
+.mdx-hero__content {
+  background-color: #11a7f2;
+  padding: 3em;
+}
+
+.mdx-hero__content.md-typeset > h1,
+.mdx-hero__content.md-typeset > h2,
+.mdx-hero__content.md-typeset > p {
+  color: #ffffff;
+}
+
+.mdx-hero__content a.md-button:hover {
+  background-color: var(--rcpch-pink-color);
+  border-color: var(--rcpch-pink-color);
+}
+
+.latex img {
+  -moz-box-shadow: 0px 0px 0px #ccc;
+  -webkit-box-shadow: 0px 0px 0px #ccc;
+  box-shadow: 0px 0px 0px #ccc;
+  border: none !important;
+}
+
+img {
+  -moz-box-shadow: 0px 0px 0px #ccc;
+  -webkit-box-shadow: 0px 0px 0px #ccc;
+  box-shadow: 0px 0px 0px #ccc;
+  border: none !important;
+}
