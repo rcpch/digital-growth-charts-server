@@ -23,7 +23,7 @@ The LMS method provides a way of obtaining normalised growth centiles from a ref
 
 - To obtain the z-score, plug the LMS values with the child's measurement into the formula:
   <div class="latex">
-  <img src="https://latex.codecogs.com/svg.image?z=(((measure/M)^L)-1/LS)"></img>
+  <img src="https://latex.codecogs.com/svg.image?z=\frac{(measurement / M)^L -1}{LS}"></img>
   </div>
 
 ## Growth References
