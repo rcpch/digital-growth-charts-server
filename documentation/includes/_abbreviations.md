@@ -48,6 +48,7 @@
 *[SSH]: Secure SHell
 *[SVG]: Scalable Vector Graphics
 *[UAT]: User Acceptance Testing
+*[UK90]: 1990 UK growth reference
 *[UKCA]: United Kingdom Conformity Assessed
 *[UK-WHO]: 2009 harmonised UK and WHO growth references
 *[WHO]: World Health Organisation
