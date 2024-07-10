@@ -13,7 +13,7 @@ The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any ch
 
 ## The LMS Method
 
-It is now common practice to express child growth status in the form of **SD score (SDS)** - the number of standard deviations away from the mean (also known as a **z-score**). The SD score can be converted to a centile.
+It is now common practice to express child growth status by the number of standard deviations away from the mean (SDS, Standard Deviation Score, also known as a z-score). The SD score can be converted to a centile.
 
 The LMS method provides a way of obtaining normalised growth centiles from a reference dataset, applying smoothing and extrapolation so the resulting L, M and S curves contain the information to draw **any** centile curve, and to convert measurements (even extreme values) into exact SD scores. The growth reference is summarised by a table of LMS values at a series of ages.
 
@@ -23,7 +23,7 @@ The LMS method provides a way of obtaining normalised growth centiles from a ref
 
 - To obtain the z-score, plug the LMS values with the child's measurement into the formula:
   <div class="latex">
-  <img src="https://latex.codecogs.com/svg.image?z=((measure/M)^L)-1/(L/S))"></img>
+  <img src="https://latex.codecogs.com/svg.image?z=(((measure/M)^L)-1/LS)"></img>
   </div>
 
 ## Growth References
