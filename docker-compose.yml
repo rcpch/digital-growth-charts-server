@@ -1,5 +1,5 @@
 # This is a Docker Compose file for local development of the Digital Growth Charts Server and documentation.
-# version: 3.8 Docker Compose version is now deprecated and no longer needed.
+# version: 3.8 (Docker Compose version is now deprecated and no longer needed)
 
 services:
   fastapi: # Digital Growth Charts Server
@@ -7,15 +7,15 @@ services:
     volumes:
       - .:/app
     ports:
-      - "8000:8000"
+      - "8000:8000" # FastAPI will be accessible at localhost:8000
     restart: always
 
   mkdocs: # Digital Growth Charts Documentation
     build: .
     volumes:
-      - .:/app # Copying entire directory contents (instead of just documentation/) because of issues related to .git directory.
+      - .:/app # Copying entire directory contents (instead of just documentation/) because of issues related to .git directory (we are using some Git related MkDocs plugins - committers, history etc)
     ports:
-      - 8001:8000
+      - 8001:8000 # MkDocs will be accessible at localhost:8001
     command: >
       sh -c "cd documentation && mkdocs build --config-file mkdocs.yml &&
              mkdocs serve --dev-addr=0.0.0.0:8000 --config-file mkdocs.yml"
