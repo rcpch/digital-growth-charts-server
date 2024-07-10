@@ -1,7 +1,7 @@
 site_name: RCPCH Digital Growth Charts
 site_description: Documentation for the RCPCH Digital Growth Charts Platform
 site_author: The Royal College of Paediatrics and Child Health
-# site_url: https://rcpch.github.io/digital-growth-charts-documentation/
+site_url: https://growth.rcpch.ac.uk
 
 # `mkdocs serve` serves the docs locally on this port (default 8000)
 dev_addr: "127.0.0.1:8000"
@@ -177,7 +177,7 @@ markdown_extensions:
         - includes/_abbreviations.md # adds abbreviations snippets to ALL pages
   - pymdownx.superfences
   - toc:
-      permalink: false
+      permalink: true
 
 copyright: Copyright &copy; 2022 Royal College of Paediatrics and Child Health (RCPCH)
 repo_url: https://github.com/rcpch/digital-growth-charts-documentation
