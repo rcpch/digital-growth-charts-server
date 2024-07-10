@@ -1,38 +1,35 @@
 ---
-title: Information for Health Staff
+title: UK-WHO, UK90, and WHO charts
 reviewers: Dr Marcus Baw, Dr Anchit Chandran
 audience: clinicians, health-staff
 ---
 
-# Chart information for Health staff
+# UK-WHO, UK90, and WHO charts
 
-## How the UK-WHO Charts work
+The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any child born after that date should be plotted on a UK-WHO growth chart. Children born before May 11th 2009 are plotted on British 1990 (UK90) charts and subsequent measurements must be plotted using those charts. After age 4, the two charts are the same.
 
-The UK–WHO growth chart combines World Health Organization (WHO) standards with UK 1990 preterm and birth data:
+## UK-WHO Charts
 
-- The chart for birth measurements (32 –42 weeks gestation) is based on British children measured around 1990.
+The UK–WHO growth chart combines World Health Organization (WHO) 2006 standards with UK 1990 preterm and birth data.
+
+- The chart for birth measurements (32 – 42 weeks gestation) is based on British children measured around 1990.
 - The chart from 2 weeks to 4 years of age is based on the WHO growth standard, derived from measurements of healthy, non-deprived, breast-fed children of mothers who did not smoke.
 - The UK 1990 growth reference for children is used from 4 years - 18 years.
 - The charts depict a healthy pattern of growth that is desirable for all children, whether breast-fed or formula-fed, and of whichever ethnic origin.
 
-## Reason for combining UK 1990 and WHO 2006
+### Reason for combining UK 1990 and WHO2006
 
-Though the UK 1990 data spans 23 weeks gestation to 20 years old, it also includes children who were bottle-fed and breast-fed. Thus, the breast-fed cohort from the WHO 2006 cohort were deemed more accurate and replaced the UK 1990 for the 2 week to 4 year age groups. As the UK 1990 data are no longer used for children in this age bracket, they have been omitted to create a continuous data set.
+Though the UK90 data spans 23 weeks gestation to 20 years old, it also includes children who were bottle-fed and breast-fed. Thus, the breast-fed cohort from the WHO2006 cohort were deemed more accurate and replaced the UK90 for the 2 week to 4 year age groups. As the UK90 data are no longer used for children in this age bracket, they have been omitted to create a continuous data set.
 
 The final dataset has 4 parts:
 
   1. Pre-term (up to 42 weeks)
   2. Infants (under 2 years)
-  3. WHO 2006 children (< 4 years)
-  4. UK 1990 children (4 years - 18 years)
+  3. WHO 2006 children (2 — 4 years)
+  4. UK 1990 children (4 years — 18 years)
 
 Where datasets overlap, there are 2 ages at the junction, one from each of UK90 and WHO 2006. There is a purposeful step at the junction between the data sets.
 
-## Instructions for the Trisomy 21 (Down's Syndrome) charts
-
-The PDF linked below was produced in 2012 to accompany the Trisomy 21 (Down's Syndrome) charts. In due course, we will update and reformat the text and adapt the presentation for the API version of the charts.
-
-[PDF Down's Syndrome Chart Information (2012)](../_assets/_pdfs/2012-instructions-for-downs-syndrome-charts.pdf)
 
 ## Centile Terminology
 
@@ -80,7 +77,9 @@ Weight gain in the early days varies a lot from baby to baby, however, by 2 week
 Calculating the percentage weight loss is a useful way to identify babies who need assessment.
 Percentage weight loss can be calculated as follows:
 
-![formula](https://latex.codecogs.com/svg.image?%\;Weight\;loss = \frac{Birth\;weight - Current\;weight}{Birth\;weight} \times 100%)
+<div class="latex">
+<img src="https://latex.codecogs.com/svg.image?Percentage\;Weight\;loss = \frac{Birth\;weight - Current\;weight}{Birth\;weight} \times 100" />
+</div>
 
 For example, a child born at 3.500kg who drops to 3.150kg at 5 days has lost 350g or 10%; in a baby born at 3.000kg, a 300g loss is 10%.
 
@@ -110,11 +109,13 @@ If any of the following occur:
 
 Centiles are derived mathematically from standard deviation scores (SDS), also known as z scores. These values in turn are related to p values - the probability of finding a child with a given measurement in a sample. An SDS of 0 equates to the 50th centile, with positive values relating to centiles above this, and a negative value relating to centiles below. The benefit of reporting and charting SDS rather than centiles is that values can all be plotted on the same chart. It is important to note that plotting the z score against age must be against the *corrected* age, not the *chronological* one, as the chart otherwise becomes crowded and hard to interpret.
 
-## Calculations as yet not implemented in the API
 
 ### Weight–height to BMI conversion chart
 
-![formula](https://latex.codecogs.com/svg.image?BMI&space;=&space;weight\;in\;kg/(height\;in\;m)^2)
+<div class="latex">
+<img src="https://latex.codecogs.com/svg.image?BMI=\frac{weight\;in\;kilograms}{(height\;in\;metres)^2}" />
+</div>
+
 BMI indicates how heavy a child is relative to his or her height and is the simplest measure of thinness and fatness from the age of 2, when height can be measured fairly accurately.  In a child over 2 years of age, the BMI centile is a better indicator of overweight or underweight than the weight centile; a child whose weight is average for their height will have a BMI between the 25th and 75th centiles, whatever their height centile. BMI above the 91st centile suggests that the child is overweight; a child above the 98th centile is very overweight (clinically obese). BMI below the 2nd centile is unusual and may reflect under-nutrition.
 
 ### Percentage median BMI
@@ -126,7 +127,7 @@ The child or young person's BMI is compared with the median value for age and se
 Parents like to know how tall their child will be as an adult. The child’s most recent height centile (aged 2–4 years) gives a good idea of this for healthy children. Plot this centile on the adult height predictor to the right of the height chart to find the average adult height for children on this centile. Four out of five children will have adult heights that are within ± 6cm of this value.
 
 #### Adult Height Predictor
-The paper-based Adult Heigth Predictor allowed you to predict the child’s adult height based on their current height, but with a regression adjustment to allow for the tendency of very tall and short children to be less extreme in height as adults. Four girls out of five will have an adult height within ± 6cm of the predicted adult height.
+The paper-based Adult Height Predictor allowed you to predict the child’s adult height based on their current height, but with a regression adjustment to allow for the tendency of very tall and short children to be less extreme in height as adults. Four girls out of five will have an adult height within ± 6cm of the predicted adult height.
 
 !!! info
     Adult Height Prediction is an upcoming feature of the Digital Growth Chart API

@@ -42,7 +42,7 @@ In addition to calculating SDS, centiles and corrected decimal ages against a ch
 - the raw data required for constructing the centile lines in a growth chart. This is offered either in the standard 9 centile format, or can generate custom centiles if requested
 - mid-parental height calculation
 
-These features are offered for all 3 growth references - UK-WHO, Down's and Turner's.
+These features are offered for all 3 growth references - UK-WHO, Down Syndrome and Turner Syndrome.
 
 ### Chart Features
 
