@@ -5,7 +5,7 @@ audience: clinicians, health-staff, statisticians
 ---
 # How the API Works
 
-Details for interested clinicians and statisticians.
+Details for interested clinicians and statisticians. It is not necessary to understand this detail in order to use growth charts clinically, this is just for those interested in the technical details.
 
 ## Growth Charting Introduction
 
@@ -13,9 +13,11 @@ The UK-WHO 0-4 year old charts were officially launched on May 11th 2009. Any ch
 
 ## The LMS Method
 
-It is now common practice to express child growth status by the number of standard deviations away from the mean (SDS, Standard Deviation Score, also known as a z-score). The SD score can be converted to a centile.
+The 'LMS' method provides a way of obtaining normalised growth centiles from a reference dataset, applying smoothing and extrapolation so the resulting **L**, **M** and **S** (**L**ambda, **M**edian and **S**kew) data contain the information to draw **any** centile curve, and to convert measurements (even extreme values) into exact SD scores. The growth reference data is a table of LMS values at a series of ages.
 
-The LMS method provides a way of obtaining normalised growth centiles from a reference dataset, applying smoothing and extrapolation so the resulting L, M and S curves contain the information to draw **any** centile curve, and to convert measurements (even extreme values) into exact SD scores. The growth reference is summarised by a table of LMS values at a series of ages.
+Using the LMS tables we can calculate Standard Deviation Score, the number of standard deviations away from the mean (SDS, Standard Deviation Score, and z-score are interchangeable terms for the same thing) for the measurement.
+
+The SDS/z-score can then be converted to a centile, if needed, although increasingly clinicians are using SDS directly. Whereas centiles for different measurements have wildly different curves on a graph, SDS are all on the same scale, making it easier to compare different measurements on the same child. In the future we hope to see more clinicians using SDS for this reason.
 
 ### How the LMS method is used
 
@@ -26,17 +28,19 @@ The LMS method provides a way of obtaining normalised growth centiles from a ref
   <img src="https://latex.codecogs.com/svg.image?z=\frac{(measurement / M)^L -1}{LS}"></img>
   </div>
 
+- To convert from a z-score to a centile, we use the normal distribution tools within our Python statistics package. The centile is the percentage of the population below the z-score.
+
 ## Growth References
 
-This is a growing list of growth references for children. These cover a number of specific medical conditions and a range of different physiological parameters. It will continue to grow as more data become available. As a side-project of this work, we are interested in collating an international library of growth references in computable format, found at the [Growth References repository](https://github.com/rcpch/growth-references). Further details are available there.
+There are a range of growth references for children, covering a range of different physiological parameters such as height, blood pressure, etc. Furthermore, there are specialist charts for some medical conditions - generally ones common enough to have good data and that also affect stature - Down Syndrome is an example. In addition, different geographical regions have different growth references, as the growth of children can vary by region, for example there are CDC growth charts for the USA.
 
-If you have a reference which you would like us to add, please contact us on [growth.digital@rcpch.ac.uk](mailto:growth.digital@rcpch.ac.uk).
+At present there is no comprehensive 'source of truth' for all these references, but we have begun to collate what we are aware of in a GitHub repository, which we would like to gradually improve over time to encompass all known references. It will continue to grow as more data become available. [Growth References repository](https://github.com/rcpch/growth-references). If you have a reference which you would like us to add, please contact us on [growth.digital@rcpch.ac.uk](mailto:growth.digital@rcpch.ac.uk).
 
-## Gold Standard
+## LMSGrowth - a preceding 'gold standard'
 
 The preceding 'gold standard' for LMS calculation was [LMSgrowth](https://www.healthforallchildren.com/shop-base/shop/software/lmsgrowth/), an Excel add-in written in Visual Basic by Huiqi Pan and Tim Cole (copyright Medical Research Council 2002–10).
 
-Results from RCPCHGrowth agree with LMSgrowth to 3 decimal places, though beyond this, there are discrepancies. This is partly because of the decimal age calculation. In LMS Growth, months and weeks are handled differently to RCPCHGrowth, which uses the Python `date-utils` library to calculate differences between dates.
+Results from RCPCHGrowth agree with LMSgrowth to 3 decimal places, though beyond this, there are very tiny discrepancies. This is partly because of the decimal age calculation. In LMS Growth, months and weeks are handled differently to RCPCHGrowth, which uses the Python `date-utils` library to calculate differences between dates.
 
 ## Interpolation
 
@@ -106,9 +110,11 @@ An infant is considered premature (preterm) if born below 37 weeks gestation. Th
 
 The entire Term period (from 37-42 weeks gestation) used to be defined as a decimal age of exactly 0 years, and the Growth Chart Reference Group at the inception of the UK-WHO paper charts had previously stipulated that no growth data should be reported over the 2-week period after delivery in term infants.
 
-The growth chart reference data covering this Term period used to be averaged across the period, so regardless of actual gestational age, all term-born children were considered to be the same gestation, for paper and PDF growth charts.
+The growth chart reference data covering this Term period used to be averaged across the period, so regardless of actual gestational age, all term-born children were considered to be the same gestation, for paper and PDF growth charts. Part of the reason for this was that gestational age correction used to be a manual process, and it was easier to have a single term value.
 
-However, during the development of the Digital Growth Charts, the [dGC Project Board](../../about/team#project-board) determined we should abolish the 'averaging' effect of the concept of term, and simply correct all children for gestational age. This is because of evidence there *is* a difference between the outcomes of children born as early term and late term. More, the dGC makes it easy to correct for all gestational ages.
+However, during the development of the Digital Growth Charts, the [dGC Project Board](../../about/team#project-board) determined that because gestational age correction was now completely automatic, we should abolish the 'averaging' effect of the concept of term, and simply correct **all** children for gestational age. This is because of evidence there *is* a difference between the outcomes of children born as early term and late term.
+
+In practice these differences are very small and would not affect most clinical care activities or decisions. However, the principle of the Digital Growth Charts is to provide the most accurate data possible, and so the decision was made to correct for gestational age in all children.
 
 ## Helpful reference documents
 
