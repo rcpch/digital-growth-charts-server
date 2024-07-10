@@ -20,6 +20,9 @@ Hopefully, this leads to further discussion with the IT team at your place of wo
 
 Many EPR suppliers have already started the process of integrating the RCPCH Digital Growth Charts API into their product, and we are happy to assist vendors with integration once they purchase a subscription. The more clinicians who are asking for Digital Growth Charts, the more likely it is that suppliers will prioritise this essential part of digital transformation.
 
+!!! info
+    We now have a section on the RCPCH Forum for supporting clinicians wanting to get Digital Growth Charts implemented in their EPR. To get access to this area sign up to the forum site and request access to our [Digital Growth Charts Clinicians](https://forum.rcpch.tech/g/dgc-clinicians)
+
 ## Q: How much do the RCPCH Digital Growth Charts APIs cost?
 
 **A**: The APIs themselves are run on a sustainable non-profit basis by the RCPCH, which is a charitable organisation. The aim is for modest revenues from the API to be fed back into development of future APIs and new features.
