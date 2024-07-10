@@ -171,7 +171,7 @@ class Centile(BaseModel):
 
 
 class MeasurementMethod(BaseModel):
-    height: List[Centile]
+    height: Optional[List[Centile]] = None
     weight: Optional[List[Centile]] = None
     ofc: Optional[List[Centile]] = None
     bmi: Optional[List[Centile]] = None
