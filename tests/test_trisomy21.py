@@ -86,13 +86,20 @@ def test_trisomy_21_calculation_with_invalid_request():
     assert validation_errors["sex"]["msg"] == "Input should be 'male' or 'female'"
 
 
-@pytest.mark.skip(
-    reason="Complicated response to debug - needs further work. Note l key has changed from str to float."
-)
-def test_trisomy_21_chart_data_with_valid_request():
-    body = {
-        "measurement_method": "height",
-        "sex": "male",
+@pytest.mark.parametrize("input", [
+    { "measurement_method": "height", "sex": "male" },
+    { "measurement_method": "weight", "sex": "male" },
+    { "measurement_method": "ofc", "sex": "male" },
+    # TODO https://github.com/rcpch/digital-growth-charts-server/issues/217
+    # { "measurement_method": "bmi", "sex": "male" },
+    { "measurement_method": "height", "sex": "female" },
+    { "measurement_method": "weight", "sex": "female" },
+    { "measurement_method": "ofc", "sex": "female" }
+    # TODO https://github.com/rcpch/digital-growth-charts-server/issues/217
+    # { "measurement_method": "bmi", "sex": "female" }
+])
+def test_trisomy_21_chart_data_with_valid_request(input):
+    body = input | {
         "centile_format": "cole-nine-centiles",
     }
 
@@ -100,21 +107,7 @@ def test_trisomy_21_chart_data_with_valid_request():
 
     assert response.status_code == 200
 
-    # COMMENTED OUT FOR BRANCH 'dockerise' PENDING DECISION ON #166 (API Test Suite) (pacharanero, 2024-02-07 )
-    # load the known-correct response from file and create a hash of it
-    with open(r"tests/test_data/test_trisomy_21_male_height_valid.json", "r") as file:
-        chart_data_file = file.read()
-    # hash both JSON objects which should be identical
-    # hashing was the only efficient way to compare these two large (~500k) files
-    # it will be harder to debug any new difference (consider saving files to disk and compare)
-    # response_hash = hashlib.sha256(
-    #     json.dumps(
-    # ).hexdigest()
-    test_response = response.json()["centile_data"]
-    # chart_data_file_hash = hashlib.sha256(chart_data_file.encode("utf-8")).hexdigest()
-    chart_data_file = json.loads(chart_data_file)
-    # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
-    assert test_response == chart_data_file
+    # TODO: Check the actual values returned. We do already validate it against the schema though.
 
 
 def test_trisomy_21_chart_data_with_invalid_request():

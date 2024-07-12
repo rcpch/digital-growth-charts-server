@@ -660,10 +660,17 @@
                         "title": "Centile"
                     },
                     "data": {
-                        "items": {
-                            "$ref": "#/components/schemas/Data"
-                        },
-                        "type": "array",
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/Data"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Data"
                     }
                 },
@@ -1716,10 +1723,17 @@
             "MeasurementMethod": {
                 "properties": {
                     "height": {
-                        "items": {
-                            "$ref": "#/components/schemas/Centile"
-                        },
-                        "type": "array",
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/Centile"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Height"
                     },
                     "weight": {
@@ -1766,9 +1780,6 @@
                     }
                 },
                 "type": "object",
-                "required": [
-                    "height"
-                ],
                 "title": "MeasurementMethod"
             },
             "MeasurementObject": {
