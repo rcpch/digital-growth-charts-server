@@ -112,10 +112,10 @@ class ChartCoordinateRequest(BaseModel):
         description="Boolean flag (default False) referring to centile_format. If custom lines requested as SDS, rather than as centiles, set this to True.",
     )
     centile_format: Optional[
-        Union[Literal["cole-nine-centiles", "three-percent-centiles"], List[float]]
+        Union[Literal["cole-nine-centiles", "three-percent-centiles", "five-percent-centiles", "eighty-five-percent-centiles"], List[float]]
     ] = Field(
         "cole-nine-centiles",
-        description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles'], or accepts a list of floats as a custom centile format e.g. [7/10/20/30/40/50/60/70/80/90/93]. Defaults to cole-nine-centiles",
+        description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or 'three-percent-centiles' [3.0, 10.0, 25.0, 50.0, 75.0, 90.0, 97.0], five-percent-centiles [5.0, 10.0, 25.0, 50.0, 75.0, 90.0, 95.0] or eight-five-percent-centiles as used in CDC BMI [3.0, 5.0, 10.0, 25.0, 50.0, 75.0, 85, 90.0, 95, 98.0, 99.0, 99.9, 99.99] or accepts a list of floats as a custom centile format e.g. [7/10/20/30/40/50/60/70/80/90/93]. Defaults to cole-nine-centiles",
     )
 
     @field_validator("centile_format", "is_sds")
