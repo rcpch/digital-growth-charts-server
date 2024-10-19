@@ -8,4 +8,4 @@ pydantic == 2.*
 
 # rcpch dependencies
 # python package which does the centile and SDS calculations
-rcpchgrowth
+rcpchgrowth==4.1.0

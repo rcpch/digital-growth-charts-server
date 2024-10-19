@@ -10,7 +10,7 @@ from fastapi.openapi.utils import get_openapi
 
 # local / rcpch imports
 from rcpchgrowth import chart_functions, constants
-from routers import trisomy_21, turners, uk_who, utilities
+from routers import trisomy_21, turners, uk_who, cdc, utilities
 
 
 version='4.2.19'  # this is set by bump version
@@ -40,6 +40,7 @@ app.add_middleware(
 app.include_router(uk_who)
 app.include_router(turners)
 app.include_router(trisomy_21)
+app.include_router(cdc)
 app.include_router(utilities)
 
 
