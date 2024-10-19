@@ -107,10 +107,12 @@ def cdc_chart_coordinates(chartParams: ChartCoordinateRequest):
         "height": [
             {
                 sds: -2.666666,
-                cdc_child_data: [...],
-                cdc_infant_data: [
+                centile: 0.4,
+                fenton: [...],
+                cdc_child: [...],
+                cdc_infant: [
                     {
-                        label: 0.4, `this is the centile
+                        l: 0.4, `this is the centile
                         x: 4, `this is the decimal age
                         y: 91.535  `this is the measurement
                     }

@@ -48,6 +48,8 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         mid_parental_height_request.sex,
     )
 
+    reference = mid_parental_height_request.reference
+
     """
     ## Calculate SDS and centile
     """
@@ -60,7 +62,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     mph_upper_centile_data = None
     try:
         mph_sds = sds_for_measurement(
-            reference=constants.UK_WHO,
+            reference=reference,
             age=20.0,
             measurement_method=constants.HEIGHT,
             observation_value=height,
@@ -77,7 +79,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
 
     try:
         mph_centile_data = create_chart(
-            reference=UK_WHO,
+            reference=reference,
             centile_format=[mph_centile],
             measurement_method=constants.HEIGHT,
             sex=mid_parental_height_request.sex,
@@ -89,7 +91,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     try:
         lower_centile = centile(mph_sds - 2)
         mph_lower_centile_data = create_chart(
-            reference=UK_WHO,
+            reference=reference,
             centile_format=[lower_centile],
             measurement_method=constants.HEIGHT,
             sex=mid_parental_height_request.sex,
@@ -103,7 +105,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         upper_centile = centile(mph_sds + 2)
 
         mph_upper_centile_data = create_chart(
-            reference=UK_WHO,
+            reference=reference,
             centile_format=[upper_centile],
             measurement_method=constants.HEIGHT,
             sex=mid_parental_height_request.sex,
@@ -115,14 +117,14 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
 
     try:
         upper_height = measurement_from_sds(
-            reference=constants.UK_WHO,
+            reference=reference,
             age=20,
             sex=mid_parental_height_request.sex,
             measurement_method=constants.HEIGHT,
             requested_sds=mph_sds + 2,
         )
         lower_height = measurement_from_sds(
-            reference=constants.UK_WHO,
+            reference=reference,
             age=20,
             sex=mid_parental_height_request.sex,
             measurement_method=constants.HEIGHT,

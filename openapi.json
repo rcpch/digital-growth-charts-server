@@ -2139,7 +2139,17 @@
                             "female"
                         ],
                         "title": "Sex",
-                        "description": "The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted."
+                        "description": "The sex of the patient, as a string value which can either be 'male' or 'female'. Abbreviations or alternatives are not accepted."
+                    },
+                    "reference": {
+                        "type": "string",
+                        "enum": [
+                            "uk-who",
+                            "cdc"
+                        ],
+                        "title": "Reference",
+                        "description": "Selected reference as string. Case sensitive and accepts only once of ['uk-who', 'cdc']",
+                        "default": "uk-who"
                     }
                 },
                 "type": "object",
