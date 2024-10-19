@@ -15,13 +15,27 @@ from main import app
 client = TestClient(app)
 
 
-def test_midparental_height_with_valid_request():
-    body = {"height_paternal": 171, "height_maternal": 168, "sex": "male"}
+def test_midparental_height_ukwho_with_valid_request():
+    body = {"height_paternal": 171, "height_maternal": 168, "sex": "male", "reference":"uk-who" }
 
     response = client.post("/utilities/mid-parental-height", json=body)
 
     # load the known-correct response from file
-    with open(r"tests/test_data/test_midparental_height_valid.json", "r") as file:
+    with open(r"tests/test_data/test_midparental_height_ukwho_valid.json", "r") as file:
+        calculation_file = file.read()
+
+    assert response.status_code == 200
+
+    # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
+    assert response.json() == json.loads(calculation_file)
+
+def test_midparental_height_cdc_with_valid_request():
+    body = {"height_paternal": 171, "height_maternal": 168, "sex": "male", "reference":"cdc" }
+
+    response = client.post("/utilities/mid-parental-height", json=body)
+
+    # load the known-correct response from file
+    with open(r"tests/test_data/test_midparental_height_cdc_valid.json", "r") as file:
         calculation_file = file.read()
 
     assert response.status_code == 200
@@ -40,7 +54,7 @@ def test_midparental_height_with_invalid_request():
     response = client.post("/utilities/mid-parental-height", json=body)
 
     # load the known-correct response from file
-    with open(r"tests/test_data/test_midparental_height_valid.json", "r") as file:
+    with open(r"tests/test_data/test_midparental_height_ukwho_valid.json", "r") as file:
         calculation_file = file.read()
 
     assert response.status_code == 422
