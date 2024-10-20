@@ -1633,7 +1633,8 @@
                                 "enum": [
                                     "uk-who",
                                     "trisomy-21",
-                                    "turners-syndrome"
+                                    "turners-syndrome",
+                                    "cdc"
                                 ]
                             },
                             {
@@ -1641,7 +1642,7 @@
                             }
                         ],
                         "title": "Reference",
-                        "description": "Selected reference as string. Case sensitive and accepts only once of ['uk-who', 'trisomy-21', 'turners-syndrome']",
+                        "description": "Selected reference as string. Case sensitive and accepts only once of ['uk-who', 'trisomy-21', 'turners-syndrome', 'cdc']",
                         "default": "uk-who"
                     }
                 },

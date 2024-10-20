@@ -205,9 +205,9 @@ class FictionalChildRequest(BaseModel):
         0.005,
         description="Noise range as float. Prescribes the amount of measurement error generated randomly. Default is 0.5%"
     )
-    reference: Optional[Literal["uk-who", "trisomy-21", "turners-syndrome"]] = Field(
+    reference: Optional[Literal["uk-who", "trisomy-21", "turners-syndrome", "cdc"]] = Field(
         "uk-who",
-        description="Selected reference as string. Case sensitive and accepts only once of ['uk-who', 'trisomy-21', 'turners-syndrome']"
+        description="Selected reference as string. Case sensitive and accepts only once of ['uk-who', 'trisomy-21', 'turners-syndrome', 'cdc']"
     )
 
 
