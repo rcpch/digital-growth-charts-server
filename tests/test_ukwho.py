@@ -239,5 +239,5 @@ def test_ukwho_fictional_child_data_with_invalid_request():
     )
     assert (
         validation_errors["reference"]["msg"]
-        == "Input should be 'uk-who', 'trisomy-21' or 'turners-syndrome'"
+        == "Input should be 'uk-who', 'trisomy-21', 'turners-syndrome' or 'cdc'"
     )
