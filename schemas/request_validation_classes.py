@@ -228,7 +228,7 @@ class MidParentalHeightRequest(BaseModel):
     )
     reference: Literal["uk-who", "cdc"] = Field(
         default="uk-who",
-        description="Selected reference as string. Case sensitive and accepts only once of ['uk-who', 'cdc']"
+        description="Selected reference as string. Case sensitive and accepts only one of ['uk-who', 'cdc']"
     )
 
 
