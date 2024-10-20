@@ -73,7 +73,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         print("It was not possible to calculate midparental SDS.")
 
     try:
-        mph_centile = centile(mph_sds)
+        mph_centile = round(centile(mph_sds),3)
     except:
         print("It was not possible to calculate a centile from midparental height.")
 
@@ -89,7 +89,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         mph_centile_data = []
 
     try:
-        lower_centile = centile(mph_sds - 2)
+        lower_centile = round(centile(mph_sds - 2),3)
         mph_lower_centile_data = create_chart(
             reference=reference,
             centile_format=[lower_centile],
@@ -102,7 +102,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         mph_lower_centile_data = []
 
     try:
-        upper_centile = centile(mph_sds + 2)
+        upper_centile = round(centile(mph_sds + 2),3)
 
         mph_upper_centile_data = create_chart(
             reference=reference,
@@ -140,6 +140,6 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         "mid_parental_height_centile_data": mph_centile_data,
         "mid_parental_height_lower_centile_data": mph_lower_centile_data,
         "mid_parental_height_upper_centile_data": mph_upper_centile_data,
-        "mid_parental_height_lower_value": lower_height,
-        "mid_parental_height_upper_value": upper_height,
+        "mid_parental_height_lower_value": round(lower_height, 2),
+        "mid_parental_height_upper_value": round(upper_height, 2),
     }
