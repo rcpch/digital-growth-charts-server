@@ -48,6 +48,8 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         mid_parental_height_request.sex,
     )
 
+    reference = mid_parental_height_request.reference
+
     """
     ## Calculate SDS and centile
     """
@@ -60,7 +62,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     mph_upper_centile_data = None
     try:
         mph_sds = sds_for_measurement(
-            reference=constants.UK_WHO,
+            reference=reference,
             age=20.0,
             measurement_method=constants.HEIGHT,
             observation_value=height,
@@ -71,13 +73,13 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         print("It was not possible to calculate midparental SDS.")
 
     try:
-        mph_centile = centile(mph_sds)
+        mph_centile = round(centile(mph_sds),3)
     except:
         print("It was not possible to calculate a centile from midparental height.")
 
     try:
         mph_centile_data = create_chart(
-            reference=UK_WHO,
+            reference=reference,
             centile_format=[mph_centile],
             measurement_method=constants.HEIGHT,
             sex=mid_parental_height_request.sex,
@@ -87,9 +89,9 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         mph_centile_data = []
 
     try:
-        lower_centile = centile(mph_sds - 2)
+        lower_centile = round(centile(mph_sds - 2),3)
         mph_lower_centile_data = create_chart(
-            reference=UK_WHO,
+            reference=reference,
             centile_format=[lower_centile],
             measurement_method=constants.HEIGHT,
             sex=mid_parental_height_request.sex,
@@ -100,10 +102,10 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         mph_lower_centile_data = []
 
     try:
-        upper_centile = centile(mph_sds + 2)
+        upper_centile = round(centile(mph_sds + 2),3)
 
         mph_upper_centile_data = create_chart(
-            reference=UK_WHO,
+            reference=reference,
             centile_format=[upper_centile],
             measurement_method=constants.HEIGHT,
             sex=mid_parental_height_request.sex,
@@ -115,14 +117,14 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
 
     try:
         upper_height = measurement_from_sds(
-            reference=constants.UK_WHO,
+            reference=reference,
             age=20,
             sex=mid_parental_height_request.sex,
             measurement_method=constants.HEIGHT,
             requested_sds=mph_sds + 2,
         )
         lower_height = measurement_from_sds(
-            reference=constants.UK_WHO,
+            reference=reference,
             age=20,
             sex=mid_parental_height_request.sex,
             measurement_method=constants.HEIGHT,
@@ -138,6 +140,6 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         "mid_parental_height_centile_data": mph_centile_data,
         "mid_parental_height_lower_centile_data": mph_lower_centile_data,
         "mid_parental_height_upper_centile_data": mph_upper_centile_data,
-        "mid_parental_height_lower_value": lower_height,
-        "mid_parental_height_upper_value": upper_height,
+        "mid_parental_height_lower_value": round(lower_height, 2),
+        "mid_parental_height_upper_value": round(upper_height, 2),
     }

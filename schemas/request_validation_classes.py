@@ -101,21 +101,21 @@ three_percent_centiles = THREE_PERCENT_CENTILES
 class ChartCoordinateRequest(BaseModel):
     sex: Literal["male", "female"] = Field(
         ...,
-        description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted.",
+        description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted."
     )
     measurement_method: Literal["height", "weight", "ofc", "bmi"] = Field(
         ...,
-        description="The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre²** and occipitofrontal circumference (head circumference, OFC) **in centimetres**.",
+        description="The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre²** and occipitofrontal circumference (head circumference, OFC) **in centimetres**."
     )
     is_sds: bool = Field(
         False,
-        description="Boolean flag (default False) referring to centile_format. If custom lines requested as SDS, rather than as centiles, set this to True.",
+        description="Boolean flag (default False) referring to centile_format. If custom lines requested as SDS, rather than as centiles, set this to True."
     )
     centile_format: Optional[
-        Union[Literal["cole-nine-centiles", "three-percent-centiles"], List[float]]
+        Union[Literal["cole-nine-centiles", "three-percent-centiles", "five-percent-centiles", "eighty-five-percent-centiles"], List[float]]
     ] = Field(
         "cole-nine-centiles",
-        description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or older three-percent centile format ['three-percent-centiles'], or accepts a list of floats as a custom centile format e.g. [7/10/20/30/40/50/60/70/80/90/93]. Defaults to cole-nine-centiles",
+        description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or 'three-percent-centiles' [3.0, 10.0, 25.0, 50.0, 75.0, 90.0, 97.0], five-percent-centiles [5.0, 10.0, 25.0, 50.0, 75.0, 90.0, 95.0] or eight-five-percent-centiles as used in CDC BMI [3.0, 5.0, 10.0, 25.0, 50.0, 75.0, 85, 90.0, 95, 98.0, 99.0, 99.9, 99.99] or accepts a list of floats as a custom centile format e.g. [7/10/20/30/40/50/60/70/80/90/93]. Defaults to cole-nine-centiles"
     )
 
     @field_validator("centile_format", "is_sds")
@@ -136,31 +136,31 @@ class ChartCoordinateRequest(BaseModel):
 class FictionalChildRequest(BaseModel):
     measurement_method: Literal["height", "weight", "ofc", "bmi"] = Field(
         ...,
-        description="The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre²** and occipitofrontal circumference (head circumference, OFC) **in centimetres**.",
+        description="The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre²** and occipitofrontal circumference (head circumference, OFC) **in centimetres**."
     )
     sex: Literal["male", "female"] = Field(
         ...,
-        description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted.",
+        description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted."
     )
     start_chronological_age: Optional[float] = Field(
         0.0,
-        description="Decimal age as a float. The age from which fictional data is to be generated.",
+        description="Decimal age as a float. The age from which fictional data is to be generated."
     )
     end_age: Optional[float] = Field(
         20.0,
-        description="Decimal age as float. Age until which fictional data is returned.",
+        description="Decimal age as float. Age until which fictional data is returned."
     )
     gestation_weeks: Optional[int] = Field(
         40,
         ge=limits.MINIMUM_GESTATION_WEEKS,
         le=limits.MAXIMUM_GESTATION_WEEKS,
-        description="The number of completed weeks of gestation at which the patient was born, passed as an integer. Supplying this data enables Gestational Age correction if the child was not born at term. If no gestational age is passed then 40 weeks (term) is assumed. **IMPORTANT: See also the other parameter `gestation_days` - both are usually required.**",
+        description="The number of completed weeks of gestation at which the patient was born, passed as an integer. Supplying this data enables Gestational Age correction if the child was not born at term. If no gestational age is passed then 40 weeks (term) is assumed. **IMPORTANT: See also the other parameter `gestation_days` - both are usually required.**"
     )
     gestation_days: Optional[int] = Field(
         0,
         ge=0,
         le=6,
-        description="The number of additional days _beyond the completed weeks of gestation_ at which the patient was born, passed as an integer. Supplying this data enables Gestational Age correction if the child was not born at term. If no gestational age is passed then term is assumed. IMPORTANT: See also the other parameter `gestation_weeks` - both are usually required.",
+        description="The number of additional days _beyond the completed weeks of gestation_ at which the patient was born, passed as an integer. Supplying this data enables Gestational Age correction if the child was not born at term. If no gestational age is passed then term is assumed. IMPORTANT: See also the other parameter `gestation_weeks` - both are usually required."
     )
     measurement_interval_type: Optional[
         Literal[
@@ -179,23 +179,23 @@ class FictionalChildRequest(BaseModel):
         ]
     ] = Field(
         "months",
-        description="Interval type between fictional measurements as integer. Accepts days as ['d', 'day', 'days'], weeks as ['w', 'weeks', 'weeks'], months as ['m', 'month', 'months'] or years as ['y', 'year', 'years']",
+        description="Interval type between fictional measurements as integer. Accepts days as ['d', 'day', 'days'], weeks as ['w', 'weeks', 'weeks'], months as ['m', 'month', 'months'] or years as ['y', 'year', 'years']"
     )
     measurement_interval_number: Optional[int] = Field(
         20,
-        description="Interval length as integer between fictional measurements returned.",
+        description="Interval length as integer between fictional measurements returned."
     )
     start_sds: Optional[float] = Field(
         0,
-        description="Starting SDS as float. SDS value at which fictional data starts.",
+        description="Starting SDS as float. SDS value at which fictional data starts."
     )
     drift: bool = Field(
         False,
-        description="Drift as boolean value. Default true. Selected if fictional measurements are intended to drift from starting SDS.",
+        description="Drift as boolean value. Default true. Selected if fictional measurements are intended to drift from starting SDS."
     )
     drift_range: Optional[float] = Field(
         -0.05,
-        description="Drift range as float. Default is -0.05. The SDS drift expected over the requested age period.",
+        description="Drift range as float. Default is -0.05. The SDS drift expected over the requested age period."
     )
     noise: bool = Field(
         False,
@@ -203,11 +203,11 @@ class FictionalChildRequest(BaseModel):
     )
     noise_range: Optional[float] = Field(
         0.005,
-        description="Noise range as float. Prescribes the amount of measurement error generated randomly. Default is 0.5%",
+        description="Noise range as float. Prescribes the amount of measurement error generated randomly. Default is 0.5%"
     )
-    reference: Optional[Literal["uk-who", "trisomy-21", "turners-syndrome"]] = Field(
+    reference: Optional[Literal["uk-who", "trisomy-21", "turners-syndrome", "cdc"]] = Field(
         "uk-who",
-        description="Selected reference as string. Case sensitive and accepts only once of ['uk-who', 'trisomy-21', 'turners-syndrome']",
+        description="Selected reference as string. Case sensitive and accepts only once of ['uk-who', 'trisomy-21', 'turners-syndrome', 'cdc']"
     )
 
 
@@ -224,7 +224,11 @@ class MidParentalHeightRequest(BaseModel):
     )
     sex: Literal["male", "female"] = Field(
         ...,
-        description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted.",
+        description="The sex of the patient, as a string value which can either be 'male' or 'female'. Abbreviations or alternatives are not accepted."
+    )
+    reference: Literal["uk-who", "cdc"] = Field(
+        default="uk-who",
+        description="Selected reference as string. Case sensitive and accepts only one of ['uk-who', 'cdc']"
     )
 
 

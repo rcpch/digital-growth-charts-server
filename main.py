@@ -10,7 +10,7 @@ from fastapi.openapi.utils import get_openapi
 
 # local / rcpch imports
 from rcpchgrowth import chart_functions, constants
-from routers import trisomy_21, turners, uk_who, utilities
+from routers import trisomy_21, turners, uk_who, cdc, utilities
 
 
 version='4.2.19'  # this is set by bump version
@@ -40,6 +40,7 @@ app.add_middleware(
 app.include_router(uk_who)
 app.include_router(turners)
 app.include_router(trisomy_21)
+app.include_router(cdc)
 app.include_router(utilities)
 
 
@@ -75,8 +76,8 @@ def root():
 # Generate and store the chart plotting data for the centile background curves.
 # This data is only generated once and then is stored and served from file.
 def generate_and_store_chart_data():
-    for centile_format in [constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES, constants.THREE_PERCENT_CENTILES]:
-        for reference in constants.REFERENCES:
+    for centile_format in [constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES, constants.THREE_PERCENT_CENTILES, constants.FIVE_PERCENT_CENTILES, constants.EIGHTY_FIVE_PERCENT_CENTILES]:
+        for reference in constants.REFERENCES + [constants.CDC]:
             for sex in constants.SEXES:
                 for measurement_method in constants.MEASUREMENT_METHODS:
                     # Don't generate files for Turner's for references we don't have (males or non-height measurements)
