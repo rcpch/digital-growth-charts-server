@@ -33,10 +33,10 @@
     },
     "measurement_calculated_values": {
         "corrected_sds": -2.406593606646068,
-        "corrected_centile": 0.8051038459644078,
+        "corrected_centile": 0.8051,
         "corrected_centile_band": "This height measurement is between the 0.4th and 2nd centiles.",
         "chronological_sds": -2.406593606646068,
-        "chronological_centile": 0.8051038459644078,
+        "chronological_centile": 0.8051,
         "chronological_centile_band": "This height measurement is between the 0.4th and 2nd centiles.",
         "corrected_measurement_error": null,
         "chronological_measurement_error": null,
@@ -49,7 +49,7 @@
                 "x": 8.167008898015059,
                 "y": 115.0,
                 "b": 10.0,
-                "centile": 0.8051038459644078,
+                "centile": 0.8051,
                 "sds": -2.406593606646068,
                 "bone_age_label": "This bone age is advanced",
                 "events_text": [
@@ -72,7 +72,7 @@
                 "x": 8.167008898015059,
                 "y": 115.0,
                 "b": 10.0,
-                "centile": 0.8051038459644078,
+                "centile": 0.8051,
                 "sds": -2.406593606646068,
                 "bone_age_label": "This bone age is advanced",
                 "events_text": [
@@ -98,7 +98,7 @@
                 "x": 8.167008898015059,
                 "y": -2.406593606646068,
                 "b": 10.0,
-                "centile": 0.8051038459644078,
+                "centile": 0.8051,
                 "sds": null,
                 "bone_age_label": "This bone age is advanced",
                 "events_text": [
@@ -121,7 +121,7 @@
                 "x": 8.167008898015059,
                 "y": -2.406593606646068,
                 "b": 10.0,
-                "centile": 0.8051038459644078,
+                "centile": 0.8051,
                 "sds": null,
                 "bone_age_label": "This bone age is advanced",
                 "events_text": [
