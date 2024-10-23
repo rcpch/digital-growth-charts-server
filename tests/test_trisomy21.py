@@ -142,7 +142,6 @@ def test_trisomy_21_fictional_child_data_with_valid_request():
         "drift_range": -0.05,
         "noise": "false",
         "noise_range": 0.005,
-        "reference": "trisomy-21",
     }
 
     response = client.post("/trisomy-21/fictional-child-data", json=body)
@@ -173,7 +172,6 @@ def test_trisomy_21_fictional_child_data_with_invalid_request():
         "drift_range": "invalid_drift_range",
         "noise": "invalid_noise",
         "noise_range": "invalid_noise_range",
-        "reference": "invalid_reference",
     }
 
     response = client.post("/trisomy-21/fictional-child-data", json=body)
@@ -229,8 +227,4 @@ def test_trisomy_21_fictional_child_data_with_invalid_request():
     assert (
         validation_errors["noise_range"]["msg"]
         == "Input should be a valid number, unable to parse string as a number"
-    )
-    assert (
-        validation_errors["reference"]["msg"]
-        == "Input should be 'uk-who', 'trisomy-21', 'turners-syndrome' or 'cdc'"
     )

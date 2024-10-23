@@ -146,7 +146,6 @@ def test_ukwho_fictional_child_data_with_valid_request():
         "drift_range": -0.05,
         "noise": False,
         "noise_range": 0.005,
-        "reference": "uk-who",
     }
 
     response = client.post("/uk-who/fictional-child-data", json=body)
@@ -178,7 +177,6 @@ def test_ukwho_fictional_child_data_with_invalid_request():
         "drift_range": "invalid_drift_range",
         "noise": "invalid_noise",
         "noise_range": "invalid_noise_range",
-        "reference": "invalid_reference",
     }
 
     response = client.post("/uk-who/fictional-child-data", json=body)
@@ -236,8 +234,4 @@ def test_ukwho_fictional_child_data_with_invalid_request():
     assert (
         validation_errors["noise_range"]["msg"]
         == "Input should be a valid number, unable to parse string as a number"
-    )
-    assert (
-        validation_errors["reference"]["msg"]
-        == "Input should be 'uk-who', 'trisomy-21', 'turners-syndrome' or 'cdc'"
     )
