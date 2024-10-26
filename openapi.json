@@ -3,7 +3,7 @@
     "info": {
         "title": "RCPCH Digital Growth API",
         "description": "Returns SDS and centiles for child growth measurements using growth references. Currently provides calculations based on the UK-WHO, Turner's Syndrome and Trisomy-21 references.",
-        "version": "4.2.19"
+        "version": "4.2.20"
     },
     "paths": {
         "/uk-who/calculation": {
@@ -1625,25 +1625,6 @@
                         "title": "Noise Range",
                         "description": "Noise range as float. Prescribes the amount of measurement error generated randomly. Default is 0.5%",
                         "default": 0.005
-                    },
-                    "reference": {
-                        "anyOf": [
-                            {
-                                "type": "string",
-                                "enum": [
-                                    "uk-who",
-                                    "trisomy-21",
-                                    "turners-syndrome",
-                                    "cdc"
-                                ]
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Reference",
-                        "description": "Selected reference as string. Case sensitive and accepts only once of ['uk-who', 'trisomy-21', 'turners-syndrome', 'cdc']",
-                        "default": "uk-who"
                     }
                 },
                 "type": "object",

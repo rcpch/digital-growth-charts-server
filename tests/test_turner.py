@@ -167,7 +167,6 @@ def test_turner_fictional_child_data_with_invalid_request():
         "drift_range": "invalid_drift_range",
         "noise": "invalid_noise",
         "noise_range": "invalid_noise_range",
-        "reference": "invalid_reference",
     }
 
     response = client.post("/turner/fictional-child-data", json=body)
@@ -225,7 +224,47 @@ def test_turner_fictional_child_data_with_invalid_request():
         validation_errors["noise_range"]["msg"]
         == "Input should be a valid number, unable to parse string as a number"
     )
-    assert (
-        validation_errors["reference"]["msg"]
-        == "Input should be 'uk-who', 'trisomy-21', 'turners-syndrome' or 'cdc'"
-    )
+
+def test_turner_fictional_child_data_with_weight_measurement_method():
+    body = {
+        "measurement_method": "weight",
+        "sex": "female",
+        "start_chronological_age": 2,
+        "end_age": 20,
+        "gestation_weeks": 40,
+        "gestation_days": 0,
+        "measurement_interval_type": "days",
+        "measurement_interval_number": 20,
+        "start_sds": 0,
+        "drift": False,
+        "drift_range": -0.05,
+        "noise": False,
+        "noise_range": 0.005,
+    }
+
+    response = client.post("/turner/fictional-child-data", json=body)
+
+    assert response.status_code == 422
+    assert response.json() == {"detail": "Turner's Syndrome data only exists for height."}
+
+def test_turner_fictional_child_data_with_male_sex():
+    body = {
+        "measurement_method": "height",
+        "sex": "male",
+        "start_chronological_age": 2,
+        "end_age": 20,
+        "gestation_weeks": 40,
+        "gestation_days": 0,
+        "measurement_interval_type": "days",
+        "measurement_interval_number": 20,
+        "start_sds": 0,
+        "drift": False,
+        "drift_range": -0.05,
+        "noise": False,
+        "noise_range": 0.005,
+    }
+
+    response = client.post("/turner/fictional-child-data", json=body)
+
+    assert response.status_code == 422
+    assert response.json() == {"detail": "Turner's Syndrome data only exists for girls."}

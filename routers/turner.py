@@ -168,6 +168,18 @@ def fictional_child_data(fictional_child_request: FictionalChildRequest):
 
     * Generates synthetic data for demonstration or testing purposes
     """
+    if fictional_child_request.sex != "female":
+        raise HTTPException(
+            status_code=422,
+            detail="Turner's Syndrome data only exists for girls.",
+        )
+    
+    if fictional_child_request.measurement_method != "height":
+        raise HTTPException(
+            status_code=422,
+            detail="Turner's Syndrome data only exists for height.",
+        )
+
     try:
         life_course_fictional_child_data = generate_fictional_child_data(
             measurement_method=fictional_child_request.measurement_method,

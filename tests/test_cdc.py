@@ -42,6 +42,7 @@ def test_cdc_calculation_with_valid_request():
     with open(r"tests/test_data/test_cdc_calculation_valid.json", "r") as file:
         calculation_file = file.read()
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
+
     assert response.json() == json.loads(calculation_file)
 
 
@@ -145,8 +146,7 @@ def test_cdc_fictional_child_data_with_valid_request():
         "drift": False,
         "drift_range": -0.05,
         "noise": False,
-        "noise_range": 0.005,
-        "reference": "cdc",
+        "noise_range": 0.005
     }
 
     response = client.post("/cdc/fictional-child-data", json=body)
@@ -178,7 +178,6 @@ def test_cdc_fictional_child_data_with_invalid_request():
         "drift_range": "invalid_drift_range",
         "noise": "invalid_noise",
         "noise_range": "invalid_noise_range",
-        "reference": "invalid_reference",
     }
 
     response = client.post("/cdc/fictional-child-data", json=body)
@@ -236,8 +235,4 @@ def test_cdc_fictional_child_data_with_invalid_request():
     assert (
         validation_errors["noise_range"]["msg"]
         == "Input should be a valid number, unable to parse string as a number"
-    )
-    assert (
-        validation_errors["reference"]["msg"]
-        == "Input should be 'uk-who', 'trisomy-21', 'turners-syndrome' or 'cdc'"
     )

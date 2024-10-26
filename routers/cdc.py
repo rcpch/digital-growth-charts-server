@@ -88,6 +88,13 @@ def cdc_calculation(
     except ValueError as err:
         print(err.args)
         return err.args, 422
+    
+    calculation["measurement_calculated_values"]["corrected_centile"] = round(calculation["measurement_calculated_values"]["corrected_centile"],4)
+    calculation["measurement_calculated_values"]["chronological_centile"] = round(calculation["measurement_calculated_values"]["chronological_centile"],4)
+    calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"],4)
+    calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"],4)
+    calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"],4)
+    calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"],4)
     return calculation
 
 
