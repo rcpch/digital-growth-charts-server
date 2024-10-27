@@ -49,6 +49,7 @@ def test_midparental_height_with_invalid_request():
         "height_paternal": "invalid_height_paternal",
         "height_maternal": "invalid_height_maternal",
         "sex": "invalid_sex",
+        "reference":"uk-who"
     }
 
     response = client.post("/utilities/mid-parental-height", json=body)
@@ -78,6 +79,7 @@ def test_midparental_height_parental_heights_ge_fifty_expected_fail():
         "height_paternal": "45",
         "height_maternal": "45",
         "sex": "male",
+        "reference":"uk-who"
     }
 
     response = client.post("/utilities/mid-parental-height", json=body)
@@ -102,6 +104,7 @@ def test_midparental_height_paternal_height_lt_twofortyfive_expected_fail():
         "height_paternal": "251",
         "height_maternal": "168",
         "sex": "male",
+        "reference":"uk-who"
     }
 
     response = client.post("/utilities/mid-parental-height", json=body)
@@ -120,6 +123,7 @@ def test_midparental_height_maternal_height_lt_twofortyfive_expected_fail():
         "height_paternal": "171",
         "height_maternal": "267",
         "sex": "male",
+        "reference":"uk-who"
     }
 
     response = client.post("/utilities/mid-parental-height", json=body)
