@@ -1,17 +1,17 @@
 """
 Utilities router
 """
+# standard library imports
+from datetime import datetime
 
 # Third party imports
 from fastapi import APIRouter
 
 # RCPCH imports
 from rcpchgrowth import mid_parental_height, sds_for_measurement, constants, centile
-from rcpchgrowth.constants.reference_constants import UK_WHO
 from rcpchgrowth.global_functions import measurement_from_sds
 from rcpchgrowth.chart_functions import create_chart
-from rcpchgrowth import mid_parental_height
-from rcpchgrowth import expected_height_z_from_mid_parental_height_z, lower_and_upper_limits_of_expected_height_z, mid_parental_height_z
+from rcpchgrowth import lower_and_upper_limits_of_expected_height_z, mid_parental_height_z
 from schemas import MidParentalHeightRequest, MidParentalHeightResponse
 
 # set up the API router
@@ -149,6 +149,8 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     
 
     return {
+        "timestamp": datetime.now().isoformat(),
+        "reference": reference,
         "target_height": target_height,
         "mid_parental_height": mph,
         "mid_parental_height_sds": mph_sds,
