@@ -4,7 +4,7 @@ In this file we define or import the response schemas
 
 # standard imports
 from typing import Dict, List, Optional, Literal
-from datetime import date
+from datetime import date, datetime
 
 # third party imports
 from pydantic import BaseModel, RootModel
