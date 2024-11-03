@@ -217,7 +217,6 @@ class Centile_Data(BaseModel):
 
 
 class MidParentalHeightResponse(BaseModel):
-    target_height: float
     mid_parental_height: float
     mid_parental_height_sds: float
     mid_parental_height_centile: float

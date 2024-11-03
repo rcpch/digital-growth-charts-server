@@ -2294,10 +2294,6 @@
             },
             "MidParentalHeightResponse": {
                 "properties": {
-                    "target_height": {
-                        "type": "number",
-                        "title": "Target Height"
-                    },
                     "mid_parental_height": {
                         "type": "number",
                         "title": "Mid Parental Height"
@@ -2356,7 +2352,6 @@
                 },
                 "type": "object",
                 "required": [
-                    "target_height",
                     "mid_parental_height",
                     "mid_parental_height_sds",
                     "mid_parental_height_centile",
