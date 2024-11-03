@@ -10,6 +10,8 @@ from rcpchgrowth import mid_parental_height, sds_for_measurement, constants, cen
 from rcpchgrowth.constants.reference_constants import UK_WHO
 from rcpchgrowth.global_functions import measurement_from_sds
 from rcpchgrowth.chart_functions import create_chart
+from rcpchgrowth import mid_parental_height
+from rcpchgrowth import expected_height_z_from_mid_parental_height_z, lower_and_upper_limits_of_expected_height_z, mid_parental_height_z
 from schemas import MidParentalHeightRequest, MidParentalHeightResponse
 
 # set up the API router
@@ -42,17 +44,18 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     as it will not be possible to render the area between the centiles if one is empty.
     """
 
-    height = mid_parental_height(
-        mid_parental_height_request.height_paternal,
-        mid_parental_height_request.height_maternal,
-        mid_parental_height_request.sex,
-    )
+    # height = mid_parental_height(
+    #     mid_parental_height_request.height_paternal,
+    #     mid_parental_height_request.height_maternal,
+    #     mid_parental_height_request.sex,
+    # )
 
     reference = mid_parental_height_request.reference
 
     """
     ## Calculate SDS and centile
     """
+    mph = None
     mph_sds = None
     mph_centile = None
     upper_height = None
@@ -61,14 +64,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     mph_lower_centile_data = None
     mph_upper_centile_data = None
     try:
-        mph_sds = sds_for_measurement(
-            reference=reference,
-            age=20.0,
-            measurement_method=constants.HEIGHT,
-            observation_value=height,
-            sex=mid_parental_height_request.sex,
-        )
-
+        mph_sds = mid_parental_height_z(paternal_height=mid_parental_height_request.height_paternal, maternal_height=mid_parental_height_request.height_maternal, reference=reference)
     except Exception:
         print("It was not possible to calculate midparental SDS.")
 
@@ -88,8 +84,10 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         print(e)
         mph_centile_data = []
 
+    lower, upper = lower_and_upper_limits_of_expected_height_z(mid_parental_height_z=mph_sds)
+
     try:
-        lower_centile = round(centile(mph_sds - 2),3)
+        lower_centile = round(centile(lower),3)
         mph_lower_centile_data = create_chart(
             reference=reference,
             centile_format=[lower_centile],
@@ -102,7 +100,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         mph_lower_centile_data = []
 
     try:
-        upper_centile = round(centile(mph_sds + 2),3)
+        upper_centile = round(centile(upper),3)
 
         mph_upper_centile_data = create_chart(
             reference=reference,
@@ -121,20 +119,38 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
             age=20,
             sex=mid_parental_height_request.sex,
             measurement_method=constants.HEIGHT,
-            requested_sds=mph_sds + 2,
+            requested_sds=upper,
         )
         lower_height = measurement_from_sds(
             reference=reference,
             age=20,
             sex=mid_parental_height_request.sex,
             measurement_method=constants.HEIGHT,
-            requested_sds=mph_sds - 2,
+            requested_sds=lower,
         )
     except Exception as e:
         print(e)
+    
+    target_height = measurement_from_sds(
+            reference=reference,
+            age=20,
+            sex=mid_parental_height_request.sex,
+            measurement_method=constants.HEIGHT,
+            requested_sds=mph_sds,
+        )
+    
+    mph = measurement_from_sds(
+            reference=reference,
+            age=20,
+            sex=mid_parental_height_request.sex,
+            measurement_method=constants.HEIGHT,
+            requested_sds=mph_sds,
+        )
+    
 
     return {
-        "mid_parental_height": height,
+        "target_height": target_height,
+        "mid_parental_height": mph,
         "mid_parental_height_sds": mph_sds,
         "mid_parental_height_centile": mph_centile,
         "mid_parental_height_centile_data": mph_centile_data,
