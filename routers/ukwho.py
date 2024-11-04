@@ -10,7 +10,7 @@ from pprint import pprint
 
 # Third party imports
 from schemas.response_schema_classes import Centile_Data, MeasurementObject
-from fastapi import APIRouter, Body, HTTPException
+from fastapi import APIRouter, Body, HTTPException, Depends
 
 # RCPCH imports
 from rcpchgrowth import (
@@ -21,6 +21,7 @@ from rcpchgrowth import (
 )
 from rcpchgrowth.constants.reference_constants import UK_WHO
 from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+from .dependency import get_reference
 
 # set up the API router
 uk_who = APIRouter(
@@ -52,7 +53,8 @@ def uk_who_calculation(
                 ],
             }
         ],
-    )
+    ),
+    reference: str = Depends(get_reference(UK_WHO))
 ):
     """
     ## UK-WHO Centile and SDS Calculations
@@ -70,9 +72,10 @@ def uk_who_calculation(
     *   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`
     * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
+    measurementRequest.set_context({"reference": reference})
     try:
         calculation = Measurement(
-            reference=constants.UK_WHO,
+            reference=reference,
             birth_date=measurementRequest.birth_date,
             gestation_days=measurementRequest.gestation_days,
             gestation_weeks=measurementRequest.gestation_weeks,

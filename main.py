@@ -25,7 +25,6 @@ app = FastAPI(
             },
     )
 
-
 # Set up CORS middleware
 app.add_middleware(
     CORSMiddleware,

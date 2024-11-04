@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import List
 
 # Third party imports
-from fastapi import APIRouter, Body, HTTPException
+from fastapi import APIRouter, Body, HTTPException, Depends
 from schemas.response_schema_classes import Centile_Data, MeasurementObject
 
 # RCPCH imports
@@ -20,6 +20,8 @@ from rcpchgrowth import (
 )
 from rcpchgrowth.constants.reference_constants import TURNERS
 from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+
+from .dependency import get_reference
 
 # set up the API router
 turners = APIRouter(
@@ -44,7 +46,8 @@ def turner_calculation(
                 "gestation_days": 2,
             }
         ],
-    )
+    ),
+    reference: str = Depends(get_reference(turners))
 ):
     """
     ## Turner's Syndrome Centile and SDS Calculations.
@@ -60,6 +63,7 @@ def turner_calculation(
     *   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`
     * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
+    measurementRequest.reference = reference
     try:
         calculation = Measurement(
             reference=constants.TURNERS,

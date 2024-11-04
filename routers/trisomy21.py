@@ -8,7 +8,7 @@ from pathlib import Path
 from schemas.response_schema_classes import Centile_Data, MeasurementObject
 
 # Third party imports
-from fastapi import APIRouter, Body, HTTPException
+from fastapi import APIRouter, Body, HTTPException, Depends
 from typing import List
 from rcpchgrowth import (
     Measurement,
@@ -20,6 +20,8 @@ from rcpchgrowth.constants.reference_constants import TRISOMY_21
 
 # local imports
 from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+
+from .dependency import get_reference
 
 # set up the API router
 trisomy_21 = APIRouter(
@@ -42,7 +44,8 @@ def trisomy_21_calculation(
                 "gestation_days": 4,
             }
         ],
-    )
+    ),
+    reference: str = Depends(get_reference(trisomy_21)),
 ):
     """
     # Trisomy-21 Centile and SDS Calculations.
@@ -59,6 +62,7 @@ def trisomy_21_calculation(
     *   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`
     * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
+    measurementRequest.reference = reference
     try:
         calculation = Measurement(
             reference=constants.TRISOMY_21,

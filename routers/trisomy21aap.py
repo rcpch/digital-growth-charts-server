@@ -10,7 +10,7 @@ from pprint import pprint
 
 # Third party imports
 from schemas.response_schema_classes import Centile_Data, MeasurementObject
-from fastapi import APIRouter, Body, HTTPException
+from fastapi import APIRouter, Body, HTTPException, Depends
 
 # RCPCH imports
 from rcpchgrowth import (
@@ -21,6 +21,8 @@ from rcpchgrowth import (
 )
 from rcpchgrowth.constants.reference_constants import TRISOMY_21_AAP
 from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+
+from .dependency import get_reference
 
 # set up the API router
 trisomy_21_aap = APIRouter(
@@ -52,7 +54,8 @@ def trisomy_21_aap_calculation(
                 ],
             }
         ],
-    )
+    ),
+    reference: str = Depends(get_reference(trisomy_21_aap))
 ):
     """
     ## Trisomy-21 AAP Centile and SDS Calculations
@@ -67,6 +70,7 @@ def trisomy_21_aap_calculation(
     * Bone ages are not supported for this reference.
     * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
+    measurementRequest.reference = reference
     try:
         calculation = Measurement(
             reference=constants.TRISOMY_21_AAP,
