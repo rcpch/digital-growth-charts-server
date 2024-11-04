@@ -3,7 +3,7 @@ from datetime import date, datetime
 from typing import Optional, Literal, Union, List
 
 # third party imports
-from pydantic import BaseModel, Field, field_validator, model_validator, PrivateAttr
+from pydantic import BaseModel, Field, field_validator, model_validator, root_validator
 from pydantic_core.core_schema import FieldValidationInfo
 from fastapi import Depends, Path
 
@@ -93,10 +93,13 @@ class MeasurementRequest(BaseModel):
         description="A list of strings. Contextual text which are associated with each measurement.",
     )
 
-    _context: dict = PrivateAttr(default_factory=dict)
-
-    def set_context(self, context: dict):
-        self._context = context
+    @model_validator(mode="before")
+    def set_reference(cls, values, info: FieldValidationInfo):
+        print(info)
+        reference = info.context.get('reference')
+        if reference:
+            values['reference'] = reference
+        return values
 
     @field_validator("birth_date", mode="before")
     def parse_date(cls, value):
@@ -109,7 +112,7 @@ class MeasurementRequest(BaseModel):
         return v
     
     @model_validator(mode="after") # ensures that the model is validated after all fields have been validated
-    def validate_observation_value(self, cls, values):
+    def validate_observation_value(cls, values):
         measurement_method = values.measurement_method
         observation_value = values.observation_value
         sex = values.sex
@@ -117,15 +120,16 @@ class MeasurementRequest(BaseModel):
         gestation_days = values.gestation_days if "gestation_days" in values else 0
         observation_date = values.observation_date
         birth_date = values.birth_date
-        reference = self._context.get("reference")
+
+        
 
         decimal_age  = corrected_decimal_age(birth_date=birth_date, observation_date=observation_date, gestation_weeks=gestation_weeks, gestation_days=gestation_days)
-
+        
         calculated_sds = sds_for_measurement(
             observation_value=observation_value,
             measurement_method=measurement_method,
             sex=sex,
-            reference=reference,
+            reference=UK_WHO,
             age=decimal_age
         )
         if measurement_method == "bmi":

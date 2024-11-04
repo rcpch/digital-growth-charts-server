@@ -47,7 +47,7 @@ def turner_calculation(
             }
         ],
     ),
-    reference: str = Depends(get_reference(turners))
+    
 ):
     """
     ## Turner's Syndrome Centile and SDS Calculations.
@@ -63,7 +63,7 @@ def turner_calculation(
     *   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`
     * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
-    measurementRequest.reference = reference
+    
     try:
         calculation = Measurement(
             reference=constants.TURNERS,

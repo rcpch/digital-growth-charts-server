@@ -10,7 +10,7 @@ from pprint import pprint
 
 # Third party imports
 from schemas.response_schema_classes import Centile_Data, MeasurementObject
-from fastapi import APIRouter, Body, HTTPException, Depends
+from fastapi import APIRouter, Body, HTTPException, Depends, Request
 
 # RCPCH imports
 from rcpchgrowth import (
@@ -30,7 +30,8 @@ uk_who = APIRouter(
 
 
 @uk_who.post("/calculation", tags=["uk-who"], response_model=MeasurementObject)
-def uk_who_calculation(
+async def uk_who_calculation(
+    request: Request,
     measurementRequest: MeasurementRequest = Body(
         ...,
         examples=[
@@ -54,7 +55,7 @@ def uk_who_calculation(
             }
         ],
     ),
-    reference: str = Depends(get_reference(UK_WHO))
+    reference: str = Depends(get_reference("uk-who")),
 ):
     """
     ## UK-WHO Centile and SDS Calculations
@@ -72,23 +73,28 @@ def uk_who_calculation(
     *   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`
     * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
-    measurementRequest.set_context({"reference": reference})
+    # pass the reference to the MeasurementRequest model
+     # Pass the reference to the model
+    measurement_request = MeasurementRequest.model_validate(
+        measurementRequest.dict(), context={"reference": reference}
+    )
+
     try:
         calculation = Measurement(
-            reference=reference,
-            birth_date=measurementRequest.birth_date,
-            gestation_days=measurementRequest.gestation_days,
-            gestation_weeks=measurementRequest.gestation_weeks,
-            measurement_method=measurementRequest.measurement_method,
-            observation_date=measurementRequest.observation_date,
-            observation_value=measurementRequest.observation_value,
-            sex=measurementRequest.sex,
-            bone_age=measurementRequest.bone_age,
-            bone_age_centile=measurementRequest.bone_age_centile,
-            bone_age_sds=measurementRequest.bone_age_sds,
-            bone_age_text=measurementRequest.bone_age_text,
-            bone_age_type=measurementRequest.bone_age_type,
-            events_text=measurementRequest.events_text,
+            reference=UK_WHO,
+            birth_date=measurement_request.birth_date,
+            gestation_days=measurement_request.gestation_days,
+            gestation_weeks=measurement_request.gestation_weeks,
+            measurement_method=measurement_request.measurement_method,
+            observation_date=measurement_request.observation_date,
+            observation_value=measurement_request.observation_value,
+            sex=measurement_request.sex,
+            bone_age=measurement_request.bone_age,
+            bone_age_centile=measurement_request.bone_age_centile,
+            bone_age_sds=measurement_request.bone_age_sds,
+            bone_age_text=measurement_request.bone_age_text,
+            bone_age_type=measurement_request.bone_age_type,
+            events_text=measurement_request.events_text,
         ).measurement
     except ValueError as err:
         print(err.args)

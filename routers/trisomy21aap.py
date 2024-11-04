@@ -55,7 +55,6 @@ def trisomy_21_aap_calculation(
             }
         ],
     ),
-    reference: str = Depends(get_reference(trisomy_21_aap))
 ):
     """
     ## Trisomy-21 AAP Centile and SDS Calculations
@@ -70,7 +69,7 @@ def trisomy_21_aap_calculation(
     * Bone ages are not supported for this reference.
     * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
-    measurementRequest.reference = reference
+    
     try:
         calculation = Measurement(
             reference=constants.TRISOMY_21_AAP,

@@ -54,7 +54,7 @@ def cdc_calculation(
             }
         ],
     ),
-    reference: str = Depends(get_reference(cdc))
+  
 ):
     """
     ## CDC Centile and SDS Calculations
@@ -71,7 +71,7 @@ def cdc_calculation(
     *   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`
     * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
-    measurementRequest.reference = reference
+    
     try:
         calculation = Measurement(
             reference=constants.CDC,
