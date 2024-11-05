@@ -78,6 +78,9 @@ async def uk_who_calculation(
          # Format the error to look like Pydantic validation errors
         formatted_error = format_error(loc=["body"], msg=str(err), error_type="value_error", input="observation_value")
         raise HTTPException(status_code=422, detail=[formatted_error])
+    except LookupError as err:
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="lookup_error", input="observation_value")
+        raise HTTPException(status_code=422, detail=[formatted_error])
 
 
     try:

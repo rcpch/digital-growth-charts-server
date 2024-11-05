@@ -99,6 +99,9 @@ def trisomy_21_aap_calculation(
     except ValueError as err:
         formatted_error = format_error(loc=["body"], msg=str(err), error_type="value_error", input="calculation_error")
         raise HTTPException(status_code=422, detail=[formatted_error])
+    except LookupError as err:
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="lookup_error", input="observation_value")
+        raise HTTPException(status_code=422, detail=[formatted_error])
     
     calculation["measurement_calculated_values"]["corrected_centile"] = round(calculation["measurement_calculated_values"]["corrected_centile"],4)
     calculation["measurement_calculated_values"]["chronological_centile"] = round(calculation["measurement_calculated_values"]["chronological_centile"],4)
