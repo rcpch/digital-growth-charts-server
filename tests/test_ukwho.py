@@ -90,6 +90,27 @@ def test_ukwho_calculation_with_invalid_request():
     )
     assert validation_errors["sex"]["msg"] == "Input should be 'male' or 'female'"
 
+@pytest.mark.parametrize("input", [
+    { "measurement_method": "height", "observation_value": 200, "birth_date": "2015-10-26", "observation_date": "2020-09-01", "sex": "female" }, # height too tall
+    { "measurement_method": "height", "observation_value": 5, "birth_date": "2015-10-26", "observation_date": "2020-09-01", "sex": "female" }, # height too short
+    { "measurement_method": "weight", "observation_value": 200, "birth_date": "2015-10-26", "observation_date": "2020-09-01", "sex": "female" }, # weight too high
+    { "measurement_method": "weight", "observation_value": 1, "birth_date": "2015-10-26", "observation_date": "2020-09-01", "sex": "female" }, # weight too low
+    { "measurement_method": "ofc", "observation_value": 500, "birth_date": "2015-10-26", "observation_date": "2020-09-01", "sex": "female" }, # head circumference too high
+    { "measurement_method": "ofc", "observation_value": 1, "birth_date": "2015-10-26", "observation_date": "2020-09-01", "sex": "female" }, # head circumference too low
+    { "measurement_method": "ofc", "observation_value": 500, "birth_date": "2015-10-26", "observation_date": "2034-09-01", "sex": "male" }, # 19y boy head circumference beyond age range
+    { "measurement_method": "ofc", "observation_value": 1, "birth_date": "2015-10-26", "observation_date": "2033-09-01", "sex": "female" }, # 18y girl head circumference beyond age range
+    { "measurement_method": "height", "observation_value": 175, "birth_date": "2015-10-26", "observation_date": "2036-09-01", "sex": "female" }, # height too old (>20y)
+    { "measurement_method": "height", "observation_value": 45, "birth_date": "2015-10-26", "observation_date": "2015-10-26", "sex": "female", "gestation_weeks": 23, "gestation_days": 0 }, # height too young (<25 weeks)
+    { "measurement_method": "weight", "observation_value": 200, "birth_date": "2015-10-26", "observation_date": "2036-09-01", "sex": "female" }, # weight too old (>20y)
+    { "measurement_method": "weight", "observation_value": 1, "birth_date": "2015-10-26", "observation_date": "2015-10-26", "sex": "female", "gestation_weeks": 22, "gestation_days": 0 }, # weight too young (<23 weeks)
+])
+def test_ukwho_chart_with_valid_request_for_outside_range_values(input):
+
+    body = input
+    response = client.post("/uk-who/calculation", json=body)
+
+    assert response.status_code == 422
+
 
 @pytest.mark.parametrize("input", [
     { "measurement_method": "height", "sex": "male" },

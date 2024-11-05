@@ -91,11 +91,17 @@ def trisomy_21_calculation(
             bone_age_type=measurementRequest.bone_age_type,
             events_text=measurementRequest.events_text,
         ).measurement
-        return calculation
     except ValueError as err:
         formatted_error = format_error(loc=["body"], msg=str(err), error_type="value_error", input="calculation_error")
         raise HTTPException(status_code=422, detail=[formatted_error])
 
+    calculation["measurement_calculated_values"]["corrected_centile"] = round(calculation["measurement_calculated_values"]["corrected_centile"],4) if calculation["measurement_calculated_values"]["corrected_centile"] is not None else None
+    calculation["measurement_calculated_values"]["chronological_centile"] = round(calculation["measurement_calculated_values"]["chronological_centile"],4) if calculation["measurement_calculated_values"]["chronological_centile"] is not None else None
+    calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] is not None else None
+    calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] is not None else None
+    calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] is not None else None
+    calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] is not None else None
+    return calculation
 
 @trisomy_21.post("/chart-coordinates", tags=["trisomy-21"], response_model=Centile_Data)
 def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):

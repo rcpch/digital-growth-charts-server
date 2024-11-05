@@ -142,7 +142,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         )
     # Note this is not the same as the mid-parental height as calculated in the standard way (i.e. the mean of the parents' heights), but instead 
     # takes the means of the z-scores of the parents' heights and applies the regression coefficient of 0.5 - simplifed: (MatHtz +PatHtz)/4. This is then converted to a measurement
-    # It has the effect of correcting for the fact that the children of taller parents are not as tall as their parents, and the children of shorter parents are not as short as their parents, but regress to the mean.
+    # It has the effect of correcting for the fact that the children of taller parents are not as tall as their parents, and the children of  shorter parents are not as short as their parents, but regress to the mean.
     mph = measurement_from_sds(
             reference=reference,
             age=20,
