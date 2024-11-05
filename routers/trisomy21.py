@@ -8,7 +8,7 @@ from pathlib import Path
 from schemas.response_schema_classes import Centile_Data, MeasurementObject
 
 # Third party imports
-from fastapi import APIRouter, Body, HTTPException
+from fastapi import APIRouter, Body, HTTPException, Depends
 from typing import List
 from rcpchgrowth import (
     Measurement,
@@ -20,6 +20,8 @@ from rcpchgrowth.constants.reference_constants import TRISOMY_21
 
 # local imports
 from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+from .validate_observation_value import validate_observation_value
+from .utils import format_error
 
 # set up the API router
 trisomy_21 = APIRouter(
@@ -42,7 +44,7 @@ def trisomy_21_calculation(
                 "gestation_days": 4,
             }
         ],
-    )
+    ),
 ):
     """
     # Trisomy-21 Centile and SDS Calculations.
@@ -59,6 +61,19 @@ def trisomy_21_calculation(
     *   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`
     * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
+    
+    # Validate observation value
+    try:
+        validate_observation_value(TRISOMY_21, measurementRequest)
+    except ValueError as err:
+         # Format the error to look like Pydantic validation errors
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="value_error", input="observation_value")
+        raise HTTPException(status_code=422, detail=[formatted_error])
+    except LookupError as err:
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="lookup_error", input="observation_value")
+        raise HTTPException(status_code=422, detail=[formatted_error])
+
+
     try:
         calculation = Measurement(
             reference=constants.TRISOMY_21,
@@ -76,10 +91,17 @@ def trisomy_21_calculation(
             bone_age_type=measurementRequest.bone_age_type,
             events_text=measurementRequest.events_text,
         ).measurement
-        return calculation
-    except Exception as err:
-        return err, 400
+    except ValueError as err:
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="value_error", input="calculation_error")
+        raise HTTPException(status_code=422, detail=[formatted_error])
 
+    calculation["measurement_calculated_values"]["corrected_centile"] = round(calculation["measurement_calculated_values"]["corrected_centile"],4) if calculation["measurement_calculated_values"]["corrected_centile"] is not None else None
+    calculation["measurement_calculated_values"]["chronological_centile"] = round(calculation["measurement_calculated_values"]["chronological_centile"],4) if calculation["measurement_calculated_values"]["chronological_centile"] is not None else None
+    calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] is not None else None
+    calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] is not None else None
+    calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] is not None else None
+    calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] is not None else None
+    return calculation
 
 @trisomy_21.post("/chart-coordinates", tags=["trisomy-21"], response_model=Centile_Data)
 def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):

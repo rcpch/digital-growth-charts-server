@@ -3,7 +3,7 @@ from datetime import date, datetime
 from typing import Optional, Literal, Union, List
 
 # third party imports
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator, PrivateAttr
 from pydantic_core.core_schema import FieldValidationInfo
 
 
@@ -15,6 +15,14 @@ from rcpchgrowth.constants.reference_constants import (
     THREE_PERCENT_CENTILES,
     CENTILE_FORMATS,
 )
+from rcpchgrowth.constants.validation_constants import (
+    MINIMUM_HEIGHT_WEIGHT_OFC_ERROR_SDS,
+    MAXIMUM_HEIGHT_WEIGHT_OFC_ERROR_SDS,
+    MINIMUM_BMI_ERROR_SDS,
+    MAXIMUM_BMI_ERROR_SDS,
+)
+from rcpchgrowth.global_functions import sds_for_measurement
+from rcpchgrowth.date_calculations import corrected_decimal_age
 
 
 class MeasurementRequest(BaseModel):

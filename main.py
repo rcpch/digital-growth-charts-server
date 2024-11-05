@@ -13,7 +13,7 @@ from rcpchgrowth import chart_functions, constants
 from routers import trisomy_21, trisomy_21_aap, turners, uk_who, cdc, utilities
 
 
-version='4.2.21'  # this is set by bump version
+version='4.2.22'  # this is set by bump version
 
 # Declare the FastAPI app
 app = FastAPI(
@@ -24,7 +24,6 @@ app = FastAPI(
             "url": "https://www.gnu.org/licenses/agpl-3.0.en.html"
             },
     )
-
 
 # Set up CORS middleware
 app.add_middleware(

@@ -9,7 +9,7 @@ from typing import List
 
 # Third party imports
 from schemas.response_schema_classes import Centile_Data, MeasurementObject
-from fastapi import APIRouter, Body, HTTPException
+from fastapi import APIRouter, Body, HTTPException, Depends
 
 # RCPCH imports
 from rcpchgrowth import (
@@ -20,6 +20,8 @@ from rcpchgrowth import (
 )
 from rcpchgrowth.constants.reference_constants import CDC
 from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+from .validate_observation_value import validate_observation_value
+from .utils import format_error
 
 # set up the API router
 cdc = APIRouter(
@@ -51,7 +53,8 @@ def cdc_calculation(
                 ],
             }
         ],
-    )
+    ),
+  
 ):
     """
     ## CDC Centile and SDS Calculations
@@ -68,6 +71,18 @@ def cdc_calculation(
     *   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`
     * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
+
+    # Validate observation value
+    try:
+        validate_observation_value(CDC, measurementRequest)
+    except ValueError as err:
+         # Format the error to look like Pydantic validation errors
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="value_error", input="observation_value")
+        raise HTTPException(status_code=422, detail=[formatted_error])
+    except LookupError as err:
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="lookup_error", input="observation_value")
+        raise HTTPException(status_code=422, detail=[formatted_error])
+    
     try:
         calculation = Measurement(
             reference=constants.CDC,
@@ -86,8 +101,11 @@ def cdc_calculation(
             events_text=measurementRequest.events_text,
         ).measurement
     except ValueError as err:
-        print(err.args)
-        return err.args, 422
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="value_error", input="calculation_error")
+        raise HTTPException(status_code=422, detail=[formatted_error])
+    except LookupError as err:
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="lookup_error", input="observation_value")
+        raise HTTPException(status_code=422, detail=[formatted_error])
     
     calculation["measurement_calculated_values"]["corrected_centile"] = round(calculation["measurement_calculated_values"]["corrected_centile"],4)
     calculation["measurement_calculated_values"]["chronological_centile"] = round(calculation["measurement_calculated_values"]["chronological_centile"],4)

@@ -10,7 +10,7 @@ from pprint import pprint
 
 # Third party imports
 from schemas.response_schema_classes import Centile_Data, MeasurementObject
-from fastapi import APIRouter, Body, HTTPException
+from fastapi import APIRouter, Body, HTTPException, Depends
 
 # RCPCH imports
 from rcpchgrowth import (
@@ -21,6 +21,8 @@ from rcpchgrowth import (
 )
 from rcpchgrowth.constants.reference_constants import TRISOMY_21_AAP
 from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+from .validate_observation_value import validate_observation_value
+from .utils import format_error
 
 # set up the API router
 trisomy_21_aap = APIRouter(
@@ -52,7 +54,7 @@ def trisomy_21_aap_calculation(
                 ],
             }
         ],
-    )
+    ),
 ):
     """
     ## Trisomy-21 AAP Centile and SDS Calculations
@@ -67,6 +69,19 @@ def trisomy_21_aap_calculation(
     * Bone ages are not supported for this reference.
     * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
+
+    # Validate observation value
+    try:
+        validate_observation_value(TRISOMY_21_AAP, measurementRequest)
+    except ValueError as err:
+         # Format the error to look like Pydantic validation errors
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="value_error", input="observation_value")
+        raise HTTPException(status_code=422, detail=[formatted_error])
+    except LookupError as err:
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="lookup_error", input="observation_value")
+        raise HTTPException(status_code=422, detail=[formatted_error])
+    
+    
     try:
         calculation = Measurement(
             reference=constants.TRISOMY_21_AAP,
@@ -85,15 +100,18 @@ def trisomy_21_aap_calculation(
             events_text=measurementRequest.events_text,
         ).measurement
     except ValueError as err:
-        print(err.args)
-        return err.args, 422
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="value_error", input="calculation_error")
+        raise HTTPException(status_code=422, detail=[formatted_error])
+    except LookupError as err:
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="lookup_error", input="observation_value")
+        raise HTTPException(status_code=422, detail=[formatted_error])
     
-    calculation["measurement_calculated_values"]["corrected_centile"] = round(calculation["measurement_calculated_values"]["corrected_centile"],4)
-    calculation["measurement_calculated_values"]["chronological_centile"] = round(calculation["measurement_calculated_values"]["chronological_centile"],4)
-    calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"],4)
-    calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"],4)
-    calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"],4)
-    calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"],4)
+    calculation["measurement_calculated_values"]["corrected_centile"] = round(calculation["measurement_calculated_values"]["corrected_centile"],4) if calculation["measurement_calculated_values"]["corrected_centile"] is not None else None
+    calculation["measurement_calculated_values"]["chronological_centile"] = round(calculation["measurement_calculated_values"]["chronological_centile"],4) if calculation["measurement_calculated_values"]["chronological_centile"] is not None else None
+    calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] is not None else None
+    calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] is not None else None
+    calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] is not None else None
+    calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] is not None else None
     return calculation
 
 

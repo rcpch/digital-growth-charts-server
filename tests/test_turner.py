@@ -83,6 +83,20 @@ def test_turner_calculation_with_invalid_request():
     )
     assert validation_errors["sex"]["msg"] == "Input should be 'male' or 'female'"
 
+@pytest.mark.parametrize("input", [
+    # Turner data only exists for height
+    { "measurement_method": "weight", "observation_value": 200, "birth_date": "2015-10-26", "observation_date": "2020-09-01", "sex": "female" }, # weight
+    { "measurement_method": "weight", "observation_value": 200, "birth_date": "2015-10-26", "observation_date": "2020-09-01", "sex": "male" }, # male
+    { "measurement_method": "height", "observation_value": 200, "birth_date": "2015-10-26", "observation_date": "2020-09-01", "sex": "female" }, # too tall
+    { "measurement_method": "height", "observation_value": 5, "birth_date": "2015-10-26", "observation_date": "2020-09-01", "sex": "female" }, # too short
+    { "measurement_method": "height", "observation_value": 5, "birth_date": "2015-10-26", "observation_date": "2015-09-01", "sex": "female" }, # too young
+    { "measurement_method": "height", "observation_value": 5, "birth_date": "2015-10-26", "observation_date": "2050-09-01", "sex": "female" }, # too old
+])
+def test_turner_calculation_with_valid_request_but_out_of_range(input):
+    body = input 
+
+    response = client.post("/turner/calculation", json=body)
+    assert response.status_code == 422
 
 @pytest.mark.parametrize("input", [
     # Turner data only exists for height in girls.
