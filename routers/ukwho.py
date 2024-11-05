@@ -6,7 +6,6 @@ UK-WHO router
 import json
 from pathlib import Path
 from typing import List
-from pprint import pprint
 
 # Third party imports
 from schemas.response_schema_classes import Centile_Data, MeasurementObject
@@ -21,17 +20,16 @@ from rcpchgrowth import (
 )
 from rcpchgrowth.constants.reference_constants import UK_WHO
 from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
-from .dependency import get_reference
+from .validate_observation_value import validate_observation_value
+from .utils import format_error
 
 # set up the API router
 uk_who = APIRouter(
     prefix="/uk-who",
 )
 
-
 @uk_who.post("/calculation", tags=["uk-who"], response_model=MeasurementObject)
 async def uk_who_calculation(
-    request: Request,
     measurementRequest: MeasurementRequest = Body(
         ...,
         examples=[
@@ -54,8 +52,7 @@ async def uk_who_calculation(
                 ],
             }
         ],
-    ),
-    reference: str = Depends(get_reference("uk-who")),
+    )
 ):
     """
     ## UK-WHO Centile and SDS Calculations
@@ -73,32 +70,36 @@ async def uk_who_calculation(
     *   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`
     * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
-    # pass the reference to the MeasurementRequest model
-     # Pass the reference to the model
-    measurement_request = MeasurementRequest.model_validate(
-        measurementRequest.dict(), context={"reference": reference}
-    )
+
+    # Validate observation value
+    try:
+        validate_observation_value(UK_WHO, measurementRequest)
+    except ValueError as err:
+         # Format the error to look like Pydantic validation errors
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="value_error", input="observation_value")
+        raise HTTPException(status_code=422, detail=[formatted_error])
+
 
     try:
         calculation = Measurement(
             reference=UK_WHO,
-            birth_date=measurement_request.birth_date,
-            gestation_days=measurement_request.gestation_days,
-            gestation_weeks=measurement_request.gestation_weeks,
-            measurement_method=measurement_request.measurement_method,
-            observation_date=measurement_request.observation_date,
-            observation_value=measurement_request.observation_value,
-            sex=measurement_request.sex,
-            bone_age=measurement_request.bone_age,
-            bone_age_centile=measurement_request.bone_age_centile,
-            bone_age_sds=measurement_request.bone_age_sds,
-            bone_age_text=measurement_request.bone_age_text,
-            bone_age_type=measurement_request.bone_age_type,
-            events_text=measurement_request.events_text,
+            birth_date=measurementRequest.birth_date,
+            gestation_days=measurementRequest.gestation_days,
+            gestation_weeks=measurementRequest.gestation_weeks,
+            measurement_method=measurementRequest.measurement_method,
+            observation_date=measurementRequest.observation_date,
+            observation_value=measurementRequest.observation_value,
+            sex=measurementRequest.sex,
+            bone_age=measurementRequest.bone_age,
+            bone_age_centile=measurementRequest.bone_age_centile,
+            bone_age_sds=measurementRequest.bone_age_sds,
+            bone_age_text=measurementRequest.bone_age_text,
+            bone_age_type=measurementRequest.bone_age_type,
+            events_text=measurementRequest.events_text,
         ).measurement
     except ValueError as err:
-        print(err.args)
-        return err.args, 422
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="value_error", input="calculation_error")
+        raise HTTPException(status_code=422, detail=[formatted_error])
     
     calculation["measurement_calculated_values"]["corrected_centile"] = round(calculation["measurement_calculated_values"]["corrected_centile"],4)
     calculation["measurement_calculated_values"]["chronological_centile"] = round(calculation["measurement_calculated_values"]["chronological_centile"],4)

@@ -20,8 +20,8 @@ from rcpchgrowth import (
 )
 from rcpchgrowth.constants.reference_constants import TURNERS
 from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
-
-from .dependency import get_reference
+from .validate_observation_value import validate_observation_value
+from .utils import format_error
 
 # set up the API router
 turners = APIRouter(
@@ -32,7 +32,7 @@ turners = APIRouter(
 @turners.post(
     "/calculation", tags=["turners-syndrome"], response_model=MeasurementObject
 )
-def turner_calculation(
+async def turner_calculation(
     measurementRequest: MeasurementRequest = Body(
         ...,
         examples=[
@@ -63,7 +63,25 @@ def turner_calculation(
     *   - `bone_age_type` as one of `greulich-pyle`, `tanner-whitehouse-ii`, `tanner-whitehouse-iiI`, `fels`, `bonexpert`
     * Optional events can be passed in as a list of strings - each list is associated with a measurement
     """
+
+    # custom error handling for Turner's Syndrome
     
+    if measurementRequest.sex != "female":
+        formatted_error = format_error(loc=["body"], msg=str("Turner reference data only exists in girls."), error_type="value_error", input="sex")
+        raise HTTPException(status_code=422, detail=[formatted_error])
+    
+    if measurementRequest.measurement_method != "height":
+        formatted_error = format_error(loc=["body"], msg=str("Turner reference data only exists for height"), error_type="value_error", input="measurement_method")
+        raise HTTPException(status_code=422, detail=[formatted_error])
+
+    # Validate observation value
+    try:
+        validate_observation_value(TURNERS, measurementRequest)
+    except ValueError as err:
+         # Format the error to look like Pydantic validation errors
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="value_error", input="observation_value")
+        raise HTTPException(status_code=422, detail=[formatted_error])
+
     try:
         calculation = Measurement(
             reference=constants.TURNERS,
@@ -82,10 +100,17 @@ def turner_calculation(
             events_text=measurementRequest.events_text,
         ).measurement
     except ValueError as err:
-        print(err.args)
-        return err.args, 422
-    return calculation
+        formatted_error = format_error(loc=["body"], msg=str(err), error_type="value_error", input="calculation_error")
+        raise HTTPException(status_code=422, detail=[formatted_error])
 
+
+    calculation["measurement_calculated_values"]["corrected_centile"] = round(calculation["measurement_calculated_values"]["corrected_centile"],4)
+    calculation["measurement_calculated_values"]["chronological_centile"] = round(calculation["measurement_calculated_values"]["chronological_centile"],4)
+    calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"],4)
+    calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"],4)
+    calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"],4)
+    calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"],4)
+    return calculation
 
 @turners.post(
     "/chart-coordinates", tags=["turners-syndrome"], response_model=Centile_Data
