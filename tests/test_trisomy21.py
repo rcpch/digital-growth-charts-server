@@ -108,6 +108,17 @@ def test_trisomy_21_chart_data_with_valid_request(input):
     assert response.status_code == 200
 
     # TODO: Check the actual values returned. We do already validate it against the schema though.
+@pytest.mark.parametrize("input", [
+    # Turner data only exists for height
+    { "measurement_method": "height", "observation_value": 200, "birth_date": "2015-10-26", "observation_date": "2020-09-01", "sex": "female" }, # too tall
+    { "measurement_method": "height", "observation_value": 5, "birth_date": "2015-10-26", "observation_date": "2020-09-01", "sex": "female" }, # too short
+    { "measurement_method": "height", "observation_value": 5, "birth_date": "2015-10-26", "observation_date": "2050-09-01", "sex": "female" }, # too old
+])
+def test_trisomy_21_calculation_with_valid_request_but_out_of_range(input):
+    body = input 
+
+    response = client.post("/trisomy-21/calculation", json=body)
+    assert response.status_code == 422
 
 
 def test_trisomy_21_chart_data_with_invalid_request():

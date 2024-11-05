@@ -96,6 +96,7 @@ def test_turner_calculation_with_valid_request_but_out_of_range(input):
     body = input 
 
     response = client.post("/turner/calculation", json=body)
+    assert response.status_code == 422
 
 @pytest.mark.parametrize("input", [
     # Turner data only exists for height in girls.
