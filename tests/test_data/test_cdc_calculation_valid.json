@@ -18,10 +18,10 @@
             "corrected_gestation_days": null
         },
         "comments": {
-            "clinician_corrected_decimal_age_comment": "Born at term at 40+0 weeks gestation. No correction for gestation has been made.",
-            "lay_corrected_decimal_age_comment": "Your child was born at 40+0 weeks gestation. This is considered term and no correction for gestation has been made.",
-            "clinician_chronological_decimal_age_comment": "Born at term at 40+0 weeks gestation. No correction for gestation has been made.",
-            "lay_chronological_decimal_age_comment": "Your child was born at 40+0 weeks gestation. This is considered term and no correction for gestation has been made."
+            "clinician_corrected_decimal_age_comment": "Born at term. No correction has been made for gestation.",
+            "lay_corrected_decimal_age_comment": "Your child was born on their due date.",
+            "clinician_chronological_decimal_age_comment": "Born Term. No correction has been made for gestation.",
+            "lay_chronological_decimal_age_comment": "Your child was born on their due date."
         },
         "corrected_decimal_age_error": null,
         "chronological_decimal_age_error": null
@@ -62,8 +62,8 @@
                 "observation_error": null,
                 "age_type": "chronological_age",
                 "calendar_age": "8 years and 2 months",
-                "lay_comment": "Your child was born at 40+0 weeks gestation. This is considered term and no correction for gestation has been made.",
-                "clinician_comment": "Born at term at 40+0 weeks gestation. No correction for gestation has been made.",
+                "lay_comment": "Your child was born on their due date.",
+                "clinician_comment": "Born Term. No correction has been made for gestation.",
                 "age_error": null,
                 "centile_band": "This height measurement is below the normal range.",
                 "observation_value_error": null
@@ -86,8 +86,8 @@
                 "age_type": "corrected_age",
                 "calendar_age": "8 years and 2 months",
                 "corrected_gestational_age": "",
-                "lay_comment": "Your child was born at 40+0 weeks gestation. This is considered term and no correction for gestation has been made.",
-                "clinician_comment": "Born at term at 40+0 weeks gestation. No correction for gestation has been made.",
+                "lay_comment": "Your child was born on their due date.",
+                "clinician_comment": "Born at term. No correction has been made for gestation.",
                 "age_error": null,
                 "centile_band": "This height measurement is below the normal range.",
                 "observation_value_error": null
@@ -111,8 +111,8 @@
                 "observation_error": null,
                 "age_type": "chronological_age",
                 "calendar_age": "8 years and 2 months",
-                "lay_comment": "Your child was born at 40+0 weeks gestation. This is considered term and no correction for gestation has been made.",
-                "clinician_comment": "Born at term at 40+0 weeks gestation. No correction for gestation has been made.",
+                "lay_comment": "Your child was born on their due date.",
+                "clinician_comment": "Born Term. No correction has been made for gestation.",
                 "age_error": null,
                 "centile_band": "This height measurement is below the normal range.",
                 "observation_value_error": null
@@ -135,8 +135,8 @@
                 "age_type": "corrected_age",
                 "calendar_age": "8 years and 2 months",
                 "corrected_gestational_age": "",
-                "lay_comment": "Your child was born at 40+0 weeks gestation. This is considered term and no correction for gestation has been made.",
-                "clinician_comment": "Born at term at 40+0 weeks gestation. No correction for gestation has been made.",
+                "lay_comment": "Your child was born on their due date.",
+                "clinician_comment": "Born at term. No correction has been made for gestation.",
                 "age_error": null,
                 "centile_band": "This height measurement is below the normal range.",
                 "observation_value_error": null
