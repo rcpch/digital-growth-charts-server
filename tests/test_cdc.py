@@ -108,6 +108,46 @@ def test_cdc_chart_with_valid_request_for_outside_range_values(input):
 
     assert response.status_code == 422
 
+def test_cdc_chart_with_valid_request_for_preterm_baby_not_yet_term():
+
+    body = {
+        "measurement_method": "height",
+        "observation_value": 50,
+        "observation_date": "2021-11-12",
+        "birth_date": "2021-9-2",
+        "gestation_weeks": 29,
+        "gestation_days": 2,
+        "sex": "male"
+    }
+
+    
+
+    response = client.post("/cdc/calculation", json=body)
+
+    assert response.status_code == 422
+    assert response.json()["detail"][0]["msg"] == "CDC data does not exist below 40 weeks."
+
+
+def test_cdc_chart_with_valid_request_for_preterm_baby_corrected_age_now_term():
+
+    body = {
+        "measurement_method": "height",
+        "observation_value": 50,
+        "observation_date": "2021-11-20",
+        "birth_date": "2021-9-2",
+        "gestation_weeks": 29,
+        "gestation_days": 2,
+        "sex": "male"
+    }
+    
+    response = client.post("/cdc/calculation", json=body)
+
+    assert response.status_code == 200
+    assert response.json()["measurement_dates"]["chronological_decimal_age"]==0.216290212183436
+    assert response.json()["measurement_dates"]["corrected_decimal_age"]==0.010951403148528405
+    assert response.json()["measurement_dates"]["comments"]["lay_corrected_decimal_age_comment"]=="Because your child was born at 29+2 weeks gestation an adjustment has been made to take this into account."
+
+
 
 
 @pytest.mark.parametrize("input", [
