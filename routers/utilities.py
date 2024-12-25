@@ -5,14 +5,15 @@ Utilities router
 from datetime import datetime
 
 # Third party imports
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 # RCPCH imports
-from rcpchgrowth import mid_parental_height, sds_for_measurement, constants, centile
+from rcpchgrowth import sds_for_measurement, constants, centile
 from rcpchgrowth.global_functions import measurement_from_sds
 from rcpchgrowth.chart_functions import create_chart
 from rcpchgrowth import lower_and_upper_limits_of_expected_height_z, mid_parental_height_z
 from schemas import MidParentalHeightRequest, MidParentalHeightResponse
+from .utils import format_error
 
 # set up the API router
 utilities = APIRouter(
@@ -44,12 +45,6 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     as it will not be possible to render the area between the centiles if one is empty.
     """
 
-    # height = mid_parental_height(
-    #     mid_parental_height_request.height_paternal,
-    #     mid_parental_height_request.height_maternal,
-    #     mid_parental_height_request.sex,
-    # )
-
     reference = mid_parental_height_request.reference
 
     """
@@ -63,6 +58,33 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     mph_centile_data = None
     mph_lower_centile_data = None
     mph_upper_centile_data = None
+
+    try:
+        maternal_height_sds = sds_for_measurement(age=20, measurement_method=constants.HEIGHT, observation_value=mid_parental_height_request.height_maternal, sex=mid_parental_height_request.sex, reference=mid_parental_height_request.reference)
+        paternal_height_sds = sds_for_measurement(age=20, measurement_method=constants.HEIGHT, observation_value=mid_parental_height_request.height_paternal, sex=mid_parental_height_request.sex, reference=mid_parental_height_request.reference)
+    except Exception as e:
+        raise Exception(f"Error: {e}")
+    
+    if paternal_height_sds < 6 or maternal_height_sds < 6 or paternal_height_sds > 6 or maternal_height_sds > 6:
+        errors = []
+        if paternal_height_sds < 6:
+            err = ("Error: The paternal height is < 6 SD. Please check the accuracy of the paternal height and try again.")
+            field = "height_paternal"
+            errors.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input=field))
+        if maternal_height_sds < 6:
+            err = ("Error: The maternal height is < 6 SD. Please check the accuracy of the maternal height and try again.")
+            field = "height_maternal"
+            errors.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input=field))
+        if paternal_height_sds > 6:
+            err = ("Error: The paternal height is > 6 SD. Please check the accuracy of the paternal height and try again.")
+            field = "height_paternal"
+            errors.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input=field))
+        if maternal_height_sds > 6:
+            err = ("Error: The maternal height is > 6 SD. Please check the accuracy of the maternal height and try again.")
+            field = "height_maternal"
+            errors.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input=field))
+        raise HTTPException(status_code=422, detail=errors)
+
     try:
         mph_sds = mid_parental_height_z(paternal_height=mid_parental_height_request.height_paternal, maternal_height=mid_parental_height_request.height_maternal, reference=reference)
     except Exception:

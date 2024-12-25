@@ -217,13 +217,9 @@ class FictionalChildRequest(BaseModel):
 
 class MidParentalHeightRequest(BaseModel):
     height_paternal: float = Field(
-        ge=50,
-        le=245,
         description="The height of the child's biological father, passed as float, measured in centimeters",
     )
     height_maternal: float = Field(
-        ge=50,
-        le=245,
         description="The height of the child's biological mother, passed as float, measured in centimeters",
     )
     sex: Literal["male", "female"] = Field(
@@ -237,21 +233,14 @@ class MidParentalHeightRequest(BaseModel):
 
 
 """
+Validation has changed. Thes are values from the Guinness Book of Records and left here for interest.
+They nolonger form part of the validation process.
+
 the shortest man in the world was 54.6 cm Chandra Bahadur Dangi
 the shortest woman in the world is Jyoti Kishanji Amge at 62.8 cm
-lower limit to paternal and maternal height here therefore set at 50 cm
-this will need adding to the constants in RCPCHGrowth
+the tallest woman ever to live is Rumeysa Gelgi (born 1979) is 215.16 cm
+the tallest man at  272 cm was Robert Wadlow (1918-1940)
 
-Upper limits are more complicated.
-Note any paternal height above 253cm or maternal height above 250cm in a boy or
-any maternal height above 237 cm or any paternal height above 249 cm in a girl will return
-a midparental height whose centile is 100 which generates an error when calculating a plottable centile
-(since 100% is not technically plottable)
-Given that the tallest woman ever to live is Rumeysa Gelgi (born 1979) is 215.16 cm
-and the tallest man was 272 cm it seems reasonable to cap the upper limit for validation purposes
-to 245 cm in either parent (which is over 8 foot).
-
-if this function is called outside of the API and heights above those detailed above are higher,
-an empty array for that centile is returned. This is likely not compatible with the charting component
-as it will not be possible to render the area between the centiles if one is empty.
+Validation now rejects heights < or > 6 SD
+This calculation is made in the Utilities route and includes a check for heights < or > 6 SD against the reference supplied.
 """

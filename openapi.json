@@ -2252,15 +2252,11 @@
                 "properties": {
                     "height_paternal": {
                         "type": "number",
-                        "maximum": 245.0,
-                        "minimum": 50.0,
                         "title": "Height Paternal",
                         "description": "The height of the child's biological father, passed as float, measured in centimeters"
                     },
                     "height_maternal": {
                         "type": "number",
-                        "maximum": 245.0,
-                        "minimum": 50.0,
                         "title": "Height Maternal",
                         "description": "The height of the child's biological mother, passed as float, measured in centimeters"
                     },

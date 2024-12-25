@@ -9,7 +9,7 @@ from typing import List
 
 # Third party imports
 from schemas.response_schema_classes import Centile_Data, MeasurementObject
-from fastapi import APIRouter, Body, HTTPException, Depends, Request
+from fastapi import APIRouter, Body, HTTPException
 
 # RCPCH imports
 from rcpchgrowth import (
