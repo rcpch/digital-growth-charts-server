@@ -87,19 +87,19 @@ def test_midparental_height_parental_heights_ge_fifty_expected_fail():
     assert response.status_code == 422
 
     # restructure the response to make it easier to assert tests specifically
-    validation_errors = {error["loc"][1]: error for error in response.json()["detail"]}
+    validation_errors = {error["input"]: error["msg"] for error in response.json()["detail"]}
 
     assert (
-        validation_errors["height_paternal"]["msg"]
-        == "Input should be greater than or equal to 50"
+        validation_errors["height_paternal"]
+        == "Error: The paternal height is < -6 SD. Please check the accuracy of the paternal height and try again."
     )
     assert (
-        validation_errors["height_maternal"]["msg"]
-        == "Input should be greater than or equal to 50"
+        validation_errors["height_maternal"]
+        == "Error: The maternal height is < -6 SD. Please check the accuracy of the maternal height and try again."
     )
 
 
-def test_midparental_height_paternal_height_lt_twofortyfive_expected_fail():
+def test_midparental_height_paternal_height_lt_sixsd_expected_fail():
     body = {
         "height_paternal": "251",
         "height_maternal": "168",
@@ -111,14 +111,14 @@ def test_midparental_height_paternal_height_lt_twofortyfive_expected_fail():
 
     assert response.status_code == 422
 
-    paternal_validation_errors = response.json()["detail"][0]
+    paternal_validation_errors = {error["input"]: error["msg"] for error in response.json()["detail"]}
 
     assert (
-        paternal_validation_errors["msg"] == "Input should be less than or equal to 245"
+        paternal_validation_errors["height_paternal"] == "Error: The paternal height is > 6 SD. Please check the accuracy of the paternal height and try again."
     )
 
 
-def test_midparental_height_maternal_height_lt_twofortyfive_expected_fail():
+def test_midparental_height_maternal_height_lt_sixsd_expected_fail():
     body = {
         "height_paternal": "171",
         "height_maternal": "267",
@@ -130,8 +130,8 @@ def test_midparental_height_maternal_height_lt_twofortyfive_expected_fail():
 
     assert response.status_code == 422
 
-    maternal_validation_errors = response.json()["detail"][0]
+    maternal_validation_errors = {error["input"]: error["msg"] for error in response.json()["detail"]}
 
     assert (
-        maternal_validation_errors["msg"] == "Input should be less than or equal to 245"
+        maternal_validation_errors["height_maternal"] == "Error: The maternal height is > 6 SD. Please check the accuracy of the maternal height and try again."
     )
