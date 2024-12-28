@@ -61,7 +61,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     try:
         maternal_height_sds = sds_for_measurement(age=20, measurement_method=constants.HEIGHT, observation_value=mid_parental_height_request.height_maternal, sex=mid_parental_height_request.sex, reference=mid_parental_height_request.reference)
         paternal_height_sds = sds_for_measurement(age=20, measurement_method=constants.HEIGHT, observation_value=mid_parental_height_request.height_paternal, sex=mid_parental_height_request.sex, reference=mid_parental_height_request.reference)
-        print(f"Maternal height SDS: {maternal_height_sds}, Paternal height SDS: {paternal_height_sds}")
+
     except Exception as e:
         raise Exception(f"Error: {e}")
     
