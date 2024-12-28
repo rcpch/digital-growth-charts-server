@@ -2,7 +2,6 @@
 Utilities router
 """
 # standard library imports
-from datetime import datetime
 
 # Third party imports
 from fastapi import APIRouter
@@ -65,7 +64,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     mph_upper_centile_data = None
     try:
         mph_sds = mid_parental_height_z(paternal_height=mid_parental_height_request.height_paternal, maternal_height=mid_parental_height_request.height_maternal, reference=reference)
-    except Exception:
+    except Exception as e:
         print("It was not possible to calculate midparental SDS.")
 
     try:

@@ -13,7 +13,6 @@ import rcpchgrowth.constants.validation_constants as limits
 from rcpchgrowth.constants.reference_constants import (
     COLE_TWO_THIRDS_SDS_NINE_CENTILES,
     THREE_PERCENT_CENTILES,
-    CENTILE_FORMATS,
 )
 from rcpchgrowth.constants.validation_constants import (
     MINIMUM_HEIGHT_WEIGHT_OFC_ERROR_SDS,
@@ -123,7 +122,7 @@ class ChartCoordinateRequest(BaseModel):
         Union[Literal["cole-nine-centiles", "three-percent-centiles", "five-percent-centiles", "eighty-five-percent-centiles"], List[float]]
     ] = Field(
         "cole-nine-centiles",
-        description="Optional selection of centile format using 9 centile standard ['nine-centiles'], or 'three-percent-centiles' [3.0, 10.0, 25.0, 50.0, 75.0, 90.0, 97.0], five-percent-centiles [5.0, 10.0, 25.0, 50.0, 75.0, 90.0, 95.0] or eight-five-percent-centiles as used in CDC BMI [3.0, 5.0, 10.0, 25.0, 50.0, 75.0, 85, 90.0, 95, 98.0, 99.0, 99.9, 99.99] or accepts a list of floats as a custom centile format e.g. [7/10/20/30/40/50/60/70/80/90/93]. Defaults to cole-nine-centiles"
+        description="Optional selection of centile format using 9 centile standard ['cole-nine-centiles'], or 'three-percent-centiles' [3.0, 10.0, 25.0, 50.0, 75.0, 90.0, 97.0], five-percent-centiles [5.0, 10.0, 25.0, 50.0, 75.0, 90.0, 95.0] or eight-five-percent-centiles as used in CDC BMI [3.0, 5.0, 10.0, 25.0, 50.0, 75.0, 85, 90.0, 95, 98.0, 99.0, 99.9, 99.99] or accepts a list of floats as a custom centile format e.g. [7/10/20/30/40/50/60/70/80/90/93]. Defaults to cole-nine-centiles"
     )
 
     @field_validator("centile_format", "is_sds")
@@ -230,7 +229,7 @@ class MidParentalHeightRequest(BaseModel):
         ...,
         description="The sex of the patient, as a string value which can either be 'male' or 'female'. Abbreviations or alternatives are not accepted."
     )
-    reference: Literal["uk-who", "cdc"] = Field(
+    reference: Literal["uk-who", "cdc", "who"] = Field(
         default="uk-who",
         description="Selected reference as string. Case sensitive and accepts only one of ['uk-who', 'cdc']"
     )
