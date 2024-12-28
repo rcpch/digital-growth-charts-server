@@ -10,7 +10,7 @@ from fastapi.openapi.utils import get_openapi
 
 # local / rcpch imports
 from rcpchgrowth import chart_functions, constants
-from routers import trisomy_21, trisomy_21_aap, turners, uk_who, cdc, utilities
+from routers import trisomy_21, trisomy_21_aap, turners, uk_who, cdc, who, utilities
 
 
 version='4.2.24'  # this is set by bump version
@@ -41,6 +41,7 @@ app.include_router(turners)
 app.include_router(trisomy_21)
 app.include_router(trisomy_21_aap)
 app.include_router(cdc)
+app.include_router(who)
 app.include_router(utilities)
 
 
@@ -77,7 +78,7 @@ def root():
 # This data is only generated once and then is stored and served from file.
 def generate_and_store_chart_data():
     for centile_format in [constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES, constants.THREE_PERCENT_CENTILES, constants.FIVE_PERCENT_CENTILES, constants.EIGHTY_FIVE_PERCENT_CENTILES]:
-        for reference in constants.REFERENCES + [constants.CDC] + [constants.TRISOMY_21_AAP]:
+        for reference in constants.REFERENCES:
             for sex in constants.SEXES:
                 for measurement_method in constants.MEASUREMENT_METHODS:
                     # Don't generate files for Turner's for references we don't have (males or non-height measurements)
