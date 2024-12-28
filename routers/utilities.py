@@ -65,22 +65,22 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     except Exception as e:
         raise Exception(f"Error: {e}")
     
-    if paternal_height_sds < -6 or maternal_height_sds < -6 or paternal_height_sds > 6 or maternal_height_sds > 6:
+    if paternal_height_sds < -8 or maternal_height_sds < -8 or paternal_height_sds > 8 or maternal_height_sds > 8:
         errors = []
-        if paternal_height_sds < -6:
-            err = ("Error: The paternal height is < -6 SD. Please check the accuracy of the paternal height and try again.")
+        if paternal_height_sds < -8:
+            err = ("Error: The paternal height is < -8 SD. Please check the accuracy of the paternal height and try again.")
             field = "height_paternal"
             errors.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input=field))
-        if maternal_height_sds < -6:
-            err = ("Error: The maternal height is < -6 SD. Please check the accuracy of the maternal height and try again.")
+        if maternal_height_sds < -8:
+            err = ("Error: The maternal height is < -8 SD. Please check the accuracy of the maternal height and try again.")
             field = "height_maternal"
             errors.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input=field))
-        if paternal_height_sds > 6:
-            err = ("Error: The paternal height is > 6 SD. Please check the accuracy of the paternal height and try again.")
+        if paternal_height_sds > 8:
+            err = ("Error: The paternal height is > 8 SD. Please check the accuracy of the paternal height and try again.")
             field = "height_paternal"
             errors.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input=field))
-        if maternal_height_sds > 6:
-            err = ("Error: The maternal height is > 6 SD. Please check the accuracy of the maternal height and try again.")
+        if maternal_height_sds > 8:
+            err = ("Error: The maternal height is > 8 SD. Please check the accuracy of the maternal height and try again.")
             field = "height_maternal"
             errors.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input=field))
         raise HTTPException(status_code=422, detail=errors)

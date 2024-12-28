@@ -91,11 +91,11 @@ def test_midparental_height_parental_heights_ge_fifty_expected_fail():
 
     assert (
         validation_errors["height_paternal"]
-        == "Error: The paternal height is < -6 SD. Please check the accuracy of the paternal height and try again."
+        == "Error: The paternal height is < -8 SD. Please check the accuracy of the paternal height and try again."
     )
     assert (
         validation_errors["height_maternal"]
-        == "Error: The maternal height is < -6 SD. Please check the accuracy of the maternal height and try again."
+        == "Error: The maternal height is < -8 SD. Please check the accuracy of the maternal height and try again."
     )
 
 
@@ -114,7 +114,7 @@ def test_midparental_height_paternal_height_lt_sixsd_expected_fail():
     paternal_validation_errors = {error["input"]: error["msg"] for error in response.json()["detail"]}
 
     assert (
-        paternal_validation_errors["height_paternal"] == "Error: The paternal height is > 6 SD. Please check the accuracy of the paternal height and try again."
+        paternal_validation_errors["height_paternal"] == "Error: The paternal height is > 8 SD. Please check the accuracy of the paternal height and try again."
     )
 
 
@@ -133,5 +133,5 @@ def test_midparental_height_maternal_height_lt_sixsd_expected_fail():
     maternal_validation_errors = {error["input"]: error["msg"] for error in response.json()["detail"]}
 
     assert (
-        maternal_validation_errors["height_maternal"] == "Error: The maternal height is > 6 SD. Please check the accuracy of the maternal height and try again."
+        maternal_validation_errors["height_maternal"] == "Error: The maternal height is > 8 SD. Please check the accuracy of the maternal height and try again."
     )

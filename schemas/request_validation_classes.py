@@ -241,6 +241,6 @@ the shortest woman in the world is Jyoti Kishanji Amge at 62.8 cm
 the tallest woman ever to live is Rumeysa Gelgi (born 1979) is 215.16 cm
 the tallest man at  272 cm was Robert Wadlow (1918-1940)
 
-Validation now rejects heights < or > 6 SD
-This calculation is made in the Utilities route and includes a check for heights < or > 6 SD against the reference supplied.
+Validation now rejects heights < or > 8 SD
+This calculation is made in the Utilities route and includes a check for heights < or > 8 SD against the reference supplied.
 """
