@@ -45,6 +45,9 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     """
 
     reference = mid_parental_height_request.reference
+    adult_age = 20
+    if reference == constants.WHO:
+        adult_age = 19
 
     """
     ## Calculate SDS and centile
@@ -87,7 +90,8 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
 
     try:
         mph_sds = mid_parental_height_z(paternal_height=mid_parental_height_request.height_paternal, maternal_height=mid_parental_height_request.height_maternal, reference=reference)
-    except Exception:
+    except Exception as e:
+        print(e)
         print("It was not possible to calculate midparental SDS.")
 
     try:
@@ -123,7 +127,6 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
 
     try:
         upper_centile = round(centile(upper),3)
-
         mph_upper_centile_data = create_chart(
             reference=reference,
             centile_format=[upper_centile],
@@ -138,14 +141,14 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     try:
         upper_height = measurement_from_sds(
             reference=reference,
-            age=20,
+            age=adult_age,
             sex=mid_parental_height_request.sex,
             measurement_method=constants.HEIGHT,
             requested_sds=upper,
         )
         lower_height = measurement_from_sds(
             reference=reference,
-            age=20,
+            age=adult_age,
             sex=mid_parental_height_request.sex,
             measurement_method=constants.HEIGHT,
             requested_sds=lower,
@@ -157,7 +160,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     # It is present in the package but not included in the API response as it might break the charting component and so shoudl be included in future versions of the API and the charting component
     target_height = measurement_from_sds( 
             reference=reference,
-            age=20,
+            age=adult_age,
             sex=mid_parental_height_request.sex,
             measurement_method=constants.HEIGHT,
             requested_sds=mph_sds,
@@ -167,7 +170,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     # It has the effect of correcting for the fact that the children of taller parents are not as tall as their parents, and the children of  shorter parents are not as short as their parents, but regress to the mean.
     mph = measurement_from_sds(
             reference=reference,
-            age=20,
+            age=adult_age,
             sex=mid_parental_height_request.sex,
             measurement_method=constants.HEIGHT,
             requested_sds=mph_sds,
