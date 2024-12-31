@@ -3,7 +3,7 @@
     "info": {
         "title": "RCPCH Digital Growth API",
         "description": "Returns SDS and centiles for child growth measurements using growth references. Currently provides calculations based on the UK-WHO, Turner's Syndrome and Trisomy-21 references.",
-        "version": "4.3.0"
+        "version": "4.3.1"
     },
     "paths": {
         "/uk-who/calculation": {
@@ -2402,15 +2402,11 @@
                 "properties": {
                     "height_paternal": {
                         "type": "number",
-                        "maximum": 245.0,
-                        "minimum": 50.0,
                         "title": "Height Paternal",
                         "description": "The height of the child's biological father, passed as float, measured in centimeters"
                     },
                     "height_maternal": {
                         "type": "number",
-                        "maximum": 245.0,
-                        "minimum": 50.0,
                         "title": "Height Maternal",
                         "description": "The height of the child's biological mother, passed as float, measured in centimeters"
                     },
