@@ -13,7 +13,7 @@ from rcpchgrowth import chart_functions, constants
 from routers import trisomy_21, trisomy_21_aap, turners, uk_who, cdc, who, utilities
 
 
-version='4.3.1'  # this is set by bump version
+version='4.3.2'  # this is set by bump version
 
 # Declare the FastAPI app
 app = FastAPI(
@@ -76,7 +76,7 @@ def root():
 
 # Generate and store the chart plotting data for the centile background curves.
 # This data is only generated once and then is stored and served from file.
-def generate_and_store_chart_data():
+def generate_and_store_chart_data(overwrite=False):
     for centile_format in [constants.COLE_TWO_THIRDS_SDS_NINE_CENTILES, constants.THREE_PERCENT_CENTILES, constants.FIVE_PERCENT_CENTILES, constants.EIGHTY_FIVE_PERCENT_CENTILES]:
         for reference in constants.REFERENCES:
             for sex in constants.SEXES:
@@ -86,7 +86,7 @@ def generate_and_store_chart_data():
                         continue
                     chart_data_file = Path(
                         f'chart-data/{centile_format}-{reference}-{sex}-{measurement_method}.json')
-                    if chart_data_file.exists():
+                    if chart_data_file.exists() and not overwrite:
                         print(f'Chart data file exists for {centile_format}-{reference}-{sex}-{measurement_method}.')
                     else:
                         print(f'Chart data file does not exist for {centile_format}-{reference}-{sex}-{measurement_method}')
