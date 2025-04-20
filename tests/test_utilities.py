@@ -32,11 +32,11 @@ def test_midparental_height_ukwho_with_valid_request():
     assert response.status_code == 200
 
     file_data = json.loads(calculation_file)
-    assert round(float(file_data['mid_parental_height']),1)==float(response.json()['mid_parental_height']), f"mid_parental_height for uk-who should be {round(177.0128, 1)}, but was {response.json()['mid_parental_height']}"
-    assert round(float(file_data['mid_parental_height_sds']),3)==float(response.json()['mid_parental_height_sds']), f"mid_parental_height_sds for uk-who should be {round(-0.04696468824606451, 3)}, but was {response.json()['mid_parental_height_sds']}"
-    assert round(float(file_data['mid_parental_height_centile']),2)==float(response.json()['mid_parental_height_centile']), f"mid_parental_height_centile for uk-who should be {round(48.127, 2)}, but was {response.json()['mid_parental_height_centile']}"
-    assert round(float(file_data["mid_parental_height_upper_value"]),1)==float(response.json()["mid_parental_height_upper_value"]), f"mid_parental_height_upper_value for uk-who should be {round(186.77, 1)}, but was {response.json()["mid_parental_height_upper_value"]}"
-    assert round(float(file_data["mid_parental_height_lower_value"]),1)==float(response.json()["mid_parental_height_lower_value"]), f"mid_parental_height_lower_value for uk-who should be {round(167.26, 1)}, but was {response.json()["mid_parental_height_lower_value"]}"
+    assert round(float(file_data['mid_parental_height']),1)==float(response.json()['mid_parental_height']), f"mid_parental_height for uk-who should be {round(float(file_data['mid_parental_height']),1)} but returned {float(response.json()['mid_parental_height'])}"
+    assert round(float(file_data['mid_parental_height_sds']),3)==float(response.json()['mid_parental_height_sds']), f"mid_parental_height_sds for uk-who should be {round(float(file_data['mid_parental_height_sds']),3)} but returned {float(response.json()['mid_parental_height_sds'])}"
+    assert round(float(file_data['mid_parental_height_centile']),2)==float(response.json()['mid_parental_height_centile']), f"mid_parental_height_centile for uk-who should be {round(float(file_data['mid_parental_height_centile']),2)} but returned {float(response.json()['mid_parental_height_centile'])}"
+    assert round(float(file_data["mid_parental_height_upper_value"]),1)==float(response.json()["mid_parental_height_upper_value"]), f"mid_parental_height_upper_value for uk-who should be {round(float(file_data['mid_parental_height_upper_value']),1)} but returned {float(response.json()['mid_parental_height_upper_value'])}"
+    assert round(float(file_data["mid_parental_height_lower_value"]),1)==float(response.json()["mid_parental_height_lower_value"]), f"mid_parental_height_lower_value for uk-who should be {round(float(file_data['mid_parental_height_lower_value']),1)} but returned {float(response.json()['mid_parental_height_lower_value'])}"
 
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
     # assert response.json() == json.loads(calculation_file)
@@ -58,11 +58,11 @@ def test_midparental_height_cdc_with_valid_request():
     assert response.status_code == 200
 
     file_data = json.loads(calculation_file)
-    assert round(float(file_data['mid_parental_height']),1)==float(response.json()['mid_parental_height']), f"mid_parental_height for uk-who should be {round(177.0128, 1)}, but was {response.json()['mid_parental_height']}"
-    assert round(float(file_data['mid_parental_height_sds']),3)==float(response.json()['mid_parental_height_sds']), f"mid_parental_height_sds for uk-who should be {round(-0.04696468824606451, 3)}, but was {response.json()['mid_parental_height_sds']}"
-    assert round(float(file_data['mid_parental_height_centile']),2)==float(response.json()['mid_parental_height_centile']), f"mid_parental_height_centile for uk-who should be {round(48.127, 2)}, but was {response.json()['mid_parental_height_centile']}"
-    assert round(float(file_data["mid_parental_height_upper_value"]),1)==float(response.json()["mid_parental_height_upper_value"]), f"mid_parental_height_upper_value for uk-who should be {round(186.77, 1)}, but was {response.json()["mid_parental_height_upper_value"]}"
-    assert round(float(file_data["mid_parental_height_lower_value"]),1)==float(response.json()["mid_parental_height_lower_value"]), f"mid_parental_height_lower_value for uk-who should be {round(167.26, 1)}, but was {response.json()["mid_parental_height_lower_value"]}"
+    assert round(float(file_data['mid_parental_height']),1)==float(response.json()['mid_parental_height']), f"mid_parental_height for uk-who should be {round(float(file_data['mid_parental_height']),1)} but returned {float(response.json()['mid_parental_height'])}"
+    assert round(float(file_data['mid_parental_height_sds']),3)==float(response.json()['mid_parental_height_sds']), f"mid_parental_height_sds for uk-who should be {round(float(file_data['mid_parental_height_sds']),3)} but returned {float(response.json()['mid_parental_height_sds'])}"
+    assert round(float(file_data['mid_parental_height_centile']),2)==float(response.json()['mid_parental_height_centile']), f"mid_parental_height_centile for uk-who should be {round(float(file_data['mid_parental_height_centile']),2)} but returned {float(response.json()['mid_parental_height_centile'])}"
+    assert round(float(file_data["mid_parental_height_upper_value"]),1)==float(response.json()["mid_parental_height_upper_value"]), f"mid_parental_height_upper_value for uk-who should be {round(float(file_data['mid_parental_height_upper_value']),1)} but returned {float(response.json()['mid_parental_height_upper_value'])}"
+    assert round(float(file_data["mid_parental_height_lower_value"]),1)==float(response.json()["mid_parental_height_lower_value"]), f"mid_parental_height_lower_value for uk-who should be {round(float(file_data['mid_parental_height_lower_value']),1)} but returned {float(response.json()['mid_parental_height_lower_value'])}"
 
 
 def test_midparental_height_with_invalid_request():
