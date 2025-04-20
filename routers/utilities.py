@@ -188,6 +188,6 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         "mid_parental_height_centile_data": mph_centile_data,
         "mid_parental_height_lower_centile_data": mph_lower_centile_data,
         "mid_parental_height_upper_centile_data": mph_upper_centile_data,
-        "mid_parental_height_lower_value": round(lower_height, 2),
-        "mid_parental_height_upper_value": round(upper_height, 2),
+        "mid_parental_height_lower_value": round(lower_height, 1),
+        "mid_parental_height_upper_value": round(upper_height, 1),
     }
