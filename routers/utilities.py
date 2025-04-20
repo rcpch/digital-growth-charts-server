@@ -62,9 +62,8 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     mph_upper_centile_data = None
 
     try:
-        maternal_height_sds = sds_for_measurement(age=20, measurement_method=constants.HEIGHT, observation_value=mid_parental_height_request.height_maternal, sex=mid_parental_height_request.sex, reference=mid_parental_height_request.reference)
-        paternal_height_sds = sds_for_measurement(age=20, measurement_method=constants.HEIGHT, observation_value=mid_parental_height_request.height_paternal, sex=mid_parental_height_request.sex, reference=mid_parental_height_request.reference)
-
+        maternal_height_sds = sds_for_measurement(age=20, measurement_method=constants.HEIGHT, observation_value=mid_parental_height_request.height_maternal, sex='female', reference=mid_parental_height_request.reference)
+        paternal_height_sds = sds_for_measurement(age=20, measurement_method=constants.HEIGHT, observation_value=mid_parental_height_request.height_paternal, sex='male', reference=mid_parental_height_request.reference)
     except Exception as e:
         raise Exception(f"Error: {e}")
     
@@ -86,25 +85,32 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
             err = ("Error: The maternal height is > 8 SD. Please check the accuracy of the maternal height and try again.")
             field = "height_maternal"
             errors.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input=field))
+        
         raise HTTPException(status_code=422, detail=errors)
 
     try:
         mph_sds = mid_parental_height_z(paternal_height=mid_parental_height_request.height_paternal, maternal_height=mid_parental_height_request.height_maternal, reference=reference)
     except Exception as e:
-        print(e)
-        print("It was not possible to calculate midparental SDS.")
+        e = f"It was not possible to calculate a centile from the midparental height SDS: {e}"
+        errors.append(format_error(loc=["body"], msg=str(e), error_type="value_error", input='height_paternal'))
+        errors.append(format_error(loc=["body"], msg=str(e), error_type="value_error", input='height_maternal'))
+        raise HTTPException(status_code=422, detail=f"Error: {e}")
 
     try:
         mph_centile = round(centile(mph_sds),3)
-    except:
-        print("It was not possible to calculate a centile from midparental height.")
+    except Exception as e:
+        e = f"It was not possible to calculate a centile from the midparental height SDS: {e}"
+        errors.append(format_error(loc=["body"], msg=str(e), error_type="value_error", input='height_paternal'))
+        errors.append(format_error(loc=["body"], msg=str(e), error_type="value_error", input='height_maternal'))
+        raise HTTPException(status_code=422, detail=f"Error: {e}")
 
     try:
         mph_centile_data = create_chart(
             reference=reference,
-            centile_format=[mph_centile],
+            centile_format=[mph_sds],
             measurement_method=constants.HEIGHT,
             sex=mid_parental_height_request.sex,
+            is_sds=True,
         )
     except Exception as e:
         print(e)
@@ -113,27 +119,26 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     lower, upper = lower_and_upper_limits_of_expected_height_z(mid_parental_height_z=mph_sds)
 
     try:
-        lower_centile = round(centile(lower),3)
         mph_lower_centile_data = create_chart(
             reference=reference,
-            centile_format=[lower_centile],
+            centile_format=[lower],
             measurement_method=constants.HEIGHT,
             sex=mid_parental_height_request.sex,
+            is_sds=True,
         )
-
     except Exception as e:
-        print(e)
+        # if the centile is not plottable, return an empty array
+        print(f"Error: {e}")
         mph_lower_centile_data = []
 
     try:
-        upper_centile = round(centile(upper),3)
         mph_upper_centile_data = create_chart(
             reference=reference,
-            centile_format=[upper_centile],
+            centile_format=[upper],
             measurement_method=constants.HEIGHT,
             sex=mid_parental_height_request.sex,
+            is_sds=True,
         )
-
     except Exception as e:
         mph_upper_centile_data = []
         print(f"Error: {e}")
@@ -175,7 +180,6 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
             measurement_method=constants.HEIGHT,
             requested_sds=mph_sds,
         )
-    
 
     return {
         "mid_parental_height": mph,
