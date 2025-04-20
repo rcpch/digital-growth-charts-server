@@ -107,7 +107,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     try:
         mph_centile_data = create_chart(
             reference=reference,
-            centile_format=[mph_sds],
+            centile_format=[round(mph_sds, 3)],
             measurement_method=constants.HEIGHT,
             sex=mid_parental_height_request.sex,
             is_sds=True,
@@ -121,7 +121,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     try:
         mph_lower_centile_data = create_chart(
             reference=reference,
-            centile_format=[lower],
+            centile_format=[round(lower, 3)],
             measurement_method=constants.HEIGHT,
             sex=mid_parental_height_request.sex,
             is_sds=True,
@@ -134,7 +134,7 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     try:
         mph_upper_centile_data = create_chart(
             reference=reference,
-            centile_format=[upper],
+            centile_format=[round(upper, 3)],
             measurement_method=constants.HEIGHT,
             sex=mid_parental_height_request.sex,
             is_sds=True,
@@ -182,9 +182,9 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
         )
 
     return {
-        "mid_parental_height": mph,
-        "mid_parental_height_sds": mph_sds,
-        "mid_parental_height_centile": mph_centile,
+        "mid_parental_height": round(mph, 1),
+        "mid_parental_height_sds": round(mph_sds, 3),
+        "mid_parental_height_centile": round(mph_centile, 2),
         "mid_parental_height_centile_data": mph_centile_data,
         "mid_parental_height_lower_centile_data": mph_lower_centile_data,
         "mid_parental_height_upper_centile_data": mph_upper_centile_data,
