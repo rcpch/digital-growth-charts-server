@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# Run API service using local editable rcpchgrowth source.
+# Usage:
+#   ./s/dev                # auto-detect (growth-api, api, server, app, web, backend)
+#   ./s/dev <service>
+#   RCPCHGROWTH_SRC=/path ./s/dev
+#   ./s/dev --copy         # copy source into container (keeps host tree read-only) then run
+
+REQUESTED_SERVICE=""
+USE_COPY=0
+for arg in "$@"; do
+  case "$arg" in
+    --copy) USE_COPY=1 ;;
+    -h|--help)
+      echo "Usage: ./s/dev [--copy] [service]"
+      exit 0
+      ;;
+    *) REQUESTED_SERVICE="$arg" ;;
+  esac
+done
+
+THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_ROOT="$(cd "$THIS_DIR/.." && pwd)"
+
+SERVICES_RAW="$(docker compose config --services 2>/dev/null || true)"
+[[ -z "$SERVICES_RAW" ]] && { echo "ERROR: Could not read services"; exit 1; }
+
+COMPOSE_SERVICES=()
+while IFS= read -r line; do [[ -n "$line" ]] && COMPOSE_SERVICES+=("$line"); done <<< "$SERVICES_RAW"
+
+has_service() { for s in "${COMPOSE_SERVICES[@]}"; do [[ "$s" == "$1" ]] && return 0; done; return 1; }
+
+if [[ -n "$REQUESTED_SERVICE" && "$REQUESTED_SERVICE" != "--copy" ]]; then
+  has_service "$REQUESTED_SERVICE" || { echo "ERROR: Service '$REQUESTED_SERVICE' not found"; printf '  %s\n' "${COMPOSE_SERVICES[@]}"; exit 1; }
+  SERVICE="$REQUESTED_SERVICE"
+else
+  for cand in growth-api api server app web backend; do
+    if has_service "$cand"; then SERVICE="$cand"; break; fi
+  done
+  [[ -z "${SERVICE:-}" ]] && { echo "ERROR: Could not auto-detect service"; printf '  %s\n' "${COMPOSE_SERVICES[@]}"; exit 1; }
+fi
+
+candidates=()
+[[ -n "${RCPCHGROWTH_SRC:-}" ]] && candidates+=("$RCPCHGROWTH_SRC")
+candidates+=("$PROJECT_ROOT/../rcpchgrowth-python" "$PROJECT_ROOT/../rcpchgrowth")
+
+LOCAL_PKG_DIR=""
+for cand in "${candidates[@]}"; do
+  if [[ -d "$cand" && -f "$cand/pyproject.toml" && -d "$cand/rcpchgrowth" ]]; then
+    LOCAL_PKG_DIR="$(cd "$cand" && pwd)"; break
+  fi
+done
+[[ -z "$LOCAL_PKG_DIR" ]] && { echo "ERROR: Could not locate local rcpchgrowth source"; printf '  %s\n' "${candidates[@]}"; exit 1; }
+
+echo "Service: $SERVICE"
+echo "Local rcpchgrowth: $LOCAL_PKG_DIR"
+[[ $USE_COPY -eq 1 ]] && echo "Mode: copy source into container" || echo "Mode: live editable mount"
+
+if [[ $USE_COPY -eq 1 ]]; then
+  docker compose run --rm --service-ports \
+    -v "${LOCAL_PKG_DIR}":/mnt/rcpchgrowth-src:ro \
+    "$SERVICE" bash -c "
+      set -e
+      rm -rf /tmp/rcpchgrowth-src && mkdir -p /tmp/rcpchgrowth-src
+      cp -a /mnt/rcpchgrowth-src/. /tmp/rcpchgrowth-src/
+      pip uninstall -y rcpchgrowth >/dev/null 2>&1 || true
+      pip install -e /tmp/rcpchgrowth-src
+      python - <<'PY'
+import rcpchgrowth
+print('Loaded (copy) version:', getattr(rcpchgrowth,'__version__','?'))
+print('Module path:', rcpchgrowth.__file__)
+PY
+      uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    "
+else
+  docker compose run --rm --service-ports \
+    -v "${LOCAL_PKG_DIR}":/ext/rcpchgrowth-src \
+    "$SERVICE" bash -c "
+      set -e
+      pip uninstall -y rcpchgrowth >/dev/null 2>&1 || true
+      pip install -e /ext/rcpchgrowth-src
+      python - <<'PY'
+import rcpchgrowth
+print('Loaded (editable) version:', getattr(rcpchgrowth,'__version__','?'))
+print('Module path:', rcpchgrowth.__file__)
+PY
+      uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    "
+fi
