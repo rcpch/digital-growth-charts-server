@@ -1,6 +1,7 @@
 services:
   growth-api:
     build: .
+    image: digital-growth-charts-server:built
     volumes:
       - .:/app
     ports:

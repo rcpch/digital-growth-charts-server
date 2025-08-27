@@ -1,0 +1,11 @@
+#!/bin/bash -e
+
+# Tests (against local Postgres)
+docker compose up -d
+s/test
+docker compose down
+
+# Push to Azure
+azure_tag="${AZURE_REGISTRY_NAME}.azurecr.io/digital-growth-charts-server:${GITHUB_SHA}"
+docker tag digital-growth-charts-server:built ${azure_tag}
+docker push ${azure_tag}
