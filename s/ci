@@ -14,3 +14,9 @@ docker compose build --build-arg BUILD_ENVIRONMENT=live
 azure_tag="${AZURE_REGISTRY_NAME}.azurecr.io/digital-growth-charts-server:${GITHUB_SHA}"
 docker tag digital-growth-charts-server:built ${azure_tag}
 docker push ${azure_tag}
+
+# Deploy to staging
+az containerapp revision copy \
+    --name ${AZURE_STAGING_APP_NAME} \
+    --resource-group ${AZURE_RESOURCE_GROUP} \
+    --git-hash ${GITHUB_SHA}
