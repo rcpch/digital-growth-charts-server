@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+az acr login --name ${AZURE_REGISTRY_NAME}
+
 # Tests (against local Postgres)
 docker compose up -d
 s/test
