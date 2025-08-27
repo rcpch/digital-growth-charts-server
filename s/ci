@@ -19,4 +19,5 @@ docker push ${azure_tag}
 az containerapp revision copy \
     --name ${AZURE_STAGING_APP_NAME} \
     --resource-group ${AZURE_RESOURCE_GROUP} \
-    --git-hash ${GITHUB_SHA}
+    --image ${azure_tag} \
+    --query 'properties.provisioningState'
