@@ -1,0 +1,25 @@
+#!/bin/bash -e
+
+request_body_file=$(mktemp)
+
+cat << EOF > ${request_body_file}
+{
+    "birth_date": "2020-04-12",
+    "observation_date": "2028-06-12",
+    "observation_value": 115,
+    "sex": "female",
+    "gestation_weeks": 40,
+    "gestation_days": 0,
+    "measurement_method": "height"
+}
+EOF
+
+# https://github.com/rakyll/hey
+# Apache Bench was unexpectedly very slow when testing Azure resources so I switched
+hey \
+    -m POST \
+    -D "${request_body_file}" \
+    -T 'application/json' \
+    -c 1 \
+    -n 10000 \
+    http://localhost:8000/uk-who/calculation
