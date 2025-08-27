@@ -1,10 +1,13 @@
 FROM python:3.12-bookworm
 
+# development or live
+ARG BUILD_ENVIRONMENT="development"
+
 COPY requirements/common-requirements.txt .
 
-COPY requirements/development-requirements.txt .
+COPY requirements/${BUILD_ENVIRONMENT}-requirements.txt .
 
-RUN pip install -r development-requirements.txt
+RUN pip install -r ${BUILD_ENVIRONMENT}-requirements.txt
 
 EXPOSE 8000
 

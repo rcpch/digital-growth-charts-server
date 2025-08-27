@@ -2,9 +2,9 @@
 
 
 # third party dependencies
-fastapi[all]
-uvicorn[standard]
-pydantic == 2.*
+fastapi[all]==0.116.1
+uvicorn[standard]==0.35.0
+pydantic == 2.11.7
 
 # rcpch dependencies
 # python package which does the centile and SDS calculations

@@ -2,10 +2,13 @@
 
 az acr login --name ${AZURE_REGISTRY_NAME}
 
-# Tests (against local Postgres)
+# Tests (development build)
 docker compose up -d
 s/test
 docker compose down
+
+# Rebuild using live dependencies
+docker compose build --build-arg BUILD_ENVIRONMENT=live
 
 # Push to Azure
 azure_tag="${AZURE_REGISTRY_NAME}.azurecr.io/digital-growth-charts-server:${GITHUB_SHA}"
