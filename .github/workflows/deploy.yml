@@ -30,6 +30,6 @@ jobs:
         env:
           AZURE_REGISTRY_NAME: ${{ secrets.AZURE_REGISTRY_NAME }}
           AZURE_STAGING_APP_NAME: ${{ secrets.AZURE_STAGING_APP_NAME }}
-          # AZURE_LIVE_APP_NAME: ${{ secrets.AZURE_LIVE_APP_NAME }}
+          AZURE_LIVE_APP_NAME: ${{ secrets.AZURE_LIVE_APP_NAME }}
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
         run: s/ci
