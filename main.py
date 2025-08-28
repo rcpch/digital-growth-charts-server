@@ -7,6 +7,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
+from fastapi.responses import JSONResponse
 
 # local / rcpch imports
 from rcpchgrowth import chart_functions, constants
@@ -14,6 +15,9 @@ from routers import trisomy_21, trisomy_21_aap, turners, uk_who, cdc, who, utili
 
 
 version='4.3.5'  # this is set by bump version
+
+# To ensure the API can only be accessed in production via our API gateway
+authorization_key = os.getenv('AUTHORIZATION_KEY')
 
 # Declare the FastAPI app
 app = FastAPI(
@@ -34,6 +38,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.middleware("http")
+async def authorization_key_middleware(request, call_next):
+    # Homepage always open to act as the healthcheck
+    if not authorization_key or request.url.path == '/':
+        return await call_next(request)
+
+    if request.headers.get("Authorization") == f"Bearer {authorization_key}":
+        return await call_next(request)
+    
+    return JSONResponse(status_code=403, content={"detail": "Forbidden"})
 
 # Include routers for each type of endpoint.
 app.include_router(uk_who)
