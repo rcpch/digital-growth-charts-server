@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - live
-      # TODO MRB: remove before merge
-      - mbarton/container-build
 
 permissions:
   id-token: write
