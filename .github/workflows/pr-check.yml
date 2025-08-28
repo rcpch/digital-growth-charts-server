@@ -1,0 +1,17 @@
+name: Run Pytest on pushes to main branches or PRs to any branch
+
+on:
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  run-pytest:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run PR check script
+        run: s/pr-check
