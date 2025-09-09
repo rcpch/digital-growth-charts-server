@@ -15,13 +15,6 @@ azure_tag="${AZURE_REGISTRY_NAME}.azurecr.io/digital-growth-charts-server:${GITH
 docker tag digital-growth-charts-server:built ${azure_tag}
 docker push ${azure_tag}
 
-# Deploy to staging
-az containerapp revision copy \
-    --name ${AZURE_STAGING_APP_NAME} \
-    --resource-group ${AZURE_RESOURCE_GROUP} \
-    --image ${azure_tag} \
-    --query 'properties.provisioningState'
-
 # Deploy to live
 az containerapp revision copy \
     --name ${AZURE_LIVE_APP_NAME} \
