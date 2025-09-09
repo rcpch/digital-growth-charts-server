@@ -1,0 +1,5 @@
+{
+  "checkpoints": {
+    "LIVE": { "url": "https://dgc-live.icywave-fab27df8.uksouth.azurecontainerapps.io", "overdue": "10M" }
+  }
+}
