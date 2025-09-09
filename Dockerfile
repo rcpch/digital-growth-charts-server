@@ -3,6 +3,9 @@ FROM python:3.12-bookworm
 # development or live
 ARG BUILD_ENVIRONMENT="development"
 
+ARG GITHUB_SHA
+ENV GITHUB_SHA=${GITHUB_SHA}
+
 COPY requirements/common-requirements.txt .
 
 COPY requirements/${BUILD_ENVIRONMENT}-requirements.txt .
