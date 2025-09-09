@@ -49,6 +49,17 @@ async def authorization_key_middleware(request, call_next):
     
     return JSONResponse(status_code=403, content={"detail": "Forbidden"})
 
+github_sha = os.getenv('GITHUB_SHA')
+
+@app.middleware("http")
+async def include_github_sha_for_prout(request, call_next):
+    response = await call_next(request)
+    
+    if github_sha:
+        response.headers["X-Git-Revision"] = github_sha
+
+    return response
+
 # Include routers for each type of endpoint.
 app.include_router(uk_who)
 app.include_router(turners)
