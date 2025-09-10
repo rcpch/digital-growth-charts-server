@@ -55,7 +55,7 @@ github_sha = os.getenv('GITHUB_SHA')
 async def include_github_sha_for_prout(request, call_next):
     response = await call_next(request)
     
-    if github_sha:
+    if request.url.path == '/' and github_sha:
         response.headers["X-Git-Revision"] = github_sha
 
     return response
