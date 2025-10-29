@@ -198,6 +198,65 @@ def test_who_fictional_child_data_with_invalid_request():
 
     # COMMENTED OUT FOR BRANCH 'dockerise' PENDING DECISION ON #166 (API Test Suite) (pacharanero, 2024-02-07 )
     # restructure the response to make it easier to assert tests specifically
+
+
+def test_who_bulk_calculation_all_valid():
+    body = {
+        "measurement_method": "height",
+        "birth_date": "2020-04-12",
+        "sex": "female",
+        "gestation_weeks": 40,
+        "gestation_days": 0,
+        "observations": [
+            {"observation_date": "2028-06-12", "observation_value": 115},
+            {"observation_date": "2028-07-12", "observation_value": 118},
+        ],
+    }
+    response = client.post("/who/bulk-calculation", json=body)
+    assert response.status_code == 200
+    data = response.json()
+    assert "results" in data
+    assert len(data["results"]) == 2
+    assert all("measurement_calculated_values" in r for r in data["results"])
+
+
+def test_who_bulk_calculation_partially_valid():
+    body = {
+        "measurement_method": "height",
+        "birth_date": "2020-04-12",
+        "sex": "female",
+        "gestation_weeks": 40,
+        "gestation_days": 0,
+        "observations": [
+            {"observation_date": "2028-06-12", "observation_value": 115},  # valid
+            {"observation_date": "2028-07-12", "observation_value": 500},  # invalid height too large
+        ],
+    }
+    response = client.post("/who/bulk-calculation", json=body)
+    assert response.status_code == 200
+    results = response.json()["results"]
+    assert len(results) == 2
+    assert any("measurement_calculated_values" in r for r in results)
+    assert any("msg" in r for r in results)
+
+
+def test_who_bulk_calculation_all_invalid():
+    body = {
+        "measurement_method": "height",
+        "birth_date": "2020-04-12",
+        "sex": "female",
+        "gestation_weeks": 40,
+        "gestation_days": 0,
+        "observations": [
+            {"observation_date": "2028-06-12", "observation_value": 500},
+            {"observation_date": "2028-07-12", "observation_value": 501},
+        ],
+    }
+    response = client.post("/who/bulk-calculation", json=body)
+    assert response.status_code == 200
+    results = response.json()["results"]
+    assert len(results) == 2
+    assert all("msg" in r for r in results)
     validation_errors = {error["loc"][1]: error for error in response.json()["detail"]}
     assert (
         validation_errors["measurement_method"]["msg"]
