@@ -218,13 +218,6 @@ def test_trisomy_21_bulk_calculation_all_invalid():
     assert len(results) == 2
     assert all("msg" in r for r in results)
 
-    with open(
-        r"tests/test_data/test_trisomy_21_fictional_child_data_valid.json", "r"
-    ) as file:
-        fictional_child_data_file = file.read()
-    # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
-    assert response.json() == json.loads(fictional_child_data_file)
-
 
 def test_trisomy_21_fictional_child_data_with_invalid_request():
 
