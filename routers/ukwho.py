@@ -144,9 +144,11 @@ async def uk_who_bulk_calculation(
         except ValueError as err:
             # Format the error to look like Pydantic validation errors
             results.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input="observation_value"))
+            continue
         except LookupError as err:
             results.append(format_error(loc=["body"], msg=str(err), error_type="lookup_error", input="observation_value"))
-        
+            continue
+
         try:
             calculation = Measurement(
                 reference=UK_WHO,
