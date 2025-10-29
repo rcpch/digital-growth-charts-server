@@ -9,7 +9,7 @@ from typing import List
 from pprint import pprint
 
 # Third party imports
-from schemas.response_schema_classes import Centile_Data, MeasurementObject
+from schemas.response_schema_classes import Centile_Data, MeasurementObject, BulkMeasurementObject
 from fastapi import APIRouter, Body, HTTPException, Depends
 
 # RCPCH imports
@@ -20,7 +20,7 @@ from rcpchgrowth import (
     create_chart,
 )
 from rcpchgrowth.constants.reference_constants import TRISOMY_21_AAP
-from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+from schemas import MeasurementRequest, BulkMeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
 from .validate_observation_value import validate_observation_value
 from .utils import format_error
 
@@ -113,6 +113,70 @@ def trisomy_21_aap_calculation(
     calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] is not None else None
     calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] is not None else None
     return calculation
+
+
+@trisomy_21_aap.post("/bulk-calculation", tags=["trisomy-21-aap"], response_model=BulkMeasurementObject)
+async def trisomy_21_aap_bulk_calculation(
+    measurementRequest: BulkMeasurementRequest = Body(
+        ...,
+        examples=[
+            {
+                "measurement_method": "height",
+                "birth_date": "2020-04-12",
+                "sex": "female",
+                "gestation_weeks": 40,
+                "gestation_days": 0,
+                "observations": [
+                    {"observation_date": "2028-06-12", "observation_value": 115},
+                    {"observation_date": "2028-12-12", "observation_value": 130},
+                ],
+            }
+        ],
+    ),
+):
+    results = []
+
+    for observation in measurementRequest.observations:
+        try:
+            validate_observation_value(TRISOMY_21_AAP, measurementRequest, observation)
+        except ValueError as err:
+            results.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input="observation_value"))
+            continue
+        except LookupError as err:
+            results.append(format_error(loc=["body"], msg=str(err), error_type="lookup_error", input="observation_value"))
+            continue
+
+        try:
+            calculation = Measurement(
+                reference=constants.TRISOMY_21_AAP,
+                birth_date=measurementRequest.birth_date,
+                gestation_days=measurementRequest.gestation_days,
+                gestation_weeks=measurementRequest.gestation_weeks,
+                measurement_method=measurementRequest.measurement_method,
+                observation_date=observation.observation_date,
+                observation_value=observation.observation_value,
+                sex=measurementRequest.sex,
+                bone_age=None,
+                bone_age_centile=None,
+                bone_age_sds=None,
+                bone_age_text=None,
+                bone_age_type=None,
+                events_text=observation.events_text,
+            ).measurement
+        except Exception as err:
+            results.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input="calculation_error"))
+            continue
+
+        calculation["measurement_calculated_values"]["corrected_centile"] = round(calculation["measurement_calculated_values"]["corrected_centile"],4) if calculation["measurement_calculated_values"]["corrected_centile"] is not None else None
+        calculation["measurement_calculated_values"]["chronological_centile"] = round(calculation["measurement_calculated_values"]["chronological_centile"],4) if calculation["measurement_calculated_values"]["chronological_centile"] is not None else None
+        calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] is not None else None
+        calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] is not None else None
+        calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] is not None else None
+        calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] is not None else None
+
+        results.append(calculation)
+
+    return {"results": results}
 
 
 @trisomy_21_aap.post("/chart-coordinates", tags=["trisomy-21-aap"], response_model=Centile_Data)
