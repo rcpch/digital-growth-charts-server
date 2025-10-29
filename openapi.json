@@ -1144,17 +1144,24 @@
             },
             "BulkMeasurementObject": {
                 "properties": {
-                    "measurements": {
+                    "results": {
                         "items": {
-                            "$ref": "#/components/schemas/MeasurementObject"
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/MeasurementObject"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/ErrorDetails"
+                                }
+                            ]
                         },
                         "type": "array",
-                        "title": "Measurements"
+                        "title": "Results"
                     }
                 },
                 "type": "object",
                 "required": [
-                    "measurements"
+                    "results"
                 ],
                 "title": "BulkMeasurementObject"
             },
@@ -1889,6 +1896,52 @@
                     "y"
                 ],
                 "title": "Data"
+            },
+            "ErrorDetails": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "title": "Type"
+                    },
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Loc"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Msg"
+                    },
+                    "input": {
+                        "title": "Input"
+                    },
+                    "ctx": {
+                        "additionalProperties": true,
+                        "type": "object",
+                        "title": "Ctx"
+                    },
+                    "url": {
+                        "type": "string",
+                        "title": "Url"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "loc",
+                    "msg",
+                    "input"
+                ],
+                "title": "ErrorDetails"
             },
             "EventsData": {
                 "properties": {

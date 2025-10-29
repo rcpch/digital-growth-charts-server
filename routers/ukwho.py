@@ -136,7 +136,49 @@ async def uk_who_bulk_calculation(
         ],
     )
 ):
-    pass
+    results = []
+
+    for observation in measurementRequest.observations:
+        try:
+            validate_observation_value(UK_WHO, measurementRequest, observation)
+        except ValueError as err:
+            # Format the error to look like Pydantic validation errors
+            results.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input="observation_value"))
+        except LookupError as err:
+            results.append(format_error(loc=["body"], msg=str(err), error_type="lookup_error", input="observation_value"))
+        
+        try:
+            calculation = Measurement(
+                reference=UK_WHO,
+                birth_date=measurementRequest.birth_date,
+                gestation_days=measurementRequest.gestation_days,
+                gestation_weeks=measurementRequest.gestation_weeks,
+                measurement_method=measurementRequest.measurement_method,
+                observation_date=observation.observation_date,
+                observation_value=observation.observation_value,
+                sex=measurementRequest.sex,
+                bone_age=observation.bone_age,
+                bone_age_centile=observation.bone_age_centile,
+                bone_age_sds=observation.bone_age_sds,
+                bone_age_text=observation.bone_age_text,
+                bone_age_type=observation.bone_age_type,
+                events_text=observation.events_text,
+            ).measurement
+        except Exception as err:
+            results.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input="calculation_error"))
+            continue
+        
+        calculation["measurement_calculated_values"]["corrected_centile"] = round(calculation["measurement_calculated_values"]["corrected_centile"],4) if calculation["measurement_calculated_values"]["corrected_centile"] is not None else None
+        calculation["measurement_calculated_values"]["chronological_centile"] = round(calculation["measurement_calculated_values"]["chronological_centile"],4) if calculation["measurement_calculated_values"]["chronological_centile"] is not None else None
+        calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] is not None else None
+        calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] is not None else None
+        calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] is not None else None
+    
+        results.append(calculation)
+
+    return {
+        "results": results
+    }
 
 
 @uk_who.post("/chart-coordinates", tags=["uk-who"], response_model=Centile_Data)

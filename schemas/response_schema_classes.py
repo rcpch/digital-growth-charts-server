@@ -8,6 +8,7 @@ from datetime import date, datetime
 
 # third party imports
 from pydantic import BaseModel, RootModel
+from pydantic_core import ErrorDetails 
 
 
 class CorrectedGestationalAge(BaseModel):
@@ -161,7 +162,9 @@ class MeasurementObject(BaseModel):
 class BulkMeasurementObject(BaseModel):
     # Deliberately repeat BirthData so the results can be passed to the
     # existing chart component without modification.
-    measurements: List[MeasurementObject]
+    #
+    # Return errors inline to allow partial plotting of valid measurements.
+    results: List[MeasurementObject | ErrorDetails]
 
 
 class Data(BaseModel):
