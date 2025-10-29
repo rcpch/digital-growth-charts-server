@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import List
 
 # Third party imports
-from schemas.response_schema_classes import Centile_Data, MeasurementObject
+from schemas.response_schema_classes import Centile_Data, MeasurementObject, BulkMeasurementObject
 from fastapi import APIRouter, Body, HTTPException
 
 # RCPCH imports
@@ -19,7 +19,7 @@ from rcpchgrowth import (
     create_chart,
 )
 from rcpchgrowth.constants.reference_constants import UK_WHO
-from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+from schemas import MeasurementRequest, BulkMeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
 from .validate_observation_value import validate_observation_value
 from .utils import format_error
 
@@ -111,6 +111,32 @@ async def uk_who_calculation(
     calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] is not None else None
     calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] is not None else None
     return calculation
+
+
+@uk_who.post("/bulk-calculation", tags=["uk-who"], response_model=BulkMeasurementObject)
+async def uk_who_bulk_calculation(
+    measurementRequest: BulkMeasurementRequest = Body(
+        ...,
+        examples=[
+            {
+                "measurement_method": "height",
+                "birth_date": "2020-04-12",
+                "sex": "female",
+                "observations": [
+                    {
+                        "observation_date": "2028-06-12",
+                        "observation_value": 115
+                    },
+                    {
+                        "observation_date": "2028-12-12",
+                        "observation_value": 130
+                    }
+                ]
+            }
+        ],
+    )
+):
+    pass
 
 
 @uk_who.post("/chart-coordinates", tags=["uk-who"], response_model=Centile_Data)

@@ -158,6 +158,12 @@ class MeasurementObject(BaseModel):
     events_data: EventsData
 
 
+class BulkMeasurementObject(BaseModel):
+    # Deliberately repeat BirthData so the results can be passed to the
+    # existing chart component without modification.
+    measurements: List[MeasurementObject]
+
+
 class Data(BaseModel):
     l: float
     x: float
