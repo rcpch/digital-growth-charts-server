@@ -186,8 +186,8 @@ def test_turner_fictional_child_data_with_invalid_request():
     response = client.post("/turner/fictional-child-data", json=body)
     assert response.status_code == 422
     validation_errors = {error["loc"][1]: error for error in response.json()["detail"]}
-    assert validation_errors["measurement_method"]["msg"] == "Input should be 'height', 'weight', 'ofc' or 'bmi".rstrip('"')
-    assert validation_errors["sex"]["msg"] == "Input should be 'male' or 'female".rstrip('"')
+    assert validation_errors["measurement_method"]["msg"] == "Input should be 'height', 'weight', 'ofc' or 'bmi'".rstrip('"')
+    assert validation_errors["sex"]["msg"] == "Input should be 'male' or 'female'".rstrip('"')
     assert validation_errors["start_chronological_age"]["msg"].startswith("Input should be a valid number")
 
 
