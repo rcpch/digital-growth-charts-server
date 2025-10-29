@@ -106,12 +106,6 @@ def trisomy_21_aap_calculation(
         formatted_error = format_error(loc=["body"], msg=str(err), error_type="lookup_error", input="observation_value")
         raise HTTPException(status_code=422, detail=[formatted_error])
     
-    calculation["measurement_calculated_values"]["corrected_centile"] = round(calculation["measurement_calculated_values"]["corrected_centile"],4) if calculation["measurement_calculated_values"]["corrected_centile"] is not None else None
-    calculation["measurement_calculated_values"]["chronological_centile"] = round(calculation["measurement_calculated_values"]["chronological_centile"],4) if calculation["measurement_calculated_values"]["chronological_centile"] is not None else None
-    calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] is not None else None
-    calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] is not None else None
-    calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] is not None else None
-    calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] is not None else None
     return calculation
 
 
@@ -166,13 +160,6 @@ async def trisomy_21_aap_bulk_calculation(
         except Exception as err:
             results.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input="calculation_error"))
             continue
-
-        calculation["measurement_calculated_values"]["corrected_centile"] = round(calculation["measurement_calculated_values"]["corrected_centile"],4) if calculation["measurement_calculated_values"]["corrected_centile"] is not None else None
-        calculation["measurement_calculated_values"]["chronological_centile"] = round(calculation["measurement_calculated_values"]["chronological_centile"],4) if calculation["measurement_calculated_values"]["chronological_centile"] is not None else None
-        calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] is not None else None
-        calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] is not None else None
-        calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] is not None else None
-        calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] is not None else None
 
         results.append(calculation)
 
