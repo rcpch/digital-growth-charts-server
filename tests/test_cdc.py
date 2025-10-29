@@ -43,7 +43,11 @@ def test_cdc_calculation_with_valid_request():
         calculation_file = file.read()
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
 
-    assert response.json() == json.loads(calculation_file)
+    calculation_json = json.loads(calculation_file)
+
+    print(f"!! {response.json()["measurement_calculated_values"]["corrected_centile"]} == {calculation_json["measurement_calculated_values"]["corrected_centile"]} !!")
+
+    assert response.json() == calculation_json
 
 
 def test_cdc_calculation_with_invalid_request():
