@@ -238,3 +238,12 @@ class MidParentalHeightResponse(BaseModel):
     mid_parental_height_upper_centile_data: List[ReferenceCreate]
     mid_parental_height_upper_value: Optional[float] = None
     mid_parental_height_lower_value: Optional[float] = None
+
+
+class ExampleFictionalChild(BaseModel):
+    measurement_method: Literal["height", "weight", "ofc", "bmi"]
+    sex: Literal["male", "female"]
+    id: str
+
+class ExampleFictionalChildrenResponse(BaseModel):
+    examples: List[ExampleFictionalChild]

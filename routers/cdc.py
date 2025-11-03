@@ -19,7 +19,7 @@ from rcpchgrowth import (
     create_chart,
 )
 from rcpchgrowth.constants.reference_constants import CDC
-from schemas import MeasurementRequest, BulkMeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+from schemas import MeasurementRequest, BulkMeasurementRequest, ChartCoordinateRequest, FictionalChildRequest, ExampleFictionalChildrenResponse
 from .validate_observation_value import validate_observation_value, MAX_BULK_OBSERVATIONS, validate_bulk_observations
 from .utils import format_error
 
@@ -189,6 +189,19 @@ async def cdc_bulk_calculation(
         results.append(calculation)
 
     return {"results": results}
+
+
+@cdc.get("/example-fictional-children", tags=["cdc"], response_model=ExampleFictionalChildrenResponse)
+def cdc_example_fictional_children():
+    return {
+        "examples": [
+            {
+                "measurement_method": "bmi",
+                "sex": "female",
+                "id": "obesity"
+            }
+        ]
+    }
 
 
 @cdc.post("/chart-coordinates", tags=["cdc"], response_model=Centile_Data)
