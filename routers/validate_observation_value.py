@@ -1,6 +1,38 @@
+from fastapi import HTTPException
 from rcpchgrowth import corrected_decimal_age, MINIMUM_BMI_ERROR_SDS, MAXIMUM_BMI_ERROR_SDS, MINIMUM_HEIGHT_WEIGHT_OFC_ERROR_SDS, MAXIMUM_HEIGHT_WEIGHT_OFC_ERROR_SDS, sds_for_measurement, chronological_calendar_age
 
+from .utils import format_error
+
 MAX_BULK_OBSERVATIONS = 200
+
+def validate_bulk_observations(observations):
+    if len(observations) == 0:
+        raise HTTPException(
+            status_code=422,
+            detail=[
+                format_error(
+                    loc=["body"],
+                    msg="At least one observation is required for bulk calculation.",
+                    error_type="value_error",
+                    input="observations",
+                )
+            ],
+        )
+
+    if len(observations) > MAX_BULK_OBSERVATIONS:
+        raise HTTPException(
+            status_code=422,
+            detail=[
+                format_error(
+                    loc=["body"],
+                    msg=f"Number of observations exceeds maximum allowed ({MAX_BULK_OBSERVATIONS}).",
+                    error_type="value_error",
+                    input="observations",
+                )
+            ],
+        )
+
+    return observations
 
 def validate_observation_value(reference, values, observation_values=None):
     """

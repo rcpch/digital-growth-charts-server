@@ -20,7 +20,7 @@ from rcpchgrowth import (
 )
 from rcpchgrowth.constants.reference_constants import CDC
 from schemas import MeasurementRequest, BulkMeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
-from .validate_observation_value import validate_observation_value, MAX_BULK_OBSERVATIONS
+from .validate_observation_value import validate_observation_value, MAX_BULK_OBSERVATIONS, validate_bulk_observations
 from .utils import format_error
 
 # set up the API router
@@ -131,31 +131,7 @@ async def cdc_bulk_calculation(
 ):
     results = []
 
-    if len(measurementRequest.observations) == 0:
-        raise HTTPException(
-            status_code=422,
-            detail=[
-                format_error(
-                    loc=["body"],
-                    msg="At least one observation is required for bulk calculation.",
-                    error_type="value_error",
-                    input="observations",
-                )
-            ],
-        )
-    
-    if len(measurementRequest.observations) > MAX_BULK_OBSERVATIONS:
-        raise HTTPException(
-            status_code=422,
-            detail=[
-                format_error(
-                    loc=["body"],
-                    msg=f"Number of observations exceeds maximum allowed ({MAX_BULK_OBSERVATIONS}).",
-                    error_type="value_error",
-                    input="observations",
-                )
-            ],
-        )
+    validate_bulk_observations(measurementRequest.observations)
 
     for observation in measurementRequest.observations:
         # Validate observation value

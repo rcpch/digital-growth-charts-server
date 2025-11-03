@@ -21,7 +21,7 @@ from rcpchgrowth import (
 )
 from rcpchgrowth.constants.reference_constants import TRISOMY_21_AAP
 from schemas import MeasurementRequest, BulkMeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
-from .validate_observation_value import validate_observation_value
+from .validate_observation_value import validate_observation_value, MAX_BULK_OBSERVATIONS, validate_bulk_observations
 from .utils import format_error
 
 # set up the API router
@@ -129,6 +129,8 @@ async def trisomy_21_aap_bulk_calculation(
     ),
 ):
     results = []
+
+    validate_bulk_observations(measurementRequest.observations)
 
     for observation in measurementRequest.observations:
         try:
