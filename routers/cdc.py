@@ -22,6 +22,7 @@ from rcpchgrowth.constants.reference_constants import CDC
 from schemas import MeasurementRequest, BulkMeasurementRequest, ChartCoordinateRequest, FictionalChildRequest, ExampleFictionalChildrenResponse
 from .validate_observation_value import validate_observation_value, MAX_BULK_OBSERVATIONS, validate_bulk_observations
 from .utils import format_error
+from .example_data import get_examples_for_reference
 
 # set up the API router
 cdc = APIRouter(
@@ -194,13 +195,7 @@ async def cdc_bulk_calculation(
 @cdc.get("/example-fictional-children", tags=["cdc"], response_model=ExampleFictionalChildrenResponse)
 def cdc_example_fictional_children():
     return {
-        "examples": [
-            {
-                "measurement_method": "bmi",
-                "sex": "female",
-                "id": "obesity"
-            }
-        ]
+        "examples": get_examples_for_reference("cdc")
     }
 
 

@@ -245,5 +245,8 @@ class ExampleFictionalChild(BaseModel):
     sex: Literal["male", "female"]
     id: str
 
+    class Config:
+        frozen = True
+
 class ExampleFictionalChildrenResponse(BaseModel):
     examples: List[ExampleFictionalChild]
