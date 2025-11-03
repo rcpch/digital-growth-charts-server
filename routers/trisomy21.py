@@ -5,7 +5,7 @@ Trisomy 21 router
 # Standard imports
 import json
 from pathlib import Path
-from schemas.response_schema_classes import Centile_Data, MeasurementObject
+from schemas.response_schema_classes import Centile_Data, MeasurementObject, BulkMeasurementObject
 
 # Third party imports
 from fastapi import APIRouter, Body, HTTPException, Depends
@@ -19,8 +19,8 @@ from rcpchgrowth import (
 from rcpchgrowth.constants.reference_constants import TRISOMY_21
 
 # local imports
-from schemas import MeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
-from .validate_observation_value import validate_observation_value
+from schemas import MeasurementRequest, BulkMeasurementRequest, ChartCoordinateRequest, FictionalChildRequest
+from .validate_observation_value import validate_observation_value, MAX_BULK_OBSERVATIONS, validate_bulk_observations
 from .utils import format_error
 
 # set up the API router
@@ -95,13 +95,66 @@ def trisomy_21_calculation(
         formatted_error = format_error(loc=["body"], msg=str(err), error_type="value_error", input="calculation_error")
         raise HTTPException(status_code=422, detail=[formatted_error])
 
-    calculation["measurement_calculated_values"]["corrected_centile"] = round(calculation["measurement_calculated_values"]["corrected_centile"],4) if calculation["measurement_calculated_values"]["corrected_centile"] is not None else None
-    calculation["measurement_calculated_values"]["chronological_centile"] = round(calculation["measurement_calculated_values"]["chronological_centile"],4) if calculation["measurement_calculated_values"]["chronological_centile"] is not None else None
-    calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["corrected_decimal_age_data"]["centile"] is not None else None
-    calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["centile_data"]["chronological_decimal_age_data"]["centile"] is not None else None
-    calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["corrected_decimal_age_data"]["centile"] is not None else None
-    calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] = round(calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"],4) if calculation["plottable_data"]["sds_data"]["chronological_decimal_age_data"]["centile"] is not None else None
     return calculation
+
+
+@trisomy_21.post("/bulk-calculation", tags=["trisomy-21"], response_model=BulkMeasurementObject)
+async def trisomy_21_bulk_calculation(
+    measurementRequest: BulkMeasurementRequest = Body(
+        ...,
+        examples=[
+            {
+                "measurement_method": "height",
+                "birth_date": "2020-04-12",
+                "sex": "male",
+                "gestation_weeks": 40,
+                "gestation_days": 4,
+                "observations": [
+                    {"observation_date": "2020-06-12", "observation_value": 60},
+                    {"observation_date": "2020-08-12", "observation_value": 65},
+                ],
+            }
+        ],
+    ),
+):
+    results = []
+
+    validate_bulk_observations(measurementRequest.observations)
+
+    for observation in measurementRequest.observations:
+        try:
+            validate_observation_value(TRISOMY_21, measurementRequest, observation)
+        except ValueError as err:
+            results.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input="observation_value"))
+            continue
+        except LookupError as err:
+            results.append(format_error(loc=["body"], msg=str(err), error_type="lookup_error", input="observation_value"))
+            continue
+
+        try:
+            calculation = Measurement(
+                reference=constants.TRISOMY_21,
+                birth_date=measurementRequest.birth_date,
+                gestation_days=measurementRequest.gestation_days,
+                gestation_weeks=measurementRequest.gestation_weeks,
+                measurement_method=measurementRequest.measurement_method,
+                observation_date=observation.observation_date,
+                observation_value=observation.observation_value,
+                sex=measurementRequest.sex,
+                bone_age=observation.bone_age,
+                bone_age_centile=observation.bone_age_centile,
+                bone_age_sds=observation.bone_age_sds,
+                bone_age_text=observation.bone_age_text,
+                bone_age_type=observation.bone_age_type,
+                events_text=observation.events_text,
+            ).measurement
+        except Exception as err:
+            results.append(format_error(loc=["body"], msg=str(err), error_type="value_error", input="calculation_error"))
+            continue
+
+        results.append(calculation)
+
+    return {"results": results}
 
 @trisomy_21.post("/chart-coordinates", tags=["trisomy-21"], response_model=Centile_Data)
 def trisomy_21_chart_coordinates(chartParams: ChartCoordinateRequest):

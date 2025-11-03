@@ -24,12 +24,7 @@ from rcpchgrowth.global_functions import sds_for_measurement
 from rcpchgrowth.date_calculations import corrected_decimal_age
 
 
-class MeasurementRequest(BaseModel):
-    """
-    This class definition creates a Python model which can be converted by FastAPI to openAPI3 schema.
-    We aim to specify all textual information, constraints, and validation here.
-    It all ends up in the openAPI documentation, automagically.
-    """
+class BirthMeasurementsMixin:
     gestation_days: Optional[int] = Field(
         0,
         ge=0,
@@ -46,19 +41,32 @@ class MeasurementRequest(BaseModel):
         ...,
         description="The type of measurement performed on the infant or child as a string which can be `height`, `weight`, `bmi` or `ofc`. The value of this measurement is supplied as the `observation_value` parameter. The measurements represent height **in centimetres**, weight *in kilograms**, body mass index **in kilograms/metre²** and occipitofrontal circumference (head circumference, OFC) **in centimetres**.",
     )
-    observation_date: date = Field(
-        ..., description="Date of the observation, in the format YYYY-MM-DD."
-    )
-    observation_value: float = Field(
-        ...,
-        description="The value of the measurement supplied. This is supplied as a floating point number. All measurements should be supplied as **centimetres**, with the exception of Body Mass Index which is supplied as kilograms per metre squared (kg/m²).",
-    )
     birth_date: date = Field(
         ..., description="Date of birth of the patient, in the format YYYY-MM-DD"
     )
     sex: Literal["male", "female"] = Field(
         ...,
         description="The sex of the patient, as a string value which can either be `male` or `female`. Abbreviations or alternatives are not accepted.",
+    )
+
+    @field_validator("birth_date", mode="before")
+    def parse_date(cls, value):
+        return datetime.strptime(value, "%Y-%m-%d").date()
+    
+    @field_validator("birth_date", mode="after")
+    def birth_date_not_after_clinic_date(cls, v, info: FieldValidationInfo):
+        if 'observation_date' in info.data and v > info.data['observation_date']:
+            raise ValueError("Birth date cannot be after observation date.")
+        return v
+
+
+class ObservationMeasurementsMixin:
+    observation_date: date = Field(
+        ..., description="Date of the observation, in the format YYYY-MM-DD."
+    )
+    observation_value: float = Field(
+        ...,
+        description="The value of the measurement supplied. This is supplied as a floating point number. All measurements should be supplied as **centimetres**, with the exception of Body Mass Index which is supplied as kilograms per metre squared (kg/m²).",
     )
     bone_age: Optional[float] = Field(
         None,
@@ -91,15 +99,25 @@ class MeasurementRequest(BaseModel):
         description="A list of strings. Contextual text which are associated with each measurement.",
     )
 
-    @field_validator("birth_date", mode="before")
-    def parse_date(cls, value):
-        return datetime.strptime(value, "%Y-%m-%d").date()
-    
-    @field_validator("birth_date", mode="after")
-    def birth_date_not_after_clinic_date(cls, v, info: FieldValidationInfo):
-        if 'observation_date' in info.data and v > info.data['observation_date']:
-            raise ValueError("Birth date cannot be after observation date.")
-        return v
+
+class MeasurementRequest(BaseModel, BirthMeasurementsMixin, ObservationMeasurementsMixin):
+    """
+    This class definition creates a Python model which can be converted by FastAPI to openAPI3 schema.
+    We aim to specify all textual information, constraints, and validation here.
+    It all ends up in the openAPI documentation, automagically.
+    """
+    pass
+
+class ObservationMeasurement(BaseModel, ObservationMeasurementsMixin):
+    pass
+
+
+class BulkMeasurementRequest(BaseModel, BirthMeasurementsMixin):
+    observations: List[ObservationMeasurement] = Field(
+        ...,
+        description="A list of observation objects",
+    )
+
 
 cole_centiles = COLE_TWO_THIRDS_SDS_NINE_CENTILES
 three_percent_centiles = THREE_PERCENT_CENTILES

@@ -3,11 +3,16 @@ In this file we define or import the response schemas
 """
 
 # standard imports
-from typing import Dict, List, Optional, Literal
+from typing import Dict, List, Optional, Literal, Annotated
 from datetime import date, datetime
 
 # third party imports
-from pydantic import BaseModel, RootModel
+from pydantic import BaseModel, RootModel, AfterValidator
+from pydantic_core import ErrorDetails 
+
+
+def rounded_centile(centile: float | None) -> float | None:
+    return round(centile, 4) if centile is not None else None
 
 
 class CorrectedGestationalAge(BaseModel):
@@ -26,7 +31,7 @@ class ChronologicalDecimalAgeData(BaseModel):
     x: Optional[float] = None
     y: Optional[float] = None
     b: Optional[float] = None
-    centile: Optional[float] = None
+    centile: Annotated[Optional[float], AfterValidator(rounded_centile)] = None
     sds: Optional[float] = None
     bone_age_label: Optional[str] = None
     events_text: Optional[list] = None
@@ -55,7 +60,7 @@ class CorrectedDecimalAgeData(BaseModel):
     x: Optional[float] = None
     y: Optional[float] = None
     b: Optional[float] = None
-    centile: Optional[float] = None
+    centile: Annotated[Optional[float], AfterValidator(rounded_centile)] = None
     sds: Optional[float] = None
     bone_age_label: Optional[str] = None
     events_text: Optional[list] = None
@@ -137,10 +142,10 @@ class ChildObservationValue(BaseModel):
 
 class MeasurementCalculatedValues(BaseModel):
     corrected_sds: Optional[float] = None
-    corrected_centile: Optional[float] = None
+    corrected_centile: Annotated[Optional[float], AfterValidator(rounded_centile)] = None
     corrected_centile_band: Optional[str] = None
     chronological_sds: Optional[float] = None
-    chronological_centile: Optional[float] = None
+    chronological_centile: Annotated[Optional[float], AfterValidator(rounded_centile)] = None
     chronological_centile_band: Optional[str] = None
     corrected_measurement_error: Optional[str] = None
     chronological_measurement_error: Optional[str] = None
@@ -156,6 +161,14 @@ class MeasurementObject(BaseModel):
     plottable_data: PlottableData
     bone_age: BoneAge
     events_data: EventsData
+
+
+class BulkMeasurementObject(BaseModel):
+    # Deliberately repeat BirthData so the results can be passed to the
+    # existing chart component without modification.
+    #
+    # Return errors inline to allow partial plotting of valid measurements.
+    results: List[MeasurementObject | ErrorDetails]
 
 
 class Data(BaseModel):
