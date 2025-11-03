@@ -1,5 +1,7 @@
 from rcpchgrowth import corrected_decimal_age, MINIMUM_BMI_ERROR_SDS, MAXIMUM_BMI_ERROR_SDS, MINIMUM_HEIGHT_WEIGHT_OFC_ERROR_SDS, MAXIMUM_HEIGHT_WEIGHT_OFC_ERROR_SDS, sds_for_measurement, chronological_calendar_age
 
+MAX_BULK_OBSERVATIONS = 200
+
 def validate_observation_value(reference, values, observation_values=None):
     """
     Validate the observation value for the given reference
