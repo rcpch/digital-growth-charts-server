@@ -1,0 +1,23 @@
+# Dependabot configuration.
+#
+# - Keeps GitHub Actions up to date.
+# - Actions are pinned to commit SHAs in workflows; Dependabot still
+#   recognises and updates SHA-pinned uses, preserving the trailing
+#   "# vX.Y.Z" version comment when it opens an update PR.
+# - The cooldown.default-days value gives 7 days between an upstream
+#   release and Dependabot raising a PR for it. This reduces exposure to
+#   compromised releases that get yanked or revoked shortly after publication
+#   (a common supply-chain attack pattern), while still keeping us current.
+#
+# Docs: https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: "ci"
+      include: "scope"
