@@ -5,6 +5,7 @@ Tests for the Turner endpoints
 # standard imports
 import json
 import hashlib
+from unittest import TestCase
 
 # third party imports
 from fastapi.testclient import TestClient
@@ -35,8 +36,12 @@ def test_turner_calculation_with_valid_request():
     # load the known-correct response from file
     with open(r"tests/test_data/test_turner_calculation_valid.json", "r") as file:
         calculation_file = file.read()
+    
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
-    assert response.json() == json.loads(calculation_file)
+    expected = json.loads(calculation_file)
+    actual = response.json()
+
+    TestCase().assertDictEqual(expected, actual)
 
 
 def test_turner_calculation_with_invalid_request():
@@ -161,8 +166,12 @@ def test_turner_fictional_child_data_with_valid_request():
         r"tests/test_data/test_turner_fictional_child_data_valid.json", "r"
     ) as file:
         fictional_child_data_file = file.read()
+    
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
-    assert response.json() == json.loads(fictional_child_data_file)
+    expected = json.loads(fictional_child_data_file)
+    actual = response.json()
+
+    TestCase().assertListEqual(expected, actual)
 
 
 def test_turner_fictional_child_data_with_invalid_request():
