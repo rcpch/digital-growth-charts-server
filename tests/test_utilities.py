@@ -38,8 +38,6 @@ def test_midparental_height_ukwho_with_valid_request():
     assert round(float(file_data["mid_parental_height_upper_value"]),1)==float(response.json()["mid_parental_height_upper_value"]), f"mid_parental_height_upper_value for uk-who should be {round(float(file_data['mid_parental_height_upper_value']),1)} but returned {float(response.json()['mid_parental_height_upper_value'])}"
     assert round(float(file_data["mid_parental_height_lower_value"]),1)==float(response.json()["mid_parental_height_lower_value"]), f"mid_parental_height_lower_value for uk-who should be {round(float(file_data['mid_parental_height_lower_value']),1)} but returned {float(response.json()['mid_parental_height_lower_value'])}"
 
-    # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
-    # assert response.json() == json.loads(calculation_file)
 
 def test_midparental_height_cdc_with_valid_request():
     """

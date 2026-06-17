@@ -5,6 +5,7 @@ Tests for the Trisomy 21 endpoints
 # standard imports
 import json
 import hashlib
+from unittest import TestCase
 
 # third party imports
 from fastapi.testclient import TestClient
@@ -36,9 +37,11 @@ def test_trisomy_21_calculation_with_valid_request():
 
     assert response.status_code == 200
 
-    # COMMENTED OUT FOR BRANCH 'dockerise' PENDING DECISION ON #166 (API Test Suite) (pacharanero, 2024-02-07 )
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
-    assert response.json() == json.loads(calculation_file)
+    expected = json.loads(calculation_file)
+    actual = response.json()
+
+    TestCase().assertDictEqual(expected, actual)
 
 
 def test_trisomy_21_calculation_with_invalid_request():
