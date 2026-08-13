@@ -46,7 +46,10 @@ def validate_observation_value(reference, values, observation_values=None):
     gestation_days = values.gestation_days
     observation_date = (observation_values or values).observation_date
     birth_date = values.birth_date
-    decimal_age  = corrected_decimal_age(birth_date=birth_date, observation_date=observation_date, gestation_weeks=gestation_weeks, gestation_days=gestation_days)
+    try:
+        decimal_age = corrected_decimal_age(birth_date=birth_date, observation_date=observation_date, gestation_weeks=gestation_weeks, gestation_days=gestation_days)
+    except Exception as e:
+        raise ValueError(e)
 
     try:
         calculated_sds = sds_for_measurement(

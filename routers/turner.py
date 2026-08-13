@@ -210,7 +210,7 @@ def turner_chart_coordinates(chartParams: ChartCoordinateRequest):
     ]
     """
     if chartParams.sex == "male" or chartParams.measurement_method != "height":
-        return "Turner data only exists for height in girls."
+        raise HTTPException(status_code=422, detail="Turner data only exists for height in girls.")
 
     chart_data = None
     if type(chartParams.centile_format) is list:
