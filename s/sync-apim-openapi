@@ -1,0 +1,72 @@
+#!/bin/bash
+
+set -euo pipefail
+
+usage() {
+    cat <<'EOF'
+Usage: s/sync-apim-openapi [--dry-run]
+
+Imports the reviewed openapi.json into the configured Azure API Management API.
+
+Required environment variables:
+  AZURE_APIM_SERVICE_NAME
+  AZURE_APIM_API_ID
+
+Optional environment variables:
+  AZURE_APIM_RESOURCE_GROUP  Defaults to AZURE_RESOURCE_GROUP.
+EOF
+}
+
+dry_run=false
+if [[ "${1:-}" == "--dry-run" ]]; then
+    dry_run=true
+elif [[ $# -ne 0 ]]; then
+    usage >&2
+    exit 2
+fi
+
+for command in az jq; do
+    command -v "${command}" >/dev/null || {
+        echo "Required command not found: ${command}" >&2
+        exit 1
+    }
+done
+
+: "${AZURE_APIM_SERVICE_NAME:?AZURE_APIM_SERVICE_NAME is required}"
+: "${AZURE_APIM_API_ID:?AZURE_APIM_API_ID is required}"
+azure_apim_resource_group="${AZURE_APIM_RESOURCE_GROUP:-${AZURE_RESOURCE_GROUP:?AZURE_APIM_RESOURCE_GROUP or AZURE_RESOURCE_GROUP is required}}"
+
+jq -e '.openapi | startswith("3.")' openapi.json >/dev/null
+
+api=$(az apim api show \
+    --service-name "${AZURE_APIM_SERVICE_NAME}" \
+    --resource-group "${azure_apim_resource_group}" \
+    --api-id "${AZURE_APIM_API_ID}" \
+    --output json)
+
+api_path=$(jq -er '.path' <<<"${api}")
+api_service_url=$(jq -er '.serviceUrl' <<<"${api}")
+api_display_name=$(jq -er '.displayName' <<<"${api}")
+
+echo "APIM service: ${AZURE_APIM_SERVICE_NAME}"
+echo "APIM API: ${AZURE_APIM_API_ID}"
+echo "APIM path: ${api_path}"
+echo "APIM backend: ${api_service_url}"
+
+if ${dry_run}; then
+    echo "Dry run only; no APIM changes made."
+    exit 0
+fi
+
+az apim api import \
+    --service-name "${AZURE_APIM_SERVICE_NAME}" \
+    --resource-group "${azure_apim_resource_group}" \
+    --api-id "${AZURE_APIM_API_ID}" \
+    --path "${api_path}" \
+    --service-url "${api_service_url}" \
+    --display-name "${api_display_name}" \
+    --specification-format OpenApiJson \
+    --specification-path openapi.json \
+    --output none
+
+echo "Imported openapi.json into APIM API ${AZURE_APIM_API_ID}."

@@ -21,3 +21,35 @@ az containerapp revision copy \
     --resource-group ${AZURE_RESOURCE_GROUP} \
     --image ${azure_tag} \
     --query 'properties.provisioningState'
+
+if [[ -n "${AZURE_APIM_SERVICE_NAME:-}" && -n "${AZURE_APIM_API_ID:-}" ]]; then
+    live_fqdn=$(az containerapp show \
+        --name ${AZURE_LIVE_APP_NAME} \
+        --resource-group ${AZURE_RESOURCE_GROUP} \
+        --query 'properties.configuration.ingress.fqdn' \
+        --output tsv)
+
+    for attempt in {1..30}; do
+        response_headers=$(mktemp)
+        if curl --fail --silent --show-error --dump-header "${response_headers}" --output /dev/null "https://${live_fqdn}/"; then
+            deployed_revision=$(tr -d '\r' < "${response_headers}" | awk -F ': ' 'tolower($1) == "x-git-revision" { print $2 }')
+            rm "${response_headers}"
+            if [[ "${deployed_revision}" == "${GITHUB_SHA}" ]]; then
+                break
+            fi
+        else
+            rm "${response_headers}"
+        fi
+
+        if [[ "${attempt}" == 30 ]]; then
+            echo "Live Container App did not report deployed revision ${GITHUB_SHA}." >&2
+            exit 1
+        fi
+
+        sleep 10
+    done
+
+    s/sync-apim-openapi
+else
+    echo "APIM OpenAPI synchronization skipped: configure AZURE_APIM_SERVICE_NAME and AZURE_APIM_API_ID."
+fi

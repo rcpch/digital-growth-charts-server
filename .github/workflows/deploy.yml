@@ -29,4 +29,7 @@ jobs:
           AZURE_REGISTRY_NAME: ${{ secrets.AZURE_REGISTRY_NAME }}
           AZURE_LIVE_APP_NAME: ${{ secrets.AZURE_LIVE_APP_NAME }}
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          AZURE_APIM_SERVICE_NAME: ${{ vars.AZURE_APIM_SERVICE_NAME }}
+          AZURE_APIM_API_ID: ${{ vars.AZURE_APIM_API_ID }}
+          AZURE_APIM_RESOURCE_GROUP: ${{ vars.AZURE_APIM_RESOURCE_GROUP }}
         run: s/ci
