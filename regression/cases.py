@@ -253,6 +253,37 @@ def fictional_child_cases():
             },
         }
     )
+    for label, request_overrides in [
+        (
+            "end_age_equals_start_age",
+            {"start_chronological_age": 2.0, "end_age": 2.0},
+        ),
+        ("zero_interval", {"measurement_interval_number": 0}),
+        (
+            "range_shorter_than_interval",
+            {
+                "start_chronological_age": 0.0,
+                "end_age": 0.01,
+                "measurement_interval_type": "years",
+                "measurement_interval_number": 1,
+            },
+        ),
+    ]:
+        cases.append(
+            {
+                "id": f"fictional/uk-who/female/height/{label}",
+                "prefix": "/uk-who",
+                "endpoint": "/fictional-child-data",
+                "method": "POST",
+                "body": {
+                    "measurement_method": "height",
+                    "sex": "female",
+                    "noise": False,
+                    "drift": False,
+                    **request_overrides,
+                },
+            }
+        )
     return cases
 
 
