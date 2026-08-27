@@ -3,7 +3,7 @@
     "info": {
         "title": "RCPCH Digital Growth API",
         "description": "Returns SDS and centiles for child growth measurements using growth references. Currently provides calculations based on the UK-WHO, Turner's Syndrome and Trisomy-21 references.",
-        "version": "4.3.5"
+        "version": "5.0.0"
     },
     "paths": {
         "/uk-who/calculation": {
@@ -56,11 +56,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -114,11 +114,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -156,11 +156,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -202,11 +202,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -255,11 +255,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -315,11 +315,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -357,11 +357,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -403,11 +403,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -456,11 +456,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -516,11 +516,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -558,11 +558,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -604,11 +604,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -666,11 +666,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -726,11 +726,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -768,11 +768,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -814,11 +814,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -876,11 +876,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -936,11 +936,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -978,11 +978,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -1024,11 +1024,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -1086,11 +1086,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -1146,11 +1146,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -1188,11 +1188,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -1234,11 +1234,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -1276,11 +1276,11 @@
                         }
                     },
                     "422": {
-                        "description": "Validation Error",
+                        "description": "Request validation or application-generated error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponse"
                                 }
                             }
                         }
@@ -1311,6 +1311,65 @@
     },
     "components": {
         "schemas": {
+            "APIErrorDetail": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "title": "Type"
+                    },
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Loc"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Msg"
+                    },
+                    "input": {
+                        "title": "Input"
+                    },
+                    "ctx": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": true,
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Ctx"
+                    },
+                    "url": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Url"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "loc",
+                    "msg"
+                ],
+                "title": "APIErrorDetail"
+            },
             "BirthData": {
                 "properties": {
                     "birth_date": {
@@ -1451,7 +1510,7 @@
                                     "$ref": "#/components/schemas/MeasurementObject"
                                 },
                                 {
-                                    "$ref": "#/components/schemas/ErrorDetails"
+                                    "$ref": "#/components/schemas/APIErrorDetail"
                                 }
                             ]
                         },
@@ -2221,52 +2280,6 @@
                 ],
                 "title": "Data"
             },
-            "ErrorDetails": {
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "title": "Type"
-                    },
-                    "loc": {
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
-                                },
-                                {
-                                    "type": "string"
-                                }
-                            ]
-                        },
-                        "type": "array",
-                        "title": "Loc"
-                    },
-                    "msg": {
-                        "type": "string",
-                        "title": "Msg"
-                    },
-                    "input": {
-                        "title": "Input"
-                    },
-                    "ctx": {
-                        "additionalProperties": true,
-                        "type": "object",
-                        "title": "Ctx"
-                    },
-                    "url": {
-                        "type": "string",
-                        "title": "Url"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "type",
-                    "loc",
-                    "msg",
-                    "input"
-                ],
-                "title": "ErrorDetails"
-            },
             "EventsData": {
                 "properties": {
                     "events_text": {
@@ -2461,19 +2474,6 @@
                     "sex"
                 ],
                 "title": "FictionalChildRequest"
-            },
-            "HTTPValidationError": {
-                "properties": {
-                    "detail": {
-                        "items": {
-                            "$ref": "#/components/schemas/ValidationError"
-                        },
-                        "type": "array",
-                        "title": "Detail"
-                    }
-                },
-                "type": "object",
-                "title": "HTTPValidationError"
             },
             "MeasurementCalculatedValues": {
                 "properties": {
@@ -3227,38 +3227,21 @@
                 "type": "object",
                 "title": "Sex"
             },
-            "ValidationError": {
+            "UnprocessableEntityResponse": {
                 "properties": {
-                    "loc": {
+                    "detail": {
                         "items": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "integer"
-                                }
-                            ]
+                            "$ref": "#/components/schemas/APIErrorDetail"
                         },
                         "type": "array",
-                        "title": "Location"
-                    },
-                    "msg": {
-                        "type": "string",
-                        "title": "Message"
-                    },
-                    "type": {
-                        "type": "string",
-                        "title": "Error Type"
+                        "title": "Detail"
                     }
                 },
                 "type": "object",
                 "required": [
-                    "loc",
-                    "msg",
-                    "type"
+                    "detail"
                 ],
-                "title": "ValidationError"
+                "title": "UnprocessableEntityResponse"
             }
         }
     }

@@ -260,7 +260,9 @@ def test_turner_fictional_child_data_with_weight_measurement_method():
     response = client.post("/turner/fictional-child-data", json=body)
 
     assert response.status_code == 422
-    assert response.json() == {"detail": "Turner's Syndrome data only exists for height."}
+    assert response.json()["detail"][0]["msg"] == (
+        "Turner's Syndrome data only exists for height."
+    )
 
 def test_turner_fictional_child_data_with_male_sex():
     body = {
@@ -282,4 +284,6 @@ def test_turner_fictional_child_data_with_male_sex():
     response = client.post("/turner/fictional-child-data", json=body)
 
     assert response.status_code == 422
-    assert response.json() == {"detail": "Turner's Syndrome data only exists for girls."}
+    assert response.json()["detail"][0]["msg"] == (
+        "Turner's Syndrome data only exists for girls."
+    )

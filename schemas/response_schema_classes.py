@@ -3,12 +3,11 @@ In this file we define or import the response schemas
 """
 
 # standard imports
-from typing import Dict, List, Optional, Literal, Annotated
 from datetime import date, datetime
+from typing import Annotated, Any, Dict, List, Literal, Optional
 
 # third party imports
 from pydantic import BaseModel, RootModel, AfterValidator
-from pydantic_core import ErrorDetails 
 
 
 def rounded_centile(centile: float | None) -> float | None:
@@ -171,6 +170,19 @@ class Provenance(BaseModel):
     calculation_engine: CalculationEngine
 
 
+class APIErrorDetail(BaseModel):
+    type: str
+    loc: List[str | int]
+    msg: str
+    input: Any = None
+    ctx: Optional[Dict[str, Any]] = None
+    url: Optional[str] = None
+
+
+class UnprocessableEntityResponse(BaseModel):
+    detail: List[APIErrorDetail]
+
+
 class MeasurementObject(BaseModel):
     provenance: Provenance
     birth_data: BirthData
@@ -187,7 +199,7 @@ class BulkMeasurementObject(BaseModel):
     # existing chart component without modification.
     #
     # Return errors inline to allow partial plotting of valid measurements.
-    results: List[MeasurementObject | ErrorDetails]
+    results: List[MeasurementObject | APIErrorDetail]
 
 
 class Data(BaseModel):

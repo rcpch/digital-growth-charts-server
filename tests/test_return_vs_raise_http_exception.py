@@ -71,7 +71,7 @@ def test_chart_coordinates_returns_422_for_a_missing_asset_file(prefix, module_p
         f"chart asset file; expected 422. A 500 here means an HTTPException object "
         f"was returned instead of raised."
     )
-    assert "Item not found" in response.json()["detail"]
+    assert "Item not found" in response.json()["detail"][0]["msg"]
 
 
 @pytest.mark.parametrize("prefix,module_path,sex,method", ROUTERS)
@@ -101,7 +101,7 @@ def test_chart_coordinates_returns_422_when_create_chart_raises(
         f"raised; expected 422. A 500 here means an HTTPException object was returned "
         f"instead of raised."
     )
-    assert "Error creating" in response.json()["detail"]
+    assert "Error creating" in response.json()["detail"][0]["msg"]
 
 
 @pytest.mark.parametrize("prefix,module_path,sex,method", ROUTERS)

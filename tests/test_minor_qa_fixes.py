@@ -74,4 +74,4 @@ def test_turner_chart_rejects_unsupported_sex_or_measurement(body):
     )
 
     assert response.status_code == 422
-    assert response.json()["detail"] == "Turner data only exists for height in girls."
+    assert response.json()["detail"][0]["msg"] == "Turner data only exists for height in girls."
