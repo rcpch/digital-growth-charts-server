@@ -1,0 +1,24 @@
+{
+  "body": {
+    "detail": [
+      {
+        "input": "height_maternal",
+        "loc": [
+          "body"
+        ],
+        "msg": "Error: The maternal height is < -8 SD. Please check the accuracy of the maternal height and try again.",
+        "type": "value_error"
+      },
+      {
+        "input": "height_paternal",
+        "loc": [
+          "body"
+        ],
+        "msg": "Error: The paternal height is > 8 SD. Please check the accuracy of the paternal height and try again.",
+        "type": "value_error"
+      }
+    ]
+  },
+  "content_type": "application/json",
+  "status_code": 422
+}

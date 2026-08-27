@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+trap 'docker compose down' EXIT
+
 docker compose up -d
 s/test
-docker compose down
+git diff --exit-code

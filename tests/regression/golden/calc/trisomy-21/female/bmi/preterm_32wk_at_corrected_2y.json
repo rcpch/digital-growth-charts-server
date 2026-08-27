@@ -1,0 +1,156 @@
+{
+  "body": {
+    "birth_data": {
+      "birth_date": "2015-06-15",
+      "estimated_date_delivery": "2015-08-10",
+      "estimated_date_delivery_string": "Mon 10 August, 2015",
+      "gestation_days": 0,
+      "gestation_weeks": 32,
+      "sex": "female"
+    },
+    "bone_age": {
+      "bone_age": null,
+      "bone_age_centile": null,
+      "bone_age_sds": null,
+      "bone_age_text": null,
+      "bone_age_type": null
+    },
+    "child_observation_value": {
+      "measurement_method": "bmi",
+      "observation_value": 18.0,
+      "observation_value_error": null
+    },
+    "events_data": {
+      "events_text": null
+    },
+    "measurement_calculated_values": {
+      "chronological_centile": 66.9541,
+      "chronological_centile_band": "This body mass index measurement is between the 50th and 75th centiles.",
+      "chronological_measurement_error": null,
+      "chronological_percentage_median_bmi": 104.65722805085728,
+      "chronological_sds": 0.4386461787177967,
+      "corrected_centile": 67.0294,
+      "corrected_centile_band": "This body mass index measurement is between the 50th and 75th centiles.",
+      "corrected_measurement_error": null,
+      "corrected_percentage_median_bmi": 104.67038982968306,
+      "corrected_sds": 0.44072473732952444
+    },
+    "measurement_dates": {
+      "chronological_calendar_age": "2 years, 1 month, 3 weeks and 4 days",
+      "chronological_decimal_age": 2.1519507186858315,
+      "chronological_decimal_age_error": null,
+      "comments": {
+        "clinician_chronological_decimal_age_comment": "No correction has been made for gestational age.",
+        "clinician_corrected_decimal_age_comment": "Correction for gestational age has been made.",
+        "lay_chronological_decimal_age_comment": "This is your child's age without taking into account their gestation at birth.",
+        "lay_corrected_decimal_age_comment": "Because your child was born at 32+0 weeks gestation an adjustment has been made to take this into account."
+      },
+      "corrected_calendar_age": "1 year, 11 months, 4 weeks and 2 days",
+      "corrected_decimal_age": 1.998631074606434,
+      "corrected_decimal_age_error": null,
+      "corrected_gestational_age": {
+        "corrected_gestation_days": null,
+        "corrected_gestation_weeks": null
+      },
+      "observation_date": "2017-08-09"
+    },
+    "plottable_data": {
+      "centile_data": {
+        "chronological_decimal_age_data": {
+          "age_error": null,
+          "age_type": "chronological_age",
+          "b": null,
+          "bone_age_centile": null,
+          "bone_age_label": null,
+          "bone_age_sds": null,
+          "bone_age_type": null,
+          "calendar_age": "2 years, 1 month, 3 weeks and 4 days",
+          "centile": 66.9541,
+          "centile_band": "This body mass index measurement is between the 50th and 75th centiles.",
+          "clinician_comment": "No correction has been made for gestational age.",
+          "events_text": null,
+          "lay_comment": "This is your child's age without taking into account their gestation at birth.",
+          "observation_error": null,
+          "observation_value_error": null,
+          "sds": 0.4386461787177967,
+          "x": 2.1519507186858315,
+          "y": 18.0
+        },
+        "corrected_decimal_age_data": {
+          "age_error": null,
+          "age_type": "corrected_age",
+          "b": null,
+          "bone_age_centile": null,
+          "bone_age_label": null,
+          "bone_age_sds": null,
+          "bone_age_type": null,
+          "calendar_age": "1 year, 11 months, 4 weeks and 2 days",
+          "centile": 67.0294,
+          "centile_band": "This body mass index measurement is between the 50th and 75th centiles.",
+          "clinician_comment": "Correction for gestational age has been made.",
+          "corrected_gestational_age": "",
+          "events_text": null,
+          "lay_comment": "Because your child was born at 32+0 weeks gestation an adjustment has been made to take this into account.",
+          "observation_error": null,
+          "observation_value_error": null,
+          "sds": 0.44072473732952444,
+          "x": 1.998631074606434,
+          "y": 18.0
+        }
+      },
+      "sds_data": {
+        "chronological_decimal_age_data": {
+          "age_error": null,
+          "age_type": "chronological_age",
+          "b": null,
+          "bone_age_centile": null,
+          "bone_age_label": null,
+          "bone_age_sds": null,
+          "bone_age_type": null,
+          "calendar_age": "2 years, 1 month, 3 weeks and 4 days",
+          "centile": 66.9541,
+          "centile_band": "This body mass index measurement is between the 50th and 75th centiles.",
+          "clinician_comment": "No correction has been made for gestational age.",
+          "events_text": null,
+          "lay_comment": "This is your child's age without taking into account their gestation at birth.",
+          "observation_error": null,
+          "observation_value_error": null,
+          "sds": null,
+          "x": 2.1519507186858315,
+          "y": 0.4386461787177967
+        },
+        "corrected_decimal_age_data": {
+          "age_error": null,
+          "age_type": "corrected_age",
+          "b": null,
+          "bone_age_centile": null,
+          "bone_age_label": null,
+          "bone_age_sds": null,
+          "bone_age_type": null,
+          "calendar_age": "1 year, 11 months, 4 weeks and 2 days",
+          "centile": 67.0294,
+          "centile_band": "This body mass index measurement is between the 50th and 75th centiles.",
+          "clinician_comment": "Correction for gestational age has been made.",
+          "corrected_gestational_age": "",
+          "events_text": null,
+          "lay_comment": "Because your child was born at 32+0 weeks gestation an adjustment has been made to take this into account.",
+          "observation_error": null,
+          "observation_value_error": null,
+          "sds": null,
+          "x": 1.998631074606434,
+          "y": 0.44072473732952444
+        }
+      }
+    },
+    "provenance": {
+      "calculation_engine": {
+        "commit": "722eb3b9facf8b49e8e6d3e14c90b0e54dc4942a",
+        "name": "rcpchgrowth",
+        "version": "4.6.0"
+      },
+      "growth_reference": "trisomy-21"
+    }
+  },
+  "content_type": "application/json",
+  "status_code": 200
+}

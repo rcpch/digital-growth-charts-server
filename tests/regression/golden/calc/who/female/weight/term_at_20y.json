@@ -1,0 +1,16 @@
+{
+  "body": {
+    "detail": [
+      {
+        "input": "observation_value",
+        "loc": [
+          "body"
+        ],
+        "msg": "WHO data does not exist above 19 years.",
+        "type": "value_error"
+      }
+    ]
+  },
+  "content_type": "application/json",
+  "status_code": 422
+}

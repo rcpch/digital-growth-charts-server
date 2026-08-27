@@ -1,0 +1,16 @@
+{
+  "body": {
+    "detail": [
+      {
+        "input": "observations",
+        "loc": [
+          "body"
+        ],
+        "msg": "At least one observation is required for bulk calculation.",
+        "type": "value_error"
+      }
+    ]
+  },
+  "content_type": "application/json",
+  "status_code": 422
+}

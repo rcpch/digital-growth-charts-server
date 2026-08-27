@@ -16,7 +16,7 @@ s/down    # stop it
 
 The pytest suite (`s/test`) proves specific, hand-picked fixtures return specific values. It does not sweep the input space, so a change in the pinned `rcpchgrowth` version could alter server behaviour somewhere the fixtures do not cover, without any test noticing.
 
-`regression/` is a separate tool for exactly that situation: it runs several hundred requests across the reference families, sexes, measurement methods, and clinically significant age boundaries (term, 42 weeks corrected, 2 years, 4 years, the WHO 5-year data-transition point, and the documented ±8/±15 SD validation limits), and snapshots the exact status code and response for every one. Two snapshots, taken before and after a change, can then be diffed to see precisely what moved.
+`tests/regression/` runs hundreds of requests over HTTP against the running Dockerized server across the reference families, sexes, measurement methods, and clinically significant age boundaries. Every response is compared with a committed golden fixture in each pull request, so an observable API change must be reviewed and accepted deliberately. Dated before-and-after snapshots remain available for dependency investigations.
 
 **Before bumping `rcpchgrowth` in `requirements/`:**
 
@@ -41,4 +41,4 @@ The diff prints every case whose status code or response changed, field by field
 - **No differences** is a strong, but not complete, signal that the upgrade is safe to merge for the cases this sweep covers. It does not prove correctness - if a case in the sweep already returns a wrong value today, an unchanged diff means the upgrade preserved that wrong value, not that it is right.
 - **Differences appear** for every case this exercise expects to change. Before merging, check that every reported difference matches what the change was supposed to do, and nothing else. An unexplained difference in a case unrelated to the change is exactly the kind of silent regression this tool exists to catch.
 
-Full detail on what is covered, how to extend the case list, and the limits of what a clean diff proves: [`regression/README.md`](regression/README.md).
+Full detail on what is covered, how to extend the case list, how to accept an intentional response change, and the limits of what a clean run proves: [`tests/regression/README.md`](tests/regression/README.md).

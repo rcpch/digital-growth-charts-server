@@ -1,0 +1,16 @@
+{
+  "body": {
+    "detail": [
+      {
+        "input": "observation_value",
+        "loc": [
+          "body"
+        ],
+        "msg": "A height of 100.0 cm in a girl of 2 weeks is more than +8 SD. Please recheck the measurement and date of birth.",
+        "type": "value_error"
+      }
+    ]
+  },
+  "content_type": "application/json",
+  "status_code": 422
+}

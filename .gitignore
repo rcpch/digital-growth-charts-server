@@ -150,5 +150,8 @@ cython_debug/
 .private
 
 # Regression sweep snapshots - regenerated on demand, not committed.
-# See regression/README.md.
-regression/snapshots/*.json
+# See tests/regression/README.md.
+tests/regression/snapshots/*.json
+
+# Actual responses are retained only when a golden regression test fails.
+test-results/

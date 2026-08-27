@@ -1,0 +1,156 @@
+{
+  "body": {
+    "birth_data": {
+      "birth_date": "2015-06-15",
+      "estimated_date_delivery": "2015-06-15",
+      "estimated_date_delivery_string": "Mon 15 June, 2015",
+      "gestation_days": 0,
+      "gestation_weeks": 40,
+      "sex": "female"
+    },
+    "bone_age": {
+      "bone_age": null,
+      "bone_age_centile": null,
+      "bone_age_sds": null,
+      "bone_age_text": null,
+      "bone_age_type": null
+    },
+    "child_observation_value": {
+      "measurement_method": "weight",
+      "observation_value": 20.0,
+      "observation_value_error": null
+    },
+    "events_data": {
+      "events_text": null
+    },
+    "measurement_calculated_values": {
+      "chronological_centile": 0.0985,
+      "chronological_centile_band": "This weight measurement is below the normal range.",
+      "chronological_measurement_error": null,
+      "chronological_percentage_median_bmi": null,
+      "chronological_sds": -3.094718354569877,
+      "corrected_centile": 0.0985,
+      "corrected_centile_band": "This weight measurement is below the normal range.",
+      "corrected_measurement_error": null,
+      "corrected_percentage_median_bmi": null,
+      "corrected_sds": -3.094718354569877
+    },
+    "measurement_dates": {
+      "chronological_calendar_age": "9 years, 11 months, 4 weeks and 2 days",
+      "chronological_decimal_age": 9.998631074606434,
+      "chronological_decimal_age_error": null,
+      "comments": {
+        "clinician_chronological_decimal_age_comment": "Born at term. No correction for gestation has been made.",
+        "clinician_corrected_decimal_age_comment": "Born at term. No correction for gestation has been made.",
+        "lay_chronological_decimal_age_comment": "Your child was born at term. No correction for gestation has been made.",
+        "lay_corrected_decimal_age_comment": "Your child was born at term. No correction for gestation has been made."
+      },
+      "corrected_calendar_age": "9 years, 11 months, 4 weeks and 2 days",
+      "corrected_decimal_age": 9.998631074606434,
+      "corrected_decimal_age_error": null,
+      "corrected_gestational_age": {
+        "corrected_gestation_days": null,
+        "corrected_gestation_weeks": null
+      },
+      "observation_date": "2025-06-14"
+    },
+    "plottable_data": {
+      "centile_data": {
+        "chronological_decimal_age_data": {
+          "age_error": null,
+          "age_type": "chronological_age",
+          "b": null,
+          "bone_age_centile": null,
+          "bone_age_label": null,
+          "bone_age_sds": null,
+          "bone_age_type": null,
+          "calendar_age": "9 years, 11 months, 4 weeks and 2 days",
+          "centile": 0.0985,
+          "centile_band": "This weight measurement is below the normal range.",
+          "clinician_comment": "Born at term. No correction for gestation has been made.",
+          "events_text": null,
+          "lay_comment": "Your child was born at term. No correction for gestation has been made.",
+          "observation_error": null,
+          "observation_value_error": null,
+          "sds": -3.094718354569877,
+          "x": 9.998631074606434,
+          "y": 20.0
+        },
+        "corrected_decimal_age_data": {
+          "age_error": null,
+          "age_type": "corrected_age",
+          "b": null,
+          "bone_age_centile": null,
+          "bone_age_label": null,
+          "bone_age_sds": null,
+          "bone_age_type": null,
+          "calendar_age": "9 years, 11 months, 4 weeks and 2 days",
+          "centile": 0.0985,
+          "centile_band": "This weight measurement is below the normal range.",
+          "clinician_comment": "Born at term. No correction for gestation has been made.",
+          "corrected_gestational_age": "",
+          "events_text": null,
+          "lay_comment": "Your child was born at term. No correction for gestation has been made.",
+          "observation_error": null,
+          "observation_value_error": null,
+          "sds": -3.094718354569877,
+          "x": 9.998631074606434,
+          "y": 20.0
+        }
+      },
+      "sds_data": {
+        "chronological_decimal_age_data": {
+          "age_error": null,
+          "age_type": "chronological_age",
+          "b": null,
+          "bone_age_centile": null,
+          "bone_age_label": null,
+          "bone_age_sds": null,
+          "bone_age_type": null,
+          "calendar_age": "9 years, 11 months, 4 weeks and 2 days",
+          "centile": 0.0985,
+          "centile_band": "This weight measurement is below the normal range.",
+          "clinician_comment": "Born at term. No correction for gestation has been made.",
+          "events_text": null,
+          "lay_comment": "Your child was born at term. No correction for gestation has been made.",
+          "observation_error": null,
+          "observation_value_error": null,
+          "sds": null,
+          "x": 9.998631074606434,
+          "y": -3.094718354569877
+        },
+        "corrected_decimal_age_data": {
+          "age_error": null,
+          "age_type": "corrected_age",
+          "b": null,
+          "bone_age_centile": null,
+          "bone_age_label": null,
+          "bone_age_sds": null,
+          "bone_age_type": null,
+          "calendar_age": "9 years, 11 months, 4 weeks and 2 days",
+          "centile": 0.0985,
+          "centile_band": "This weight measurement is below the normal range.",
+          "clinician_comment": "Born at term. No correction for gestation has been made.",
+          "corrected_gestational_age": "",
+          "events_text": null,
+          "lay_comment": "Your child was born at term. No correction for gestation has been made.",
+          "observation_error": null,
+          "observation_value_error": null,
+          "sds": null,
+          "x": 9.998631074606434,
+          "y": -3.094718354569877
+        }
+      }
+    },
+    "provenance": {
+      "calculation_engine": {
+        "commit": "722eb3b9facf8b49e8e6d3e14c90b0e54dc4942a",
+        "name": "rcpchgrowth",
+        "version": "4.6.0"
+      },
+      "growth_reference": "who"
+    }
+  },
+  "content_type": "application/json",
+  "status_code": 200
+}

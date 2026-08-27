@@ -1,0 +1,16 @@
+{
+  "body": {
+    "detail": [
+      {
+        "input": "observation_value",
+        "loc": [
+          "body"
+        ],
+        "msg": "UK-WHO BMI data does not exist below 2 weeks of age.",
+        "type": "value_error"
+      }
+    ]
+  },
+  "content_type": "application/json",
+  "status_code": 422
+}

@@ -1,0 +1,16 @@
+{
+  "body": {
+    "detail": [
+      {
+        "input": "observation_value",
+        "loc": [
+          "body"
+        ],
+        "msg": "A weight of 20.0 kg in a boy of 20 years is less than -8 SD. Please recheck the measurement and date of birth.",
+        "type": "value_error"
+      }
+    ]
+  },
+  "content_type": "application/json",
+  "status_code": 422
+}
