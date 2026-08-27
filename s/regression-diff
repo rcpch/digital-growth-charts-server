@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# UNIX based systems may require special permissions to run this file
+# run chmod +x s/<filename> to allow this
+
+# Diffs two regression snapshots produced by s/regression-snapshot.
+# See regression/README.md.
+#
+# Usage: s/regression-diff <before.json> <after.json>
+
+docker exec digital-growth-charts-server-growth-api-1 python -m regression.compare_snapshots $*

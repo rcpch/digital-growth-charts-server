@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# UNIX based systems may require special permissions to run this file
+# run chmod +x s/<filename> to allow this
+
+# Generates a regression snapshot of API responses across the case matrix
+# in regression/cases.py. See regression/README.md.
+# Can only be run once the container is running.
+#
+# Usage: s/regression-snapshot <output-filename.json>
+
+docker exec digital-growth-charts-server-growth-api-1 python -m regression.generate_snapshot $*

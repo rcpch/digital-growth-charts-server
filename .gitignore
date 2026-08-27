@@ -145,3 +145,10 @@ cython_debug/
 .DS_Store
 
 
+
+# Private files
+.private
+
+# Regression sweep snapshots - regenerated on demand, not committed.
+# See regression/README.md.
+regression/snapshots/*.json
