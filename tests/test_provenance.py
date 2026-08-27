@@ -1,5 +1,7 @@
 """Tests for calculation provenance in Measurement responses."""
 
+from importlib.metadata import version as distribution_version
+
 import pytest
 from fastapi.testclient import TestClient
 from pydantic import ValidationError
@@ -39,7 +41,9 @@ def test_calculation_passes_through_package_provenance(endpoint, growth_referenc
     provenance = response.json()["provenance"]
     assert provenance["growth_reference"] == growth_reference
     assert provenance["calculation_engine"]["name"] == "rcpchgrowth"
-    assert provenance["calculation_engine"]["version"] == "4.6.0"
+    assert provenance["calculation_engine"]["version"] == distribution_version(
+        "rcpchgrowth"
+    )
     assert provenance["calculation_engine"]["commit"]
 
 

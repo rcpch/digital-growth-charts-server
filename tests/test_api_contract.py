@@ -1,5 +1,9 @@
 """Tests for versioned API response contracts."""
 
+from configparser import ConfigParser
+import json
+from pathlib import Path
+
 from fastapi.testclient import TestClient
 
 from main import app
@@ -7,10 +11,29 @@ from schemas import UnprocessableEntityResponse
 
 
 client = TestClient(app, raise_server_exceptions=False)
+PROJECT_ROOT = Path(__file__).parent.parent
 
 
-def test_api_contract_is_version_five():
-    assert app.openapi()["info"]["version"] == "5.0.0"
+def test_api_version_is_consistent():
+    bumpversion_config = ConfigParser()
+    bumpversion_config.read(PROJECT_ROOT / ".bumpversion.cfg")
+    expected_version = bumpversion_config["bumpversion"]["current_version"]
+
+    citation_version = next(
+        line.removeprefix("version: ")
+        for line in (PROJECT_ROOT / "CITATION.cff").read_text().splitlines()
+        if line.startswith("version: ")
+    )
+    committed_openapi = json.loads((PROJECT_ROOT / "openapi.json").read_text())
+
+    assert {
+        "bumpversion:file:main.py",
+        "bumpversion:file:CITATION.cff",
+        "bumpversion:file:openapi.json",
+    }.issubset(bumpversion_config.sections())
+    assert app.openapi()["info"]["version"] == expected_version
+    assert citation_version == expected_version
+    assert committed_openapi["info"]["version"] == expected_version
 
 
 def test_native_validation_error_uses_standard_422_response():
