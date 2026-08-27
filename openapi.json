@@ -1541,6 +1541,30 @@
                 ],
                 "title": "BulkMeasurementRequest"
             },
+            "CalculationEngine": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "const": "rcpchgrowth",
+                        "title": "Name"
+                    },
+                    "version": {
+                        "type": "string",
+                        "title": "Version"
+                    },
+                    "commit": {
+                        "type": "string",
+                        "title": "Commit"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "version",
+                    "commit"
+                ],
+                "title": "CalculationEngine"
+            },
             "Centile": {
                 "properties": {
                     "sds": {
@@ -2707,6 +2731,9 @@
             },
             "MeasurementObject": {
                 "properties": {
+                    "provenance": {
+                        "$ref": "#/components/schemas/Provenance"
+                    },
                     "birth_data": {
                         "$ref": "#/components/schemas/BirthData"
                     },
@@ -2731,6 +2758,7 @@
                 },
                 "type": "object",
                 "required": [
+                    "provenance",
                     "birth_data",
                     "measurement_dates",
                     "child_observation_value",
@@ -3138,6 +3166,31 @@
                 },
                 "type": "object",
                 "title": "PlottableData"
+            },
+            "Provenance": {
+                "properties": {
+                    "growth_reference": {
+                        "type": "string",
+                        "enum": [
+                            "uk-who",
+                            "trisomy-21",
+                            "trisomy-21-aap",
+                            "turners-syndrome",
+                            "cdc",
+                            "who"
+                        ],
+                        "title": "Growth Reference"
+                    },
+                    "calculation_engine": {
+                        "$ref": "#/components/schemas/CalculationEngine"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "growth_reference",
+                    "calculation_engine"
+                ],
+                "title": "Provenance"
             },
             "ReferenceCreate": {
                 "additionalProperties": {

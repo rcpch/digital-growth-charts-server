@@ -153,7 +153,26 @@ class MeasurementCalculatedValues(BaseModel):
     chronological_percentage_median_bmi: Optional[float] = None
 
 
+class CalculationEngine(BaseModel):
+    name: Literal["rcpchgrowth"]
+    version: str
+    commit: str
+
+
+class Provenance(BaseModel):
+    growth_reference: Literal[
+        "uk-who",
+        "trisomy-21",
+        "trisomy-21-aap",
+        "turners-syndrome",
+        "cdc",
+        "who",
+    ]
+    calculation_engine: CalculationEngine
+
+
 class MeasurementObject(BaseModel):
+    provenance: Provenance
     birth_data: BirthData
     measurement_dates: MeasurementDates
     child_observation_value: ChildObservationValue
