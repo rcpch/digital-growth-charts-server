@@ -22,6 +22,11 @@ from tests.regression.golden import (
 CASES = all_cases()
 
 
+def test_snapshot_diff_ignores_only_machine_scale_float_noise():
+    assert list(diff_value(1.0, 1.0 + 1e-15)) == []
+    assert list(diff_value(1.0, 1.0 + 1e-9)) == [("", 1.0, 1.0 + 1e-9)]
+
+
 @pytest.fixture(scope="module")
 def running_api():
     with httpx.Client(base_url=API_BASE_URL, timeout=60) as client:

@@ -12,6 +12,7 @@ check.
 """
 
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -45,6 +46,16 @@ def diff_value(before, after, path=""):
             yield (f"{path}[length]", len(before), len(after))
         for i, (b, a) in enumerate(zip(before, after)):
             yield from diff_value(b, a, f"{path}[{i}]")
+    elif (
+        isinstance(before, (int, float))
+        and not isinstance(before, bool)
+        and isinstance(after, (int, float))
+        and not isinstance(after, bool)
+    ):
+        # Last-bit differences vary across CPU/libm implementations and are not
+        # observable clinical changes. Keep the tolerance far below API precision.
+        if not math.isclose(before, after, rel_tol=1e-12, abs_tol=1e-12):
+            yield (path, before, after)
     else:
         if before != after:
             yield (path, before, after)
