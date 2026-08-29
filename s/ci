@@ -1,6 +1,8 @@
-#!/bin/bash -e
+#!/usr/bin/env bash
 
-az acr login --name ${AZURE_REGISTRY_NAME}
+set -euo pipefail
+
+az acr login --name "${AZURE_REGISTRY_NAME}"
 
 # Tests (development build)
 docker compose up -d
@@ -12,33 +14,39 @@ docker compose build --build-arg BUILD_ENVIRONMENT=live
 
 # Push to Azure
 azure_tag="${AZURE_REGISTRY_NAME}.azurecr.io/digital-growth-charts-server:${GITHUB_SHA}"
-docker tag digital-growth-charts-server:built ${azure_tag}
-docker push ${azure_tag}
+docker tag digital-growth-charts-server:built "${azure_tag}"
+docker push "${azure_tag}"
 
 # Deploy to live
 az containerapp revision copy \
-    --name ${AZURE_LIVE_APP_NAME} \
-    --resource-group ${AZURE_RESOURCE_GROUP} \
-    --image ${azure_tag} \
+    --name "${AZURE_LIVE_APP_NAME}" \
+    --resource-group "${AZURE_RESOURCE_GROUP}" \
+    --image "${azure_tag}" \
     --query 'properties.provisioningState'
 
 if [[ -n "${AZURE_APIM_SERVICE_NAME:-}" && -n "${AZURE_APIM_API_ID:-}" ]]; then
     live_fqdn=$(az containerapp show \
-        --name ${AZURE_LIVE_APP_NAME} \
-        --resource-group ${AZURE_RESOURCE_GROUP} \
+        --name "${AZURE_LIVE_APP_NAME}" \
+        --resource-group "${AZURE_RESOURCE_GROUP}" \
         --query 'properties.configuration.ingress.fqdn' \
         --output tsv)
 
+    response_headers=$(mktemp)
+    openapi_document=$(mktemp)
+    cleanup() {
+        rm -f "${response_headers}" "${openapi_document}"
+    }
+    trap cleanup EXIT
+
     for attempt in {1..30}; do
-        response_headers=$(mktemp)
-        if curl --fail --silent --show-error --dump-header "${response_headers}" --output /dev/null "https://${live_fqdn}/"; then
-            deployed_revision=$(tr -d '\r' < "${response_headers}" | awk -F ': ' 'tolower($1) == "x-git-revision" { print $2 }')
-            rm "${response_headers}"
+        if curl --fail --silent --show-error \
+            --dump-header "${response_headers}" \
+            --output "${openapi_document}" \
+            "https://${live_fqdn}/"; then
+            deployed_revision=$(tr -d '\r' < "${response_headers}" | awk -F ': ' 'tolower($1) == "x-git-revision" { value=$2 } END { print value }')
             if [[ "${deployed_revision}" == "${GITHUB_SHA}" ]]; then
                 break
             fi
-        else
-            rm "${response_headers}"
         fi
 
         if [[ "${attempt}" == 30 ]]; then
@@ -49,7 +57,7 @@ if [[ -n "${AZURE_APIM_SERVICE_NAME:-}" && -n "${AZURE_APIM_API_ID:-}" ]]; then
         sleep 10
     done
 
-    s/sync-apim-openapi
+    s/sync-apim-openapi "${openapi_document}"
 else
     echo "APIM OpenAPI synchronization skipped: configure AZURE_APIM_SERVICE_NAME and AZURE_APIM_API_ID."
 fi
