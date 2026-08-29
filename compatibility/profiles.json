@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "profiles": [
+    {
+      "id": "legacy-7.5.2",
+      "status": "supported",
+      "reviewAfter": "2027-08-29",
+      "sunset": null,
+      "provenanceSupport": false,
+      "component": {
+        "repository": "https://github.com/rcpch/digital-growth-charts-react-component-library.git",
+        "revision": "388b1589e42d73bbf451470868e2dcda4c67be9d"
+      }
+    },
+    {
+      "id": "provenance-v1",
+      "status": "supported",
+      "reviewAfter": "2027-08-29",
+      "sunset": null,
+      "provenanceSupport": true,
+      "component": {
+        "repository": "https://github.com/rcpch/digital-growth-charts-react-component-library.git",
+        "revision": "e9080ef25188670f0a5a1ce7950df761015c506a"
+      }
+    }
+  ]
+}

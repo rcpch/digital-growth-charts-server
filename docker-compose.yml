@@ -9,3 +9,22 @@ services:
       - .:/app
     ports:
       - "8000:8000"
+
+  compatibility-runner:
+    profiles:
+      - compatibility
+    build:
+      context: .
+      dockerfile: compatibility/Dockerfile
+    environment:
+      COMPATIBILITY_API_BASE_URL: ${COMPATIBILITY_API_BASE_URL:-http://growth-api:8000}
+      COMPATIBILITY_CACHE_DIR: /cache
+      COMPATIBILITY_RESULTS_DIR: /results
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - compatibility-cache:/cache
+      - ./test-results/compatibility:/results
+
+volumes:
+  compatibility-cache:

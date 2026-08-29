@@ -9,6 +9,7 @@ Issues can be raised here <https://github.com/rcpch/digital-growth-charts-server
 ```sh
 s/up      # start the server in Docker
 s/test    # run the pytest suite
+s/compatibility-test  # test candidate responses against supported chart components
 s/down    # stop it
 ```
 
@@ -42,3 +43,7 @@ The diff prints every case whose status code or response changed, field by field
 - **Differences appear** for every case this exercise expects to change. Before merging, check that every reported difference matches what the change was supposed to do, and nothing else. An unexplained difference in a case unrelated to the change is exactly the kind of silent regression this tool exists to catch.
 
 Full detail on what is covered, how to extend the case list, how to accept an intentional response change, and the limits of what a clean run proves: [`tests/regression/README.md`](tests/regression/README.md).
+
+## Component compatibility
+
+`s/compatibility-test` runs the candidate API response corpus through the pinned legacy and provenance-aware React component profiles. It is the same Dockerized matrix used by `s/pr-check` in CI and does not require a sibling component checkout, although it will use one when present so committed but unpushed component work can be tested locally. See [`compatibility/README.md`](compatibility/README.md).

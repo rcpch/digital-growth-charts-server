@@ -8,12 +8,13 @@ Read this file before changing anything.
 
 - [README.md](README.md) - setup and project overview.
 - [tests/regression/README.md](tests/regression/README.md) - API response contract and golden-fixture workflow.
+- [compatibility/README.md](compatibility/README.md) - supported React consumer profiles and the local/CI compatibility matrix.
 - [pacharanero/house-style](https://github.com/pacharanero/house-style) - adopted cross-repository engineering standards.
 
 ## Core Invariants
 
 - Treat status codes, content types, response schemas, and response values as an API contract. Intentional changes require reviewed updates to the goldens under `tests/regression/golden/`.
-- An API response change must also prompt a compatibility check against the Storybook and test fixtures in the sibling Chart Component repository, `../digital-growth-charts-react-component-library`. If affected, run its `scripts/generate-fixtures.mjs` against the updated local server, review and commit the generated fixture changes in that repository, and validate its tests and Storybook build. Do not consider the server response change complete until the Chart Component fixtures are updated or the server PR records why they are unaffected.
+- An API response change must pass `s/compatibility-test` against every supported immutable Chart Component profile. If the committed component fixtures are affected, run the sibling repository's `s/generate-fixtures` against the updated local server, review and commit the generated fixture changes there, and validate its tests and Storybook build.
 - Preserve calculation provenance from `rcpchgrowth` unchanged and keep the API server provenance fields accurate.
 
 ## Workflow
@@ -21,6 +22,7 @@ Read this file before changing anything.
 - `s/up` - build and run the API locally.
 - `s/test` - run the full pytest suite against the running container.
 - `s/regression-accept` - explicitly regenerate reviewed API goldens after an intentional response change.
+- `s/compatibility-test` - run candidate API responses through every supported React component profile.
 - `s/pr-check` - run the containerized PR check used by CI.
 
 ## Git Workflow

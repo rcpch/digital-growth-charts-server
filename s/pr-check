@@ -4,4 +4,5 @@ trap 'docker compose down' EXIT
 
 docker compose up -d
 s/test
+s/compatibility-test --reuse-api
 git diff --exit-code
