@@ -1,36 +1,57 @@
 #!/usr/bin/env bash
 
+# Production deployment entry point. GitHub Actions authenticates to Azure with
+# OIDC before invoking this script and supplies all Azure resource identifiers
+# through environment variables. Any failed command stops the deployment.
+
 set -euo pipefail
 
+# Authenticate Docker to the existing Azure Container Registry using the Azure
+# CLI session established by azure/login. No registry password is persisted.
 az acr login --name "${AZURE_REGISTRY_NAME}"
 
-# Tests (development build)
+# Build the development image, start the API, and run the complete test suite
+# against it. The image includes development dependencies such as pytest.
 docker compose up -d
 s/test
 docker compose down
 
-# Rebuild using live dependencies
+# Rebuild from the same checkout with only live dependencies. docker-compose.yml
+# passes GITHUB_SHA into the image so the running API can identify its source
+# revision through the X-Git-Revision response header.
 docker compose build --build-arg BUILD_ENVIRONMENT=live
 
-# Push to Azure
+# Tag the image with the immutable commit SHA rather than a floating environment
+# tag. This gives Container Apps and the later readiness check one identity.
 azure_tag="${AZURE_REGISTRY_NAME}.azurecr.io/digital-growth-charts-server:${GITHUB_SHA}"
 docker tag digital-growth-charts-server:built "${azure_tag}"
 docker push "${azure_tag}"
 
-# Deploy to live
+# Create a Container App revision from the currently active configuration while
+# replacing only its image. In single-revision mode Azure moves live traffic to
+# the new revision once it is ready.
 az containerapp revision copy \
     --name "${AZURE_LIVE_APP_NAME}" \
     --resource-group "${AZURE_RESOURCE_GROUP}" \
     --image "${azure_tag}" \
     --query 'properties.provisioningState'
 
+# APIM synchronization is deliberately conditional so deployments remain
+# possible before APIM is configured. AZURE_APIM_API_ID may identify the current
+# API or a non-current revision such as growth-charts;rev=2.
 if [[ -n "${AZURE_APIM_SERVICE_NAME:-}" && -n "${AZURE_APIM_API_ID:-}" ]]; then
+    # Fetch directly from the Container App rather than through APIM. Reading
+    # through APIM here could capture the old contract that this run is intended
+    # to replace.
     live_fqdn=$(az containerapp show \
         --name "${AZURE_LIVE_APP_NAME}" \
         --resource-group "${AZURE_RESOURCE_GROUP}" \
         --query 'properties.configuration.ingress.fqdn' \
         --output tsv)
 
+    # Keep the response body and headers together in temporary files. The root
+    # endpoint returns the runtime-generated OpenAPI document and is also the
+    # only endpoint carrying X-Git-Revision. Cleanup runs on success or failure.
     response_headers=$(mktemp)
     openapi_document=$(mktemp)
     cleanup() {
@@ -38,6 +59,9 @@ if [[ -n "${AZURE_APIM_SERVICE_NAME:-}" && -n "${AZURE_APIM_API_ID:-}" ]]; then
     }
     trap cleanup EXIT
 
+    # Container App traffic can take time to move to a new revision. Poll for up
+    # to five minutes and only accept a schema body whose response header names
+    # this exact commit. This prevents importing a valid but stale document.
     for attempt in {1..30}; do
         if curl --fail --silent --show-error \
             --dump-header "${response_headers}" \
@@ -57,6 +81,9 @@ if [[ -n "${AZURE_APIM_SERVICE_NAME:-}" && -n "${AZURE_APIM_API_ID:-}" ]]; then
         sleep 10
     done
 
+    # Validation and APIM mutation are isolated in a reusable script. It reads
+    # existing APIM settings before importing and fails the deployment if Azure
+    # rejects or cannot apply the generated contract.
     s/sync-apim-openapi "${openapi_document}"
 else
     echo "APIM OpenAPI synchronization skipped: configure AZURE_APIM_SERVICE_NAME and AZURE_APIM_API_ID."

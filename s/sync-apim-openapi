@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
+# Validate one runtime-generated OpenAPI document and import it into an existing
+# Azure API Management API or revision. This script never generates a schema;
+# s/ci supplies the body captured from the verified Container App revision.
+
 set -euo pipefail
 
+# Keep argument parsing explicit because --dry-run still performs validation and
+# reads the Azure target, but must stop before the mutating import operation.
 usage() {
     cat <<'EOF'
 Usage: s/sync-apim-openapi [--dry-run] OPENAPI_DOCUMENT
@@ -30,6 +36,8 @@ if [[ $# -ne 1 ]]; then
 fi
 openapi_document=$1
 
+# Fail with actionable errors before contacting Azure or partially processing a
+# document when the runner is missing one of the required command-line tools.
 for command in az jq openapi-spec-validator; do
     command -v "${command}" >/dev/null || {
         echo "Required command not found: ${command}" >&2
@@ -41,6 +49,9 @@ done
 : "${AZURE_APIM_API_ID:?AZURE_APIM_API_ID is required}"
 azure_apim_resource_group="${AZURE_APIM_RESOURCE_GROUP:-${AZURE_RESOURCE_GROUP:?AZURE_APIM_RESOURCE_GROUP or AZURE_RESOURCE_GROUP is required}}"
 
+# Validate standards compliance first, then explicitly require OpenAPI 3. The
+# validator accepts other OpenAPI generations, while this deployment contract
+# is intentionally limited to version 3 documents.
 if [[ ! -f "${openapi_document}" ]]; then
     echo "OpenAPI document not found: ${openapi_document}" >&2
     exit 1
@@ -49,6 +60,10 @@ fi
 openapi-spec-validator "${openapi_document}"
 jq -e '.openapi | type == "string" and startswith("3.")' "${openapi_document}" >/dev/null
 
+# Read the target before importing. Besides proving that the OIDC identity can
+# access the configured API/revision, this preserves APIM-owned routing values
+# rather than replacing them with assumptions from the source repository. A
+# non-current revision is addressed by an API ID such as growth-charts;rev=2.
 api=$(az apim api show \
     --service-name "${AZURE_APIM_SERVICE_NAME}" \
     --resource-group "${azure_apim_resource_group}" \
@@ -64,11 +79,17 @@ echo "APIM API: ${AZURE_APIM_API_ID}"
 echo "APIM path: ${api_path}"
 echo "APIM backend: ${api_service_url}"
 
+# A dry run intentionally includes target lookup so it catches an incorrect API
+# ID, resource group, missing backend URL, or insufficient read permission.
 if ${dry_run}; then
     echo "Dry run only; no APIM changes made."
     exit 0
 fi
 
+# Updating an existing API from OpenAPI can delete operations that are absent
+# from the document. Stable operationId values allow APIM to update matching
+# operations in place and retain their policies. The first rollout targets a
+# non-current revision so these effects can be inspected before using live APIM.
 az apim api import \
     --service-name "${AZURE_APIM_SERVICE_NAME}" \
     --resource-group "${azure_apim_resource_group}" \
