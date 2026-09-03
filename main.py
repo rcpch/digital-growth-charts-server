@@ -24,9 +24,10 @@ from routers import (
     who,
 )
 from schemas import UnprocessableEntityResponse
+from server_metadata import API_SERVER_COMMIT, API_SERVER_VERSION
 
 
-version='5.0.0'  # this is set by bump version
+version = API_SERVER_VERSION
 
 # To ensure the API can only be accessed in production via our API gateway
 authorization_key = os.getenv('AUTHORIZATION_KEY')
@@ -61,14 +62,12 @@ async def authorization_key_middleware(request, call_next):
     
     return JSONResponse(status_code=403, content={"detail": "Forbidden"})
 
-github_sha = os.getenv('GITHUB_SHA')
-
 @app.middleware("http")
 async def include_github_sha_for_prout(request, call_next):
     response = await call_next(request)
     
-    if request.url.path == '/' and github_sha:
-        response.headers["X-Git-Revision"] = github_sha
+    if request.url.path == '/':
+        response.headers["X-Git-Revision"] = API_SERVER_COMMIT
 
     return response
 

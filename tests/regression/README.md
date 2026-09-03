@@ -32,7 +32,7 @@ git diff -- tests/regression/golden
 s/test tests/regression/test_api_regression.py
 ```
 
-`s/regression-accept` requires an explicit acceptance flag internally, replaces stale fixtures, and refuses to accept any new 5xx or non-JSON response. Two pre-existing 500 cases are temporarily allowlisted and tracked by [issue #285](https://github.com/rcpch/digital-growth-charts-server/issues/285); their exact current responses remain protected by goldens and no other server errors are permitted.
+`s/regression-accept` requires an explicit acceptance flag internally, replaces stale fixtures, and refuses to accept any new 5xx or non-JSON response. Two pre-existing 500 cases are temporarily allowlisted and tracked by [issue #285](https://github.com/rcpch/digital-growth-charts-server/issues/285); their exact current responses remain protected by goldens and no other server errors are permitted. The only build-dependent response value is `provenance.api_server.commit`: comparisons permit one valid 40-character Git commit to replace another, while still requiring the field, its format, and all other provenance values.
 
 Golden changes are evidence of an observable contract change, not proof that the new output is correct. Numerical changes need clinical or reference evidence, and intentional schema/error changes need an explanation in the pull request.
 

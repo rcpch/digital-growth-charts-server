@@ -1370,6 +1370,32 @@
                 ],
                 "title": "APIErrorDetail"
             },
+            "APIServer": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "const": "digital-growth-charts-server",
+                        "title": "Name"
+                    },
+                    "version": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Version"
+                    },
+                    "commit": {
+                        "type": "string",
+                        "pattern": "^(?:[0-9a-f]{40}|unknown)$",
+                        "title": "Commit"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "version",
+                    "commit"
+                ],
+                "title": "APIServer"
+            },
             "BirthData": {
                 "properties": {
                     "birth_date": {
@@ -3183,12 +3209,17 @@
                     },
                     "calculation_engine": {
                         "$ref": "#/components/schemas/CalculationEngine"
+                    },
+                    "api_server": {
+                        "$ref": "#/components/schemas/APIServer",
+                        "readOnly": true
                     }
                 },
                 "type": "object",
                 "required": [
                     "growth_reference",
-                    "calculation_engine"
+                    "calculation_engine",
+                    "api_server"
                 ],
                 "title": "Provenance"
             },

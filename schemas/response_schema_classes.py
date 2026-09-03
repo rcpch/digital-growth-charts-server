@@ -7,7 +7,10 @@ from datetime import date, datetime
 from typing import Annotated, Any, Dict, List, Literal, Optional
 
 # third party imports
-from pydantic import BaseModel, RootModel, AfterValidator
+from pydantic import AfterValidator, BaseModel, RootModel, StringConstraints, computed_field
+
+# local imports
+from server_metadata import API_SERVER_COMMIT, API_SERVER_NAME, API_SERVER_VERSION
 
 
 def rounded_centile(centile: float | None) -> float | None:
@@ -158,6 +161,14 @@ class CalculationEngine(BaseModel):
     commit: str
 
 
+class APIServer(BaseModel):
+    name: Literal["digital-growth-charts-server"]
+    version: Annotated[str, StringConstraints(min_length=1)]
+    commit: Annotated[
+        str, StringConstraints(pattern=r"^(?:[0-9a-f]{40}|unknown)$")
+    ]
+
+
 class Provenance(BaseModel):
     growth_reference: Literal[
         "uk-who",
@@ -168,6 +179,15 @@ class Provenance(BaseModel):
         "who",
     ]
     calculation_engine: CalculationEngine
+
+    @computed_field
+    @property
+    def api_server(self) -> APIServer:
+        return APIServer(
+            name=API_SERVER_NAME,
+            version=API_SERVER_VERSION,
+            commit=API_SERVER_COMMIT,
+        )
 
 
 class APIErrorDetail(BaseModel):

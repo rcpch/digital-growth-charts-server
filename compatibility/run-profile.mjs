@@ -177,7 +177,7 @@ function measurementsFromResponse(endpoint, response) {
   throw new Error(`Unsupported compatibility endpoint: ${endpoint}`);
 }
 
-function validateProvenance(measurements, job) {
+function validateProvenance(measurements, job, apiRevision) {
   const expectedReference = expectedProvenanceReference(job.reference);
   let engineIdentity;
   let engine;
@@ -195,6 +195,14 @@ function validateProvenance(measurements, job) {
       !/^[0-9a-f]{40}$/.test(candidate.commit || '')
     ) {
       throw new Error(`${job.name}[${index}] has invalid calculation-engine provenance`);
+    }
+    const apiServer = provenance.api_server;
+    if (
+      apiServer?.name !== 'digital-growth-charts-server' ||
+      !apiServer.version ||
+      apiServer.commit !== apiRevision
+    ) {
+      throw new Error(`${job.name}[${index}] has invalid API-server provenance`);
     }
     const identity = `${candidate.name}@${candidate.version}#${candidate.commit}`;
     if (engineIdentity && identity !== engineIdentity) {
@@ -220,7 +228,7 @@ async function fetchCandidateResponses(baseUrl) {
     const response = await post(baseUrl, job);
     const measurements = measurementsFromResponse(job.endpoint, response);
     if (measurements.length === 0) throw new Error(`${job.name} returned no measurements`);
-    const engine = validateProvenance(measurements, job);
+    const engine = validateProvenance(measurements, job, apiRevision);
     if (sharedEngine && engine.identity !== sharedEngine.identity) {
       throw new Error(`${job.name} used ${engine.identity}, but earlier cases used ${sharedEngine.identity}`);
     }

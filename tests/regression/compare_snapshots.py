@@ -13,10 +13,12 @@ check.
 
 import json
 import math
+import re
 import sys
 from pathlib import Path
 
 SNAPSHOT_DIR = Path(__file__).resolve().parent / "snapshots"
+COMMIT_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 
 
 def resolve(path_str: str) -> Path:
@@ -31,6 +33,14 @@ def resolve(path_str: str) -> Path:
 
 def diff_value(before, after, path=""):
     """Yield (path, before, after) for every leaf-level difference."""
+    if (
+        path.endswith(".provenance.api_server.commit")
+        and isinstance(before, str)
+        and isinstance(after, str)
+        and COMMIT_PATTERN.fullmatch(before)
+        and COMMIT_PATTERN.fullmatch(after)
+    ):
+        return
     if isinstance(before, dict) and isinstance(after, dict):
         keys = sorted(set(before) | set(after))
         for key in keys:

@@ -22,6 +22,7 @@ done
 
 THIS_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT="$(cd "$THIS_DIR/.." && pwd)"
+export GITHUB_SHA="${GITHUB_SHA:-$(git -C "$PROJECT_ROOT" rev-parse HEAD)}"
 
 SERVICES_RAW="$(docker compose config --services 2>/dev/null || true)"
 [[ -z "$SERVICES_RAW" ]] && { echo "ERROR: Could not read services"; exit 1; }

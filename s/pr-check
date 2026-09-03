@@ -2,6 +2,7 @@
 
 trap 'docker compose down' EXIT
 
+export GITHUB_SHA="${GITHUB_SHA:-$(git rev-parse HEAD)}"
 docker compose up -d
 s/test
 s/compatibility-test --reuse-api

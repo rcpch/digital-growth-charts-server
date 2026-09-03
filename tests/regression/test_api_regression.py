@@ -22,9 +22,14 @@ from tests.regression.golden import (
 CASES = all_cases()
 
 
-def test_snapshot_diff_ignores_only_machine_scale_float_noise():
+def test_snapshot_diff_ignores_expected_dynamic_values():
     assert list(diff_value(1.0, 1.0 + 1e-15)) == []
     assert list(diff_value(1.0, 1.0 + 1e-9)) == [("", 1.0, 1.0 + 1e-9)]
+    path = "body.provenance.api_server.commit"
+    assert list(diff_value("a" * 40, "b" * 40, path)) == []
+    assert list(diff_value("a" * 40, "unknown", path)) == [
+        (path, "a" * 40, "unknown")
+    ]
 
 
 @pytest.fixture(scope="module")

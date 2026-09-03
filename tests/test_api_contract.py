@@ -8,6 +8,7 @@ from fastapi.testclient import TestClient
 
 from main import app
 from schemas import UnprocessableEntityResponse
+from server_metadata import API_SERVER_COMMIT
 
 
 client = TestClient(app, raise_server_exceptions=False)
@@ -27,13 +28,19 @@ def test_api_version_is_consistent():
     committed_openapi = json.loads((PROJECT_ROOT / "openapi.json").read_text())
 
     assert {
-        "bumpversion:file:main.py",
+        "bumpversion:file:server_metadata.py",
         "bumpversion:file:CITATION.cff",
         "bumpversion:file:openapi.json",
     }.issubset(bumpversion_config.sections())
     assert app.openapi()["info"]["version"] == expected_version
     assert citation_version == expected_version
     assert committed_openapi["info"]["version"] == expected_version
+
+
+def test_root_identifies_api_server_commit():
+    response = client.get("/")
+
+    assert response.headers["X-Git-Revision"] == API_SERVER_COMMIT
 
 
 def test_native_validation_error_uses_standard_422_response():

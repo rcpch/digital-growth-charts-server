@@ -4,6 +4,8 @@ services:
       context: .
       args:
         - GITHUB_SHA=${GITHUB_SHA:-}
+    environment:
+      - GITHUB_SHA=${GITHUB_SHA:-}
     image: digital-growth-charts-server:built
     volumes:
       - .:/app

@@ -3,4 +3,5 @@
 # UNIX based systems may require special permissions to run this file
 # run chmod +x s/<filename> to allow this
 
+export GITHUB_SHA="${GITHUB_SHA:-$(git rev-parse HEAD)}"
 docker compose up
