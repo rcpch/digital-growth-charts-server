@@ -156,13 +156,13 @@ class MeasurementCalculatedValues(BaseModel):
 
 
 class CalculationEngine(BaseModel):
-    name: Literal["rcpchgrowth"]
+    name: Literal["rcpch/rcpchgrowth-python"]
     version: str
     commit: str
 
 
 class APIServer(BaseModel):
-    name: Literal["digital-growth-charts-server"]
+    name: Literal["rcpch/digital-growth-charts-server"]
     version: Annotated[str, StringConstraints(min_length=1)]
     commit: Annotated[
         str, StringConstraints(pattern=r"^(?:[0-9a-f]{40}|unknown)$")

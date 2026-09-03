@@ -190,7 +190,7 @@ function validateProvenance(measurements, job, apiRevision) {
     }
     const candidate = provenance.calculation_engine;
     if (
-      candidate?.name !== 'rcpchgrowth' ||
+      candidate?.name !== 'rcpch/rcpchgrowth-python' ||
       !candidate.version ||
       !/^[0-9a-f]{40}$/.test(candidate.commit || '')
     ) {
@@ -198,7 +198,7 @@ function validateProvenance(measurements, job, apiRevision) {
     }
     const apiServer = provenance.api_server;
     if (
-      apiServer?.name !== 'digital-growth-charts-server' ||
+      apiServer?.name !== 'rcpch/digital-growth-charts-server' ||
       !apiServer.version ||
       apiServer.commit !== apiRevision
     ) {

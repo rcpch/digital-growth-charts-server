@@ -49,7 +49,9 @@ def test_calculation_passes_through_package_provenance(endpoint, growth_referenc
     assert response.status_code == 200
     provenance = response.json()["provenance"]
     assert provenance["growth_reference"] == growth_reference
-    assert provenance["calculation_engine"]["name"] == "rcpchgrowth"
+    assert (
+        provenance["calculation_engine"]["name"] == "rcpch/rcpchgrowth-python"
+    )
     assert provenance["calculation_engine"]["version"] == distribution_version(
         "rcpchgrowth"
     )
@@ -132,7 +134,7 @@ def test_measurement_schema_rejects_invalid_reference_and_filters_unknown_fields
 def test_api_server_schema_rejects_invalid_build_identity():
     with pytest.raises(ValidationError):
         APIServer(
-            name="digital-growth-charts-server",
+            name="rcpch/digital-growth-charts-server",
             version="5.0.0",
             commit="not-a-commit",
         )
@@ -158,5 +160,5 @@ def test_openapi_documents_required_provenance_contract():
     assert schema["APIServer"]["required"] == ["name", "version", "commit"]
     assert (
         schema["APIServer"]["properties"]["name"]["const"]
-        == "digital-growth-charts-server"
+        == "rcpch/digital-growth-charts-server"
     )

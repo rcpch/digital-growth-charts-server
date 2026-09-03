@@ -3,7 +3,7 @@ import subprocess
 from pathlib import Path
 
 
-API_SERVER_NAME = "digital-growth-charts-server"
+API_SERVER_NAME = "rcpch/digital-growth-charts-server"
 API_SERVER_VERSION = "5.0.0"  # this is set by bump version
 
 

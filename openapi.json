@@ -1374,7 +1374,7 @@
                 "properties": {
                     "name": {
                         "type": "string",
-                        "const": "digital-growth-charts-server",
+                        "const": "rcpch/digital-growth-charts-server",
                         "title": "Name"
                     },
                     "version": {
@@ -1630,7 +1630,7 @@
                 "properties": {
                     "name": {
                         "type": "string",
-                        "const": "rcpchgrowth",
+                        "const": "rcpch/rcpchgrowth-python",
                         "title": "Name"
                     },
                     "version": {
