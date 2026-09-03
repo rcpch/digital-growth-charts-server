@@ -89,7 +89,11 @@ app.openapi = custom_openapi
 
 
 # Include the root endpoint (so it is _described_ in the APIspec).
-@app.get("/", tags=["openapi3"])
+@app.get(
+    "/",
+    tags=["openapi3"],
+    summary="API specification - APIM sync E2E test 2026-09-03",
+)
 def root():
     """
     # API spec endpoint
