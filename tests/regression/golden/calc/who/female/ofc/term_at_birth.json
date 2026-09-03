@@ -6,7 +6,7 @@
         "loc": [
           "body"
         ],
-        "msg": "A Head circumference of 50.0 cm in a girl of Birth date is more than +8 SD. Please recheck the measurement and date of birth.",
+        "msg": "A Head circumference of 50.0 cm in a girl at birth is more than +8 SD. Please recheck the measurement and date of birth.",
         "type": "value_error"
       }
     ]
