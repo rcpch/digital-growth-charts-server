@@ -1293,7 +1293,7 @@
                 "tags": [
                     "openapi3"
                 ],
-                "summary": "Root",
+                "summary": "API specification - APIM sync E2E test 2026-09-03",
                 "description": "# API spec endpoint\n* The root `/` API endpoint returns the openAPI3 specification in JSON format\n* This spec is also available in the root of the server code repository",
                 "operationId": "root__get",
                 "responses": {
