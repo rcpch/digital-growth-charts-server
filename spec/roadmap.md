@@ -26,6 +26,28 @@ Legend: [x] done, [~] in progress, [ ] not started
 
   Add a scheduled check in `digital-growth-charts-upptime` that compares the public APIM contract with the expected deployed API contract and alerts on drift. This complements deployment-time synchronization by detecting later manual or platform-side changes. Keep production credentials out of the monitor and validate the public surface only.
 
+## Chart-data lifecycle
+
+- [ ] **R11 - Replace checked-in generated chart coordinates with an explicit cache strategy**
+
+  The server currently persists generated chart-line coordinates as JSON under `chart-data/`, generates files only when they are absent, and serves existing files instead of recalculating the default centile collections. This makes the files an implicit cache with no invalidation when `rcpchgrowth` changes, as demonstrated by the corrected WHO age step tracked in React component [#224](https://github.com/rcpch/digital-growth-charts-react-component-library/issues/224). The API can calculate these coordinates on demand, while the React component separately bundles them to avoid repeated API calls and tracks dynamic loading in [#99](https://github.com/rcpch/digital-growth-charts-react-component-library/issues/99).
+
+  Inventory why the server-side JSON was introduced and whether measured request cost justifies caching. Prefer on-demand calculation if it is acceptably cheap. If caching is required, make it an explicit runtime or deployment cache keyed and invalidated by calculation-engine identity, reference, centile format, sex, and measurement method rather than source-controlled generated data. Acceptance requires benchmark evidence, removal or documented generation of the checked-in JSON, deterministic tests for cache invalidation and corrected WHO age grids, all API regression cases, and all supported React compatibility profiles to pass.
+
+## Restricted reference removal
+
+- [ ] **R12 - Remove Fenton from every Digital Growth Charts surface**
+
+  Permission to distribute this reference and its source data under the projects' open-source terms is unavailable. Remove it rather than retaining disabled code, empty response structures, fixtures, generated output, publications, ignore rules, or dependencies that contain it. This work must not remove or alter the separately licensed UK-WHO preterm reference.
+
+  Begin in `rcpchgrowth`: remove the reference constants and thresholds, disabled data loader, CDC dispatch and chart branches, tests, `.gitignore` and Binder cleanup rules, roadmap references, and the bundled CDC publication containing its LMS tables. Release the cleaned calculation package before changing downstream repositories.
+
+  Update the server and Chart Component as one reviewed contract migration. Upgrade the server to the cleaned `rcpchgrowth` release; remove the placeholder from CDC chart and mid-parental-height responses; remove the router example; regenerate or delete all affected `chart-data/`, regression goldens, and hand-written fixtures; and validate the intentional response change through the complete regression and compatibility matrices. In the Component, remove the interface property, positional CDC-segment lookup, filtering fallbacks, rendering workaround, test parameters, bundled chart modules, and generated build, Storybook, and cache artifacts. Replace positional assumptions with selection of the remaining named CDC infant and child segments, then publish a cleaned Component release.
+
+  Upgrade the React demo and SMART on FHIR application to the cleaned Component release and rebuild their lockfiles and generated outputs. Re-scan the Node server demo, native client, and other maintained consumers even where the initial audit found no tracked references. In the documentation source, remove the clinician-facing reference claim and retain only this exact explanation in the appropriate developer page: `Fenton is known but excluded because permission/open-source licensing is unavailable.` Rebuild the documentation site and search indexes from the cleaned source.
+
+  Acceptance requires case-insensitive scans of tracked source, repository history-independent build outputs, release packages, installed dependency trees, rendered documentation, and deployed API responses to find no reference name, data, schema key, fixture, or generated artifact except the single approved developer-documentation sentence. Remove the proper-name occurrences from this roadmap item when the work is complete so that the final tracked scan has that one documented exception. Record package versions and cross-repository pull requests as evidence, and require the Python suite, all 881 server regression cases, every supported Component compatibility profile, Component tests and Storybook build, and consumer builds to pass.
+
 ## Completed findings
 
 - [x] **R5 - Raise router HTTP exceptions instead of returning them**
