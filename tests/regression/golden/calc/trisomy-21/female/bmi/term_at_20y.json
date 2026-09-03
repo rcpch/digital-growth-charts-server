@@ -1,0 +1,16 @@
+{
+  "body": {
+    "detail": [
+      {
+        "input": "observation_value",
+        "loc": [
+          "body"
+        ],
+        "msg": "Trisomy BMI reference data does not exist > 18.82 y.",
+        "type": "value_error"
+      }
+    ]
+  },
+  "content_type": "application/json",
+  "status_code": 422
+}

@@ -46,7 +46,10 @@ def validate_observation_value(reference, values, observation_values=None):
     gestation_days = values.gestation_days
     observation_date = (observation_values or values).observation_date
     birth_date = values.birth_date
-    decimal_age  = corrected_decimal_age(birth_date=birth_date, observation_date=observation_date, gestation_weeks=gestation_weeks, gestation_days=gestation_days)
+    try:
+        decimal_age = corrected_decimal_age(birth_date=birth_date, observation_date=observation_date, gestation_weeks=gestation_weeks, gestation_days=gestation_days)
+    except Exception as e:
+        raise ValueError(e)
 
     try:
         calculated_sds = sds_for_measurement(
@@ -71,6 +74,14 @@ def validate_observation_value(reference, values, observation_values=None):
 
     units = "cm" if measurement_method in ["height", "ofc"] else "kg"
     boy_girl = "boy" if sex == "male" else "girl"
+    # chronological_calendar_age() returns the standalone label "Birth date"
+    # for an observation taken on the day of birth (age zero), rather than a
+    # noun phrase such as "3 years, 2 months" - it is not designed to be
+    # embedded mid-sentence. Interpolating it directly into "... in a {boy_girl}
+    # of {calendar_age} ..." therefore produced the grammatically incongruous
+    # "in a boy of Birth date is more than +8 SD ...". Build a phrase that
+    # reads correctly in both cases instead of interpolating the raw label.
+    age_phrase = "at birth" if calendar_age == "Birth date" else f"of {calendar_age}"
     if measurement_method == "bmi":
         units = "kg/m²"
         if calculated_sds < MINIMUM_BMI_ERROR_SDS:
@@ -81,8 +92,8 @@ def validate_observation_value(reference, values, observation_values=None):
         if measurement_method == "ofc":
             measurement_method = "Head circumference"
         if calculated_sds < MINIMUM_HEIGHT_WEIGHT_OFC_ERROR_SDS:
-            raise ValueError(f"A {measurement_method} of {observation_value} {units} in a {boy_girl} of {calendar_age} is less than -8 SD. Please recheck the measurement and date of birth.")
+            raise ValueError(f"A {measurement_method} of {observation_value} {units} in a {boy_girl} {age_phrase} is less than -8 SD. Please recheck the measurement and date of birth.")
         if calculated_sds > MAXIMUM_HEIGHT_WEIGHT_OFC_ERROR_SDS:
-            raise ValueError(f"A {measurement_method} of {observation_value} {units} in a {boy_girl} of {calendar_age} is more than +8 SD. Please recheck the measurement and date of birth.")
+            raise ValueError(f"A {measurement_method} of {observation_value} {units} in a {boy_girl} {age_phrase} is more than +8 SD. Please recheck the measurement and date of birth.")
 
     return values

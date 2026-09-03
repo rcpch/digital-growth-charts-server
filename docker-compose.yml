@@ -3,9 +3,30 @@ services:
     build:
       context: .
       args:
-        - GITHUB_SHA=${GITHUB_SHA}
+        - GITHUB_SHA=${GITHUB_SHA:-}
+    environment:
+      - GITHUB_SHA=${GITHUB_SHA:-}
     image: digital-growth-charts-server:built
     volumes:
       - .:/app
     ports:
       - "8000:8000"
+
+  compatibility-runner:
+    profiles:
+      - compatibility
+    build:
+      context: .
+      dockerfile: compatibility/Dockerfile
+    environment:
+      COMPATIBILITY_API_BASE_URL: ${COMPATIBILITY_API_BASE_URL:-http://growth-api:8000}
+      COMPATIBILITY_CACHE_DIR: /cache
+      COMPATIBILITY_RESULTS_DIR: /results
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - compatibility-cache:/cache
+      - ./test-results/compatibility:/results
+
+volumes:
+  compatibility-cache:

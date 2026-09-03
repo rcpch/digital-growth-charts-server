@@ -1,0 +1,16 @@
+{
+  "body": {
+    "detail": [
+      {
+        "input": "observations",
+        "loc": [
+          "body"
+        ],
+        "msg": "Number of observations exceeds maximum allowed (200).",
+        "type": "value_error"
+      }
+    ]
+  },
+  "content_type": "application/json",
+  "status_code": 422
+}

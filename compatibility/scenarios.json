@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "description": "Candidate API responses that every supported chart-component profile must consume.",
+  "series": {
+    "endpoint": "fictional-child-data",
+    "matrices": [
+      {
+        "reference": "uk-who",
+        "sexes": ["female", "male"],
+        "methods": ["height", "weight", "bmi", "ofc"]
+      },
+      {
+        "reference": "who",
+        "sexes": ["female", "male"],
+        "methods": ["height", "weight", "bmi", "ofc"]
+      },
+      {
+        "reference": "cdc",
+        "sexes": ["female", "male"],
+        "methods": ["height", "weight", "bmi", "ofc"]
+      },
+      {
+        "reference": "trisomy-21",
+        "sexes": ["female", "male"],
+        "methods": ["height", "weight", "bmi", "ofc"]
+      },
+      {
+        "reference": "trisomy-21-aap",
+        "sexes": ["female", "male"],
+        "methods": ["height", "weight", "bmi", "ofc"]
+      },
+      {
+        "reference": "turner",
+        "sexes": ["female"],
+        "methods": ["height"]
+      }
+    ],
+    "body": {
+      "start_chronological_age": 0,
+      "end_age": 20,
+      "measurement_interval_type": "months",
+      "measurement_interval_number": 24,
+      "start_sds": 0,
+      "drift": false,
+      "noise": false,
+      "gestation_weeks": 40,
+      "gestation_days": 0
+    }
+  },
+  "special": [
+    {
+      "name": "ukWhoFemaleWeightPreterm22",
+      "description": "22-week preterm girl, weight, first year",
+      "endpoint": "fictional-child-data",
+      "reference": "uk-who",
+      "body": {
+        "measurement_method": "weight",
+        "sex": "female",
+        "start_chronological_age": 0,
+        "end_age": 1,
+        "measurement_interval_type": "weeks",
+        "measurement_interval_number": 4,
+        "start_sds": 0,
+        "drift": false,
+        "noise": false,
+        "gestation_weeks": 22,
+        "gestation_days": 0
+      }
+    },
+    {
+      "name": "ukWhoMaleHeightPreterm30",
+      "description": "30-week preterm boy, height, first two years",
+      "endpoint": "fictional-child-data",
+      "reference": "uk-who",
+      "body": {
+        "measurement_method": "height",
+        "sex": "male",
+        "start_chronological_age": 0,
+        "end_age": 2,
+        "measurement_interval_type": "months",
+        "measurement_interval_number": 2,
+        "start_sds": 0,
+        "drift": false,
+        "noise": false,
+        "gestation_weeks": 30,
+        "gestation_days": 0
+      }
+    },
+    {
+      "name": "ukWhoFemaleHeightBoneAgeEvent",
+      "description": "Single measurement carrying bone age and an event annotation",
+      "endpoint": "calculation",
+      "reference": "uk-who",
+      "body": {
+        "birth_date": "2012-01-01",
+        "observation_date": "2022-01-01",
+        "measurement_method": "height",
+        "observation_value": 135,
+        "sex": "female",
+        "gestation_weeks": 40,
+        "gestation_days": 0,
+        "bone_age": 9.5,
+        "bone_age_type": "greulich-pyle",
+        "bone_age_centile": 50,
+        "bone_age_sds": 0,
+        "bone_age_text": "Bone age approximately 9.5 years",
+        "events_text": ["Started growth hormone"]
+      }
+    },
+    {
+      "name": "ukWhoFemaleHeightDuplicates",
+      "description": "Two identical observations for the allowDuplicates rendering path",
+      "endpoint": "bulk-calculation",
+      "reference": "uk-who",
+      "allowDuplicates": true,
+      "body": {
+        "birth_date": "2018-01-01",
+        "sex": "female",
+        "measurement_method": "height",
+        "gestation_weeks": 40,
+        "gestation_days": 0,
+        "observations": [
+          {
+            "observation_date": "2022-01-01",
+            "observation_value": 100
+          },
+          {
+            "observation_date": "2022-01-01",
+            "observation_value": 100
+          }
+        ]
+      }
+    }
+  ]
+}

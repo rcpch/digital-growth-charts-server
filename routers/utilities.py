@@ -62,10 +62,10 @@ def mid_parental_height_endpoint(mid_parental_height_request: MidParentalHeightR
     mph_upper_centile_data = None
 
     try:
-        maternal_height_sds = sds_for_measurement(age=20, measurement_method=constants.HEIGHT, observation_value=mid_parental_height_request.height_maternal, sex='female', reference=mid_parental_height_request.reference)
-        paternal_height_sds = sds_for_measurement(age=20, measurement_method=constants.HEIGHT, observation_value=mid_parental_height_request.height_paternal, sex='male', reference=mid_parental_height_request.reference)
+        maternal_height_sds = sds_for_measurement(age=adult_age, measurement_method=constants.HEIGHT, observation_value=mid_parental_height_request.height_maternal, sex='female', reference=mid_parental_height_request.reference)
+        paternal_height_sds = sds_for_measurement(age=adult_age, measurement_method=constants.HEIGHT, observation_value=mid_parental_height_request.height_paternal, sex='male', reference=mid_parental_height_request.reference)
     except Exception as e:
-        raise Exception(f"Error: {e}")
+        raise HTTPException(status_code=422, detail=f"Error: {e}")
     
     if paternal_height_sds < -8 or maternal_height_sds < -8 or paternal_height_sds > 8 or maternal_height_sds > 8:
         errors = []

@@ -1,0 +1,161 @@
+{
+  "body": {
+    "birth_data": {
+      "birth_date": "2015-06-15",
+      "estimated_date_delivery": "2015-08-10",
+      "estimated_date_delivery_string": "Mon 10 August, 2015",
+      "gestation_days": 0,
+      "gestation_weeks": 32,
+      "sex": "male"
+    },
+    "bone_age": {
+      "bone_age": null,
+      "bone_age_centile": null,
+      "bone_age_sds": null,
+      "bone_age_text": null,
+      "bone_age_type": null
+    },
+    "child_observation_value": {
+      "measurement_method": "ofc",
+      "observation_value": 50.0,
+      "observation_value_error": null
+    },
+    "events_data": {
+      "events_text": null
+    },
+    "measurement_calculated_values": {
+      "chronological_centile": 86.6469,
+      "chronological_centile_band": "This head circumference measurement is between the 75th and 91st centiles.",
+      "chronological_measurement_error": null,
+      "chronological_percentage_median_bmi": null,
+      "chronological_sds": 1.1098555036748277,
+      "corrected_centile": 90.0805,
+      "corrected_centile_band": "This head circumference measurement is on or near the 91st centile.",
+      "corrected_measurement_error": null,
+      "corrected_percentage_median_bmi": null,
+      "corrected_sds": 1.2861508849357994
+    },
+    "measurement_dates": {
+      "chronological_calendar_age": "2 years, 1 month, 3 weeks and 4 days",
+      "chronological_decimal_age": 2.1519507186858315,
+      "chronological_decimal_age_error": null,
+      "comments": {
+        "clinician_chronological_decimal_age_comment": "No correction has been made for gestational age.",
+        "clinician_corrected_decimal_age_comment": "Correction for gestational age has been made.",
+        "lay_chronological_decimal_age_comment": "This is your child's age without taking into account their gestation at birth.",
+        "lay_corrected_decimal_age_comment": "Because your child was born at 32+0 weeks gestation an adjustment has been made to take this into account."
+      },
+      "corrected_calendar_age": "1 year, 11 months, 4 weeks and 2 days",
+      "corrected_decimal_age": 1.998631074606434,
+      "corrected_decimal_age_error": null,
+      "corrected_gestational_age": {
+        "corrected_gestation_days": null,
+        "corrected_gestation_weeks": null
+      },
+      "observation_date": "2017-08-09"
+    },
+    "plottable_data": {
+      "centile_data": {
+        "chronological_decimal_age_data": {
+          "age_error": null,
+          "age_type": "chronological_age",
+          "b": null,
+          "bone_age_centile": null,
+          "bone_age_label": null,
+          "bone_age_sds": null,
+          "bone_age_type": null,
+          "calendar_age": "2 years, 1 month, 3 weeks and 4 days",
+          "centile": 86.6469,
+          "centile_band": "This head circumference measurement is between the 75th and 91st centiles.",
+          "clinician_comment": "No correction has been made for gestational age.",
+          "events_text": null,
+          "lay_comment": "This is your child's age without taking into account their gestation at birth.",
+          "observation_error": null,
+          "observation_value_error": null,
+          "sds": 1.1098555036748277,
+          "x": 2.1519507186858315,
+          "y": 50.0
+        },
+        "corrected_decimal_age_data": {
+          "age_error": null,
+          "age_type": "corrected_age",
+          "b": null,
+          "bone_age_centile": null,
+          "bone_age_label": null,
+          "bone_age_sds": null,
+          "bone_age_type": null,
+          "calendar_age": "1 year, 11 months, 4 weeks and 2 days",
+          "centile": 90.0805,
+          "centile_band": "This head circumference measurement is on or near the 91st centile.",
+          "clinician_comment": "Correction for gestational age has been made.",
+          "corrected_gestational_age": "",
+          "events_text": null,
+          "lay_comment": "Because your child was born at 32+0 weeks gestation an adjustment has been made to take this into account.",
+          "observation_error": null,
+          "observation_value_error": null,
+          "sds": 1.2861508849357994,
+          "x": 1.998631074606434,
+          "y": 50.0
+        }
+      },
+      "sds_data": {
+        "chronological_decimal_age_data": {
+          "age_error": null,
+          "age_type": "chronological_age",
+          "b": null,
+          "bone_age_centile": null,
+          "bone_age_label": null,
+          "bone_age_sds": null,
+          "bone_age_type": null,
+          "calendar_age": "2 years, 1 month, 3 weeks and 4 days",
+          "centile": 86.6469,
+          "centile_band": "This head circumference measurement is between the 75th and 91st centiles.",
+          "clinician_comment": "No correction has been made for gestational age.",
+          "events_text": null,
+          "lay_comment": "This is your child's age without taking into account their gestation at birth.",
+          "observation_error": null,
+          "observation_value_error": null,
+          "sds": null,
+          "x": 2.1519507186858315,
+          "y": 1.1098555036748277
+        },
+        "corrected_decimal_age_data": {
+          "age_error": null,
+          "age_type": "corrected_age",
+          "b": null,
+          "bone_age_centile": null,
+          "bone_age_label": null,
+          "bone_age_sds": null,
+          "bone_age_type": null,
+          "calendar_age": "1 year, 11 months, 4 weeks and 2 days",
+          "centile": 90.0805,
+          "centile_band": "This head circumference measurement is on or near the 91st centile.",
+          "clinician_comment": "Correction for gestational age has been made.",
+          "corrected_gestational_age": "",
+          "events_text": null,
+          "lay_comment": "Because your child was born at 32+0 weeks gestation an adjustment has been made to take this into account.",
+          "observation_error": null,
+          "observation_value_error": null,
+          "sds": null,
+          "x": 1.998631074606434,
+          "y": 1.2861508849357994
+        }
+      }
+    },
+    "provenance": {
+      "api_server": {
+        "commit": "7adef7a288e791902621b5cded96c5c7dfbb34a4",
+        "name": "rcpch/digital-growth-charts-server",
+        "version": "5.0.0"
+      },
+      "calculation_engine": {
+        "commit": "f651cf4d94ad21472681b62997be86b082980736",
+        "name": "rcpch/rcpchgrowth-python",
+        "version": "4.6.2"
+      },
+      "growth_reference": "who"
+    }
+  },
+  "content_type": "application/json",
+  "status_code": 200
+}

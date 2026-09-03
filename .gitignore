@@ -145,3 +145,13 @@ cython_debug/
 .DS_Store
 
 
+
+# Private files
+.private
+
+# Regression sweep snapshots - regenerated on demand, not committed.
+# See tests/regression/README.md.
+tests/regression/snapshots/*.json
+
+# Actual responses are retained only when a golden regression test fails.
+test-results/

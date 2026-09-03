@@ -1,0 +1,7 @@
+{
+  "body": {
+    "__non_json_response__": "Internal Server Error"
+  },
+  "content_type": "text/plain",
+  "status_code": 500
+}

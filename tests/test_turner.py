@@ -13,6 +13,7 @@ import pytest
 
 # local / rcpch imports
 from main import app
+from tests import without_provenance
 
 client = TestClient(app)
 
@@ -39,7 +40,7 @@ def test_turner_calculation_with_valid_request():
     
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
     expected = json.loads(calculation_file)
-    actual = response.json()
+    actual = without_provenance(response.json())
 
     TestCase().assertDictEqual(expected, actual)
 
@@ -169,7 +170,7 @@ def test_turner_fictional_child_data_with_valid_request():
     
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
     expected = json.loads(fictional_child_data_file)
-    actual = response.json()
+    actual = without_provenance(response.json())
 
     TestCase().assertListEqual(expected, actual)
 
@@ -259,7 +260,9 @@ def test_turner_fictional_child_data_with_weight_measurement_method():
     response = client.post("/turner/fictional-child-data", json=body)
 
     assert response.status_code == 422
-    assert response.json() == {"detail": "Turner's Syndrome data only exists for height."}
+    assert response.json()["detail"][0]["msg"] == (
+        "Turner's Syndrome data only exists for height."
+    )
 
 def test_turner_fictional_child_data_with_male_sex():
     body = {
@@ -281,4 +284,6 @@ def test_turner_fictional_child_data_with_male_sex():
     response = client.post("/turner/fictional-child-data", json=body)
 
     assert response.status_code == 422
-    assert response.json() == {"detail": "Turner's Syndrome data only exists for girls."}
+    assert response.json()["detail"][0]["msg"] == (
+        "Turner's Syndrome data only exists for girls."
+    )

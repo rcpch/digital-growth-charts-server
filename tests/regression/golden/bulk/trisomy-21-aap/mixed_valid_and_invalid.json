@@ -1,0 +1,195 @@
+{
+  "body": {
+    "results": [
+      {
+        "ctx": null,
+        "input": "observation_value",
+        "loc": [
+          "body"
+        ],
+        "msg": "Reference data absent: No Trisomy 21 (AAP) reference data exists below 1 month of age for height or head circumference.",
+        "type": "value_error",
+        "url": null
+      },
+      {
+        "ctx": null,
+        "input": "observation_value",
+        "loc": [
+          "body"
+        ],
+        "msg": "A height of 100.0 cm in a girl of 11 months, 4 weeks and 2 days is more than +8 SD. Please recheck the measurement and date of birth.",
+        "type": "value_error",
+        "url": null
+      },
+      {
+        "birth_data": {
+          "birth_date": "2015-06-15",
+          "estimated_date_delivery": "2015-06-15",
+          "estimated_date_delivery_string": "Mon 15 June, 2015",
+          "gestation_days": 0,
+          "gestation_weeks": 40,
+          "sex": "female"
+        },
+        "bone_age": {
+          "bone_age": null,
+          "bone_age_centile": null,
+          "bone_age_sds": null,
+          "bone_age_text": null,
+          "bone_age_type": null
+        },
+        "child_observation_value": {
+          "measurement_method": "height",
+          "observation_value": 100.0,
+          "observation_value_error": null
+        },
+        "events_data": {
+          "events_text": null
+        },
+        "measurement_calculated_values": {
+          "chronological_centile": 61.3869,
+          "chronological_centile_band": "This height measurement is between the 50th and 75th centiles.",
+          "chronological_measurement_error": null,
+          "chronological_percentage_median_bmi": null,
+          "chronological_sds": 0.2894163345894208,
+          "corrected_centile": 61.3869,
+          "corrected_centile_band": "This height measurement is between the 50th and 75th centiles.",
+          "corrected_measurement_error": null,
+          "corrected_percentage_median_bmi": null,
+          "corrected_sds": 0.2894163345894208
+        },
+        "measurement_dates": {
+          "chronological_calendar_age": "4 years, 11 months, 4 weeks and 2 days",
+          "chronological_decimal_age": 4.999315537303217,
+          "chronological_decimal_age_error": null,
+          "comments": {
+            "clinician_chronological_decimal_age_comment": "Born Term. No correction has been made for gestation.",
+            "clinician_corrected_decimal_age_comment": "Born at term. No correction has been made for gestation.",
+            "lay_chronological_decimal_age_comment": "Your child was born on their due date.",
+            "lay_corrected_decimal_age_comment": "Your child was born on their due date."
+          },
+          "corrected_calendar_age": "4 years, 11 months, 4 weeks and 2 days",
+          "corrected_decimal_age": 4.999315537303217,
+          "corrected_decimal_age_error": null,
+          "corrected_gestational_age": {
+            "corrected_gestation_days": null,
+            "corrected_gestation_weeks": null
+          },
+          "observation_date": "2020-06-14"
+        },
+        "plottable_data": {
+          "centile_data": {
+            "chronological_decimal_age_data": {
+              "age_error": null,
+              "age_type": "chronological_age",
+              "b": null,
+              "bone_age_centile": null,
+              "bone_age_label": null,
+              "bone_age_sds": null,
+              "bone_age_type": null,
+              "calendar_age": "4 years, 11 months, 4 weeks and 2 days",
+              "centile": 61.3869,
+              "centile_band": "This height measurement is between the 50th and 75th centiles.",
+              "clinician_comment": "Born Term. No correction has been made for gestation.",
+              "events_text": null,
+              "lay_comment": "Your child was born on their due date.",
+              "observation_error": null,
+              "observation_value_error": null,
+              "sds": 0.2894163345894208,
+              "x": 4.999315537303217,
+              "y": 100.0
+            },
+            "corrected_decimal_age_data": {
+              "age_error": null,
+              "age_type": "corrected_age",
+              "b": null,
+              "bone_age_centile": null,
+              "bone_age_label": null,
+              "bone_age_sds": null,
+              "bone_age_type": null,
+              "calendar_age": "4 years, 11 months, 4 weeks and 2 days",
+              "centile": 61.3869,
+              "centile_band": "This height measurement is between the 50th and 75th centiles.",
+              "clinician_comment": "Born at term. No correction has been made for gestation.",
+              "corrected_gestational_age": "",
+              "events_text": null,
+              "lay_comment": "Your child was born on their due date.",
+              "observation_error": null,
+              "observation_value_error": null,
+              "sds": 0.2894163345894208,
+              "x": 4.999315537303217,
+              "y": 100.0
+            }
+          },
+          "sds_data": {
+            "chronological_decimal_age_data": {
+              "age_error": null,
+              "age_type": "chronological_age",
+              "b": null,
+              "bone_age_centile": null,
+              "bone_age_label": null,
+              "bone_age_sds": null,
+              "bone_age_type": null,
+              "calendar_age": "4 years, 11 months, 4 weeks and 2 days",
+              "centile": 61.3869,
+              "centile_band": "This height measurement is between the 50th and 75th centiles.",
+              "clinician_comment": "Born Term. No correction has been made for gestation.",
+              "events_text": null,
+              "lay_comment": "Your child was born on their due date.",
+              "observation_error": null,
+              "observation_value_error": null,
+              "sds": null,
+              "x": 4.999315537303217,
+              "y": 0.2894163345894208
+            },
+            "corrected_decimal_age_data": {
+              "age_error": null,
+              "age_type": "corrected_age",
+              "b": null,
+              "bone_age_centile": null,
+              "bone_age_label": null,
+              "bone_age_sds": null,
+              "bone_age_type": null,
+              "calendar_age": "4 years, 11 months, 4 weeks and 2 days",
+              "centile": 61.3869,
+              "centile_band": "This height measurement is between the 50th and 75th centiles.",
+              "clinician_comment": "Born at term. No correction has been made for gestation.",
+              "corrected_gestational_age": "",
+              "events_text": null,
+              "lay_comment": "Your child was born on their due date.",
+              "observation_error": null,
+              "observation_value_error": null,
+              "sds": null,
+              "x": 4.999315537303217,
+              "y": 0.2894163345894208
+            }
+          }
+        },
+        "provenance": {
+          "api_server": {
+            "commit": "7adef7a288e791902621b5cded96c5c7dfbb34a4",
+            "name": "rcpch/digital-growth-charts-server",
+            "version": "5.0.0"
+          },
+          "calculation_engine": {
+            "commit": "f651cf4d94ad21472681b62997be86b082980736",
+            "name": "rcpch/rcpchgrowth-python",
+            "version": "4.6.2"
+          },
+          "growth_reference": "trisomy-21-aap"
+        }
+      },
+      {
+        "ctx": null,
+        "input": "observation_value",
+        "loc": [
+          "body"
+        ],
+        "msg": "A height of 300.0 cm in a girl of 4 years, 11 months, 4 weeks and 2 days is more than +8 SD. Please recheck the measurement and date of birth.",
+        "type": "value_error",
+        "url": null
+      }
+    ]
+  },
+  "content_type": "application/json",
+  "status_code": 200
+}

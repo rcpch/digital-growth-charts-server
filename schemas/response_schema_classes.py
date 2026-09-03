@@ -3,12 +3,14 @@ In this file we define or import the response schemas
 """
 
 # standard imports
-from typing import Dict, List, Optional, Literal, Annotated
 from datetime import date, datetime
+from typing import Annotated, Any, Dict, List, Literal, Optional
 
 # third party imports
-from pydantic import BaseModel, RootModel, AfterValidator
-from pydantic_core import ErrorDetails 
+from pydantic import AfterValidator, BaseModel, RootModel, StringConstraints, computed_field
+
+# local imports
+from server_metadata import API_SERVER_COMMIT, API_SERVER_NAME, API_SERVER_VERSION
 
 
 def rounded_centile(centile: float | None) -> float | None:
@@ -153,7 +155,56 @@ class MeasurementCalculatedValues(BaseModel):
     chronological_percentage_median_bmi: Optional[float] = None
 
 
+class CalculationEngine(BaseModel):
+    name: Literal["rcpch/rcpchgrowth-python"]
+    version: str
+    commit: str
+
+
+class APIServer(BaseModel):
+    name: Literal["rcpch/digital-growth-charts-server"]
+    version: Annotated[str, StringConstraints(min_length=1)]
+    commit: Annotated[
+        str, StringConstraints(pattern=r"^(?:[0-9a-f]{40}|unknown)$")
+    ]
+
+
+class Provenance(BaseModel):
+    growth_reference: Literal[
+        "uk-who",
+        "trisomy-21",
+        "trisomy-21-aap",
+        "turners-syndrome",
+        "cdc",
+        "who",
+    ]
+    calculation_engine: CalculationEngine
+
+    @computed_field
+    @property
+    def api_server(self) -> APIServer:
+        return APIServer(
+            name=API_SERVER_NAME,
+            version=API_SERVER_VERSION,
+            commit=API_SERVER_COMMIT,
+        )
+
+
+class APIErrorDetail(BaseModel):
+    type: str
+    loc: List[str | int]
+    msg: str
+    input: Any = None
+    ctx: Optional[Dict[str, Any]] = None
+    url: Optional[str] = None
+
+
+class UnprocessableEntityResponse(BaseModel):
+    detail: List[APIErrorDetail]
+
+
 class MeasurementObject(BaseModel):
+    provenance: Provenance
     birth_data: BirthData
     measurement_dates: MeasurementDates
     child_observation_value: ChildObservationValue
@@ -168,7 +219,7 @@ class BulkMeasurementObject(BaseModel):
     # existing chart component without modification.
     #
     # Return errors inline to allow partial plotting of valid measurements.
-    results: List[MeasurementObject | ErrorDetails]
+    results: List[MeasurementObject | APIErrorDetail]
 
 
 class Data(BaseModel):

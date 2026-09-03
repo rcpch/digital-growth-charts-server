@@ -234,7 +234,7 @@ def who_chart_coordinates(chartParams: ChartCoordinateRequest):
                 is_sds=chartParams.is_sds,
             )
         except:
-            return HTTPException(
+            raise HTTPException(
                 status_code=422,
                 detail=f"Error creating {chartParams.sex} {chartParams.measurement_method} WHO chart on the server, using {chartParams.centile_format} centile format.",
             )
@@ -252,7 +252,7 @@ def who_chart_coordinates(chartParams: ChartCoordinateRequest):
             ) as file:
                 chart_data = json.load(file)
         else:
-            return HTTPException(
+            raise HTTPException(
                 status_code=422,
                 detail=f"Item not found: chart-data/{chartParams.centile_format}-{constants.WHO}-{chartParams.sex}-{chartParams.measurement_method}.json",
             )
@@ -287,7 +287,7 @@ def fictional_child_data(fictional_child_request: FictionalChildRequest):
         )
         return life_course_fictional_child_data
     except:
-        return HTTPException(
+        raise HTTPException(
             status_code=422,
             detail=f"Not possible to create WHO fictional child data.",
         )

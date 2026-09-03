@@ -13,6 +13,7 @@ import pytest
 
 # local / rcpch imports
 from main import app
+from tests import without_provenance
 
 client = TestClient(app)
 
@@ -45,7 +46,7 @@ def test_ukwho_calculation_with_valid_request():
     
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
     expected = json.loads(calculation_file)
-    actual = response.json()
+    actual = without_provenance(response.json())
 
     TestCase().assertDictEqual(expected, actual)
 
@@ -186,7 +187,7 @@ def test_ukwho_fictional_child_data_with_valid_request():
     
     # load the two JSON responses as Python Dicts so enable comparison (slow but more reliable)
     expected = json.loads(fictional_child_data_file)
-    actual = response.json()
+    actual = without_provenance(response.json())
 
     TestCase().assertListEqual(expected, actual)
 

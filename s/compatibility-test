@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+#
+# Run candidate API responses through every supported React component profile.
+# Docker is the only required local dependency. Pass --profile ID to run one
+# profile, --keep to retain temporary checkouts, or --reuse-api from s/pr-check.
+
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+if ! command -v docker >/dev/null 2>&1; then
+    echo "docker is required; install Docker with the Compose plugin first." >&2
+    exit 1
+fi
+if ! docker compose version >/dev/null 2>&1; then
+    echo "the Docker Compose plugin is required; install it before running this check." >&2
+    exit 1
+fi
+
+reuse_api=false
+list=false
+runner_args=()
+for argument in "$@"; do
+    case "$argument" in
+        --reuse-api)
+            reuse_api=true
+            ;;
+        --keep)
+            runner_args+=("$argument")
+            ;;
+        --list)
+            list=true
+            runner_args+=("$argument")
+            ;;
+        *)
+            runner_args+=("$argument")
+            ;;
+    esac
+done
+
+if [[ " ${runner_args[*]} " == *" --help "* ]]; then
+    cat <<'EOF'
+Usage: s/compatibility-test [--profile ID] [--keep] [--reuse-api] [--list]
+
+Runs the API-owned component compatibility matrix in Docker. By default the
+script rebuilds and starts the local candidate API. Set
+COMPATIBILITY_API_BASE_URL to test another API reachable from Docker.
+EOF
+    exit 0
+fi
+
+started_api=false
+if [[ "$list" == false && -z "${COMPATIBILITY_API_BASE_URL:-}" ]]; then
+    running_api="$(docker compose ps --status running -q growth-api)"
+    if [[ "$reuse_api" == true ]]; then
+        if [[ -z "$running_api" ]]; then
+            echo "--reuse-api requires the Compose growth-api service to be running." >&2
+            exit 1
+        fi
+    else
+        export GITHUB_SHA="${GITHUB_SHA:-$(git rev-parse HEAD)}"
+        docker compose up --build -d growth-api
+        if [[ -z "$running_api" ]]; then
+            started_api=true
+        fi
+    fi
+fi
+
+cleanup() {
+    if [[ "$started_api" == true ]]; then
+        docker compose down
+    fi
+}
+trap cleanup EXIT
+
+docker compose --profile compatibility build compatibility-runner
+
+run_command=(docker compose --profile compatibility run --rm --no-deps)
+component_repository="${COMPONENT_REPOSITORY_PATH:-$(dirname "$PWD")/digital-growth-charts-react-component-library}"
+if [[ -d "$component_repository/.git" ]]; then
+    run_command+=(--volume "$component_repository:/local-component-repository:ro")
+fi
+run_command+=(compatibility-runner)
+run_command+=("${runner_args[@]}")
+
+"${run_command[@]}"

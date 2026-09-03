@@ -4,17 +4,30 @@ from pathlib import Path
 import os
 
 # third party imports
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.exception_handlers import http_exception_handler
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 # local / rcpch imports
 from rcpchgrowth import chart_functions, constants
-from routers import trisomy_21, trisomy_21_aap, turners, uk_who, cdc, who, utilities
+from routers import (
+    cdc,
+    format_error,
+    trisomy_21,
+    trisomy_21_aap,
+    turners,
+    uk_who,
+    utilities,
+    who,
+)
+from schemas import UnprocessableEntityResponse
+from server_metadata import API_SERVER_COMMIT, API_SERVER_VERSION
 
 
-version='4.3.5'  # this is set by bump version
+version = API_SERVER_VERSION
 
 # To ensure the API can only be accessed in production via our API gateway
 authorization_key = os.getenv('AUTHORIZATION_KEY')
@@ -49,25 +62,51 @@ async def authorization_key_middleware(request, call_next):
     
     return JSONResponse(status_code=403, content={"detail": "Forbidden"})
 
-github_sha = os.getenv('GITHUB_SHA')
-
 @app.middleware("http")
 async def include_github_sha_for_prout(request, call_next):
     response = await call_next(request)
     
-    if request.url.path == '/' and github_sha:
-        response.headers["X-Git-Revision"] = github_sha
+    if request.url.path == '/':
+        response.headers["X-Git-Revision"] = API_SERVER_COMMIT
 
     return response
 
+
+@app.exception_handler(StarletteHTTPException)
+async def consistent_http_exception_handler(
+    request: Request, exception: StarletteHTTPException
+):
+    if exception.status_code == 422 and isinstance(exception.detail, str):
+        exception = StarletteHTTPException(
+            status_code=exception.status_code,
+            detail=[
+                format_error(
+                    loc=["request"],
+                    msg=exception.detail,
+                    error_type="value_error",
+                    input=None,
+                )
+            ],
+            headers=exception.headers,
+        )
+    return await http_exception_handler(request, exception)
+
+
 # Include routers for each type of endpoint.
-app.include_router(uk_who)
-app.include_router(turners)
-app.include_router(trisomy_21)
-app.include_router(trisomy_21_aap)
-app.include_router(cdc)
-app.include_router(who)
-app.include_router(utilities)
+unprocessable_entity_response = {
+    422: {
+        "model": UnprocessableEntityResponse,
+        "description": "Request validation or application-generated error",
+    }
+}
+
+app.include_router(uk_who, responses=unprocessable_entity_response)
+app.include_router(turners, responses=unprocessable_entity_response)
+app.include_router(trisomy_21, responses=unprocessable_entity_response)
+app.include_router(trisomy_21_aap, responses=unprocessable_entity_response)
+app.include_router(cdc, responses=unprocessable_entity_response)
+app.include_router(who, responses=unprocessable_entity_response)
+app.include_router(utilities, responses=unprocessable_entity_response)
 
 
 # Customise API metadata
