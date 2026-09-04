@@ -6,11 +6,13 @@ Legend: [x] done, [~] in progress, [ ] not started
 
 ## Contract reliability
 
-- [ ] **R1 - Support mathematically undefined extreme-centile chart points** ([GitHub #285](https://github.com/rcpch/digital-growth-charts-server/issues/285))
+- [x] **R1 - Support mathematically undefined extreme-centile chart points** ([GitHub #285](https://github.com/rcpch/digital-growth-charts-server/issues/285))
 
   The `eighty-five-percent-centiles` chart data contain 43 `null` values for CDC female weight and 25 for Trisomy 21 male BMI. These values are mathematically correct: for those ages, the inverse Box-Cox transform has no real solution at the 99.99th centile. The server currently declares `Data.y` as a non-nullable `float`, so the two chart requests fail response validation and return 500.
 
   Change `Data.y` to permit `null`, confirm that every supported React compatibility profile renders a line with gaps safely, and regenerate the two static chart assets if necessary. Remove both cases from the regression suite's known-500 allowlist while retaining them in the case matrix. Acceptance requires valid chart responses, focused tests, all 881 regression cases, and all component compatibility profiles to pass.
+
+  Completed in PR #290: `Data.y` is nullable, both cases return 200 with null `y` values pinned by a focused contract test, the known-500 allowlist is emptied, and the full regression and compatibility matrices pass.
 
 - [ ] **R2 - Decide the fate of `extended-who-centiles`**
 
