@@ -18,4 +18,9 @@ WORKDIR /app
 
 COPY . /app
 
+# The bind-mounted workspace is owned by the host user, so git refuses to
+# read it as a different uid ("dubious ownership") and provenance would
+# report "unknown". Trust it explicitly for local dev/test runs.
+RUN git config --global --add safe.directory /app
+
 CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
