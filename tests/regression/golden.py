@@ -15,10 +15,8 @@ API_BASE_URL = os.getenv("REGRESSION_BASE_URL", "http://127.0.0.1:8000")
 
 # These existing defects remain protected by exact goldens but do not permit
 # any other case to start returning 5xx. Remove each exception when #285 lands.
-KNOWN_SERVER_ERROR_CASES = {
-    "chart/cdc/female/weight/eighty-five-percent-centiles",
-    "chart/trisomy-21/male/bmi/eighty-five-percent-centiles",
-}
+# Issue #285 is closed: no known server errors remain.
+KNOWN_SERVER_ERROR_CASES: set[str] = set()
 
 
 def golden_path(case_id: str, root: Path = GOLDEN_DIR) -> Path:

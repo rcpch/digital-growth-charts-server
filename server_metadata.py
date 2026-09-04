@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 API_SERVER_NAME = "rcpch/digital-growth-charts-server"
-API_SERVER_VERSION = "5.0.0"  # this is set by bump version
+API_SERVER_VERSION = "5.1.0"  # this is set by bump version
 
 
 def _resolve_commit() -> str:

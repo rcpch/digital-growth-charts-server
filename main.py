@@ -120,6 +120,29 @@ def custom_openapi():
         description="Returns SDS and centiles for child growth measurements using growth references. Currently provides calculations based on the UK-WHO, Turner's Syndrome and Trisomy-21 references.",
         routes=app.routes,
     )
+
+    # Clients (including the embedded Swagger UI on the documentation site)
+    # resolve relative operation paths against these servers. Without this,
+    # "Try it out" requests are sent to the host serving the schema
+    # (e.g. raw.githubusercontent.com) instead of the API gateway (#284).
+    openapi_schema["servers"] = [
+        {"url": "https://api.rcpch.ac.uk/growth/v1", "description": "Production (Azure API Management)"},
+        {"url": "http://localhost:8000", "description": "Local development"},
+    ]
+
+    # The API gateway authenticates requests with a subscription key in the
+    # Subscription-Key header. Declaring the scheme lets Swagger UI prompt
+    # for a key and send it with "Try it out" requests.
+    openapi_schema["components"]["securitySchemes"] = {
+        "apiKey": {
+            "type": "apiKey",
+            "description": "API gateway subscription key. Requests without a valid key receive Unauthorized or Not Found (4xx) responses.",
+            "name": "Subscription-Key",
+            "in": "header",
+        }
+    }
+    openapi_schema["security"] = [{"apiKey": []}]
+
     app.openapi_schema = openapi_schema
     return app.openapi_schema
 

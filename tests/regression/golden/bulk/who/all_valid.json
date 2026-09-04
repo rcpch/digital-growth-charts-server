@@ -166,9 +166,9 @@
         },
         "provenance": {
           "api_server": {
-            "commit": "7adef7a288e791902621b5cded96c5c7dfbb34a4",
+            "commit": "c177e0422f738c183cd7a47fc53d90c08afe7b98",
             "name": "rcpch/digital-growth-charts-server",
-            "version": "5.0.0"
+            "version": "5.1.0"
           },
           "calculation_engine": {
             "commit": "f651cf4d94ad21472681b62997be86b082980736",

@@ -3,7 +3,7 @@
     "info": {
         "title": "RCPCH Digital Growth API",
         "description": "Returns SDS and centiles for child growth measurements using growth references. Currently provides calculations based on the UK-WHO, Turner's Syndrome and Trisomy-21 references.",
-        "version": "5.0.0"
+        "version": "5.1.0"
     },
     "paths": {
         "/uk-who/calculation": {
@@ -2294,15 +2294,21 @@
                         "title": "X"
                     },
                     "y": {
-                        "type": "number",
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Y"
                     }
                 },
                 "type": "object",
                 "required": [
                     "l",
-                    "x",
-                    "y"
+                    "x"
                 ],
                 "title": "Data"
             },
@@ -3274,6 +3280,29 @@
                 ],
                 "title": "UnprocessableEntityResponse"
             }
+        },
+        "securitySchemes": {
+            "apiKey": {
+                "type": "apiKey",
+                "description": "API gateway subscription key. Requests without a valid key receive Unauthorized or Not Found (4xx) responses.",
+                "name": "Subscription-Key",
+                "in": "header"
+            }
         }
-    }
+    },
+    "servers": [
+        {
+            "url": "https://api.rcpch.ac.uk/growth/v1",
+            "description": "Production (Azure API Management)"
+        },
+        {
+            "url": "http://localhost:8000",
+            "description": "Local development"
+        }
+    ],
+    "security": [
+        {
+            "apiKey": []
+        }
+    ]
 }

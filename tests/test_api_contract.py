@@ -109,3 +109,60 @@ def test_all_post_operations_document_standard_422_response():
 
     error_detail_schema = schema["components"]["schemas"]["APIErrorDetail"]
     assert set(error_detail_schema["required"]) == {"type", "loc", "msg"}
+
+
+def test_undefined_extreme_centile_chart_points_are_null_not_500():
+    # For some ages the inverse Box-Cox transform has no real solution at
+    # the 99.99th centile, so the engine emits y: null. The response model
+    # must accept null y values and return a valid chart response rather
+    # than failing validation with a 500 (#285).
+    for path in ("/cdc/chart-coordinates", "/trisomy-21/chart-coordinates"):
+        response = client.post(
+            path,
+            json={
+                "sex": "female" if "cdc" in path else "male",
+                "measurement_method": "weight" if "cdc" in path else "bmi",
+                "is_sds": False,
+                "centile_format": "eighty-five-percent-centiles",
+            },
+        )
+
+        assert response.status_code == 200, path
+        body = response.json()
+
+        null_ys = [
+            point
+            for segment in body["centile_data"]
+            if isinstance(segment, dict)
+            for reference in segment.values()
+            if isinstance(reference, dict)
+            for sex in reference.values()
+            if isinstance(sex, dict)
+            for measurement in sex.values()
+            if measurement
+            for series in measurement
+            for point in (series["data"] or [])
+            if point["y"] is None
+        ]
+        assert null_ys, path
+
+
+def test_openapi_declares_production_server_and_api_key_security():
+    # The embedded Swagger UI on the documentation site resolves relative
+    # operation paths against the declared servers and prompts for the
+    # declared security credentials. Without them, "Try it out" requests
+    # are sent to the host serving the schema instead of the API
+    # gateway (#284).
+    schema = app.openapi()
+
+    assert {
+        "url": "https://api.rcpch.ac.uk/growth/v1",
+        "description": "Production (Azure API Management)",
+    } in schema["servers"]
+
+    security_scheme = schema["components"]["securitySchemes"]["apiKey"]
+    assert security_scheme["type"] == "apiKey"
+    assert security_scheme["name"] == "Subscription-Key"
+    assert security_scheme["in"] == "header"
+
+    assert schema["security"] == [{"apiKey": []}]

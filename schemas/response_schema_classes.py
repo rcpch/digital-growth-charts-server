@@ -225,7 +225,10 @@ class BulkMeasurementObject(BaseModel):
 class Data(BaseModel):
     l: float
     x: float
-    y: float
+    # Mathematically undefined extreme-centile points (no real inverse
+    # Box-Cox solution) serialise as null. Renderers skip null points,
+    # leaving a gap in the line.
+    y: Optional[float] = None
 
 
 class Centile(BaseModel):
