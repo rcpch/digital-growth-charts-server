@@ -1,7 +1,6 @@
 """Tests for versioned API response contracts."""
 
 from configparser import ConfigParser
-import json
 from pathlib import Path
 
 from fastapi.testclient import TestClient
@@ -25,16 +24,17 @@ def test_api_version_is_consistent():
         for line in (PROJECT_ROOT / "CITATION.cff").read_text().splitlines()
         if line.startswith("version: ")
     )
-    committed_openapi = json.loads((PROJECT_ROOT / "openapi.json").read_text())
 
+    # The versioned schema is the runtime one served at /. There is no
+    # committed openapi.json: APIM imports the runtime document from the
+    # verified deployment, so the two cannot drift (#229).
     assert {
         "bumpversion:file:server_metadata.py",
         "bumpversion:file:CITATION.cff",
-        "bumpversion:file:openapi.json",
     }.issubset(bumpversion_config.sections())
+    assert not (PROJECT_ROOT / "openapi.json").exists()
     assert app.openapi()["info"]["version"] == expected_version
     assert citation_version == expected_version
-    assert committed_openapi["info"]["version"] == expected_version
 
 
 def test_root_identifies_api_server_commit():
