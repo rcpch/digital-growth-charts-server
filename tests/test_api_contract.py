@@ -145,3 +145,24 @@ def test_undefined_extreme_centile_chart_points_are_null_not_500():
             if point["y"] is None
         ]
         assert null_ys, path
+
+
+def test_openapi_declares_production_server_and_api_key_security():
+    # The embedded Swagger UI on the documentation site resolves relative
+    # operation paths against the declared servers and prompts for the
+    # declared security credentials. Without them, "Try it out" requests
+    # are sent to the host serving the schema instead of the API
+    # gateway (#284).
+    schema = app.openapi()
+
+    assert {
+        "url": "https://api.rcpch.ac.uk/growth/v1",
+        "description": "Production (Azure API Management)",
+    } in schema["servers"]
+
+    security_scheme = schema["components"]["securitySchemes"]["apiKey"]
+    assert security_scheme["type"] == "apiKey"
+    assert security_scheme["name"] == "Subscription-Key"
+    assert security_scheme["in"] == "header"
+
+    assert schema["security"] == [{"apiKey": []}]

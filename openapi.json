@@ -3280,6 +3280,29 @@
                 ],
                 "title": "UnprocessableEntityResponse"
             }
+        },
+        "securitySchemes": {
+            "apiKey": {
+                "type": "apiKey",
+                "description": "API gateway subscription key. Requests without a valid key receive Unauthorized or Not Found (4xx) responses.",
+                "name": "Subscription-Key",
+                "in": "header"
+            }
         }
-    }
+    },
+    "servers": [
+        {
+            "url": "https://api.rcpch.ac.uk/growth/v1",
+            "description": "Production (Azure API Management)"
+        },
+        {
+            "url": "http://localhost:8000",
+            "description": "Local development"
+        }
+    ],
+    "security": [
+        {
+            "apiKey": []
+        }
+    ]
 }
