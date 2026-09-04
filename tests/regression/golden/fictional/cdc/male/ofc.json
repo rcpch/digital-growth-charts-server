@@ -145,9 +145,9 @@
       },
       "provenance": {
         "api_server": {
-          "commit": "1f526b9e7e26273c6956ae69f00eaa5275a5159b",
+          "commit": "c177e0422f738c183cd7a47fc53d90c08afe7b98",
           "name": "rcpch/digital-growth-charts-server",
-          "version": "5.0.0"
+          "version": "5.1.0"
         },
         "calculation_engine": {
           "commit": "f651cf4d94ad21472681b62997be86b082980736",
@@ -302,9 +302,9 @@
       },
       "provenance": {
         "api_server": {
-          "commit": "1f526b9e7e26273c6956ae69f00eaa5275a5159b",
+          "commit": "c177e0422f738c183cd7a47fc53d90c08afe7b98",
           "name": "rcpch/digital-growth-charts-server",
-          "version": "5.0.0"
+          "version": "5.1.0"
         },
         "calculation_engine": {
           "commit": "f651cf4d94ad21472681b62997be86b082980736",
