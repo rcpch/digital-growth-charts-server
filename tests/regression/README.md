@@ -36,6 +36,8 @@ s/test tests/regression/test_api_regression.py
 
 Golden changes are evidence of an observable contract change, not proof that the new output is correct. Numerical changes need clinical or reference evidence, and intentional schema/error changes need an explanation in the pull request.
 
+The goldens retain the complete `provenance` structure, names, and growth-reference identity, but normalize the volatile API-server and calculation-engine version and commit values to stable sentinels. Focused provenance tests verify the real runtime values and schema constraints. This keeps routine releases from rewriting hundreds of otherwise unchanged goldens while still detecting missing provenance, renamed producers, incorrect references, and structural changes. Before-and-after dependency snapshots remain unnormalized so they continue to record the exact versions and commits under comparison.
+
 ## Before-and-after snapshots
 
 The dated snapshot tools remain available for investigations that need to compare two environments or dependency versions independently of the committed contract. They now use the same real HTTP transport as the CI suite.

@@ -13,6 +13,7 @@ from tests.regression.golden import (
     GOLDEN_DIR,
     KNOWN_SERVER_ERROR_CASES,
     golden_path,
+    normalize_result_for_golden,
     run_case,
     wait_for_api,
     write_result,
@@ -30,6 +31,51 @@ def test_snapshot_diff_ignores_expected_dynamic_values():
     assert list(diff_value("a" * 40, "unknown", path)) == [
         (path, "a" * 40, "unknown")
     ]
+
+
+def test_golden_normalization_replaces_only_volatile_provenance_values():
+    result = {
+        "status_code": 200,
+        "body": {
+            "results": [
+                {
+                    "provenance": {
+                        "growth_reference": "uk-who",
+                        "calculation_engine": {
+                            "name": "rcpch/rcpchgrowth-python",
+                            "version": "4.6.4",
+                            "commit": "a" * 40,
+                        },
+                        "api_server": {
+                            "name": "rcpch/digital-growth-charts-server",
+                            "version": "5.1.0",
+                            "commit": "b" * 40,
+                        },
+                    },
+                    "value": 42,
+                }
+            ]
+        },
+    }
+
+    normalized = normalize_result_for_golden(result)
+    provenance = normalized["body"]["results"][0]["provenance"]
+
+    assert provenance == {
+        "growth_reference": "uk-who",
+        "calculation_engine": {
+            "name": "rcpch/rcpchgrowth-python",
+            "version": "<calculation-engine-version>",
+            "commit": "<calculation-engine-commit>",
+        },
+        "api_server": {
+            "name": "rcpch/digital-growth-charts-server",
+            "version": "<api-server-version>",
+            "commit": "<api-server-commit>",
+        },
+    }
+    assert normalized["body"]["results"][0]["value"] == 42
+    assert result["body"]["results"][0]["provenance"]["api_server"]["version"] == "5.1.0"
 
 
 @pytest.fixture(scope="module")
@@ -74,7 +120,7 @@ def test_running_api_matches_golden(case, running_api):
         )
 
     expected = json.loads(expected_file.read_text())
-    differences = list(diff_value(expected, actual))
+    differences = list(diff_value(expected, normalize_result_for_golden(actual)))
     if differences:
         actual_file = golden_path(case["id"], FAILURE_DIR)
         write_result(actual_file, actual)

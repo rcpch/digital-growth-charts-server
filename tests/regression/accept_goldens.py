@@ -12,6 +12,7 @@ from tests.regression.golden import (
     GOLDEN_DIR,
     KNOWN_SERVER_ERROR_CASES,
     golden_path,
+    normalize_result_for_golden,
     run_case,
     wait_for_api,
     write_result,
@@ -58,7 +59,10 @@ def main() -> int:
                     and case["id"] not in KNOWN_SERVER_ERROR_CASES
                 ):
                     unexpected_non_json_responses.append(case["id"])
-                write_result(golden_path(case["id"], temporary_dir), result)
+                write_result(
+                    golden_path(case["id"], temporary_dir),
+                    normalize_result_for_golden(result),
+                )
 
         if unexpected_server_errors:
             joined = "\n  - ".join(unexpected_server_errors)
