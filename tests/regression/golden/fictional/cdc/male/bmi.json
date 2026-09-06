@@ -145,14 +145,14 @@
       },
       "provenance": {
         "api_server": {
-          "commit": "c177e0422f738c183cd7a47fc53d90c08afe7b98",
+          "commit": "<api-server-commit>",
           "name": "rcpch/digital-growth-charts-server",
-          "version": "5.1.0"
+          "version": "<api-server-version>"
         },
         "calculation_engine": {
-          "commit": "f651cf4d94ad21472681b62997be86b082980736",
+          "commit": "<calculation-engine-commit>",
           "name": "rcpch/rcpchgrowth-python",
-          "version": "4.6.2"
+          "version": "<calculation-engine-version>"
         },
         "growth_reference": "cdc"
       }
@@ -302,14 +302,14 @@
       },
       "provenance": {
         "api_server": {
-          "commit": "c177e0422f738c183cd7a47fc53d90c08afe7b98",
+          "commit": "<api-server-commit>",
           "name": "rcpch/digital-growth-charts-server",
-          "version": "5.1.0"
+          "version": "<api-server-version>"
         },
         "calculation_engine": {
-          "commit": "f651cf4d94ad21472681b62997be86b082980736",
+          "commit": "<calculation-engine-commit>",
           "name": "rcpch/rcpchgrowth-python",
-          "version": "4.6.2"
+          "version": "<calculation-engine-version>"
         },
         "growth_reference": "cdc"
       }
@@ -459,14 +459,14 @@
       },
       "provenance": {
         "api_server": {
-          "commit": "c177e0422f738c183cd7a47fc53d90c08afe7b98",
+          "commit": "<api-server-commit>",
           "name": "rcpch/digital-growth-charts-server",
-          "version": "5.1.0"
+          "version": "<api-server-version>"
         },
         "calculation_engine": {
-          "commit": "f651cf4d94ad21472681b62997be86b082980736",
+          "commit": "<calculation-engine-commit>",
           "name": "rcpch/rcpchgrowth-python",
-          "version": "4.6.2"
+          "version": "<calculation-engine-version>"
         },
         "growth_reference": "cdc"
       }
@@ -616,14 +616,14 @@
       },
       "provenance": {
         "api_server": {
-          "commit": "c177e0422f738c183cd7a47fc53d90c08afe7b98",
+          "commit": "<api-server-commit>",
           "name": "rcpch/digital-growth-charts-server",
-          "version": "5.1.0"
+          "version": "<api-server-version>"
         },
         "calculation_engine": {
-          "commit": "f651cf4d94ad21472681b62997be86b082980736",
+          "commit": "<calculation-engine-commit>",
           "name": "rcpch/rcpchgrowth-python",
-          "version": "4.6.2"
+          "version": "<calculation-engine-version>"
         },
         "growth_reference": "cdc"
       }
@@ -773,14 +773,14 @@
       },
       "provenance": {
         "api_server": {
-          "commit": "c177e0422f738c183cd7a47fc53d90c08afe7b98",
+          "commit": "<api-server-commit>",
           "name": "rcpch/digital-growth-charts-server",
-          "version": "5.1.0"
+          "version": "<api-server-version>"
         },
         "calculation_engine": {
-          "commit": "f651cf4d94ad21472681b62997be86b082980736",
+          "commit": "<calculation-engine-commit>",
           "name": "rcpch/rcpchgrowth-python",
-          "version": "4.6.2"
+          "version": "<calculation-engine-version>"
         },
         "growth_reference": "cdc"
       }
@@ -930,14 +930,14 @@
       },
       "provenance": {
         "api_server": {
-          "commit": "c177e0422f738c183cd7a47fc53d90c08afe7b98",
+          "commit": "<api-server-commit>",
           "name": "rcpch/digital-growth-charts-server",
-          "version": "5.1.0"
+          "version": "<api-server-version>"
         },
         "calculation_engine": {
-          "commit": "f651cf4d94ad21472681b62997be86b082980736",
+          "commit": "<calculation-engine-commit>",
           "name": "rcpch/rcpchgrowth-python",
-          "version": "4.6.2"
+          "version": "<calculation-engine-version>"
         },
         "growth_reference": "cdc"
       }
@@ -1087,14 +1087,14 @@
       },
       "provenance": {
         "api_server": {
-          "commit": "c177e0422f738c183cd7a47fc53d90c08afe7b98",
+          "commit": "<api-server-commit>",
           "name": "rcpch/digital-growth-charts-server",
-          "version": "5.1.0"
+          "version": "<api-server-version>"
         },
         "calculation_engine": {
-          "commit": "f651cf4d94ad21472681b62997be86b082980736",
+          "commit": "<calculation-engine-commit>",
           "name": "rcpch/rcpchgrowth-python",
-          "version": "4.6.2"
+          "version": "<calculation-engine-version>"
         },
         "growth_reference": "cdc"
       }
@@ -1244,14 +1244,14 @@
       },
       "provenance": {
         "api_server": {
-          "commit": "c177e0422f738c183cd7a47fc53d90c08afe7b98",
+          "commit": "<api-server-commit>",
           "name": "rcpch/digital-growth-charts-server",
-          "version": "5.1.0"
+          "version": "<api-server-version>"
         },
         "calculation_engine": {
-          "commit": "f651cf4d94ad21472681b62997be86b082980736",
+          "commit": "<calculation-engine-commit>",
           "name": "rcpch/rcpchgrowth-python",
-          "version": "4.6.2"
+          "version": "<calculation-engine-version>"
         },
         "growth_reference": "cdc"
       }
@@ -1401,14 +1401,14 @@
       },
       "provenance": {
         "api_server": {
-          "commit": "c177e0422f738c183cd7a47fc53d90c08afe7b98",
+          "commit": "<api-server-commit>",
           "name": "rcpch/digital-growth-charts-server",
-          "version": "5.1.0"
+          "version": "<api-server-version>"
         },
         "calculation_engine": {
-          "commit": "f651cf4d94ad21472681b62997be86b082980736",
+          "commit": "<calculation-engine-commit>",
           "name": "rcpch/rcpchgrowth-python",
-          "version": "4.6.2"
+          "version": "<calculation-engine-version>"
         },
         "growth_reference": "cdc"
       }
@@ -1558,14 +1558,14 @@
       },
       "provenance": {
         "api_server": {
-          "commit": "c177e0422f738c183cd7a47fc53d90c08afe7b98",
+          "commit": "<api-server-commit>",
           "name": "rcpch/digital-growth-charts-server",
-          "version": "5.1.0"
+          "version": "<api-server-version>"
         },
         "calculation_engine": {
-          "commit": "f651cf4d94ad21472681b62997be86b082980736",
+          "commit": "<calculation-engine-commit>",
           "name": "rcpch/rcpchgrowth-python",
-          "version": "4.6.2"
+          "version": "<calculation-engine-version>"
         },
         "growth_reference": "cdc"
       }

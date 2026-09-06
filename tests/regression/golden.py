@@ -1,5 +1,6 @@
 """Shared HTTP and fixture helpers for API response regression tests."""
 
+from copy import deepcopy
 import json
 import os
 import time
@@ -17,6 +18,17 @@ API_BASE_URL = os.getenv("REGRESSION_BASE_URL", "http://127.0.0.1:8000")
 # any other case to start returning 5xx. Remove each exception when #285 lands.
 # Issue #285 is closed: no known server errors remain.
 KNOWN_SERVER_ERROR_CASES: set[str] = set()
+
+PROVENANCE_SENTINELS = {
+    "calculation_engine": {
+        "version": "<calculation-engine-version>",
+        "commit": "<calculation-engine-commit>",
+    },
+    "api_server": {
+        "version": "<api-server-version>",
+        "commit": "<api-server-commit>",
+    },
+}
 
 
 def golden_path(case_id: str, root: Path = GOLDEN_DIR) -> Path:
@@ -53,6 +65,31 @@ def run_case(client: httpx.Client, case: dict) -> dict:
         "content_type": response.headers.get("content-type", "").partition(";")[0],
         "body": body,
     }
+
+
+def normalize_result_for_golden(result: dict) -> dict:
+    """Replace volatile provenance identities while retaining their contract shape."""
+    normalized = deepcopy(result)
+
+    def normalize(value) -> None:
+        if isinstance(value, dict):
+            provenance = value.get("provenance")
+            if isinstance(provenance, dict):
+                for component, sentinels in PROVENANCE_SENTINELS.items():
+                    identity = provenance.get(component)
+                    if not isinstance(identity, dict):
+                        continue
+                    for field, sentinel in sentinels.items():
+                        if field in identity:
+                            identity[field] = sentinel
+            for child in value.values():
+                normalize(child)
+        elif isinstance(value, list):
+            for child in value:
+                normalize(child)
+
+    normalize(normalized)
+    return normalized
 
 
 def write_result(path: Path, result: dict) -> None:
