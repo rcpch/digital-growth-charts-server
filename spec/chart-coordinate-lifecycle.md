@@ -13,7 +13,7 @@ It does **not** authorise:
 - **Keep the chart-coordinate HTTP endpoints.** There are consumers beyond the standard React component.
 - **Keep background curves bundled with the React component.** Don't introduce mandatory chart-data API requests, API-key requirements, or additional billable calls for existing React consumers.
 - **Treat the Python calculation engine as the single source of truth.** Server and React outputs should be reproducible from it, not maintained as independent numerical copies.
-- **Prefer a deployment-local disk cache, regenerated at server startup**, over an external cache service. Benchmark and validate startup cost before finalising this.
+- **Generate once per running process, and hold the result in memory.** No external cache service, and no disk persistence. A process only ever needs to calculate the supported coordinate matrix once, at startup; every request after that is served from memory for the life of that process. There is no measurable advantage to writing this to disk instead, and real disadvantages: an on-disk copy can silently outlive the engine version that produced it and get served to a later, different process, which is exactly the failure mode R11 exists to close.
 - **Remove generated server coordinates from Git only after** preserving the evidence needed to compare historical and freshly generated output.
 - **Treat changed curves as a clinical-data review, not a fixture refresh.** Even expected bug fixes need traceable evidence; unexpected discrepancies need investigation.
 
@@ -35,7 +35,7 @@ Don't attribute the historical design to an individual, or assume its original r
 
 Deduplicate **generation logic, reference selection, and generation parameters** - not necessarily every distributed byte.
 
-A server disk cache and an offline-capable React bundle can legitimately hold the same generated values for different consumers. Both must be reproducible from the same authoritative engine and an explicit generation specification, which should record:
+A server in-memory cache and an offline-capable React bundle can legitimately hold the same generated values for different consumers. Both must be reproducible from the same authoritative engine and an explicit generation specification, which should record:
 
 - reference, sex, measurement method
 - named format or custom values
@@ -44,36 +44,43 @@ A server disk cache and an offline-capable React bundle can legitimately hold th
 
 Don't assume existing React modules map one-to-one to the server's 164 files - inventory specialised SDS datasets and segment transformations first.
 
-React generation should run at build/release time, using a local engine or local server, with no production credentials and no billable requests. Two open decisions:
+### React generation as a CI build step
 
-- Should generated React source modules stay tracked in Git, or become release artifacts? (Shipping the data in the package is a separate decision from storing it in Git.)
-- Existing published component versions are already frozen and must be included in any impact assessment.
+React can't hold this data in memory the way the server can - a browser bundle has to ship something static. The leading proposal: a **CI build step in the Component repository** that, on release, installs the pinned `rcpchgrowth` release, runs the same generation specification as the server, and produces the bundled coordinate modules as a build output - rather than a developer hand-editing or manually regenerating them.
+
+This would mean:
+
+- Generation runs at CI time, against a released `rcpchgrowth` version, with no production credentials and no billable API requests.
+- The generation specification (reference, sex, measurement, format, age-grid rules, precision) is a single shared definition, so "the CI step produced this" is checkable independently of what the server does.
+- Every Component release records which `rcpchgrowth` version and commit generated its bundled data, so staleness is a answerable question ("this release's charts are from engine X") rather than an unknown.
+
+Two things still need deciding before this is implementable:
+
+- **Do the generated `.ts` modules stay tracked in Git**, committed by the CI step (reviewable diffs, but a bot-authored commit in history), **or become a release-time-only artifact** that's generated and packaged but never committed? Shipping the data in the npm package is a separate decision from storing it in Git.
+- Existing published Component versions are already frozen with today's (partly stale, partly mismatched-convention) bundled data and must be included in any impact assessment - this CI step only fixes new releases going forward.
 
 ## Proposed server startup lifecycle
 
 1. Resolve the installed engine version and build identity, and enumerate the supported coordinate-generation matrix. Explicitly exclude unsupported combinations rather than swallowing generation failures.
-2. Generate the complete required set into a fresh staging directory on **every** application-instance startup, even when previous files exist. Use a writable runtime location - don't require a writable source checkout.
+2. Generate the complete required set **once, in memory**, on **every** application-instance startup. Nothing is written to disk - there is no staging directory, no writable-runtime-location requirement, and no stale-file problem to solve, because there is no file.
 3. Validate the output: structure, coverage, finite coordinates (or explicitly permitted nulls), age grids, generation metadata. Nulls representing undefined inverse transforms are not generation failures.
-4. Publish the complete validated set atomically, and mark the instance ready only afterward. Failed generation must fail startup/readiness visibly - never silently fall back to stale or partial files.
-5. Serve the immutable published set for that instance's lifetime. Custom-list requests stay on-demand unless measurement establishes a reason to cache them separately.
+4. Hold the complete validated set in process memory (a module-level or app-state object), and mark the instance ready only afterward. Failed generation must fail startup/readiness visibly - never silently fall back to a partial or previous in-memory set.
+5. Serve the in-memory set for that instance's lifetime. Custom-list requests stay on-demand unless measurement establishes a reason to cache them separately.
 
 Startup here means **application lifecycle initialisation**, not Python module import. Things that need explicit handling:
 
-- multiple workers
+- multiple workers - each worker process holds its own in-memory copy; there's no cross-worker sharing to coordinate, since there's nothing written to shared storage
 - development reload
-- parallel Container App replicas
+- parallel Container App replicas - each replica generates independently on its own startup, from whichever engine version it has installed
 - overlapping deployments
 
-Prefer instance-local storage over a shared mutable volume. After measuring costs and understanding the process model, choose either one coordinated generator per instance, or isolated generation per worker.
+Because nothing is shared or persisted, most of the disk-cache coordination problems (staging directories, atomic publish, partial-write races, stale-file detection, shared-volume writability) don't exist here - each process either finishes generating and validating its own in-memory set, or fails its own readiness check. That's a real simplification over the disk-cache design this section previously proposed.
 
-Azure startup/readiness probes must allow the measured cold-start budget while still detecting failure. Keep the previous healthy deployment available during rollout. A rollback must restore a coherent code/engine/data combination - not copy old coordinates under new provenance.
+Azure startup/readiness probes must allow the measured cold-start budget while still detecting failure. Keep the previous healthy deployment available during rollout. A rollback must restore a coherent code/engine/data combination - each new process naturally regenerates from whatever engine version it's running, so there's no old-coordinates-under-new-provenance risk to guard against here.
 
 ### Repository layout
 
-- Track `chart-data/README.md`, explaining the directory, startup generation, metadata, failure behaviour, development workflow, and runtime storage location.
-- A tracked README already keeps the directory in Git, so `.gitkeep` is unnecessary.
-- Ignore generated contents while explicitly retaining the README and any chosen ignore-control file.
-- Don't make these ignore changes until the historical comparison (below) has been captured.
+No runtime directory is needed at all under this design - nothing is generated to disk. `chart-data/` (or whatever the committed historical directory is called) is a pre-migration artifact only, in scope for removal once the historical comparison (below) is complete and the in-memory generation is proven equivalent. This replaces the earlier README/`.gitignore` proposal for a disk-cache directory.
 
 ## Historical comparison and clinical review
 
@@ -109,7 +116,7 @@ The restricted evidence, per-point classification, and methodology are kept priv
 | Layer | Required evidence |
 | --- | --- |
 | Engine correctness | Independent reference vectors, domain boundaries, valid age grids, supported centile/SDS formats, and intentionally undefined points. Comparing two calls to the same generator proves consistency, not clinical correctness. |
-| Startup lifecycle | Empty directory; pre-existing stale data; engine change; interrupted generation; invalid/missing output; unwritable storage; concurrent startup; repeatability; readiness withheld until success. Importing application modules must not generate files. |
+| Startup lifecycle | Engine change between processes produces the corresponding in-memory change; interrupted/failed generation blocks readiness rather than serving a partial set; repeatability (same engine version, same output); multiple workers each generate their own correct copy independently. Importing application modules must not trigger generation - only application startup does. |
 | Served coordinates | Named-format responses equal the freshly generated approved set. Equivalent custom lists agree where semantics and rounding match. Cover custom lists explicitly in the regression matrix. |
 | API regression | Keep reviewed independent goldens for calculated results. Generate runtime cache data during test-server startup, but don't generate expected goldens from that same run during ordinary tests. Intentional changes go through the explicit acceptance workflow. |
 | React dataset generation | Reproduce bundled data from recorded engine identity and generation parameters. Compare semantically with the intended engine output, allowing only documented transformations. |
@@ -154,7 +161,7 @@ A small **opt-in** benchmark suite, not a production load test.
 
 **Coverage** - every operation family and reference, with representative valid, boundary, and validation-error requests: single calculations, bulk calculations at several bounded sizes, named chart formats, custom chart lists, fictional series of several bounded lengths, mid-parental height, and schema retrieval.
 
-Keep these four measurements separate, so disk-cache performance isn't mistaken for engine performance:
+Keep these four measurements separate, so in-memory-cache performance isn't mistaken for engine performance:
 
 - fresh coordinate-generation timing
 - whole startup time
@@ -169,19 +176,19 @@ Keep these four measurements separate, so disk-cache performance isn't mistaken 
 - engine/API commits, dependency environment
 - hardware/container resource limits, worker count
 - whether timings include network/APIM overhead
-- startup CPU, peak memory, disk size where available
+- startup CPU and peak memory (the in-memory set's resident size is now a direct memory-budget question, not just a disk one)
 
 Keep machine-readable results plus a concise human summary. Start with before/after comparisons, not arbitrary CI performance thresholds on noisy shared runners.
 
-Use results to identify bottlenecks and set a startup budget. If full startup generation is too costly, revisit generation granularity or deployment-time precomputation with explicit identity checks - don't silently keep the current existence-only cache.
+Use results to identify bottlenecks and set a startup budget. If full in-memory generation on every process/worker start is too costly, revisit generation granularity or worker configuration with explicit identity checks - don't silently keep the current existence-only disk cache as a workaround.
 
 ## Proposed sequence and decision gates
 
 1. Inventory consumers, datasets, generation variants, response shapes, and deployment process/storage constraints. Preserve historical evidence first.
 2. Build the opt-in benchmark harness and semantic comparison tooling. Produce a baseline and classify discrepancies with clinical input as needed.
 3. Agree startup failure/readiness semantics, the generation matrix, and the metadata contract. Resolve R2's unsupported named format rather than unintentionally enabling it as a side effect.
-4. Implement and test startup regeneration, then remove generated server files from Git with the README/ignore rules. Review coordinate golden changes against the comparison report.
-5. Make React data generation reproducible while preserving offline bundled curves and the existing no-extra-API-calls behaviour. Validate actual curve rendering, not only measurement compatibility.
+4. Implement and test in-memory startup generation, then remove the generated `chart-data/` files from Git entirely - there's no replacement directory to add. Review coordinate golden changes against the comparison report.
+5. Build the Component CI generation step, preserving offline bundled curves and the existing no-extra-API-calls behaviour. Validate actual curve rendering, not only measurement compatibility.
 6. Extend provenance contracts across coordinate and utility outputs, with explicit compatibility review. Coordinate with R12's reference removal, but keep numerical/schema diffs separate so each has an explainable cause.
 7. Roll out through reviewed releases and staged deployment. Record the generation manifest and timings, verify freshness through HTTP, and monitor readiness and endpoint errors. Keep commercial behaviour unchanged.
 
@@ -190,7 +197,8 @@ Use results to identify bottlenecks and set a startup budget. If full startup ge
 - What period and customer population should the APIM usage inventory cover, and who owns it?
 - What is the acceptable cold-start/readiness budget under current Azure resources and worker configuration?
 - Which exact React generation transformations and datasets should become part of the shared generation specification?
-- Should React generated modules remain tracked for reviewability, or be produced during release with a manifest and independent fixtures?
+- Should the Component's CI-generated modules stay tracked in Git (reviewable diffs, bot-authored commits) or be produced only at release time as an unreviewed build artifact with an independent fixture-based check instead?
+- Which `rcpchgrowth` version should the Component's CI step pin to, and how does that pin get bumped - manually reviewed, or automatically tracking the server's own dependency version?
 - Which provenance fields belong in coordinate/utility JSON versus artifact manifests or headers, and which consumers require compatibility testing?
 - Who owns the clinical comparison review and internal incident escalation, and what evidence is needed before releasing changed curves?
 - What benchmark corpus, repetitions, and hardware baseline make performance comparisons useful without turning CI into a noisy timing gate?
