@@ -85,6 +85,13 @@ if [[ -n "${AZURE_APIM_SERVICE_NAME:-}" && -n "${AZURE_APIM_API_ID:-}" ]]; then
     # existing APIM settings before importing and fails the deployment if Azure
     # rejects or cannot apply the generated contract.
     s/sync-apim-openapi "${openapi_document}"
+
+    # Hand the same verified document back to the caller. The deploy workflow
+    # sets OPENAPI_EXPORT_PATH so it can publish the document to GitHub Pages;
+    # the variable is unset for local runs, which are unaffected.
+    if [[ -n "${OPENAPI_EXPORT_PATH:-}" ]]; then
+        cp "${openapi_document}" "${OPENAPI_EXPORT_PATH}"
+    fi
 else
     echo "APIM OpenAPI synchronization skipped: configure AZURE_APIM_SERVICE_NAME and AZURE_APIM_API_ID."
 fi
